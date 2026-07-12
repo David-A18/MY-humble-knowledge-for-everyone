@@ -16,3 +16,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Refactored Git command documentation for easier reading with smaller tables and examples outside table cells.
 - Added AI documentation instructions for readable page structure, small tables, examples outside tables, explanations, risk notes, and validation expectations.
 - Added GitHub Actions documentation covering concepts, workflow structure, commands, `uses:` actions, examples, common solutions, and security guidance.
+- Expanded Kubernetes and EKS documentation with daily `kubectl` commands, common and advanced command references, operational workflows, troubleshooting solutions, tricks, best practices, EKS operations, and AWS-focused deployment guidance.
+- Added an agent instruction to commit and push completed documentation work after successful validation.

@@ -38,6 +38,7 @@ When adding or moving content, update every affected index immediately.
 - Include navigation links back to the parent index and root index in focused articles.
 - Every documentation directory must contain a `README.md` index, except `.github` workflow and issue-template directories.
 - Update [CHANGELOG.md](CHANGELOG.md) for meaningful structural, navigation, or content additions.
+- After validation passes and only intended changes remain, commit and push completed work unless the user explicitly asks not to or a blocker prevents it.
 - Update this file when repository routes or editing conventions change.
 
 ## Where to edit
@@ -138,10 +139,15 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/fundamentals/README.md](kubernetes/fundamentals/README.md) | Fundamentals index. | Core Kubernetes concept pages are added. |
 | [kubernetes/core-objects/README.md](kubernetes/core-objects/README.md) | Core objects index. | Object-specific pages are added. |
 | [kubernetes/commands/README.md](kubernetes/commands/README.md) | Command index. | `kubectl` references are added or moved. |
+| [kubernetes/commands/daily-usage.md](kubernetes/commands/daily-usage.md) | Daily `kubectl` usage. | Context, namespace, inspection, logs, events, exec, or port-forward guidance changes. |
+| [kubernetes/commands/common-commands.md](kubernetes/commands/common-commands.md) | Common `kubectl` command reference. | Apply, diff, rollout, scale, delete, selector, or output-format guidance changes. |
+| [kubernetes/commands/advanced-commands.md](kubernetes/commands/advanced-commands.md) | Advanced `kubectl` command reference. | JSONPath, dry-run, server-side apply, debug, node maintenance, or authorization guidance changes. |
+| [kubernetes/commands/workflows.md](kubernetes/commands/workflows.md) | Kubernetes operational command workflows. | Deployment, rollback, service debugging, or resource-pressure workflows change. |
 | [kubernetes/commands/kubectl-basics.md](kubernetes/commands/kubectl-basics.md) | Basic `kubectl` commands. | Common inspection commands change. |
 | [kubernetes/applications-and-tools/README.md](kubernetes/applications-and-tools/README.md) | Tooling index. | Helm, Kustomize, controller, or GitOps notes are added. |
 | [kubernetes/troubleshooting/README.md](kubernetes/troubleshooting/README.md) | Troubleshooting index. | Kubernetes diagnostic guides are added. |
 | [kubernetes/troubleshooting/crashloopbackoff.md](kubernetes/troubleshooting/crashloopbackoff.md) | CrashLoopBackOff guide. | Pod restart diagnostics change. |
+| [kubernetes/troubleshooting/common-solutions.md](kubernetes/troubleshooting/common-solutions.md) | Common Kubernetes troubleshooting solutions. | Pending pod, image pull, service/DNS, rollout, or permission diagnostics change. |
 | [kubernetes/best-practices/README.md](kubernetes/best-practices/README.md) | Best-practices index. | Operational guidance changes. |
 | [kubernetes/tricks/README.md](kubernetes/tricks/README.md) | Productivity notes. | Small Kubernetes techniques are added. |
 | [kubernetes/examples/README.md](kubernetes/examples/README.md) | Examples index. | Practical manifests or walkthroughs are added. |
@@ -175,6 +181,7 @@ When adding or moving content, update every affected index immediately.
 | [cross-topic-guides/github-actions-with-terraform.md](cross-topic-guides/github-actions-with-terraform.md) | GitHub Actions and Terraform CI. | Terraform CI/CD patterns change. |
 | [cross-topic-guides/github-actions-with-kubernetes.md](cross-topic-guides/github-actions-with-kubernetes.md) | GitHub Actions and Kubernetes CI/CD. | Kubernetes deployment automation changes. |
 | [cross-topic-guides/deploying-to-eks.md](cross-topic-guides/deploying-to-eks.md) | EKS deployment planning. | EKS deployment procedures change. |
+| [cross-topic-guides/eks-operations.md](cross-topic-guides/eks-operations.md) | Day-to-day EKS operations with AWS CLI and kubectl. | EKS operational commands, access, add-ons, or diagnostics change. |
 | [cross-topic-guides/observability-stack.md](cross-topic-guides/observability-stack.md) | Observability planning. | Monitoring, logging, tracing, or alerting guidance changes. |
 | [cross-topic-guides/end-to-end-deployment.md](cross-topic-guides/end-to-end-deployment.md) | Full delivery flow. | Source-to-production workflow guidance changes. |
 
@@ -241,5 +248,6 @@ When adding or moving content, update every affected index immediately.
 - [ ] Markdown lint passes when tooling is available.
 - [ ] [CHANGELOG.md](CHANGELOG.md) is updated for meaningful changes.
 - [ ] [context.md](context.md) is updated when routes or conventions change.
+- [ ] Completed work is committed and pushed after successful validation, unless explicitly blocked.
 
 [Back to root index](README.md)

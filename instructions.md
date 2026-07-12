@@ -208,6 +208,15 @@ npx markdownlint-cli2 "**/*.md"
 - Update `CHANGELOG.md` for meaningful content, structure, or workflow changes.
 - Update `context.md` when routes, conventions, or agent instructions change.
 
+## Commit and push after validation
+
+After validation passes and `git status --short --branch` shows only intended changes, agents should commit and push their completed work before finishing the task.
+
+- Use a concise conventional commit message, such as `docs: expand kubernetes eks guidance`.
+- Push the branch that contains the committed work.
+- If validation fails, the remote rejects the push, credentials are unavailable, or unrelated user changes would be included, stop and report the blocker instead of forcing the operation.
+- Do not rewrite history or force-push unless the user explicitly asks for that operation.
+
 ## Related links
 
 - [AI agent context](context.md)

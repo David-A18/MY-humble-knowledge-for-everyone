@@ -15,9 +15,18 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | [Tricks](tricks/README.md) | Helpful command patterns and productivity notes. |
 | [Examples](examples/README.md) | Practical manifests and walkthroughs. |
 
+## AWS and EKS workflows
+
+| Guide | Focus |
+| --- | --- |
+| [Kubernetes on AWS](../cross-topic-guides/kubernetes-on-aws.md) | EKS operating model, identity, networking, storage, add-ons, and cost visibility. |
+| [Deploying to EKS](../cross-topic-guides/deploying-to-eks.md) | EKS deployment workflow from kubeconfig through rollout validation. |
+| [EKS operations](../cross-topic-guides/eks-operations.md) | AWS CLI and `kubectl` commands for day-to-day EKS operations. |
+
 ## Official documentation
 
 - [Kubernetes documentation](https://kubernetes.io/docs/)
 - [kubectl reference](https://kubernetes.io/docs/reference/kubectl/)
+- [Amazon EKS documentation](https://docs.aws.amazon.com/eks/)
 
 [Back to root index](../README.md)
