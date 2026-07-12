@@ -92,6 +92,11 @@ When adding or moving content, update every affected index immediately.
 | [git/README.md](git/README.md) | Git area index. | Git subcategories or major Git articles change. |
 | [git/commands/README.md](git/commands/README.md) | Git command index. | Git command references are added or moved. |
 | [git/commands/daily-commands.md](git/commands/daily-commands.md) | Common daily Git commands. | Daily workflow commands or examples change. |
+| [git/commands/common-use-cases.md](git/commands/common-use-cases.md) | Scenario-based Git workflows. | Common Git workflow examples change. |
+| [git/commands/solve-issues.md](git/commands/solve-issues.md) | Safe commands for undoing mistakes and recovering work. | Git issue-solving commands or safety guidance change. |
+| [git/commands/troubleshooting-commands.md](git/commands/troubleshooting-commands.md) | Git diagnostic command reference. | Git troubleshooting diagnostics change. |
+| [git/commands/advanced-commands.md](git/commands/advanced-commands.md) | Advanced Git command reference. | Rebase, patch, maintenance, or plumbing guidance changes. |
+| [git/commands/complete-command-catalog.md](git/commands/complete-command-catalog.md) | Complete categorized Git command catalog. | Git command inventory or categorization changes. |
 | [git/troubleshooting/README.md](git/troubleshooting/README.md) | Git troubleshooting index. | Git recovery guides are added or moved. |
 | [git/troubleshooting/undo-and-recovery.md](git/troubleshooting/undo-and-recovery.md) | Undo and recovery guide. | Recovery procedures or safety guidance change. |
 | [git/best-practices/README.md](git/best-practices/README.md) | Git best-practices index. | Branching, commits, or review practices change. |

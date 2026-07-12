@@ -6,7 +6,7 @@ Practical Git knowledge for daily development, repository maintenance, automatio
 
 | Section | Focus |
 | --- | --- |
-| [Commands](commands/README.md) | Daily Git command workflows and examples. |
+| [Commands](commands/README.md) | Daily commands, common workflows, recovery commands, troubleshooting diagnostics, advanced usage, and complete command catalog coverage. |
 | [Troubleshooting](troubleshooting/README.md) | Recovery procedures for common Git problems. |
 | [Best practices](best-practices/README.md) | Branching, commit hygiene, and review readiness. |
 | [Tricks](tricks/README.md) | Useful productivity patterns and lesser-known commands. |
