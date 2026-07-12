@@ -107,6 +107,13 @@ When adding or moving content, update every affected index immediately.
 | [git/best-practices/README.md](git/best-practices/README.md) | Git best-practices index. | Branching, commits, or review practices change. |
 | [git/tricks/README.md](git/tricks/README.md) | Git productivity notes. | Small Git techniques are added. |
 | [git/github-actions/README.md](git/github-actions/README.md) | GitHub Actions index. | CI/CD workflow notes are added or moved. |
+| [git/github-actions/components-and-concepts.md](git/github-actions/components-and-concepts.md) | GitHub Actions components and concepts. | Workflow building-block explanations change. |
+| [git/github-actions/workflow-structure.md](git/github-actions/workflow-structure.md) | GitHub Actions workflow file structure. | Workflow syntax, trigger, job, step, matrix, or concurrency guidance changes. |
+| [git/github-actions/commands.md](git/github-actions/commands.md) | GitHub Actions command reference. | GitHub CLI or workflow command guidance changes. |
+| [git/github-actions/actions-and-uses-catalog.md](git/github-actions/actions-and-uses-catalog.md) | Common `uses:` action catalog. | Action recommendations, categories, or safety guidance change. |
+| [git/github-actions/examples-and-use-cases.md](git/github-actions/examples-and-use-cases.md) | GitHub Actions examples and use cases. | CI/CD examples or workflow patterns change. |
+| [git/github-actions/common-solutions.md](git/github-actions/common-solutions.md) | GitHub Actions common fixes. | Troubleshooting guidance or failure-mode solutions change. |
+| [git/github-actions/security-secrets-and-permissions.md](git/github-actions/security-secrets-and-permissions.md) | GitHub Actions security, secrets, and permissions. | Token, secret, environment, OIDC, or third-party action safety guidance changes. |
 
 ### Terraform
 

@@ -15,3 +15,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Expanded Git command documentation with daily commands, common use cases, issue-solving commands, troubleshooting diagnostics, advanced commands, and a complete command catalog.
 - Refactored Git command documentation for easier reading with smaller tables and examples outside table cells.
 - Added AI documentation instructions for readable page structure, small tables, examples outside tables, explanations, risk notes, and validation expectations.
+- Added GitHub Actions documentation covering concepts, workflow structure, commands, `uses:` actions, examples, common solutions, and security guidance.
