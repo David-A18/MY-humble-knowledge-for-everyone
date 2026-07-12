@@ -4,6 +4,8 @@ This file is the operating map for AI agents working in `engineering-knowledge-b
 
 > [!IMPORTANT]
 > Keep this file updated whenever files, directories, templates, workflows, or navigation rules change.
+>
+> Read [instructions.md](instructions.md) before creating or refactoring documentation. It defines the standard page structure, table style, example placement, risk notes, and validation expectations for AI agents.
 
 ## Repository intent
 
@@ -26,6 +28,7 @@ When adding or moving content, update every affected index immediately.
 ## Global editing rules
 
 - Use GitHub Flavored Markdown.
+- Follow [instructions.md](instructions.md) for readable documentation structure, small tables, examples outside tables, and plain-language explanations.
 - Use lowercase kebab-case for documentation directories and Markdown filenames.
 - Use standard uppercase filenames only for repository-level files such as [README.md](README.md), [LICENSE](LICENSE), [CONTRIBUTING.md](CONTRIBUTING.md), [CHANGELOG.md](CHANGELOG.md), [ROADMAP.md](ROADMAP.md), and [GLOSSARY.md](GLOSSARY.md).
 - Use relative links for all internal repository links.
@@ -43,6 +46,7 @@ When adding or moving content, update every affected index immediately.
 | --- | --- |
 | Change the public landing page or top-level navigation | [README.md](README.md) |
 | Change contribution standards | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Change AI documentation structure standards | [instructions.md](instructions.md) |
 | Record notable repository changes | [CHANGELOG.md](CHANGELOG.md) |
 | Update planned work | [ROADMAP.md](ROADMAP.md) |
 | Define shared terms | [GLOSSARY.md](GLOSSARY.md) |
@@ -59,6 +63,7 @@ When adding or moving content, update every affected index immediately.
 | --- | --- | --- |
 | [README.md](README.md) | Human entry point and top-level navigation. | A major area, resource, or navigation pattern changes. |
 | [context.md](context.md) | AI agent operating map. | Routes, conventions, or repository automation change. |
+| [instructions.md](instructions.md) | AI documentation structure and readability standard. | Documentation layout, table, example, risk-note, or validation standards change. |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution and documentation standards. | Review expectations or writing standards change. |
 | [CHANGELOG.md](CHANGELOG.md) | Notable changes. | A meaningful content, structure, or workflow change is made. |
 | [ROADMAP.md](ROADMAP.md) | Planned future work. | Priorities or planned topic areas change. |
@@ -193,11 +198,12 @@ When adding or moving content, update every affected index immediately.
 1. Choose the correct major area and subcategory.
 2. Copy the closest template from [templates](templates/README.md).
 3. Name the file in lowercase kebab-case.
-4. Add a clear title, purpose, practical content, and navigation links.
-5. Add the article to the parent `README.md` index.
-6. If it creates a new concept, update [GLOSSARY.md](GLOSSARY.md).
-7. If it changes repository structure or standards, update this file.
-8. Add a short note to [CHANGELOG.md](CHANGELOG.md).
+4. Follow [instructions.md](instructions.md) for readable structure, examples, explanations, and risk notes.
+5. Add a clear title, purpose, practical content, and navigation links.
+6. Add the article to the parent `README.md` index.
+7. If it creates a new concept, update [GLOSSARY.md](GLOSSARY.md).
+8. If it changes repository structure or standards, update this file.
+9. Add a short note to [CHANGELOG.md](CHANGELOG.md).
 
 ## How to add a new directory
 
@@ -213,7 +219,8 @@ When adding or moving content, update every affected index immediately.
 - Keep edits scoped to the page's purpose.
 - Preserve existing navigation links unless the route changes.
 - Update parent indexes when article titles, filenames, or locations change.
-- Prefer tables for comparisons and checklists for operational procedures.
+- Prefer small scan-friendly tables for comparisons and checklists for operational procedures.
+- Put command examples outside tables and explain them with `What it does:` text below the example.
 - Use fenced code blocks with language identifiers.
 - Include expected command output where it helps readers verify success.
 - Use GitHub alerts for operational risk, useful tips, or important caveats.

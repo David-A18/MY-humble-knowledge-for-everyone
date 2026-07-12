@@ -22,6 +22,7 @@ A practical, long-term engineering knowledge base for Git, GitHub Actions, Terra
 | --- | --- |
 | [Templates](templates/README.md) | Reusable Markdown templates for articles, commands, troubleshooting guides, ADRs, and examples. |
 | [AI agent context](context.md) | Operating map for AI agents, including routes, editing rules, and validation expectations. |
+| [AI documentation instructions](instructions.md) | Structure and readability standards for AI agents creating or refactoring documentation. |
 | [Glossary](GLOSSARY.md) | Shared terms and acronyms used across the knowledge base. |
 | [Roadmap](ROADMAP.md) | Planned expansion areas and prioritization. |
 | [Contributing](CONTRIBUTING.md) | Writing standards, review checklist, and contribution flow. |
@@ -35,6 +36,7 @@ Each documentation directory has a `README.md` index with links to its subcatego
 
 - Use GitHub Flavored Markdown.
 - Prefer focused articles over large catch-all pages.
+- Keep tables small and place examples outside table cells with plain-language explanations below them.
 - Include commands, expected outputs, failure symptoms, and decision sequences where useful.
 - Use official documentation links when external references are needed.
 - Mark early-stage pages with `Status: Initial outline` and enough structure to make future expansion clear.
