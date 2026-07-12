@@ -135,6 +135,18 @@ How it works: GitHub downloads the referenced action version and runs the action
 
 What it does: checks out the repository into `$GITHUB_WORKSPACE` so later steps can access the code.
 
+### Understand the reference
+
+```text
+actions/checkout@v4
+```
+
+How it works: the text before `@` identifies the action location. The text after `@` identifies the version, tag, branch, or commit SHA.
+
+What it does: tells GitHub exactly which reusable action code to run.
+
+For a fuller catalog and selection guide, use [`uses` catalog](actions-and-uses-catalog.md).
+
 ## Related links
 
 - [Understanding GitHub Actions](https://docs.github.com/articles/getting-started-with-github-actions)
