@@ -1,0 +1,29 @@
+name: New topic
+description: Suggest a new knowledge base topic or article.
+title: "topic: "
+labels:
+  - documentation
+  - enhancement
+body:
+  - type: input
+    id: area
+    attributes:
+      label: Knowledge area
+      description: Which major area should contain this topic?
+      placeholder: "terraform, kubernetes, aws, git, cross-topic"
+    validations:
+      required: true
+  - type: textarea
+    id: topic
+    attributes:
+      label: Topic proposal
+      description: Describe the proposed article and why it is useful.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Useful references
+      description: Add official documentation links or trusted references.
+    validations:
+      required: false

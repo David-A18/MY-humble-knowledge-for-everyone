@@ -1,0 +1,31 @@
+name: Documentation error
+description: Report inaccurate, outdated, unclear, or broken documentation.
+title: "docs: "
+labels:
+  - documentation
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for helping keep the knowledge base accurate."
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Relative path or section where the issue appears.
+      placeholder: "aws/networking/security-groups.md"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is incorrect, unclear, outdated, or broken?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected correction
+      description: What should the page say or link to instead?
+    validations:
+      required: false
