@@ -7,40 +7,194 @@ Use this page for professional Git commands that are powerful, useful, and easie
 > [!WARNING]
 > Advanced Git commands often rewrite history, change many files, or operate on repository internals. Inspect first, save work, and avoid rewriting commits that other people may have based work on.
 
-## Advanced command table
+## History editing and review
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Rebase local branch | `git rebase <base>` | `git rebase origin/main` | Keeping local feature commits on top of a newer base. | Replays commits from the current branch onto the selected base. | Do not rebase shared commits that others may have based work on. |
-| Edit commit series | `git rebase -i <base>` | `git rebase -i origin/main` | Squashing, rewording, reordering, or dropping local commits before review. | Opens an interactive todo list for commits after the base. | Rewrites history. Use only on local or agreed-to branches. |
-| Compare two versions of a branch | `git range-diff <old> <new>` | `git range-diff origin/main..v1 origin/main..v2` | After rebasing or revising a patch series. | Compares commit ranges by patch identity. | Safe read-only command. Excellent for review. |
-| Find the commit that introduced a bug | `git bisect` | `git bisect start` | A regression exists and you know a good and bad commit. | Binary-searches history by repeatedly checking out commits. | Keep test steps reliable. Finish with `git bisect reset`. |
-| Show line history | `git blame <path>` | `git blame src/app.js` | Investigating why a line exists. | Shows the last commit that changed each line. | Use as context, not as a people problem. |
-| Search tracked content | `git grep <pattern>` | `git grep "TODO"` | Searching repository files tracked by Git. | Searches tracked files at the current revision. | Safe read-only command. |
-| Reuse recorded conflict resolutions | `git rerere` | `git config rerere.enabled true` | Repeated rebases or long-running branches hit the same conflicts. | Records and reapplies previous conflict resolutions. | Review auto-applied resolutions before committing. |
-| Apply one commit elsewhere | `git cherry-pick <commit>` | `git cherry-pick abc1234` | Backporting or moving a specific commit to another branch. | Applies the changes from an existing commit as a new commit. | Can duplicate changes if used instead of merge/rebase intentionally. |
-| Apply a patch file | `git apply <patch>` | `git apply fix.patch` | Applying a raw patch without creating a commit automatically. | Applies patch content to the working tree or index. | Use `git apply --check` first for safety. |
-| Import mailbox patches | `git am` | `git am -3 patches/*.patch` | Email-based patch workflows. | Applies patches as commits, preserving author metadata. | Common in mailing-list workflows, less common in pull-request workflows. |
-| Create patch files | `git format-patch <base>` | `git format-patch origin/main` | Sending a branch as patch files. | Creates one patch file per commit. | Check recipient workflow before using email patches. |
-| Send patches by email | `git send-email` | `git send-email *.patch` | Mailing-list projects that accept patches by email. | Sends patch files with email headers preserved. | Requires email setup. Avoid sending accidental private data. |
-| Maintain several working trees | `git worktree` | `git worktree add ../repo-hotfix hotfix` | Working on multiple branches without stashing. | Manages additional working directories backed by one repository. | Each worktree should use a different branch. |
-| Limit checkout to selected paths | `git sparse-checkout` | `git sparse-checkout set docs src` | Large repositories where you need only part of the tree. | Configures the working tree to include selected paths. | Coordinate with tooling that expects full checkouts. |
-| Manage nested repositories | `git submodule` | `git submodule update --init --recursive` | Repository depends on another repository at a fixed commit. | Initializes, updates, and inspects submodules. | Submodules add workflow complexity. Document expectations clearly. |
-| Create repository bundle | `git bundle` | `git bundle create backup.bundle --all` | Offline transfer or backup of refs and objects. | Stores repository objects and refs in a single file. | Verify bundle before relying on it: `git bundle verify backup.bundle`. |
-| Export a tree archive | `git archive` | `git archive --format=zip --output=release.zip HEAD` | Creating source archives without `.git` metadata. | Writes files from a tree-ish to an archive. | Does not include untracked files. |
-| Add notes to objects | `git notes` | `git notes add -m "Reviewed by security"` | Adding metadata without changing commits. | Stores notes attached to objects. | Notes are separate refs and may need explicit push/fetch. |
-| Inspect objects | `git cat-file` | `git cat-file -p HEAD^{tree}` | Learning or scripting against Git object data. | Prints object content, type, or size. | Plumbing command. Safe read-only when used for inspection. |
-| Inspect tree contents | `git ls-tree` | `git ls-tree -r --name-only HEAD` | Listing files in a commit or tree. | Shows tree entries for a revision. | Safe read-only command. |
-| Compute merge base | `git merge-base <a> <b>` | `git merge-base main feature/login` | Scripting comparisons or understanding branch divergence. | Finds a best common ancestor for commits. | Safe read-only command. |
-| List commits programmatically | `git rev-list <range>` | `git rev-list --count origin/main..HEAD` | Scripts need commit IDs or counts. | Walks commit history and prints matching commits. | Safe read-only command. |
-| Parse revisions safely | `git rev-parse <rev>` | `git rev-parse --show-toplevel` | Scripts need canonical object IDs or repository paths. | Parses revision names and repository metadata. | Useful in scripts; validate inputs. |
-| List refs with formatting | `git for-each-ref` | `git for-each-ref --format="%(refname:short)" refs/heads` | Scripts need branch or tag metadata. | Iterates refs and prints selected fields. | Safe read-only command. |
-| Update index metadata | `git update-index` | `git update-index --chmod=+x script.sh` | Advanced index changes such as file mode updates. | Registers file metadata or content changes in the index. | Do not use assume-unchanged or skip-worktree as a substitute for ignoring tracked files. |
-| Validate repository objects | `git fsck` | `git fsck --full` | Diagnosing corruption or missing objects. | Verifies object database integrity. | Read-only by default. |
-| Run cleanup and optimization | `git gc` | `git gc --prune=now` | After heavy repository maintenance when you understand object reachability. | Packs objects and prunes unreachable objects. | `--prune=now` is aggressive. Prefer default `git gc` or `git maintenance run`. |
-| Run background-style maintenance | `git maintenance` | `git maintenance run` | Routine performance maintenance. | Runs configured maintenance tasks such as prefetch or commit-graph updates. | Safer default than custom `git gc` tuning. |
-| Rewrite history with old tool | `git filter-branch` | `git filter-branch --tree-filter "rm -f secret.txt" HEAD` | Legacy scripts that still use it. | Rewrites many commits. | Official docs warn users away from this for many cases. Prefer modern tools such as `git filter-repo` when available. |
-| Force push with lease | `git push --force-with-lease` | `git push --force-with-lease origin HEAD` | Updating a remote branch after an agreed history rewrite. | Force pushes only if the remote still points where your local remote-tracking ref expects. | Safer than `--force`, but still rewrites public history. |
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Rebase local branch | `git rebase <base>` | Keeping local feature commits on top of a newer base. |
+| Edit commit series | `git rebase -i <base>` | Squashing, rewording, reordering, or dropping local commits before review. |
+| Compare two versions of a branch | `git range-diff <old> <new>` | After rebasing or revising a patch series. |
+| Apply one commit elsewhere | `git cherry-pick <commit>` | Backporting or moving a specific commit to another branch. |
+| Force push with lease | `git push --force-with-lease` | Updating a remote branch after an agreed history rewrite. |
+
+### Rebase local work
+
+```bash
+git rebase origin/main
+git rebase -i origin/main
+```
+
+What it does: replays local commits on top of another base. Interactive rebase lets you reword, squash, reorder, or drop commits. Do not rebase shared commits that others may have based work on.
+
+### Compare rewritten history
+
+```bash
+git range-diff origin/main..v1 origin/main..v2
+```
+
+What it does: compares two versions of a commit series by patch identity, which makes it useful after rebasing or revising a branch.
+
+### Move one commit
+
+```bash
+git cherry-pick abc1234
+```
+
+What it does: applies the changes from an existing commit as a new commit on the current branch.
+
+### Push rewritten history safely
+
+```bash
+git push --force-with-lease origin HEAD
+```
+
+What it does: force pushes only if the remote still points where your local remote-tracking ref expects. It is safer than `--force`, but it still rewrites public history.
+
+## Debug and search history
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Find the commit that introduced a bug | `git bisect` | A regression exists and you know a good and bad commit. |
+| Show line history | `git blame <path>` | Investigating why a line exists. |
+| Search tracked content | `git grep <pattern>` | Searching repository files tracked by Git. |
+| Reuse recorded conflict resolutions | `git rerere` | Repeated rebases or long-running branches hit the same conflicts. |
+
+### Find a regression
+
+```bash
+git bisect start
+git bisect bad
+git bisect good v1.2.0
+```
+
+What it does: binary-searches history until Git finds the first bad commit. Finish with `git bisect reset`.
+
+### Search and inspect history
+
+```bash
+git blame src/app.js
+git grep "TODO"
+```
+
+What it does: `git blame` shows the last commit that changed each line. `git grep` searches tracked files at the current revision.
+
+### Reuse conflict resolutions
+
+```bash
+git config rerere.enabled true
+git rerere status
+```
+
+What it does: records and reapplies previous conflict resolutions. Review auto-applied resolutions before committing.
+
+## Patch, archive, and multi-worktree workflows
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Apply a patch file | `git apply <patch>` | Applying a raw patch without creating a commit automatically. |
+| Import mailbox patches | `git am` | Email-based patch workflows. |
+| Create patch files | `git format-patch <base>` | Sending a branch as patch files. |
+| Send patches by email | `git send-email` | Mailing-list projects that accept patches by email. |
+| Maintain several working trees | `git worktree` | Working on multiple branches without stashing. |
+| Limit checkout to selected paths | `git sparse-checkout` | Large repositories where you need only part of the tree. |
+| Manage nested repositories | `git submodule` | Repository depends on another repository at a fixed commit. |
+| Create repository bundle | `git bundle` | Offline transfer or backup of refs and objects. |
+| Export a tree archive | `git archive` | Creating source archives without `.git` metadata. |
+| Add notes to objects | `git notes` | Adding metadata without changing commits. |
+
+### Apply or create patches
+
+```bash
+git apply --check fix.patch
+git apply fix.patch
+git format-patch origin/main
+```
+
+What it does: checks a patch, applies it to the working tree, or creates one patch file per commit.
+
+### Email patch workflow
+
+```bash
+git am -3 patches/*.patch
+git send-email *.patch
+```
+
+What it does: imports patches as commits or sends patch files through email. This is common in mailing-list projects, not most pull-request workflows.
+
+### Work with separate trees
+
+```bash
+git worktree add ../repo-hotfix hotfix
+git sparse-checkout set docs src
+git submodule update --init --recursive
+```
+
+What it does: creates another working directory, narrows a checkout to selected paths, or initializes nested repositories.
+
+### Package repository content
+
+```bash
+git bundle create backup.bundle --all
+git archive --format=zip --output=release.zip HEAD
+git notes add -m "Reviewed by security"
+```
+
+What it does: creates an offline repository bundle, exports tracked files without `.git` metadata, or attaches notes to objects without changing commits.
+
+## Plumbing and maintenance
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Inspect objects | `git cat-file` | Learning or scripting against Git object data. |
+| Inspect tree contents | `git ls-tree` | Listing files in a commit or tree. |
+| Compute merge base | `git merge-base <a> <b>` | Scripting comparisons or understanding branch divergence. |
+| List commits programmatically | `git rev-list <range>` | Scripts need commit IDs or counts. |
+| Parse revisions safely | `git rev-parse <rev>` | Scripts need canonical object IDs or repository paths. |
+| List refs with formatting | `git for-each-ref` | Scripts need branch or tag metadata. |
+| Update index metadata | `git update-index` | Advanced index changes such as file mode updates. |
+| Validate repository objects | `git fsck` | Diagnosing corruption or missing objects. |
+| Run cleanup and optimization | `git gc` | After heavy repository maintenance when you understand object reachability. |
+| Run background-style maintenance | `git maintenance` | Routine performance maintenance. |
+| Rewrite history with old tool | `git filter-branch` | Legacy scripts that still use it. |
+
+### Inspect Git internals
+
+```bash
+git cat-file -p HEAD^{tree}
+git ls-tree -r --name-only HEAD
+git merge-base main feature/login
+```
+
+What it does: prints object content, lists tree entries, and finds the best common ancestor between branches.
+
+### Script with revisions and refs
+
+```bash
+git rev-list --count origin/main..HEAD
+git rev-parse --show-toplevel
+git for-each-ref --format="%(refname:short)" refs/heads
+```
+
+What it does: counts commits, prints repository metadata, and formats refs for scripts.
+
+### Maintain repository data
+
+```bash
+git update-index --chmod=+x script.sh
+git fsck --full
+git maintenance run
+git gc
+```
+
+What it does: updates index metadata, verifies object integrity, and runs repository optimization tasks.
+
+### Legacy history rewrite
+
+```bash
+git filter-branch --tree-filter "rm -f secret.txt" HEAD
+```
+
+What it does: rewrites many commits with a legacy tool. Prefer modern tools such as `git filter-repo` when available, and never rewrite shared history without coordination.
 
 ## Advanced safety rules
 

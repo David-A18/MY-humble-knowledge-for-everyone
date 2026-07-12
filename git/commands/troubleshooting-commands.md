@@ -4,37 +4,175 @@
 
 Use this page to diagnose why Git is behaving unexpectedly before choosing a fix.
 
-## Troubleshooting command table
+## First checks
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Check repository state | `git status --short --branch` | `git status --short --branch` | First step in almost every Git problem. | Shows branch, upstream, staged, unstaged, untracked, and conflict state. | Safe read-only command. |
-| Inspect branch tracking | `git branch -vv` | `git branch -vv` | Push or pull goes to the wrong branch. | Shows local branches, upstream branches, and ahead/behind counts. | Safe read-only command. |
-| Inspect remotes | `git remote -v` | `git remote -v` | Fetch, pull, or push reaches the wrong repository. | Lists remote names and URLs. | Safe read-only command. |
-| Inspect remote refs | `git ls-remote <remote>` | `git ls-remote origin` | A branch or tag exists remotely but not locally. | Lists refs advertised by the remote. | Safe read-only command. |
-| Update remote-tracking refs | `git fetch --all --prune` | `git fetch --all --prune` | Local remote branch list is stale. | Downloads remote refs and removes stale remote-tracking refs. | Does not update the current branch. |
-| Diagnose rejected push | `git log --oneline --left-right --graph HEAD...@{upstream}` | `git log --oneline --left-right --graph HEAD...@{upstream}` | Push is rejected because histories diverged. | Shows commits only on local and only on upstream. | Safe read-only command. |
-| Check ignored file rules | `git check-ignore -v <path>` | `git check-ignore -v .env` | A file is ignored and you do not know why. | Prints the ignore rule and file that matched. | Safe read-only command. |
-| See tracked ignored files | `git ls-files -ci --exclude-standard` | `git ls-files -ci --exclude-standard` | `.gitignore` is not stopping files already in Git. | Lists tracked files that also match ignore rules. | Remove tracking with `git rm --cached <path>` if appropriate. |
-| Remove a tracked ignored file | `git rm --cached <path>` | `git rm --cached .env` | A file should stay locally but stop being tracked. | Removes the file from the index, leaving the working copy. | Commit the removal. Rotate secrets if they were committed. |
-| Show conflict files | `git diff --name-only --diff-filter=U` | `git diff --name-only --diff-filter=U` | During merge, rebase, or cherry-pick conflicts. | Lists unmerged paths. | Safe read-only command. |
-| Inspect conflict stages | `git ls-files -u` | `git ls-files -u` | You need lower-level conflict details. | Shows index entries for base, ours, and theirs. | Advanced read-only command. |
-| Use a merge tool | `git mergetool` | `git mergetool` | Conflicts are easier to resolve visually. | Opens the configured merge conflict tool. | Review the result before staging. |
-| Reuse conflict resolutions | `git rerere status` | `git rerere status` | You enabled rerere and want to inspect recorded resolutions. | Shows paths where recorded resolutions may apply. | Enable intentionally with `git config rerere.enabled true`. |
-| Diagnose detached HEAD | `git symbolic-ref --short HEAD` | `git symbolic-ref --short HEAD` | You are not sure whether you are on a branch. | Prints the current branch name if `HEAD` is attached. | Fails in detached HEAD; use `git switch -c <branch>` to keep work. |
-| Find current commit | `git rev-parse --short HEAD` | `git rev-parse --short HEAD` | You need the exact commit currently checked out. | Prints the abbreviated object ID of `HEAD`. | Safe read-only command. |
-| Diagnose credential helper | `git config --show-origin --get-all credential.helper` | `git config --show-origin --get-all credential.helper` | Git repeatedly asks for credentials or uses the wrong helper. | Shows configured credential helpers and where they came from. | Do not paste tokens into command history. |
-| Clear bad HTTPS credential | `git credential reject` | `git credential reject` | A saved password or token is wrong. | Removes a credential matching protocol/host/user input. | Follow official credential-helper guidance for your OS. |
-| Check line-ending config | `git config --show-origin --get-regexp core.autocrlf` | `git config --show-origin --get-regexp core.autocrlf` | Files appear fully changed due to line endings. | Shows line-ending conversion config and source files. | Coordinate `.gitattributes` changes with the team. |
-| Renormalize files after attributes change | `git add --renormalize .` | `git add --renormalize .` | After changing `.gitattributes` line-ending rules. | Reapplies clean filters and normalization to tracked files. | Review the diff carefully before committing. |
-| Test hook execution | `git hook run --ignore-missing <hook-name>` | `git hook run --ignore-missing pre-commit` | A hook may be affecting commits, merges, or pushes. | Runs a specific hook if it exists and succeeds when it is missing. | Hook support varies by Git version. Inspect `.git/hooks` when needed. |
-| Bypass local commit hooks once | `git commit --no-verify` | `git commit --no-verify -m "Emergency docs fix"` | Only when a local hook is broken and the team process allows bypassing. | Commits without running pre-commit and commit-msg hooks. | Do not use to skip required quality checks. |
-| Verify repository objects | `git fsck` | `git fsck --full` | You suspect repository corruption or missing objects. | Checks object connectivity and validity. | Read-only by default, but output can be technical. |
-| Measure object storage | `git count-objects -vH` | `git count-objects -vH` | Repository feels large or slow. | Shows loose object count and pack size. | Safe read-only command. |
-| Run maintenance | `git maintenance run` | `git maintenance run` | Repository has many objects or operations are slow. | Runs configured maintenance tasks. | Usually safe. Let Git choose defaults unless you know the repository needs more. |
-| Garbage collect objects | `git gc` | `git gc` | After large history operations or when Git recommends it. | Packs objects and prunes unreachable data according to safety windows. | Avoid interrupting. Prefer `git maintenance run` for routine use. |
-| Generate a bug report bundle | `git bugreport` | `git bugreport` | Reporting a Git issue upstream or to platform support. | Creates diagnostic text for a bug report. | Review before sharing; it may include environment details. |
-| Generate diagnostics archive | `git diagnose` | `git diagnose` | Support asks for detailed repository diagnostics. | Produces an archive of diagnostic information. | Review before sharing outside your organization. |
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Check repository state | `git status --short --branch` | First step in almost every Git problem. |
+| Inspect branch tracking | `git branch -vv` | Push or pull goes to the wrong branch. |
+| Inspect remotes | `git remote -v` | Fetch, pull, or push reaches the wrong repository. |
+| Inspect remote refs | `git ls-remote <remote>` | A branch or tag exists remotely but not locally. |
+| Update remote-tracking refs | `git fetch --all --prune` | Local remote branch list is stale. |
+
+### Start with repository state
+
+```bash
+git status --short --branch
+git branch -vv
+git remote -v
+```
+
+What it does: shows your current branch, file state, upstream tracking, ahead/behind counts, and remote URLs.
+
+### Refresh remote information
+
+```bash
+git ls-remote origin
+git fetch --all --prune
+```
+
+What it does: checks what refs the remote advertises, then updates local remote-tracking refs without changing your current branch.
+
+## Push, pull, and branch problems
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Diagnose rejected push | `git log --oneline --left-right --graph HEAD...@{upstream}` | Push is rejected because histories diverged. |
+| Diagnose detached HEAD | `git symbolic-ref --short HEAD` | You are not sure whether you are on a branch. |
+| Find current commit | `git rev-parse --short HEAD` | You need the exact commit currently checked out. |
+
+### Diagnose diverged history
+
+```bash
+git log --oneline --left-right --graph HEAD...@{upstream}
+```
+
+What it does: shows commits that exist only locally and only upstream so you can decide whether to merge, rebase, or ask for help.
+
+### Check detached HEAD
+
+```bash
+git symbolic-ref --short HEAD
+git rev-parse --short HEAD
+```
+
+What it does: prints the current branch if `HEAD` is attached, or helps identify the checked-out commit if it is detached.
+
+## Ignore, conflict, and file problems
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Check ignored file rules | `git check-ignore -v <path>` | A file is ignored and you do not know why. |
+| See tracked ignored files | `git ls-files -ci --exclude-standard` | `.gitignore` is not stopping files already in Git. |
+| Remove a tracked ignored file | `git rm --cached <path>` | A file should stay locally but stop being tracked. |
+| Show conflict files | `git diff --name-only --diff-filter=U` | During merge, rebase, or cherry-pick conflicts. |
+| Inspect conflict stages | `git ls-files -u` | You need lower-level conflict details. |
+| Use a merge tool | `git mergetool` | Conflicts are easier to resolve visually. |
+| Reuse conflict resolutions | `git rerere status` | You enabled rerere and want to inspect recorded resolutions. |
+
+### Debug ignore rules
+
+```bash
+git check-ignore -v .env
+git ls-files -ci --exclude-standard
+git rm --cached .env
+```
+
+What it does: finds the ignore rule, lists tracked files that match ignore patterns, and removes a tracked file from the index while keeping the local copy.
+
+### Inspect conflicts
+
+```bash
+git diff --name-only --diff-filter=U
+git ls-files -u
+git mergetool
+```
+
+What it does: lists unresolved conflict files, shows low-level conflict stages, and opens the configured merge tool.
+
+### Check recorded resolutions
+
+```bash
+git rerere status
+```
+
+What it does: shows paths where Git may reuse recorded conflict resolutions. Enable rerere intentionally with `git config rerere.enabled true`.
+
+## Credentials, line endings, and hooks
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Diagnose credential helper | `git config --show-origin --get-all credential.helper` | Git repeatedly asks for credentials or uses the wrong helper. |
+| Clear bad HTTPS credential | `git credential reject` | A saved password or token is wrong. |
+| Check line-ending config | `git config --show-origin --get-regexp core.autocrlf` | Files appear fully changed due to line endings. |
+| Renormalize files after attributes change | `git add --renormalize .` | After changing `.gitattributes` line-ending rules. |
+| Test hook execution | `git hook run --ignore-missing <hook-name>` | A hook may be affecting commits, merges, or pushes. |
+| Bypass local commit hooks once | `git commit --no-verify` | Only when a local hook is broken and team process allows it. |
+
+### Diagnose credentials
+
+```bash
+git config --show-origin --get-all credential.helper
+git credential reject
+```
+
+What it does: shows configured credential helpers and can remove a bad saved credential. Do not paste tokens into command history.
+
+### Fix line-ending noise
+
+```bash
+git config --show-origin --get-regexp core.autocrlf
+git add --renormalize .
+```
+
+What it does: shows line-ending configuration and reapplies normalization rules to tracked files. Review the diff carefully before committing.
+
+### Check hook behavior
+
+```bash
+git hook run --ignore-missing pre-commit
+git commit --no-verify -m "Emergency docs fix"
+```
+
+What it does: tests a hook if it exists. `--no-verify` bypasses local commit hooks once; use it only when the team process allows bypassing.
+
+## Repository health and performance
+
+| Task | Command | When to use it |
+| --- | --- | --- |
+| Verify repository objects | `git fsck` | You suspect repository corruption or missing objects. |
+| Measure object storage | `git count-objects -vH` | Repository feels large or slow. |
+| Run maintenance | `git maintenance run` | Repository has many objects or operations are slow. |
+| Garbage collect objects | `git gc` | After large history operations or when Git recommends it. |
+| Generate a bug report bundle | `git bugreport` | Reporting a Git issue upstream or to platform support. |
+| Generate diagnostics archive | `git diagnose` | Support asks for detailed repository diagnostics. |
+
+### Check repository health
+
+```bash
+git fsck --full
+git count-objects -vH
+```
+
+What it does: verifies object connectivity and shows storage statistics for loose objects and packs.
+
+### Run maintenance
+
+```bash
+git maintenance run
+git gc
+```
+
+What it does: runs optimization tasks and packs repository data. Prefer `git maintenance run` for routine use.
+
+### Generate diagnostics
+
+```bash
+git bugreport
+git diagnose
+```
+
+What it does: creates diagnostic output for support or upstream Git bug reports. Review files before sharing them.
 
 ## Common troubleshooting sequence
 

@@ -2,228 +2,353 @@
 
 ## Purpose
 
-Use this catalog to recognize the Git command surface. Daily users should start with [Daily Git commands](daily-commands.md), [Common Git use cases](common-use-cases.md), and [Solve Git issues](solve-issues.md). This page includes uncommon, low-level, server, email, migration, and interface commands so readers know what exists and when it matters.
+Use this catalog to recognize the Git command surface. Daily users should start with [Daily Git commands](daily-commands.md), [Common Git use cases](common-use-cases.md), and [Solve Git issues](solve-issues.md). This page keeps the complete inventory skimmable by separating command tables from examples.
 
 > [!IMPORTANT]
 > The official Git reference is the source of truth for command behavior. Some commands listed by `git help -a` depend on platform, installed extras, or Git version.
 
 ## Main porcelain commands
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Stage content | `git add` | `git add README.md` | Preparing changes for commit. | Adds file content to the index. | Run again after later edits. |
-| Apply mailbox patches | `git am` | `git am -3 patch.mbox` | Email patch workflows. | Applies patches as commits. | Less common in pull-request workflows. |
-| Export files from a commit | `git archive` | `git archive --format=zip --output=src.zip HEAD` | Creating source archives. | Writes tracked files from a tree to an archive. | Does not include `.git` metadata or untracked files. |
-| Download partial clone objects | `git backfill` | `git backfill` | Partial clone maintenance. | Downloads missing objects in a partial clone. | Newer command; check local Git support. |
-| Find bug-introducing commit | `git bisect` | `git bisect start` | Regression investigation. | Binary-searches commit history. | Requires known good/bad commits and repeatable tests. |
-| Manage branches | `git branch` | `git branch --all` | Listing, creating, renaming, or deleting branches. | Manages branch refs. | Deleting branches can hide work until recovered with reflog. |
-| Bundle repository data | `git bundle` | `git bundle create repo.bundle --all` | Offline transfer or backup. | Packages refs and objects into a file. | Verify bundles before relying on them. |
-| Switch or restore paths | `git checkout` | `git checkout main` | Legacy branch switching or file restoration. | Switches branches or restores files. | Prefer `git switch` and `git restore` for clearer intent. |
-| Apply a commit elsewhere | `git cherry-pick` | `git cherry-pick abc1234` | Backports or selective commit movement. | Replays one commit as a new commit. | Can duplicate changes if used casually. |
-| Graphical commit tool | `git citool` | `git citool` | GUI-based commits. | Opens a graphical interface for committing. | Availability depends on installation. |
-| Remove untracked files | `git clean` | `git clean -fdn` | Cleaning generated or untracked files. | Deletes untracked files when run without dry-run. | Use `-n` preview before destructive cleanup. |
-| Clone repository | `git clone` | `git clone https://github.com/example/repo.git` | Starting from a remote repository. | Copies repository history and configures a remote. | Use trusted URLs. |
-| Record staged snapshot | `git commit` | `git commit -m "Add docs"` | Saving staged changes. | Creates a commit object and advances the branch. | Review staged diff first. |
-| Name an object from refs | `git describe` | `git describe --tags` | Build metadata or release labels. | Finds a human-readable name near a commit. | Output depends on available tags. |
-| Compare changes | `git diff` | `git diff --staged` | Reviewing file changes. | Shows differences between working tree, index, commits, or trees. | Safe read-only unless used through tools that edit. |
-| Download remote refs | `git fetch` | `git fetch --all --prune` | Updating remote-tracking refs. | Downloads objects and refs without integrating them. | Safe default before pull/rebase/merge. |
-| Create patch files | `git format-patch` | `git format-patch origin/main` | Email or patch-file submission. | Writes commits as patch files. | Review patch files before sharing. |
-| Optimize repository | `git gc` | `git gc` | Repository maintenance. | Cleans and packs repository data. | Avoid aggressive prune unless you understand reachability. |
-| Browse repository graphically | `git gitk` | `git gitk --all` | Visual history inspection. | Opens Git's history browser. | GUI availability depends on installation. |
-| Search tracked content | `git grep` | `git grep "function"` | Searching repository content. | Searches files known to Git. | Safe read-only command. |
-| Graphical Git UI | `git gui` | `git gui` | GUI-based staging and commits. | Opens Git's portable GUI. | Availability depends on installation. |
-| Rewrite history experimentally | `git history` | `git history` | Experimental history operations. | Provides experimental history rewrite functionality. | Experimental. Avoid in shared repositories. |
-| Initialize repository | `git init` | `git init` | Starting version control in a folder. | Creates or reinitializes repository metadata. | Does not commit files automatically. |
-| Show commit history | `git log` | `git log --oneline --graph` | Reviewing history. | Lists commits and metadata. | Safe read-only command. |
-| Run maintenance tasks | `git maintenance` | `git maintenance run` | Keeping large repos healthy. | Runs configured optimization tasks. | Prefer defaults unless tuning is needed. |
-| Join histories | `git merge` | `git merge origin/main` | Integrating branches while preserving history. | Combines histories, often with a merge commit. | Resolve conflicts carefully. |
-| Move or rename tracked paths | `git mv` | `git mv old.md new.md` | Renaming tracked files. | Moves file in working tree and stages the change. | Equivalent to move plus `git add`/`git rm`. |
-| Attach notes to objects | `git notes` | `git notes add -m "Reviewed"` | Adding metadata without changing commits. | Stores notes in separate refs. | Notes need explicit sharing. |
-| Fetch and integrate | `git pull` | `git pull --ff-only` | Updating current branch from upstream. | Runs fetch followed by merge or rebase. | Use `--ff-only` for safer routine pulls. |
-| Upload refs | `git push` | `git push -u origin HEAD` | Sharing commits or tags. | Sends objects and updates remote refs. | Avoid force pushing shared history without agreement. |
-| Compare commit ranges | `git range-diff` | `git range-diff v1 v2` | Reviewing revised patch series. | Compares two commit ranges by patch identity. | Safe read-only command. |
-| Reapply commits | `git rebase` | `git rebase origin/main` | Moving local commits to a new base. | Rewrites commits onto another base. | Do not rebase shared commits others may depend on. |
-| Move HEAD or index | `git reset` | `git reset --soft HEAD~1` | Reworking local commits or index state. | Moves branch, index, and optionally working tree depending on mode. | `--hard` is destructive. |
-| Restore files | `git restore` | `git restore --staged README.md` | Undoing file or index changes. | Restores paths from index or a commit. | Destructive when discarding unstaged edits. |
-| Revert commits | `git revert` | `git revert abc1234` | Undoing shared commits. | Creates a new commit that reverses another commit. | Preferred for public history. |
-| Remove tracked paths | `git rm` | `git rm --cached .env` | Stop tracking or delete files. | Removes paths from index and optionally working tree. | `--cached` keeps local file; without it deletes file. |
-| Manage large repositories | `git scalar` | `git scalar register` | Large monorepo workflows. | Configures performance-oriented repository management. | Check platform and team guidance. |
-| Summarize log output | `git shortlog` | `git shortlog -sn` | Release notes or contributor summaries. | Groups commits by author. | Safe read-only command. |
-| Show object details | `git show` | `git show HEAD` | Inspecting commits, tags, trees, or blobs. | Displays object content and metadata. | Safe read-only command. |
-| Manage sparse checkouts | `git sparse-checkout` | `git sparse-checkout set docs src` | Working with part of a large repository. | Restricts working tree paths. | Tooling may expect a full checkout. |
-| Save temporary changes | `git stash` | `git stash push -m "wip"` | Context switching without committing. | Stores dirty working tree state. | Include messages; be careful with untracked files. |
-| Show working tree state | `git status` | `git status --short --branch` | Before almost any Git operation. | Shows branch and file states. | Safe read-only command. |
-| Manage submodules | `git submodule` | `git submodule update --init --recursive` | Repositories nested at fixed commits. | Initializes, updates, and inspects submodules. | Adds workflow complexity. |
-| Measure repository scale | `git survey` | `git survey` | Experimental repository scale diagnostics. | Measures repository dimensions of scale. | Experimental; availability and output may change. |
-| Switch branches | `git switch` | `git switch main` | Moving between branches. | Checks out branches with clearer intent than `checkout`. | Git blocks overwrites of local changes. |
-| Manage tags | `git tag` | `git tag -a v1.0.0 -m "Release v1.0.0"` | Marking release or important points. | Creates, lists, deletes, or verifies tags. | Push tags intentionally. |
-| Manage worktrees | `git worktree` | `git worktree add ../repo-hotfix hotfix` | Multiple branches at once. | Adds or manages linked working trees. | One branch should not be checked out in multiple worktrees. |
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git add` | Stage file content. | Run again after later edits. |
+| `git am` | Apply mailbox patches as commits. | Common in email patch workflows. |
+| `git archive` | Export files from a commit or tree. | Does not include `.git` metadata. |
+| `git backfill` | Download missing objects in a partial clone. | Newer command; check local Git support. |
+| `git bisect` | Find the commit that introduced a bug. | Requires reliable good/bad tests. |
+| `git branch` | List, create, rename, or delete branches. | Deleting branches can hide work until reflog recovery. |
+| `git bundle` | Package refs and objects into one file. | Useful for offline transfer or backup. |
+| `git checkout` | Legacy branch switching or file restore. | Prefer `git switch` and `git restore` for clarity. |
+| `git cherry-pick` | Apply one existing commit elsewhere. | Can duplicate changes if used casually. |
+| `git citool` | Graphical commit interface. | Availability depends on installation. |
+| `git clean` | Remove untracked files. | Destructive; preview with `-n`. |
+| `git clone` | Copy an existing repository. | Use trusted URLs. |
+| `git commit` | Record staged content. | Review `git diff --staged` first. |
+| `git describe` | Give an object a human-readable name. | Output depends on available tags. |
+| `git diff` | Compare changes. | Safe read-only unless paired with external tools that edit. |
+| `git fetch` | Download remote refs and objects. | Does not update the current branch. |
+| `git format-patch` | Create patch files from commits. | Review patches before sharing. |
+| `git gc` | Clean and pack repository data. | Avoid aggressive pruning unless you understand reachability. |
+| `git gitk` | Browse history graphically. | GUI availability depends on installation. |
+| `git grep` | Search tracked content. | Safe read-only command. |
+| `git gui` | Portable graphical Git interface. | Availability depends on installation. |
+| `git history` | Experimental history rewrite command. | Experimental; avoid in shared repositories. |
+| `git init` | Create or reinitialize a repository. | Does not commit files automatically. |
+| `git log` | Show commit history. | Safe read-only command. |
+| `git maintenance` | Run repository maintenance tasks. | Prefer defaults unless tuning is needed. |
+| `git merge` | Join histories. | Resolve conflicts carefully. |
+| `git mv` | Move or rename tracked paths. | Stages the move. |
+| `git notes` | Attach notes to objects. | Notes need explicit sharing. |
+| `git pull` | Fetch and integrate remote changes. | `--ff-only` is safer for routine pulls. |
+| `git push` | Upload refs and objects. | Avoid force pushing shared history without agreement. |
+| `git range-diff` | Compare two commit ranges. | Excellent after rebasing a patch series. |
+| `git rebase` | Replay commits onto another base. | Do not rebase shared commits others may depend on. |
+| `git reset` | Move `HEAD`, index, and sometimes working tree. | `--hard` is destructive. |
+| `git restore` | Restore files or index entries. | Destructive when discarding unstaged edits. |
+| `git revert` | Create a commit that reverses another commit. | Preferred for public history. |
+| `git rm` | Remove paths from index and possibly working tree. | `--cached` keeps the local file. |
+| `git scalar` | Manage large Git repositories. | Check platform and team guidance. |
+| `git shortlog` | Summarize commit log by author. | Good for release notes. |
+| `git show` | Show commits, tags, trees, or blobs. | Safe read-only command. |
+| `git sparse-checkout` | Limit working tree paths. | Tooling may expect full checkouts. |
+| `git stash` | Save temporary dirty working tree state. | Use messages so stashes are recognizable. |
+| `git status` | Show working tree state. | Make this a first habit. |
+| `git submodule` | Manage nested repositories. | Adds workflow complexity. |
+| `git survey` | Measure repository dimensions of scale. | Experimental; output may change. |
+| `git switch` | Switch branches. | Clearer than checkout for branch movement. |
+| `git tag` | Create, list, delete, or verify tags. | Push tags intentionally. |
+| `git worktree` | Manage multiple working trees. | Keep each worktree on a different branch. |
+
+### Main porcelain examples
+
+```bash
+git status --short --branch
+git add -p
+git commit -m "Describe the change"
+git fetch --all --prune
+git pull --ff-only
+git push -u origin HEAD
+```
+
+What it does: these are the normal day-to-day commands for checking state, staging carefully, committing, syncing, and publishing branch work.
+
+```bash
+git rebase origin/main
+git range-diff origin/main..v1 origin/main..v2
+git revert abc1234
+```
+
+What it does: these commands reshape or compare history. Prefer `git revert` for shared mistakes, and only rebase commits that are safe to rewrite.
 
 ## Ancillary commands
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Read or set configuration | `git config` | `git config --global user.email "alex@example.com"` | Configuring identity, behavior, aliases, or tools. | Gets and sets Git config values. | Know whether you are editing local, global, or system config. |
-| Export Git data stream | `git fast-export` | `git fast-export --all` | Migration or conversion tooling. | Exports repository history in a fast-import stream. | Usually for tools and migrations. |
-| Import Git data stream | `git fast-import` | `git fast-import < stream.txt` | Migration or conversion tooling. | Imports fast-import formatted repository data. | Can create many refs and objects. Test first. |
-| Rewrite branches with legacy tool | `git filter-branch` | `git filter-branch --index-filter "git rm --cached secret.txt" HEAD` | Legacy history rewriting scripts. | Rewrites commits across history. | Use modern alternatives where possible; high risk. |
-| Resolve conflicts with a tool | `git mergetool` | `git mergetool` | Visual conflict resolution. | Launches a configured merge tool. | Review results before staging. |
-| Pack refs | `git pack-refs` | `git pack-refs --all` | Repository maintenance or server optimization. | Packs loose refs into a single file. | Mostly administrative. |
-| Prune unreachable objects | `git prune` | `git prune --dry-run` | Low-level cleanup after object reachability changes. | Removes unreachable loose objects. | Prefer `git gc`; pruning can remove recovery options. |
-| Inspect reflogs | `git reflog` | `git reflog --date=local` | Recovering moved branch tips or lost commits. | Shows recent ref updates. | Read-only unless expiring or deleting entries. |
-| Manage refs namespace | `git refs` | `git refs verify` | Low-level ref maintenance. | Provides low-level access to refs. | Advanced and version-dependent. |
-| Manage remotes | `git remote` | `git remote -v` | Viewing or changing remote repositories. | Lists, adds, removes, or edits remotes. | Verify URLs before pushing. |
-| Repack object database | `git repack` | `git repack -Ad` | Repository/server maintenance. | Packs loose objects into packfiles. | Prefer `git gc` unless administering repositories. |
-| Replace objects | `git replace` | `git replace <old> <new>` | Temporary history repair or investigation. | Creates replacement refs for objects. | Can make history look different locally. |
-| Annotate lines | `git annotate` | `git annotate README.md` | Similar to blame in older workflows. | Shows commit attribution per line. | Prefer `git blame` for common use. |
-| Show line attribution | `git blame` | `git blame README.md` | Investigating line history. | Shows the last commit for each line. | Use for context, not personal blame. |
-| Collect Git bug info | `git bugreport` | `git bugreport` | Filing Git bugs. | Creates a diagnostic bug report template. | Review before sharing. |
-| Count object storage | `git count-objects` | `git count-objects -vH` | Diagnosing repository size. | Shows loose object and pack statistics. | Safe read-only command. |
-| Generate diagnostics | `git diagnose` | `git diagnose` | Support or deep troubleshooting. | Creates diagnostic archive. | Review archive before sharing. |
-| Use external diff tool | `git difftool` | `git difftool HEAD~1` | Visual diff inspection. | Opens configured diff tool. | Tool may create temp files. |
-| Verify object database | `git fsck` | `git fsck --full` | Suspected corruption. | Checks object connectivity and validity. | Read-only by default. |
-| Browse with gitweb | `git gitweb` | `git gitweb` | Web frontend administration. | Supports Git web browsing. | Server/admin use. |
-| Show help | `git help` | `git help commit` | Learning command options. | Opens manual pages or help text. | Safe read-only command. |
-| Serve repository in browser | `git instaweb` | `git instaweb` | Temporary local web browsing of a repository. | Starts a gitweb instance. | Opens local service; stop when done. |
-| Test merges without checkout | `git merge-tree` | `git merge-tree HEAD origin/main` | Predicting merge results. | Performs a merge calculation without touching index or worktree. | Safe for analysis. |
-| Reuse conflict resolution | `git rerere` | `git config rerere.enabled true` | Repeated conflicts. | Records and reapplies resolutions. | Review reused resolutions. |
-| Compare branches | `git show-branch` | `git show-branch main feature` | Inspecting branch relationships. | Shows commits and branch ancestry. | Safe read-only command. |
-| Verify signed commit | `git verify-commit` | `git verify-commit HEAD` | Checking commit signatures. | Validates GPG/SSH signatures on commits. | Requires trust configuration. |
-| Verify signed tag | `git verify-tag` | `git verify-tag v1.0.0` | Checking release tag signatures. | Validates tag signatures. | Requires trust configuration. |
-| Show Git version | `git version` | `git version` | Reporting local Git version. | Prints installed Git version. | Safe read-only command. |
-| Show old-style changed commits | `git whatchanged` | `git whatchanged -p` | Legacy history inspection. | Shows logs with diffs. | Prefer `git log` for most use. |
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git config` | Read or set repository, global, or system options. | Know which config level you are editing. |
+| `git fast-export` | Export history as a fast-import stream. | Migration/tooling command. |
+| `git fast-import` | Import fast-import formatted history. | Can create many refs and objects. |
+| `git filter-branch` | Legacy history rewrite tool. | High risk; prefer modern alternatives when available. |
+| `git mergetool` | Open a merge conflict tool. | Review results before staging. |
+| `git pack-refs` | Pack loose refs. | Mostly administrative. |
+| `git prune` | Remove unreachable loose objects. | Prefer `git gc` for normal cleanup. |
+| `git reflog` | Inspect recent ref movements. | Important recovery tool. |
+| `git refs` | Low-level access to refs. | Advanced and version-dependent. |
+| `git remote` | Manage remote repositories. | Verify URLs before pushing. |
+| `git repack` | Repack object database. | Prefer `git gc` unless administering repositories. |
+| `git replace` | Replace one object with another locally. | Can make history look different. |
+| `git annotate` | Show line attribution. | Prefer `git blame` for common use. |
+| `git blame` | Show last commit for each line. | Use for context, not blame in the human sense. |
+| `git bugreport` | Collect bug report information. | Review before sharing. |
+| `git count-objects` | Count loose objects and disk use. | Safe read-only command. |
+| `git diagnose` | Create diagnostic archive. | Review before sharing. |
+| `git difftool` | Open an external diff tool. | Tool may create temporary files. |
+| `git fsck` | Verify object connectivity and validity. | Read-only by default. |
+| `git gitweb` | Git web frontend support. | Server/admin use. |
+| `git help` | Show command documentation. | Safe read-only command. |
+| `git instaweb` | Start temporary gitweb browser. | Opens a local service. |
+| `git merge-tree` | Calculate a merge without touching worktree. | Useful for analysis. |
+| `git rerere` | Reuse recorded conflict resolutions. | Review reused resolutions. |
+| `git show-branch` | Show branch relationships. | Safe read-only command. |
+| `git verify-commit` | Verify commit signatures. | Requires trust configuration. |
+| `git verify-tag` | Verify tag signatures. | Requires trust configuration. |
+| `git version` | Show installed Git version. | Useful for support. |
+| `git whatchanged` | Legacy log-with-diff view. | Prefer `git log` for most use. |
+
+### Ancillary examples
+
+```bash
+git config --global user.email "alex@example.com"
+git remote -v
+git reflog --date=local
+git fsck --full
+```
+
+What it does: configures identity, checks remote URLs, reviews recovery history, and validates repository objects.
+
+```bash
+git mergetool
+git rerere status
+git count-objects -vH
+git bugreport
+```
+
+What it does: helps with conflict resolution, repeated conflicts, repository size checks, and bug reporting.
 
 ## Interacting with other systems
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Import GNU Arch repository | `git archimport` | `git archimport archive/project` | Migrating from GNU Arch. | Imports Arch history into Git. | Niche migration command. |
-| Export commit to CVS checkout | `git cvsexportcommit` | `git cvsexportcommit HEAD` | CVS interoperability. | Applies one Git commit to a CVS checkout. | Legacy system support. |
-| Import CVS repository | `git cvsimport` | `git cvsimport project` | Migrating from CVS. | Imports CVS history into Git. | Legacy migration command. |
-| Serve CVS protocol from Git | `git cvsserver` | `git cvsserver` | Supporting CVS clients against Git. | Emulates a CVS server. | Legacy interoperability. |
-| Send patches to IMAP | `git imap-send` | `git imap-send < patches.mbox` | Email patch workflows. | Uploads patches to an IMAP folder. | Requires mail configuration. |
-| Interoperate with Perforce | `git p4` | `git p4 clone //depot/project` | Perforce migration or bridge workflows. | Imports from and submits to Perforce. | Niche external SCM workflow. |
-| Import Quilt patches | `git quiltimport` | `git quiltimport` | Quilt patch stack migration. | Applies a quilt patchset to a branch. | Legacy/niche patch workflow. |
-| Generate pull request text | `git request-pull` | `git request-pull v1.0 origin main` | Mailing-list or distributed workflows. | Summarizes pending changes for upstream. | Not the same as a GitHub pull request object. |
-| Send patch emails | `git send-email` | `git send-email *.patch` | Email-based contribution workflows. | Sends patches as email. | Requires careful email setup. |
-| Interoperate with Subversion | `git svn` | `git svn clone https://svn.example.org/project` | SVN migration or bridge workflows. | Provides bidirectional Git/SVN operations. | Can be slow and workflow-sensitive. |
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git archimport` | Import GNU Arch history. | Niche migration command. |
+| `git cvsexportcommit` | Export one Git commit to CVS. | Legacy interoperability. |
+| `git cvsimport` | Import CVS history. | Legacy migration command. |
+| `git cvsserver` | Emulate a CVS server from Git. | Legacy interoperability. |
+| `git imap-send` | Send patches to an IMAP folder. | Requires mail configuration. |
+| `git p4` | Interoperate with Perforce. | Migration or bridge workflow. |
+| `git quiltimport` | Import a Quilt patchset. | Niche patch workflow. |
+| `git request-pull` | Generate text asking upstream to pull. | Not the same as a GitHub pull request object. |
+| `git send-email` | Send patch emails. | Requires careful email setup. |
+| `git svn` | Interoperate with Subversion. | Can be slow and workflow-sensitive. |
 
-## Low-level commands
+### External system examples
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Apply patch | `git apply` | `git apply --check fix.patch` | Applying or validating raw patches. | Applies patch files to worktree or index. | Use `--check` before applying. |
-| Copy index files out | `git checkout-index` | `git checkout-index -a --prefix=/tmp/export/` | Scripts exporting index content. | Copies files from index to working tree path. | Plumbing command. |
-| Manage commit graph | `git commit-graph` | `git commit-graph write --reachable` | Performance maintenance. | Writes or verifies commit-graph data. | Usually handled by maintenance. |
-| Create commit object | `git commit-tree` | `git commit-tree HEAD^{tree} -p HEAD` | Low-level scripting. | Creates a commit object from a tree. | Does not update branch refs by itself. |
-| Compute object ID | `git hash-object` | `git hash-object README.md` | Object model learning or scripting. | Computes and optionally writes object IDs. | `-w` writes objects. |
-| Build pack index | `git index-pack` | `git index-pack packfile.pack` | Packfile maintenance. | Builds index for a packfile. | Administrative/plumbing use. |
-| Three-way merge files | `git merge-file` | `git merge-file current base other` | Scripted conflict handling. | Merges three file versions. | Can modify files. |
-| Merge index entries | `git merge-index` | `git merge-index git-merge-one-file -a` | Low-level merge machinery. | Runs merge program for unmerged index entries. | Plumbing command. |
-| Create validated tag object | `git mktag` | `git mktag < tag-object.txt` | Low-level tag creation. | Creates a tag object with validation. | Porcelain `git tag` is safer. |
-| Create tree object | `git mktree` | `git mktree < tree.txt` | Low-level object construction. | Builds a tree from ls-tree formatted input. | Plumbing command. |
-| Manage multi-pack index | `git multi-pack-index` | `git multi-pack-index write` | Repository performance maintenance. | Writes or verifies multi-pack-index data. | Usually handled by maintenance. |
-| Create packfile | `git pack-objects` | `git pack-objects pack` | Server/admin object packing. | Creates packed object archives. | Plumbing/admin command. |
-| Remove duplicate packed objects | `git prune-packed` | `git prune-packed` | Cleanup after packing. | Removes loose objects already in packs. | Usually handled by `git gc`. |
-| Read tree into index | `git read-tree` | `git read-tree HEAD` | Low-level index manipulation. | Reads tree data into the index. | Can replace index contents. |
-| Replay commits experimentally | `git replay` | `git replay --onto main topic` | Experimental commit replay. | Replays commits on another base, including bare repo flows. | Experimental; prefer `git rebase` unless needed. |
-| Manage symbolic refs | `git symbolic-ref` | `git symbolic-ref --short HEAD` | Inspecting or setting symbolic refs. | Reads, modifies, or deletes symbolic refs. | Updating refs manually is advanced. |
-| Unpack objects | `git unpack-objects` | `git unpack-objects < packfile.pack` | Repository transfer internals. | Unpacks objects from a pack. | Plumbing/admin command. |
-| Update index | `git update-index` | `git update-index --chmod=+x script.sh` | Advanced index edits. | Registers content and metadata in the index. | Do not use as a substitute for `.gitignore`. |
-| Update refs safely | `git update-ref` | `git update-ref refs/heads/test HEAD` | Scripts that move refs. | Updates ref values with safety checks. | Can move branch pointers. |
-| Write tree object | `git write-tree` | `git write-tree` | Low-level commit construction. | Creates a tree object from the index. | Plumbing command. |
-| Inspect object content | `git cat-file` | `git cat-file -p HEAD` | Object model inspection. | Prints object content, type, or size. | Safe read-only command. |
-| Find unapplied commits | `git cherry` | `git cherry -v origin/main` | Comparing patch equivalence with upstream. | Shows commits not yet applied upstream. | Safe read-only command. |
-| Compare worktree and index | `git diff-files` | `git diff-files` | Low-level diff scripts. | Compares working tree files to index. | Safe read-only command. |
-| Compare tree and index/worktree | `git diff-index` | `git diff-index HEAD` | Scripting changed-file detection. | Compares a tree to index or working tree. | Safe read-only command. |
-| Compare blob pairs | `git diff-pairs` | `git diff-pairs` | Low-level diff internals. | Compares provided blob pairs. | Internal/advanced. |
-| Compare tree objects | `git diff-tree` | `git diff-tree --stat HEAD~1 HEAD` | Scripted commit diffing. | Compares tree objects. | Safe read-only command. |
-| Iterate refs | `git for-each-ref` | `git for-each-ref refs/heads` | Scripting branch/tag reports. | Prints refs with formatting. | Safe read-only command. |
-| Run command across repositories | `git for-each-repo` | `git for-each-repo --config=maintenance.repo maintenance run` | Multi-repo maintenance. | Runs a Git command for repositories listed in config. | Validate config list first. |
-| Extract archive commit ID | `git get-tar-commit-id` | `git get-tar-commit-id < archive.tar` | Inspecting archives made by `git archive`. | Reads embedded commit ID. | Safe read-only command. |
-| Show last modified commits | `git last-modified` | `git last-modified README.md` | Experimental file-history queries. | Shows when files were last modified. | Experimental; availability varies. |
-| List index files | `git ls-files` | `git ls-files` | Inspecting tracked, staged, or ignored files. | Shows index and working tree file info. | Safe read-only command. |
-| List remote refs | `git ls-remote` | `git ls-remote origin` | Checking remote branch/tag names. | Lists refs advertised by a remote. | Safe read-only command. |
-| List tree contents | `git ls-tree` | `git ls-tree -r --name-only HEAD` | Inspecting files in a commit. | Lists entries in a tree object. | Safe read-only command. |
-| Find merge base | `git merge-base` | `git merge-base main feature` | Comparing branch ancestry. | Finds best common ancestors. | Safe read-only command. |
-| Find symbolic names | `git name-rev` | `git name-rev HEAD~3` | Making object IDs human-readable. | Finds ref-based names for revisions. | Safe read-only command. |
-| Find redundant packs | `git pack-redundant` | `git pack-redundant --all` | Pack maintenance. | Finds redundant pack files. | Rare admin command. |
-| Show repository info | `git repo` | `git repo info` | Repository metadata inspection when available. | Retrieves repository information. | Version-dependent. |
-| List commits | `git rev-list` | `git rev-list --count HEAD` | Scripting history traversal. | Lists commit objects matching criteria. | Safe read-only command. |
-| Parse revisions | `git rev-parse` | `git rev-parse --show-toplevel` | Scripts needing repository paths or object IDs. | Parses revisions and repository metadata. | Validate user input in scripts. |
-| Show pack index | `git show-index` | `git show-index < pack.idx` | Packfile diagnostics. | Shows contents of a pack index. | Low-level read-only command. |
-| Show refs | `git show-ref` | `git show-ref --heads` | Inspecting local refs. | Lists refs and object IDs. | Safe read-only command. |
-| Unpack blob to temp file | `git unpack-file` | `git unpack-file HEAD:README.md` | Low-level blob extraction. | Creates temporary file with blob content. | Mostly internal. |
-| Show logical variable | `git var` | `git var GIT_AUTHOR_IDENT` | Scripting identity or editor info. | Prints Git logical variables. | Safe read-only command. |
-| Verify packfile | `git verify-pack` | `git verify-pack -v pack.idx` | Pack diagnostics. | Validates packed object files. | Low-level read-only command. |
+```bash
+git svn clone https://svn.example.org/project
+git p4 clone //depot/project
+git request-pull v1.0 origin main
+```
+
+What it does: bridges Git with older or external source control workflows, or creates pull-request text for distributed projects.
+
+```bash
+git format-patch origin/main
+git send-email *.patch
+```
+
+What it does: creates patch files and sends them for mailing-list based contribution workflows.
+
+## Low-level manipulators
+
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git apply` | Apply or validate raw patches. | Use `--check` before applying. |
+| `git checkout-index` | Copy files from index. | Plumbing command. |
+| `git commit-graph` | Write or verify commit graph data. | Usually handled by maintenance. |
+| `git commit-tree` | Create a commit object directly. | Does not update branch refs by itself. |
+| `git hash-object` | Compute or write object IDs. | `-w` writes objects. |
+| `git index-pack` | Build index for a packfile. | Administrative/plumbing use. |
+| `git merge-file` | Run a three-way file merge. | Can modify files. |
+| `git merge-index` | Run merge program for unmerged index entries. | Plumbing command. |
+| `git mktag` | Create a validated tag object. | Porcelain `git tag` is safer. |
+| `git mktree` | Build a tree object from text. | Plumbing command. |
+| `git multi-pack-index` | Write or verify multi-pack indexes. | Usually handled by maintenance. |
+| `git pack-objects` | Create packfiles. | Server/admin command. |
+| `git prune-packed` | Remove loose objects already in packs. | Usually handled by `git gc`. |
+| `git read-tree` | Read tree data into the index. | Can replace index contents. |
+| `git replay` | Experimental commit replay. | Prefer `git rebase` unless needed. |
+| `git symbolic-ref` | Read or update symbolic refs. | Updating refs manually is advanced. |
+| `git unpack-objects` | Unpack objects from a pack. | Plumbing/admin command. |
+| `git update-index` | Update index content or metadata. | Do not use as a `.gitignore` substitute. |
+| `git update-ref` | Update refs safely from scripts. | Can move branch pointers. |
+| `git write-tree` | Create a tree object from the index. | Plumbing command. |
+
+### Low-level manipulator examples
+
+```bash
+git apply --check fix.patch
+git hash-object README.md
+git update-index --chmod=+x script.sh
+git write-tree
+```
+
+What it does: validates patches, computes object IDs, updates index metadata, and writes a tree object from the index.
+
+## Low-level interrogators
+
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git cat-file` | Inspect object content, type, or size. | Safe read-only command. |
+| `git cherry` | Find commits not yet applied upstream. | Compares patch equivalence. |
+| `git diff-files` | Compare working tree and index. | Low-level diff command. |
+| `git diff-index` | Compare tree to index or worktree. | Useful in scripts. |
+| `git diff-pairs` | Compare provided blob pairs. | Internal/advanced. |
+| `git diff-tree` | Compare tree objects. | Useful for scripted commit diffs. |
+| `git for-each-ref` | Iterate refs with formatting. | Useful in scripts. |
+| `git for-each-repo` | Run Git command across configured repos. | Validate repo list first. |
+| `git get-tar-commit-id` | Extract commit ID from `git archive` output. | Safe read-only command. |
+| `git last-modified` | Show when files were last modified. | Experimental. |
+| `git ls-files` | Show index and tracked file info. | Safe read-only command. |
+| `git ls-remote` | List refs in a remote repository. | Safe read-only command. |
+| `git ls-tree` | List contents of a tree object. | Safe read-only command. |
+| `git merge-base` | Find best common ancestors. | Useful for branch comparison. |
+| `git name-rev` | Find symbolic names for revisions. | Safe read-only command. |
+| `git pack-redundant` | Find redundant pack files. | Rare admin command. |
+| `git repo` | Retrieve repository information. | Version-dependent. |
+| `git rev-list` | List commits matching criteria. | Useful in scripts. |
+| `git rev-parse` | Parse revisions and repository metadata. | Validate user input in scripts. |
+| `git show-index` | Show pack index contents. | Low-level read-only command. |
+| `git show-ref` | List local refs. | Safe read-only command. |
+| `git unpack-file` | Create temp file with blob content. | Mostly internal. |
+| `git var` | Show Git logical variables. | Safe read-only command. |
+| `git verify-pack` | Validate packed object files. | Low-level read-only command. |
+
+### Low-level interrogator examples
+
+```bash
+git cat-file -p HEAD
+git ls-tree -r --name-only HEAD
+git merge-base main feature/login
+git rev-list --count origin/main..HEAD
+git rev-parse --show-toplevel
+```
+
+What it does: inspects object content, tree contents, branch ancestry, commit counts, and repository paths.
 
 ## Server and protocol commands
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Serve Git protocol | `git daemon` | `git daemon --base-path=/srv/git` | Hosting repositories over the Git protocol. | Starts a simple Git server. | Server administration command. |
-| Fetch missing objects | `git fetch-pack` | `git fetch-pack origin` | Protocol-level fetch operations. | Receives missing objects from another repository. | Usually invoked by porcelain commands. |
-| Serve Git over HTTP | `git http-backend` | `git http-backend` | Smart HTTP server setup. | Implements server-side HTTP Git protocol. | Web server configuration required. |
-| Push objects at protocol level | `git send-pack` | `git send-pack origin refs/heads/main` | Protocol-level push operations. | Sends objects over Git protocol. | Usually invoked by `git push`. |
-| Support dumb HTTP transports | `git update-server-info` | `git update-server-info` | Static HTTP repository hosting. | Updates auxiliary info files. | Server/admin use. |
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git daemon` | Serve repositories over the Git protocol. | Server administration command. |
+| `git fetch-pack` | Receive missing objects from another repository. | Usually invoked by porcelain commands. |
+| `git http-backend` | Implement Git over HTTP server side. | Web server configuration required. |
+| `git send-pack` | Send objects over Git protocol. | Usually invoked by `git push`. |
+| `git update-server-info` | Support dumb HTTP transports. | Server/admin use. |
+
+### Server examples
+
+```bash
+git daemon --base-path=/srv/git
+git update-server-info
+```
+
+What it does: serves Git repositories or updates auxiliary files for simple HTTP hosting. These are server administration commands.
 
 ## Internal helpers and repository interfaces
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Check attributes | `git check-attr` | `git check-attr --all README.md` | Debugging `.gitattributes`. | Shows attributes that apply to paths. | Safe read-only command. |
-| Check ignore rules | `git check-ignore` | `git check-ignore -v .env` | Debugging `.gitignore`. | Shows which ignore rule matches a path. | Safe read-only command. |
-| Check mailmap names | `git check-mailmap` | `git check-mailmap "A <a@example.com>"` | Verifying canonical author mapping. | Resolves names through mailmap rules. | Safe read-only command. |
-| Validate ref names | `git check-ref-format` | `git check-ref-format refs/heads/feature/a` | Scripts creating refs. | Checks whether a ref name is valid. | Safe read-only command. |
-| Format columns | `git column` | `git column --mode=column` | Script/user interface formatting. | Displays text in columns. | Helper command. |
-| Handle credentials | `git credential` | `git credential fill` | Credential-helper debugging. | Reads/writes credential protocol records. | Avoid exposing tokens. |
-| Cache credentials | `git credential-cache` | `git credential-cache exit` | Temporary in-memory credential storage. | Implements cache credential helper. | Stores secrets temporarily. |
-| Store credentials | `git credential-store` | `git credential-store --file ~/.git-credentials store` | Plain-text credential helper workflows. | Stores credentials on disk. | Plain text; use OS credential manager when possible. |
-| Format merge message | `git fmt-merge-msg` | `git fmt-merge-msg < .git/FETCH_HEAD` | Merge internals or scripts. | Produces merge commit messages. | Usually invoked by merge. |
-| Run hooks | `git hook` | `git hook run --ignore-missing pre-commit` | Testing or running configured hooks. | Runs hook commands. | Hook support varies by version. |
-| Parse trailers | `git interpret-trailers` | `git interpret-trailers --parse < commit.txt` | Commit metadata automation. | Adds or parses structured trailers. | Useful for signoffs and review metadata. |
-| Extract patch mail info | `git mailinfo` | `git mailinfo msg patch < mail.txt` | Email patch internals. | Extracts patch and authorship from email. | Usually used by `git am`. |
-| Split mailbox | `git mailsplit` | `git mailsplit mailbox` | Email patch internals. | Splits mbox into individual messages. | Usually used by `git am`. |
-| Merge one conflicted file | `git merge-one-file` | `git merge-one-file` | Merge internals. | Helper used by `git merge-index`. | Internal helper. |
-| Compute patch identity | `git patch-id` | `git patch-id < change.patch` | Comparing equivalent patches. | Computes stable patch IDs. | Safe read-only command. |
-| Shell i18n helper | `git sh-i18n` | `git sh-i18n` | Git script internals. | Provides translation setup for shell scripts. | Internal helper. |
-| Shell setup helper | `git sh-setup` | `git sh-setup` | Git script internals. | Provides common shell script setup. | Internal helper. |
-| Strip whitespace | `git stripspace` | `git stripspace < message.txt` | Cleaning commit messages or mail input. | Removes unnecessary whitespace. | Helper command. |
-| Define path attributes | `gitattributes` | `.gitattributes` | Line endings, diffs, merge drivers, linguist metadata. | Repository interface file for per-path attributes. | Commit changes intentionally; can affect many files. |
-| Understand CLI conventions | `gitcli` | `git help gitcli` | Learning Git command syntax. | Documents command-line conventions. | Documentation interface, not a normal subcommand. |
-| Define hooks | `githooks` | `.git/hooks/pre-commit` | Automating local or server checks. | Documents hook names and behavior. | Local hooks are not cloned by default. |
-| Ignore untracked files | `gitignore` | `.gitignore` | Keeping build outputs and local config untracked. | Defines ignore patterns. | Does not untrack files already committed. |
-| Canonicalize identities | `gitmailmap` | `.mailmap` | Cleaning author names in history views. | Maps names/emails for display. | Does not rewrite commits. |
-| Configure submodules | `gitmodules` | `.gitmodules` | Documenting submodule URLs and paths. | Defines submodule configuration stored in the repo. | Keep URLs reviewed and trusted. |
-| Understand repository layout | `gitrepository-layout` | `git help repository-layout` | Learning Git internals. | Documents `.git` directory layout. | Documentation interface. |
-| Specify revisions | `gitrevisions` | `git help revisions` | Learning revision syntax. | Documents names and ranges such as `HEAD~1` and `main..topic`. | Essential for safe advanced usage. |
+| Command or interface | Use | Notes |
+| --- | --- | --- |
+| `git check-attr` | Debug `.gitattributes`. | Safe read-only command. |
+| `git check-ignore` | Debug `.gitignore`. | Safe read-only command. |
+| `git check-mailmap` | Resolve names through mailmap rules. | Safe read-only command. |
+| `git check-ref-format` | Validate ref names. | Useful in scripts. |
+| `git column` | Display text in columns. | Helper command. |
+| `git credential` | Read/write credential protocol records. | Avoid exposing tokens. |
+| `git credential-cache` | Temporarily cache credentials in memory. | Stores secrets temporarily. |
+| `git credential-store` | Store credentials on disk. | Plain text; prefer OS credential manager. |
+| `git fmt-merge-msg` | Produce merge commit messages. | Usually invoked by merge. |
+| `git hook` | Run hook commands. | Hook support varies by version. |
+| `git interpret-trailers` | Add or parse structured trailers. | Useful for signoffs and review metadata. |
+| `git mailinfo` | Extract patch and author data from email. | Usually used by `git am`. |
+| `git mailsplit` | Split mbox messages. | Usually used by `git am`. |
+| `git merge-one-file` | Merge one conflicted file. | Internal helper. |
+| `git patch-id` | Compute stable patch IDs. | Safe read-only command. |
+| `git sh-i18n` | Shell translation setup. | Internal helper. |
+| `git sh-setup` | Common shell script setup. | Internal helper. |
+| `git stripspace` | Remove unnecessary whitespace. | Helper command. |
+| `gitattributes` | Define path attributes. | Can affect line endings, diffs, and merges. |
+| `gitcli` | Document Git command-line conventions. | Documentation interface. |
+| `githooks` | Document hook names and behavior. | Local hooks are not cloned by default. |
+| `gitignore` | Define intentionally untracked files. | Does not untrack files already committed. |
+| `gitmailmap` | Map names and emails for display. | Does not rewrite commits. |
+| `gitmodules` | Define submodule properties. | Keep URLs reviewed and trusted. |
+| `gitrepository-layout` | Document `.git` layout. | Documentation interface. |
+| `gitrevisions` | Document revision and range syntax. | Essential for safe advanced usage. |
+
+### Interface examples
+
+```bash
+git check-ignore -v .env
+git check-attr --all README.md
+git hook run --ignore-missing pre-commit
+git interpret-trailers --parse < commit-message.txt
+```
+
+What it does: debugs ignore rules and attributes, tests hooks, and parses structured commit-message trailers.
 
 ## Developer-facing formats and protocols
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Understand bundle format | `gitformat-bundle` | `git help format-bundle` | Tooling around bundle files. | Documents Git bundle file format. | Documentation interface. |
-| Understand chunk format | `gitformat-chunk` | `git help format-chunk` | Implementing Git-compatible tooling. | Documents chunk-based file formats. | Developer-facing docs. |
-| Understand commit-graph format | `gitformat-commit-graph` | `git help format-commit-graph` | Tooling or diagnostics for commit graphs. | Documents commit-graph file format. | Developer-facing docs. |
-| Understand index format | `gitformat-index` | `git help format-index` | Tooling around the index. | Documents Git index file format. | Developer-facing docs. |
-| Understand pack format | `gitformat-pack` | `git help format-pack` | Packfile tooling or diagnostics. | Documents pack file format. | Developer-facing docs. |
-| Understand signature format | `gitformat-signature` | `git help format-signature` | Signature tooling. | Documents Git cryptographic signature formats. | Developer-facing docs. |
-| Understand protocol capabilities | `gitprotocol-capabilities` | `git help protocol-capabilities` | Server/client implementation. | Documents protocol v0 and v1 capabilities. | Developer-facing docs. |
-| Understand common protocol rules | `gitprotocol-common` | `git help protocol-common` | Protocol implementation. | Documents shared protocol concepts. | Developer-facing docs. |
-| Understand HTTP protocol | `gitprotocol-http` | `git help protocol-http` | Git HTTP server/client work. | Documents Git HTTP protocols. | Developer-facing docs. |
-| Understand pack protocol | `gitprotocol-pack` | `git help protocol-pack` | Transfer protocol implementation. | Documents pack transfer protocol. | Developer-facing docs. |
-| Understand protocol v2 | `gitprotocol-v2` | `git help protocol-v2` | Modern Git protocol implementation. | Documents Git wire protocol v2. | Developer-facing docs. |
+| Interface | Use | Notes |
+| --- | --- | --- |
+| `gitformat-bundle` | Bundle file format documentation. | Developer-facing docs. |
+| `gitformat-chunk` | Chunk-based file format documentation. | Developer-facing docs. |
+| `gitformat-commit-graph` | Commit-graph format documentation. | Developer-facing docs. |
+| `gitformat-index` | Index file format documentation. | Developer-facing docs. |
+| `gitformat-pack` | Pack file format documentation. | Developer-facing docs. |
+| `gitformat-signature` | Cryptographic signature format documentation. | Developer-facing docs. |
+| `gitprotocol-capabilities` | Protocol v0 and v1 capability docs. | Developer-facing docs. |
+| `gitprotocol-common` | Shared protocol concept docs. | Developer-facing docs. |
+| `gitprotocol-http` | Git HTTP protocol docs. | Developer-facing docs. |
+| `gitprotocol-pack` | Pack transfer protocol docs. | Developer-facing docs. |
+| `gitprotocol-v2` | Git wire protocol v2 docs. | Developer-facing docs. |
+
+### Developer documentation examples
+
+```bash
+git help format-pack
+git help protocol-v2
+```
+
+What it does: opens documentation for Git file formats and wire protocols used by Git-compatible tooling.
 
 ## Local external helpers shown by this workstation
 
-| Task | Command | Example | When to use it | What it does | Risk/notes |
-| --- | --- | --- | --- | --- | --- |
-| Prompt for passwords | `git askpass` | `git askpass` | Credential prompting internals. | External helper for credential prompts. | Usually invoked by Git or GUI tools. |
-| Prompt yes/no | `git askyesno` | `git askyesno` | Git for Windows helper prompts. | External helper for yes/no prompts. | Usually invoked by Git tooling. |
-| Select credential helper | `git credential-helper-selector` | `git credential-helper-selector` | Git for Windows credential setup. | Helps choose a credential manager. | Platform-specific external helper. |
-| Manage credentials | `git credential-manager` | `git credential-manager version` | Git Credential Manager operations. | Manages secure credential storage. | Prefer over plain-text credential storage. |
-| Manage large files | `git lfs` | `git lfs track "*.zip"` | Repositories using Git Large File Storage. | Handles large file pointers and LFS transfers. | Requires server/project LFS support. |
-| Update Git for Windows | `git update-git-for-windows` | `git update-git-for-windows` | Updating Git for Windows. | Launches Git for Windows updater. | Platform-specific external command. |
+| Command | Use | Notes |
+| --- | --- | --- |
+| `git askpass` | Prompt for passwords. | Usually invoked by Git or GUI tools. |
+| `git askyesno` | Prompt yes/no in Git for Windows. | Platform-specific helper. |
+| `git credential-helper-selector` | Select credential helper. | Git for Windows helper. |
+| `git credential-manager` | Manage secure credentials. | Prefer over plain-text credential storage. |
+| `git lfs` | Manage Git Large File Storage. | Requires project/server LFS support. |
+| `git update-git-for-windows` | Update Git for Windows. | Platform-specific external command. |
+
+### External helper examples
+
+```bash
+git credential-manager version
+git lfs track "*.zip"
+git update-git-for-windows
+```
+
+What it does: checks Git Credential Manager, configures Git LFS tracking, or launches the Git for Windows updater.
 
 ## Related links
 
