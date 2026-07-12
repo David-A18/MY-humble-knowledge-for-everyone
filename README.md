@@ -21,6 +21,7 @@ A practical, long-term engineering knowledge base for Git, GitHub Actions, Terra
 | Resource | Purpose |
 | --- | --- |
 | [Templates](templates/README.md) | Reusable Markdown templates for articles, commands, troubleshooting guides, ADRs, and examples. |
+| [AI agent context](context.md) | Operating map for AI agents, including routes, editing rules, and validation expectations. |
 | [Glossary](GLOSSARY.md) | Shared terms and acronyms used across the knowledge base. |
 | [Roadmap](ROADMAP.md) | Planned expansion areas and prioritization. |
 | [Contributing](CONTRIBUTING.md) | Writing standards, review checklist, and contribution flow. |
