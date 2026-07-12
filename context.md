@@ -143,6 +143,7 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/commands/common-commands.md](kubernetes/commands/common-commands.md) | Common `kubectl` command reference. | Apply, diff, rollout, scale, delete, selector, or output-format guidance changes. |
 | [kubernetes/commands/advanced-commands.md](kubernetes/commands/advanced-commands.md) | Advanced `kubectl` command reference. | JSONPath, dry-run, server-side apply, debug, node maintenance, or authorization guidance changes. |
 | [kubernetes/commands/workflows.md](kubernetes/commands/workflows.md) | Kubernetes operational command workflows. | Deployment, rollback, service debugging, or resource-pressure workflows change. |
+| [kubernetes/commands/eksctl-commands.md](kubernetes/commands/eksctl-commands.md) | AWS-native `eksctl` command reference for EKS. | EKS cluster, node group, add-on, access, Pod Identity, Fargate, endpoint, logging, or upgrade commands change. |
 | [kubernetes/commands/kubectl-basics.md](kubernetes/commands/kubectl-basics.md) | Basic `kubectl` commands. | Common inspection commands change. |
 | [kubernetes/applications-and-tools/README.md](kubernetes/applications-and-tools/README.md) | Tooling index. | Helm, Kustomize, controller, or GitOps notes are added. |
 | [kubernetes/troubleshooting/README.md](kubernetes/troubleshooting/README.md) | Troubleshooting index. | Kubernetes diagnostic guides are added. |

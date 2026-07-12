@@ -10,6 +10,7 @@ Command references for `kubectl` and day-to-day cluster inspection.
 | [Common commands](common-commands.md) | Apply, diff, rollout, scale, delete, selectors, and output formatting. |
 | [Advanced commands](advanced-commands.md) | JSONPath, API discovery, dry runs, server-side apply, debug, node maintenance, and auth checks. |
 | [Workflows](workflows.md) | Command sequences for deployments, rollback, service debugging, and resource pressure checks. |
+| [eksctl commands for Amazon EKS](eksctl-commands.md) | AWS-native EKS commands for clusters, node groups, add-ons, IAM access, Pod Identity, Fargate, and logging. |
 | [kubectl basics](kubectl-basics.md) | Common commands for inspecting workloads and cluster resources. |
 
 ## Official documentation
@@ -17,6 +18,7 @@ Command references for `kubectl` and day-to-day cluster inspection.
 - [kubectl quick reference](https://kubernetes.io/docs/reference/kubectl/quick-reference/)
 - [kubectl reference](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 - [kubectl command overview](https://kubernetes.io/docs/reference/kubectl/)
+- [eksctl user guide](https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html)
 
 ## Related links
 

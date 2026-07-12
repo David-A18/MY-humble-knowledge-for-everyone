@@ -115,6 +115,15 @@ kubectl get events -A --sort-by=.lastTimestamp
 
 What it does: confirms identity and context, checks cluster reachability, lists nodes, finds non-running pods, and reviews recent cluster events.
 
+## eksctl command reference
+
+Use `eksctl` when the operation changes AWS/EKS infrastructure rather than normal Kubernetes objects.
+
+| Need | Reference |
+| --- | --- |
+| Cluster and node group lifecycle | [eksctl commands for Amazon EKS](../kubernetes/commands/eksctl-commands.md) |
+| Kubernetes object inspection and rollout workflows | [Kubernetes command workflows](../kubernetes/commands/workflows.md) |
+
 ## Official documentation
 
 - [Amazon EKS kubeconfig](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
@@ -123,11 +132,13 @@ What it does: confirms identity and context, checks cluster reachability, lists 
 - [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html)
 - [Amazon EKS add-ons](https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html)
 - [Amazon EKS Best Practices Guide](https://docs.aws.amazon.com/eks/latest/best-practices/introduction.html)
+- [eksctl user guide](https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html)
 
 ## Related links
 
 - [Kubernetes on AWS](kubernetes-on-aws.md)
 - [Deploying to EKS](deploying-to-eks.md)
+- [eksctl commands for Amazon EKS](../kubernetes/commands/eksctl-commands.md)
 - [Kubernetes commands](../kubernetes/commands/README.md)
 - [AWS index](../aws/README.md)
 - [Back to cross-topic guides](README.md)
