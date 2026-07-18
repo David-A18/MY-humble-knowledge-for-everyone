@@ -22,7 +22,7 @@ Use these values when present, but verify them against the actual content.
 
 | Field | Accepted values |
 | --- | --- |
-| `principal_topic` | `cloud`, `kubernetes`, `git`, `security`, `finops`, `devops`, `programming-languages`, `mlops`, `ai`, `ai-agents`, `llm`, `ml`, `solutions-architect` |
+| `principal_topic` | `cloud`, `databases`, `kubernetes`, `git`, `security`, `finops`, `devops`, `programming-languages`, `mlops`, `ai`, `ai-agents`, `llm`, `ml`, `solutions-architect` |
 | `provider` | `aws`, `azure`, `gcloud` for provider-specific cloud content |
 | `target_section` | Relative path to the preferred destination section or article |
 
@@ -34,6 +34,7 @@ Use these values when present, but verify them against the actual content.
 | Azure-specific cloud content | [cloud/azure](../cloud/azure/README.md) |
 | Google Cloud content | [cloud/gcloud](../cloud/gcloud/README.md) |
 | Provider-neutral cloud content | [cloud](../cloud/README.md) |
+| Database and data-platform content | [databases](../databases/README.md) |
 | Kubernetes content | [kubernetes](../kubernetes/README.md) |
 | Git content | [git](../git/README.md) |
 | Security content | [security](../security/README.md) |

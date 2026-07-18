@@ -26,3 +26,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a cloud provider hierarchy, moved AWS documentation under `cloud/aws`, and added initial Azure and Google Cloud indexes.
 - Added initial topic indexes for security, FinOps, DevOps, programming languages, MLOps, AI, AI agents, LLM, ML, and solutions architect content.
 - Added ADR-0002 for source ingestion and expanded topic taxonomy.
+- Ingested raw source guides into curated articles for CDN and edge delivery, APISIX, Kafka, stateful AWS design, Crossplane, GitOps, MongoDB, OIDC, EKS workload identity, tooling clusters, `kind`, and CRDs.
+- Added a top-level databases section for Kafka, MongoDB, and database model decision guidance.

@@ -12,6 +12,12 @@ Status: Initial outline
 | [Azure](azure/README.md) | Azure services, identity, networking, operations, cost, governance, and architecture notes. |
 | [Google Cloud](gcloud/README.md) | Google Cloud services, identity, networking, operations, cost, governance, and architecture notes. |
 
+## Shared cloud areas
+
+| Area | Use it for |
+| --- | --- |
+| [Edge and CDN](edge/README.md) | CDN, edge routing, cache behavior, origin protection, and multi-CDN guidance. |
+
 ## Provider-neutral topics
 
 - Cloud operating models.

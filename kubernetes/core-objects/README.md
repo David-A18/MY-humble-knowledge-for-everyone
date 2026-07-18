@@ -4,6 +4,13 @@ Status: Initial outline
 
 Focused notes for the Kubernetes objects used most often in application operations.
 
+## Articles
+
+| Article | Purpose |
+| --- | --- |
+| [Stateful workloads](stateful-workloads.md) | Understand StatefulSets, PVCs, StorageClasses, and stateful design. |
+| [Custom resources and CRDs](custom-resources-and-crds.md) | Understand Kubernetes API extensions, CRDs, and operators. |
+
 ## Expected content
 
 - Pods and deployments.

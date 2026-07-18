@@ -7,6 +7,8 @@
     "**/*.md"
   ],
   "ignores": [
-    ".git"
+    ".git",
+    "sources/incoming/**/*.md",
+    "sources/processed/**/*.md"
   ]
 }

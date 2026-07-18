@@ -54,6 +54,7 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | [Kubernetes commands](kubernetes/commands/README.md) | [kubernetes/commands/README.md](kubernetes/commands/README.md) | Daily `kubectl`, common commands, advanced commands, operational sequences, `eksctl`, and basics. |
 | [Cloud](cloud/README.md) | [cloud/README.md](cloud/README.md) | Provider-neutral cloud guidance and provider sections for AWS, Azure, and Google Cloud. |
 | [AWS](cloud/aws/README.md) | [cloud/aws/README.md](cloud/aws/README.md) | AWS fundamentals, networking, compute, storage, databases, security, governance, FinOps, architecture, and troubleshooting. |
+| [Databases](databases/README.md) | [databases/README.md](databases/README.md) | Database modeling, Kafka, MongoDB, operations, and cloud data-platform choices. |
 | [Security](security/README.md) | [security/README.md](security/README.md) | Security across cloud, identity, applications, supply chain, and operations. |
 | [FinOps](finops/README.md) | [finops/README.md](finops/README.md) | Cost visibility, allocation, optimization, budgets, and accountability. |
 | [DevOps](devops/README.md) | [devops/README.md](devops/README.md) | Delivery workflows, automation, reliability practices, and platform operations. |
@@ -96,6 +97,7 @@ Use [sources/AGENTS.md](sources/AGENTS.md) when converting raw `.md` notes from 
 - Classify each source by `principal_topic`, `provider`, and `target_section` when metadata is present.
 - Infer missing metadata from the raw content and verify the destination against existing indexes.
 - Route AWS, Azure, and Google Cloud material through [cloud](cloud/README.md).
+- Route general Kafka, MongoDB, and database material through [databases](databases/README.md).
 - Route multi-technology workflows to [cross-topic guides](cross-topic-guides/README.md).
 - Move successfully ingested raw files to [sources/processed](sources/processed/README.md).
 

@@ -4,6 +4,12 @@ Security knowledge across cloud, platforms, applications, identity, supply chain
 
 Status: Initial outline
 
+## Articles
+
+| Article | Purpose |
+| --- | --- |
+| [Identity federation](identity-federation/README.md) | OIDC, external identity providers, token trust, and cloud access patterns. |
+
 ## Expected content
 
 - Identity and access patterns.

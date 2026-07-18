@@ -9,6 +9,8 @@ VPC, routing, connectivity, and traffic-control notes.
 | Article | Purpose |
 | --- | --- |
 | [Security groups](security-groups.md) | Understand security group behavior and troubleshooting checks. |
+| [CloudFront](cloudfront.md) | Design CloudFront distributions, origins, cache behavior, and EKS edge paths. |
+| [Stateful networking](stateful-networking.md) | Compare stateful and stateless AWS network controls. |
 
 ## Expected future content
 

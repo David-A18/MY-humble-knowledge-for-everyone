@@ -4,6 +4,12 @@ Status: Initial outline
 
 Architecture guidance, reference patterns, and design trade-offs for AWS workloads.
 
+## Articles
+
+| Article | Purpose |
+| --- | --- |
+| [Stateful vs. stateless](stateful-vs-stateless.md) | Classify AWS components by where state lives and how that affects operations. |
+
 ## Expected content
 
 - Well-Architected review notes.

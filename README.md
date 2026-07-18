@@ -14,6 +14,7 @@ A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions
 | [Kubernetes](kubernetes/README.md) | Cluster objects, kubectl workflows, application tooling, troubleshooting, and operational practices. |
 | [Cloud](cloud/README.md) | Provider-neutral cloud guidance and provider sections for AWS, Azure, and Google Cloud. |
 | [AWS](cloud/aws/README.md) | AWS fundamentals, networking, compute, storage, security, FinOps, architecture, and certification notes. |
+| [Databases](databases/README.md) | Database modeling, Kafka, MongoDB, operations, and cloud data-platform choices. |
 | [Security](security/README.md) | Security guidance across cloud, identity, applications, supply chain, and operations. |
 | [FinOps](finops/README.md) | Cost visibility, allocation, optimization, budgets, and financial accountability. |
 | [DevOps](devops/README.md) | Delivery workflows, automation, reliability practices, and platform operations. |

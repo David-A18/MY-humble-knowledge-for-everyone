@@ -13,6 +13,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | [Examples and use cases](examples-and-use-cases.md) | CI, matrix testing, manual deploys, Docker publishing, Terraform checks, AWS OIDC, and scheduled jobs. |
 | [Common solutions](common-solutions.md) | Fixes for trigger, checkout, token, secret, OIDC, cache, matrix, concurrency, and debugging problems. |
 | [Security, secrets, and permissions](security-secrets-and-permissions.md) | Least-privilege tokens, secrets, variables, environments, OIDC, action pinning, and pull request safety. |
+| [AWS OIDC federation](aws-oidc-federation.md) | Authenticate GitHub Actions to AWS with OIDC and temporary credentials. |
 
 ## Recommended learning path
 

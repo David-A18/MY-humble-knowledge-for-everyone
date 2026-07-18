@@ -4,6 +4,12 @@ Status: Initial outline
 
 Security practices, detection, encryption, and operational controls on AWS.
 
+## Articles
+
+| Article | Purpose |
+| --- | --- |
+| [IAM OIDC provider and STS web identity](iam-oidc-provider-and-sts-web-identity.md) | Understand AWS trust for external OIDC tokens and temporary credentials. |
+
 ## Expected content
 
 - Encryption at rest and in transit.
