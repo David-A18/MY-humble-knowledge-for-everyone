@@ -35,6 +35,7 @@ Common terms used across the knowledge base.
 | MSK | Amazon Managed Streaming for Apache Kafka; AWS managed service for Kafka-compatible streaming workloads. |
 | MTTR | Mean Time To Recovery; a reliability metric for how quickly service is restored after failure. |
 | OIDC | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
+| Platform API | Stable internal API exposed by a platform team to hide implementation details behind a product-like request shape. |
 | ProviderConfig | Crossplane provider configuration scoped to a namespace. |
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
 | RTO | Recovery Time Objective; acceptable time to restore service after an outage. |

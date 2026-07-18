@@ -291,6 +291,7 @@ GitOps promotion
 - [Crossplane](README.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
+- [Crossplane references](references.md)
 - [Crossplane composition documentation](https://docs.crossplane.io/latest/composition/compositions/)
 - [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
 - [Crossplane CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/)

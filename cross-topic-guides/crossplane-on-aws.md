@@ -6,6 +6,8 @@ Use this guide to run Crossplane in Kubernetes while managing AWS resources with
 
 Core Crossplane concepts belong in [Crossplane](../kubernetes/crossplane/README.md). This page focuses on AWS-specific decisions.
 
+For the install-to-resource-management procedure, use [Crossplane AWS resource workflow](../kubernetes/crossplane/aws-resource-workflow.md).
+
 ## Architecture
 
 | Component | Responsibility |
@@ -241,11 +243,14 @@ For stuck deletions, check AWS deletion protection, dependencies, non-empty buck
 ## Related links
 
 - [Crossplane](../kubernetes/crossplane/README.md)
+- [Crossplane AWS resource workflow](../kubernetes/crossplane/aws-resource-workflow.md)
+- [Crossplane professional operating model](../kubernetes/crossplane/professional-operating-model.md)
 - [Providers and authentication](../kubernetes/crossplane/providers-and-authentication.md)
 - [Managed resources and lifecycle](../kubernetes/crossplane/managed-resources-and-lifecycle.md)
 - [Crossplane compositions](../kubernetes/crossplane/compositions.md)
 - [Production, GitOps, and operations](../kubernetes/crossplane/production-gitops-and-operations.md)
 - [Crossplane troubleshooting](../kubernetes/crossplane/troubleshooting.md)
+- [Crossplane references](../kubernetes/crossplane/references.md)
 - [Crossplane providers documentation](https://docs.crossplane.io/latest/packages/providers/)
 - [AWS EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html)
 - [AWS IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)

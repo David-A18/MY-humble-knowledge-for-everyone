@@ -208,6 +208,7 @@ Use another workflow engine when:
 - [Crossplane compositions](compositions.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane troubleshooting](troubleshooting.md)
+- [Crossplane references](references.md)
 - [Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/)
 - [Crossplane metrics](https://docs.crossplane.io/latest/guides/metrics/)
 - [Crossplane operations](https://docs.crossplane.io/latest/operations/operation/)

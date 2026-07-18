@@ -150,19 +150,25 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
+| [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
+| [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
 | [Production, GitOps, and operations](production-gitops-and-operations.md) | Run Crossplane with GitOps, package promotion, observability, backups, upgrades, and operational workflows. |
 | [Troubleshooting](troubleshooting.md) | Diagnose providers, compositions, managed resources, auth failures, leaked resources, and deletion issues. |
+| [References](references.md) | Official and supporting references used for the Crossplane section. |
 
 ## Related links
 
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane compositions](compositions.md)
+- [Professional operating model](professional-operating-model.md)
+- [AWS resource workflow](aws-resource-workflow.md)
 - [Local AWS S3 lab](local-aws-s3-lab.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Crossplane troubleshooting](troubleshooting.md)
+- [Crossplane references](references.md)
 - [Crossplane v2 overview](https://docs.crossplane.io/latest/whats-new/)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
 - [Back to Kubernetes index](../README.md)

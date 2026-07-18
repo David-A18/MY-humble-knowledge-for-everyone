@@ -246,6 +246,7 @@ Common deletion blockers:
 - [Crossplane](README.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane troubleshooting](troubleshooting.md)
+- [Crossplane references](references.md)
 - [Managed resources documentation](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
 - [Back to Kubernetes index](../README.md)
 - [Back to root index](../../README.md)
