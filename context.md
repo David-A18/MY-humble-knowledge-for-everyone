@@ -5,11 +5,13 @@ This file is the operating map for AI agents working in `engineering-knowledge-b
 > [!IMPORTANT]
 > Keep this file updated whenever files, directories, templates, workflows, or navigation rules change.
 >
+> Start with [AGENTS.md](AGENTS.md) when an AI agent needs an explicit routing and deployment workflow.
+>
 > Read [instructions.md](instructions.md) before creating or refactoring documentation. It defines the standard page structure, table style, example placement, risk notes, and validation expectations for AI agents.
 
 ## Repository intent
 
-`engineering-knowledge-base` is a long-term personal knowledge base for practical engineering knowledge across Git, GitHub Actions, Terraform, Kubernetes, AWS, FinOps, cloud architecture, troubleshooting, and engineering best practices.
+`engineering-knowledge-base` is a long-term personal knowledge base for practical engineering knowledge across cloud, Git, GitHub Actions, Terraform, Kubernetes, security, FinOps, DevOps, programming languages, MLOps, AI, LLMs, ML, solutions architecture, troubleshooting, and engineering best practices.
 
 The repository is documentation-first. Changes should improve navigation, accuracy, maintainability, or practical usefulness.
 
@@ -18,7 +20,7 @@ The repository is documentation-first. Changes should improve navigation, accura
 Readers should be able to follow this route:
 
 1. Start at [README.md](README.md).
-2. Choose a major area such as [Git](git/README.md), [Terraform](terraform/README.md), [Kubernetes](kubernetes/README.md), [AWS](aws/README.md), or [Cross-topic guides](cross-topic-guides/README.md).
+2. Choose a major area such as [Cloud](cloud/README.md), [Git](git/README.md), [Terraform](terraform/README.md), [Kubernetes](kubernetes/README.md), [Security](security/README.md), [AI](ai/README.md), or [Cross-topic guides](cross-topic-guides/README.md).
 3. Open a subcategory `README.md`.
 4. Open a focused article.
 5. Use the article's bottom links to return to the parent index and root index.
@@ -46,6 +48,7 @@ When adding or moving content, update every affected index immediately.
 | Need | Edit here |
 | --- | --- |
 | Change the public landing page or top-level navigation | [README.md](README.md) |
+| Change AI agent routing or deployment workflow | [AGENTS.md](AGENTS.md) |
 | Change contribution standards | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Change AI documentation structure standards | [instructions.md](instructions.md) |
 | Record notable repository changes | [CHANGELOG.md](CHANGELOG.md) |
@@ -54,6 +57,7 @@ When adding or moving content, update every affected index immediately.
 | Add reusable article structures | [templates](templates/README.md) |
 | Add architecture or repository decisions | [decision-records](decision-records/README.md) |
 | Add images, diagrams, or icons | [assets](assets/README.md) |
+| Add raw Markdown notes for later ingestion | [sources](sources/README.md) |
 | Change GitHub metadata or validation workflows | [.github](.github/PULL_REQUEST_TEMPLATE.md) |
 
 ## Route map
@@ -63,6 +67,7 @@ When adding or moving content, update every affected index immediately.
 | File | Purpose | Edit when |
 | --- | --- | --- |
 | [README.md](README.md) | Human entry point and top-level navigation. | A major area, resource, or navigation pattern changes. |
+| [AGENTS.md](AGENTS.md) | AI agent router for choosing routes, templates, validation, and deployment steps. | Agent execution workflow, routing rules, or documentation improvement process changes. |
 | [context.md](context.md) | AI agent operating map. | Routes, conventions, or repository automation change. |
 | [instructions.md](instructions.md) | AI documentation structure and readability standard. | Documentation layout, table, example, risk-note, or validation standards change. |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution and documentation standards. | Review expectations or writing standards change. |
@@ -70,6 +75,16 @@ When adding or moving content, update every affected index immediately.
 | [ROADMAP.md](ROADMAP.md) | Planned future work. | Priorities or planned topic areas change. |
 | [GLOSSARY.md](GLOSSARY.md) | Shared terms and acronyms. | New important terminology appears in articles. |
 | [LICENSE](LICENSE) | Repository license. | License ownership or terms intentionally change. |
+
+### Sources
+
+| Route | Purpose | Edit when |
+| --- | --- | --- |
+| [sources/README.md](sources/README.md) | Raw Markdown source intake index. | Source intake folders or ingestion rules change. |
+| [sources/AGENTS.md](sources/AGENTS.md) | Agent workflow for ingesting raw Markdown source files. | Classification, ingestion, archive, or validation behavior changes. |
+| [sources/raw-topic-template.md](sources/raw-topic-template.md) | Optional metadata starter for raw topic notes. | Raw source metadata fields change. |
+| [sources/incoming/README.md](sources/incoming/README.md) | Drop zone for raw `.md` files waiting for ingestion. | Incoming source rules change. |
+| [sources/processed/README.md](sources/processed/README.md) | Archive for raw files already converted into curated docs. | Processed source archive rules change. |
 
 ### Assets
 
@@ -153,24 +168,42 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/tricks/README.md](kubernetes/tricks/README.md) | Productivity notes. | Small Kubernetes techniques are added. |
 | [kubernetes/examples/README.md](kubernetes/examples/README.md) | Examples index. | Practical manifests or walkthroughs are added. |
 
-### AWS
+### Cloud
 
 | Route | Purpose | Edit when |
 | --- | --- | --- |
-| [aws/README.md](aws/README.md) | AWS area index. | AWS subcategories or major articles change. |
-| [aws/fundamentals/README.md](aws/fundamentals/README.md) | Fundamentals index. | Core AWS concept pages are added. |
-| [aws/networking/README.md](aws/networking/README.md) | Networking index. | VPC, routing, or connectivity guides are added. |
-| [aws/networking/security-groups.md](aws/networking/security-groups.md) | Security groups guide. | Security group behavior or troubleshooting guidance changes. |
-| [aws/compute/README.md](aws/compute/README.md) | Compute index. | EC2, scaling, containers, or serverless notes are added. |
-| [aws/storage/README.md](aws/storage/README.md) | Storage index. | S3, EBS, EFS, backup, or lifecycle notes are added. |
-| [aws/databases/README.md](aws/databases/README.md) | Databases index. | RDS, DynamoDB, cache, or data notes are added. |
-| [aws/security/README.md](aws/security/README.md) | Security index. | Encryption, detection, or incident notes are added. |
-| [aws/governance-and-access/README.md](aws/governance-and-access/README.md) | Governance and access index. | IAM, Organizations, SCP, or account guidance changes. |
-| [aws/finops/README.md](aws/finops/README.md) | FinOps index. | Cost management guides are added. |
-| [aws/finops/cost-allocation-tags.md](aws/finops/cost-allocation-tags.md) | Cost allocation tag guide. | Tagging standards or reporting guidance changes. |
-| [aws/architecture/README.md](aws/architecture/README.md) | Architecture index. | Reference architecture or design review notes are added. |
-| [aws/troubleshooting/README.md](aws/troubleshooting/README.md) | AWS troubleshooting index. | AWS diagnostic runbooks are added. |
-| [aws/solutions-architect/README.md](aws/solutions-architect/README.md) | Solutions architect notes. | Certification or architecture review notes are added. |
+| [cloud/README.md](cloud/README.md) | Cloud provider and provider-neutral index. | Cloud provider routes or provider-neutral cloud topics change. |
+| [cloud/aws/README.md](cloud/aws/README.md) | AWS area index. | AWS subcategories or major articles change. |
+| [cloud/aws/fundamentals/README.md](cloud/aws/fundamentals/README.md) | Fundamentals index. | Core AWS concept pages are added. |
+| [cloud/aws/networking/README.md](cloud/aws/networking/README.md) | Networking index. | VPC, routing, or connectivity guides are added. |
+| [cloud/aws/networking/security-groups.md](cloud/aws/networking/security-groups.md) | Security groups guide. | Security group behavior or troubleshooting guidance changes. |
+| [cloud/aws/compute/README.md](cloud/aws/compute/README.md) | Compute index. | EC2, scaling, containers, or serverless notes are added. |
+| [cloud/aws/storage/README.md](cloud/aws/storage/README.md) | Storage index. | S3, EBS, EFS, backup, or lifecycle notes are added. |
+| [cloud/aws/databases/README.md](cloud/aws/databases/README.md) | Databases index. | RDS, DynamoDB, cache, or data notes are added. |
+| [cloud/aws/security/README.md](cloud/aws/security/README.md) | Security index. | Encryption, detection, or incident notes are added. |
+| [cloud/aws/governance-and-access/README.md](cloud/aws/governance-and-access/README.md) | Governance and access index. | IAM, Organizations, SCP, or account guidance changes. |
+| [cloud/aws/finops/README.md](cloud/aws/finops/README.md) | FinOps index. | Cost management guides are added. |
+| [cloud/aws/finops/cost-allocation-tags.md](cloud/aws/finops/cost-allocation-tags.md) | Cost allocation tag guide. | Tagging standards or reporting guidance changes. |
+| [cloud/aws/architecture/README.md](cloud/aws/architecture/README.md) | Architecture index. | Reference architecture or design review notes are added. |
+| [cloud/aws/troubleshooting/README.md](cloud/aws/troubleshooting/README.md) | AWS troubleshooting index. | AWS diagnostic runbooks are added. |
+| [cloud/aws/solutions-architect/README.md](cloud/aws/solutions-architect/README.md) | Solutions architect notes. | Certification or architecture review notes are added. |
+| [cloud/azure/README.md](cloud/azure/README.md) | Azure area index. | Azure service, architecture, governance, or operations notes are added. |
+| [cloud/gcloud/README.md](cloud/gcloud/README.md) | Google Cloud area index. | Google Cloud service, architecture, governance, or operations notes are added. |
+
+### Principal topic indexes
+
+| Route | Purpose | Edit when |
+| --- | --- | --- |
+| [security/README.md](security/README.md) | Security index. | Cross-platform security content is added. |
+| [finops/README.md](finops/README.md) | FinOps index. | Provider-neutral cost-management content is added. |
+| [devops/README.md](devops/README.md) | DevOps index. | Delivery, automation, platform, or operations content is added. |
+| [programming-languages/README.md](programming-languages/README.md) | Programming languages index. | Language-specific notes or examples are added. |
+| [mlops/README.md](mlops/README.md) | MLOps index. | ML operations, deployment, monitoring, or governance content is added. |
+| [ai/README.md](ai/README.md) | AI index. | General AI system, workflow, or safety content is added. |
+| [ai-agents/README.md](ai-agents/README.md) | AI agents index. | Agent workflow, routing, tool-use, or evaluation content is added. |
+| [llm/README.md](llm/README.md) | LLM index. | LLM prompting, retrieval, evaluation, deployment, or operations content is added. |
+| [ml/README.md](ml/README.md) | ML index. | Machine learning concepts, datasets, training, or evaluation content is added. |
+| [solutions-architect/README.md](solutions-architect/README.md) | Solutions architect index. | Architecture trade-off, review, or study content is added. |
 
 ### Cross-topic guides
 
@@ -192,6 +225,7 @@ When adding or moving content, update every affected index immediately.
 | --- | --- | --- |
 | [decision-records/README.md](decision-records/README.md) | ADR index. | ADRs are added, renamed, or superseded. |
 | [decision-records/ADR-0001-knowledge-base-structure.md](decision-records/ADR-0001-knowledge-base-structure.md) | Initial structure decision. | Only edit to correct history or add clearly marked amendments. |
+| [decision-records/ADR-0002-source-ingestion-and-topic-taxonomy.md](decision-records/ADR-0002-source-ingestion-and-topic-taxonomy.md) | Source ingestion and expanded topic taxonomy decision. | Only edit to correct history or add clearly marked amendments. |
 
 ### GitHub metadata and workflows
 
@@ -229,6 +263,14 @@ When adding or moving content, update every affected index immediately.
 5. Update [README.md](README.md) if it is a new top-level area or resource.
 6. Validate internal links before committing.
 
+## How to ingest raw source files
+
+1. Place raw `.md` files in [sources/incoming](sources/incoming/README.md).
+2. Follow [sources/AGENTS.md](sources/AGENTS.md) to classify each source by topic, provider, and destination.
+3. Convert the raw material into the closest existing article or a new focused article.
+4. Update parent indexes, related links, [GLOSSARY.md](GLOSSARY.md), and [CHANGELOG.md](CHANGELOG.md) when needed.
+5. Move processed raw files to [sources/processed](sources/processed/README.md).
+
 ## How to modify existing files
 
 - Keep edits scoped to the page's purpose.
@@ -248,7 +290,9 @@ When adding or moving content, update every affected index immediately.
 - [ ] Internal links are relative and resolve locally.
 - [ ] Markdown lint passes when tooling is available.
 - [ ] [CHANGELOG.md](CHANGELOG.md) is updated for meaningful changes.
+- [ ] [AGENTS.md](AGENTS.md) is updated when routing or deployment workflow changes.
 - [ ] [context.md](context.md) is updated when routes or conventions change.
+- [ ] Processed raw source files are archived under [sources/processed](sources/processed/README.md).
 - [ ] Completed work is committed and pushed after successful validation, unless explicitly blocked.
 
 [Back to root index](README.md)

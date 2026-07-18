@@ -140,6 +140,6 @@ Use `eksctl` when the operation changes AWS/EKS infrastructure rather than norma
 - [Deploying to EKS](deploying-to-eks.md)
 - [eksctl commands for Amazon EKS](../kubernetes/commands/eksctl-commands.md)
 - [Kubernetes commands](../kubernetes/commands/README.md)
-- [AWS index](../aws/README.md)
+- [AWS index](../cloud/aws/README.md)
 - [Back to cross-topic guides](README.md)
 - [Back to root index](../README.md)

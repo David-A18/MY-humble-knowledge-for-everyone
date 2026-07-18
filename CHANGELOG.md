@@ -21,3 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Expanded Kubernetes and EKS documentation with daily `kubectl` commands, common and advanced command references, operational workflows, troubleshooting solutions, tricks, best practices, EKS operations, and AWS-focused deployment guidance.
 - Added an agent instruction to commit and push completed documentation work after successful validation.
 - Added an `eksctl` command reference for AWS-native EKS cluster, node group, add-on, access, Pod Identity, Fargate, networking, logging, and upgrade operations.
+- Added an AI agent router with route selection, template choice, improvement workflow, link rules, validation, and deployment guidance.
+- Added a raw Markdown source intake area with incoming and processed folders, ingestion instructions, and a raw topic template.
+- Added a cloud provider hierarchy, moved AWS documentation under `cloud/aws`, and added initial Azure and Google Cloud indexes.
+- Added initial topic indexes for security, FinOps, DevOps, programming languages, MLOps, AI, AI agents, LLM, ML, and solutions architect content.
+- Added ADR-0002 for source ingestion and expanded topic taxonomy.

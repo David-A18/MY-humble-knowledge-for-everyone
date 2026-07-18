@@ -29,6 +29,6 @@ Map a complete delivery path from source control to running cloud infrastructure
 - [Git index](../git/README.md)
 - [Terraform index](../terraform/README.md)
 - [Kubernetes index](../kubernetes/README.md)
-- [AWS index](../aws/README.md)
+- [AWS index](../cloud/aws/README.md)
 - [Back to cross-topic guides](README.md)
 - [Back to root index](../README.md)
