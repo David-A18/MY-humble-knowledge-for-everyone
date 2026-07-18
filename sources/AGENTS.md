@@ -36,6 +36,7 @@ Use these values when present, but verify them against the actual content.
 | Provider-neutral cloud content | [cloud](../cloud/README.md) |
 | Database and data-platform content | [databases](../databases/README.md) |
 | Kubernetes content | [kubernetes](../kubernetes/README.md) |
+| Crossplane content | [kubernetes/crossplane](../kubernetes/crossplane/README.md) |
 | Git content | [git](../git/README.md) |
 | Security content | [security](../security/README.md) |
 | FinOps content | [finops](../finops/README.md) |

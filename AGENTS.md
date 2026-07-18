@@ -52,6 +52,7 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | [Terraform](terraform/README.md) | [terraform/README.md](terraform/README.md) | Terraform fundamentals, state, command workflow, language, project structure, troubleshooting, best practices, and examples. |
 | [Kubernetes](kubernetes/README.md) | [kubernetes/README.md](kubernetes/README.md) | Kubernetes concepts, objects, `kubectl`, operational workflows, troubleshooting, best practices, tricks, and examples. |
 | [Kubernetes commands](kubernetes/commands/README.md) | [kubernetes/commands/README.md](kubernetes/commands/README.md) | Daily `kubectl`, common commands, advanced commands, operational sequences, `eksctl`, and basics. |
+| [Kubernetes Crossplane](kubernetes/crossplane/README.md) | [kubernetes/crossplane/README.md](kubernetes/crossplane/README.md) | Crossplane concepts, compositions, providers, managed resources, and troubleshooting. |
 | [Cloud](cloud/README.md) | [cloud/README.md](cloud/README.md) | Provider-neutral cloud guidance and provider sections for AWS, Azure, and Google Cloud. |
 | [AWS](cloud/aws/README.md) | [cloud/aws/README.md](cloud/aws/README.md) | AWS fundamentals, networking, compute, storage, databases, security, governance, FinOps, architecture, and troubleshooting. |
 | [Databases](databases/README.md) | [databases/README.md](databases/README.md) | Database modeling, Kafka, MongoDB, operations, and cloud data-platform choices. |
@@ -97,6 +98,7 @@ Use [sources/AGENTS.md](sources/AGENTS.md) when converting raw `.md` notes from 
 - Classify each source by `principal_topic`, `provider`, and `target_section` when metadata is present.
 - Infer missing metadata from the raw content and verify the destination against existing indexes.
 - Route AWS, Azure, and Google Cloud material through [cloud](cloud/README.md).
+- Route Crossplane material through [Kubernetes Crossplane](kubernetes/crossplane/README.md), unless it is a multi-technology provider workflow that belongs in [cross-topic guides](cross-topic-guides/README.md).
 - Route general Kafka, MongoDB, and database material through [databases](databases/README.md).
 - Route multi-technology workflows to [cross-topic guides](cross-topic-guides/README.md).
 - Move successfully ingested raw files to [sources/processed](sources/processed/README.md).

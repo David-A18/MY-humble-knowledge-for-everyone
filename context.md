@@ -163,11 +163,12 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/commands/workflows.md](kubernetes/commands/workflows.md) | Kubernetes operational command workflows. | Deployment, rollback, service debugging, or resource-pressure workflows change. |
 | [kubernetes/commands/eksctl-commands.md](kubernetes/commands/eksctl-commands.md) | AWS-native `eksctl` command reference for EKS. | EKS cluster, node group, add-on, access, Pod Identity, Fargate, endpoint, logging, or upgrade commands change. |
 | [kubernetes/commands/kubectl-basics.md](kubernetes/commands/kubectl-basics.md) | Basic `kubectl` commands. | Common inspection commands change. |
+| [kubernetes/crossplane/README.md](kubernetes/crossplane/README.md) | Crossplane concept guide and section index. | Crossplane core guidance or section navigation changes. |
+| [kubernetes/crossplane/compositions.md](kubernetes/crossplane/compositions.md) | Crossplane composition design. | Composition or platform API guidance changes. |
+| [kubernetes/crossplane/troubleshooting.md](kubernetes/crossplane/troubleshooting.md) | Crossplane troubleshooting guide. | Crossplane diagnostic guidance changes. |
 | [kubernetes/applications-and-tools/README.md](kubernetes/applications-and-tools/README.md) | Tooling index. | Helm, Kustomize, controller, or GitOps notes are added. |
 | [kubernetes/applications-and-tools/apache-apisix.md](kubernetes/applications-and-tools/apache-apisix.md) | Apache APISIX gateway guidance. | APISIX concepts or Kubernetes gateway guidance changes. |
 | [kubernetes/applications-and-tools/gateway-api-and-ingress.md](kubernetes/applications-and-tools/gateway-api-and-ingress.md) | Gateway API and Ingress comparison. | Kubernetes traffic API guidance changes. |
-| [kubernetes/applications-and-tools/crossplane.md](kubernetes/applications-and-tools/crossplane.md) | Crossplane concept guide. | Crossplane core guidance changes. |
-| [kubernetes/applications-and-tools/crossplane-compositions.md](kubernetes/applications-and-tools/crossplane-compositions.md) | Crossplane composition design. | Composition or platform API guidance changes. |
 | [kubernetes/applications-and-tools/gitops.md](kubernetes/applications-and-tools/gitops.md) | GitOps operating model. | GitOps reconciliation guidance changes. |
 | [kubernetes/applications-and-tools/argo-cd-vs-flux.md](kubernetes/applications-and-tools/argo-cd-vs-flux.md) | Argo CD and Flux comparison. | GitOps controller comparison changes. |
 | [kubernetes/applications-and-tools/flux.md](kubernetes/applications-and-tools/flux.md) | Flux controller and repository guidance. | Flux guidance changes. |
@@ -177,7 +178,6 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/troubleshooting/crashloopbackoff.md](kubernetes/troubleshooting/crashloopbackoff.md) | CrashLoopBackOff guide. | Pod restart diagnostics change. |
 | [kubernetes/troubleshooting/common-solutions.md](kubernetes/troubleshooting/common-solutions.md) | Common Kubernetes troubleshooting solutions. | Pending pod, image pull, service/DNS, rollout, or permission diagnostics change. |
 | [kubernetes/troubleshooting/apisix.md](kubernetes/troubleshooting/apisix.md) | APISIX troubleshooting guide. | APISIX diagnostic guidance changes. |
-| [kubernetes/troubleshooting/crossplane.md](kubernetes/troubleshooting/crossplane.md) | Crossplane troubleshooting guide. | Crossplane diagnostic guidance changes. |
 | [kubernetes/troubleshooting/kind.md](kubernetes/troubleshooting/kind.md) | `kind` troubleshooting guide. | Local cluster diagnostic guidance changes. |
 | [kubernetes/best-practices/README.md](kubernetes/best-practices/README.md) | Best-practices index. | Operational guidance changes. |
 | [kubernetes/tricks/README.md](kubernetes/tricks/README.md) | Productivity notes. | Small Kubernetes techniques are added. |

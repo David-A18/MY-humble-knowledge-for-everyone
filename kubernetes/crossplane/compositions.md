@@ -23,8 +23,7 @@ Use this page to understand Crossplane compositions as the boundary between plat
 
 ## Related links
 
-- [Crossplane](crossplane.md)
+- [Crossplane](README.md)
 - [Crossplane composition documentation](https://docs.crossplane.io/latest/concepts/compositions/)
-- [Back to Kubernetes applications and tools](README.md)
 - [Back to Kubernetes index](../README.md)
 - [Back to root index](../../README.md)

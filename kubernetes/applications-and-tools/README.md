@@ -10,8 +10,6 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | --- | --- |
 | [Apache APISIX](apache-apisix.md) | Understand APISIX as a Kubernetes API gateway. |
 | [Gateway API and Ingress](gateway-api-and-ingress.md) | Choose between Ingress, Gateway API, and gateway-specific CRDs. |
-| [Crossplane](crossplane.md) | Understand Crossplane as a Kubernetes-native infrastructure control plane. |
-| [Crossplane compositions](crossplane-compositions.md) | Design platform APIs with Crossplane compositions. |
 | [GitOps](gitops.md) | Understand Kubernetes GitOps reconciliation. |
 | [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare two common GitOps controllers. |
 | [Flux](flux.md) | Understand Flux controllers and repository design. |

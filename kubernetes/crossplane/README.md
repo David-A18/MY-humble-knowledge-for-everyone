@@ -22,12 +22,18 @@ Crossplane extends the Kubernetes API with providers and custom resources. A Cro
 - Developers should request infrastructure through Kubernetes-style resources.
 - Drift correction and reconciliation are desired operating behaviors.
 
+## Articles
+
+| Article | Purpose |
+| --- | --- |
+| [Compositions](compositions.md) | Design platform APIs with Crossplane compositions. |
+| [Troubleshooting](troubleshooting.md) | Diagnose providers, compositions, managed resources, and deletion issues. |
+
 ## Related links
 
-- [Crossplane compositions](crossplane-compositions.md)
+- [Crossplane compositions](compositions.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
-- [Crossplane troubleshooting](../troubleshooting/crossplane.md)
+- [Crossplane troubleshooting](troubleshooting.md)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
-- [Back to Kubernetes applications and tools](README.md)
 - [Back to Kubernetes index](../README.md)
 - [Back to root index](../../README.md)

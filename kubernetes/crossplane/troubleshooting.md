@@ -25,9 +25,8 @@ What it does: inspects conditions, managed resources, and provider controller lo
 
 ## Related links
 
-- [Crossplane](../applications-and-tools/crossplane.md)
-- [Crossplane compositions](../applications-and-tools/crossplane-compositions.md)
+- [Crossplane](README.md)
+- [Crossplane compositions](compositions.md)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
-- [Back to Kubernetes troubleshooting](README.md)
 - [Back to Kubernetes index](../README.md)
 - [Back to root index](../../README.md)

@@ -24,9 +24,9 @@ Use this guide to run Crossplane in Kubernetes while managing AWS resources.
 
 ## Related links
 
-- [Crossplane](../kubernetes/applications-and-tools/crossplane.md)
-- [Crossplane compositions](../kubernetes/applications-and-tools/crossplane-compositions.md)
-- [Crossplane troubleshooting](../kubernetes/troubleshooting/crossplane.md)
+- [Crossplane](../kubernetes/crossplane/README.md)
+- [Crossplane compositions](../kubernetes/crossplane/compositions.md)
+- [Crossplane troubleshooting](../kubernetes/crossplane/troubleshooting.md)
 - [Crossplane providers documentation](https://docs.crossplane.io/latest/packages/providers/)
 - [Back to cross-topic guides](README.md)
 - [Back to root index](../README.md)

@@ -22,7 +22,7 @@ Use this page to understand Kubernetes custom resources, CustomResourceDefinitio
 
 ## Related links
 
-- [Crossplane](../applications-and-tools/crossplane.md)
+- [Crossplane](../crossplane/README.md)
 - [Kubernetes custom resources documentation](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
 - [CRD task documentation](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)
 - [Back to Kubernetes core objects](README.md)
