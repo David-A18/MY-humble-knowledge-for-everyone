@@ -7,26 +7,25 @@ A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions
 
 ## Knowledge areas
 
-| Area | Use it for |
-| --- | --- |
-| [Git](git/README.md) | Daily commands, repository hygiene, branching, recovery, and GitHub Actions. |
-| [Terraform](terraform/README.md) | IaC fundamentals, state, module structure, commands, troubleshooting, and examples. |
-| [Kubernetes](kubernetes/README.md) | Cluster objects, kubectl workflows, application tooling, troubleshooting, and operational practices. |
-| [Cloud](cloud/README.md) | Provider-neutral cloud guidance and provider sections for AWS, Azure, and Google Cloud. |
-| [AWS](cloud/aws/README.md) | AWS fundamentals, networking, compute, storage, security, FinOps, architecture, and certification notes. |
-| [Databases](databases/README.md) | Database modeling, Kafka, MongoDB, operations, and cloud data-platform choices. |
-| [Security](security/README.md) | Security guidance across cloud, identity, applications, supply chain, and operations. |
-| [FinOps](finops/README.md) | Cost visibility, allocation, optimization, budgets, and financial accountability. |
-| [DevOps](devops/README.md) | Delivery workflows, automation, reliability practices, and platform operations. |
-| [Programming languages](programming-languages/README.md) | Language notes, tooling, runtime behavior, and practical examples. |
-| [MLOps](mlops/README.md) | ML delivery, deployment, monitoring, governance, and operational practices. |
-| [AI](ai/README.md) | AI concepts, workflows, systems, safety, and engineering use. |
-| [AI agents](ai-agents/README.md) | Agent workflows, tool use, routing, evaluation, and operational safety. |
-| [LLM](llm/README.md) | Large language model prompting, retrieval, evaluation, deployment, and operations. |
-| [ML](ml/README.md) | Machine learning fundamentals, datasets, training, evaluation, and model risks. |
-| [Solutions architect](solutions-architect/README.md) | Design trade-offs, architecture reviews, reliability, security, cost, and certification notes. |
-| [Cross-topic guides](cross-topic-guides/README.md) | Practical workflows that combine multiple technologies. |
-| [Decision records](decision-records/README.md) | Architecture and repository decisions with context and trade-offs. |
+| Principal area | Current subtopics | Use it for |
+| --- | --- | --- |
+| [Cloud](cloud/README.md) | [AWS](cloud/aws/README.md), [Azure](cloud/azure/README.md), [Google Cloud](cloud/gcloud/README.md), [edge and CDN](cloud/edge/README.md) | Provider-neutral cloud guidance plus provider-specific architecture, networking, security, operations, and cost notes. |
+| [Kubernetes](kubernetes/README.md) | [Core objects](kubernetes/core-objects/README.md), [commands](kubernetes/commands/README.md), [applications and tools](kubernetes/applications-and-tools/README.md), [best practices](kubernetes/best-practices/README.md), [troubleshooting](kubernetes/troubleshooting/README.md) | Cluster objects, `kubectl` workflows, application tooling, troubleshooting, and operational practices. |
+| [Git](git/README.md) | [Commands](git/commands/README.md), [GitHub Actions](git/github-actions/README.md) | Daily commands, repository hygiene, branching, recovery, automation, workflow security, and CI/CD examples. |
+| [Terraform](terraform/README.md) | [Commands](terraform/commands/README.md), [examples](terraform/examples/README.md), [best practices](terraform/best-practices/README.md), [troubleshooting](terraform/troubleshooting/README.md) | IaC fundamentals, state, module structure, command workflows, troubleshooting, and reusable examples. |
+| [Databases](databases/README.md) | [Kafka](databases/kafka/README.md), [MongoDB](databases/mongodb/README.md), [relational vs document databases](databases/relational-vs-document-databases.md) | Database modeling, event streaming, document databases, operations, and cloud data-platform choices. |
+| [Security](security/README.md) | [Identity federation](security/identity-federation/README.md) | Security guidance across cloud, identity, applications, supply chain, and operations. |
+| [FinOps](finops/README.md) | Cost allocation, budgets, optimization, accountability | Cost visibility, allocation, optimization, budgets, and financial accountability. |
+| [DevOps](devops/README.md) | Delivery workflows, automation, reliability, platform operations | Delivery workflows, automation, reliability practices, and platform operations. |
+| [Programming languages](programming-languages/README.md) | Language notes, tooling, runtimes, practical examples | Language behavior, tooling, runtime notes, and examples. |
+| [AI](ai/README.md) | AI systems, workflows, safety, engineering use | AI concepts, workflows, systems, safety, and engineering use. |
+| [AI agents](ai-agents/README.md) | Agent workflows, tool use, routing, evaluation, operational safety | Agent design, routing, knowledge-base improvement workflows, and operational safety. |
+| [LLM](llm/README.md) | Prompting, retrieval, evaluation, deployment, operations | Large language model prompting, retrieval, evaluation, deployment, and operations. |
+| [ML](ml/README.md) | Datasets, training, evaluation, model risks | Machine learning fundamentals, datasets, training, evaluation, and model risks. |
+| [MLOps](mlops/README.md) | Delivery, deployment, monitoring, governance, operations | ML delivery, deployment, monitoring, governance, and operational practices. |
+| [Solutions architect](solutions-architect/README.md) | Design trade-offs, architecture reviews, reliability, security, cost | Architecture decisions, design reviews, reliability, security, cost, and certification notes. |
+| [Cross-topic guides](cross-topic-guides/README.md) | EKS, AWS, Terraform, GitOps, OIDC, APISIX, CloudFront, MSK, Crossplane | Practical workflows that combine multiple technologies. |
+| [Decision records](decision-records/README.md) | Repository and architecture decisions | Architecture and repository decisions with context and trade-offs. |
 
 ## Repository resources
 

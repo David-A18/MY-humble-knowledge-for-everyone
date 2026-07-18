@@ -28,3 +28,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added ADR-0002 for source ingestion and expanded topic taxonomy.
 - Ingested raw source guides into curated articles for CDN and edge delivery, APISIX, Kafka, stateful AWS design, Crossplane, GitOps, MongoDB, OIDC, EKS workload identity, tooling clusters, `kind`, and CRDs.
 - Added a top-level databases section for Kafka, MongoDB, and database model decision guidance.
+- Improved the root README knowledge-area table to show principal areas with their current subtopics.
