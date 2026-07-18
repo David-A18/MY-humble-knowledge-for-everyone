@@ -2,7 +2,7 @@
 
 > A detailed study guide covering OIDC fundamentals, OAuth 2.0, JWTs, AWS IAM federation, Amazon EKS IRSA, EKS Pod Identity, human authentication to EKS, IAM Identity Center, CI/CD federation, security rules, troubleshooting, and practical examples.
 
-**Last reviewed:** 18 July 2026  
+**Last reviewed:** 18 July 2026
 **Audience:** Cloud engineers, platform engineers, DevOps engineers, Kubernetes administrators, security engineers, and AWS architects.
 
 ---
@@ -3744,121 +3744,121 @@ Success criteria:
 
 # 35. Glossary
 
-**Access token**  
+**Access token**
 A credential used to access a protected API.
 
-**Audience (`aud`)**  
+**Audience (`aud`)**
 The intended recipient of a token.
 
-**Authentication**  
+**Authentication**
 The process of verifying identity.
 
-**Authorization**  
+**Authorization**
 The process of deciding what an identity may do.
 
-**Authorization Code flow**  
+**Authorization Code flow**
 An OAuth/OIDC flow in which the client receives a short-lived authorization code and exchanges it at the token endpoint.
 
-**Bearer token**  
+**Bearer token**
 A token usable by whoever possesses it.
 
-**Claim**  
+**Claim**
 A name/value statement in a token.
 
-**Client ID**  
+**Client ID**
 An identifier for an application registered with an authorization server.
 
-**Confidential client**  
+**Confidential client**
 A client capable of protecting credentials, commonly a server-side application.
 
-**Discovery document**  
+**Discovery document**
 OIDC metadata published at a well-known URL.
 
-**EKS access entry**  
+**EKS access entry**
 An EKS resource that associates an IAM principal with Kubernetes permissions.
 
-**EKS Pod Identity**  
+**EKS Pod Identity**
 An EKS-managed mechanism that associates a Kubernetes ServiceAccount with an IAM role through the EKS Auth API and Pod Identity Agent.
 
-**Federation**  
+**Federation**
 Trusting an external identity system.
 
-**ID token**  
+**ID token**
 An OIDC security token containing claims about authentication and identity.
 
-**Identity provider / IdP**  
+**Identity provider / IdP**
 A system that authenticates identities. In OIDC terminology, the issuer is often called an OpenID Provider.
 
-**IAM OIDC provider**  
+**IAM OIDC provider**
 An AWS IAM resource representing trust in an external OIDC issuer.
 
-**IRSA**  
+**IRSA**
 IAM Roles for Service Accounts.
 
-**Issuer (`iss`)**  
+**Issuer (`iss`)**
 The authority that issued the token.
 
-**JSON Web Key Set / JWKS**  
+**JSON Web Key Set / JWKS**
 A JSON document containing public keys used to verify JWT signatures.
 
-**JSON Web Token / JWT**  
+**JSON Web Token / JWT**
 A compact token format with header, payload, and signature.
 
-**Nonce**  
+**Nonce**
 A request-bound random value used to mitigate token replay and substitution.
 
-**OAuth 2.0**  
+**OAuth 2.0**
 An authorization framework for delegated access.
 
-**OIDC**  
+**OIDC**
 OpenID Connect, an authentication protocol built on OAuth 2.0.
 
-**OpenID Provider / OP**  
+**OpenID Provider / OP**
 An OIDC issuer that authenticates identities and issues ID tokens.
 
-**Permission set**  
+**Permission set**
 An IAM Identity Center template used to create and assign AWS account permissions.
 
-**PKCE**  
+**PKCE**
 Proof Key for Code Exchange, which binds authorization-code redemption to the initiating client.
 
-**Projected ServiceAccount token**  
+**Projected ServiceAccount token**
 A time-limited signed Kubernetes token mounted into a pod.
 
-**Public client**  
+**Public client**
 A client that cannot safely protect a permanent client secret, such as a CLI or native application.
 
-**Relying Party / RP**  
+**Relying Party / RP**
 An application that trusts an OpenID Provider.
 
-**Refresh token**  
+**Refresh token**
 A sensitive token used to obtain new access tokens.
 
-**RoleBinding**  
+**RoleBinding**
 A Kubernetes RBAC object granting Role or ClusterRole permissions within one namespace.
 
-**SAML 2.0**  
+**SAML 2.0**
 An XML-based enterprise identity-federation standard.
 
-**SCIM 2.0**  
+**SCIM 2.0**
 A standard for provisioning and synchronizing users and groups.
 
-**ServiceAccount**  
+**ServiceAccount**
 A Kubernetes identity for processes running in pods.
 
-**Subject (`sub`)**  
+**Subject (`sub`)**
 The principal represented by a token.
 
-**Trust policy**  
+**Trust policy**
 The resource-based policy attached to an IAM role that defines who may assume it.
 
-**Trusted identity propagation**  
+**Trusted identity propagation**
 An IAM Identity Center capability that preserves workforce identity context across supported application and AWS service calls.
 
-**Trusted token issuer**  
+**Trusted token issuer**
 An external OAuth 2.0 authorization server configured in IAM Identity Center for trusted identity propagation.
 
-**Web identity federation**  
+**Web identity federation**
 Exchanging an external web identity token for temporary AWS role credentials.
 
 ---

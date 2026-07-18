@@ -2,8 +2,8 @@
 
 > A detailed study guide to API gateways, Apache APISIX, Kubernetes Ingress and Gateway API, traffic management, security, observability, GitOps, AWS integration, production design, and troubleshooting.
 
-**Research snapshot:** 18 July 2026  
-**Documentation versions reviewed:** Apache APISIX **3.17** and APISIX Ingress Controller **2.1.0**  
+**Research snapshot:** 18 July 2026
+**Documentation versions reviewed:** Apache APISIX **3.17** and APISIX Ingress Controller **2.1.0**
 **Audience:** Cloud engineers, Kubernetes administrators, platform engineers, DevOps engineers, and solution architects.
 
 ---

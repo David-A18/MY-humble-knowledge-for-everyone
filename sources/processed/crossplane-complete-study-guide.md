@@ -1,9 +1,9 @@
 # Crossplane on Kubernetes and AWS
 ## Complete Study Guide: Crossplane, Upbound, Upjet, Terraform Comparison, AWS Labs, GitOps, Security, and Troubleshooting
 
-> **Last reviewed:** 18 July 2026  
-> **Audience:** Cloud, DevOps, Kubernetes, AWS, and platform-engineering learners  
-> **Environment assumed:** Windows + WSL 2 + Visual Studio Code + Docker Desktop + AWS CLI + Kubernetes  
+> **Last reviewed:** 18 July 2026
+> **Audience:** Cloud, DevOps, Kubernetes, AWS, and platform-engineering learners
+> **Environment assumed:** Windows + WSL 2 + Visual Studio Code + Docker Desktop + AWS CLI + Kubernetes
 > **Version note:** The official Crossplane core documentation currently presents Crossplane **v2.3** as the latest core release. Provider and CLI versions have independent release cycles. Always pin package versions and verify their schemas before using examples in production.
 
 ---

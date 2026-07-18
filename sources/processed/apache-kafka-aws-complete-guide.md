@@ -2,7 +2,7 @@
 
 > **Purpose:** A practical, detailed guide to understanding Apache Kafka, how applications interact with it, when it should be used, and how to design a production solution with Amazon MSK and Amazon EKS.
 >
-> **Last reviewed:** 18 July 2026  
+> **Last reviewed:** 18 July 2026
 > **Primary references:** Apache Kafka 4.3 documentation and current AWS documentation.
 
 ---
@@ -3002,106 +3002,106 @@ If these questions have no owners or answers, the platform is not ready for prod
 
 # 30. Glossary
 
-**Acknowledgement (`acks`)**  
+**Acknowledgement (`acks`)**
 Producer setting controlling how much broker confirmation is required.
 
-**Broker**  
+**Broker**
 Kafka server that stores and serves partitions.
 
-**Bootstrap brokers**  
+**Bootstrap brokers**
 Initial broker endpoints a client uses to discover the cluster.
 
-**CDC**  
+**CDC**
 Change data capture: streaming database changes into another system.
 
-**Compaction**  
+**Compaction**
 Cleanup policy retaining the latest record value per key over time.
 
-**Consumer**  
+**Consumer**
 Application that reads Kafka records.
 
-**Consumer group**  
+**Consumer group**
 Consumers cooperating to divide partition work.
 
-**Consumer lag**  
+**Consumer lag**
 Distance between latest available offsets and a group's committed offsets.
 
-**Controller**  
+**Controller**
 Kafka control-plane role managing cluster metadata and leadership.
 
-**Dead-letter topic**  
+**Dead-letter topic**
 Topic holding records that could not be processed successfully.
 
-**Event**  
+**Event**
 Record describing something that happened.
 
-**Exactly-once semantics**  
+**Exactly-once semantics**
 Processing property requiring careful definition of the transactional boundary.
 
-**Follower**  
+**Follower**
 Replica copying a partition leader.
 
-**Idempotency**  
+**Idempotency**
 Property where repeating an operation has the same final effect as executing it once.
 
-**In-sync replica (ISR)**  
+**In-sync replica (ISR)**
 Replica sufficiently caught up with the leader to be considered synchronized.
 
-**Key**  
+**Key**
 Record field used for partition selection and compaction semantics.
 
-**KRaft**  
+**KRaft**
 Kafka's built-in Raft-based metadata mode replacing ZooKeeper.
 
-**Leader**  
+**Leader**
 Replica handling reads and writes for a partition.
 
-**Log segment**  
+**Log segment**
 Physical segment file containing part of a partition log.
 
-**Offset**  
+**Offset**
 Record position within a partition.
 
-**Outbox pattern**  
+**Outbox pattern**
 Pattern that writes business state and an event record in one database transaction, then publishes the event asynchronously.
 
-**Partition**  
+**Partition**
 Ordered subdivision of a topic and primary unit of parallelism.
 
-**Producer**  
+**Producer**
 Application that writes records.
 
-**Rebalance**  
+**Rebalance**
 Redistribution of partitions among consumer-group members.
 
-**Record**  
+**Record**
 Kafka key/value item with metadata.
 
-**Replication factor**  
+**Replication factor**
 Number of replicas maintained for each partition.
 
-**Schema registry**  
+**Schema registry**
 System that stores and governs event schemas.
 
-**Serializer/deserializer**  
+**Serializer/deserializer**
 Components converting application objects to bytes and bytes back to objects.
 
-**Sink connector**  
+**Sink connector**
 Connector moving records from Kafka to another system.
 
-**Source connector**  
+**Source connector**
 Connector moving records from another system into Kafka.
 
-**Stream processing**  
+**Stream processing**
 Continuous computation over event streams.
 
-**Topic**  
+**Topic**
 Named stream divided into partitions.
 
-**Tombstone**  
+**Tombstone**
 A keyed record with a null value used to represent deletion in compacted topics.
 
-**Transactional outbox**  
+**Transactional outbox**
 See outbox pattern.
 
 ---

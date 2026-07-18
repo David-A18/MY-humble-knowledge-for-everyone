@@ -2,8 +2,8 @@
 
 ## A complete AWS Solutions Architect guide to CDN architecture, edge security, caching, AWS/EKS integration, operations, and use cases
 
-> **Last verified:** 18 July 2026  
-> **Audience:** Cloud engineers, AWS solutions architects, DevOps engineers, platform engineers, security engineers, and Kubernetes/EKS administrators  
+> **Last verified:** 18 July 2026
+> **Audience:** Cloud engineers, AWS solutions architects, DevOps engineers, platform engineers, security engineers, and Kubernetes/EKS administrators
 > **Important correction:** The product and company name is **Akamai**, not “Acamai” or “ACAMAI.”
 
 ---
@@ -3418,18 +3418,18 @@ A parallel multi-CDN architecture is generally cleaner than an accidental chain.
 
 # 29. Common mistakes
 
-1. **Calling Akamai only a CDN.**  
+1. **Calling Akamai only a CDN.**
    It also provides security, DNS, traffic management, edge compute, and cloud services.
 
-2. **Treating Akamai Property Manager exactly like a CloudFront distribution.**  
+2. **Treating Akamai Property Manager exactly like a CloudFront distribution.**
    The rule-tree and contract/product model differs.
 
 3. **Caching authenticated content by accident.**
 
-4. **Forwarding every cookie, header, and query parameter.**  
+4. **Forwarding every cookie, header, and query parameter.**
    This destroys cache efficiency.
 
-5. **Changing the global cache key in one production step.**  
+5. **Changing the global cache key in one production step.**
    It can cause an origin traffic spike.
 
 6. **Leaving the origin publicly bypassable.**
@@ -3446,7 +3446,7 @@ A parallel multi-CDN architecture is generally cleaner than an accidental chain.
 
 12. **Purging instead of using versioned assets.**
 
-13. **Comparing providers only by number of PoPs.**  
+13. **Comparing providers only by number of PoPs.**
     Providers count and describe infrastructure differently.
 
 14. **Comparing only list price.**
@@ -3459,7 +3459,7 @@ A parallel multi-CDN architecture is generally cleaner than an accidental chain.
 
 18. **Logging tokens and sensitive cookies.**
 
-19. **Assuming the CDN replaces application security.**  
+19. **Assuming the CDN replaces application security.**
     Secure code, authentication, authorization, dependency management, and origin controls remain necessary.
 
 20. **Assuming CDN cache equals database consistency.**
@@ -3744,100 +3744,100 @@ Use this before selecting a platform.
 
 # 33. Glossary
 
-**Akamai Control Center**  
+**Akamai Control Center**
 Web interface for managing Akamai products and account resources.
 
-**ALB**  
+**ALB**
 AWS Application Load Balancer.
 
-**Cache behavior**  
+**Cache behavior**
 CloudFront path-based configuration that selects an origin and policies.
 
-**Cache hit**  
+**Cache hit**
 The CDN returns a valid cached object.
 
-**Cache key**  
+**Cache key**
 The identifier used to distinguish cached representations.
 
-**Cache miss**  
+**Cache miss**
 The CDN needs another cache tier or the origin to obtain the object.
 
-**CDN**  
+**CDN**
 Content Delivery Network.
 
-**CloudFront distribution**  
+**CloudFront distribution**
 The primary Amazon CloudFront configuration object.
 
-**CP code**  
+**CP code**
 Akamai identifier for billing, reporting, and monitoring a traffic subset.
 
-**CPS**  
+**CPS**
 Akamai Certificate Provisioning System.
 
-**DataStream 2**  
+**DataStream 2**
 Akamai low-latency log-streaming service.
 
-**Edge**  
+**Edge**
 Distributed infrastructure close to users from a network perspective.
 
-**Edge hostname**  
+**Edge hostname**
 Akamai hostname used to map a customer property hostname onto the Akamai edge platform.
 
-**EdgeKV**  
+**EdgeKV**
 Akamai distributed key-value data service for EdgeWorkers applications.
 
-**EdgeWorkers**  
+**EdgeWorkers**
 Akamai JavaScript edge-compute service.
 
-**GTM**  
+**GTM**
 Akamai Global Traffic Management.
 
-**Invalidation**  
+**Invalidation**
 Removal or expiration of CDN-cached content before its normal TTL.
 
-**Lambda@Edge**  
+**Lambda@Edge**
 AWS Lambda-based processing associated with CloudFront request or response events.
 
-**OAC**  
+**OAC**
 CloudFront Origin Access Control.
 
-**Origin**  
+**Origin**
 The authoritative source from which the CDN retrieves content.
 
-**Origin offload**  
+**Origin offload**
 The proportion of delivery handled without origin traffic.
 
-**Origin request policy**  
+**Origin request policy**
 CloudFront policy for forwarding values to the origin without necessarily including them in the cache key.
 
-**Origin Shield**  
+**Origin Shield**
 Additional CloudFront caching layer in front of the origin.
 
-**PoP**  
+**PoP**
 Point of Presence.
 
-**Property**  
+**Property**
 Akamai's versioned rule configuration for delivery behavior.
 
-**Property hostname**  
+**Property hostname**
 The public customer hostname associated with an Akamai property.
 
-**Site Shield**  
+**Site Shield**
 Akamai origin-protection capability using selected Akamai source infrastructure.
 
-**SureRoute**  
+**SureRoute**
 Akamai route-optimization feature between edge and origin.
 
-**Tiered Distribution**  
+**Tiered Distribution**
 Akamai hierarchical caching feature that reduces origin requests.
 
-**TTL**  
+**TTL**
 Time to live.
 
-**WAAP**  
+**WAAP**
 Web Application and API Protection.
 
-**WAF**  
+**WAF**
 Web Application Firewall.
 
 ---

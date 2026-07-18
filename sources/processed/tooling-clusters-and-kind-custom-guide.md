@@ -2,7 +2,7 @@
 
 > A detailed study guide for Kubernetes platform engineering, local development, GitOps, multi-cluster operations, and Amazon EKS.
 >
-> **Last reviewed:** 18 July 2026  
+> **Last reviewed:** 18 July 2026
 > **Scope:** Kubernetes tooling clusters, management clusters, workload clusters, `kind`, custom `kind` configuration, custom node images, and Kubernetes custom resource `kind`s.
 
 ---
@@ -2985,61 +2985,61 @@ Learn:
 
 # 29. Glossary
 
-**Add-on**  
+**Add-on**
 Software installed in or around Kubernetes to provide networking, storage, observability, policy, delivery, or other capabilities.
 
-**Bootstrap cluster**  
+**Bootstrap cluster**
 A temporary Kubernetes cluster used to create another cluster.
 
-**Cluster API**  
+**Cluster API**
 A Kubernetes subproject that provides declarative APIs and controllers for provisioning, upgrading, and operating Kubernetes clusters.
 
-**Controller**  
+**Controller**
 A control loop that observes desired and actual state and takes action to reduce the difference.
 
-**CRD**  
+**CRD**
 CustomResourceDefinition. A Kubernetes API object that defines a new custom resource type.
 
-**Custom resource**  
+**Custom resource**
 An object of a type added to the Kubernetes API, usually through a CRD.
 
-**Drift**  
+**Drift**
 A difference between intended configuration and current live state.
 
-**GitOps**  
+**GitOps**
 An operating model in which declarative desired state is stored in a versioned source and reconciled automatically.
 
-**Hub cluster**  
+**Hub cluster**
 A central cluster that manages, deploys to, or observes other clusters.
 
-**IRSA**  
+**IRSA**
 IAM Roles for Service Accounts, an AWS pattern for providing AWS permissions to Kubernetes workloads. Review current EKS guidance and Pod Identity options when designing a new platform.
 
-**`kind`**  
+**`kind`**
 Kubernetes IN Docker, a tool for local Kubernetes clusters using container nodes.
 
-**`kindest/node`**  
+**`kindest/node`**
 The node image family commonly used by `kind`.
 
-**Management cluster**  
+**Management cluster**
 A cluster that manages the lifecycle or desired state of other clusters.
 
-**Operator**  
+**Operator**
 A controller, often combined with custom resources, that encodes operational knowledge.
 
-**Platform engineering**  
+**Platform engineering**
 The discipline of building and operating reusable internal capabilities that help application teams deliver software safely and efficiently.
 
-**Reconciliation**  
+**Reconciliation**
 The repeated process of comparing desired and observed state and taking corrective action.
 
-**Spoke cluster**  
+**Spoke cluster**
 A cluster managed or observed from a central hub.
 
-**Tooling cluster**  
+**Tooling cluster**
 A cluster primarily used to host operational and platform tools.
 
-**Workload cluster**  
+**Workload cluster**
 A cluster primarily used to run applications or business services.
 
 ---

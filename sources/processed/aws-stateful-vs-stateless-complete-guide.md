@@ -2,8 +2,8 @@
 
 > A practical and detailed study guide for networking, security, compute, containers, Kubernetes, storage, databases, messaging, APIs, workflows, scaling, resiliency, and architecture design.
 
-**Last reviewed:** 18 July 2026  
-**Primary scope:** AWS and Amazon EKS  
+**Last reviewed:** 18 July 2026
+**Primary scope:** AWS and Amazon EKS
 **Correct terminology:** **stateful** and **stateless** — not “statefull.”
 
 ---
@@ -2216,103 +2216,103 @@ Can I terminate this replica right now without losing required information?
 
 The following sources were used to verify and extend this guide. AWS and Kubernetes documentation can evolve, so consult the current version when implementing production infrastructure.
 
-1. AWS Well-Architected Framework — Make systems stateless where possible  
+1. AWS Well-Architected Framework — Make systems stateless where possible
    https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html
 
-2. Amazon VPC — Security Groups  
+2. Amazon VPC — Security Groups
    https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-3. Amazon VPC — Network ACLs  
+3. Amazon VPC — Network ACLs
    https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
-4. Amazon VPC — Custom Network ACLs and ephemeral ports  
+4. Amazon VPC — Custom Network ACLs and ephemeral ports
    https://docs.aws.amazon.com/vpc/latest/userguide/custom-network-acl.html
 
-5. Amazon VPC — Infrastructure security guidance  
+5. Amazon VPC — Infrastructure security guidance
    https://docs.aws.amazon.com/vpc/latest/userguide/infrastructure-security.html
 
-6. Amazon EC2 — Security Group connection tracking  
+6. Amazon EC2 — Security Group connection tracking
    https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html
 
-7. Amazon VPC — NACL rule processing  
+7. Amazon VPC — NACL rule processing
    https://docs.aws.amazon.com/vpc/latest/userguide/nacl-rules.html
 
-8. Amazon VPC — NAT Gateway  
+8. Amazon VPC — NAT Gateway
    https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
 
-9. Amazon VPC — Troubleshoot NAT Gateways  
+9. Amazon VPC — Troubleshoot NAT Gateways
    https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-troubleshooting.html
 
-10. Amazon VPC — Egress-only internet gateway  
+10. Amazon VPC — Egress-only internet gateway
     https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html
 
-11. AWS Network Firewall — Stateless rule groups  
+11. AWS Network Firewall — Stateless rule groups
     https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateless-rule-groups-standard.html
 
-12. AWS Network Firewall — Stateful rule groups  
+12. AWS Network Firewall — Stateful rule groups
     https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateful-rule-groups-ips.html
 
-13. AWS Network Firewall — Symmetric-routing troubleshooting  
+13. AWS Network Firewall — Symmetric-routing troubleshooting
     https://docs.aws.amazon.com/network-firewall/latest/developerguide/troubleshooting-general-issues.html
 
-14. AWS Transit Gateway — Appliance mode and flow behavior  
+14. AWS Transit Gateway — Appliance mode and flow behavior
     https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html
 
-15. Gateway Load Balancer — Target-group flow stickiness  
+15. Gateway Load Balancer — Target-group flow stickiness
     https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/edit-target-group-attributes.html
 
-16. Application Load Balancer — Sticky sessions  
+16. Application Load Balancer — Sticky sessions
     https://docs.aws.amazon.com/elasticloadbalancing/latest/application/edit-target-group-attributes.html
 
-17. API Gateway — WebSocket API overview  
+17. API Gateway — WebSocket API overview
     https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-overview.html
 
-18. AWS Lambda — Designing Lambda applications  
+18. AWS Lambda — Designing Lambda applications
     https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html
 
-19. AWS Lambda — Execution-environment lifecycle  
+19. AWS Lambda — Execution-environment lifecycle
     https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtime-environment.html
 
-20. AWS Lambda — Programming model  
+20. AWS Lambda — Programming model
     https://docs.aws.amazon.com/lambda/latest/dg/foundation-progmodel.html
 
-21. Amazon ECS — Persistent-storage best practices and container writable layer  
+21. Amazon ECS — Persistent-storage best practices and container writable layer
     https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/storage.html
 
-22. Amazon ECS — Storage options for tasks  
+22. Amazon ECS — Storage options for tasks
     https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html
 
-23. Amazon EC2 — Instance-store data persistence  
+23. Amazon EC2 — Instance-store data persistence
     https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-store-lifetime.html
 
-24. Amazon EBS — EBS volumes  
+24. Amazon EBS — EBS volumes
     https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volumes.html
 
-25. Amazon EBS — Attaching a volume in the same Availability Zone  
+25. Amazon EBS — Attaching a volume in the same Availability Zone
     https://docs.aws.amazon.com/ebs/latest/userguide/ebs-attaching-volume.html
 
-26. Amazon EFS — What is EFS?  
+26. Amazon EFS — What is EFS?
     https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html
 
-27. Amazon SQS — What is SQS?  
+27. Amazon SQS — What is SQS?
     https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
 
-28. AWS Step Functions — What is Step Functions?  
+28. AWS Step Functions — What is Step Functions?
     https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
 
-29. Kubernetes — StatefulSets  
+29. Kubernetes — StatefulSets
     https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 
-30. Kubernetes — StorageClasses and `WaitForFirstConsumer`  
+30. Kubernetes — StorageClasses and `WaitForFirstConsumer`
     https://kubernetes.io/docs/concepts/storage/storage-classes/
 
-31. Amazon EKS Best Practices — Data plane and EBS topology  
+31. Amazon EKS Best Practices — Data plane and EBS topology
     https://docs.aws.amazon.com/eks/latest/best-practices/data-plane.html
 
-32. Amazon SQS — At-least-once delivery  
+32. Amazon SQS — At-least-once delivery
     https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues-at-least-once-delivery.html
 
-33. Amazon VPC — VPC Flow Logs  
+33. Amazon VPC — VPC Flow Logs
     https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
 ---

@@ -1,6 +1,6 @@
 # GitOps with Argo CD and Flux
 
-> A detailed comparison and a Flux-focused practical guide for Kubernetes platform engineering  
+> A detailed comparison and a Flux-focused practical guide for Kubernetes platform engineering
 > Updated: July 2026
 
 ---
@@ -81,16 +81,16 @@ GitOps is not merely “running `kubectl apply` from a CI pipeline.”
 
 OpenGitOps defines GitOps around four main principles:
 
-1. **Declarative**  
+1. **Declarative**
    The desired state of the system is described declaratively.
 
-2. **Versioned and immutable**  
+2. **Versioned and immutable**
    Desired state is stored in a versioned system that preserves history and supports rollback.
 
-3. **Pulled automatically**  
+3. **Pulled automatically**
    Software agents obtain the declared state automatically rather than depending exclusively on an external pipeline pushing changes.
 
-4. **Continuously reconciled**  
+4. **Continuously reconciled**
    Agents continuously compare actual state with desired state and act to remove differences.
 
 Git is the most common source because it provides commits, branches, pull requests, reviews and audit history. Modern Flux can also consume OCI artifacts and other sources, but the same principles remain.
@@ -3511,61 +3511,61 @@ The core sentence to remember is:
 
 # 25. Glossary
 
-**Actual state**  
+**Actual state**
 The resources and field values currently present in the cluster.
 
-**Application**  
+**Application**
 In Argo CD, a first-class custom resource defining source, destination and sync behavior. In Flux, “application” is often a logical grouping of several toolkit resources rather than one mandatory object.
 
-**Artifact**  
+**Artifact**
 A versioned package produced by a Flux Source and consumed by another controller.
 
-**Bootstrap**  
+**Bootstrap**
 The process of installing a GitOps system and configuring it to manage its own installation from the declared source.
 
-**Continuous delivery**  
+**Continuous delivery**
 A practice in which software remains deployable and delivery is automated to an agreed boundary.
 
-**Controller**  
+**Controller**
 A process that watches API state and repeatedly works to move actual state toward desired state.
 
-**Desired state**  
+**Desired state**
 The state declared in Git, OCI or another accepted source.
 
-**Drift**  
+**Drift**
 A difference between live state and desired state.
 
-**Garbage collection / pruning**  
+**Garbage collection / pruning**
 Deleting resources that were previously managed but are no longer declared.
 
-**GitOps Toolkit**  
+**GitOps Toolkit**
 The collection of Flux controllers and APIs.
 
-**Health check**  
+**Health check**
 An assessment that a reconciled resource is operational or ready, not merely accepted by the API.
 
-**HelmRelease**  
+**HelmRelease**
 A Flux custom resource describing a Helm release and its lifecycle.
 
-**Kustomization — native**  
+**Kustomization — native**
 A Kustomize build definition using `kustomize.config.k8s.io`.
 
-**Kustomization — Flux**  
+**Kustomization — Flux**
 A reconciliation object using `kustomize.toolkit.fluxcd.io`.
 
-**Reconciliation**  
+**Reconciliation**
 The repeated process of observing, comparing and acting to reduce differences.
 
-**Remediation**  
+**Remediation**
 Controller action after a failed installation or upgrade, such as retry or rollback.
 
-**Source**  
+**Source**
 A Flux custom resource that retrieves and exposes versioned content.
 
-**Suspend**  
+**Suspend**
 Pause reconciliation of a Flux resource.
 
-**Workload identity**  
+**Workload identity**
 A method for a Kubernetes ServiceAccount or workload to obtain cloud permissions without static long-lived access keys.
 
 ---

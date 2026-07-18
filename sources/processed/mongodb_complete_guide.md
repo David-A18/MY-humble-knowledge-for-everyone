@@ -2,8 +2,8 @@
 
 > A practical, in-depth study guide to MongoDB and its differences from PostgreSQL, MySQL, and MariaDB.
 >
-> **Last reviewed:** 18 July 2026  
-> **Audience:** developers, cloud engineers, DevOps engineers, solution architects, and database beginners  
+> **Last reviewed:** 18 July 2026
+> **Audience:** developers, cloud engineers, DevOps engineers, solution architects, and database beginners
 > **Scope:** concepts, architecture, data modeling, queries, transactions, scaling, availability, security, operations, AWS options, examples, and database-selection guidance
 
 ---
