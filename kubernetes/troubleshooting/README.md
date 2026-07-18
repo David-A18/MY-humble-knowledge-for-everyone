@@ -8,6 +8,9 @@ Symptom-driven guides for diagnosing Kubernetes workload and cluster issues.
 | --- | --- |
 | [CrashLoopBackOff](crashloopbackoff.md) | Diagnose pods that repeatedly crash and restart. |
 | [Common solutions](common-solutions.md) | Diagnose Pending pods, image pulls, service/DNS issues, failed rollouts, and permission errors. |
+| [APISIX troubleshooting](apisix.md) | Diagnose APISIX gateway, route, plugin, backend, and TLS issues. |
+| [Crossplane troubleshooting](crossplane.md) | Diagnose Crossplane providers, compositions, managed resources, and deletion issues. |
+| [kind troubleshooting](kind.md) | Diagnose local `kind` cluster, context, image, port, and scheduling issues. |
 
 ## Common starting commands
 

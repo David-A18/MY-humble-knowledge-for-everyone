@@ -26,6 +26,6 @@ Capture practical patterns for managing AWS infrastructure with Terraform.
 
 - [Terraform AWS provider documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 - [Terraform index](../terraform/README.md)
-- [AWS index](../aws/README.md)
+- [AWS index](../cloud/aws/README.md)
 - [Back to cross-topic guides](README.md)
 - [Back to root index](../README.md)

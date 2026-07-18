@@ -137,6 +137,6 @@ What it does: checks claim state, provisioning events, and available StorageClas
 - [Amazon EKS networking best practices](https://docs.aws.amazon.com/eks/latest/best-practices/networking.html)
 - [Amazon EKS cost optimization best practices](https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt.html)
 - [Kubernetes index](../kubernetes/README.md)
-- [AWS index](../aws/README.md)
+- [AWS index](../cloud/aws/README.md)
 - [Back to cross-topic guides](README.md)
 - [Back to root index](../README.md)
