@@ -30,3 +30,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a top-level databases section for Kafka, MongoDB, and database model decision guidance.
 - Improved the root README knowledge-area table to show principal areas with their current subtopics.
 - Promoted Crossplane into its own Kubernetes subtopic and updated canonical links.
+- Expanded the Crossplane section with managed-resource lifecycle, provider authentication, composition, local AWS S3 lab, production GitOps and operations, troubleshooting, and AWS architecture guidance.
