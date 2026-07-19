@@ -177,12 +177,18 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/crossplane/references.md](kubernetes/crossplane/references.md) | Crossplane official and supporting reference list. | Crossplane source references or research bibliography changes. |
 | [kubernetes/applications-and-tools/README.md](kubernetes/applications-and-tools/README.md) | Tooling index. | Helm, Kustomize, controller, or GitOps notes are added. |
 | [kubernetes/applications-and-tools/apache-apisix.md](kubernetes/applications-and-tools/apache-apisix.md) | Apache APISIX gateway guidance. | APISIX concepts or Kubernetes gateway guidance changes. |
+| [kubernetes/applications-and-tools/apisix-architecture-and-deployment.md](kubernetes/applications-and-tools/apisix-architecture-and-deployment.md) | APISIX architecture and deployment guide. | APISIX data-plane, controller, Gateway API, deployment mode, EKS exposure, or troubleshooting flow guidance changes. |
+| [kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md](kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md) | APISIX security, traffic, and observability guide. | APISIX authentication, rate limiting, traffic release, telemetry, or policy-placement guidance changes. |
 | [kubernetes/applications-and-tools/gateway-api-and-ingress.md](kubernetes/applications-and-tools/gateway-api-and-ingress.md) | Gateway API and Ingress comparison. | Kubernetes traffic API guidance changes. |
 | [kubernetes/applications-and-tools/gitops.md](kubernetes/applications-and-tools/gitops.md) | GitOps operating model. | GitOps reconciliation guidance changes. |
 | [kubernetes/applications-and-tools/argo-cd-vs-flux.md](kubernetes/applications-and-tools/argo-cd-vs-flux.md) | Argo CD and Flux comparison. | GitOps controller comparison changes. |
 | [kubernetes/applications-and-tools/flux.md](kubernetes/applications-and-tools/flux.md) | Flux controller and repository guidance. | Flux guidance changes. |
+| [kubernetes/applications-and-tools/flux-reconciliation-and-helm.md](kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Flux reconciliation and Helm release guide. | Flux source-controller, Kustomization, HelmRelease, dependency, or reconciliation troubleshooting guidance changes. |
+| [kubernetes/applications-and-tools/gitops-security-and-multitenancy.md](kubernetes/applications-and-tools/gitops-security-and-multitenancy.md) | GitOps security and multi-tenancy guide. | GitOps ownership, Argo CD Projects, Flux tenancy, secrets, or controller-permission guidance changes. |
 | [kubernetes/applications-and-tools/tooling-clusters.md](kubernetes/applications-and-tools/tooling-clusters.md) | Tooling cluster design. | Platform tooling cluster guidance changes. |
+| [kubernetes/applications-and-tools/tooling-cluster-architecture.md](kubernetes/applications-and-tools/tooling-cluster-architecture.md) | Tooling cluster architecture guide. | Tooling-cluster patterns, failure behavior, security, or EKS account-boundary guidance changes. |
 | [kubernetes/applications-and-tools/kind-custom-clusters.md](kubernetes/applications-and-tools/kind-custom-clusters.md) | Custom `kind` cluster guidance. | Local cluster lab or kind configuration guidance changes. |
+| [kubernetes/applications-and-tools/kind-images-and-local-registries.md](kubernetes/applications-and-tools/kind-images-and-local-registries.md) | kind image and local-registry guide. | Loading local images, named kind clusters, local registries, or private-registry troubleshooting changes. |
 | [kubernetes/troubleshooting/README.md](kubernetes/troubleshooting/README.md) | Troubleshooting index. | Kubernetes diagnostic guides are added. |
 | [kubernetes/troubleshooting/crashloopbackoff.md](kubernetes/troubleshooting/crashloopbackoff.md) | CrashLoopBackOff guide. | Pod restart diagnostics change. |
 | [kubernetes/troubleshooting/common-solutions.md](kubernetes/troubleshooting/common-solutions.md) | Common Kubernetes troubleshooting solutions. | Pending pod, image pull, service/DNS, rollout, or permission diagnostics change. |
@@ -199,7 +205,9 @@ When adding or moving content, update every affected index immediately.
 | [cloud/README.md](cloud/README.md) | Cloud provider and provider-neutral index. | Cloud provider routes or provider-neutral cloud topics change. |
 | [cloud/edge/README.md](cloud/edge/README.md) | Edge and CDN index. | CDN or edge delivery articles are added. |
 | [cloud/edge/cdn-and-edge-fundamentals.md](cloud/edge/cdn-and-edge-fundamentals.md) | CDN and edge fundamentals. | CDN terminology or edge design guidance changes. |
+| [cloud/edge/cdn-caching-and-origin-protection.md](cloud/edge/cdn-caching-and-origin-protection.md) | CDN caching and origin-protection guide. | Cache keys, TTLs, purges, origin shielding, private origins, or direct-origin bypass guidance changes. |
 | [cloud/edge/akamai-vs-cloudfront.md](cloud/edge/akamai-vs-cloudfront.md) | Akamai and CloudFront comparison. | CDN comparison or decision guidance changes. |
+| [cloud/edge/multi-cdn-operations.md](cloud/edge/multi-cdn-operations.md) | Multi-CDN operations guide. | DNS, traffic steering, cache parity, logging, purge, or rollback guidance for multiple CDN providers changes. |
 | [cloud/aws/README.md](cloud/aws/README.md) | AWS area index. | AWS subcategories or major articles change. |
 | [cloud/aws/fundamentals/README.md](cloud/aws/fundamentals/README.md) | Fundamentals index. | Core AWS concept pages are added. |
 | [cloud/aws/networking/README.md](cloud/aws/networking/README.md) | Networking index. | VPC, routing, or connectivity guides are added. |
@@ -219,6 +227,8 @@ When adding or moving content, update every affected index immediately.
 | [cloud/aws/finops/cost-allocation-tags.md](cloud/aws/finops/cost-allocation-tags.md) | Cost allocation tag guide. | Tagging standards or reporting guidance changes. |
 | [cloud/aws/architecture/README.md](cloud/aws/architecture/README.md) | Architecture index. | Reference architecture or design review notes are added. |
 | [cloud/aws/architecture/stateful-vs-stateless.md](cloud/aws/architecture/stateful-vs-stateless.md) | Stateful vs. stateless AWS design guide. | AWS state, scaling, or recovery design guidance changes. |
+| [cloud/aws/architecture/stateless-application-patterns.md](cloud/aws/architecture/stateless-application-patterns.md) | Stateless AWS application pattern guide. | Externalizing application state, replaceable compute, or safe replica-replacement guidance changes. |
+| [cloud/aws/architecture/stateful-design-decision-checklist.md](cloud/aws/architecture/stateful-design-decision-checklist.md) | Stateful AWS design checklist. | State ownership, backups, RPO/RTO, stateful networking, or Kubernetes stateful workload review guidance changes. |
 | [cloud/aws/troubleshooting/README.md](cloud/aws/troubleshooting/README.md) | AWS troubleshooting index. | AWS diagnostic runbooks are added. |
 | [cloud/aws/solutions-architect/README.md](cloud/aws/solutions-architect/README.md) | Solutions architect notes. | Certification or architecture review notes are added. |
 | [cloud/azure/README.md](cloud/azure/README.md) | Azure area index. | Azure service, architecture, governance, or operations notes are added. |
@@ -232,10 +242,14 @@ When adding or moving content, update every affected index immediately.
 | [databases/kafka/README.md](databases/kafka/README.md) | Kafka index. | Kafka articles are added or moved. |
 | [databases/kafka/fundamentals.md](databases/kafka/fundamentals.md) | Kafka fundamentals. | Kafka architecture or concept guidance changes. |
 | [databases/kafka/topic-and-event-design.md](databases/kafka/topic-and-event-design.md) | Kafka topic and event design. | Topic, schema, retention, or event contract guidance changes. |
+| [databases/kafka/consumer-groups-lag-and-replay.md](databases/kafka/consumer-groups-lag-and-replay.md) | Kafka consumer group, lag, and replay guide. | Consumer assignment, offset commits, lag diagnostics, replay, or offset-reset guidance changes. |
+| [databases/kafka/delivery-guarantees-and-failure-handling.md](databases/kafka/delivery-guarantees-and-failure-handling.md) | Kafka delivery guarantees and failure-handling guide. | Producer safety, consumer idempotency, retry topics, dead-letter topics, or outbox guidance changes. |
 | [databases/kafka/operations.md](databases/kafka/operations.md) | Kafka operations. | Kafka monitoring, lag, replication, or recovery guidance changes. |
 | [databases/mongodb/README.md](databases/mongodb/README.md) | MongoDB index. | MongoDB articles are added or moved. |
 | [databases/mongodb/fundamentals.md](databases/mongodb/fundamentals.md) | MongoDB fundamentals. | MongoDB concept guidance changes. |
 | [databases/mongodb/data-modeling.md](databases/mongodb/data-modeling.md) | MongoDB data modeling. | Document modeling guidance changes. |
+| [databases/mongodb/schema-validation-and-indexing.md](databases/mongodb/schema-validation-and-indexing.md) | MongoDB schema validation and indexing guide. | JSON Schema validation, schema versioning, index design, TTL indexes, or explain-plan checks change. |
+| [databases/mongodb/replication-sharding-and-consistency.md](databases/mongodb/replication-sharding-and-consistency.md) | MongoDB replication, sharding, and consistency guide. | Replica set, write concern, read concern, shard key, backup, restore, or consistency guidance changes. |
 | [databases/mongodb/operations.md](databases/mongodb/operations.md) | MongoDB operations. | MongoDB performance, backup, replication, or sharding guidance changes. |
 | [databases/relational-vs-document-databases.md](databases/relational-vs-document-databases.md) | Relational and document database comparison. | Database model decision guidance changes. |
 
@@ -246,6 +260,8 @@ When adding or moving content, update every affected index immediately.
 | [security/README.md](security/README.md) | Security index. | Cross-platform security content is added. |
 | [security/identity-federation/README.md](security/identity-federation/README.md) | Identity federation index. | Federation or OIDC articles are added. |
 | [security/identity-federation/oidc-fundamentals.md](security/identity-federation/oidc-fundamentals.md) | OIDC fundamentals. | OIDC concept or token validation guidance changes. |
+| [security/identity-federation/oidc-token-validation.md](security/identity-federation/oidc-token-validation.md) | OIDC token validation guide. | JWT signature, issuer, audience, JWKS, time claim, nonce, or token-purpose validation guidance changes. |
+| [security/identity-federation/eks-human-identity-and-rbac.md](security/identity-federation/eks-human-identity-and-rbac.md) | EKS human identity and Kubernetes RBAC guide. | Human EKS authentication, access entries, OIDC group claims, or RBAC binding guidance changes. |
 | [finops/README.md](finops/README.md) | FinOps index. | Provider-neutral cost-management content is added. |
 | [devops/README.md](devops/README.md) | DevOps index. | Delivery, automation, platform, or operations content is added. |
 | [programming-languages/README.md](programming-languages/README.md) | Programming languages index. | Language-specific notes or examples are added. |

@@ -8,6 +8,9 @@ Common terms used across the knowledge base.
 | AI | Artificial Intelligence; systems or workflows that perform tasks associated with reasoning, generation, prediction, or automation. |
 | AI agent | An AI system that can follow goals, use tools, inspect context, and take multi-step actions with feedback. |
 | API gateway | A traffic entry point that routes API requests and often applies policy such as authentication, rate limits, TLS, and observability. |
+| APISIX | Apache APISIX; an open-source API gateway that can run in Kubernetes and be configured through APISIX APIs, CRDs, or Gateway API integrations. |
+| Argo CD | Kubernetes GitOps controller that reconciles application desired state from Git or another source into target clusters. |
+| BSON | Binary JSON; MongoDB's binary document format for storing documents and typed values. |
 | CDN | Content Delivery Network; an edge network that caches or accelerates content close to users. |
 | CI | Continuous Integration; automated validation that runs on code changes. |
 | CD | Continuous Delivery or Continuous Deployment, depending on release process. |
@@ -29,7 +32,10 @@ Common terms used across the knowledge base.
 | GitOps | An operating model where Git stores desired state and controllers reconcile infrastructure or workloads from that state. |
 | IaC | Infrastructure as Code; managing infrastructure through versioned declarative or procedural definitions. |
 | IRSA | IAM Roles for Service Accounts; an EKS pattern that uses Kubernetes service account tokens and IAM OIDC trust to provide AWS credentials. |
+| JWKS | JSON Web Key Set; a document containing public keys used to verify tokens signed by an identity provider. |
 | Kafka | Distributed event streaming platform used for durable event logs, producers, consumers, and stream processing. |
+| kind | Kubernetes in Docker; a local Kubernetes tool that runs cluster nodes as containers. |
+| KRaft | Kafka's Raft-based metadata mode that replaces ZooKeeper for Kafka cluster metadata management. |
 | Least privilege | Granting only the permissions needed to perform a task. |
 | LLM | Large Language Model; a model trained to process and generate language and other structured content. |
 | Managed Resource | Crossplane provider-defined Kubernetes object that represents an external resource. |
@@ -42,6 +48,7 @@ Common terms used across the knowledge base.
 | MTTR | Mean Time To Recovery; a reliability metric for how quickly service is restored after failure. |
 | OIDC | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
 | Operation | Crossplane run-to-completion function pipeline for maintenance or operational tasks. |
+| PKCE | Proof Key for Code Exchange; an OAuth 2.0 extension used with authorization code flows to reduce authorization-code interception risk. |
 | Platform API | Stable internal API exposed by a platform team to hide implementation details behind a product-like request shape. |
 | ProviderConfig | Crossplane provider configuration scoped to a namespace. |
 | ProviderRevision | Crossplane package revision object for a concrete installed provider version. |
@@ -50,6 +57,7 @@ Common terms used across the knowledge base.
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
+| Tooling cluster | Kubernetes cluster dedicated to platform tools such as GitOps, observability, policy, CI/CD runners, or developer experience services. |
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | XR | Composite Resource; an instance of an XRD-defined platform API. |
 | XRD | Composite Resource Definition; the Crossplane object that defines a platform API schema. |

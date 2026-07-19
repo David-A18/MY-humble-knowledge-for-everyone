@@ -35,3 +35,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added Crossplane deployment-pattern guidance for multi-resource YAML, Terraform-style loop equivalents, resource references, selectors, and XR status patching.
 - Added a Crossplane component-model guide defining XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, EnvironmentConfigs, package revisions, and package runtime controls.
 - Added a Terraform modules versus Crossplane reusable platform APIs comparison with Configuration package examples.
+- Ingested additional processed source guidance into focused articles for CDN caching and multi-CDN operations, APISIX architecture and policy, Kafka lag/replay and delivery guarantees, AWS stateful design, Flux/GitOps operations, MongoDB validation and scaling, OIDC/EKS identity, and tooling/kind workflows.
