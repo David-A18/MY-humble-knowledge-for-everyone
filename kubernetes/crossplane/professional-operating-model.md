@@ -188,6 +188,7 @@ What it does: defines a small namespaced platform API and prevents unsupported r
 ## Related links
 
 - [Crossplane](README.md)
+- [Deployment patterns and references](deployment-patterns-and-references.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Crossplane compositions](compositions.md)
 - [Providers and authentication](providers-and-authentication.md)

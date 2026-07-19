@@ -289,6 +289,7 @@ GitOps promotion
 ## Related links
 
 - [Crossplane](README.md)
+- [Deployment patterns and references](deployment-patterns-and-references.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)

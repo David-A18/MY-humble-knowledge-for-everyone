@@ -20,6 +20,8 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/) | XRD schema, API group, names, scope, and versions. |
 | [Composition revisions](https://docs.crossplane.io/latest/composition/composition-revisions/) | How composition changes are versioned and rolled out. |
 | [Function Patch and Transform](https://docs.crossplane.io/latest/guides/function-patch-and-transform/) | Patch-and-transform function input schema and examples. |
+| [Go templating function](https://github.com/crossplane-contrib/function-go-templating) | Composition function for Go templates, including `range` loops and generated composed resources. |
+| [KCL function](https://github.com/crossplane-contrib/function-kcl) | Composition function for KCL-based logic, loops, and dynamic resource generation. |
 | [Crossplane CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/) | `crossplane composition render`, project, dependency, and package commands. |
 | [Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/) | GitOps integration, tracking, sync waves, health, and exclusions. |
 | [Metrics](https://docs.crossplane.io/latest/guides/metrics/) | Prometheus-style metrics for Crossplane core, providers, and Upjet providers. |

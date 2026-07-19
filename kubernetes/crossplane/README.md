@@ -150,6 +150,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
+| [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
 | [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
@@ -162,6 +163,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane compositions](compositions.md)
+- [Deployment patterns and references](deployment-patterns-and-references.md)
 - [Professional operating model](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Local AWS S3 lab](local-aws-s3-lab.md)

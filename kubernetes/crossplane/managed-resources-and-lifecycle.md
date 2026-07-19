@@ -244,6 +244,7 @@ Common deletion blockers:
 ## Related links
 
 - [Crossplane](README.md)
+- [Deployment patterns and references](deployment-patterns-and-references.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane troubleshooting](troubleshooting.md)
 - [Crossplane references](references.md)
