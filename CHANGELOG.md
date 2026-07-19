@@ -34,3 +34,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added deeper Crossplane professional-practice guidance, an end-to-end AWS resource workflow, and a dedicated Crossplane references page.
 - Added Crossplane deployment-pattern guidance for multi-resource YAML, Terraform-style loop equivalents, resource references, selectors, and XR status patching.
 - Added a Crossplane component-model guide defining XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, EnvironmentConfigs, package revisions, and package runtime controls.
+- Added a Terraform modules versus Crossplane reusable platform APIs comparison with Configuration package examples.

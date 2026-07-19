@@ -11,6 +11,7 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [Crossplane documentation](https://docs.crossplane.io/latest/) | Current Crossplane documentation entry point. |
 | [What is new in Crossplane v2](https://docs.crossplane.io/latest/whats-new/) | Namespaced resources, v2 behavior, and upgrade context. |
 | [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/) | Helm installation and prerequisites. |
+| [Get started with control plane projects](https://docs.crossplane.io/latest/get-started/get-started-with-control-plane-projects/) | Crossplane project workflow for reusable APIs and package-oriented platform development. |
 | [Get started with managed resources](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/) | First managed-resource workflow. |
 | [Managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/) | Managed-resource fields, conditions, annotations, references, finalizers, provider configs, and management policies. |
 | [Managed Resource Definitions](https://docs.crossplane.io/latest/managed-resources/managed-resource-definitions/) | Provider resource API activation model introduced in Crossplane v2. |
@@ -50,6 +51,7 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [AWS IRSA authentication](https://docs.upbound.io/manuals/packages/providers/aws-auth/aws-irsa/) | IRSA setup for EKS-hosted Crossplane providers. |
 | [Upbound Marketplace](https://marketplace.upbound.io/) | Current provider, function, configuration package, and resource schema discovery. |
 | [Upbound AWS S3 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-s3) | S3 provider package, versions, and resource schemas. |
+| [Upbound AWS EC2 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ec2) | EC2, VPC, subnet, routing, security group, and networking provider resources. |
 | [Upbound AWS provider family](https://marketplace.upbound.io/providers/upbound/provider-family-aws) | Shared AWS provider family and authentication APIs. |
 | [Upjet repository](https://github.com/crossplane/upjet) | Provider-generation framework and implementation context. |
 | [provider-upjet-aws authentication](https://github.com/crossplane-contrib/provider-upjet-aws/blob/main/AUTHENTICATION.md) | Provider AWS authentication behavior and supported credential sources. |
