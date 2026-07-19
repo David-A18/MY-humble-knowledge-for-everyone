@@ -6,6 +6,8 @@ Use this page to design Crossplane platform APIs with Composite Resource Definit
 
 Compositions are where Crossplane becomes a platform-engineering tool. A platform team defines a small API that users can request, then implements that API with managed resources, ordinary Kubernetes resources, and function logic.
 
+For definitions of every Crossplane-specific component around this model, start with the [Crossplane component model](component-model.md).
+
 ## Composition model
 
 | Layer | Owner | Responsibility |
@@ -289,6 +291,7 @@ GitOps promotion
 ## Related links
 
 - [Crossplane](README.md)
+- [Crossplane component model](component-model.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)

@@ -13,12 +13,19 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/) | Helm installation and prerequisites. |
 | [Get started with managed resources](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/) | First managed-resource workflow. |
 | [Managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/) | Managed-resource fields, conditions, annotations, references, finalizers, provider configs, and management policies. |
+| [Managed Resource Definitions](https://docs.crossplane.io/latest/managed-resources/managed-resource-definitions/) | Provider resource API activation model introduced in Crossplane v2. |
 | [Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/) | Selectively activating provider resource APIs. |
+| [Usages](https://docs.crossplane.io/latest/managed-resources/usages/) | Deletion protection and deletion ordering for resources that depend on each other. |
 | [Disabling unused managed resources](https://docs.crossplane.io/latest/guides/disabling-unused-managed-resources/) | Safe-start and activation-policy workflow. |
 | [Providers](https://docs.crossplane.io/latest/packages/providers/) | Provider package installation, revisions, health, runtime configuration, and provider config types. |
+| [Functions](https://docs.crossplane.io/latest/packages/functions/) | Function package installation and composition-function role. |
+| [Configurations](https://docs.crossplane.io/latest/packages/configurations/) | Configuration package installation, revisions, dependencies, and packaging workflow. |
+| [Image Configs](https://docs.crossplane.io/latest/packages/image-configs/) | Central package image pull, verification, runtime, and rewrite behavior. |
 | [Compositions](https://docs.crossplane.io/latest/composition/compositions/) | Composition model and composed-resource behavior. |
 | [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/) | XRD schema, API group, names, scope, and versions. |
+| [Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/) | XR creation, composition selection, revision policy, pause, poll interval, and labels. |
 | [Composition revisions](https://docs.crossplane.io/latest/composition/composition-revisions/) | How composition changes are versioned and rolled out. |
+| [Environment Configs](https://docs.crossplane.io/latest/composition/environment-configs/) | Cluster-scoped composition data and XR-specific in-memory environments. |
 | [Function Patch and Transform](https://docs.crossplane.io/latest/guides/function-patch-and-transform/) | Patch-and-transform function input schema and examples. |
 | [Go templating function](https://github.com/crossplane-contrib/function-go-templating) | Composition function for Go templates, including `range` loops and generated composed resources. |
 | [KCL function](https://github.com/crossplane-contrib/function-kcl) | Composition function for KCL-based logic, loops, and dynamic resource generation. |
@@ -26,6 +33,8 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/) | GitOps integration, tracking, sync waves, health, and exclusions. |
 | [Metrics](https://docs.crossplane.io/latest/guides/metrics/) | Prometheus-style metrics for Crossplane core, providers, and Upjet providers. |
 | [Operations](https://docs.crossplane.io/latest/operations/operation/) | Run-to-completion function pipelines for maintenance and operational tasks. |
+| [Cron Operations](https://docs.crossplane.io/latest/operations/cronoperation/) | Scheduled operation pipelines. |
+| [Watch Operations](https://docs.crossplane.io/latest/operations/watchoperation/) | Reactive operation pipelines triggered by watched Kubernetes resource changes. |
 | [Troubleshoot Crossplane](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/) | Official diagnostic workflow. |
 | [Import existing resources](https://docs.crossplane.io/latest/guides/import-existing-resources/) | Bringing existing external resources under Crossplane observation or management. |
 | [Change logs](https://docs.crossplane.io/latest/guides/change-logs/) | Provider change-log feature and audit support. |
@@ -76,6 +85,7 @@ These sources are useful for understanding how teams combine Crossplane with pla
 ## Related links
 
 - [Crossplane](README.md)
+- [Crossplane component model](component-model.md)
 - [Professional operating model](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Back to Kubernetes index](../README.md)

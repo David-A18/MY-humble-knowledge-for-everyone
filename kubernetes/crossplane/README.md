@@ -147,6 +147,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 | Article | Purpose |
 | --- | --- |
+| [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
@@ -160,6 +161,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 ## Related links
 
+- [Component model](component-model.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane compositions](compositions.md)
