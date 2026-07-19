@@ -4,6 +4,18 @@
 
 Use this guide to reason about Kafka consumer progress, scaling, lag, and safe replay.
 
+## Components
+
+| Component | What it does |
+| --- | --- |
+| Topic | Named event log that stores records. |
+| Partition | Ordered slice of a topic and the unit of consumer parallelism. |
+| Offset | Position of a record inside one partition. |
+| Consumer | Process that reads records from assigned partitions. |
+| Consumer group | Logical application that shares partition assignments across consumers. |
+| Group coordinator | Broker-side coordinator for membership, assignments, and committed offsets. |
+| Lag | Distance between the latest available offset and the group's committed offset. |
+
 ## Consumer group model
 
 A consumer group is one logical application made of one or more consumer instances.
@@ -18,6 +30,17 @@ consumer group: payment-service
 ```
 
 Within one group, a partition is assigned to one active consumer at a time. Different groups read the same topic independently.
+
+## How it works
+
+1. A consumer subscribes to one or more topics with a `group.id`.
+2. The group coordinator assigns partitions to active group members.
+3. Consumers poll records from their assigned partitions.
+4. The application processes the records.
+5. The group commits offsets after the chosen safety point.
+6. If a consumer joins, leaves, crashes, or stalls, the group rebalances.
+
+Rebalancing is normal, but repeated rebalancing reduces useful processing time and often appears as rising lag.
 
 ## Scaling rule
 
@@ -52,6 +75,15 @@ bin/kafka-consumer-groups.sh \
 ```
 
 What it does: shows committed offsets, log-end offsets, and lag by partition for the target consumer group.
+
+Expected output includes columns similar to:
+
+```text
+GROUP              TOPIC      PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG
+payment-service-v1 orders.v1  0          18423           18510           87
+```
+
+What it means: partition `0` has 87 records available that this consumer group has not committed yet.
 
 ## Lag diagnosis
 
@@ -107,6 +139,18 @@ What it does: moves the selected group offsets so records can be consumed again 
 
 > [!WARNING]
 > Never reset offsets for a production group casually. Reprocessing can repeat payments, emails, inventory reservations, or other side effects unless consumers are idempotent.
+
+## Kubernetes operating notes
+
+| Kubernetes behavior | Kafka effect |
+| --- | --- |
+| Pod restart | Consumer leaves and rejoins the group. |
+| Rolling deployment | Partition assignments move during rollout. |
+| CPU throttling | Poll loop can slow down and trigger lag. |
+| Liveness probe too aggressive | Healthy but slow consumers may be killed. |
+| Horizontal Pod Autoscaler | Scaling events can trigger rebalances. |
+
+For long processing, tune consumer poll settings and probes together. A consumer that blocks the poll loop for too long can be treated as unhealthy by Kafka even if the Pod is still running.
 
 ## Related links
 

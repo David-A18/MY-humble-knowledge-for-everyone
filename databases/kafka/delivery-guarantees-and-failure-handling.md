@@ -4,6 +4,31 @@
 
 Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records.
 
+## Components
+
+| Component | Responsibility |
+| --- | --- |
+| Producer | Serializes records, assigns keys, sends batches, and retries delivery. |
+| Broker leader | Appends records to the partition log and acknowledges writes. |
+| Follower replicas | Copy partition data for availability. |
+| Consumer | Polls records and performs business processing. |
+| Offset commit | Records the consumer group's progress. |
+| Retry topic | Holds records that should be attempted later. |
+| Dead-letter topic | Holds records that could not be processed after bounded attempts. |
+| Outbox table | Bridges database transactions and event publication. |
+
+## How failures move through Kafka
+
+```text
+producer retry
+  -> broker append
+  -> consumer poll
+  -> side effect
+  -> offset commit
+```
+
+Each arrow can fail. The safest design decides what happens if the process crashes before or after every step.
+
 ## Delivery guarantee choices
 
 | Guarantee | Meaning | Common fit |
@@ -38,6 +63,17 @@ linger.ms=5
 
 What it does: starts with safer acknowledgement and retry behavior, then leaves throughput and latency tuning to load tests.
 
+### Manual commit consumer pattern
+
+```python
+for record in consumer.poll(timeout_ms=1000):
+    event_id = record.headers.get("event-id")
+    process_idempotently(event_id, record.value)
+consumer.commit()
+```
+
+What it does: commits progress only after processing succeeds. The consumer can still repeat work after a crash, so `process_idempotently` must make duplicates safe.
+
 ## Consumer failure patterns
 
 | Failure | Symptom | Safer response |
@@ -62,6 +98,22 @@ orders.v1
 
 What it does: gives transient failures time to recover while preserving a final place for records that need human or automated repair.
 
+## Dead-letter record contents
+
+Include enough information for repair:
+
+- original topic, partition, and offset,
+- original key and headers,
+- error class and message,
+- consumer name and version,
+- failed timestamp,
+- retry count,
+- correlation ID or trace ID,
+- original payload or pointer to a secure payload store.
+
+> [!WARNING]
+> Do not put secrets, tokens, or sensitive personal data into dead-letter topics unless the topic has the same security controls and retention policy as the source data.
+
 ## Transactional outbox
 
 Use a transactional outbox when a service must update its database and publish an event based on that update.
@@ -77,6 +129,22 @@ Publisher or CDC connector
 ```
 
 What it does: avoids the unsafe sequence where the database commit succeeds but the Kafka publish fails, or the Kafka publish succeeds but the database commit rolls back.
+
+### Outbox table sketch
+
+```sql
+CREATE TABLE outbox_events (
+  event_id UUID PRIMARY KEY,
+  aggregate_type TEXT NOT NULL,
+  aggregate_id TEXT NOT NULL,
+  event_type TEXT NOT NULL,
+  payload JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  published_at TIMESTAMPTZ
+);
+```
+
+What it does: stores the event in the same database transaction as the business change so a publisher or CDC connector can publish it later.
 
 ## Idempotency checklist
 

@@ -4,6 +4,17 @@
 
 Use this page to classify AWS application components by where state lives and how that affects scaling, recovery, and operations.
 
+## What state means
+
+State is information from a previous request, packet, transaction, or execution that affects correct future behavior.
+
+```text
+stateful: the component must remember something
+stateless: the component can process the request without private local history
+```
+
+A stateless API can still read and write large amounts of data. The difference is that durable data lives in shared systems such as RDS, DynamoDB, S3, EFS, SQS, MSK, or Step Functions instead of only inside one replaceable compute replica.
+
 ## Core distinction
 
 | Type | Meaning | Operational effect |
@@ -18,6 +29,22 @@ Use this page to classify AWS application components by where state lives and ho
 - Stateful data tier: RDS, DynamoDB, ElastiCache, MSK, EBS-backed workloads, or self-managed databases.
 - Mixed design: stateless API with stateful authentication, queue, cache, database, or workflow layer.
 
+## How replacement differs
+
+```text
+Stateless app replica fails
+  -> load balancer marks it unhealthy
+  -> Auto Scaling, ECS, or Kubernetes creates another
+  -> new replica reads shared state
+
+Stateful node fails
+  -> failover, reattach, replay, restore, or elect
+  -> verify data consistency
+  -> resume traffic
+```
+
+What it does: highlights why stateful systems need runbooks and recovery tests, while stateless compute should be routinely replaceable.
+
 ## Design checklist
 
 - Inventory all session, file, cache, queue, workflow, and database state.
@@ -27,6 +54,8 @@ Use this page to classify AWS application components by where state lives and ho
 
 ## Related links
 
+- [Stateless application patterns](stateless-application-patterns.md)
+- [Stateful design decision checklist](stateful-design-decision-checklist.md)
 - [Stateful networking](../networking/stateful-networking.md)
 - [Stateful workloads](../../../kubernetes/core-objects/stateful-workloads.md)
 - [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)

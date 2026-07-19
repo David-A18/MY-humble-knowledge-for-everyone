@@ -4,6 +4,18 @@
 
 Use this guide to separate human authentication to Amazon EKS from workload identity and to bind authenticated users or groups to Kubernetes permissions safely.
 
+## How it works
+
+Human access to EKS has two gates:
+
+```text
+human authenticates
+  -> EKS maps identity to Kubernetes username and groups
+  -> Kubernetes RBAC authorizes verbs on resources
+```
+
+AWS identity proves who is calling the cluster endpoint. Kubernetes RBAC decides whether that caller can list Pods, create Deployments, read Secrets, or change cluster-wide resources.
+
 ## The three identity problems
 
 | Problem | Primary mechanism | Purpose |
@@ -13,6 +25,18 @@ Use this guide to separate human authentication to Amazon EKS from workload iden
 | Human to Kubernetes | EKS access entries, IAM authentication, or external OIDC where supported. | People use `kubectl` against the cluster. |
 
 Do not mix these together. A Pod's AWS permissions and a developer's Kubernetes RBAC permissions solve different problems.
+
+## Components
+
+| Component | What it does |
+| --- | --- |
+| IAM principal | AWS identity used to authenticate to EKS. |
+| EKS access entry | Maps an IAM principal to cluster access. |
+| Kubernetes username | Identity string seen by Kubernetes authorization. |
+| Kubernetes group | Group string used in RBAC bindings. |
+| Role or ClusterRole | Defines allowed verbs on resources. |
+| RoleBinding or ClusterRoleBinding | Attaches a role to users, groups, or service accounts. |
+| External OIDC provider | Optional identity source for human authentication in supported designs. |
 
 ## RBAC binding pattern
 
@@ -46,6 +70,28 @@ kubectl auth can-i '*' '*' --all-namespaces
 
 What it does: tests what the current Kubernetes identity can do.
 
+### Create an EKS access entry
+
+```bash
+aws eks create-access-entry \
+  --cluster-name platform-prod \
+  --principal-arn arn:aws:iam::111122223333:role/payments-developer
+```
+
+What it does: registers an IAM role as a cluster access principal.
+
+### Associate a managed access policy
+
+```bash
+aws eks associate-access-policy \
+  --cluster-name platform-prod \
+  --principal-arn arn:aws:iam::111122223333:role/payments-developer \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy \
+  --access-scope type=namespace,namespaces=payments
+```
+
+What it does: grants view-oriented EKS access scoped to the `payments` namespace.
+
 ## Governance checklist
 
 - Prefer group-based bindings over individual user bindings.
@@ -58,6 +104,16 @@ What it does: tests what the current Kubernetes identity can do.
 
 > [!IMPORTANT]
 > Authentication proves who the caller is. Kubernetes RBAC decides what that caller can do. Both must be correct.
+
+## Troubleshooting
+
+| Symptom | First check |
+| --- | --- |
+| `kubectl` cannot authenticate. | AWS identity, kubeconfig, cluster endpoint access, and token generation. |
+| Authenticated user has no permissions. | RBAC bindings or EKS access policy scope. |
+| User can access too much. | ClusterRoleBinding, broad group claim, or cluster-wide access policy. |
+| Group-based RBAC does not work. | Claim mapping, group name prefix, and identity provider configuration. |
+| Workload role appears in human access review. | Human and workload identity boundaries are mixed. |
 
 ## Related links
 

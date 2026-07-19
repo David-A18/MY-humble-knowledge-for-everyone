@@ -18,6 +18,35 @@ Use this page when a public application, API, or static asset path sits behind A
 | Origin bypass | A path where clients can reach the origin directly. | Bypass can skip WAF, bot controls, rate limits, and cache protection. |
 | Origin shield or tiered cache | An intermediate cache layer in front of the origin. | Reduces duplicate origin requests during global cache misses. |
 
+## How it works
+
+A CDN is a reverse proxy in front of the origin. The viewer talks to the edge location, not directly to the application server.
+
+```text
+Viewer
+  -> DNS resolves public hostname to CDN
+  -> CDN terminates viewer TLS
+  -> CDN evaluates security policy and cache key
+  -> cache hit returns from edge
+  -> cache miss forwards to origin
+  -> origin response may be cached and returned
+```
+
+The origin should see a smaller, more controlled request stream than the public internet. That is the point of combining caching, security inspection, and origin protection.
+
+## Components
+
+| Component | What it does | Example |
+| --- | --- | --- |
+| Viewer hostname | Public DNS name used by clients. | `www.example.com` |
+| Edge hostname or distribution domain | Provider-owned target for DNS. | CloudFront distribution domain or Akamai edge hostname. |
+| Origin hostname | Hostname the CDN uses to reach the real service. | `origin-www.example.com` |
+| Cache policy | Defines TTLs and cache-key inputs. | Include `Accept-Encoding`; exclude marketing parameters. |
+| Origin request policy | Defines what is forwarded without necessarily caching on it. | Forward `Authorization` only on no-cache paths. |
+| Response headers policy | Adds security or cache headers. | `Strict-Transport-Security`, `Cache-Control`. |
+| WAF or edge security policy | Blocks malicious requests before origin. | Rate rules, managed signatures, bot controls. |
+| Logs and metrics | Prove cache, error, and security behavior. | Cache status, request ID, origin status. |
+
 ## Cache-key decisions
 
 Start by classifying each path.
@@ -64,6 +93,28 @@ What it does: keeps the CDN viewer hostname separate from the origin hostname so
 > [!IMPORTANT]
 > Treat direct-origin access as a production incident risk. If the origin is reachable without the CDN, attackers and accidental clients can bypass edge WAF, rate limiting, bot controls, TLS policy, and cache offload.
 
+### Private S3 origin example
+
+```text
+Viewer
+  -> CloudFront
+  -> Origin Access Control signs origin request
+  -> private S3 bucket allows CloudFront service principal
+```
+
+What it does: keeps the bucket private while letting CloudFront fetch objects through a controlled origin-access path.
+
+### Public ALB origin example
+
+```text
+Viewer
+  -> CDN
+  -> ALB origin hostname
+  -> EKS ingress or application target group
+```
+
+What it does: keeps routing simple, but it requires extra bypass controls such as strict Host validation, WAF policy, source restrictions where possible, and direct-origin monitoring.
+
 ## TTL and purge guidance
 
 | Situation | Prefer | Reason |
@@ -83,6 +134,17 @@ What it does: keeps the CDN viewer hostname separate from the origin hostname so
 | 502 from CloudFront custom origin | Origin TLS certificate and origin domain name. | Certificate name does not match the configured origin name. |
 | Cache hit ratio is low | Query strings, cookies, and headers in key. | Cache key is too specific. |
 | CDN appears bypassed | Origin access logs and Host headers. | Clients can reach the origin directly. |
+
+## Implementation checklist
+
+- Separate viewer hostname from origin hostname.
+- Classify each path as static, public dynamic, authenticated, or admin.
+- Decide cache-key inputs before deployment.
+- Add explicit no-cache behavior for private and unsafe paths.
+- Prefer versioned assets over frequent purges.
+- Restrict the origin with private access, source controls, or strict application checks.
+- Log viewer request ID, origin status, cache status, and client IP source.
+- Load test cache-miss behavior before global rollout.
 
 ## Related links
 

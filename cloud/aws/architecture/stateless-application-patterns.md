@@ -13,6 +13,33 @@ information or continuity, it behaves as stateless compute.
 
 Stateless does not mean the application has no data. It means the compute instance does not privately own required history.
 
+## How it works
+
+Stateless compute moves durable state out of the replica and into shared services.
+
+```text
+ALB
+  -> app replica A
+  -> app replica B
+  -> app replica C
+        |
+        +-> DynamoDB, RDS, S3, ElastiCache, SQS, MSK, Step Functions
+```
+
+Any healthy replica can serve the next request because required state is retrieved from shared stores or included in the request.
+
+## Components
+
+| Component | Role |
+| --- | --- |
+| Load balancer | Routes requests only to healthy replicas. |
+| Auto Scaling group, ECS service, or Kubernetes Deployment | Maintains replaceable compute capacity. |
+| Shared data store | Holds authoritative state. |
+| Configuration store | Provides reproducible runtime settings. |
+| Secret store | Provides credentials without baking them into images. |
+| Queue or workflow service | Holds work while workers remain replaceable. |
+| Observability pipeline | Keeps logs and metrics after a replica is gone. |
+
 ## State inventory
 
 | State type | Avoid storing only in | Prefer |
@@ -47,6 +74,15 @@ What it does: removes one Auto Scaling instance while keeping desired capacity, 
 > [!WARNING]
 > Run replacement tests only in an approved environment and window. Confirm the target is an interchangeable application replica, not a stateful database, broker, firewall, or manually configured singleton.
 
+### Kubernetes replacement example
+
+```bash
+kubectl delete pod -n payments -l app=payments-api
+kubectl rollout status deployment/payments-api -n payments
+```
+
+What it does: removes current application Pods and verifies that the Deployment replaces them successfully.
+
 ## AWS patterns
 
 | Workload | Stateless pattern | Stateful dependency |
@@ -66,6 +102,15 @@ What it does: removes one Auto Scaling instance while keeping desired capacity, 
 | Treating Lambda `/tmp` as durable. | Execution environment reuse is not guaranteed. |
 | Keeping logs only on instances. | Failed or replaced replicas remove diagnostic context. |
 | Scaling down workers without draining. | In-flight jobs can be repeated or abandoned. |
+
+## Validation checklist
+
+- A new replica starts without manual SSH or console edits.
+- Terminating a replica does not lose uploads, sessions, or job progress.
+- Logs and metrics remain available after termination.
+- Health checks remove bad replicas before users see errors.
+- Graceful shutdown drains in-flight requests or checkpoints work.
+- Backups protect state stores, not disposable compute nodes.
 
 ## Related links
 

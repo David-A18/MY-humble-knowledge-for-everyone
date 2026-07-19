@@ -4,6 +4,20 @@
 
 Use this guide to keep GitOps controllers powerful enough to reconcile clusters without giving every team uncontrolled cluster-wide deployment authority.
 
+## How GitOps changes security
+
+GitOps turns repository write access into a path toward runtime change. The controller becomes the actor that applies those changes, so both Git permissions and Kubernetes permissions matter.
+
+```text
+developer pull request
+  -> review and branch policy
+  -> merge to protected branch
+  -> GitOps controller detects desired state
+  -> Kubernetes API applies changes using controller permissions
+```
+
+If the controller can create cluster-admin bindings, then a Git change may become a cluster-admin change.
+
 ## Threat model
 
 | Asset | Risk | Control |
@@ -31,6 +45,25 @@ Use this guide to keep GitOps controllers powerful enough to reconcile clusters 
 
 Argo CD Projects can restrict trusted source repositories, target clusters, namespaces, resource kinds, and project roles. Use Projects as a first-class tenancy boundary rather than putting every application into the default project.
 
+### Argo CD project boundary example
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: payments
+  namespace: argocd
+spec:
+  sourceRepos:
+    - https://github.com/example/payments-platform.git
+  destinations:
+    - namespace: payments
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+```
+
+What it does: limits applications in the project to one source repository and one namespace destination.
+
 ## Flux controls
 
 Flux multi-tenancy usually combines:
@@ -41,6 +74,22 @@ Flux multi-tenancy usually combines:
 - source repository boundaries,
 - `dependsOn` for platform ordering,
 - admission controls for disallowed resources.
+
+### Flux scoped reconciliation example
+
+```yaml
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: payments-apps
+  namespace: flux-system
+spec:
+  serviceAccountName: payments-reconciler
+  targetNamespace: payments
+  path: ./teams/payments
+```
+
+What it does: asks Flux to reconcile a team's path using a scoped service account instead of the controller's default authority.
 
 ## Secret handling
 
@@ -59,6 +108,17 @@ Flux multi-tenancy usually combines:
 - Is manual production drift detected and reconciled intentionally?
 - Are controller alerts routed to the owning team?
 - Is there a documented break-glass procedure?
+
+## Incident response checks
+
+When an unexpected object appears in a cluster:
+
+1. Identify whether it is managed by Argo CD, Flux, Helm, or manual apply.
+2. Find the source repository, path, chart, or Kustomization that owns it.
+3. Check commit history and pull request approvals.
+4. Check the controller service account that applied it.
+5. Revert in Git or suspend the owning reconciliation object.
+6. Preserve controller logs for audit.
 
 ## Related links
 

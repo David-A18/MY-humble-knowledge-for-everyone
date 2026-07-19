@@ -4,6 +4,35 @@
 
 Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS.
 
+## How state changes the design
+
+Stateful components must recover specific information after failure. That changes scaling, deployment, backup, networking, and security decisions.
+
+```text
+stateless replica failure
+  -> stop routing
+  -> replace replica
+
+stateful replica failure
+  -> protect data
+  -> preserve quorum or leadership
+  -> reattach or rebuild state
+  -> verify consistency
+  -> then resume traffic
+```
+
+## Components to identify
+
+| Component | Questions to answer |
+| --- | --- |
+| State owner | Which service or process is authoritative? |
+| Storage layer | Where does the state physically live? |
+| Replication layer | How many copies exist and where? |
+| Backup layer | What separate recovery copy exists? |
+| Coordination layer | How are leaders, locks, or partitions assigned? |
+| Network path | Do stateful network devices need symmetric flow routing? |
+| Runbook | Who can fail over, restore, replay, or scale down safely? |
+
 ## Classification questions
 
 | Question | Why it matters |
@@ -35,6 +64,18 @@ Use this checklist before running stateful workloads, network appliances, databa
 - Transit Gateway appliance mode and Gateway Load Balancer stickiness can help preserve flow path.
 - VPC Flow Logs can show accept/reject decisions but do not replace route, firewall, and app logs.
 
+### NACL return traffic example
+
+```text
+Inbound:
+allow TCP 443 from client
+
+Outbound:
+allow TCP ephemeral ports to client
+```
+
+What it does: permits both directions for a stateless Network ACL. A Security Group would track the connection, but a NACL evaluates each direction independently.
+
 ## Data-state checklist
 
 - Backups are separate from replication.
@@ -55,6 +96,15 @@ Use this checklist before running stateful workloads, network appliances, databa
 
 > [!WARNING]
 > A StatefulSet gives Pods stable names and storage association. It does not automatically make PostgreSQL, Kafka, MongoDB, or another database highly available.
+
+## Production readiness evidence
+
+- Restore was tested from backup into an isolated environment.
+- Failover was tested without creating two writers.
+- Monitoring covers lag, quorum, disk saturation, and backup failures.
+- Scale-in has a drain or decommission procedure.
+- Security policy covers snapshots, backups, logs, and replicas.
+- RPO and RTO are written down and accepted by the service owner.
 
 ## Related links
 

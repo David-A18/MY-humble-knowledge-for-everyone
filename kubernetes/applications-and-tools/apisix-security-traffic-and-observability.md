@@ -4,6 +4,22 @@
 
 Use this guide to place the right policy in Apache APISIX without turning the gateway into hidden business logic.
 
+## How policy execution works
+
+APISIX evaluates route matching and plugins around the request lifecycle.
+
+```text
+client request
+  -> rewrite phase
+  -> access phase
+  -> upstream selection
+  -> proxy request
+  -> response header/body processing
+  -> log phase
+```
+
+Authentication, authorization, and rate limiting usually happen before the request reaches the backend. Logging and metrics happen after APISIX has enough request and response context.
+
 ## Policy placement
 
 | Policy | Good gateway responsibility | Keep in application code |
@@ -13,6 +29,17 @@ Use this guide to place the right policy in Apache APISIX without turning the ga
 | Rate limits | Per IP, consumer, credential, or tenant limits. | Business quotas that need transactional state. |
 | Routing | Host, path, header, canary, and weighted routing. | Workflow decisions based on private domain data. |
 | Observability | Request IDs, metrics, logs, traces. | Domain events and business audit records. |
+
+## Policy components
+
+| Component | What it controls |
+| --- | --- |
+| Route plugin | Behavior attached to one matched API path. |
+| Service plugin | Behavior shared by several routes. |
+| Consumer plugin | Policy applied after caller identity is known. |
+| Global rule | Broad policy across gateway traffic. |
+| Plugin config | Reusable plugin settings referenced by routes or consumers. |
+| Secret or credential | API key, JWT secret, client certificate, or IdP settings. |
 
 ## Authentication and identity
 
@@ -39,6 +66,19 @@ Choose the limiting key based on the abuse or fairness problem.
 | Tenant | SaaS fairness. | Requires tenant identity in the gateway context. |
 | Route | Protecting expensive endpoints. | Does not distinguish callers. |
 
+### Rate-limit policy example
+
+```yaml
+plugins:
+  limit-count:
+    count: 1000
+    time_window: 60
+    key_type: var
+    key: consumer_name
+```
+
+What it does: expresses a per-consumer request limit for a 60-second window. The exact Kubernetes wrapper depends on the APISIX Ingress Controller API version in use.
+
 ## Traffic release patterns
 
 | Pattern | Use when | Validation |
@@ -62,6 +102,17 @@ Minimum telemetry for production APISIX routes:
 - rate-limit decisions,
 - authentication and authorization failures,
 - gateway and upstream error classes.
+
+### Request ID propagation example
+
+```text
+Client -> APISIX adds or preserves X-Request-ID
+APISIX -> backend receives X-Request-ID
+Backend -> logs X-Request-ID with business context
+APISIX -> access log includes same X-Request-ID
+```
+
+What it does: allows the platform team to connect gateway logs, application logs, and distributed traces during an incident.
 
 ### Check gateway and controller logs
 

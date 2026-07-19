@@ -14,6 +14,30 @@ Host Docker image cache
 kind node container image store
 ```
 
+## How it works
+
+`kind` creates Docker containers that behave like Kubernetes nodes. Each node has its own container runtime image store. Kubernetes pulls images from a registry unless the image already exists on the node and the pull policy allows reuse.
+
+```text
+docker build on host
+  -> host image cache
+  -> kind load copies image into node containers
+  -> Pod starts with imagePullPolicy: IfNotPresent or Never
+```
+
+For repeated development, a local registry can be faster because the nodes pull from a registry endpoint instead of receiving copied images one at a time.
+
+## Components
+
+| Component | What it does |
+| --- | --- |
+| Host Docker daemon | Builds and stores local images. |
+| kind node container | Runs a Kubernetes node and has a separate image store. |
+| Image tag | Name Kubernetes uses when resolving the image. |
+| `imagePullPolicy` | Controls whether Kubernetes pulls or reuses a local image. |
+| Local registry | Registry reachable by both host and cluster nodes. |
+| Pull Secret | Kubernetes credential for private registry access. |
+
 ## Options
 
 | Option | Use when | Notes |
@@ -60,6 +84,23 @@ spec:
 
 What it does: keeps Kubernetes from trying to pull a local development image from a public registry when it already exists in the node image store.
 
+### Verify the image is visible
+
+```bash
+docker exec platform-lab-control-plane crictl images | grep orders-api
+```
+
+What it does: checks the node container's image store rather than only the host Docker image cache.
+
+### Local registry workflow
+
+```bash
+docker tag orders-api:dev localhost:5001/orders-api:dev
+docker push localhost:5001/orders-api:dev
+```
+
+What it does: pushes a development image to a local registry that a correctly configured `kind` cluster can pull from.
+
 ## Troubleshooting
 
 | Symptom | Check |
@@ -69,6 +110,16 @@ What it does: keeps Kubernetes from trying to pull a local development image fro
 | Image works in one cluster only | Image was loaded into only one named cluster. |
 | App runs old code | Tag reuse and local image cache. |
 | CI cannot access registry | Network path and registry certificate trust. |
+
+## Lab checklist
+
+- Name the cluster explicitly.
+- Build the image with a clear local tag.
+- Load the image into the intended cluster or push it to the local registry.
+- Set `imagePullPolicy` intentionally.
+- Confirm the Pod spec uses the same tag that was loaded or pushed.
+- Inspect the node image store when troubleshooting.
+- Delete and recreate Pods after changing image availability.
 
 ## Related links
 

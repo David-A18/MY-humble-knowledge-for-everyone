@@ -4,6 +4,12 @@
 
 Use this page to understand the core Kafka mental model before designing producers, consumers, or AWS streaming architectures.
 
+## What Kafka does
+
+Apache Kafka stores streams of records in durable partitioned logs. Producers append records to topics, brokers replicate and serve those records, and consumers read them independently using offsets.
+
+Kafka is useful when several systems need to react to the same facts at different speeds without the producer knowing every consumer.
+
 ## Core concepts
 
 | Concept | Meaning | Why it matters |
@@ -16,6 +22,19 @@ Use this page to understand the core Kafka mental model before designing produce
 | Consumer group | Consumers sharing work for a topic. | Each partition is consumed by one group member at a time. |
 | Offset | Position of a record in a partition. | Consumers commit offsets to track progress. |
 
+## Component model
+
+```text
+producer
+  -> topic
+  -> partition leader on broker
+  -> follower replicas
+  -> consumer group
+  -> offset commits
+```
+
+Each component affects a different design concern: producer settings affect durability, partitions affect ordering and parallelism, brokers affect availability, and consumers affect processing guarantees.
+
 ## Message flow
 
 1. A producer serializes an event and sends it to a topic.
@@ -23,6 +42,24 @@ Use this page to understand the core Kafka mental model before designing produce
 3. The partition leader appends the record to the log.
 4. Followers replicate the record.
 5. Consumers fetch records and commit offsets after processing.
+
+### Event example
+
+```json
+{
+  "eventId": "7e858f8f-9337-44d1-91fb-9038d56653a6",
+  "eventType": "OrderCreated",
+  "eventVersion": 1,
+  "occurredAt": "2026-07-18T09:30:00Z",
+  "data": {
+    "orderId": "ORD-7842",
+    "customerId": "CUST-52",
+    "total": 149.99
+  }
+}
+```
+
+What it does: records a fact that happened. Consumers such as payment, inventory, notification, and analytics can process it independently.
 
 ## Design reminders
 
@@ -35,6 +72,8 @@ Use this page to understand the core Kafka mental model before designing produce
 
 - [Apache Kafka documentation](https://kafka.apache.org/documentation/)
 - [Topic and event design](topic-and-event-design.md)
+- [Consumer groups, lag, and replay](consumer-groups-lag-and-replay.md)
+- [Delivery guarantees and failure handling](delivery-guarantees-and-failure-handling.md)
 - [Kafka operations](operations.md)
 - [Back to Kafka index](README.md)
 - [Back to databases index](../README.md)

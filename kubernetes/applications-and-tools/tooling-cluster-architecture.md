@@ -8,6 +8,38 @@ Use this guide to design a Kubernetes tooling cluster that hosts platform tools 
 
 A tooling cluster is a cluster role, not a Kubernetes resource kind. It hosts shared platform tools such as GitOps controllers, observability systems, security scanners, CI runners, secret operators, and developer portals.
 
+## How it works
+
+The tooling cluster runs platform control services. Workload clusters run business applications.
+
+```text
+Git, registries, cloud APIs
+          |
+          v
+tooling cluster
+  -> GitOps controllers
+  -> observability
+  -> policy and security tooling
+          |
+          v
+workload clusters
+  -> application namespaces
+```
+
+The tooling cluster should manage other clusters only through explicit credentials, service accounts, and network paths.
+
+## Components
+
+| Component | What it does |
+| --- | --- |
+| GitOps controller | Applies platform and workload desired state. |
+| Observability stack | Collects metrics, logs, traces, and alerts. |
+| Policy controller | Enforces admission and compliance rules. |
+| Secret operator | Syncs approved secret material into clusters. |
+| Runner or build system | Executes CI tasks or image builds. |
+| Developer portal | Exposes service catalog and platform workflows. |
+| Backup and restore tooling | Protects platform state and recovery metadata. |
+
 ## Common patterns
 
 | Pattern | Use when | Trade-off |
@@ -62,6 +94,28 @@ workload account B
 ```
 
 What it does: separates the platform tooling plane from workload accounts while still allowing controlled cross-account access.
+
+## Restore sequence
+
+1. Restore cluster access and cloud IAM prerequisites.
+2. Restore secret management and decryption keys.
+3. Restore GitOps controllers.
+4. Reconnect workload-cluster credentials.
+5. Restore observability storage or reconnect external backends.
+6. Resume reconciliation in controlled order.
+
+> [!IMPORTANT]
+> A tooling cluster should be able to rebuild itself from Git plus protected secrets. If the only copy of the GitOps configuration is inside the failed cluster, recovery becomes circular.
+
+## Design review questions
+
+- Which teams can change tooling-cluster configuration?
+- Which credentials can reach workload clusters?
+- What continues if the tooling cluster is unavailable?
+- Which tools need persistent storage and backup?
+- Which tools must be highly available?
+- How are break-glass actions audited?
+- How are platform upgrades tested before production?
 
 ## Related links
 

@@ -16,6 +16,15 @@ GitRepository or HelmRepository
 
 Flux separates source acquisition from workload reconciliation. That makes dependencies, intervals, retries, and ownership visible in Kubernetes resources.
 
+## How it works
+
+1. A source object points Flux at Git, Helm, OCI, S3-compatible storage, or another supported source.
+2. `source-controller` fetches the source and stores an immutable artifact.
+3. A reconciler consumes that artifact.
+4. `kustomize-controller` applies manifests or Kustomize overlays.
+5. `helm-controller` renders and manages Helm releases.
+6. Status conditions show whether source fetch, render, apply, and health checks succeeded.
+
 ## Main controllers
 
 | Controller | Primary resources | Role |
@@ -25,6 +34,17 @@ Flux separates source acquisition from workload reconciliation. That makes depen
 | helm-controller | `HelmRelease`. | Installs and reconciles Helm releases. |
 | notification-controller | `Provider`, `Alert`, `Receiver`. | Sends alerts and receives webhooks. |
 | image automation controllers | `ImageRepository`, `ImagePolicy`, `ImageUpdateAutomation`. | Detects image tags and commits updates. |
+
+## Resource components
+
+| Resource | Important fields |
+| --- | --- |
+| `GitRepository` | `url`, `ref`, `interval`, authentication Secret. |
+| `Kustomization` | `sourceRef`, `path`, `prune`, `dependsOn`, `targetNamespace`. |
+| `HelmRepository` | Chart repository URL and refresh interval. |
+| `HelmRelease` | `chart`, `values`, remediation, install and upgrade settings. |
+| `Provider` | Notification destination. |
+| `Receiver` | Webhook endpoint for source updates. |
 
 ## Reconciliation flow
 
@@ -45,6 +65,26 @@ flux reconcile kustomization apps-prod --with-source
 
 What it does: asks Flux to fetch source and reconcile the dependent Kustomization immediately instead of waiting for the interval.
 
+### Basic Kustomization example
+
+```yaml
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps-prod
+  namespace: flux-system
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: platform-config
+  path: ./clusters/prod/apps
+  prune: true
+  wait: true
+```
+
+What it does: applies the production app manifests from a Git artifact, waits for readiness, and prunes resources that were removed from Git.
+
 ## Kustomization or HelmRelease
 
 | Need | Prefer | Reason |
@@ -62,6 +102,28 @@ What it does: asks Flux to fetch source and reconcile the dependent Kustomizatio
 - Use remediation settings for failed installs and upgrades.
 - Monitor HelmRelease conditions, not only Pod status.
 - Avoid manual `helm upgrade` against Flux-owned releases.
+
+### HelmRelease example
+
+```yaml
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: metrics-server
+  namespace: platform
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: metrics-server
+      version: 3.12.1
+      sourceRef:
+        kind: HelmRepository
+        name: metrics-server
+        namespace: flux-system
+```
+
+What it does: declares a Helm chart release that Flux installs and keeps reconciled.
 
 ## Troubleshooting
 

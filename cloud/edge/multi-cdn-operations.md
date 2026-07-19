@@ -23,6 +23,31 @@ The CDNs should usually run in parallel, not in an accidental chain.
 > [!WARNING]
 > Avoid `User -> CDN A -> CDN B -> origin` unless there is a deliberate and tested reason. Chaining can duplicate caches, confuse client IP handling, add latency, and make purge behavior ambiguous.
 
+## Components
+
+| Component | Responsibility |
+| --- | --- |
+| Traffic steering | Chooses which CDN receives a request. |
+| Provider configuration | Implements cache, TLS, security, and origin behavior in each CDN. |
+| Origin layer | Serves the authoritative content or application response. |
+| Behavior contract | Describes expected behavior in provider-neutral terms. |
+| Observability pipeline | Normalizes logs, metrics, request IDs, and security events. |
+| Purge automation | Removes or invalidates content across every active provider. |
+| Rollback plan | Restores a known-good DNS and CDN configuration. |
+
+## How request handling differs
+
+Each CDN may name concepts differently. The architecture should still produce the same visible behavior.
+
+```text
+Provider A rule tree      Provider B cache behavior
+        |                         |
+        v                         v
+same intended cache key, TTL, security policy, headers, and origin
+```
+
+What it does: gives engineers a way to compare outcomes instead of arguing over product-specific vocabulary.
+
 ## Shared behavior contract
 
 Create a provider-neutral behavior contract before configuring either CDN.
@@ -67,6 +92,23 @@ What it does: describes the intended behavior once, then each CDN implementation
 | Health-check failover | A provider or origin path can fail. | Health checks must test useful application behavior. |
 | Manual CNAME switch | You need a controlled migration step. | Prepare rollback before lowering confidence. |
 
+### Weighted migration example
+
+```text
+0% provider B
+  -> validate config with test hostname
+5% provider B
+  -> watch errors, cache hit ratio, WAF actions, origin traffic
+25% provider B
+  -> compare user latency and support tickets
+50% provider B
+  -> confirm purge and rollback operations
+100% provider B
+  -> keep provider A ready until rollback window closes
+```
+
+What it does: moves traffic gradually while collecting evidence that both providers behave the same for real users.
+
 ## Operational checklist
 
 - Keep a single owner for cache-key policy.
@@ -87,6 +129,20 @@ What it does: describes the intended behavior once, then each CDN implementation
 | Purging one CDN only. | Stale content persists in the other path. | Use a multi-provider purge runbook. |
 | Logging different fields. | Incidents cannot be correlated. | Define required log fields before go-live. |
 | Letting origins remain public. | CDN controls are bypassable. | Restrict origins and monitor direct access. |
+
+## Incident checks
+
+When behavior differs between providers, compare:
+
+1. DNS answer and selected CDN.
+2. TLS certificate and SNI.
+3. Matched rule, behavior, or property.
+4. Cache key inputs.
+5. Forwarded headers, cookies, and query parameters.
+6. Origin hostname and Host header.
+7. WAF, bot, or rate-limit action.
+8. Response headers and cache-control values.
+9. Log fields and request IDs.
 
 ## Related links
 
