@@ -4,6 +4,28 @@ Status: Initial outline
 
 Notes for tools commonly used to package, deploy, and operate Kubernetes workloads.
 
+## Quick path: APISIX
+
+| Need | Read |
+| --- | --- |
+| Understand what APISIX is and what it does. | [Apache APISIX](apache-apisix.md) |
+| Understand APISIX components and request flow. | [APISIX architecture and deployment](apisix-architecture-and-deployment.md) |
+| Configure auth, rate limits, traffic release, metrics, logs, and traces. | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) |
+| Choose between Ingress, Gateway API, and APISIX CRDs. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
+| Run APISIX on Amazon EKS. | [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md) |
+| Troubleshoot 404, 401, 403, 429, 503, TLS, and upstream failures. | [APISIX troubleshooting](../troubleshooting/apisix.md) |
+
+## Quick path: Flux and GitOps
+
+| Need | Read |
+| --- | --- |
+| Understand the GitOps operating model. | [GitOps](gitops.md) |
+| Compare Argo CD and Flux. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
+| Understand Flux controllers and repository structure. | [Flux](flux.md) |
+| Follow source, Kustomization, and HelmRelease reconciliation. | [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) |
+| Scope controller permissions, tenancy, and secrets. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
+| Operate GitOps on Amazon EKS. | [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md) |
+
 ## Articles
 
 | Article | Purpose |

@@ -37,3 +37,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a Terraform modules versus Crossplane reusable platform APIs comparison with Configuration package examples.
 - Ingested additional processed source guidance into focused articles for CDN caching and multi-CDN operations, APISIX architecture and policy, Kafka lag/replay and delivery guarantees, AWS stateful design, Flux/GitOps operations, MongoDB validation and scaling, OIDC/EKS identity, and tooling/kind workflows.
 - Expanded the ingested topic set with deeper explanations, component maps, request and reconciliation flows, examples, troubleshooting checks, and official reference links across edge/CDN, APISIX, Kafka, AWS state design, GitOps, MongoDB, OIDC/EKS identity, tooling clusters, and `kind`.
+- Improved navigation for APISIX, Flux, GitOps, Akamai, CloudFront, and CDN content with root-level fast paths, topic-specific index paths, and cross-topic guide navigation routes.

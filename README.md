@@ -27,6 +27,16 @@ A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions
 | [Cross-topic guides](cross-topic-guides/README.md) | EKS, AWS, Terraform, GitOps, OIDC, APISIX, CloudFront, MSK, Crossplane | Practical workflows that combine multiple technologies. |
 | [Decision records](decision-records/README.md) | Repository and architecture decisions | Architecture and repository decisions with context and trade-offs. |
 
+## Fast topic paths
+
+Use these shortcuts when you already know the topic name and do not want to browse through the full area hierarchy.
+
+| Topic | Start here | Then read |
+| --- | --- | --- |
+| APISIX on Kubernetes or EKS | [Apache APISIX](kubernetes/applications-and-tools/apache-apisix.md) | [Architecture and deployment](kubernetes/applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](cross-topic-guides/apisix-on-eks.md), [APISIX troubleshooting](kubernetes/troubleshooting/apisix.md). |
+| Flux and GitOps | [Flux](kubernetes/applications-and-tools/flux.md) | [Flux reconciliation and Helm releases](kubernetes/applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](kubernetes/applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](cross-topic-guides/gitops-on-eks.md). |
+| Akamai, CloudFront, and CDN edge | [Akamai vs. CloudFront](cloud/edge/akamai-vs-cloudfront.md) | [CDN fundamentals](cloud/edge/cdn-and-edge-fundamentals.md), [caching and origin protection](cloud/edge/cdn-caching-and-origin-protection.md), [multi-CDN operations](cloud/edge/multi-cdn-operations.md), [CDN in front of EKS](cross-topic-guides/cdn-in-front-of-eks.md). |
+
 ## Repository resources
 
 | Resource | Purpose |

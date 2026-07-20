@@ -16,6 +16,14 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | [Tricks](tricks/README.md) | Helpful command patterns and productivity notes. |
 | [Examples](examples/README.md) | Practical manifests and walkthroughs. |
 
+## Fast paths for application tooling
+
+| Topic | Start here | Follow-up |
+| --- | --- | --- |
+| APISIX | [Apache APISIX](applications-and-tools/apache-apisix.md) | [Architecture and deployment](applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
+| Flux | [Flux](applications-and-tools/flux.md) | [Flux reconciliation and Helm releases](applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](../cross-topic-guides/gitops-on-eks.md). |
+| GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Choose between UI-centered application operations and composable controller-based reconciliation. |
+
 ## AWS and EKS workflows
 
 | Guide | Focus |

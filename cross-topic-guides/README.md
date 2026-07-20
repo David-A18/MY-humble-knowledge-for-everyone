@@ -2,6 +2,14 @@
 
 Guides that connect multiple engineering areas into practical workflows.
 
+## Quick paths
+
+| Topic | Start here | Related foundations |
+| --- | --- | --- |
+| APISIX on EKS | [APISIX on EKS](apisix-on-eks.md) | [Apache APISIX](../kubernetes/applications-and-tools/apache-apisix.md), [APISIX architecture and deployment](../kubernetes/applications-and-tools/apisix-architecture-and-deployment.md), [APISIX security, traffic, and observability](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md). |
+| Flux or GitOps on EKS | [GitOps on EKS](gitops-on-eks.md) | [GitOps](../kubernetes/applications-and-tools/gitops.md), [Flux](../kubernetes/applications-and-tools/flux.md), [Flux reconciliation and Helm releases](../kubernetes/applications-and-tools/flux-reconciliation-and-helm.md). |
+| Akamai, CloudFront, or CDN in front of EKS | [CDN in front of EKS](cdn-in-front-of-eks.md) | [Akamai vs. CloudFront](../cloud/edge/akamai-vs-cloudfront.md), [CDN caching and origin protection](../cloud/edge/cdn-caching-and-origin-protection.md), [Multi-CDN operations](../cloud/edge/multi-cdn-operations.md). |
+
 | Guide | Focus |
 | --- | --- |
 | [Terraform on AWS](terraform-on-aws.md) | Use Terraform to manage AWS infrastructure safely. |

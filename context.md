@@ -25,6 +25,8 @@ Readers should be able to follow this route:
 4. Open a focused article.
 5. Use the article's bottom links to return to the parent index and root index.
 
+High-demand topics such as APISIX, Flux/GitOps, Akamai, CloudFront, and CDN guidance should also remain reachable through root-level fast paths and topic-specific quick paths in the relevant parent indexes.
+
 When adding or moving content, update every affected index immediately.
 
 ## Global editing rules

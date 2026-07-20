@@ -18,6 +18,15 @@ Status: Initial outline
 | --- | --- |
 | [Edge and CDN](edge/README.md) | CDN, edge routing, cache behavior, origin protection, and multi-CDN guidance. |
 
+## Edge and CDN quick paths
+
+| Topic | Start here | Follow-up |
+| --- | --- | --- |
+| Akamai or "Acamai" | [Akamai vs. CloudFront](edge/akamai-vs-cloudfront.md) | Compare concepts, product fit, cache behavior, origin protection, and migration risks. |
+| Amazon CloudFront | [CloudFront](aws/networking/cloudfront.md) | Design AWS-native CDN distributions, origins, cache behavior, and EKS edge paths. |
+| CDN caching | [CDN caching and origin protection](edge/cdn-caching-and-origin-protection.md) | Design cache keys, TTLs, purges, and direct-origin controls. |
+| Multi-CDN operations | [Multi-CDN operations](edge/multi-cdn-operations.md) | Keep DNS, cache, security, logs, purges, and rollback consistent across providers. |
+
 ## Provider-neutral topics
 
 - Cloud operating models.

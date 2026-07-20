@@ -22,9 +22,18 @@ Use this guide to run Apache APISIX as a Kubernetes API gateway on Amazon EKS.
 - Monitor controller reconciliation, APISIX gateway health, and backend endpoints.
 - Use GitOps for gateway configuration when multiple teams change routes.
 
+## Navigation path
+
+1. Start with [Apache APISIX](../kubernetes/applications-and-tools/apache-apisix.md) for the gateway mental model.
+2. Read [APISIX architecture and deployment](../kubernetes/applications-and-tools/apisix-architecture-and-deployment.md) for data plane, controller, Gateway API, and EKS exposure.
+3. Read [APISIX security, traffic, and observability](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md) for plugins, authentication, rate limits, releases, logs, metrics, and traces.
+4. Use [APISIX troubleshooting](../kubernetes/troubleshooting/apisix.md) when traffic does not match, authenticate, rate-limit, or reach upstreams correctly.
+
 ## Related links
 
 - [Apache APISIX](../kubernetes/applications-and-tools/apache-apisix.md)
+- [APISIX architecture and deployment](../kubernetes/applications-and-tools/apisix-architecture-and-deployment.md)
+- [APISIX security, traffic, and observability](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md)
 - [Gateway API and Ingress](../kubernetes/applications-and-tools/gateway-api-and-ingress.md)
 - [APISIX troubleshooting](../kubernetes/troubleshooting/apisix.md)
 - [Amazon EKS documentation](https://docs.aws.amazon.com/eks/)
