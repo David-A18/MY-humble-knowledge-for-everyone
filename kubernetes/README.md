@@ -23,6 +23,7 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | APISIX | [Apache APISIX](applications-and-tools/apache-apisix.md) | [Architecture and deployment](applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
 | Flux | [Flux](applications-and-tools/flux.md) | [Flux reconciliation and Helm releases](applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](../cross-topic-guides/gitops-on-eks.md). |
 | GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Choose between UI-centered application operations and composable controller-based reconciliation. |
+| Velero | [Velero](../migrations/velero/README.md) | [Storage and volume backups](../migrations/velero/storage-and-volume-backups.md), [backup and restore workflows](../migrations/velero/backup-restore-workflows.md), [cluster migration and disaster recovery](../migrations/velero/cluster-migration-and-disaster-recovery.md). |
 
 ## AWS and EKS workflows
 
@@ -31,6 +32,7 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | [Kubernetes on AWS](../cross-topic-guides/kubernetes-on-aws.md) | EKS operating model, identity, networking, storage, add-ons, and cost visibility. |
 | [Deploying to EKS](../cross-topic-guides/deploying-to-eks.md) | EKS deployment workflow from kubeconfig through rollout validation. |
 | [EKS operations](../cross-topic-guides/eks-operations.md) | AWS CLI and `kubectl` commands for day-to-day EKS operations. |
+| [Velero AWS S3 and EBS installation](../migrations/velero/aws-s3-ebs-installation.md) | EKS backup and restore setup with S3 backup storage, EBS snapshots, and CSI snapshot support. |
 
 ## Official documentation
 

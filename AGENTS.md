@@ -56,6 +56,8 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | [Cloud](cloud/README.md) | [cloud/README.md](cloud/README.md) | Provider-neutral cloud guidance and provider sections for AWS, Azure, and Google Cloud. |
 | [AWS](cloud/aws/README.md) | [cloud/aws/README.md](cloud/aws/README.md) | AWS fundamentals, networking, compute, storage, databases, security, governance, FinOps, architecture, and troubleshooting. |
 | [Databases](databases/README.md) | [databases/README.md](databases/README.md) | Database modeling, Kafka, MongoDB, operations, and cloud data-platform choices. |
+| [Migrations](migrations/README.md) | [migrations/README.md](migrations/README.md) | Infrastructure, platform, workload, Kubernetes backup, restore, disaster recovery, and migration guidance. |
+| [Velero](migrations/velero/README.md) | [migrations/velero/README.md](migrations/velero/README.md) | Kubernetes backup, restore, disaster recovery, cluster migration, S3-compatible backup storage, EBS snapshots, CSI snapshots, and File System Backup. |
 | [Security](security/README.md) | [security/README.md](security/README.md) | Security across cloud, identity, applications, supply chain, and operations. |
 | [FinOps](finops/README.md) | [finops/README.md](finops/README.md) | Cost visibility, allocation, optimization, budgets, and accountability. |
 | [DevOps](devops/README.md) | [devops/README.md](devops/README.md) | Delivery workflows, automation, reliability practices, and platform operations. |

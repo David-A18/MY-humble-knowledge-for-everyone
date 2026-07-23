@@ -19,10 +19,12 @@ Use this page to understand Kubernetes objects and storage decisions for statefu
 - Persistent storage does not automatically provide backup, replication, or application-level high availability.
 - Use `WaitForFirstConsumer` when storage placement should align with Pod scheduling.
 - Test restore and scale-down behavior before running stateful systems in production.
+- Use tools such as Velero for Kubernetes resource and volume recovery, but keep database-native backups for strict consistency and point-in-time recovery.
 
 ## Related links
 
 - [Stateful vs. stateless on AWS](../../cloud/aws/architecture/stateful-vs-stateless.md)
+- [Velero storage and volume backups](../../migrations/velero/storage-and-volume-backups.md)
 - [Kubernetes StatefulSet documentation](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
 - [Back to Kubernetes core objects](README.md)
 - [Back to Kubernetes index](../README.md)

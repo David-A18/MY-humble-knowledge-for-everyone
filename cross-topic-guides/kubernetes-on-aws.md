@@ -97,6 +97,7 @@ What it does: lists EKS add-ons and checks the Kubernetes system namespace for c
 | Block storage for one pod at a time | Amazon EBS | PersistentVolumeClaim and StorageClass. |
 | Shared filesystem access | Amazon EFS | PersistentVolumeClaim and CSI driver. |
 | Object storage | Amazon S3 | Application SDK access through Pod Identity or IRSA. |
+| Cluster backup and recovery | Amazon S3 and EBS snapshots through Velero | BackupStorageLocation, VolumeSnapshotLocation, VolumeSnapshotClass, and Restore. |
 
 ### Check PVC issues
 
@@ -132,6 +133,8 @@ What it does: checks claim state, provisioning events, and available StorageClas
 - [Kubernetes commands](../kubernetes/commands/README.md)
 - [EKS operations](eks-operations.md)
 - [Deploying to EKS](deploying-to-eks.md)
+- [Velero AWS S3 and EBS installation](../migrations/velero/aws-s3-ebs-installation.md)
+- [Velero cluster migration and disaster recovery](../migrations/velero/cluster-migration-and-disaster-recovery.md)
 - [Amazon EKS Best Practices Guide](https://docs.aws.amazon.com/eks/latest/best-practices/introduction.html)
 - [Amazon EKS documentation](https://docs.aws.amazon.com/eks/)
 - [Amazon EKS networking best practices](https://docs.aws.amazon.com/eks/latest/best-practices/networking.html)

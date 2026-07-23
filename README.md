@@ -1,6 +1,6 @@
 # engineering-knowledge-base
 
-A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions, Terraform, Kubernetes, security, FinOps, DevOps, programming languages, MLOps, AI, LLMs, ML, solutions architecture, troubleshooting, and engineering best practices.
+A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions, Terraform, Kubernetes, migrations, security, FinOps, DevOps, programming languages, MLOps, AI, LLMs, ML, solutions architecture, troubleshooting, and engineering best practices.
 
 > [!NOTE]
 > This repository is organized for fast navigation: start here, choose a major area, open a subcategory, then read a focused article or starter outline.
@@ -14,6 +14,7 @@ A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions
 | [Git](git/README.md) | [Commands](git/commands/README.md), [GitHub Actions](git/github-actions/README.md) | Daily commands, repository hygiene, branching, recovery, automation, workflow security, and CI/CD examples. |
 | [Terraform](terraform/README.md) | [Commands](terraform/commands/README.md), [examples](terraform/examples/README.md), [best practices](terraform/best-practices/README.md), [troubleshooting](terraform/troubleshooting/README.md) | IaC fundamentals, state, module structure, command workflows, troubleshooting, and reusable examples. |
 | [Databases](databases/README.md) | [Kafka](databases/kafka/README.md), [MongoDB](databases/mongodb/README.md), [relational vs document databases](databases/relational-vs-document-databases.md) | Database modeling, event streaming, document databases, operations, and cloud data-platform choices. |
+| [Migrations](migrations/README.md) | [Velero](migrations/velero/README.md) | Infrastructure, platform, workload, Kubernetes backup, restore, disaster recovery, and migration guidance. |
 | [Security](security/README.md) | [Identity federation](security/identity-federation/README.md) | Security guidance across cloud, identity, applications, supply chain, and operations. |
 | [FinOps](finops/README.md) | Cost allocation, budgets, optimization, accountability | Cost visibility, allocation, optimization, budgets, and financial accountability. |
 | [DevOps](devops/README.md) | Delivery workflows, automation, reliability, platform operations | Delivery workflows, automation, reliability practices, and platform operations. |
@@ -36,6 +37,7 @@ Use these shortcuts when you already know the topic name and do not want to brow
 | APISIX on Kubernetes or EKS | [Apache APISIX](kubernetes/applications-and-tools/apache-apisix.md) | [Architecture and deployment](kubernetes/applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](cross-topic-guides/apisix-on-eks.md), [APISIX troubleshooting](kubernetes/troubleshooting/apisix.md). |
 | Flux and GitOps | [Flux](kubernetes/applications-and-tools/flux.md) | [Flux reconciliation and Helm releases](kubernetes/applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](kubernetes/applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](cross-topic-guides/gitops-on-eks.md). |
 | Akamai, CloudFront, and CDN edge | [Akamai vs. CloudFront](cloud/edge/akamai-vs-cloudfront.md) | [CDN fundamentals](cloud/edge/cdn-and-edge-fundamentals.md), [caching and origin protection](cloud/edge/cdn-caching-and-origin-protection.md), [multi-CDN operations](cloud/edge/multi-cdn-operations.md), [CDN in front of EKS](cross-topic-guides/cdn-in-front-of-eks.md). |
+| Velero Kubernetes migration and recovery | [Velero](migrations/velero/README.md) | [Storage and volume backups](migrations/velero/storage-and-volume-backups.md), [AWS S3 and EBS installation](migrations/velero/aws-s3-ebs-installation.md), [cluster migration and disaster recovery](migrations/velero/cluster-migration-and-disaster-recovery.md). |
 
 ## Repository resources
 

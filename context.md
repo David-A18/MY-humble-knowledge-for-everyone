@@ -11,7 +11,7 @@ This file is the operating map for AI agents working in `engineering-knowledge-b
 
 ## Repository intent
 
-`engineering-knowledge-base` is a long-term personal knowledge base for practical engineering knowledge across cloud, databases, Git, GitHub Actions, Terraform, Kubernetes, security, FinOps, DevOps, programming languages, MLOps, AI, LLMs, ML, solutions architecture, troubleshooting, and engineering best practices.
+`engineering-knowledge-base` is a long-term personal knowledge base for practical engineering knowledge across cloud, databases, Git, GitHub Actions, Terraform, Kubernetes, migrations, security, FinOps, DevOps, programming languages, MLOps, AI, LLMs, ML, solutions architecture, troubleshooting, and engineering best practices.
 
 The repository is documentation-first. Changes should improve navigation, accuracy, maintainability, or practical usefulness.
 
@@ -20,7 +20,7 @@ The repository is documentation-first. Changes should improve navigation, accura
 Readers should be able to follow this route:
 
 1. Start at [README.md](README.md).
-2. Choose a major area such as [Cloud](cloud/README.md), [Databases](databases/README.md), [Git](git/README.md), [Terraform](terraform/README.md), [Kubernetes](kubernetes/README.md), [Security](security/README.md), [AI](ai/README.md), or [Cross-topic guides](cross-topic-guides/README.md).
+2. Choose a major area such as [Cloud](cloud/README.md), [Databases](databases/README.md), [Git](git/README.md), [Terraform](terraform/README.md), [Kubernetes](kubernetes/README.md), [Migrations](migrations/README.md), [Security](security/README.md), [AI](ai/README.md), or [Cross-topic guides](cross-topic-guides/README.md).
 3. Open a subcategory `README.md`.
 4. Open a focused article.
 5. Use the article's bottom links to return to the parent index and root index.
@@ -254,6 +254,21 @@ When adding or moving content, update every affected index immediately.
 | [databases/mongodb/replication-sharding-and-consistency.md](databases/mongodb/replication-sharding-and-consistency.md) | MongoDB replication, sharding, and consistency guide. | Replica set, write concern, read concern, shard key, backup, restore, or consistency guidance changes. |
 | [databases/mongodb/operations.md](databases/mongodb/operations.md) | MongoDB operations. | MongoDB performance, backup, replication, or sharding guidance changes. |
 | [databases/relational-vs-document-databases.md](databases/relational-vs-document-databases.md) | Relational and document database comparison. | Database model decision guidance changes. |
+
+### Migrations
+
+| Route | Purpose | Edit when |
+| --- | --- | --- |
+| [migrations/README.md](migrations/README.md) | Migrations principal area index. | Infrastructure, platform, workload, data, backup, restore, or disaster recovery migration routes change. |
+| [migrations/velero/README.md](migrations/velero/README.md) | Velero subtopic index and reader path. | Velero articles are added, moved, or reorganized. |
+| [migrations/velero/fundamentals.md](migrations/velero/fundamentals.md) | Velero purpose, use cases, backup scope, and limits. | Velero positioning or core capability guidance changes. |
+| [migrations/velero/components-and-architecture.md](migrations/velero/components-and-architecture.md) | Velero CLI, server, CRDs, controllers, plugins, node-agent, and data movement architecture. | Velero components, API types, or architecture guidance changes. |
+| [migrations/velero/storage-and-volume-backups.md](migrations/velero/storage-and-volume-backups.md) | Object storage, S3 compatibility, EBS snapshots, CSI snapshots, CSI data movement, and File System Backup guidance. | Velero storage or volume backup decision guidance changes. |
+| [migrations/velero/aws-s3-ebs-installation.md](migrations/velero/aws-s3-ebs-installation.md) | EKS installation path for Velero with S3 and EBS/CSI snapshot support. | AWS plugin, EKS, S3, EBS, IAM, or snapshot-controller setup guidance changes. |
+| [migrations/velero/backup-restore-workflows.md](migrations/velero/backup-restore-workflows.md) | Backup, schedule, restore, filtering, hook, namespace mapping, and cleanup workflows. | Velero operational command guidance changes. |
+| [migrations/velero/cluster-migration-and-disaster-recovery.md](migrations/velero/cluster-migration-and-disaster-recovery.md) | Cross-cluster migration, object storage sync, read-only backup locations, and DR planning. | Velero migration or disaster recovery guidance changes. |
+| [migrations/velero/real-use-cases-and-runbooks.md](migrations/velero/real-use-cases-and-runbooks.md) | Practical recovery, environment clone, EKS rebuild, and pre-maintenance runbooks. | Velero runbooks or realistic operating scenarios change. |
+| [migrations/velero/troubleshooting-and-operations.md](migrations/velero/troubleshooting-and-operations.md) | Velero troubleshooting checks for backup, restore, storage, CSI, node-agent, and data movement. | Velero diagnostics, failure modes, or operational habits change. |
 
 ### Principal topic indexes
 
