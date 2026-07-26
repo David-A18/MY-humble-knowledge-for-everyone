@@ -7,12 +7,12 @@ Velero is a Kubernetes backup, restore, disaster recovery, and cluster migration
 | Need | Read |
 | --- | --- |
 | Learn what Velero does and does not do. | [Fundamentals](fundamentals.md) |
-| Understand the moving parts and CRDs. | [Components and architecture](components-and-architecture.md) |
-| Choose a persistent volume backup method. | [Storage and volume backups](storage-and-volume-backups.md) |
-| Install on EKS with S3 and EBS snapshots. | [AWS S3 and EBS installation](aws-s3-ebs-installation.md) |
-| Run backups, schedules, restores, and namespace moves. | [Backup and restore workflows](backup-restore-workflows.md) |
-| Plan migration or disaster recovery. | [Cluster migration and disaster recovery](cluster-migration-and-disaster-recovery.md) |
-| Map Velero to real operating scenarios. | [Real use cases and runbooks](real-use-cases-and-runbooks.md) |
+| Understand the moving parts, CRDs, controllers, and object storage sync. | [Components and architecture](components-and-architecture.md) |
+| Choose a persistent volume backup method and configure storage paths. | [Storage and volume backups](storage-and-volume-backups.md) |
+| Install on EKS with S3, EBS snapshots, CSI support, IAM, and node-agent. | [AWS S3 and EBS installation](aws-s3-ebs-installation.md) |
+| Run backups, schedules, restores, filters, hooks, and restore mappings. | [Backup and restore workflows](backup-restore-workflows.md) |
+| Plan migration or disaster recovery with source and destination checks. | [Cluster migration and disaster recovery](cluster-migration-and-disaster-recovery.md) |
+| Map Velero to real operating scenarios, including GitOps and cross-cloud migrations. | [Real use cases and runbooks](real-use-cases-and-runbooks.md) |
 | Investigate failures and operate Velero safely. | [Troubleshooting and operations](troubleshooting-and-operations.md) |
 
 ## What Velero protects

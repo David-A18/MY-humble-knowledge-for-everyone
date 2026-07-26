@@ -4,6 +4,18 @@
 
 Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots.
 
+## Contents
+
+- [Prerequisites](#prerequisites)
+- [Create backup storage](#create-backup-storage)
+- [Prepare IAM](#prepare-iam)
+- [Install the EKS snapshot controller](#install-the-eks-snapshot-controller)
+- [Create an EBS VolumeSnapshotClass](#create-an-ebs-volumesnapshotclass)
+- [Install Velero with the AWS plugin](#install-velero-with-the-aws-plugin)
+- [Enable node-agent when needed](#enable-node-agent-when-needed)
+- [Example Velero locations after install](#example-velero-locations-after-install)
+- [Validate the installation](#validate-the-installation)
+
 ## Prerequisites
 
 | Requirement | Why it matters |
@@ -46,6 +58,61 @@ Minimum policy design should include:
 > [!WARNING]
 > The default chart or install examples may grant broad Kubernetes permissions. Review RBAC before production use and reduce access where your restore scope permits it.
 
+### Example IAM policy shape
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::my-velero-backups"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "s3:AbortMultipartUpload",
+        "s3:ListMultipartUploadParts"
+      ],
+      "Resource": "arn:aws:s3:::my-velero-backups/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateSnapshot",
+        "ec2:DeleteSnapshot",
+        "ec2:DescribeSnapshots",
+        "ec2:DescribeVolumes",
+        "ec2:CreateTags"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+What it does: shows the permission categories Velero needs for S3 backup storage and EBS snapshot workflows. Scope this further to the account, region, bucket, tags, and snapshot ownership model used by your environment.
+
+### Service account identity example
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: velero
+  namespace: velero
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::<account-id>:role/velero-backup-role
+```
+
+What it does: shows the IRSA-style annotation that connects the Velero service account to an IAM role. If your platform uses EKS Pod Identity instead, bind the role through that mechanism and keep the service account name consistent.
+
 ## Install the EKS snapshot controller
 
 ```bash
@@ -84,11 +151,18 @@ The exact command depends on whether you use Helm or `velero install`. The impor
 ### Install with Helm values
 
 ```yaml
+serviceAccount:
+  server:
+    create: true
+    name: velero
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::<account-id>:role/velero-backup-role
 configuration:
   backupStorageLocation:
   - name: default
     provider: aws
     bucket: my-velero-backups
+    prefix: clusters/prod-eks
     config:
       region: eu-west-1
   volumeSnapshotLocation:
@@ -99,6 +173,9 @@ configuration:
   features: EnableCSI
 credentials:
   useSecret: false
+deployNodeAgent: true
+nodeAgent:
+  podVolumePath: /var/lib/kubelet/pods
 initContainers:
 - name: velero-plugin-for-aws
   image: velero/velero-plugin-for-aws:v1.14.0
@@ -122,6 +199,26 @@ helm install velero vmware-tanzu/velero \
 
 What it does: installs Velero into the `velero` namespace with the prepared values.
 
+### Equivalent CLI install shape
+
+```bash
+velero install \
+  --provider aws \
+  --plugins velero/velero-plugin-for-aws:v1.14.0 \
+  --bucket my-velero-backups \
+  --prefix clusters/prod-eks \
+  --backup-location-config region=eu-west-1 \
+  --snapshot-location-config region=eu-west-1 \
+  --features EnableCSI \
+  --use-node-agent \
+  --no-secret
+```
+
+What it does: installs Velero with the AWS plugin, S3 backup location, AWS snapshot location, CSI support, node-agent, and workload identity instead of a credentials file.
+
+> [!NOTE]
+> `--no-secret` assumes the Velero pod receives AWS credentials from workload identity such as IRSA or EKS Pod Identity. If you use a credentials file for a lab, keep it out of Git and rotate it after testing.
+
 ## Enable node-agent when needed
 
 Install or enable node-agent when using File System Backup or Velero built-in data mover.
@@ -135,6 +232,36 @@ What it does: shows the Velero CLI flags that enable the node-agent DaemonSet an
 > [!WARNING]
 > Node-agent may require privileged or host filesystem access in some environments. Review cluster security policy before enabling file-system backup or data movement.
 
+## Example Velero locations after install
+
+```yaml
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: default
+  namespace: velero
+spec:
+  provider: aws
+  objectStorage:
+    bucket: my-velero-backups
+    prefix: clusters/prod-eks
+  config:
+    region: eu-west-1
+  accessMode: ReadWrite
+---
+apiVersion: velero.io/v1
+kind: VolumeSnapshotLocation
+metadata:
+  name: default
+  namespace: velero
+spec:
+  provider: aws
+  config:
+    region: eu-west-1
+```
+
+What it does: shows the two location resources Velero uses: object storage for backup archives and provider configuration for EBS snapshots.
+
 ## Validate the installation
 
 ```bash
@@ -142,9 +269,45 @@ kubectl get pods -n velero
 velero backup-location get
 velero snapshot-location get
 kubectl get volumesnapshotclass
+kubectl get daemonset node-agent -n velero
 ```
 
 What it does: checks that Velero pods are running, backup and snapshot locations are available, and Kubernetes has a snapshot class.
+
+### Run a smoke-test backup
+
+```bash
+kubectl create namespace velero-smoke-test
+kubectl create configmap smoke-test \
+  --from-literal=created-by=velero-docs \
+  -n velero-smoke-test
+
+velero backup create velero-smoke-test \
+  --include-namespaces velero-smoke-test \
+  --snapshot-volumes=false \
+  --wait
+
+velero backup describe velero-smoke-test --details
+```
+
+What it does: creates a tiny test namespace, backs up only Kubernetes resources, and shows whether Velero can write and describe a backup.
+
+### Run a smoke-test restore
+
+```bash
+velero restore create velero-smoke-restore \
+  --from-backup velero-smoke-test \
+  --namespace-mappings velero-smoke-test:velero-smoke-restore \
+  --wait
+
+kubectl get configmap smoke-test -n velero-smoke-restore
+velero restore describe velero-smoke-restore --details
+```
+
+What it does: restores the smoke-test ConfigMap into a different namespace so you can verify restore behavior without touching production workloads.
+
+> [!WARNING]
+> Clean up only the smoke-test namespaces you created. Do not run namespace deletion commands against production namespaces.
 
 ## Related links
 
