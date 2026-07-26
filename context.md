@@ -149,6 +149,18 @@ When adding or moving content, update every affected index immediately.
 | [terraform/best-practices/README.md](terraform/best-practices/README.md) | Terraform best-practices index. | Maintainability or safety guidance changes. |
 | [terraform/examples/README.md](terraform/examples/README.md) | Terraform examples index. | Practical examples are added. |
 
+### Crossplane
+
+| Route | Purpose | Edit when |
+| --- | --- | --- |
+| [crossplane/README.md](crossplane/README.md) | Crossplane area index. | Crossplane subcategories or major articles change. |
+| [crossplane/fundamentals/README.md](crossplane/fundamentals/README.md) | Crossplane mental model and core concepts. | Providers, managed resources, XRs, XRDs, Compositions, or Functions guidance changes. |
+| [crossplane/workflow/README.md](crossplane/workflow/README.md) | Crossplane graphical workflows. | Reconciliation, Composition, troubleshooting, or Terraform comparison workflows change. |
+| [crossplane/examples/README.md](crossplane/examples/README.md) | Practical Crossplane examples. | Install, provider, managed resource, XRD, Composition, XR, or trace examples change. |
+| [crossplane/xrd-and-compositions/README.md](crossplane/xrd-and-compositions/README.md) | Deep XRD and Composition explanation. | Custom API design, schema, Composition selection, or Terraform module comparison changes. |
+| [crossplane/comparison/README.md](crossplane/comparison/README.md) | Crossplane comparison index. | Comparison guides are added or moved. |
+| [crossplane/comparison/terraform-vs-crossplane.md](crossplane/comparison/terraform-vs-crossplane.md) | Terraform and Crossplane decision guide. | IaC comparison, adoption guidance, or tool trade-offs change. |
+
 ### Kubernetes
 
 | Route | Purpose | Edit when |
