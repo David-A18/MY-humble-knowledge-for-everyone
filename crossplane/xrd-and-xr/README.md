@@ -30,11 +30,28 @@ An XRD alone does not create AWS infrastructure. It only creates the Kubernetes 
 
 An XRD, or `CompositeResourceDefinition`, defines a new Kubernetes API for a higher-level platform capability.
 
+Think of an XRD as an API contract:
+
+- It gives the API a group, version, kind, and plural name.
+- It defines whether the API is namespaced or cluster-scoped.
+- It defines the allowed `spec` fields with an OpenAPI v3 schema.
+- It validates what users can ask for before Crossplane tries to compose anything.
+- It does not create AWS resources by itself.
+
+The important mental model is:
+
+```text
+XRD = "What can users request?"
+XR  = "One user request that follows the XRD schema."
+Composition = "How Crossplane turns that request into AWS resources."
+```
+
 For AWS, useful XRDs might be:
 
 - `AppBucket`: a governed S3 bucket for one application.
 - `AppQueue`: a standard SQS queue with tags and dead-letter settings.
 - `PlatformDatabase`: an approved RDS database profile.
+- `PlatformNetwork`: a VPC, subnets, network ACLs, route tables, and VPC endpoints.
 - `ServiceEnvironment`: a bundle of AWS resources needed by one service.
 
 The XRD should describe what the consumer is allowed to decide. It should not expose every provider field.
@@ -104,6 +121,93 @@ What it does: verifies the XRD exists and the generated API is available through
 > [!IMPORTANT]
 > XRD `metadata.name` must be the plural name, a dot, and the group name. For this example it must be `appbuckets.platform.example.org`.
 
+## AWS PlatformNetwork XRD
+
+This XRD defines a bigger AWS network API. The user can request a deployable VPC shape without creating every `VPC`, `Subnet`, `NetworkACL`, `RouteTable`, and `VPCEndpoint` managed resource manually.
+
+```yaml
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: platformnetworks.platform.example.org
+spec:
+  group: platform.example.org
+  scope: Namespaced
+  names:
+    kind: PlatformNetwork
+    plural: platformnetworks
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              region:
+                type: string
+                enum:
+                - eu-west-1
+                - eu-central-1
+                - us-east-1
+              cidrBlock:
+                type: string
+                description: CIDR block for the VPC.
+              environment:
+                type: string
+                enum:
+                - dev
+                - staging
+                - prod
+              privateSubnetA:
+                type: object
+                properties:
+                  availabilityZone:
+                    type: string
+                  cidrBlock:
+                    type: string
+                required:
+                - availabilityZone
+                - cidrBlock
+              privateSubnetB:
+                type: object
+                properties:
+                  availabilityZone:
+                    type: string
+                  cidrBlock:
+                    type: string
+                required:
+                - availabilityZone
+                - cidrBlock
+              deletionPolicy:
+                type: string
+                enum:
+                - Delete
+                - Orphan
+                default: Delete
+            required:
+            - region
+            - cidrBlock
+            - environment
+            - privateSubnetA
+            - privateSubnetB
+```
+
+What it does: creates a custom Kubernetes API named `PlatformNetwork`. The API exposes only platform-approved inputs: region, VPC CIDR, two private subnet definitions, environment, and deletion behavior.
+
+Apply and inspect it:
+
+```bash
+kubectl apply -f xrd-platformnetwork.yaml
+kubectl get xrd platformnetworks.platform.example.org
+kubectl api-resources | findstr PlatformNetwork
+```
+
+What it does: confirms Kubernetes now has a `platformnetworks.platform.example.org` API endpoint.
+
 ## What an XR is
 
 An XR, or composite resource, is an object a user creates from the API defined by the XRD.
@@ -134,6 +238,41 @@ kubectl describe appbucket receipts -n payments
 ```
 
 What it does: creates a request for an AWS-backed platform bucket. Crossplane stores the XR, selects the referenced Composition, and starts creating composed resources.
+
+For the network XRD, the call is a `PlatformNetwork` XR:
+
+```yaml
+apiVersion: platform.example.org/v1alpha1
+kind: PlatformNetwork
+metadata:
+  namespace: payments
+  name: payments-network
+spec:
+  region: eu-west-1
+  cidrBlock: 10.40.0.0/16
+  environment: prod
+  privateSubnetA:
+    availabilityZone: eu-west-1a
+    cidrBlock: 10.40.1.0/24
+  privateSubnetB:
+    availabilityZone: eu-west-1b
+    cidrBlock: 10.40.2.0/24
+  deletionPolicy: Orphan
+  crossplane:
+    compositionRef:
+      name: platformnetwork-aws-private
+```
+
+Apply and inspect it:
+
+```bash
+kubectl apply -f platformnetwork-payments.yaml
+kubectl get platformnetworks -n payments
+kubectl describe platformnetwork payments-network -n payments
+crossplane beta trace platformnetwork.platform.example.org/payments-network -n payments
+```
+
+What it does: calls the platform API once. The matching Composition can then create the AWS VPC, subnets, network ACL, ACL rules, route table, route table associations, and VPC endpoints as composed resources.
 
 ## How users select an implementation
 
@@ -180,6 +319,8 @@ The practical mapping is:
 - Composition equals the implementation of that request.
 
 In Terraform, a module is evaluated when Terraform runs. In Crossplane, the XR remains in Kubernetes and controllers keep reconciling it until it is deleted or paused.
+
+For the `PlatformNetwork` example, the Terraform equivalent would be a `vpc` module call with input variables. In Crossplane, the `PlatformNetwork` XR is a persistent Kubernetes resource. If an AWS subnet or endpoint is not ready, the XR shows that through status and Crossplane keeps reconciling instead of waiting for another `terraform apply`.
 
 ## Designing AWS XRDs
 
@@ -233,5 +374,6 @@ Use `LegacyCluster` only when maintaining v1-style claim workflows.
 - [Terraform modules](https://developer.hashicorp.com/terraform/language/modules)
 - [Crossplane Compositions in this knowledge base](../compositions/README.md)
 - [Crossplane examples](../examples/README.md)
+- [AWS VPC platform API example](../examples/aws-vpc-platform-api.md)
 - [Back to Crossplane index](../README.md)
 - [Back to root index](../../README.md)

@@ -15,6 +15,12 @@ Provide practical AWS-focused Crossplane examples for installation, provider set
 - AWS credentials with permission to create and delete the example resources.
 - Crossplane CLI if you want to use `crossplane beta trace` or `crossplane composition render`.
 
+## Example walkthroughs
+
+| Example | What it shows |
+| --- | --- |
+| [AWS VPC platform API](aws-vpc-platform-api.md) | One `PlatformNetwork` XR that composes a VPC, subnets, network ACLs, route table associations, and VPC endpoints. |
+
 ## Install Crossplane
 
 ```bash

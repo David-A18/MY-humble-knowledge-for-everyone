@@ -207,6 +207,8 @@ resources:
 
 What it does: shows how one XR can own multiple AWS managed resources. The exact provider fields depend on the installed AWS provider package and resource kind.
 
+For a fuller AWS network example, see [AWS VPC platform API](../examples/aws-vpc-platform-api.md). It shows one `PlatformNetwork` XR implemented as a VPC, two subnets, a network ACL, ACL rules, a route table, route table associations, and S3/DynamoDB VPC endpoints.
+
 ## Render before applying
 
 ```bash
@@ -265,5 +267,6 @@ What it does: prevents an existing XR from automatically adopting a new Composit
 - [Crossplane composite resources](https://docs.crossplane.io/latest/composition/composite-resources/)
 - [XRDs and XRs in this knowledge base](../xrd-and-xr/README.md)
 - [Crossplane examples](../examples/README.md)
+- [AWS VPC platform API](../examples/aws-vpc-platform-api.md)
 - [Back to Crossplane index](../README.md)
 - [Back to root index](../../README.md)

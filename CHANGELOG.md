@@ -43,3 +43,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a Velero possible integrations guide with a GitHub Actions pipeline pattern, operation instruction file, OIDC and EKS access requirements, backup and migration modes, full-cluster resource backup option, and supporting Velero configuration examples.
 - Added a Crossplane knowledge area covering fundamentals, deployment workflows, examples, XRDs, Compositions, and Terraform comparison guidance.
 - Split Crossplane XRD/XR and Composition guidance into separate AWS-focused sections.
+- Added an AWS VPC Crossplane example with a `PlatformNetwork` XRD, XR call, and multi-resource Composition.
