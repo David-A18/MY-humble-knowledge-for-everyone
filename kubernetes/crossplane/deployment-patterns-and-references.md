@@ -425,6 +425,8 @@ The important difference is ownership. In Terraform, the module caller often see
 
 Use a Composition alone when the reusable template is internal to one cluster and lifecycle is simple. Use a Configuration package when the platform API should be versioned, promoted, shared across clusters, installed as a dependency, or treated like a product release.
 
+For a full fixed-resource AWS network example, see [AWS VPC platform API](aws-vpc-platform-api.md). It shows a single `PlatformNetwork` XR that composes VPC, subnet, network ACL, route table, and VPC endpoint managed resources.
+
 ### Example Terraform module call
 
 ```hcl
@@ -597,6 +599,7 @@ What it does: validates and applies the platform API, then inspects XR status, m
 
 - [Crossplane](README.md)
 - [Crossplane compositions](compositions.md)
+- [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Professional operating model](professional-operating-model.md)

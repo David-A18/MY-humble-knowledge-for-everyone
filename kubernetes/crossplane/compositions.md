@@ -8,6 +8,8 @@ Compositions are where Crossplane becomes a platform-engineering tool. A platfor
 
 For definitions of every Crossplane-specific component around this model, start with the [Crossplane component model](component-model.md).
 
+For a concrete AWS example that composes many resources behind one XR, see [AWS VPC platform API](aws-vpc-platform-api.md). It shows a `PlatformNetwork` XRD, the user-facing XR call, and a Composition that creates a VPC, subnets, NACLs, route table associations, and VPC endpoints.
+
 ## Composition model
 
 | Layer | Owner | Responsibility |
@@ -293,6 +295,7 @@ GitOps promotion
 - [Crossplane](README.md)
 - [Crossplane component model](component-model.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
+- [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)

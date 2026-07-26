@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a top-level migrations section with a Velero guide covering Kubernetes backup, restore, S3-compatible storage, EBS and CSI snapshots, File System Backup, cluster migration, disaster recovery, runbooks, and troubleshooting.
 - Expanded Velero fundamentals, architecture, storage, installation, backup and restore workflows, migration planning, runbooks, and troubleshooting with beginner-to-operations explanations, concrete YAML examples, EKS/S3/EBS configuration, volume backup trade-offs, GitOps migration guidance, and AKS-to-EKS cross-cloud migration guidance.
 - Added a Velero possible integrations guide with a GitHub Actions pipeline pattern, operation instruction file, OIDC and EKS access requirements, backup and migration modes, full-cluster resource backup option, and supporting Velero configuration examples.
-- Added a Crossplane knowledge area covering fundamentals, deployment workflows, examples, XRDs, Compositions, and Terraform comparison guidance.
+- Added Crossplane knowledge-base coverage under the canonical Kubernetes Crossplane section, including fundamentals, deployment workflows, examples, XRDs, Compositions, and Terraform comparison guidance.
+- Consolidated the requested Crossplane VPC example into the canonical `kubernetes/crossplane` section and cleaned up duplicate top-level Crossplane navigation.
 - Split Crossplane XRD/XR and Composition guidance into separate AWS-focused sections.
 - Added an AWS VPC Crossplane example with a `PlatformNetwork` XRD, XR call, and multi-resource Composition.

@@ -149,20 +149,6 @@ When adding or moving content, update every affected index immediately.
 | [terraform/best-practices/README.md](terraform/best-practices/README.md) | Terraform best-practices index. | Maintainability or safety guidance changes. |
 | [terraform/examples/README.md](terraform/examples/README.md) | Terraform examples index. | Practical examples are added. |
 
-### Crossplane
-
-| Route | Purpose | Edit when |
-| --- | --- | --- |
-| [crossplane/README.md](crossplane/README.md) | Crossplane area index. | Crossplane subcategories or major articles change. |
-| [crossplane/fundamentals/README.md](crossplane/fundamentals/README.md) | Crossplane mental model and core concepts. | Providers, managed resources, XRs, XRDs, Compositions, or Functions guidance changes. |
-| [crossplane/workflow/README.md](crossplane/workflow/README.md) | Crossplane graphical workflows. | Reconciliation, Composition, troubleshooting, or Terraform comparison workflows change. |
-| [crossplane/examples/README.md](crossplane/examples/README.md) | Practical Crossplane examples. | Install, provider, managed resource, XRD, Composition, XR, or trace examples change. |
-| [crossplane/examples/aws-vpc-platform-api.md](crossplane/examples/aws-vpc-platform-api.md) | AWS VPC platform API example. | VPC, subnet, ACL, route table, endpoint, XRD, XR, or Composition examples change. |
-| [crossplane/xrd-and-xr/README.md](crossplane/xrd-and-xr/README.md) | XRD and XR explanation. | Custom API design, XR usage, schema, scope, or Terraform module comparison changes. |
-| [crossplane/compositions/README.md](crossplane/compositions/README.md) | Crossplane Composition explanation. | AWS Composition implementation, function pipelines, patching, revisions, or troubleshooting changes. |
-| [crossplane/comparison/README.md](crossplane/comparison/README.md) | Crossplane comparison index. | Comparison guides are added or moved. |
-| [crossplane/comparison/terraform-vs-crossplane.md](crossplane/comparison/terraform-vs-crossplane.md) | Terraform and Crossplane decision guide. | IaC comparison, adoption guidance, or tool trade-offs change. |
-
 ### Kubernetes
 
 | Route | Purpose | Edit when |
@@ -185,6 +171,7 @@ When adding or moving content, update every affected index immediately.
 | [kubernetes/crossplane/providers-and-authentication.md](kubernetes/crossplane/providers-and-authentication.md) | Crossplane provider and authentication guide. | Provider package, ProviderConfig, authentication, activation policy, or schema-validation guidance changes. |
 | [kubernetes/crossplane/compositions.md](kubernetes/crossplane/compositions.md) | Crossplane composition design. | Composition, XRD, XR, function pipeline, revision, render, or platform API guidance changes. |
 | [kubernetes/crossplane/deployment-patterns-and-references.md](kubernetes/crossplane/deployment-patterns-and-references.md) | Crossplane multi-resource deployment and reference guide. | Terraform-style loop equivalents, multi-document YAML, dynamic function loops, resource references, selectors, or XR status patching changes. |
+| [kubernetes/crossplane/aws-vpc-platform-api.md](kubernetes/crossplane/aws-vpc-platform-api.md) | Crossplane AWS VPC platform API example. | VPC, subnet, NACL, route table, endpoint, XRD, XR, or Composition examples change. |
 | [kubernetes/crossplane/professional-operating-model.md](kubernetes/crossplane/professional-operating-model.md) | Crossplane professional operating model guide. | Platform-team workflow, GitOps review, ownership, control-plane, or professional practice guidance changes. |
 | [kubernetes/crossplane/aws-resource-workflow.md](kubernetes/crossplane/aws-resource-workflow.md) | Crossplane AWS resource workflow guide. | Install-to-AWS-resource workflow, component interaction, managed-resource deployment, or AWS management procedure changes. |
 | [kubernetes/crossplane/local-aws-s3-lab.md](kubernetes/crossplane/local-aws-s3-lab.md) | Crossplane local AWS S3 hands-on lab. | Local lab, temporary AWS credential, S3 provider, drift test, or cleanup workflow changes. |
