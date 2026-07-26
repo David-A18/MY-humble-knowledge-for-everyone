@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Provide practical Crossplane examples for installation, provider setup, direct managed resources, XRDs, Compositions, and composite resources.
+Provide practical AWS-focused Crossplane examples for installation, provider setup, direct S3 managed resources, XRDs, Compositions, and composite resources.
 
 > [!WARNING]
 > These examples can create billable AWS resources. Use a sandbox account, unique names, least-privilege credentials, and a cleanup plan.
@@ -163,8 +163,27 @@ spec:
               region:
                 type: string
                 description: AWS region where the bucket should be created.
+                enum:
+                - eu-west-1
+                - eu-central-1
+                - us-east-1
+              environment:
+                type: string
+                description: Environment tag for the AWS bucket.
+                enum:
+                - dev
+                - staging
+                - prod
+              deletionPolicy:
+                type: string
+                description: Whether Crossplane deletes or orphans the AWS bucket when the XR is deleted.
+                enum:
+                - Delete
+                - Orphan
+                default: Delete
             required:
             - region
+            - environment
 ```
 
 Apply it:
@@ -202,10 +221,11 @@ What it does: installs the function used by the Composition pipeline to produce 
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: appbucket-s3
+  name: appbucket-s3-standard
   labels:
     provider: aws
     service: s3
+    tier: standard
 spec:
   compositeTypeRef:
     apiVersion: platform.example.org/v1alpha1
@@ -224,25 +244,35 @@ spec:
           apiVersion: s3.aws.m.upbound.io/v1beta1
           kind: Bucket
           spec:
+            deletionPolicy: Delete
             providerConfigRef:
               name: default
               kind: ClusterProviderConfig
             forProvider:
               region: eu-west-1
+              tags:
+                managed-by: crossplane
+                platform-api: appbucket
         patches:
         - type: FromCompositeFieldPath
           fromFieldPath: spec.region
           toFieldPath: spec.forProvider.region
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.environment
+          toFieldPath: spec.forProvider.tags.environment
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.deletionPolicy
+          toFieldPath: spec.deletionPolicy
 ```
 
 Apply it:
 
 ```bash
-kubectl apply -f composition-appbucket-s3.yaml
+kubectl apply -f composition-appbucket-s3-standard.yaml
 kubectl get compositions
 ```
 
-What it does: connects the `AppBucket` API to an S3 `Bucket` managed resource. When a user creates an `AppBucket`, Crossplane creates the composed bucket.
+What it does: connects the `AppBucket` API to an AWS S3 `Bucket` managed resource, injects platform tags, maps the user-selected environment tag, and applies the requested deletion policy.
 
 ## Call the platform API with an XR
 
@@ -250,30 +280,32 @@ What it does: connects the `AppBucket` API to an S3 `Bucket` managed resource. W
 apiVersion: platform.example.org/v1alpha1
 kind: AppBucket
 metadata:
-  namespace: default
+  namespace: payments
   name: receipts
 spec:
   region: eu-west-1
+  environment: prod
+  deletionPolicy: Orphan
   crossplane:
     compositionRef:
-      name: appbucket-s3
+      name: appbucket-s3-standard
 ```
 
 Apply it:
 
 ```bash
 kubectl apply -f appbucket-receipts.yaml
-kubectl get appbuckets -n default
-kubectl describe appbucket receipts -n default
-kubectl get buckets -n default
+kubectl get appbuckets -n payments
+kubectl describe appbucket receipts -n payments
+kubectl get buckets -n payments
 ```
 
-What it does: creates a composite resource. Crossplane reads the XR, uses the selected Composition, creates the composed S3 Bucket managed resource, and reports readiness on the XR.
+What it does: creates a composite resource in the `payments` namespace. Crossplane reads the XR, uses the selected AWS S3 Composition, creates the composed S3 Bucket managed resource, and reports readiness on the XR.
 
 Trace the resource tree:
 
 ```bash
-crossplane beta trace appbucket.platform.example.org/receipts -n default
+crossplane beta trace appbucket.platform.example.org/receipts -n payments
 ```
 
 What it does: shows the XR and the resources Crossplane composed for it, making it easier to debug readiness problems.
@@ -281,7 +313,7 @@ What it does: shows the XR and the resources Crossplane composed for it, making 
 ## Render a Composition locally
 
 ```bash
-crossplane composition render appbucket-receipts.yaml composition-appbucket-s3.yaml function-patch-and-transform.yaml
+crossplane composition render appbucket-receipts.yaml composition-appbucket-s3-standard.yaml function-patch-and-transform.yaml
 ```
 
 What it does: runs the Composition function locally and prints the resources the Composition would generate. The Crossplane CLI uses Docker for function execution by default.
@@ -291,14 +323,14 @@ What it does: runs the Composition function locally and prints the resources the
 Delete the user-facing XR first:
 
 ```bash
-kubectl delete appbucket receipts -n default
+kubectl delete appbucket receipts -n payments
 ```
 
 Then confirm the composed managed resource and external resource are gone:
 
 ```bash
-kubectl get buckets -n default
-kubectl get events -n default --sort-by=.lastTimestamp
+kubectl get buckets -n payments
+kubectl get events -n payments --sort-by=.lastTimestamp
 ```
 
 > [!WARNING]
@@ -310,5 +342,7 @@ kubectl get events -n default --sort-by=.lastTimestamp
 - [Crossplane providers](https://docs.crossplane.io/latest/packages/providers/)
 - [Crossplane Compositions](https://docs.crossplane.io/latest/composition/compositions/)
 - [Crossplane CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/)
+- [XRDs and XRs](../xrd-and-xr/README.md)
+- [Compositions](../compositions/README.md)
 - [Back to Crossplane index](../README.md)
 - [Back to root index](../../README.md)

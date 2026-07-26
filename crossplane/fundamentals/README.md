@@ -53,7 +53,7 @@ What it does: asks the AWS S3 provider to create an S3 bucket in `eu-west-1` usi
 
 This is useful for learning and for platform teams, but it often exposes too much provider-specific detail to application teams.
 
-## Platform APIs with XRDs and Compositions
+## Platform APIs with XRDs, XRs, and Compositions
 
 Crossplane's more powerful pattern is to define a custom API:
 
@@ -73,7 +73,7 @@ metadata:
   name: receipts
 spec:
   region: eu-west-1
-  versioning: true
+  environment: prod
 ```
 
 What it does: lets a developer request a governed storage capability without knowing the exact S3 managed resource schema, provider config, tags, naming policy, or default security controls.
@@ -92,7 +92,7 @@ Crossplane uses normal Kubernetes extension patterns: CRDs, controllers, status,
 
 - Treat provider credentials as production secrets.
 - Use least-privilege cloud permissions for each provider configuration.
-- Start with direct managed resources to understand provider behavior, then hide repeated patterns behind XRDs and Compositions.
+- Start with direct AWS managed resources to understand provider behavior, then hide repeated patterns behind XRDs, XRs, and Compositions.
 - Prefer pipeline Compositions with Functions for new work.
 - Use GitOps for Crossplane objects only after deletion policies, naming, and ownership rules are clear.
 - Watch `READY`, `SYNCED`, events, and provider logs when troubleshooting.
@@ -101,7 +101,8 @@ Crossplane uses normal Kubernetes extension patterns: CRDs, controllers, status,
 
 - [Crossplane workflow](../workflow/README.md)
 - [Crossplane examples](../examples/README.md)
-- [XRDs and Compositions](../xrd-and-compositions/README.md)
+- [XRDs and XRs](../xrd-and-xr/README.md)
+- [Compositions](../compositions/README.md)
 - [Terraform vs Crossplane](../comparison/terraform-vs-crossplane.md)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
 - [Back to Crossplane index](../README.md)

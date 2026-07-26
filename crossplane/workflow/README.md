@@ -149,7 +149,8 @@ What it does: starts from resource health, then uses describe output, events, an
 
 - [Crossplane fundamentals](../fundamentals/README.md)
 - [Crossplane examples](../examples/README.md)
-- [XRDs and Compositions](../xrd-and-compositions/README.md)
+- [XRDs and XRs](../xrd-and-xr/README.md)
+- [Compositions](../compositions/README.md)
 - [Terraform vs Crossplane](../comparison/terraform-vs-crossplane.md)
 - [Crossplane composition documentation](https://docs.crossplane.io/latest/composition/)
 - [Back to Crossplane index](../README.md)

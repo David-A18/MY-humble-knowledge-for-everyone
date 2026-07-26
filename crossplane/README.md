@@ -9,7 +9,8 @@ Practical Crossplane notes for building Kubernetes-native infrastructure APIs, c
 | [Fundamentals](fundamentals/README.md) | Crossplane mental model, providers, managed resources, XRs, XRDs, Compositions, and Functions. |
 | [Workflow](workflow/README.md) | Graphical workflows for direct managed resources and composed platform APIs. |
 | [Examples](examples/README.md) | Practical installation, provider, managed resource, XRD, Composition, and XR examples. |
-| [XRDs and Compositions](xrd-and-compositions/README.md) | Deep explanation of custom APIs, schema design, Composition behavior, and how users call an XR API. |
+| [XRDs and XRs](xrd-and-xr/README.md) | Custom API contracts, user-facing XR calls, Terraform module comparison, and AWS API design. |
+| [Compositions](compositions/README.md) | AWS-backed Composition implementation, function pipelines, patches, revisions, and troubleshooting. |
 | [Comparison](comparison/README.md) | Decision guides comparing Crossplane with Terraform. |
 
 ## What Crossplane is
@@ -22,7 +23,7 @@ In practice:
 - Providers add Kubernetes APIs for external systems such as AWS, Azure, GCP, Helm, Kubernetes, or SaaS platforms.
 - Users create Kubernetes objects that describe desired infrastructure.
 - Crossplane and provider controllers create, update, observe, and delete the external resources.
-- Platform teams can define higher-level APIs with XRDs and Compositions so application teams request a database, bucket, or application platform without knowing every low-level cloud field.
+- Platform teams can define higher-level APIs with XRDs, let users create XRs, and implement those requests with Compositions so application teams request an AWS bucket, queue, database, or service environment without knowing every low-level cloud field.
 
 ## Core building blocks
 

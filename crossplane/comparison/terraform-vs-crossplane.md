@@ -22,7 +22,7 @@ Many organizations use both:
 | Primary interface | HCL configuration and CLI/API workflows. | Kubernetes resources and controllers. |
 | Execution model | Plan, then apply when a workflow runs. | Continuous reconciliation loop. |
 | State model | Terraform state maps configuration to remote objects. | Kubernetes stores desired state; controllers observe external state and update status. |
-| Reuse model | Modules package reusable HCL. | XRDs define APIs; Compositions define implementations. |
+| Reuse model | Modules package reusable HCL. | XRDs define APIs, XRs call them, and Compositions implement them. |
 | Review model | `terraform plan` shows proposed changes before apply. | Kubernetes diff/GitOps review plus controller status after reconciliation. |
 | Access model | Backend, workspace, VCS, and cloud credentials. | Kubernetes RBAC, namespaces, provider configs, and cloud credentials. |
 | Drift handling | Detected during plan or refresh. | Controllers continuously observe and reconcile. |
@@ -75,7 +75,7 @@ XRDs are not modules.
 
 A Terraform module is a reusable HCL package. It receives variables, creates resources during plan/apply, and records the result in Terraform state.
 
-An XRD defines a Kubernetes API. Users create XRs from that API. Crossplane continuously reconciles those XRs through Compositions and provider controllers.
+An XRD defines a Kubernetes API. Users create XRs from that API. Crossplane continuously reconciles those XRs through Compositions and AWS provider controllers.
 
 The useful mapping is:
 
@@ -109,7 +109,7 @@ flowchart TD
     foundation["Foundation\nAccounts, VPCs, IAM, EKS"]
     cluster["Kubernetes cluster"]
     crossplane["Crossplane"]
-    platformapi["Platform APIs\nXRDs and Compositions"]
+    platformapi["Platform APIs\nXRDs, XRs, and Compositions"]
     teams["Application teams"]
     resources["App infrastructure\nBuckets, databases, queues, secrets"]
 
@@ -152,6 +152,8 @@ Neither tool removes the need for cloud IAM design, deletion policies, naming st
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
 - [Crossplane XRDs](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
 - [Crossplane Compositions](https://docs.crossplane.io/latest/composition/compositions/)
+- [XRDs and XRs in this knowledge base](../xrd-and-xr/README.md)
+- [Compositions in this knowledge base](../compositions/README.md)
 - [Back to Crossplane comparison](README.md)
 - [Back to Crossplane index](../README.md)
 - [Back to root index](../../README.md)

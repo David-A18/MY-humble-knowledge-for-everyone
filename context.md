@@ -157,7 +157,8 @@ When adding or moving content, update every affected index immediately.
 | [crossplane/fundamentals/README.md](crossplane/fundamentals/README.md) | Crossplane mental model and core concepts. | Providers, managed resources, XRs, XRDs, Compositions, or Functions guidance changes. |
 | [crossplane/workflow/README.md](crossplane/workflow/README.md) | Crossplane graphical workflows. | Reconciliation, Composition, troubleshooting, or Terraform comparison workflows change. |
 | [crossplane/examples/README.md](crossplane/examples/README.md) | Practical Crossplane examples. | Install, provider, managed resource, XRD, Composition, XR, or trace examples change. |
-| [crossplane/xrd-and-compositions/README.md](crossplane/xrd-and-compositions/README.md) | Deep XRD and Composition explanation. | Custom API design, schema, Composition selection, or Terraform module comparison changes. |
+| [crossplane/xrd-and-xr/README.md](crossplane/xrd-and-xr/README.md) | XRD and XR explanation. | Custom API design, XR usage, schema, scope, or Terraform module comparison changes. |
+| [crossplane/compositions/README.md](crossplane/compositions/README.md) | Crossplane Composition explanation. | AWS Composition implementation, function pipelines, patching, revisions, or troubleshooting changes. |
 | [crossplane/comparison/README.md](crossplane/comparison/README.md) | Crossplane comparison index. | Comparison guides are added or moved. |
 | [crossplane/comparison/terraform-vs-crossplane.md](crossplane/comparison/terraform-vs-crossplane.md) | Terraform and Crossplane decision guide. | IaC comparison, adoption guidance, or tool trade-offs change. |
 
