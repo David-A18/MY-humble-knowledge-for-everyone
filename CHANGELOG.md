@@ -45,3 +45,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Consolidated the requested Crossplane VPC example into the canonical `kubernetes/crossplane` section and cleaned up duplicate top-level Crossplane navigation.
 - Split Crossplane XRD/XR and Composition guidance into separate AWS-focused sections.
 - Added an AWS VPC Crossplane example with a `PlatformNetwork` XRD, XR call, and multi-resource Composition.
+- Added a dedicated Terraform vs Crossplane comparison explaining what Crossplane solves beyond Terraform's run-based workflow.

@@ -96,6 +96,8 @@ What it does: lets a platform team hide encryption, public-access blocking, logg
 
 ## Crossplane versus Terraform
 
+For the focused decision guide, read [Terraform vs Crossplane](terraform-vs-crossplane.md).
+
 | Area | Terraform | Crossplane |
 | --- | --- | --- |
 | Primary model | Execution-oriented IaC. | Continuously running control plane. |
@@ -152,6 +154,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
+| [Terraform vs Crossplane](terraform-vs-crossplane.md) | Compare run-based Terraform workflows with Crossplane reconciliation and platform APIs, including what Crossplane solves that Terraform does not solve naturally. |
 | [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
 | [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
@@ -167,6 +170,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [Providers and authentication](providers-and-authentication.md)
 - [Crossplane compositions](compositions.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
+- [Terraform vs Crossplane](terraform-vs-crossplane.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Professional operating model](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)

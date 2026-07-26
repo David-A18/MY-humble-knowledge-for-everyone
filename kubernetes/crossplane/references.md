@@ -68,6 +68,14 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [AWS Organizations service control policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) | Defense-in-depth guardrails outside Crossplane. |
 | [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html) | Independent configuration recording and compliance checks. |
 
+## Terraform references
+
+| Reference | Use it for |
+| --- | --- |
+| [Terraform documentation](https://developer.hashicorp.com/terraform/docs) | Terraform model, CLI, language, providers, collaboration, and adoption guidance. |
+| [Terraform modules](https://developer.hashicorp.com/terraform/language/modules) | Module purpose, root modules, child modules, reusable configuration, and module calls. |
+| [Terraform state](https://developer.hashicorp.com/terraform/language/state) | State purpose, object bindings, refresh behavior, and remote backend guidance. |
+
 ## Professional practice signals
 
 These sources are useful for understanding how teams combine Crossplane with platform engineering and GitOps. Verify commands and APIs against official docs before copying examples.
