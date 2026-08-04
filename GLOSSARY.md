@@ -13,6 +13,7 @@ Common terms used across the knowledge base.
 | BackupRepository | Velero repository used by File System Backup or data movement to store volume data in object storage. |
 | BackupStorageLocation | Velero custom resource that defines the object storage bucket, prefix, provider, and access mode used for backup artifacts. |
 | BSON | Binary JSON; MongoDB's binary document format for storing documents and typed values. |
+| Capacity provider | Amazon ECS strategy that controls which infrastructure runs tasks and, for supported capacity types, how that capacity scales. |
 | CDN | Content Delivery Network; an edge network that caches or accelerates content close to users. |
 | CI | Continuous Integration; automated validation that runs on code changes. |
 | CD | Continuous Delivery or Continuous Deployment, depending on release process. |
@@ -28,8 +29,12 @@ Common terms used across the knowledge base.
 | CSI snapshot | Kubernetes snapshot workflow for CSI-backed persistent volumes using VolumeSnapshot, VolumeSnapshotContent, and VolumeSnapshotClass resources. |
 | DeploymentRuntimeConfig | Crossplane package-runtime configuration for provider or function pods. |
 | DevOps | Engineering practices that connect software delivery, automation, operations, and reliability work. |
+| ECS | Amazon Elastic Container Service; AWS-native container orchestration for running, managing, and scaling containerized applications. |
+| ECS service | Amazon ECS resource that keeps a desired number of task definition instances running and replaces failed or unhealthy tasks. |
+| EKS | Amazon Elastic Kubernetes Service; AWS managed Kubernetes service for running Kubernetes clusters on AWS and supported hybrid environments. |
 | EnvironmentConfig | Crossplane composition data object that provides XR-specific in-memory environment values. |
 | External name | Crossplane annotation that maps a Kubernetes managed resource to its real external resource identifier. |
+| Fargate | AWS serverless container compute option for running ECS tasks or EKS pods without managing servers. |
 | FinOps | A cloud financial management discipline focused on cost visibility, accountability, and optimization. |
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |
 | FunctionRevision | Crossplane package revision object for a concrete installed function version. |
@@ -61,8 +66,11 @@ Common terms used across the knowledge base.
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
 | RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
+| Service Connect | Amazon ECS capability for service discovery, service-to-service connectivity, and traffic monitoring between ECS services. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
+| Task definition | Amazon ECS versioned blueprint that describes container images, CPU, memory, networking, IAM roles, logging, secrets, and volumes for a task. |
+| Task role | IAM role associated with an ECS task that grants application containers permission to call AWS APIs. |
 | Tooling cluster | Kubernetes cluster dedicated to platform tools such as GitOps, observability, policy, CI/CD runners, or developer experience services. |
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | Velero | Kubernetes backup, restore, disaster recovery, and cluster migration tool that stores cluster resources in object storage and can protect persistent volume data. |

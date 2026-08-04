@@ -8,7 +8,7 @@ Practical AWS knowledge for cloud architecture, networking, compute, storage, se
 | --- | --- |
 | [Fundamentals](fundamentals/README.md) | Regions, availability zones, accounts, shared responsibility, and core concepts. |
 | [Networking](networking/README.md) | VPCs, subnets, routing, security groups, and connectivity. |
-| [Compute](compute/README.md) | EC2, Auto Scaling, containers, and serverless compute notes. |
+| [Compute](compute/README.md) | EC2, Auto Scaling, ECS, EKS comparisons, containers, and serverless compute notes. |
 | [Storage](storage/README.md) | S3, EBS, EFS, lifecycle, durability, and backup considerations. |
 | [Databases](databases/README.md) | RDS, DynamoDB, ElastiCache, and data architecture notes. |
 | [Security](security/README.md) | Encryption, identity, detection, and security operations. |

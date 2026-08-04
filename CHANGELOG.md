@@ -46,3 +46,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Split Crossplane XRD/XR and Composition guidance into separate AWS-focused sections.
 - Added an AWS VPC Crossplane example with a `PlatformNetwork` XRD, XR call, and multi-resource Composition.
 - Added a dedicated Terraform vs Crossplane comparison explaining what Crossplane solves beyond Terraform's run-based workflow.
+- Added AWS compute coverage for Amazon ECS fundamentals, ECS versus EKS decision guidance, and full-platform EKS-to-ECS migration planning.
