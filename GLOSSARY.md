@@ -13,7 +13,9 @@ Common terms used across the knowledge base.
 | Attested computation | OKF concept type that describes a sanctioned computation, its runtime, parameters, executor, receipt, and deterministic attester. |
 | BackupRepository | Velero repository used by File System Backup or data movement to store volume data in object storage. |
 | BackupStorageLocation | Velero custom resource that defines the object storage bucket, prefix, provider, and access mode used for backup artifacts. |
+| Blue-green deployment | Release strategy that runs an old production-capable environment and a new production-capable environment at the same time, then moves traffic from the old version to the new version after validation. |
 | BSON | Binary JSON; MongoDB's binary document format for storing documents and typed values. |
+| Canary deployment | Release strategy that sends a small percentage of production traffic to a new version first, then increases traffic gradually while monitoring health. |
 | Capacity provider | Amazon ECS strategy that controls which infrastructure runs tasks and, for supported capacity types, how that capacity scales. |
 | CDN | Content Delivery Network; an edge network that caches or accelerates content close to users. |
 | CI | Continuous Integration; automated validation that runs on code changes. |

@@ -207,6 +207,8 @@ When adding or moving content, update every affected index immediately.
 | Route | Purpose | Edit when |
 | --- | --- | --- |
 | [cloud/README.md](cloud/README.md) | Cloud provider and provider-neutral index. | Cloud provider routes or provider-neutral cloud topics change. |
+| [cloud/solutions/README.md](cloud/solutions/README.md) | Provider-neutral cloud solutions index. | Deployment, reliability, migration, scaling, or operations solution patterns are added. |
+| [cloud/solutions/blue-green-deployment.md](cloud/solutions/blue-green-deployment.md) | Blue-green deployment guide. | Blue-green concepts, service maps, recognition signals, or release risks change. |
 | [cloud/edge/README.md](cloud/edge/README.md) | Edge and CDN index. | CDN or edge delivery articles are added. |
 | [cloud/edge/cdn-and-edge-fundamentals.md](cloud/edge/cdn-and-edge-fundamentals.md) | CDN and edge fundamentals. | CDN terminology or edge design guidance changes. |
 | [cloud/edge/cdn-caching-and-origin-protection.md](cloud/edge/cdn-caching-and-origin-protection.md) | CDN caching and origin-protection guide. | Cache keys, TTLs, purges, origin shielding, private origins, or direct-origin bypass guidance changes. |

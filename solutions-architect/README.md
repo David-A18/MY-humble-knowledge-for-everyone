@@ -12,4 +12,10 @@ Status: Initial outline
 - Certification and interview study notes.
 - Cross-links to cloud provider and cross-topic guides.
 
+## Related cloud solution patterns
+
+| Pattern | Use it for |
+| --- | --- |
+| [Blue-green deployment](../cloud/solutions/blue-green-deployment.md) | Low-downtime releases, traffic cutover, rollback planning, and deployment architecture reviews. |
+
 [Back to root index](../README.md)

@@ -16,7 +16,14 @@ Status: Initial outline
 
 | Area | Use it for |
 | --- | --- |
+| [Cloud solutions](solutions/README.md) | Provider-neutral solution patterns for deployment, reliability, migration, scaling, and operations. |
 | [Edge and CDN](edge/README.md) | CDN, edge routing, cache behavior, origin protection, and multi-CDN guidance. |
+
+## Cloud solutions quick paths
+
+| Topic | Start here | Follow-up |
+| --- | --- | --- |
+| Blue-green deployment | [Blue-green deployment](solutions/blue-green-deployment.md) | Understand the pattern, how to recognize it, and which services usually implement it. |
 
 ## Edge and CDN quick paths
 

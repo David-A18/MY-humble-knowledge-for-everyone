@@ -54,6 +54,7 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | [Kubernetes commands](kubernetes/commands/README.md) | [kubernetes/commands/README.md](kubernetes/commands/README.md) | Daily `kubectl`, common commands, advanced commands, operational sequences, `eksctl`, and basics. |
 | [Kubernetes Crossplane](kubernetes/crossplane/README.md) | [kubernetes/crossplane/README.md](kubernetes/crossplane/README.md) | Crossplane concepts, compositions, providers, managed resources, and troubleshooting. |
 | [Cloud](cloud/README.md) | [cloud/README.md](cloud/README.md) | Provider-neutral cloud guidance and provider sections for AWS, Azure, and Google Cloud. |
+| [Cloud solutions](cloud/solutions/README.md) | [cloud/solutions/README.md](cloud/solutions/README.md) | Provider-neutral deployment, reliability, migration, scaling, and operations solution patterns. |
 | [AWS](cloud/aws/README.md) | [cloud/aws/README.md](cloud/aws/README.md) | AWS fundamentals, networking, compute, storage, databases, security, governance, FinOps, architecture, and troubleshooting. |
 | [Databases](databases/README.md) | [databases/README.md](databases/README.md) | Database modeling, Kafka, MongoDB, operations, and cloud data-platform choices. |
 | [Migrations](migrations/README.md) | [migrations/README.md](migrations/README.md) | Infrastructure, platform, workload, Kubernetes backup, restore, disaster recovery, and migration guidance. |
