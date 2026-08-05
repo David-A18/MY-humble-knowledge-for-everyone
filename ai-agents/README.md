@@ -8,7 +8,7 @@ Status: Initial outline
 
 | Guide | Use it for |
 | --- | --- |
-| [Model Context Protocol, custom tools, and OKF](../ai/model-context-protocol-custom-tools-and-okf.md) | Agent tool integration, MCP servers, skills, Markdown knowledge bases, and OKF bundles. |
+| [AI tooling](../ai/ai-tooling/README.md) | Agent tool integration, MCP servers, Claude and Codex tools, skills, Markdown knowledge bases, and OKF bundles. |
 
 ## Expected content
 

@@ -48,4 +48,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a dedicated Terraform vs Crossplane comparison explaining what Crossplane solves beyond Terraform's run-based workflow.
 - Added AWS compute coverage for Amazon ECS fundamentals, ECS versus EKS decision guidance, and full-platform EKS-to-ECS migration planning.
 - Added AI guidance for MCP, custom tools, Markdown knowledge-base management, skills, retrieval, and OKF v0.2 bundles.
+- Split AI tooling into a dedicated section with focused guides for MCP, Claude and Codex tools, and agent knowledge-base management.
 - Added a provider-neutral cloud solutions section with blue-green deployment guidance, recognition signals, service maps, risks, and official references.

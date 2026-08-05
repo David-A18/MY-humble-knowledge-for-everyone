@@ -19,7 +19,7 @@ A practical, long-term engineering knowledge base for cloud, Git, GitHub Actions
 | [FinOps](finops/README.md) | Cost allocation, budgets, optimization, accountability | Cost visibility, allocation, optimization, budgets, and financial accountability. |
 | [DevOps](devops/README.md) | Delivery workflows, automation, reliability, platform operations | Delivery workflows, automation, reliability practices, and platform operations. |
 | [Programming languages](programming-languages/README.md) | Language notes, tooling, runtimes, practical examples | Language behavior, tooling, runtime notes, and examples. |
-| [AI](ai/README.md) | AI systems, MCP, custom tools, knowledge-base patterns, safety, engineering use | AI concepts, workflows, tool integrations, Markdown knowledge bases, systems, safety, and engineering use. |
+| [AI](ai/README.md) | [AI tooling](ai/ai-tooling/README.md), AI systems, MCP, custom tools, knowledge-base patterns, safety, engineering use | AI concepts, workflows, tool integrations, Markdown knowledge bases, systems, safety, and engineering use. |
 | [AI agents](ai-agents/README.md) | Agent workflows, tool use, routing, evaluation, operational safety | Agent design, routing, knowledge-base improvement workflows, and operational safety. |
 | [LLM](llm/README.md) | Prompting, retrieval, evaluation, deployment, operations | Large language model prompting, retrieval, evaluation, deployment, and operations. |
 | [ML](ml/README.md) | Datasets, training, evaluation, model risks | Machine learning fundamentals, datasets, training, evaluation, and model risks. |

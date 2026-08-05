@@ -6,7 +6,7 @@ AI knowledge for concepts, systems, workflows, tools, knowledge bases, and pract
 
 | Guide | Use it for |
 | --- | --- |
-| [Model Context Protocol, custom tools, and OKF](model-context-protocol-custom-tools-and-okf.md) | MCP concepts, custom AI tools, Markdown workflows, agent knowledge-base management, and the OKF spec. |
+| [AI tooling](ai-tooling/README.md) | MCP servers, Claude and Codex custom tools, skills, Markdown knowledge bases, retrieval, and OKF. |
 
 ## Expected content
 

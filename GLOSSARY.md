@@ -21,6 +21,8 @@ Common terms used across the knowledge base.
 | CI | Continuous Integration; automated validation that runs on code changes. |
 | CD | Continuous Delivery or Continuous Deployment, depending on release process. |
 | ClusterProviderConfig | Crossplane provider configuration that can be referenced across namespaces. |
+| Claude Code | Anthropic coding agent that can use project memory, skills, commands, subagents, permissions, and MCP servers. |
+| Codex | OpenAI coding agent that can use repository instructions, skills, plugins, MCP servers, and connected tools to inspect and change software projects. |
 | Composition | Crossplane implementation that maps a composite resource to composed resources through a function pipeline. |
 | Composition Function | Crossplane package that supplies logic used by a Composition or Operation. |
 | Composition Revision | Crossplane-generated immutable version of a Composition used for rollout and rollback control. |
@@ -76,6 +78,7 @@ Common terms used across the knowledge base.
 | ProviderRevision | Crossplane package revision object for a concrete installed provider version. |
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
 | RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
+| RAG | Retrieval-Augmented Generation; pattern where relevant source material is retrieved and provided to a model before it answers. |
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
 | Service Connect | Amazon ECS capability for service discovery, service-to-service connectivity, and traffic monitoring between ECS services. |
 | Skill | Reusable AI workflow package, usually centered on `SKILL.md` plus optional references, scripts, and assets. |
@@ -88,6 +91,7 @@ Common terms used across the knowledge base.
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | Velero | Kubernetes backup, restore, disaster recovery, and cluster migration tool that stores cluster resources in object storage and can protect persistent volume data. |
 | VolumeSnapshot | Kubernetes request for a point-in-time snapshot of a persistent volume claim. |
+| Vector store | Search index that stores embeddings and metadata so retrieval can find semantically similar documents or chunks. |
 | VolumeSnapshotClass | Kubernetes object that defines snapshot behavior and CSI driver settings for VolumeSnapshot resources. |
 | VolumeSnapshotLocation | Velero custom resource that defines provider-specific volume snapshot configuration. |
 | XR | Composite Resource; an instance of an XRD-defined platform API. |
