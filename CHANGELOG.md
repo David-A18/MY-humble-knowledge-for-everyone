@@ -47,3 +47,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added an AWS VPC Crossplane example with a `PlatformNetwork` XRD, XR call, and multi-resource Composition.
 - Added a dedicated Terraform vs Crossplane comparison explaining what Crossplane solves beyond Terraform's run-based workflow.
 - Added AWS compute coverage for Amazon ECS fundamentals, ECS versus EKS decision guidance, and full-platform EKS-to-ECS migration planning.
+- Added AI guidance for MCP, custom tools, Markdown knowledge-base management, skills, retrieval, and OKF v0.2 bundles.

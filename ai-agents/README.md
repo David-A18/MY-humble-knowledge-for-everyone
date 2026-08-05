@@ -4,6 +4,12 @@ AI agent knowledge for agent workflows, tool use, routing, memory, evaluation, a
 
 Status: Initial outline
 
+## Related AI tooling
+
+| Guide | Use it for |
+| --- | --- |
+| [Model Context Protocol, custom tools, and OKF](../ai/model-context-protocol-custom-tools-and-okf.md) | Agent tool integration, MCP servers, skills, Markdown knowledge bases, and OKF bundles. |
+
 ## Expected content
 
 - Agent architecture and routing patterns.

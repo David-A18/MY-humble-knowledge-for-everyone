@@ -10,6 +10,7 @@ Common terms used across the knowledge base.
 | API gateway | A traffic entry point that routes API requests and often applies policy such as authentication, rate limits, TLS, and observability. |
 | APISIX | Apache APISIX; an open-source API gateway that can run in Kubernetes and be configured through APISIX APIs, CRDs, or Gateway API integrations. |
 | Argo CD | Kubernetes GitOps controller that reconciles application desired state from Git or another source into target clusters. |
+| Attested computation | OKF concept type that describes a sanctioned computation, its runtime, parameters, executor, receipt, and deterministic attester. |
 | BackupRepository | Velero repository used by File System Backup or data movement to store volume data in object storage. |
 | BackupStorageLocation | Velero custom resource that defines the object storage bucket, prefix, provider, and access mode used for backup artifacts. |
 | BSON | Binary JSON; MongoDB's binary document format for storing documents and typed values. |
@@ -44,6 +45,7 @@ Common terms used across the knowledge base.
 | JWKS | JSON Web Key Set; a document containing public keys used to verify tokens signed by an identity provider. |
 | Kafka | Distributed event streaming platform used for durable event logs, producers, consumers, and stream processing. |
 | kind | Kubernetes in Docker; a local Kubernetes tool that runs cluster nodes as containers. |
+| Knowledge bundle | A self-contained directory of Markdown knowledge documents, commonly used as the distribution unit for OKF. |
 | Kopia | Backup tool used by Velero File System Backup and data movement paths to store deduplicated volume data. |
 | KRaft | Kafka's Raft-based metadata mode that replaces ZooKeeper for Kafka cluster metadata management. |
 | Least privilege | Granting only the permissions needed to perform a task. |
@@ -52,25 +54,34 @@ Common terms used across the knowledge base.
 | Managed Resource Activation Policy | Crossplane v2 policy that activates selected managed-resource APIs from a provider. |
 | Managed Resource Definition | Crossplane v2 representation of a provider managed-resource API before or while it is activated into a Kubernetes CRD. |
 | ML | Machine Learning; systems that learn patterns from data to make predictions, classifications, or decisions. |
+| MCP | Model Context Protocol; a standard protocol for connecting AI hosts to external tools, resources, and prompt providers. |
+| MCP client | The MCP connection inside an AI host that sends requests to MCP servers and receives their responses. |
+| MCP host | The AI application or environment that the user interacts with, such as an agent app, IDE, or chat product. |
+| MCP server | An integration process or service that exposes tools, resources, and prompts to an MCP host through an MCP client. |
 | MLOps | Operational practices for deploying, monitoring, governing, and maintaining machine learning systems. |
 | MongoDB | Document database that stores JSON-like BSON documents and supports flexible document modeling. |
 | MSK | Amazon Managed Streaming for Apache Kafka; AWS managed service for Kafka-compatible streaming workloads. |
 | MTTR | Mean Time To Recovery; a reliability metric for how quickly service is restored after failure. |
 | OIDC | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
+| OKF | Open Knowledge Format; a Markdown and YAML-frontmatter format for portable human- and agent-readable knowledge bundles. |
 | Node-agent | Velero DaemonSet that runs file-system backup and data movement work on Kubernetes nodes. |
 | Operation | Crossplane run-to-completion function pipeline for maintenance or operational tasks. |
 | PKCE | Proof Key for Code Exchange; an OAuth 2.0 extension used with authorization code flows to reduce authorization-code interception risk. |
 | Platform API | Stable internal API exposed by a platform team to hide implementation details behind a product-like request shape. |
+| Prompt | Reusable instruction template that guides a model or agent for a specific interaction or workflow. |
+| Provenance | Metadata that records the sources a claim or knowledge document derives from. |
 | ProviderConfig | Crossplane provider configuration scoped to a namespace. |
 | ProviderRevision | Crossplane package revision object for a concrete installed provider version. |
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
 | RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
 | Service Connect | Amazon ECS capability for service discovery, service-to-service connectivity, and traffic monitoring between ECS services. |
+| Skill | Reusable AI workflow package, usually centered on `SKILL.md` plus optional references, scripts, and assets. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
 | Task definition | Amazon ECS versioned blueprint that describes container images, CPU, memory, networking, IAM roles, logging, secrets, and volumes for a task. |
 | Task role | IAM role associated with an ECS task that grants application containers permission to call AWS APIs. |
+| Tool | A callable capability exposed to an AI model or agent so it can query data, perform computation, or take an action. |
 | Tooling cluster | Kubernetes cluster dedicated to platform tools such as GitOps, observability, policy, CI/CD runners, or developer experience services. |
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | Velero | Kubernetes backup, restore, disaster recovery, and cluster migration tool that stores cluster resources in object storage and can protect persistent volume data. |

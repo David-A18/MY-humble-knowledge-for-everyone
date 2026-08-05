@@ -287,6 +287,7 @@ When adding or moving content, update every affected index immediately.
 | [programming-languages/README.md](programming-languages/README.md) | Programming languages index. | Language-specific notes or examples are added. |
 | [mlops/README.md](mlops/README.md) | MLOps index. | ML operations, deployment, monitoring, or governance content is added. |
 | [ai/README.md](ai/README.md) | AI index. | General AI system, workflow, or safety content is added. |
+| [ai/model-context-protocol-custom-tools-and-okf.md](ai/model-context-protocol-custom-tools-and-okf.md) | MCP, custom AI tools, Markdown knowledge-base, skills, retrieval, and OKF guide. | AI tool integration, agent-accessible knowledge bases, or OKF guidance changes. |
 | [ai-agents/README.md](ai-agents/README.md) | AI agents index. | Agent workflow, routing, tool-use, or evaluation content is added. |
 | [llm/README.md](llm/README.md) | LLM index. | LLM prompting, retrieval, evaluation, deployment, or operations content is added. |
 | [ml/README.md](ml/README.md) | ML index. | Machine learning concepts, datasets, training, or evaluation content is added. |
