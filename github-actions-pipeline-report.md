@@ -26,6 +26,7 @@ Run date: 2026-08-05
 | Nested Markdown examples | `ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md` embedded fenced Markdown examples that contained shorter inner fences. | Changed outer fences to four backticks and added required blank lines around closing fences. |
 | Link check scope | `link-check.yml` scanned `sources/incoming` and `sources/processed`, even though the repository treats those as raw intake/archive areas. | Added `lychee.toml` with `exclude_path` entries for those directories. |
 | Placeholder links | Documentation examples intentionally include `example.com`, `github.com/example/...`, `localhost`, and loopback URLs. | Added explicit `lychee` exclude patterns for those non-production examples. |
+| CI evidence links | The report links to GitHub Actions run pages for auditability, but those pages are CI evidence rather than documentation dependencies and can vary by GitHub execution context. | Excluded repository GitHub Actions run-page URLs from lychee while keeping them visible in the report. |
 | Stale official links | Local reproduction with `lychee-v0.24.2` found 404s for the AWS CLI v2 `update-kubeconfig` path and the removed Velero `troubleshoot-restore` page. | Replaced them with the current AWS CLI `latest` command reference and the Velero `restore-reference` page. |
 | Action runtime warnings | Existing workflows used older action major versions that produced Node.js 20 deprecation warnings. | Updated workflow action refs to current releases: `actions/checkout@v7.0.1`, `DavidAnson/markdownlint-cli2-action@v24.2.0`, and `hashicorp/setup-terraform@v4.0.1`. |
 
@@ -34,9 +35,9 @@ Run date: 2026-08-05
 | File | Reason |
 | --- | --- |
 | `.github/workflows/markdown-lint.yml` | Use current checkout and markdownlint actions; pass the repository markdownlint config explicitly. |
-| `.github/workflows/link-check.yml` | Use current checkout action and run `lychee` with repository config plus absolute root-dir handling. |
+| `.github/workflows/link-check.yml` | Use current checkout action, run `lychee` with repository config plus absolute root-dir handling, and expose lychee output when failures occur. |
 | `.github/workflows/terraform-format.yml` | Use current checkout and Terraform setup actions. |
-| `lychee.toml` | Centralize link-check exclusions for raw source archives and intentional example URLs. |
+| `lychee.toml` | Centralize link-check exclusions for raw source archives, intentional example URLs, and GitHub Actions evidence links. |
 | `migrations/velero/fundamentals.md` | Fix MD056 table parsing. |
 | `migrations/velero/possible-integrations.md` | Replace a stale AWS CLI command reference URL. |
 | `migrations/velero/troubleshooting-and-operations.md` | Replace a removed Velero restore troubleshooting URL. |
