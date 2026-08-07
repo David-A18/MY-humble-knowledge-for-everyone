@@ -16,4 +16,4 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --config lychee.toml --root-dir . --verbose --no-progress "**/*.md"
+          args: --config lychee.toml --root-dir "${{ github.workspace }}" --verbose --no-progress "**/*.md"

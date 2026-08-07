@@ -622,7 +622,7 @@ What it does: restores the migration backup into the destination cluster after V
 - [GitHub Actions OIDC with AWS](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws)
 - [GitHub Actions environments](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments)
 - [AWS configure credentials action](https://github.com/aws-actions/configure-aws-credentials)
-- [AWS EKS update-kubeconfig](https://docs.aws.amazon.com/cli/v2/reference/eks/update-kubeconfig.html)
+- [AWS EKS update-kubeconfig](https://docs.aws.amazon.com/cli/latest/reference/eks/update-kubeconfig.html)
 - [Velero backup reference](https://velero.io/docs/v1.18/backup-reference/)
 - [Velero restore reference](https://velero.io/docs/v1.18/restore-reference/)
 - [Backup and restore workflows](backup-restore-workflows.md)

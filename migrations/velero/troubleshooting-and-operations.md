@@ -242,7 +242,7 @@ What it does: checks restored resources, PVC binding, and whether expected files
 
 - [Velero troubleshooting](https://velero.io/docs/v1.18/troubleshooting/)
 - [Velero File System Backup](https://velero.io/docs/v1.18/file-system-backup/)
-- [Velero troubleshoot a restore](https://velero.io/docs/v1.18/troubleshoot-restore/)
+- [Velero restore reference](https://velero.io/docs/v1.18/restore-reference/)
 - [Back to Velero index](README.md)
 - [Back to migrations index](../README.md)
 - [Back to root index](../../README.md)
