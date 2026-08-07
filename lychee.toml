@@ -1,0 +1,13 @@
+exclude_path = [
+  "sources/incoming",
+  "sources/processed",
+]
+
+exclude = [
+  "^https?://(www\\.)?example\\.com(/.*)?$",
+  "^https?://github\\.com/example(/.*)?$",
+  "^https?://localhost(:[0-9]+)?(/.*)?$",
+  "^http://localhost(:[0-9]+)?(/.*)?$",
+  "^https?://127\\.0\\.0\\.1(:[0-9]+)?(/.*)?$",
+  "^http://127\\.0\\.0\\.1(:[0-9]+)?(/.*)?$",
+]

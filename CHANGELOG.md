@@ -51,3 +51,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Split AI tooling into a dedicated section with focused guides for MCP, Claude and Codex tools, and agent knowledge-base management.
 - Expanded OKF guidance with clearer purpose, consumption model, field details, attestation behavior, and a platform-operations bundle scenario.
 - Added a provider-neutral cloud solutions section with blue-green deployment guidance, recognition signals, service maps, risks, and official references.
+- Added a GitHub Actions pipeline failure report and validation hardening for Markdown lint, link checking, and action runtime warnings.

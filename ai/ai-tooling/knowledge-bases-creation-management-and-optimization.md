@@ -386,7 +386,7 @@ What it does: gives humans and agents a fast route map before they inspect indiv
 
 #### Playbook concept
 
-```markdown
+````markdown
 ---
 type: Playbook
 title: CrashLoopBackOff triage
@@ -417,7 +417,8 @@ kubectl logs app-123 -n production --previous
 What it does: checks the current Pod state and previous container output without modifying the cluster.
 
 [^k8s-pod-lifecycle]: Kubernetes Pod lifecycle.
-```
+
+````
 
 What it does: gives the agent a safe, sourced troubleshooting page with freshness and review status.
 
@@ -464,6 +465,7 @@ sum by (pod) (
 The query uses the kube-state-metrics restart counter for container restarts.[^restart-metric]
 
 [^restart-metric]: kube-state-metrics restart metric reference.
+
 ````
 
 What it does: defines a metric the agent can request through a deterministic executor instead of inventing a PromQL query.

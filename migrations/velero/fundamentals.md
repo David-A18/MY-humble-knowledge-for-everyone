@@ -67,7 +67,7 @@ The common restore flow is:
 | --- | --- | --- |
 | Kubernetes cluster access | Installing Velero and creating backup/restore resources. | `kubectl auth can-i create backups.velero.io -n velero` |
 | Velero CLI | Operator commands and automation. | `velero version` |
-| Velero server and CRDs | Any backup or restore. | `kubectl get pods -n velero` and `kubectl get crd | grep velero.io` |
+| Velero server and CRDs | Any backup or restore. | `kubectl get pods -n velero` and `kubectl get crd \| grep velero.io` |
 | Backup storage location | All Velero backups. | `velero backup-location get` |
 | Provider object store plugin | Writing to the selected backup storage. | `kubectl describe deployment velero -n velero` |
 | Cloud IAM or storage credentials | Access to buckets, containers, prefixes, snapshots, and repositories. | Cloud IAM policy review plus `velero backup-location get` |
