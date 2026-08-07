@@ -45,6 +45,16 @@ Run date: 2026-08-05
 
 ## Validation results
 
+Remote validation commit: `bb2c4bd`
+
+Run date: 2026-08-07
+
+| Workflow | Run ID | Result | Notes |
+| --- | --- | --- | --- |
+| Link check | `31175695827` | Passed | Confirmed `lychee` succeeds after excluding raw source archives, excluding intentional examples, using an absolute root dir, and replacing two stale external links. |
+| Markdown lint | `31175695736` | Passed | Confirmed the Velero table escape and OKF nested fence fixes. |
+| Terraform format | `31175695734` | Passed | Confirmed Terraform formatting workflow succeeds after action upgrades. |
+
 | Check | Result | Notes |
 | --- | --- | --- |
 | `git status --short --branch` | Passed with unrelated existing changes | Confirmed intended CI/report files plus pre-existing uncommitted documentation work. |
