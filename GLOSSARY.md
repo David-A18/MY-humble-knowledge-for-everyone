@@ -7,6 +7,7 @@ Common terms used across the knowledge base.
 | ADR | Architecture Decision Record; a short document that captures context, decision, and consequences. |
 | AI | Artificial Intelligence; systems or workflows that perform tasks associated with reasoning, generation, prediction, or automation. |
 | AI agent | An AI system that can follow goals, use tools, inspect context, and take multi-step actions with feedback. |
+| Agent knowledge base | Curated corpus designed for agents and humans to search, fetch, cite, evaluate, and maintain with explicit provenance, trust, freshness, and review boundaries. |
 | API gateway | A traffic entry point that routes API requests and often applies policy such as authentication, rate limits, TLS, and observability. |
 | APISIX | Apache APISIX; an open-source API gateway that can run in Kubernetes and be configured through APISIX APIs, CRDs, or Gateway API integrations. |
 | Argo CD | Kubernetes GitOps controller that reconciles application desired state from Git or another source into target clusters. |
@@ -34,6 +35,7 @@ Common terms used across the knowledge base.
 | CSI snapshot | Kubernetes snapshot workflow for CSI-backed persistent volumes using VolumeSnapshot, VolumeSnapshotContent, and VolumeSnapshotClass resources. |
 | DeploymentRuntimeConfig | Crossplane package-runtime configuration for provider or function pods. |
 | DevOps | Engineering practices that connect software delivery, automation, operations, and reliability work. |
+| Deterministic extraction | Parsing exact machine-readable facts from authoritative producers with code rather than asking a model to recreate them. |
 | ECS | Amazon Elastic Container Service; AWS-native container orchestration for running, managing, and scaling containerized applications. |
 | ECS service | Amazon ECS resource that keeps a desired number of task definition instances running and replaces failed or unhealthy tasks. |
 | EKS | Amazon Elastic Kubernetes Service; AWS managed Kubernetes service for running Kubernetes clusters on AWS and supported hybrid environments. |
@@ -50,10 +52,12 @@ Common terms used across the knowledge base.
 | Kafka | Distributed event streaming platform used for durable event logs, producers, consumers, and stream processing. |
 | kind | Kubernetes in Docker; a local Kubernetes tool that runs cluster nodes as containers. |
 | Knowledge bundle | A self-contained directory of Markdown knowledge documents, commonly used as the distribution unit for OKF. |
+| Knowledge source of truth | Versioned derived knowledge corpus that agents and humans serve from and review, distinct from the upstream source-of-truth producer. |
 | Kopia | Backup tool used by Velero File System Backup and data movement paths to store deduplicated volume data. |
 | KRaft | Kafka's Raft-based metadata mode that replaces ZooKeeper for Kafka cluster metadata management. |
 | Least privilege | Granting only the permissions needed to perform a task. |
 | LLM | Large Language Model; a model trained to process and generate language and other structured content. |
+| Machine-owned region | Documentation region generated from deterministic source data and protected from model-authored claims or manual drift. |
 | Managed Resource | Crossplane provider-defined Kubernetes object that represents an external resource. |
 | Managed Resource Activation Policy | Crossplane v2 policy that activates selected managed-resource APIs from a provider. |
 | Managed Resource Definition | Crossplane v2 representation of a provider managed-resource API before or while it is activated into a Kubernetes CRD. |
@@ -67,7 +71,7 @@ Common terms used across the knowledge base.
 | MSK | Amazon Managed Streaming for Apache Kafka; AWS managed service for Kafka-compatible streaming workloads. |
 | MTTR | Mean Time To Recovery; a reliability metric for how quickly service is restored after failure. |
 | OIDC | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
-| OKF | Open Knowledge Format; a Markdown and YAML-frontmatter format for portable human- and agent-readable knowledge bundles. |
+| OKF | Open Knowledge Format; an open Markdown and YAML-frontmatter specification for portable human- and agent-readable knowledge bundles with structured metadata. |
 | Node-agent | Velero DaemonSet that runs file-system backup and data movement work on Kubernetes nodes. |
 | Operation | Crossplane run-to-completion function pipeline for maintenance or operational tasks. |
 | PKCE | Proof Key for Code Exchange; an OAuth 2.0 extension used with authorization code flows to reduce authorization-code interception risk. |
@@ -79,9 +83,12 @@ Common terms used across the knowledge base.
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
 | RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
 | RAG | Retrieval-Augmented Generation; pattern where relevant source material is retrieved and provided to a model before it answers. |
+| RDF | Resource Description Framework; W3C graph data model for representing information as triples, graphs, datasets, and identifiers. |
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
+| SHACL | Shapes Constraint Language; W3C language for validating RDF graphs against shapes. |
 | Service Connect | Amazon ECS capability for service discovery, service-to-service connectivity, and traffic monitoring between ECS services. |
 | Skill | Reusable AI workflow package, usually centered on `SKILL.md` plus optional references, scripts, and assets. |
+| Semantic reranking | Retrieval step that reorders lexical or candidate results by semantic similarity when measured vocabulary mismatch justifies the extra cost. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
 | Task definition | Amazon ECS versioned blueprint that describes container images, CPU, memory, networking, IAM roles, logging, secrets, and volumes for a task. |
@@ -91,7 +98,7 @@ Common terms used across the knowledge base.
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | Velero | Kubernetes backup, restore, disaster recovery, and cluster migration tool that stores cluster resources in object storage and can protect persistent volume data. |
 | VolumeSnapshot | Kubernetes request for a point-in-time snapshot of a persistent volume claim. |
-| Vector store | Search index that stores embeddings and metadata so retrieval can find semantically similar documents or chunks. |
+| Vector store | Disposable search index that stores embeddings and metadata so retrieval can find semantically similar documents or chunks. |
 | VolumeSnapshotClass | Kubernetes object that defines snapshot behavior and CSI driver settings for VolumeSnapshot resources. |
 | VolumeSnapshotLocation | Velero custom resource that defines provider-specific volume snapshot configuration. |
 | XR | Composite Resource; an instance of an XRD-defined platform API. |

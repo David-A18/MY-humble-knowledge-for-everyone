@@ -8,7 +8,8 @@ Status: Initial outline
 
 | Guide | Use it for |
 | --- | --- |
-| [AI tooling](../ai/ai-tooling/README.md) | Agent tool integration, MCP servers, Claude and Codex tools, skills, Markdown knowledge bases, and OKF bundles. |
+| [AI tooling](../ai/ai-tooling/README.md) | Agent tool integration, MCP servers, Claude and Codex tools, skills, Markdown knowledge bases, OKF bundles, and Git-backed knowledge architecture. |
+| [Agent knowledge bases](../ai/ai-tooling/knowledge-bases/README.md) | Retrieval, provenance, freshness, security, evaluation, and maintenance patterns for agent-readable knowledge systems. |
 
 ## Expected content
 

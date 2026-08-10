@@ -12,4 +12,10 @@ Status: Initial outline
 - Model deployment and observability notes.
 - Safety, privacy, and cost-management practices.
 
+## Related AI tooling
+
+| Guide | Use it for |
+| --- | --- |
+| [Agent knowledge bases](../ai/ai-tooling/knowledge-bases/README.md) | Git-backed knowledge corpora, OKF, retrieval budgets, freshness, security, and quality evaluation for LLM systems. |
+
 [Back to root index](../README.md)

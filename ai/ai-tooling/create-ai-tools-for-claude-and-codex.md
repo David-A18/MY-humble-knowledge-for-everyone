@@ -199,10 +199,9 @@ Recommended server shape:
 | `search_knowledge` | Read-only search over curated docs. |
 | `fetch_knowledge_entry` | Read-only fetch by stable ID. |
 | `propose_knowledge_update` | Generates a patch without applying it. |
-| `modify_knowledge_entry` | Applies a validated write only inside allowlisted paths. |
 
 > [!WARNING]
-> Put write tools behind server-side authorization, path allowlists, conflict checks, lint checks, and audit logging. Model intent is not an access-control mechanism.
+> Keep normal knowledge-serving tools read-only. Privileged maintenance tools that apply writes should live behind a separate authorization boundary with path allowlists, conflict checks, lint checks, review policy, and audit logging. Model intent is not an access-control mechanism.
 
 ## Testing checklist
 
@@ -234,6 +233,7 @@ Recommended server shape:
 - Official documentation: [OpenAI skills guide](https://developers.openai.com/plugins/build/skills)
 - [Model Context Protocol](model-context-protocol.md)
 - [Knowledge-base creation, management, and optimization](knowledge-bases-creation-management-and-optimization.md)
+- [Agent knowledge bases](knowledge-bases/README.md)
 - [Back to AI tooling](README.md)
 - [Back to AI index](../README.md)
 - [Back to root index](../../README.md)

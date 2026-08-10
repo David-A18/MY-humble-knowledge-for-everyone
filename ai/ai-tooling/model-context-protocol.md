@@ -32,6 +32,28 @@ Transport changes how messages move. It does not change what a tool, resource, o
 
 ## Server capabilities
 
+### Knowledge serving pattern
+
+For agent knowledge bases, treat MCP as an optional serving adapter over the retrieval layer. MCP should expose capability, not dictate whether the corpus uses plain Markdown, OKF, BM25, SQLite FTS, OpenSearch, pgvector, FAISS, a graph index, or a hybrid retriever.
+
+```text
+Git or OKF corpus
+  -> retrieval service
+  -> read-only knowledge operations
+  -> MCP server
+  -> agent
+```
+
+Useful knowledge-serving tools:
+
+| Tool | Behavior |
+| --- | --- |
+| `search_knowledge` | Returns bounded candidate concepts or sections with IDs, summaries, trust, freshness, authority, and corpus revision metadata. |
+| `fetch_knowledge_entry` | Fetches one authorized document or section by stable ID. |
+| `fetch_source_evidence` | Fetches related evidence only when authorized and needed. |
+
+Keep normal knowledge serving read-only. Maintenance workflows may produce patches, branches, or PRs, but those operations should live behind a separate maintenance boundary with stronger authorization, validation, and audit logging.
+
 ### Tools
 
 Tools should represent user goals, not raw backend endpoints.
@@ -220,6 +242,7 @@ What it does: creates a Python MCP server with a search tool and a dynamic resou
 - Official documentation: [OpenAI MCP server guide](https://developers.openai.com/plugins/build/mcp-server)
 - [Create AI tools for Claude and Codex](create-ai-tools-for-claude-and-codex.md)
 - [Knowledge-base creation, management, and optimization](knowledge-bases-creation-management-and-optimization.md)
+- [Agent knowledge bases](knowledge-bases/README.md)
 - [Back to AI tooling](README.md)
 - [Back to AI index](../README.md)
 - [Back to root index](../../README.md)

@@ -6,7 +6,7 @@ AI knowledge for concepts, systems, workflows, tools, knowledge bases, and pract
 
 | Guide | Use it for |
 | --- | --- |
-| [AI tooling](ai-tooling/README.md) | MCP servers, Claude and Codex custom tools, skills, Markdown knowledge bases, retrieval, and OKF. |
+| [AI tooling](ai-tooling/README.md) | MCP servers, Claude and Codex custom tools, skills, Markdown knowledge bases, retrieval, OKF, and agent knowledge-base reference architecture. |
 
 ## Expected content
 
