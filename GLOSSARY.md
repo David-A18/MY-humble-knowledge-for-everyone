@@ -18,11 +18,14 @@ Common terms used across the knowledge base.
 | BackupRepository | Velero repository used by File System Backup or data movement to store volume data in object storage. |
 | BackupStorageLocation | Velero custom resource that defines the object storage bucket, prefix, provider, and access mode used for backup artifacts. |
 | Blue-green deployment | Release strategy that runs an old production-capable environment and a new production-capable environment at the same time, then moves traffic from the old version to the new version after validation. |
+| Bootstrap | Frontend CSS and JavaScript toolkit for responsive layouts, reusable interface components, and utility classes. |
+| Bootstrapping | Initial setup or startup work that prepares enough files, configuration, dependencies, services, or infrastructure for the next layer to run. |
 | BSON | Binary JSON; MongoDB's binary document format for storing documents and typed values. |
 | Canary deployment | Release strategy that sends a small percentage of production traffic to a new version first, then increases traffic gradually while monitoring health. |
 | Capacity provider | Amazon ECS strategy that controls which infrastructure runs tasks and, for supported capacity types, how that capacity scales. |
 | CDN | Content Delivery Network; an edge network that caches or accelerates content close to users. |
 | CI | Continuous Integration; automated validation that runs on code changes. |
+| CI/CD | Continuous Integration and Continuous Delivery or Deployment; in this repository, the lightweight process that validates documentation and lands content in `main`. |
 | CD | Continuous Delivery or Continuous Deployment, depending on release process. |
 | ClusterProviderConfig | Crossplane provider configuration that can be referenced across namespaces. |
 | Claude Code | Anthropic coding agent that can use project memory, skills, commands, subagents, permissions, and MCP servers. |
@@ -30,8 +33,10 @@ Common terms used across the knowledge base.
 | Composition | Crossplane implementation that maps a composite resource to composed resources through a function pipeline. |
 | Composition Function | Crossplane package that supplies logic used by a Composition or Operation. |
 | Composition Revision | Crossplane-generated immutable version of a Composition used for rollout and rollback control. |
+| Composed resource | Kubernetes resource created for one Crossplane composite resource by a Composition, often a provider managed resource. |
 | Configuration Package | Crossplane OCI package that bundles platform APIs, compositions, and package dependencies. |
 | Composite Resource | Crossplane resource instance created from a Composite Resource Definition. |
+| Composite resource claim | Legacy Crossplane user-facing request object that creates or binds to a composite resource; namespaced XRs are the default mental model in Crossplane v2 designs. |
 | Composite Resource Definition | Crossplane definition that creates a custom platform API schema. |
 | CRD | CustomResourceDefinition; a Kubernetes object that defines a custom API resource. |
 | Crossplane | Kubernetes-native control-plane framework for reconciling external infrastructure and custom platform APIs. |
@@ -53,6 +58,7 @@ Common terms used across the knowledge base.
 | IRSA | IAM Roles for Service Accounts; an EKS pattern that uses Kubernetes service account tokens and IAM OIDC trust to provide AWS credentials. |
 | JWKS | JSON Web Key Set; a document containing public keys used to verify tokens signed by an identity provider. |
 | Kafka | Distributed event streaming platform used for durable event logs, producers, consumers, and stream processing. |
+| K9s | Terminal UI for navigating, inspecting, and operating Kubernetes clusters through the Kubernetes API. |
 | kind | Kubernetes in Docker; a local Kubernetes tool that runs cluster nodes as containers. |
 | Knowledge bundle | A self-contained directory of Markdown knowledge documents, commonly used as the distribution unit for OKF. |
 | Knowledge source of truth | Versioned derived knowledge corpus that agents and humans serve from and review, distinct from the upstream source-of-truth producer. |
@@ -73,20 +79,24 @@ Common terms used across the knowledge base.
 | MongoDB | Document database that stores JSON-like BSON documents and supports flexible document modeling. |
 | MSK | Amazon Managed Streaming for Apache Kafka; AWS managed service for Kafka-compatible streaming workloads. |
 | MTTR | Mean Time To Recovery; a reliability metric for how quickly service is restored after failure. |
+| MVP | Minimum Viable Product; the smallest useful product version that can deliver value to real users and support learning from real usage. |
 | OIDC | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
-| OKF | Open Knowledge Format; an open Markdown and YAML-frontmatter specification for portable human- and agent-readable knowledge bundles with structured metadata. |
 | Node-agent | Velero DaemonSet that runs file-system backup and data movement work on Kubernetes nodes. |
+| OKF | Open Knowledge Format; an open Markdown and YAML-frontmatter specification for portable human- and agent-readable knowledge bundles with structured metadata. |
 | Operation | Crossplane run-to-completion function pipeline for maintenance or operational tasks. |
+| Pilot | Controlled real-world rollout of a more complete solution to a limited audience before wider launch. |
 | PKCE | Proof Key for Code Exchange; an OAuth 2.0 extension used with authorization code flows to reduce authorization-code interception risk. |
 | Platform API | Stable internal API exposed by a platform team to hide implementation details behind a product-like request shape. |
+| PoC | Proof of Concept; a small, time-boxed effort used to prove whether an idea, technology, integration, architecture, or approach is feasible. |
 | Prompt | Reusable instruction template that guides a model or agent for a specific interaction or workflow. |
 | Provenance | Metadata that records the sources a claim or knowledge document derives from. |
+| Prototype | Early model used to explore shape, interaction, behavior, or design before a full implementation. |
 | ProviderConfig | Crossplane provider configuration scoped to a namespace. |
 | ProviderRevision | Crossplane package revision object for a concrete installed provider version. |
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
-| RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
 | RAG | Retrieval-Augmented Generation; pattern where relevant source material is retrieved and provided to a model before it answers. |
 | RDF | Resource Description Framework; W3C graph data model for representing information as triples, graphs, datasets, and identifiers. |
+| RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
 | SHACL | Shapes Constraint Language; W3C language for validating RDF graphs against shapes. |
 | Service Connect | Amazon ECS capability for service discovery, service-to-service connectivity, and traffic monitoring between ECS services. |
@@ -94,6 +104,7 @@ Common terms used across the knowledge base.
 | Semantic reranking | Retrieval step that reorders lexical or candidate results by semantic similarity when measured vocabulary mismatch justifies the extra cost. |
 | SonarQube | Code quality and security analysis platform that uses scanners, quality profiles, quality gates, and pull request analysis to report code issues. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
+| Spike | Short investigation used to learn enough to estimate, design, or make a technical decision. |
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
 | Task definition | Amazon ECS versioned blueprint that describes container images, CPU, memory, networking, IAM roles, logging, secrets, and volumes for a task. |
 | Task role | IAM role associated with an ECS task that grants application containers permission to call AWS APIs. |
@@ -101,8 +112,8 @@ Common terms used across the knowledge base.
 | Tooling cluster | Kubernetes cluster dedicated to platform tools such as GitOps, observability, policy, CI/CD runners, or developer experience services. |
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | Velero | Kubernetes backup, restore, disaster recovery, and cluster migration tool that stores cluster resources in object storage and can protect persistent volume data. |
-| VolumeSnapshot | Kubernetes request for a point-in-time snapshot of a persistent volume claim. |
 | Vector store | Disposable search index that stores embeddings and metadata so retrieval can find semantically similar documents or chunks. |
+| VolumeSnapshot | Kubernetes request for a point-in-time snapshot of a persistent volume claim. |
 | VolumeSnapshotClass | Kubernetes object that defines snapshot behavior and CSI driver settings for VolumeSnapshot resources. |
 | VolumeSnapshotLocation | Velero custom resource that defines provider-specific volume snapshot configuration. |
 | XR | Composite Resource; an instance of an XRD-defined platform API. |

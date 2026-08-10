@@ -11,6 +11,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | [Commands](commands.md) | GitHub CLI workflow/run commands and workflow command files such as `$GITHUB_ENV` and `$GITHUB_OUTPUT`. |
 | [`uses` catalog](actions-and-uses-catalog.md) | How `uses:` works, how to navigate action references, and common official, general-purpose, and third-party actions. |
 | [Examples and use cases](examples-and-use-cases.md) | CI, matrix testing, manual deploys, Docker publishing, Terraform checks, AWS OIDC, and scheduled jobs. |
+| [Content CI/CD process](content-ci-cd-process.md) | Repository process for merging documentation content into `main`, validating Markdown, skipping required human review, and cleaning covered branches. |
 | [Common solutions](common-solutions.md) | Fixes for trigger, checkout, token, secret, OIDC, cache, matrix, concurrency, and debugging problems. |
 | [Security, secrets, and permissions](security-secrets-and-permissions.md) | Least-privilege tokens, secrets, variables, environments, OIDC, action pinning, and pull request safety. |
 | [AWS OIDC federation](aws-oidc-federation.md) | Authenticate GitHub Actions to AWS with OIDC and temporary credentials. |

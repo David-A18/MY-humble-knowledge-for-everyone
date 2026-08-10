@@ -6,6 +6,8 @@ Use this page to decide when Terraform is enough, when Crossplane adds a better 
 
 The short version: Terraform is excellent for provisioning infrastructure through a deliberate `plan` and `apply` workflow. Crossplane is useful when infrastructure should behave like a continuously reconciled Kubernetes API that developers can consume through self-service resources.
 
+If the main confusion is "what is the Crossplane equivalent of a Terraform module call?", start with [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md).
+
 ## Bottom line
 
 | Question | Prefer Terraform | Prefer Crossplane |
@@ -295,6 +297,7 @@ If the main problem is "how do we give many teams a stable API that keeps infras
 ## Related links
 
 - [Crossplane](README.md)
+- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
 - [Crossplane component model](component-model.md)
 - [Crossplane compositions](compositions.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)

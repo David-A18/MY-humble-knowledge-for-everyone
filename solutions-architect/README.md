@@ -12,6 +12,11 @@ Status: Initial outline
 - Certification and interview study notes.
 - Cross-links to cloud provider and cross-topic guides.
 
+## Articles
+
+- [Proof of Concept](proof-of-concept.md): explains PoC meaning, vocabulary,
+  success criteria, scope control, deliverables, examples, and review questions.
+
 ## Related cloud solution patterns
 
 | Pattern | Use it for |

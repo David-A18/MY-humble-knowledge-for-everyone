@@ -149,6 +149,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 | Article | Purpose |
 | --- | --- |
+| [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
 | [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
@@ -165,6 +166,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 ## Related links
 
+- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
 - [Component model](component-model.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)

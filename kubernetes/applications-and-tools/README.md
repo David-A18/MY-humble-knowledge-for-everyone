@@ -34,6 +34,15 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Choose between S3, EBS snapshots, CSI snapshots, and File System Backup. | [Velero storage and volume backups](../../migrations/velero/storage-and-volume-backups.md) |
 | Install Velero on EKS with S3 and EBS snapshot support. | [Velero AWS S3 and EBS installation](../../migrations/velero/aws-s3-ebs-installation.md) |
 
+## Quick path: K9s
+
+| Need | Read |
+| --- | --- |
+| Understand what K9s is and how it maps to Kubernetes resources. | [K9s](k9s.md) |
+| Move through K9s views, filters, namespaces, and contexts. | [K9s navigation](k9s.md#move-around) |
+| Inspect Pods, logs, events, Deployments, Services, and cluster health. | [K9s inspection workflows](k9s.md#inspect-and-see-things) |
+| Use aliases, hotkeys, plugins, and read-only mode safely. | [K9s daily configuration](k9s.md#configuration-that-helps-daily-use) |
+
 ## Articles
 
 | Article | Purpose |
@@ -51,6 +60,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
 | [kind custom clusters](kind-custom-clusters.md) | Create local Kubernetes clusters for labs and CI. |
 | [kind images and local registries](kind-images-and-local-registries.md) | Load host-built images into kind or use a local registry. |
+| [K9s](k9s.md) | Use K9s to navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
 | [Velero](../../migrations/velero/README.md) | Back up, restore, migrate, and recover Kubernetes resources and persistent volumes. |
 
 ## Expected content

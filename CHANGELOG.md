@@ -51,6 +51,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Split AI tooling into a dedicated section with focused guides for MCP, Claude and Codex tools, and agent knowledge-base management.
 - Expanded OKF guidance with clearer purpose, consumption model, field details, attestation behavior, and a platform-operations bundle scenario.
 - Added a provider-neutral cloud solutions section with blue-green deployment guidance, recognition signals, service maps, risks, and official references.
+- Added a K9s guide for Kubernetes terminal UI navigation, common views, inspection workflows, filters, aliases, hotkeys, plugins, and safe read-only use.
+- Added a Crossplane beginner guide explaining XRDs, Compositions, XRs, composition selection, naming rules, and the Terraform module-call analogy.
+- Added a beginner Bootstrap and bootstrapping concept guide covering the frontend toolkit, class meanings, startup processes, project setup, and infrastructure bootstrapping.
+- Added a Proof of Concept guide under solutions architect with vocabulary, scope, success criteria, deliverables, examples, risks, and review guidance.
 - Added a GitHub Actions pipeline failure report and validation hardening for Markdown lint, link checking, and action runtime warnings.
 - Added an agent-first knowledge-base reference architecture under AI tooling, covering OKF v0.2, knowledge standards, Git-backed corpus design, retrieval budgets, provenance, freshness, security, governance, evaluation, and a conformant public-safe OKF example bundle.
 - Added Apigee API management coverage under Google Cloud and SonarQube code quality plus GitHub integration coverage under DevOps, with root fast paths and glossary entries.
+- Added a content-only CI/CD process guide requiring documentation changes to land in `main`, with validation-focused checks, no required human review for normal content changes, and branch cleanup guidance.
