@@ -9,7 +9,10 @@ Common terms used across the knowledge base.
 | AI agent | An AI system that can follow goals, use tools, inspect context, and take multi-step actions with feedback. |
 | Agent knowledge base | Curated corpus designed for agents and humans to search, fetch, cite, evaluate, and maintain with explicit provenance, trust, freshness, and review boundaries. |
 | API gateway | A traffic entry point that routes API requests and often applies policy such as authentication, rate limits, TLS, and observability. |
+| API product | Apigee bundle of API resources exposed to developers with access, quota, approval, and credential behavior. |
+| Apigee | Google Cloud API management platform for API proxies, policies, products, developer apps, analytics, and hybrid API runtime patterns. |
 | APISIX | Apache APISIX; an open-source API gateway that can run in Kubernetes and be configured through APISIX APIs, CRDs, or Gateway API integrations. |
+| App registration | API management process where a client application is registered and receives credentials for approved API products. |
 | Argo CD | Kubernetes GitOps controller that reconciles application desired state from Git or another source into target clusters. |
 | Attested computation | OKF concept type that describes a sanctioned computation, its runtime, parameters, executor, receipt, and deterministic attester. |
 | BackupRepository | Velero repository used by File System Backup or data movement to store volume data in object storage. |
@@ -89,6 +92,7 @@ Common terms used across the knowledge base.
 | Service Connect | Amazon ECS capability for service discovery, service-to-service connectivity, and traffic monitoring between ECS services. |
 | Skill | Reusable AI workflow package, usually centered on `SKILL.md` plus optional references, scripts, and assets. |
 | Semantic reranking | Retrieval step that reorders lexical or candidate results by semantic similarity when measured vocabulary mismatch justifies the extra cost. |
+| SonarQube | Code quality and security analysis platform that uses scanners, quality profiles, quality gates, and pull request analysis to report code issues. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
 | Task definition | Amazon ECS versioned blueprint that describes container images, CPU, memory, networking, IAM roles, logging, secrets, and volumes for a task. |

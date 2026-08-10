@@ -25,6 +25,12 @@ Status: Initial outline
 | --- | --- | --- |
 | Blue-green deployment | [Blue-green deployment](solutions/blue-green-deployment.md) | Understand the pattern, how to recognize it, and which services usually implement it. |
 
+## Google Cloud quick paths
+
+| Topic | Start here | Follow-up |
+| --- | --- | --- |
+| Apigee API management | [Apigee API management](gcloud/apigee.md) | Understand API proxies, policies, products, developer apps, environments, and hybrid deployment trade-offs. |
+
 ## Edge and CDN quick paths
 
 | Topic | Start here | Follow-up |

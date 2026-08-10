@@ -25,7 +25,7 @@ Readers should be able to follow this route:
 4. Open a focused article.
 5. Use the article's bottom links to return to the parent index and root index.
 
-High-demand topics such as APISIX, Flux/GitOps, Akamai, CloudFront, and CDN guidance should also remain reachable through root-level fast paths and topic-specific quick paths in the relevant parent indexes.
+High-demand topics such as Apigee, APISIX, Kafka, SonarQube, Flux/GitOps, Akamai, CloudFront, and CDN guidance should also remain reachable through root-level fast paths and topic-specific quick paths in the relevant parent indexes.
 
 When adding or moving content, update every affected index immediately.
 
@@ -239,6 +239,7 @@ When adding or moving content, update every affected index immediately.
 | [cloud/aws/solutions-architect/README.md](cloud/aws/solutions-architect/README.md) | Solutions architect notes. | Certification or architecture review notes are added. |
 | [cloud/azure/README.md](cloud/azure/README.md) | Azure area index. | Azure service, architecture, governance, or operations notes are added. |
 | [cloud/gcloud/README.md](cloud/gcloud/README.md) | Google Cloud area index. | Google Cloud service, architecture, governance, or operations notes are added. |
+| [cloud/gcloud/apigee.md](cloud/gcloud/apigee.md) | Apigee API management guide. | Apigee API proxy, policy, product, developer app, environment, hybrid, or automation guidance changes. |
 
 ### Databases
 
@@ -286,6 +287,9 @@ When adding or moving content, update every affected index immediately.
 | [security/identity-federation/eks-human-identity-and-rbac.md](security/identity-federation/eks-human-identity-and-rbac.md) | EKS human identity and Kubernetes RBAC guide. | Human EKS authentication, access entries, OIDC group claims, or RBAC binding guidance changes. |
 | [finops/README.md](finops/README.md) | FinOps index. | Provider-neutral cost-management content is added. |
 | [devops/README.md](devops/README.md) | DevOps index. | Delivery, automation, platform, or operations content is added. |
+| [devops/code-quality/README.md](devops/code-quality/README.md) | Code quality index. | Static analysis, quality gate, pull request feedback, or CI quality routes change. |
+| [devops/code-quality/sonarqube.md](devops/code-quality/sonarqube.md) | SonarQube code quality guide. | SonarQube analysis, scanner, quality gate, new-code, or operational guidance changes. |
+| [devops/code-quality/sonarqube-github-integration.md](devops/code-quality/sonarqube-github-integration.md) | SonarQube GitHub integration guide. | GitHub repository import, project binding, GitHub Actions scan, pull request decoration, required checks, or code scanning alert guidance changes. |
 | [programming-languages/README.md](programming-languages/README.md) | Programming languages index. | Language-specific notes or examples are added. |
 | [mlops/README.md](mlops/README.md) | MLOps index. | ML operations, deployment, monitoring, or governance content is added. |
 | [ai/README.md](ai/README.md) | AI index. | General AI system, workflow, or safety content is added. |
