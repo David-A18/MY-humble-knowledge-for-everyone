@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added the first local beginner route with `start-here.md`, a local Kubernetes deployment learning path, exact Kubernetes exercise manifests, and a Terraform local-state lifecycle exercise.
+- Added maintained local-link validation scripts, validator fixtures, CI wiring, manual workflow triggers, and explicit workflow permissions for documentation validation.
+- Added visible article review-information standards to the writing instructions, templates, and contributor checklist.
+- Corrected Git restore guidance, Kafka manual-commit example behavior, Crossplane temporary AWS credential examples, and the Markdown lint baseline.
+- Added an actionable knowledge-base improvement plan with 15 work packages, dependencies, contributor instructions, quality criteria, evidence tracking, and maintenance targets; linked it from the roadmap and repository routing guides.
+- Added a dated knowledge-base review covering structure, learning paths, technical spot checks, validation, maintenance, and prioritized improvements, with links from the root index and context map.
 - Added Crossplane provider, managed-resource, Composition, Function, and Configuration package guidance; an ECR-backed application delivery platform API; Helm installation and lifecycle guidance; and Amazon ECR OCI/Helm operational guidance.
 - Initial professional documentation scaffold for Git, Terraform, Kubernetes, AWS, cross-topic guides, templates, decision records, and repository maintenance files.
 - MIT license.

@@ -2,6 +2,8 @@
 
 Reusable templates for consistent documentation.
 
+Use these templates together with the canonical [AI documentation instructions](../instructions.md). The instructions define page types, review information, warning placement, example evidence, and navigation rules.
+
 | Template | Use it for |
 | --- | --- |
 | [Knowledge article](knowledge-article-template.md) | Conceptual or procedural technical articles. |

@@ -4,7 +4,13 @@ Status: Initial outline
 
 Practical Kubernetes examples and walkthroughs.
 
-## Expected content
+## Examples
+
+| Example | Purpose |
+| --- | --- |
+| [Local deployment learning path files](local-deployment-learning-path/README.md) | Manifests for the first local Kubernetes learning path. |
+
+## Expected future content
 
 - Deployment and service manifests.
 - ConfigMap and Secret examples.

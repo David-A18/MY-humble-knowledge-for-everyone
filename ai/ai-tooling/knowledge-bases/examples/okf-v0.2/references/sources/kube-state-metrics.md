@@ -21,5 +21,5 @@ Use this source when a knowledge concept references Kubernetes object state metr
 
 ## Related links
 
-- External source: https://github.com/kubernetes/kube-state-metrics
+- External source: [kube-state-metrics project](https://github.com/kubernetes/kube-state-metrics)
 - [Back to source references](README.md)

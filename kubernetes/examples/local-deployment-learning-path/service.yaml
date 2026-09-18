@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kb-web
+  namespace: kb-learning
+  labels:
+    app.kubernetes.io/name: kb-web
+    app.kubernetes.io/part-of: kb-local-learning
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: kb-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

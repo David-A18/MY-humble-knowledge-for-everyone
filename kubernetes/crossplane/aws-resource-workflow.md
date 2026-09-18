@@ -164,6 +164,7 @@ Create `aws-credentials.ini` for a sandbox-only lab:
 [default]
 aws_access_key_id = REPLACE_WITH_TEMPORARY_LAB_KEY
 aws_secret_access_key = REPLACE_WITH_TEMPORARY_LAB_SECRET
+aws_session_token = REPLACE_WITH_TEMPORARY_LAB_SESSION_TOKEN
 ```
 
 Create the Secret:
@@ -174,10 +175,10 @@ kubectl create secret generic aws-secret \
   --from-file=creds=./aws-credentials.ini
 ```
 
-What it does: gives the provider a credential file through a Kubernetes Secret.
+What it does: gives the provider a credential file through a Kubernetes Secret. For AWS STS temporary credentials, the session token is required alongside the access key and secret access key.
 
 > [!WARNING]
-> Static access keys are for temporary labs only. Use EKS Pod Identity, IRSA, or another workload identity pattern for production.
+> File-backed AWS credentials are for temporary labs only. Use EKS Pod Identity, IRSA, or another workload identity pattern for production, and recreate the Secret when temporary credentials expire.
 
 ### ProviderConfig declaration
 

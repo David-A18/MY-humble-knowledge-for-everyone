@@ -1,10 +1,16 @@
 # Terraform examples
 
-Status: Initial outline
+Status: Draft
 
 Practical examples for Terraform configuration and operational workflows.
 
-## Expected content
+## Examples
+
+| Example | Purpose |
+| --- | --- |
+| [Local state lifecycle](local-state-lifecycle/README.md) | Learn init, validate, plan, apply, state inspection, change, and destroy without a cloud account. |
+
+## Expected future content
 
 - AWS networking examples.
 - S3 backend examples.

@@ -21,5 +21,5 @@ Use this source when a knowledge concept needs deterministic JSON validation rul
 
 ## Related links
 
-- External source: https://json-schema.org/draft/2020-12
+- External source: [JSON Schema Draft 2020-12](https://json-schema.org/draft/2020-12)
 - [Back to source references](README.md)

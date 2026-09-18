@@ -12,7 +12,7 @@ Use this page when you made a mistake and need the safest command for the situat
 | Task | Command | When to use it |
 | --- | --- | --- |
 | Unstage a file | `git restore --staged <path>` | You staged a file by mistake. |
-| Discard unstaged changes in one file | `git restore <path>` | You want the file back to the version in `HEAD`. |
+| Discard unstaged changes in one file | `git restore <path>` | You want the working tree file back to the version in the index. |
 | Restore a deleted tracked file | `git restore <path>` | You deleted a tracked file by mistake. |
 | Restore from another commit | `git restore --source=<commit> <path>` | You need a file as it existed at another commit. |
 
@@ -26,11 +26,14 @@ What it does: removes the file from the index but keeps your working tree change
 
 ### Discard local file edits
 
+> [!WARNING]
+> `git restore README.md` discards unstaged edits in `README.md`. If `README.md` is staged, the working tree is restored from the staged version, not necessarily from `HEAD`.
+
 ```bash
 git restore README.md
 ```
 
-What it does: replaces the working tree file with the committed version. This destroys uncommitted edits in that file.
+What it does: replaces the working tree file with the version currently in the index. To restore from the current commit instead, use `git restore --source=HEAD README.md`.
 
 ### Restore a file from history
 

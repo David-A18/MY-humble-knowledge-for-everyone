@@ -1,6 +1,14 @@
 # Article title
 
 Status: Initial outline
+Audience: Beginning platform engineer
+Page type: Explanation or how-to
+Maintainer: Unassigned
+Last substantive review: Not yet reviewed
+Applicable versions: To be established before execution
+Validation evidence: Not yet tested
+Known limitations: To be documented
+Next review: Assign after substantive review
 
 ## Purpose
 
@@ -24,9 +32,14 @@ Explain what this article helps the reader understand or accomplish.
 
 ## Procedure
 
+> [!WARNING]
+> Place destructive, expensive, credential-sensitive, or production-impacting warnings before the command they affect.
+
 ```bash
-# Example command
+tool command --flag value
 ```
+
+What it does: explain what the command changes, reads, or validates.
 
 Expected output:
 
@@ -42,5 +55,6 @@ example output
 
 ## Related links
 
+- [Writing instructions](../instructions.md)
 - [Back to templates index](README.md)
 - [Back to root index](../README.md)

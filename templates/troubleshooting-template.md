@@ -1,6 +1,14 @@
 # Troubleshooting title
 
 Status: Initial outline
+Audience: Beginning platform engineer
+Page type: Troubleshooting
+Maintainer: Unassigned
+Last substantive review: Not yet reviewed
+Applicable versions: To be established before execution
+Validation evidence: Not yet tested
+Known limitations: To be documented
+Next review: Assign after substantive review
 
 ## Purpose
 
@@ -29,14 +37,21 @@ Diagnose and resolve a specific failure mode.
 ## Commands
 
 ```bash
-# Diagnostic command
+tool inspect --target example
 ```
+
+What it does: gather evidence before changing the system.
 
 ## Recovery
 
+> [!WARNING]
+> Place warnings before destructive or production-impacting recovery commands.
+
 ```bash
-# Recovery command
+tool recover --target example
 ```
+
+What it does: describe the recovery action and its rollback path.
 
 ## Prevention
 
@@ -45,5 +60,6 @@ Diagnose and resolve a specific failure mode.
 
 ## Related links
 
+- [Writing instructions](../instructions.md)
 - [Back to templates index](README.md)
 - [Back to root index](../README.md)

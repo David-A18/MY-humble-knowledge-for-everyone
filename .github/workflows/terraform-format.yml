@@ -1,10 +1,14 @@
 name: Terraform format
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
 
 jobs:
   terraform-format:
@@ -17,4 +21,9 @@ jobs:
         uses: hashicorp/setup-terraform@v4.0.1
 
       - name: Check Terraform formatting
-        run: terraform fmt -recursive -check
+        run: |
+          if ! find terraform -name '*.tf' -type f | grep -q .; then
+            echo "No Terraform example files found; skipping terraform fmt."
+            exit 0
+          fi
+          terraform fmt -recursive -check terraform

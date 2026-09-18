@@ -16,7 +16,7 @@ Use Git's inspection tools before undoing work, then choose the least destructiv
 | Situation | Safer command | When to use it |
 | --- | --- | --- |
 | File was staged by mistake | `git restore --staged <path>` | You want to keep the file changes but remove them from the next commit. |
-| Unstaged file changes should be discarded | `git restore <path>` | You want one file back to the committed version. |
+| Unstaged file changes should be discarded | `git restore <path>` | You want the working tree file back to the version in the index. |
 | Bad commit was pushed | `git revert <commit>` | You need a public-history-safe undo commit. |
 | Commit or branch tip seems lost | `git reflog` | You need to find a previous `HEAD` or branch position. |
 
@@ -30,11 +30,14 @@ What it does: removes the file from the staging area while keeping the working t
 
 ### Discard one file's local edits
 
+> [!WARNING]
+> `git restore path/to/file` discards unstaged edits in that file. If the file is staged, the working tree is restored from the staged version, not necessarily from `HEAD`.
+
 ```bash
 git restore path/to/file
 ```
 
-What it does: replaces the working tree file with the committed version. This destroys uncommitted edits in that file.
+What it does: replaces the working tree file with the version currently in the index. Use `git restore --source=HEAD path/to/file` when you explicitly want the working tree file restored from the current commit.
 
 ### Undo a pushed commit
 

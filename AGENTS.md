@@ -36,7 +36,7 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | AI operating rules or routing | [AGENTS.md](AGENTS.md) and [context.md](context.md) | Root-level agent guides | [README.md](README.md), [CHANGELOG.md](CHANGELOG.md) |
 | Writing format, examples, tables, risk notes | [instructions.md](instructions.md) | [instructions.md](instructions.md), [templates](templates/README.md) | [context.md](context.md), [CHANGELOG.md](CHANGELOG.md) |
 | Contribution or review process | [CONTRIBUTING.md](CONTRIBUTING.md) | [CONTRIBUTING.md](CONTRIBUTING.md), [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) | [context.md](context.md), [CHANGELOG.md](CHANGELOG.md) |
-| Planned work or priorities | [ROADMAP.md](ROADMAP.md) | [ROADMAP.md](ROADMAP.md) | [README.md](README.md) if navigation changes |
+| Planned work or priorities | [ROADMAP.md](ROADMAP.md), [improvement plan](knowledge-base-improvement-plan.md) | [ROADMAP.md](ROADMAP.md), [improvement plan](knowledge-base-improvement-plan.md) | [README.md](README.md) if navigation changes |
 | Shared terms or acronyms | [GLOSSARY.md](GLOSSARY.md) | [GLOSSARY.md](GLOSSARY.md) | Related articles that use the term |
 | Architecture or repository decisions | [decision-records/README.md](decision-records/README.md) | New ADR from [ADR template](templates/architecture-decision-record-template.md) | [decision-records/README.md](decision-records/README.md), [CHANGELOG.md](CHANGELOG.md) |
 | Visual references | [assets/README.md](assets/README.md) | [assets/diagrams](assets/diagrams/README.md), [assets/images](assets/images/README.md), [assets/icons](assets/icons/README.md) | Article that uses the asset |

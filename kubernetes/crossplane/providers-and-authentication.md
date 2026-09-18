@@ -102,13 +102,24 @@ What it does: defines AWS credentials that managed resources can reference acros
 
 | Environment | Common model | Notes |
 | --- | --- | --- |
-| Temporary local lab | Short-lived access keys in a Kubernetes Secret. | Use only in a sandbox account; never commit secrets. |
+| Temporary local lab | Short-lived STS credentials in a Kubernetes Secret. | Include the session token, use only in a sandbox account, and never commit secrets. |
 | EKS production | EKS Pod Identity when supported by the provider image and AWS SDK path. | Simpler EKS-native association model. |
 | EKS with IRSA requirements | IAM Roles for Service Accounts. | Useful when IRSA-specific trust controls are required. |
 | Multi-account AWS | Base provider role plus `AssumeRole` to target accounts. | Separate provider configs by environment or account. |
 | Hosted control plane | Provider-specific OIDC or workload identity flow. | Follow the hosted platform documentation. |
 
 ### Static credentials secret for a lab
+
+Create the local credential file with all fields from the temporary AWS credential set:
+
+```ini
+[default]
+aws_access_key_id = REPLACE_WITH_TEMPORARY_LAB_KEY
+aws_secret_access_key = REPLACE_WITH_TEMPORARY_LAB_SECRET
+aws_session_token = REPLACE_WITH_TEMPORARY_LAB_SESSION_TOKEN
+```
+
+What it does: gives the provider the same credential fields the AWS CLI expects for manually supplied short-term credentials.
 
 ```bash
 kubectl create secret generic aws-secret \
@@ -119,7 +130,7 @@ kubectl create secret generic aws-secret \
 What it does: creates a Kubernetes Secret from a local AWS credentials file without printing the credential values.
 
 > [!WARNING]
-> Static access keys are suitable only for short-lived isolated labs. Rotate or delete the keys after the lab and keep credential files out of Git.
+> File-backed AWS credentials are suitable only for short-lived isolated labs. Use temporary credentials, include `aws_session_token`, rotate or let credentials expire after the lab, and keep credential files out of Git.
 
 ### EKS Pod Identity fit
 

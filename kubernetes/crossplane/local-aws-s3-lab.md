@@ -94,6 +94,7 @@ Create `aws-credentials.ini`:
 [default]
 aws_access_key_id = REPLACE_WITH_TEMPORARY_LAB_KEY
 aws_secret_access_key = REPLACE_WITH_TEMPORARY_LAB_SECRET
+aws_session_token = REPLACE_WITH_TEMPORARY_LAB_SESSION_TOKEN
 ```
 
 Protect the file:
@@ -110,7 +111,10 @@ kubectl create secret generic aws-secret \
   --from-file=creds=./aws-credentials.ini
 ```
 
-What it does: stores temporary lab credentials in Kubernetes for the provider.
+What it does: stores temporary lab credentials in Kubernetes for the provider. AWS STS credentials require the access key, secret access key, and session token. Long-lived IAM access keys do not have a session token, but they are a weaker fit for this lab and should be avoided.
+
+> [!IMPORTANT]
+> Temporary credentials expire. If the provider starts reporting AWS authentication failures after earlier success, refresh the STS credentials, recreate `aws-credentials.ini`, recreate the Secret, and restart or wait for the provider to reload credentials. Do not commit `aws-credentials.ini` or print its values in logs.
 
 ## Configure the provider
 

@@ -22,7 +22,7 @@ Use these values when present, but verify them against the actual content.
 
 | Field | Accepted values |
 | --- | --- |
-| `principal_topic` | `cloud`, `databases`, `kubernetes`, `git`, `security`, `finops`, `devops`, `programming-languages`, `mlops`, `ai`, `ai-agents`, `llm`, `ml`, `solutions-architect` |
+| `principal_topic` | `cloud`, `databases`, `kubernetes`, `git`, `terraform`, `migrations`, `security`, `finops`, `devops`, `programming-languages`, `mlops`, `ai`, `ai-agents`, `llm`, `ml`, `solutions-architect` |
 | `provider` | `aws`, `azure`, `gcloud` for provider-specific cloud content |
 | `target_section` | Relative path to the preferred destination section or article |
 
@@ -38,6 +38,8 @@ Use these values when present, but verify them against the actual content.
 | Kubernetes content | [kubernetes](../kubernetes/README.md) |
 | Crossplane content | [kubernetes/crossplane](../kubernetes/crossplane/README.md) |
 | Git content | [git](../git/README.md) |
+| Terraform content | [terraform](../terraform/README.md) |
+| Migration, backup, restore, or disaster-recovery content | [migrations](../migrations/README.md) |
 | Security content | [security](../security/README.md) |
 | FinOps content | [finops](../finops/README.md) |
 | DevOps content | [devops](../devops/README.md) |

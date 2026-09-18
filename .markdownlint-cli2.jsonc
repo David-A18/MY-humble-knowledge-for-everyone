@@ -1,7 +1,10 @@
 {
   "config": {
     "MD013": false,
-    "MD033": false
+    "MD033": false,
+    "MD025": {
+      "front_matter_title": ""
+    }
   },
   "globs": [
     "**/*.md"

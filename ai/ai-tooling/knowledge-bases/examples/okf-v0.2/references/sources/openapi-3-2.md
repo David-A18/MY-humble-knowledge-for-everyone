@@ -21,5 +21,5 @@ Use this source when a knowledge concept needs exact HTTP API structure, such as
 
 ## Related links
 
-- External source: https://spec.openapis.org/oas/v3.2.0.html
+- External source: [OpenAPI Specification v3.2.0](https://spec.openapis.org/oas/v3.2.0.html)
 - [Back to source references](README.md)

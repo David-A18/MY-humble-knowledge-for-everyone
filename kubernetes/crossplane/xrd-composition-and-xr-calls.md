@@ -495,7 +495,7 @@ If you are reading old examples, translate carefully:
 
 | Symptom | Likely cause | Next step |
 | --- | --- | --- |
-| `kubectl apply` rejects the XR kind | The XRD is missing, not established, or the XR `apiVersion`/`kind` does not match it. | Run `kubectl get xrd` and `kubectl api-resources | grep platform.example.org`. |
+| `kubectl apply` rejects the XR kind | The XRD is missing, not established, or the XR `apiVersion`/`kind` does not match it. | Run `kubectl get xrd` and `kubectl api-resources \| grep platform.example.org`. |
 | XR exists but no composed resources appear | No compatible Composition was selected or the function pipeline failed. | Describe the XR and inspect `Synced`, events, `compositionRef`, and function logs. |
 | XR selected the wrong implementation | Multiple Compositions match and defaults/selectors are unclear. | Set `defaultCompositionRef`, `enforcedCompositionRef`, `compositionRef`, or clearer Composition labels. |
 | Composition is ignored | `compositeTypeRef` does not match the XRD's group, version, or kind. | Compare `Composition.spec.compositeTypeRef` with the XR `apiVersion` and `kind`. |

@@ -63,16 +63,33 @@ linger.ms=5
 
 What it does: starts with safer acknowledgement and retry behavior, then leaves throughput and latency tuning to load tests.
 
-### Manual commit consumer pattern
+### Manual commit consumer pattern with kafka-python
+
+This example uses `kafka-python` and shows the polling shape for that client. It disables automatic commits so offsets advance only after this loop processes the returned records and calls `commit()`.
 
 ```python
-for record in consumer.poll(timeout_ms=1000):
-    event_id = record.headers.get("event-id")
-    process_idempotently(event_id, record.value)
+from kafka import KafkaConsumer
+
+consumer = KafkaConsumer(
+    "orders.v1",
+    bootstrap_servers=["localhost:9092"],
+    group_id="payment-consumer",
+    enable_auto_commit=False,
+    auto_offset_reset="earliest",
+)
+
+records_by_partition = consumer.poll(timeout_ms=1000, max_records=100)
+
+for _topic_partition, records in records_by_partition.items():
+    for record in records:
+        headers = dict(record.headers or [])
+        event_id = headers.get("event-id")
+        process_idempotently(event_id, record.value)
+
 consumer.commit()
 ```
 
-What it does: commits progress only after processing succeeds. The consumer can still repeat work after a crash, so `process_idempotently` must make duplicates safe.
+What it does: commits progress only after processing succeeds. If processing raises an exception before `consumer.commit()`, the offsets are not advanced and the batch can be replayed after restart. If processing succeeds for some records and then fails later in the same batch, those successful side effects can happen again unless `process_idempotently` records a stable event ID or operation ID.
 
 ## Consumer failure patterns
 

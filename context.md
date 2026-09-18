@@ -61,6 +61,7 @@ When adding or moving content, update every affected index immediately.
 | Add images, diagrams, or icons | [assets](assets/README.md) |
 | Add raw Markdown notes for later ingestion | [sources](sources/README.md) |
 | Change GitHub metadata or validation workflows | [.github](.github/PULL_REQUEST_TEMPLATE.md) |
+| Change maintained validation scripts | [scripts](scripts/validate-local-links.mjs) |
 
 ## Route map
 
@@ -69,12 +70,15 @@ When adding or moving content, update every affected index immediately.
 | File | Purpose | Edit when |
 | --- | --- | --- |
 | [README.md](README.md) | Human entry point and top-level navigation. | A major area, resource, or navigation pattern changes. |
+| [start-here.md](start-here.md) | First local beginner route through Git, Kubernetes, troubleshooting, cleanup, and Terraform basics. | The first learning path, prerequisites, or next-step routes change. |
 | [AGENTS.md](AGENTS.md) | AI agent router for choosing routes, templates, validation, and deployment steps. | Agent execution workflow, routing rules, or documentation improvement process changes. |
 | [context.md](context.md) | AI agent operating map. | Routes, conventions, or repository automation change. |
 | [instructions.md](instructions.md) | AI documentation structure and readability standard. | Documentation layout, table, example, risk-note, or validation standards change. |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution and documentation standards. | Review expectations or writing standards change. |
 | [CHANGELOG.md](CHANGELOG.md) | Notable changes. | A meaningful content, structure, or workflow change is made. |
 | [ROADMAP.md](ROADMAP.md) | Planned future work. | Priorities or planned topic areas change. |
+| [knowledge-base-review.md](knowledge-base-review.md) | Dated repository review with evidence and improvement priorities. | A new assessment or clearly marked follow-up is recorded; preserve the reviewed baseline. |
+| [knowledge-base-improvement-plan.md](knowledge-base-improvement-plan.md) | Execution plan for review findings, with dependencies, acceptance criteria, and evidence tracking. | Work package scope, status, implementation evidence, or priorities change. |
 | [GLOSSARY.md](GLOSSARY.md) | Shared terms and acronyms. | New important terminology appears in articles. |
 | [LICENSE](LICENSE) | Repository license. | License ownership or terms intentionally change. |
 
@@ -107,6 +111,13 @@ When adding or moving content, update every affected index immediately.
 | [templates/troubleshooting-template.md](templates/troubleshooting-template.md) | Troubleshooting guide starter. | Diagnostic guide structure changes. |
 | [templates/architecture-decision-record-template.md](templates/architecture-decision-record-template.md) | ADR starter. | Decision record format changes. |
 | [templates/practical-example-template.md](templates/practical-example-template.md) | Hands-on example starter. | Example walkthrough standards change. |
+
+### Validation scripts
+
+| Route | Purpose | Edit when |
+| --- | --- | --- |
+| [scripts/validate-local-links.mjs](scripts/validate-local-links.mjs) | Repository-aware local Markdown link, fragment, directory-index, and root-reachability validator. | Local link rules, exclusions, or navigation invariants change. |
+| [scripts/test-local-link-validator.mjs](scripts/test-local-link-validator.mjs) | Fixture tests for valid links, broken targets, missing fragments, fenced examples, and the OKF portable-bundle exception. | Validator behavior changes. |
 
 ### Git
 

@@ -12,7 +12,7 @@ body:
     attributes:
       label: Page
       description: Relative path or section where the issue appears.
-      placeholder: "aws/networking/security-groups.md"
+      placeholder: "cloud/aws/networking/security-groups.md"
     validations:
       required: true
   - type: textarea

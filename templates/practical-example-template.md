@@ -1,6 +1,14 @@
 # Practical example title
 
 Status: Initial outline
+Audience: Beginning platform engineer
+Page type: Tutorial
+Maintainer: Unassigned
+Last substantive review: Not yet reviewed
+Applicable versions: To be established before execution
+Validation evidence: Not yet tested
+Known limitations: To be documented
+Next review: Assign after substantive review
 
 ## Goal
 
@@ -28,8 +36,10 @@ Describe the concrete result the reader will produce.
 ## Validation
 
 ```bash
-# Validation command
+tool validate --target example
 ```
+
+What it does: confirms the exercise reached the intended state.
 
 Expected output:
 
@@ -39,11 +49,17 @@ example output
 
 ## Cleanup
 
+> [!WARNING]
+> Place warnings before commands that delete resources or affect shared infrastructure.
+
 ```bash
-# Cleanup command
+tool delete --target example
 ```
+
+What it does: removes resources created by the exercise and prevents ongoing cost or state drift.
 
 ## Related links
 
+- [Writing instructions](../instructions.md)
 - [Back to templates index](README.md)
 - [Back to root index](../README.md)

@@ -14,8 +14,12 @@ Thank you for improving `engineering-knowledge-base`. Contributions should make 
 
 - [ ] File and directory names use lowercase kebab-case.
 - [ ] The page has a clear purpose and audience.
+- [ ] The page type is clear: tutorial, how-to, reference, explanation, troubleshooting, or ADR.
+- [ ] Substantially reviewed operational pages include the review-information block from [instructions](instructions.md).
 - [ ] Long pages include a table of contents.
 - [ ] Commands use fenced code blocks with language identifiers.
+- [ ] Runnable examples state tools, versions, permissions, starting state, expected result, and cleanup.
+- [ ] Illustrative examples say they are illustrative before the code block.
 - [ ] Risky operations include warnings or rollback notes.
 - [ ] Internal links are relative and verified.
 - [ ] External links use descriptive text and point to authoritative sources.
