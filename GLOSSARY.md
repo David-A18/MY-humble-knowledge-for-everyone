@@ -44,6 +44,7 @@ Common terms used across the knowledge base.
 | DeploymentRuntimeConfig | Crossplane package-runtime configuration for provider or function pods. |
 | DevOps | Engineering practices that connect software delivery, automation, operations, and reliability work. |
 | Deterministic extraction | Parsing exact machine-readable facts from authoritative producers with code rather than asking a model to recreate them. |
+| ECR | Amazon Elastic Container Registry; AWS managed registry for container images and OCI-compatible artifacts, including Helm charts. |
 | ECS | Amazon Elastic Container Service; AWS-native container orchestration for running, managing, and scaling containerized applications. |
 | ECS service | Amazon ECS resource that keeps a desired number of task definition instances running and replaces failed or unhealthy tasks. |
 | EKS | Amazon Elastic Kubernetes Service; AWS managed Kubernetes service for running Kubernetes clusters on AWS and supported hybrid environments. |
@@ -54,6 +55,7 @@ Common terms used across the knowledge base.
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |
 | FunctionRevision | Crossplane package revision object for a concrete installed function version. |
 | GitOps | An operating model where Git stores desired state and controllers reconcile infrastructure or workloads from that state. |
+| Helm | Kubernetes package manager that installs versioned charts as tracked releases. |
 | IaC | Infrastructure as Code; managing infrastructure through versioned declarative or procedural definitions. |
 | IRSA | IAM Roles for Service Accounts; an EKS pattern that uses Kubernetes service account tokens and IAM OIDC trust to provide AWS credentials. |
 | JWKS | JSON Web Key Set; a document containing public keys used to verify tokens signed by an identity provider. |
@@ -91,6 +93,7 @@ Common terms used across the knowledge base.
 | Prompt | Reusable instruction template that guides a model or agent for a specific interaction or workflow. |
 | Provenance | Metadata that records the sources a claim or knowledge document derives from. |
 | Prototype | Early model used to explore shape, interaction, behavior, or design before a full implementation. |
+| Provider | Crossplane OCI package that installs managed-resource APIs and controllers for an external system. |
 | ProviderConfig | Crossplane provider configuration scoped to a namespace. |
 | ProviderRevision | Crossplane package revision object for a concrete installed provider version. |
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |

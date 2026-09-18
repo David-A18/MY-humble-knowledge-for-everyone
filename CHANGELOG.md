@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added Crossplane provider, managed-resource, Composition, Function, and Configuration package guidance; an ECR-backed application delivery platform API; Helm installation and lifecycle guidance; and Amazon ECR OCI/Helm operational guidance.
 - Initial professional documentation scaffold for Git, Terraform, Kubernetes, AWS, cross-topic guides, templates, decision records, and repository maintenance files.
 - MIT license.
 - GitHub issue templates, pull request template, CODEOWNERS, and documentation validation workflows.

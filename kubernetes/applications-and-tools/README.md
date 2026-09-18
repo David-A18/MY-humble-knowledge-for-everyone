@@ -26,6 +26,14 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Scope controller permissions, tenancy, and secrets. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
 | Operate GitOps on Amazon EKS. | [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md) |
 
+## Quick path: Helm
+
+| Need | Read |
+| --- | --- |
+| Understand charts, releases, values, rendering, upgrades, and rollbacks. | [Helm for Kubernetes and Crossplane](helm.md) |
+| Install or upgrade Crossplane with Helm safely. | [Crossplane section](../crossplane/README.md) and [Helm for Kubernetes and Crossplane](helm.md#install-crossplane-with-helm) |
+| Publish or consume Helm OCI charts in Amazon ECR. | [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md#helm-charts-in-ecr-through-oci) |
+
 ## Quick path: Velero
 
 | Need | Read |
@@ -56,6 +64,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Flux](flux.md) | Understand Flux controllers and repository design. |
 | [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) | Follow Flux source, Kustomization, and HelmRelease reconciliation. |
 | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Scope GitOps controller permissions, secrets, and ownership boundaries. |
+| [Helm for Kubernetes and Crossplane](helm.md) | Use Helm charts and releases safely, including Crossplane installation and provider lifecycle boundaries. |
 | [Tooling clusters](tooling-clusters.md) | Decide when to use a dedicated platform tooling cluster. |
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
 | [kind custom clusters](kind-custom-clusters.md) | Create local Kubernetes clusters for labs and CI. |
@@ -65,7 +74,6 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 ## Expected content
 
-- Helm.
 - Kustomize.
 - External secrets operators.
 

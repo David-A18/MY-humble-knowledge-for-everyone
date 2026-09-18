@@ -52,6 +52,7 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [Upbound Marketplace](https://marketplace.upbound.io/) | Current provider, function, configuration package, and resource schema discovery. |
 | [Upbound AWS S3 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-s3) | S3 provider package, versions, and resource schemas. |
 | [Upbound AWS EC2 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ec2) | EC2, VPC, subnet, routing, security group, and networking provider resources. |
+| [Upbound AWS ECR provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ecr) | ECR provider package availability, managed-resource schemas, provenance, and release information. |
 | [Upbound AWS provider family](https://marketplace.upbound.io/providers/upbound/provider-family-aws) | Shared AWS provider family and authentication APIs. |
 | [Upjet repository](https://github.com/crossplane/upjet) | Provider-generation framework and implementation context. |
 | [provider-upjet-aws authentication](https://github.com/crossplane-contrib/provider-upjet-aws/blob/main/AUTHENTICATION.md) | Provider AWS authentication behavior and supported credential sources. |
@@ -67,6 +68,17 @@ Use this page as the reference list for the Crossplane section. Prefer these off
 | [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) | Auditing provider assume-role and resource API calls. |
 | [AWS Organizations service control policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) | Defense-in-depth guardrails outside Crossplane. |
 | [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html) | Independent configuration recording and compliance checks. |
+| [Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html) | ECR concepts, private repositories, and OCI artifact support. |
+| [Amazon ECR repository policies](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html) | Repository policies, IAM policies, and registry authentication requirements. |
+| [Amazon ECR lifecycle policies](https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html) | Retention rules, previews, expiration behavior, and lifecycle safety. |
+| [Push a Helm chart to Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/push-oci-artifact.html) | ECR OCI Helm chart packaging, login, push, and verification workflow. |
+
+## Helm references
+
+| Reference | Use it for |
+| --- | --- |
+| [Helm documentation](https://helm.sh/docs/intro/using_helm/) | Chart, release, repository, install, upgrade, rollback, and inspection commands. |
+| [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/) | Official Crossplane Helm repository, chart installation, and prerequisites. |
 
 ## Terraform references
 

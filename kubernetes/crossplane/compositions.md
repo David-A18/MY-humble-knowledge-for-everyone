@@ -296,9 +296,11 @@ GitOps promotion
 
 - [Crossplane](README.md)
 - [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
+- [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
 - [Crossplane component model](component-model.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
+- [Application delivery platform API](application-delivery-platform-api.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)
