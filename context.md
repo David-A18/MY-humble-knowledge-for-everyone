@@ -123,7 +123,7 @@ When adding or moving content, update every affected index immediately.
 | --- | --- | --- |
 | [scripts/validate-local-links.mjs](scripts/validate-local-links.mjs) | Repository-aware local Markdown link, fragment, directory-index, and root-reachability validator. | Local link rules, exclusions, or navigation invariants change. |
 | [scripts/test-local-link-validator.mjs](scripts/test-local-link-validator.mjs) | Fixture tests for valid links, broken targets, missing fragments, fenced examples, and the OKF portable-bundle exception. | Validator behavior changes. |
-| [scripts/validate-issue-templates.py](scripts/validate-issue-templates.py) | GitHub issue form YAML and repository-convention validator. | Issue template schema or validation rules change. |
+| [scripts/validate-issue-templates.py](scripts/validate-issue-templates.py) | GitHub issue form YAML, repository-label manifest, and repository-convention validator. | Issue template schema, label manifest, or validation rules change. |
 
 ### Git
 
@@ -360,6 +360,7 @@ When adding or moving content, update every affected index immediately.
 | --- | --- | --- |
 | [.github/CODEOWNERS](.github/CODEOWNERS) | Default repository ownership. | Ownership or review routing changes. |
 | [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) | Pull request checklist. | Review expectations change. |
+| [.github/labels.yml](.github/labels.yml) | Versioned label manifest used by issue templates and maintenance workflows. | Issue-template labels, validation labels, or maintenance labels change. |
 | [.github/ISSUE_TEMPLATE/documentation-error.yml](.github/ISSUE_TEMPLATE/documentation-error.yml) | Documentation error issue form. | Error reporting fields change. |
 | [.github/ISSUE_TEMPLATE/new-topic.yml](.github/ISSUE_TEMPLATE/new-topic.yml) | New topic issue form. | Topic proposal fields change. |
 | [.github/ISSUE_TEMPLATE/improvement.yml](.github/ISSUE_TEMPLATE/improvement.yml) | Improvement issue form. | Improvement request fields change. |

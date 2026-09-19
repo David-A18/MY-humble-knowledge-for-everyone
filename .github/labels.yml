@@ -1,0 +1,17 @@
+# Repository labels used by issue templates and documentation maintenance workflows.
+# Keep this file in sync with GitHub repository labels.
+- name: documentation
+  color: "0075ca"
+  description: Improvements or additions to documentation
+- name: enhancement
+  color: "a2eeef"
+  description: New feature or request
+- name: help wanted
+  color: "008672"
+  description: Extra attention is needed
+- name: user-research
+  color: "fbca04"
+  description: Reader testing, usability feedback, and findability evidence
+- name: validation
+  color: "5319e7"
+  description: Validation evidence, sandbox runs, or verification work

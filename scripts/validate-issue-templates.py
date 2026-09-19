@@ -15,15 +15,59 @@ except ImportError as exc:  # pragma: no cover - exercised only when dependency 
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
+LABELS_FILE = ROOT / ".github" / "labels.yml"
 ALLOWED_TYPES = {"checkboxes", "dropdown", "input", "markdown", "textarea"}
 REQUIRED_TOP_LEVEL = {"name", "description", "title", "labels", "body"}
+REQUIRED_LABEL_FIELDS = {"name", "color", "description"}
 
 
 def fail(path: Path, message: str) -> str:
     return f"{path.relative_to(ROOT)}: {message}"
 
 
-def validate_template(path: Path) -> list[str]:
+def validate_label_manifest(path: Path) -> tuple[set[str], list[str]]:
+    errors: list[str] = []
+    if not path.exists():
+        return set(), [fail(path, "label manifest is missing")]
+
+    try:
+        data = yaml.safe_load(path.read_text())
+    except yaml.YAMLError as exc:
+        return set(), [fail(path, f"invalid YAML: {exc}")]
+
+    if not isinstance(data, list) or not data:
+        return set(), [fail(path, "label manifest must be a non-empty list")]
+
+    labels: set[str] = set()
+    for index, item in enumerate(data, start=1):
+        if not isinstance(item, dict):
+            errors.append(fail(path, f"label item {index} must be a mapping"))
+            continue
+
+        missing = sorted(REQUIRED_LABEL_FIELDS - set(item))
+        if missing:
+            errors.append(fail(path, f"label item {index} missing fields: {', '.join(missing)}"))
+
+        name = item.get("name")
+        if not isinstance(name, str) or not name:
+            errors.append(fail(path, f"label item {index} must have a non-empty name"))
+        elif name in labels:
+            errors.append(fail(path, f"duplicate label {name!r}"))
+        else:
+            labels.add(name)
+
+        color = item.get("color")
+        if not isinstance(color, str) or len(color) != 6 or any(char not in "0123456789abcdefABCDEF" for char in color):
+            errors.append(fail(path, f"label item {index} color must be a six-character hex string without #"))
+
+        description = item.get("description")
+        if not isinstance(description, str) or not description:
+            errors.append(fail(path, f"label item {index} must have a non-empty description"))
+
+    return labels, errors
+
+
+def validate_template(path: Path, declared_labels: set[str]) -> list[str]:
     errors: list[str] = []
     try:
         data = yaml.safe_load(path.read_text())
@@ -45,6 +89,10 @@ def validate_template(path: Path) -> list[str]:
     if labels is not None:
         if not isinstance(labels, list) or not all(isinstance(label, str) for label in labels):
             errors.append(fail(path, "labels must be a list of strings"))
+        else:
+            unknown_labels = sorted(set(labels) - declared_labels)
+            if unknown_labels:
+                errors.append(fail(path, f"labels are not declared in .github/labels.yml: {', '.join(unknown_labels)}"))
 
     body = data.get("body")
     if not isinstance(body, list) or not body:
@@ -108,9 +156,9 @@ def main() -> int:
         print("No issue templates found.")
         return 0
 
-    errors: list[str] = []
+    declared_labels, errors = validate_label_manifest(LABELS_FILE)
     for path in paths:
-        errors.extend(validate_template(path))
+        errors.extend(validate_template(path, declared_labels))
 
     if errors:
         print("Issue template validation failed:", file=sys.stderr)
@@ -118,7 +166,7 @@ def main() -> int:
             print(f"- {error}", file=sys.stderr)
         return 1
 
-    print(f"Issue template validation passed for {len(paths)} files.")
+    print(f"Issue template validation passed for {len(paths)} files and {len(declared_labels)} declared labels.")
     return 0
 
 
