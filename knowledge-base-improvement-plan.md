@@ -523,7 +523,7 @@ Authoritative sources and applicable versions: AWS CLI credential-file documenta
 Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because no authorized AWS sandbox credentials were available.
 Remaining defects or dependencies: Needs an authorized AWS sandbox run to verify ProviderConfig Secret authentication, credential expiry behavior, and cleanup.
-Publication commit or blocker: Source correction published in commit `1079a0d`; validation template pending validation and publication for the 2026-09-19 KB-04 template batch. Execution acceptance remains blocked on sandbox access.
+Publication commit or blocker: Source correction published in commit `1079a0d`; validation template published in commit `e024498`, with this record finalized in the follow-up publication-evidence commit. Execution acceptance remains blocked on sandbox access.
 Next action: Run the S3 lab in an authorized sandbox using the validation template and record provider/controller versions, identity, success, expiry symptoms, and cleanup.
 
 Task ID: KB-05
