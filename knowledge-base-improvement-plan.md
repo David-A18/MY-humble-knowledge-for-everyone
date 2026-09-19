@@ -663,7 +663,7 @@ Authoritative sources and applicable versions: Current repository routes and KB-
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 247 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 247 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09.
 Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, and create follow-up issues or edits for repeated blockers.
-Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template pending validation and publication for the 2026-09-19 KB-14 template batch.
+Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template published in commit `4ed9069`, with this record finalized in the follow-up publication-evidence commit.
 Next action: Obtain reader participation, then complete KB-14 acceptance evidence.
 
 Task ID: KB-15
