@@ -1,0 +1,76 @@
+name: Reader test results
+description: Record anonymous KB-14 reader-task results.
+title: "reader test: "
+labels:
+  - documentation
+  - user-research
+body:
+  - type: markdown
+    attributes:
+      value: "Use this form for KB-14 reader-task sessions. Do not include names, email addresses, employer details, private infrastructure details, screenshots with secrets, or terminal output containing credentials."
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      description: When did the reader session happen?
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
+  - type: input
+    id: reader_profile
+    attributes:
+      label: Reader profile
+      description: Broad experience level only.
+      placeholder: "beginner, early practitioner, experienced engineer"
+    validations:
+      required: true
+  - type: input
+    id: repository_commit
+    attributes:
+      label: Repository commit tested
+      description: Commit hash or branch used during the session.
+      placeholder: "6022585"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment notes
+      description: Browser, terminal, OS, or tool versions when relevant. Do not include private details.
+    validations:
+      required: false
+  - type: textarea
+    id: task_results
+    attributes:
+      label: Task results
+      description: Record task number, found page, time to find, result, confusing term or step, and follow-up action.
+      value: |
+        | Task | Found page | Time to find | Result | Confusing term or step | Follow-up action |
+        | --- | --- | --- | --- | --- | --- |
+        | 1. Undo an unstaged Git edit. |  |  |  |  |  |
+        | 2. Find the local Kubernetes learning path. |  |  |  |  |  |
+        | 3. Diagnose a Kubernetes workload restart. |  |  |  |  |  |
+        | 4. Distinguish Crossplane components. |  |  |  |  |  |
+        | 5. Validate a Velero restore. |  |  |  |  |  |
+        | 6. Choose Terraform or Crossplane for a reusable platform API. |  |  |  |  |  |
+        | 7. Update kubeconfig and validate EKS permissions. |  |  |  |  |  |
+        | 8. Explain Kafka duplicate side effects. |  |  |  |  |  |
+        | 9. Identify the next step after the local route. |  |  |  |  |  |
+        | 10. Report one confusing term, missing prerequisite, or blocked step. |  |  |  |  |  |
+    validations:
+      required: true
+  - type: textarea
+    id: observed_blockers
+    attributes:
+      label: Observed blockers
+      description: Record repeated blockers that should become documentation fixes.
+      placeholder: "Task number, evidence, expected result, actual result, and proposed follow-up."
+    validations:
+      required: false
+  - type: textarea
+    id: terms_to_clarify
+    attributes:
+      label: Terms to clarify
+      description: List terms or phrases the reader interpreted differently than intended.
+    validations:
+      required: false

@@ -517,14 +517,14 @@ Status: Blocked
 Owner: Codex
 Date: 2026-09-18
 Starting commit and pre-existing changes: Same batch as KB-01.
-Reader outcome: The known omission in temporary AWS credential examples is corrected in source-reviewed docs, and maintainers now have a public-safe template for recording the missing AWS/Crossplane sandbox run.
-Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`, `kubernetes/crossplane/aws-s3-lab-validation-template.md`, `kubernetes/crossplane/README.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
+Reader outcome: The known omission in temporary AWS credential examples is corrected in source-reviewed docs, and maintainers now have public-safe template and issue-form paths for recording the missing AWS/Crossplane sandbox run.
+Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`, `kubernetes/crossplane/aws-s3-lab-validation-template.md`, `kubernetes/crossplane/README.md`, `.github/ISSUE_TEMPLATE/crossplane-aws-s3-validation.yml`, `maintenance-review-queue.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: AWS CLI credential-file documentation for short-term credentials and `aws_session_token`; Crossplane AWS S3 provider package example remains pinned to `xpkg.upbound.io/upbound/provider-aws-s3:v2.6.1`.
-Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
+Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because no authorized AWS sandbox credentials were available.
 Remaining defects or dependencies: Needs an authorized AWS sandbox run to verify ProviderConfig Secret authentication, credential expiry behavior, and cleanup.
-Publication commit or blocker: Source correction published in commit `1079a0d`; validation template published in commit `e024498`, with this record finalized in the follow-up publication-evidence commit. Execution acceptance remains blocked on sandbox access.
-Next action: Run the S3 lab in an authorized sandbox using the validation template and record provider/controller versions, identity, success, expiry symptoms, and cleanup.
+Publication commit or blocker: Source correction published in commit `1079a0d`; validation template published in commit `e024498`, with this record finalized in the follow-up publication-evidence commit. Issue-form support pending validation and publication for the 2026-09-19 issue-form batch. Execution acceptance remains blocked on sandbox access.
+Next action: Run the S3 lab in an authorized sandbox using the validation template or issue form and record provider/controller versions, identity, success, expiry symptoms, and cleanup.
 
 Task ID: KB-05
 Status: Done
@@ -657,14 +657,14 @@ Status: Blocked
 Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `f7196bb`, tracking `origin/main`.
-Reader outcome: Maintainers now have a linked queue and results template for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
-Files changed: `maintenance-review-queue.md`, `reader-test-results-template.md`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
+Reader outcome: Maintainers now have a linked queue, results template, and issue form for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
+Files changed: `maintenance-review-queue.md`, `reader-test-results-template.md`, `.github/ISSUE_TEMPLATE/reader-test-results.yml`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
-Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 247 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 247 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
+Checks executed, tool versions, and results: Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09.
 Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, and create follow-up issues or edits for repeated blockers.
-Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template published in commit `4ed9069`, with this record finalized in the follow-up publication-evidence commit.
-Next action: Obtain reader participation, then complete KB-14 acceptance evidence.
+Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template published in commit `4ed9069`, with this record finalized in the follow-up publication-evidence commit. Issue-form support pending validation and publication for the 2026-09-19 issue-form batch.
+Next action: Obtain reader participation, then complete KB-14 acceptance evidence through the template or issue form.
 
 Task ID: KB-15
 Status: Done

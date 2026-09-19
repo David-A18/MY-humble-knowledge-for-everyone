@@ -47,5 +47,6 @@ Use the templates in [templates](templates/README.md) when starting new content.
 ## Maintenance and reader feedback
 
 - Use the [maintenance review queue](maintenance-review-queue.md) for priority article reviews, blocked validation follow-ups, and reader-task testing.
+- Use the reader-test results issue form for KB-14 sessions and the Crossplane AWS S3 validation issue form for KB-04 sandbox runs.
 - When a reader reports confusion or a blocked step, record the page, environment or version when relevant, expected result, actual result, and the smallest confusing term or instruction.
 - Do not record unnecessary personal information about readers. Broad experience level is enough for knowledge-base improvement work.

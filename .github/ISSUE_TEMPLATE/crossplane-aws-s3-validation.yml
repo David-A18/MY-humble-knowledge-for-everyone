@@ -1,0 +1,76 @@
+name: Crossplane AWS S3 validation
+description: Record an authorized sandbox run of the Crossplane AWS S3 lab.
+title: "validation: crossplane aws s3 lab"
+labels:
+  - documentation
+  - validation
+body:
+  - type: markdown
+    attributes:
+      value: "Use this form for KB-04 sandbox validation. Use only authorized non-production AWS accounts. Never paste access keys, secret keys, session tokens, private account details, or credential-bearing logs."
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
+  - type: input
+    id: repository_commit
+    attributes:
+      label: Repository commit tested
+      placeholder: "d3023ff"
+    validations:
+      required: true
+  - type: input
+    id: aws_region
+    attributes:
+      label: AWS region
+      placeholder: "eu-west-1"
+    validations:
+      required: true
+  - type: dropdown
+    id: sandbox_confirmed
+    attributes:
+      label: Authorized sandbox confirmed
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Tool and package versions
+      description: Record AWS CLI, Docker, kind, kubectl, Helm, Crossplane chart/core, AWS S3 provider package, and provider revision versions.
+      placeholder: "AWS CLI: ...\nkind: ...\nCrossplane: ...\nprovider-aws-s3: ..."
+    validations:
+      required: true
+  - type: textarea
+    id: identity_credentials
+    attributes:
+      label: Identity and credential checks
+      description: Record public-safe facts only. Confirm expected sandbox account, temporary credentials, session token presence, credential file permissions, Git exclusion, and Secret creation without values.
+    validations:
+      required: true
+  - type: textarea
+    id: execution_results
+    attributes:
+      label: Execution results
+      description: Summarize cluster creation, Crossplane install, provider health, ProviderConfig, bucket creation, public-access block, drift correction, and cleanup.
+    validations:
+      required: true
+  - type: textarea
+    id: failures
+    attributes:
+      label: Failures or expiry symptoms
+      description: Record provider authentication errors, unhealthy provider state, bucket readiness failures, or cleanup issues.
+    validations:
+      required: false
+  - type: textarea
+    id: cleanup_proof
+    attributes:
+      label: Cleanup proof
+      description: Confirm S3 bucket, public-access block, managed resources, Kubernetes Secret, local credential file, kind cluster, and cost risk cleanup.
+    validations:
+      required: true
