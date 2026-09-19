@@ -4,6 +4,16 @@
 
 Use this page to plan Velero-based Kubernetes cluster migration, disaster recovery, and cross-cluster restores.
 
+Status: Draft
+Audience: Platform engineers planning Kubernetes migration or disaster recovery with Velero
+Page type: Migration and disaster-recovery guide
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Velero v1.18 documentation and current backup, restore, and file-system backup references
+Validation evidence: Source reviewed against official Velero migration, backup sync, restore, object-storage, and file-system backup documentation
+Known limitations: Not validated with source and destination clusters, shared backup storage, provider snapshots, or a full application restore drill during this review
+Next review: After a successful cross-cluster restore drill or by 2026-12-19
+
 ## Contents
 
 - [Migration model](#migration-model)

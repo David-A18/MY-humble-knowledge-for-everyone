@@ -4,15 +4,15 @@
 
 Explain how Terraform state maps configuration to real infrastructure and why state handling is operationally sensitive.
 
-Status: Draft
+Status: Maintained
 Audience: Beginning platform engineer
 Page type: Explanation
 Maintainer: Unassigned
-Last substantive review: 2026-09-18
-Applicable versions: Terraform CLI 1.4.0 or newer for the linked local exercise; locally executed with Terraform v1.13.1
-Validation evidence: Source reviewed, statically checked, and linked local exercise executed with Terraform v1.13.1
+Last substantive review: 2026-09-19
+Applicable versions: Terraform CLI v1.16 state documentation; linked local exercise executed with Terraform v1.13.1
+Validation evidence: Source reviewed against official Terraform state documentation; linked local exercise executed with Terraform v1.13.1
 Known limitations: This page introduces state handling and does not replace backend-specific operational runbooks
-Next review: After the first completed local Terraform exercise run
+Next review: 2026-12-19 or after a relevant Terraform state behavior change
 
 ## Key ideas
 

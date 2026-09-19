@@ -6,6 +6,16 @@ Use this hands-on lab to install Crossplane in a local Kubernetes cluster, insta
 
 This lab is intentionally provider-specific. For production AWS architecture, use [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md).
 
+Status: Draft
+Audience: Platform engineers practicing Crossplane with AWS in a sandbox
+Page type: Hands-on lab
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Crossplane v2.4 documentation; Upbound AWS S3 provider package shown as v2.6.1; AWS STS temporary credentials
+Validation evidence: Source reviewed against official Crossplane provider and managed-resource documentation; AWS credential handling corrected from the official STS model
+Known limitations: Not executed against a live kind cluster, Crossplane controller, or AWS sandbox during this review
+Next review: After a successful sandbox AWS execution or by 2026-12-19
+
 ## Prerequisites
 
 - A sandbox AWS account.

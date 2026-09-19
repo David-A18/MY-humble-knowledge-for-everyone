@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-12, and KB-13 have implementation evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
+Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-11, KB-12, and KB-13 have implementation evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -79,7 +79,7 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-08 | Make automated checks match documented guarantees | KB-02, KB-06 | M | Done |
 | KB-09 | Build the first beginner learning path | KB-03, KB-06, KB-07, KB-08 | L | Blocked |
 | KB-10 | Add a complete Terraform exercise | KB-06, KB-08 | M | Done |
-| KB-11 | Review ten priority operational guides | KB-03, KB-04, KB-05, KB-06, KB-08 | L | Todo |
+| KB-11 | Review ten priority operational guides | KB-03, KB-04, KB-05, KB-06, KB-08 | L | Done |
 | KB-12 | Improve long-page readability | KB-06 | M | Done |
 | KB-13 | Simplify governance and add source traceability | KB-07, KB-08 | M | Done |
 | KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Todo |
@@ -610,6 +610,20 @@ Remaining defects or dependencies: None for the declared exercise scope.
 Publication commit or blocker: Published in commit `1079a0d`.
 Next action: None for KB-10.
 
+Task ID: KB-11
+Status: Done
+Owner: Codex
+Date: 2026-09-19
+Starting commit and pre-existing changes: Started from clean `main` at `d166a1d`, tracking `origin/main`.
+Reader outcome: Ten priority operational guides now state their maturity, audience, applicable versions, validation evidence, known execution limits, and next review trigger before readers follow commands.
+Files changed: `git/troubleshooting/undo-and-recovery.md`, `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `terraform/commands/core-workflow.md`, `terraform/fundamentals/state-management.md`, `databases/kafka/delivery-guarantees-and-failure-handling.md`, `migrations/velero/aws-s3-ebs-installation.md`, `migrations/velero/backup-restore-workflows.md`, `migrations/velero/cluster-migration-and-disaster-recovery.md`, `cross-topic-guides/deploying-to-eks.md`, `CHANGELOG.md`, and this plan.
+Authoritative sources and applicable versions: Official Git 2.55.0 documentation, Crossplane v2.4 provider and managed-resource documentation, Terraform v1.16 command and state documentation, Apache Kafka documentation, kafka-python consumer API documentation, Velero v1.18 and current reference documentation, official Velero AWS plugin repository, Amazon EKS kubeconfig and workload IAM documentation, and Kubernetes Deployment and kubectl rollout documentation.
+Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 244 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
+Checks not executed and reason: AWS, EKS, Crossplane, Velero, kind, Kubernetes, and Kafka broker integration tests were not executed because the needed sandbox cloud accounts, clusters, Docker daemon, and broker environment were not available in this workspace. The affected pages now state those limits.
+Remaining defects or dependencies: KB-04 still needs authorized AWS/Crossplane sandbox execution. KB-09 still needs a Docker-capable local cluster run. KB-14 must test reader tasks with actual readers and start the maintenance loop.
+Publication commit or blocker: Pending validation and publication for the 2026-09-19 KB-11 batch.
+Next action: Run repository validation, publish the batch if checks pass, then continue with KB-14 or KB-15 only when their dependencies can be satisfied.
+
 Task ID: KB-12
 Status: Done
 Owner: Codex
@@ -621,7 +635,7 @@ Authoritative sources and applicable versions: Current repository headings and l
 Checks executed, tool versions, and results: Markdown lint, local link validator fixtures, repository local link validation, and `git diff --check` passed.
 Checks not executed and reason: No rendered screenshot review was captured; the change is anchor navigation only.
 Remaining defects or dependencies: Further long pages can receive the same treatment during later article reviews.
-Publication commit or blocker: Pending validation and publication for the 2026-09-19 batch.
+Publication commit or blocker: Published in commit `d166a1d`.
 Next action: Continue applying contents navigation when long pages are substantively edited.
 
 Task ID: KB-13
@@ -635,7 +649,7 @@ Authoritative sources and applicable versions: Current repository paths at `1079
 Checks executed, tool versions, and results: Markdown lint, local link validator fixtures, repository local link validation, and `git diff --check` passed.
 Checks not executed and reason: Historical ingestion source verification was not reconstructed beyond current path mapping and changelog evidence.
 Remaining defects or dependencies: Future ingestions must fill the register at the time material moves to `sources/processed`.
-Publication commit or blocker: Pending validation and publication for the 2026-09-19 batch.
+Publication commit or blocker: Published in commit `d166a1d`.
 Next action: Use the register for all new source ingestion work.
 
 ## Maintenance cadence and success measures

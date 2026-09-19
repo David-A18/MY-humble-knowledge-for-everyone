@@ -4,15 +4,15 @@
 
 Document the standard command flow for making and reviewing Terraform changes.
 
-Status: Draft
+Status: Maintained
 Audience: Beginning platform engineer
 Page type: Reference
 Maintainer: Unassigned
-Last substantive review: 2026-09-18
-Applicable versions: Terraform CLI 1.4.0 or newer for the linked local exercise; locally executed with Terraform v1.13.1
-Validation evidence: Source reviewed, statically checked, and linked local exercise executed with Terraform v1.13.1
-Known limitations: This page describes command flow; use the linked exercise for a concrete local lifecycle
-Next review: After the first completed local Terraform exercise run
+Last substantive review: 2026-09-19
+Applicable versions: Terraform CLI v1.16 documentation; linked local exercise executed with Terraform v1.13.1
+Validation evidence: Source reviewed against official Terraform init, plan, and apply documentation; linked local exercise executed with Terraform v1.13.1
+Known limitations: This page describes command flow; provider-specific backend, credential, and policy behavior still require environment runbooks
+Next review: 2026-12-19 or after a relevant Terraform CLI workflow change
 
 ## Command sequence
 

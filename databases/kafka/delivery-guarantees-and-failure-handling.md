@@ -4,6 +4,16 @@
 
 Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records.
 
+Status: Draft
+Audience: Engineers designing Kafka producers, consumers, and recovery paths
+Page type: Architecture and operations guide
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Apache Kafka current documentation; kafka-python consumer API used by the example
+Validation evidence: Source reviewed against official Apache Kafka semantics documentation and kafka-python API documentation; Python example syntax was statically checked in the earlier correction batch
+Known limitations: Not executed against a live Kafka broker or consumer group during this review
+Next review: After broker-backed example execution or by 2026-12-19
+
 ## Components
 
 | Component | Responsibility |

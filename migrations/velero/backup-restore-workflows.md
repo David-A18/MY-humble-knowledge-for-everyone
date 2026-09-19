@@ -4,6 +4,16 @@
 
 Use this page for the day-to-day Velero commands that create backups, schedules, restores, namespace mappings, and inspection output.
 
+Status: Draft
+Audience: Operators running Velero backup, schedule, and restore workflows
+Page type: Command workflow guide
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Velero v1.18 documentation and current backup and restore references
+Validation evidence: Source reviewed against official Velero backup, schedule, restore, hook, and restore-modifier documentation
+Known limitations: Commands were not executed against a live Velero server, backup storage location, or Kubernetes cluster during this review
+Next review: After a successful cluster-backed restore drill or by 2026-12-19
+
 ## Contents
 
 - [Create backups](#create-backups)

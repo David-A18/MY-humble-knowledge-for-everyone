@@ -4,6 +4,16 @@
 
 Use Git's inspection tools before undoing work, then choose the least destructive recovery path.
 
+Status: Maintained
+Audience: Developers learning safe Git recovery
+Page type: Troubleshooting
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Git restore documentation 2.55.0; locally reproduced with Git 2.53.0
+Validation evidence: Source reviewed against official Git documentation and commands executed in a disposable local repository
+Known limitations: Examples cover normal tracked-file restore behavior, not every merge-conflict, sparse-checkout, or submodule restore mode
+Next review: 2026-12-19 or after a relevant Git restore behavior change
+
 ## First checks
 
 - [ ] Run `git status --short --branch`.

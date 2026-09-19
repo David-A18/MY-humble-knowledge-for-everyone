@@ -4,6 +4,16 @@
 
 Plan the moving parts of deploying applications to Amazon EKS.
 
+Status: Draft
+Audience: Application and platform engineers deploying to Amazon EKS
+Page type: Cross-topic deployment guide
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Current Amazon EKS kubeconfig and workload IAM documentation; current Kubernetes Deployment and kubectl rollout documentation
+Validation evidence: Source reviewed against official Amazon EKS and Kubernetes documentation
+Known limitations: Not executed against a live EKS cluster, kubeconfig, Kubernetes namespace, or deployment pipeline during this review
+Next review: After a successful sandbox EKS deployment or by 2026-12-19
+
 ## Deployment flow
 
 | Step | Command or check | Why it matters |

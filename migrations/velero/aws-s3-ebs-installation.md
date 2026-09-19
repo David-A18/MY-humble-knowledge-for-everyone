@@ -4,6 +4,16 @@
 
 Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots.
 
+Status: Draft
+Audience: Platform engineers installing Velero on EKS
+Page type: Installation guide
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Velero v1.18 documentation; official Velero AWS plugin repository; Amazon EKS snapshot controller documentation
+Validation evidence: Source reviewed against official Velero provider, backup, and AWS plugin documentation plus Amazon EKS guidance
+Known limitations: Not executed against a live EKS cluster, S3 bucket, EBS CSI driver, or AWS IAM role during this review
+Next review: After a successful sandbox EKS installation or by 2026-12-19
+
 ## Contents
 
 - [Prerequisites](#prerequisites)

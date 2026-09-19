@@ -6,6 +6,16 @@ Use this page to understand Crossplane provider packages, provider configs, auth
 
 Providers extend Crossplane with external APIs. Installing a provider creates Kubernetes API types for managed resources and starts controller pods that reconcile those resources.
 
+Status: Draft
+Audience: Platform engineers designing Crossplane provider authentication
+Page type: Concept and operations guide
+Maintainer: Unassigned
+Last substantive review: 2026-09-19
+Applicable versions: Crossplane v2.4 provider package and managed-resource documentation
+Validation evidence: Source reviewed against official Crossplane provider and managed-resource documentation
+Known limitations: Authentication examples are not executed against a provider controller or cloud account in this review
+Next review: 2026-12-19 or after a provider authentication model change
+
 ## Provider package model
 
 Crossplane packages are OCI images. The main package types are:
