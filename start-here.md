@@ -4,11 +4,11 @@ Status: Draft
 Audience: Beginning platform engineer
 Page type: Tutorial route
 Maintainer: Unassigned
-Last substantive review: 2026-09-18
+Last substantive review: 2026-09-19
 Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
-Validation evidence: Source reviewed, statically checked, and Terraform exercise locally executed with Terraform v1.13.1; Kubernetes execution blocked because Docker daemon was unavailable
+Validation evidence: Source reviewed and statically checked; Kubernetes learning path executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; Terraform exercise locally executed with Terraform v1.13.1
 Known limitations: Independent beginner testing belongs to the maintenance loop in the improvement plan
-Next review: After the first completed author run of the linked exercises
+Next review: After KB-14 reader testing or by 2026-12-19
 
 ## Purpose
 

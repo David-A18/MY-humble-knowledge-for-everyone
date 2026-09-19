@@ -4,11 +4,11 @@ Status: Draft
 Audience: Beginning platform engineer
 Page type: Tutorial
 Maintainer: Unassigned
-Last substantive review: 2026-09-18
-Applicable versions: kind v0.30.0, kubectl v1.37.0 client, Kubernetes manifests using stable Namespace, Deployment, and Service APIs
-Validation evidence: Source reviewed and statically checked; local execution blocked because `kind` could not connect to a Docker daemon at `/var/run/docker.sock`
+Last substantive review: 2026-09-19
+Applicable versions: Docker 29.8.0 rootless daemon, kind v0.30.0, Kubernetes v1.34.0 node image, kubectl v1.34.1 client, and stable Namespace, Deployment, and Service APIs
+Validation evidence: Executed end to end in a disposable kind cluster: created cluster, deployed namespace/Deployment/Service, verified Service with port-forward and curl, reproduced `ErrImagePull`, rolled back, practiced Git restore, deleted namespace, and deleted cluster
 Known limitations: Uses local Kubernetes only; it does not teach cloud load balancers, IAM, persistent storage, or production ingress
-Next review: After the first completed author run
+Next review: After KB-14 reader testing or by 2026-12-19
 
 ## Goal
 

@@ -4,9 +4,9 @@ Status: Draft
 Audience: Beginning platform engineer
 Page type: Explanation
 Maintainer: Unassigned
-Last substantive review: 2026-09-18
-Applicable versions: Kubernetes v1.37.0 client used for attempted local validation; concepts apply to stable Namespace, Pod, Deployment, Service, label, and reconciliation behavior
-Validation evidence: Source reviewed and statically checked; local exercise execution is tracked in the linked learning path and currently blocked by unavailable Docker daemon
+Last substantive review: 2026-09-19
+Applicable versions: Kubernetes v1.34.0 kind node and kubectl v1.34.1 used for local validation; concepts apply to stable Namespace, Pod, Deployment, Service, label, and reconciliation behavior
+Validation evidence: Source reviewed and statically checked; linked local learning path executed end to end with rootless Docker, kind, and kubectl
 Known limitations: This page introduces concepts and does not replace the full Kubernetes documentation
 Next review: After the first completed local learning-path run
 

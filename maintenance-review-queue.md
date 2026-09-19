@@ -11,7 +11,7 @@ Maintainer: Unassigned
 Last substantive review: 2026-09-19
 Applicable versions: Repository state at commit `f7196bb`
 Validation evidence: Markdown lint and local link validation passed for the queue introduction batch
-Known limitations: Reader trials have not started, and cloud, cluster, and broker integration checks still need suitable environments
+Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks still need suitable environments
 Next review: When KB-14 reader testing starts, or by 2026-10-19
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
@@ -80,7 +80,6 @@ Record only the fields needed for documentation improvement:
 ## Current blockers
 
 - KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated.
-- KB-09 needs Docker daemon access for the local Kubernetes exercise run.
 - KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance.
 - KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question after KB-14 produces reader evidence.
 

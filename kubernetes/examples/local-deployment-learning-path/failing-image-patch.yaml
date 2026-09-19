@@ -4,7 +4,14 @@ metadata:
   name: kb-web
   namespace: kb-learning
 spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kb-web
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kb-web
+        app.kubernetes.io/part-of: kb-local-learning
     spec:
       containers:
         - name: web

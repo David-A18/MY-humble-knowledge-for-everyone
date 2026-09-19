@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Completed the local Kubernetes beginner path author run with rootless Docker, kind, and kubectl; fixed the failing-image manifest so the exercise produces the intended `ErrImagePull` diagnosis and rollback flow.
 - Added ADR-0003, deciding to keep repository Markdown navigation as the canonical publishing surface until reader testing shows a measured need for a searchable static site.
 - Added a maintenance review queue with priority guide review dates, blocked validation follow-ups, a reader-task testing protocol, and contributor navigation links.
 - Added the first local beginner route with `start-here.md`, a local Kubernetes deployment learning path, exact Kubernetes exercise manifests, and a Terraform local-state lifecycle exercise.

@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-11, KB-12, KB-13, and KB-15 have implementation evidence. KB-14 has a maintenance queue scaffold but remains blocked on actual reader testing and KB-09 execution evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
+Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-09, KB-10, KB-11, KB-12, KB-13, and KB-15 have implementation evidence. KB-14 has a maintenance queue scaffold but remains blocked on actual reader testing. KB-04 has source/documentation corrections but remains blocked on an authorized AWS/Crossplane sandbox.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -77,7 +77,7 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-06 | Align templates and article quality rules | KB-02 | M | Done |
 | KB-07 | Make maturity and routes visible | KB-06 | S | Done |
 | KB-08 | Make automated checks match documented guarantees | KB-02, KB-06 | M | Done |
-| KB-09 | Build the first beginner learning path | KB-03, KB-06, KB-07, KB-08 | L | Blocked |
+| KB-09 | Build the first beginner learning path | KB-03, KB-06, KB-07, KB-08 | L | Done |
 | KB-10 | Add a complete Terraform exercise | KB-06, KB-08 | M | Done |
 | KB-11 | Review ten priority operational guides | KB-03, KB-04, KB-05, KB-06, KB-08 | L | Done |
 | KB-12 | Improve long-page readability | KB-06 | M | Done |
@@ -583,18 +583,18 @@ Publication commit or blocker: Published in commit `1079a0d`.
 Next action: Inspect CI after publication.
 
 Task ID: KB-09
-Status: Blocked
+Status: Done
 Owner: Codex
-Date: 2026-09-18
-Starting commit and pre-existing changes: Same batch as KB-01.
+Date: 2026-09-18; execution evidence updated 2026-09-19.
+Starting commit and pre-existing changes: Original content published in the KB-01 batch; execution resumed from clean `main` at `3797b75`.
 Reader outcome: The first beginner route now exists and includes Git recovery, Kubernetes fundamentals, a local deployment exercise, a controlled failure, diagnosis, recovery, cleanup, and next-step links.
-Files changed: `start-here.md`, `cross-topic-guides/local-deployment-learning-path.md`, `kubernetes/fundamentals/README.md`, `kubernetes/examples/README.md`, and `kubernetes/examples/local-deployment-learning-path/*`.
-Authoritative sources and applicable versions: kind v0.30.0 and kubectl v1.37.0 were downloaded to `/tmp` for attempted validation; manifests use stable Kubernetes Namespace, Deployment, and Service APIs.
-Checks executed, tool versions, and results: Markdown lint and local link checks passed. Temporary `kind` and `kubectl` binaries ran and reported versions. Python/PyYAML parsed all Kubernetes exercise YAML files and confirmed `apiVersion`, `kind`, and `metadata.name` are present.
-Checks not executed and reason: The cluster lifecycle could not run because `kind` could not connect to Docker at `/var/run/docker.sock`; Docker client was present, but the daemon was unavailable.
-Remaining defects or dependencies: Needs a Docker daemon to run the full local cluster exercise, verify the intentional image-pull failure, rollback, cleanup, and author completion notes.
-Publication commit or blocker: Source and static evidence published in commit `1079a0d`; exercise execution acceptance remains blocked on local Docker daemon availability.
-Next action: Re-run the learning path when Docker daemon access is available.
+Files changed: `start-here.md`, `cross-topic-guides/local-deployment-learning-path.md`, `kubernetes/fundamentals/README.md`, `kubernetes/examples/README.md`, `kubernetes/examples/local-deployment-learning-path/*`, `ROADMAP.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
+Authoritative sources and applicable versions: Docker 29.8.0 rootless daemon, kind v0.30.0, Kubernetes v1.34.0 node image, kubectl v1.34.1 client, and stable Kubernetes Namespace, Deployment, and Service APIs.
+Checks executed, tool versions, and results: Created kind cluster `kb-local`; verified the control-plane node was `Ready`; applied namespace, Deployment, and Service; waited for two ready Pods; port-forwarded the Service and confirmed an HTTP response with `curl`; corrected `failing-image-patch.yaml` after Kubernetes rejected the previous incomplete Deployment patch; reproduced the intended `ErrImagePull` and `ImagePullBackOff`; rolled back successfully; practiced `git restore --staged` and `git restore`; deleted the namespace; deleted the kind cluster; confirmed no kind clusters remained. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed. The changed processed-source ingestion register also passed a direct local-link sanity check.
+Checks not executed and reason: Independent beginner testing was not executed; that belongs to KB-14 and requires actual readers.
+Remaining defects or dependencies: None for the author-run scope. KB-14 still needs reader testing.
+Publication commit or blocker: Original source and static evidence published in commit `1079a0d`; execution evidence pending validation and publication for the 2026-09-19 KB-09 completion batch.
+Next action: Use KB-14 reader testing to find learner-facing blockers.
 
 Task ID: KB-10
 Status: Done
@@ -619,10 +619,10 @@ Reader outcome: Ten priority operational guides now state their maturity, audien
 Files changed: `git/troubleshooting/undo-and-recovery.md`, `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `terraform/commands/core-workflow.md`, `terraform/fundamentals/state-management.md`, `databases/kafka/delivery-guarantees-and-failure-handling.md`, `migrations/velero/aws-s3-ebs-installation.md`, `migrations/velero/backup-restore-workflows.md`, `migrations/velero/cluster-migration-and-disaster-recovery.md`, `cross-topic-guides/deploying-to-eks.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Official Git 2.55.0 documentation, Crossplane v2.4 provider and managed-resource documentation, Terraform v1.16 command and state documentation, Apache Kafka documentation, kafka-python consumer API documentation, Velero v1.18 and current reference documentation, official Velero AWS plugin repository, Amazon EKS kubeconfig and workload IAM documentation, and Kubernetes Deployment and kubectl rollout documentation.
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 244 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
-Checks not executed and reason: AWS, EKS, Crossplane, Velero, kind, Kubernetes, and Kafka broker integration tests were not executed because the needed sandbox cloud accounts, clusters, Docker daemon, and broker environment were not available in this workspace. The affected pages now state those limits.
-Remaining defects or dependencies: KB-04 still needs authorized AWS/Crossplane sandbox execution. KB-09 still needs a Docker-capable local cluster run. KB-14 must test reader tasks with actual readers and start the maintenance loop.
+Checks not executed and reason: AWS, EKS, Crossplane provider, Velero, and Kafka broker integration tests were not executed because the needed sandbox cloud accounts, clusters, provider controllers, backup storage, and broker environment were not available in this workspace. The affected pages now state those limits.
+Remaining defects or dependencies: KB-04 still needs authorized AWS/Crossplane sandbox execution. KB-14 must test reader tasks with actual readers and start the maintenance loop.
 Publication commit or blocker: Published in commit `77d0d1c`; this record was finalized in the follow-up publication-evidence commit.
-Next action: Run repository validation, publish the batch if checks pass, then continue with KB-14 or KB-15 only when their dependencies can be satisfied.
+Next action: Continue with KB-14 when actual reader participation is available.
 
 Task ID: KB-12
 Status: Done
@@ -661,10 +661,10 @@ Reader outcome: Maintainers now have a linked queue for priority guide reviews, 
 Files changed: `maintenance-review-queue.md`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 245 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 245 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
-Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. The local Kubernetes beginner path is still not end-to-end executed because Docker daemon access remains unavailable.
-Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, create follow-up issues or edits for repeated blockers, and rerun the local Kubernetes path when Docker is available.
+Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09.
+Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, and create follow-up issues or edits for repeated blockers.
 Publication commit or blocker: Scaffold published in commit `07e9f83`; this record was finalized in the follow-up publication-evidence commit.
-Next action: Obtain reader participation and Docker-capable local execution, then complete KB-14 acceptance evidence.
+Next action: Obtain reader participation, then complete KB-14 acceptance evidence.
 
 Task ID: KB-15
 Status: Done
