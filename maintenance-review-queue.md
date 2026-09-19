@@ -16,7 +16,7 @@ Next review: When KB-14 reader testing starts, or by 2026-10-19
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
 
-Use the [reader test results template](reader-test-results-template.md) or the reader-test GitHub issue form when recording a reader session.
+Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run sessions and the [reader test results template](reader-test-results-template.md) or reader-test GitHub issue form to record results.
 
 ## How to use this queue
 
@@ -51,7 +51,7 @@ Recruit 3-5 willing readers through an authorized channel. Aim for readers who w
 
 ### Test tasks
 
-Ask each reader to start from [Start here](start-here.md) and answer or complete these tasks:
+Ask each reader to start from [Start here](start-here.md) and answer or complete these tasks. The [reader test facilitator guide](reader-test-facilitator-guide.md) provides the session script, expected routes, scoring rules, and hint rules.
 
 1. Find how to undo an unstaged Git edit without rewriting shared history.
 2. Find the first local Kubernetes learning path and identify its prerequisites.
@@ -82,11 +82,12 @@ Record only the fields needed for documentation improvement:
 ## Current blockers
 
 - KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated; use the [AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
-- KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance. Use the reader-test results template or reader-test GitHub issue form to record sessions.
+- KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance. Use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
 - KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question after KB-14 produces reader evidence.
 
 ## Related links
 
+- [Reader test facilitator guide](reader-test-facilitator-guide.md)
 - [Reader test results template](reader-test-results-template.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Knowledge-base review](knowledge-base-review.md)

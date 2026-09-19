@@ -14,7 +14,7 @@ Validation evidence: Template structure reviewed against KB-14 result fields; no
 Known limitations: This template does not replace actual reader participation or prove findability by itself
 Next review: After the first completed reader-test session
 
-Copy this file for each reader-test session or paste the sections into an issue. Do not commit names, email addresses, employer details, private infrastructure details, screenshots with secrets, or terminal output containing credentials.
+Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run the session. Copy this file for each reader-test session or paste the sections into an issue. Do not commit names, email addresses, employer details, private infrastructure details, screenshots with secrets, or terminal output containing credentials.
 
 ## Session summary
 
@@ -74,6 +74,7 @@ Record repeated blockers as issues or small documentation tasks. Include the pag
 
 ## Related links
 
+- [Reader test facilitator guide](reader-test-facilitator-guide.md)
 - [Maintenance review queue](maintenance-review-queue.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Contributing](CONTRIBUTING.md)

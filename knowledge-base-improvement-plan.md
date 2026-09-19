@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-09, KB-10, KB-11, KB-12, KB-13, and KB-15 have implementation evidence. KB-14 has a maintenance queue scaffold but remains blocked on actual reader testing. KB-04 has source/documentation corrections but remains blocked on an authorized AWS/Crossplane sandbox.
+Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-09, KB-10, KB-11, KB-12, KB-13, and KB-15 have implementation evidence. KB-14 has a maintenance queue scaffold, results template, issue form, and facilitator guide but remains blocked on actual reader testing. KB-04 has source/documentation corrections but remains blocked on an authorized AWS/Crossplane sandbox.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -657,14 +657,14 @@ Status: Blocked
 Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `f7196bb`, tracking `origin/main`.
-Reader outcome: Maintainers now have a linked queue, results template, and issue form for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
-Files changed: `maintenance-review-queue.md`, `reader-test-results-template.md`, `.github/ISSUE_TEMPLATE/reader-test-results.yml`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
+Reader outcome: Maintainers now have a linked queue, facilitator guide, results template, and issue form for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
+Files changed: `maintenance-review-queue.md`, `reader-test-facilitator-guide.md`, `reader-test-results-template.md`, `.github/ISSUE_TEMPLATE/reader-test-results.yml`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
-Checks executed, tool versions, and results: Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
-Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09.
+Checks executed, tool versions, and results: Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files for the initial scaffold. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. For the facilitator-guide batch, `npx markdownlint-cli2 "**/*.md"` passed across 249 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 249 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed.
+Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09. The facilitator guide has not been exercised with actual readers yet.
 Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, and create follow-up issues or edits for repeated blockers.
-Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template published in commit `4ed9069`, with this record finalized in the follow-up publication-evidence commit. Issue-form support published in commit `f1fb006`, with this record finalized in the follow-up publication-evidence commit.
-Next action: Obtain reader participation, then complete KB-14 acceptance evidence through the template or issue form.
+Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template published in commit `4ed9069`, with this record finalized in the follow-up publication-evidence commit. Issue-form support published in commit `f1fb006`, with this record finalized in the follow-up publication-evidence commit. Facilitator-guide publication is pending this batch.
+Next action: Obtain reader participation, run sessions with the facilitator guide, then complete KB-14 acceptance evidence through the template or issue form.
 
 Task ID: KB-15
 Status: Done
