@@ -677,7 +677,7 @@ Authoritative sources and applicable versions: Current repository navigation, va
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Static-site generator and hosting capabilities were not evaluated because the decision does not select a generator, host, prototype, or public deployment path. Reader testing remains unavailable, so the ADR records a conservative current decision and a revisit trigger rather than fabricated site evidence.
 Remaining defects or dependencies: Reopen the ADR after KB-14 records reader outcomes, especially if repeated tasks fail because of search, mobile readability, or navigation limits.
-Publication commit or blocker: Pending validation and publication for the 2026-09-19 KB-15 decision batch.
+Publication commit or blocker: Published in commit `46c9811`; this record was finalized in the follow-up publication-evidence commit.
 Next action: Complete KB-04, KB-09, and KB-14 when their external prerequisites are available.
 
 ## Maintenance cadence and success measures
