@@ -573,14 +573,14 @@ Status: Done
 Owner: Codex
 Date: 2026-09-18
 Starting commit and pre-existing changes: Same batch as KB-01.
-Reader outcome: Local and CI validation now have matching purposes, documented commands, and a maintained local-link validator.
-Files changed: `.github/workflows/markdown-lint.yml`, `.github/workflows/link-check.yml`, `.github/workflows/terraform-format.yml`, `git/github-actions/content-ci-cd-process.md`, `scripts/validate-local-links.mjs`, `scripts/test-local-link-validator.mjs`.
-Authoritative sources and applicable versions: Node.js v22.23.2, Terraform v1.13.1 for local formatting check, `markdownlint-cli2 v0.23.2`.
-Checks executed, tool versions, and results: `node scripts/test-local-link-validator.mjs` passed validator fixtures; `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed; Markdown lint passed; Terraform fmt check passed with Terraform v1.13.1 after adding a local `.tf` exercise.
+Reader outcome: Local and CI validation now have matching purposes, documented commands, maintained local-link validation, and maintained GitHub issue-form validation.
+Files changed: `.github/workflows/markdown-lint.yml`, `.github/workflows/link-check.yml`, `.github/workflows/terraform-format.yml`, `.github/workflows/issue-template-validation.yml`, `git/github-actions/content-ci-cd-process.md`, `scripts/validate-local-links.mjs`, `scripts/test-local-link-validator.mjs`, `scripts/validate-issue-templates.py`, `context.md`, `CHANGELOG.md`, and this plan.
+Authoritative sources and applicable versions: Node.js v22.23.2, Terraform v1.13.1 for local formatting check, Python 3 with PyYAML, `markdownlint-cli2 v0.23.2`, `actions/setup-python@v6.0.0`, and `actions/checkout@v7.0.1`.
+Checks executed, tool versions, and results: `node scripts/test-local-link-validator.mjs` passed validator fixtures; `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed; Markdown lint passed; Terraform fmt check passed with Terraform v1.13.1 after adding a local `.tf` exercise. For the issue-template validation extension, Python/PyYAML parsed all issue-template and workflow YAML files, `python3 scripts/validate-issue-templates.py` passed for 5 issue forms, `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability, and `git diff --check` passed.
 Checks not executed and reason: Remote GitHub Actions results were not inspected because the batch has not been pushed.
 Remaining defects or dependencies: External URL availability remains governed by lychee and can fail for network or remote-site reasons separate from local structure.
-Publication commit or blocker: Published in commit `1079a0d`.
-Next action: Inspect CI after publication.
+Publication commit or blocker: Initial validation batch published in commit `1079a0d`; issue-template validation extension pending validation and publication for the 2026-09-19 validation batch.
+Next action: Run local validation, publish the issue-template validation extension if checks pass, and inspect CI when available.
 
 Task ID: KB-09
 Status: Done

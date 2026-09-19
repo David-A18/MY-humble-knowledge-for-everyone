@@ -42,11 +42,12 @@ What it does: refreshes remote branch knowledge, moves to `main`, and fast-forwa
 npx markdownlint-cli2 "**/*.md"
 node scripts/test-local-link-validator.mjs
 node scripts/validate-local-links.mjs
+python3 scripts/validate-issue-templates.py
 ```
 
-What it does: runs the repository Markdown lint check, validates the local-link checker against fixtures, and checks local Markdown links, heading fragments, required directory indexes, and root reachability.
+What it does: runs the repository Markdown lint check, validates the local-link checker against fixtures, checks local Markdown links, heading fragments, required directory indexes, root reachability, and validates GitHub issue form YAML structure.
 
-If Node tooling is unavailable, inspect the changed Markdown manually and record the missing tool in the handoff.
+If Node or Python tooling is unavailable, inspect the changed Markdown or issue templates manually and record the missing tool in the handoff.
 
 ### Merge a content branch into main
 
@@ -102,6 +103,7 @@ Documentation validation workflows should run on:
 | Markdown lint | Formatting, heading, table, and Markdown style checks in the configured curated scope. | `npx markdownlint-cli2 "**/*.md"` |
 | Local link validation | Local inline/reference links, heading fragments, required directory indexes, and root reachability. | `node scripts/validate-local-links.mjs` |
 | Local-link validator fixtures | Confirms valid links pass and intentional broken targets, fragments, fenced links, and the OKF portable-bundle exception behave as expected. | `node scripts/test-local-link-validator.mjs` |
+| Issue template validation | Parses GitHub issue form YAML and checks required repository conventions for fields, IDs, dropdown options, and required flags. | `python3 scripts/validate-issue-templates.py` |
 | External link validation | Checks remote URL availability with exclusions from `lychee.toml`. Network failures, authentication, and rate limits are external availability evidence, not local content structure evidence. | `lychee --config lychee.toml --root-dir . "**/*.md"` |
 | Terraform formatting | Formats tracked Terraform example files when they exist; reports a skip when the repository has no `.tf` examples. | `terraform fmt -recursive -check terraform` |
 

@@ -121,6 +121,7 @@ When adding or moving content, update every affected index immediately.
 | --- | --- | --- |
 | [scripts/validate-local-links.mjs](scripts/validate-local-links.mjs) | Repository-aware local Markdown link, fragment, directory-index, and root-reachability validator. | Local link rules, exclusions, or navigation invariants change. |
 | [scripts/test-local-link-validator.mjs](scripts/test-local-link-validator.mjs) | Fixture tests for valid links, broken targets, missing fragments, fenced examples, and the OKF portable-bundle exception. | Validator behavior changes. |
+| [scripts/validate-issue-templates.py](scripts/validate-issue-templates.py) | GitHub issue form YAML and repository-convention validator. | Issue template schema or validation rules change. |
 
 ### Git
 
@@ -360,9 +361,12 @@ When adding or moving content, update every affected index immediately.
 | [.github/ISSUE_TEMPLATE/documentation-error.yml](.github/ISSUE_TEMPLATE/documentation-error.yml) | Documentation error issue form. | Error reporting fields change. |
 | [.github/ISSUE_TEMPLATE/new-topic.yml](.github/ISSUE_TEMPLATE/new-topic.yml) | New topic issue form. | Topic proposal fields change. |
 | [.github/ISSUE_TEMPLATE/improvement.yml](.github/ISSUE_TEMPLATE/improvement.yml) | Improvement issue form. | Improvement request fields change. |
+| [.github/ISSUE_TEMPLATE/reader-test-results.yml](.github/ISSUE_TEMPLATE/reader-test-results.yml) | KB-14 reader-test results issue form. | Reader-test result fields or privacy guidance change. |
+| [.github/ISSUE_TEMPLATE/crossplane-aws-s3-validation.yml](.github/ISSUE_TEMPLATE/crossplane-aws-s3-validation.yml) | KB-04 Crossplane AWS S3 sandbox validation issue form. | Sandbox validation fields or credential-safety guidance change. |
 | [.github/workflows/markdown-lint.yml](.github/workflows/markdown-lint.yml) | Markdown lint workflow. | Markdown lint behavior changes. |
 | [.github/workflows/link-check.yml](.github/workflows/link-check.yml) | Link check workflow. | Link validation behavior changes. |
 | [.github/workflows/terraform-format.yml](.github/workflows/terraform-format.yml) | Terraform format workflow. | Terraform validation behavior changes. |
+| [.github/workflows/issue-template-validation.yml](.github/workflows/issue-template-validation.yml) | GitHub issue form validation workflow. | Issue-template validation behavior changes. |
 | [.markdownlint-cli2.jsonc](.markdownlint-cli2.jsonc) | Markdown lint configuration. | Local or CI lint rules change. |
 | [.gitattributes](.gitattributes) | Line-ending and binary file handling. | File normalization rules change. |
 

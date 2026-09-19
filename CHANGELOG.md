@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added maintained issue-template validation with a local Python checker and GitHub Actions workflow.
 - Added GitHub issue forms for KB-14 reader-test results and KB-04 Crossplane AWS S3 sandbox validation runs.
 - Added a Crossplane AWS S3 lab validation template for future authorized sandbox runs, with version capture, identity checks, execution evidence, failure handling, cleanup proof, and publication-update guidance.
 - Added a reader-test results template for KB-14 sessions, including task outcomes, blocker tracking, terminology feedback, privacy guidance, and follow-up actions.

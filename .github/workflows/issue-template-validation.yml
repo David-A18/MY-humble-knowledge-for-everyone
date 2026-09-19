@@ -1,0 +1,29 @@
+name: Issue template validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  issue-template-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.x"
+
+      - name: Install validation dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Validate GitHub issue templates
+        run: python scripts/validate-issue-templates.py
