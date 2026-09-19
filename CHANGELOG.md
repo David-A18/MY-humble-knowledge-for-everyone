@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added GitHub tracking issues for the remaining KB-04 AWS sandbox validation and KB-14 reader-test evidence blockers.
 - Added an external evidence request checklist for the remaining KB-04 AWS sandbox and KB-14 reader-test blockers.
 - Added a reader test facilitator guide for KB-14 sessions, with a standard prompt, expected routes, scoring rules, hint guidance, and follow-up workflow.
 - Added maintained issue-template validation with a local Python checker and GitHub Actions workflow.

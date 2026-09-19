@@ -18,7 +18,7 @@ Use this checklist before running the Crossplane AWS S3 lab or reader-task sessi
 
 ## KB-04 AWS and Crossplane sandbox evidence
 
-KB-04 can finish only after an authorized non-production AWS sandbox run validates the Crossplane AWS S3 lab.
+KB-04 can finish only after an authorized non-production AWS sandbox run validates the Crossplane AWS S3 lab. Track the run in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1).
 
 ### Required before the run
 
@@ -50,7 +50,7 @@ Use the [Crossplane AWS S3 lab validation template](kubernetes/crossplane/aws-s3
 
 ## KB-14 reader-test evidence
 
-KB-14 can finish only after actual readers try the documented tasks and their anonymous outcomes are recorded.
+KB-14 can finish only after actual readers try the documented tasks and their anonymous outcomes are recorded. Track the sessions in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2).
 
 ### Required before the sessions
 
