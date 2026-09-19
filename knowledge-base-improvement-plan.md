@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-11, KB-12, and KB-13 have implementation evidence. KB-14 has a maintenance queue scaffold but remains blocked on actual reader testing and KB-09 execution evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
+Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-11, KB-12, KB-13, and KB-15 have implementation evidence. KB-14 has a maintenance queue scaffold but remains blocked on actual reader testing and KB-09 execution evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -83,7 +83,7 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-12 | Improve long-page readability | KB-06 | M | Done |
 | KB-13 | Simplify governance and add source traceability | KB-07, KB-08 | M | Done |
 | KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Blocked |
-| KB-15 | Decide whether a searchable site is worthwhile | KB-14 | M | Todo |
+| KB-15 | Decide whether a searchable site is worthwhile | KB-14 | M | Done |
 
 Dependencies indicate required inputs, not a requirement to postpone a small independent correction. If a dependency proves unnecessary, update the table with an explanation. Keep one primary work package active per contributor to make changes easy to review.
 
@@ -665,6 +665,20 @@ Checks not executed and reason: Reader trials were not run because no authorized
 Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, create follow-up issues or edits for repeated blockers, and rerun the local Kubernetes path when Docker is available.
 Publication commit or blocker: Scaffold published in commit `07e9f83`; this record was finalized in the follow-up publication-evidence commit.
 Next action: Obtain reader participation and Docker-capable local execution, then complete KB-14 acceptance evidence.
+
+Task ID: KB-15
+Status: Done
+Owner: Codex
+Date: 2026-09-19
+Starting commit and pre-existing changes: Started from clean `main` at `e4926ef`, tracking `origin/main`.
+Reader outcome: The repository now has an explicit publishing decision: keep Markdown repository navigation as the canonical surface for now, and reopen the static-site question only after KB-14 reader testing identifies a measured need.
+Files changed: `decision-records/adr-0003-searchable-site-decision.md`, `decision-records/README.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
+Authoritative sources and applicable versions: Current repository navigation, validation, and maintenance state at `e4926ef`; KB-14 scaffold and current lack of reader-findability evidence.
+Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
+Checks not executed and reason: Static-site generator and hosting capabilities were not evaluated because the decision does not select a generator, host, prototype, or public deployment path. Reader testing remains unavailable, so the ADR records a conservative current decision and a revisit trigger rather than fabricated site evidence.
+Remaining defects or dependencies: Reopen the ADR after KB-14 records reader outcomes, especially if repeated tasks fail because of search, mobile readability, or navigation limits.
+Publication commit or blocker: Pending validation and publication for the 2026-09-19 KB-15 decision batch.
+Next action: Complete KB-04, KB-09, and KB-14 when their external prerequisites are available.
 
 ## Maintenance cadence and success measures
 

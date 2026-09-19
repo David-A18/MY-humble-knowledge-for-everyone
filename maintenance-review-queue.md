@@ -82,7 +82,7 @@ Record only the fields needed for documentation improvement:
 - KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated.
 - KB-09 needs Docker daemon access for the local Kubernetes exercise run.
 - KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance.
-- KB-15 should wait until KB-14 produces findability and maintenance evidence.
+- KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question after KB-14 produces reader evidence.
 
 ## Related links
 
