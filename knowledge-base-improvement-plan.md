@@ -517,14 +517,14 @@ Status: Blocked
 Owner: Codex
 Date: 2026-09-18
 Starting commit and pre-existing changes: Same batch as KB-01.
-Reader outcome: The known omission in temporary AWS credential examples is corrected in source-reviewed docs.
-Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`.
+Reader outcome: The known omission in temporary AWS credential examples is corrected in source-reviewed docs, and maintainers now have a public-safe template for recording the missing AWS/Crossplane sandbox run.
+Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`, `kubernetes/crossplane/aws-s3-lab-validation-template.md`, `kubernetes/crossplane/README.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: AWS CLI credential-file documentation for short-term credentials and `aws_session_token`; Crossplane AWS S3 provider package example remains pinned to `xpkg.upbound.io/upbound/provider-aws-s3:v2.6.1`.
-Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. Markdown lint and local link checks passed.
+Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because no authorized AWS sandbox credentials were available.
 Remaining defects or dependencies: Needs an authorized AWS sandbox run to verify ProviderConfig Secret authentication, credential expiry behavior, and cleanup.
-Publication commit or blocker: Source correction published in commit `1079a0d`; execution acceptance remains blocked on sandbox access.
-Next action: Run the S3 lab in an authorized sandbox and record provider/controller versions, identity, success, expiry symptoms, and cleanup.
+Publication commit or blocker: Source correction published in commit `1079a0d`; validation template pending validation and publication for the 2026-09-19 KB-04 template batch. Execution acceptance remains blocked on sandbox access.
+Next action: Run the S3 lab in an authorized sandbox using the validation template and record provider/controller versions, identity, success, expiry symptoms, and cleanup.
 
 Task ID: KB-05
 Status: Done

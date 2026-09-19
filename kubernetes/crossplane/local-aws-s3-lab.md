@@ -365,6 +365,7 @@ shred -u aws-credentials.ini 2>/dev/null || rm -f aws-credentials.ini
 - [Crossplane](README.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
+- [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Crossplane managed-resource tutorial](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/)
 - [Back to Kubernetes index](../README.md)

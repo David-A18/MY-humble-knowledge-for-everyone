@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a Crossplane AWS S3 lab validation template for future authorized sandbox runs, with version capture, identity checks, execution evidence, failure handling, cleanup proof, and publication-update guidance.
 - Added a reader-test results template for KB-14 sessions, including task outcomes, blocker tracking, terminology feedback, privacy guidance, and follow-up actions.
 - Completed the local Kubernetes beginner path author run with rootless Docker, kind, and kubectl; fixed the failing-image manifest so the exercise produces the intended `ErrImagePull` diagnosis and rollback flow.
 - Added ADR-0003, deciding to keep repository Markdown navigation as the canonical publishing surface until reader testing shows a measured need for a searchable static site.

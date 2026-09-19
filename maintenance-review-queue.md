@@ -31,7 +31,7 @@ Use the [reader test results template](reader-test-results-template.md) when rec
 | Guide | Owner | Next review | Reason | Current evidence | Open evidence |
 | --- | --- | --- | --- | --- | --- |
 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Unassigned | 2026-12-19 | Safety-critical recovery guidance | Source reviewed against official Git documentation and locally reproduced in a disposable repository | Broader conflict, sparse-checkout, and submodule scenarios |
-| [Crossplane local AWS S3 lab](kubernetes/crossplane/local-aws-s3-lab.md) | Unassigned | After sandbox AWS execution or 2026-12-19 | Real cloud resources and credentials | Crossplane and AWS STS source review | Live kind, Crossplane, provider, and AWS sandbox run |
+| [Crossplane local AWS S3 lab](kubernetes/crossplane/local-aws-s3-lab.md) | Unassigned | After sandbox AWS execution or 2026-12-19 | Real cloud resources and credentials | Crossplane and AWS STS source review plus [validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) | Live kind, Crossplane, provider, and AWS sandbox run |
 | [Crossplane providers and authentication](kubernetes/crossplane/providers-and-authentication.md) | Unassigned | 2026-12-19 | Credential and provider behavior changes quickly | Crossplane v2.4 source review | Provider-controller authentication execution |
 | [Terraform core workflow](terraform/commands/core-workflow.md) | Unassigned | 2026-12-19 | Core workflow used by learners | Terraform source review and local exercise execution | Remote backend, cloud provider, and policy behavior |
 | [Terraform state management](terraform/fundamentals/state-management.md) | Unassigned | 2026-12-19 | State guidance is operationally sensitive | Terraform source review and local exercise execution | Backend-specific locking, drift, and recovery drills |
@@ -81,7 +81,7 @@ Record only the fields needed for documentation improvement:
 
 ## Current blockers
 
-- KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated.
+- KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated; use the [AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) to record the run.
 - KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance.
 - KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question after KB-14 produces reader evidence.
 

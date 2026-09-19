@@ -162,6 +162,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
+| [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
 | [Production, GitOps, and operations](production-gitops-and-operations.md) | Run Crossplane with GitOps, package promotion, observability, backups, upgrades, and operational workflows. |
 | [Troubleshooting](troubleshooting.md) | Diagnose providers, compositions, managed resources, auth failures, leaked resources, and deletion issues. |
 | [References](references.md) | Official and supporting references used for the Crossplane section. |
@@ -181,6 +182,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [Professional operating model](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Local AWS S3 lab](local-aws-s3-lab.md)
+- [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Crossplane troubleshooting](troubleshooting.md)
