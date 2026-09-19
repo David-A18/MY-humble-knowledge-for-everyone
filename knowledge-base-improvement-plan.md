@@ -657,13 +657,13 @@ Status: Blocked
 Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `f7196bb`, tracking `origin/main`.
-Reader outcome: Maintainers now have a linked queue for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
-Files changed: `maintenance-review-queue.md`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
+Reader outcome: Maintainers now have a linked queue and results template for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
+Files changed: `maintenance-review-queue.md`, `reader-test-results-template.md`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
-Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 245 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 245 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
+Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 247 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 247 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09.
 Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, and create follow-up issues or edits for repeated blockers.
-Publication commit or blocker: Scaffold published in commit `07e9f83`; this record was finalized in the follow-up publication-evidence commit.
+Publication commit or blocker: Initial scaffold published in commit `07e9f83`; reader-test results template pending validation and publication for the 2026-09-19 KB-14 template batch.
 Next action: Obtain reader participation, then complete KB-14 acceptance evidence.
 
 Task ID: KB-15

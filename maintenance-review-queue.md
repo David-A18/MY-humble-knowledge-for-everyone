@@ -16,6 +16,8 @@ Next review: When KB-14 reader testing starts, or by 2026-10-19
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
 
+Use the [reader test results template](reader-test-results-template.md) when recording a reader session.
+
 ## How to use this queue
 
 1. Pick an article whose next review date is due, whose upstream product changed, or whose blocked evidence is now available.
@@ -85,6 +87,7 @@ Record only the fields needed for documentation improvement:
 
 ## Related links
 
+- [Reader test results template](reader-test-results-template.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Knowledge-base review](knowledge-base-review.md)
 - [Contributing](CONTRIBUTING.md)
