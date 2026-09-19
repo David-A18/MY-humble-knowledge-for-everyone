@@ -663,7 +663,7 @@ Authoritative sources and applicable versions: Current repository routes and KB-
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 245 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 245 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. The local Kubernetes beginner path is still not end-to-end executed because Docker daemon access remains unavailable.
 Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, create follow-up issues or edits for repeated blockers, and rerun the local Kubernetes path when Docker is available.
-Publication commit or blocker: Pending validation and publication for the 2026-09-19 KB-14 scaffold batch.
+Publication commit or blocker: Scaffold published in commit `07e9f83`; this record was finalized in the follow-up publication-evidence commit.
 Next action: Obtain reader participation and Docker-capable local execution, then complete KB-14 acceptance evidence.
 
 ## Maintenance cadence and success measures
