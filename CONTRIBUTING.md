@@ -47,6 +47,7 @@ Use the templates in [templates](templates/README.md) when starting new content.
 ## Maintenance and reader feedback
 
 - Use the [maintenance review queue](maintenance-review-queue.md) for priority article reviews, blocked validation follow-ups, and reader-task testing.
+- Use the [external evidence request checklist](external-evidence-request.md) before collecting AWS sandbox or reader-test evidence for blocked plan work.
 - Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run KB-14 sessions consistently.
 - Use the reader-test results issue form for KB-14 sessions and the Crossplane AWS S3 validation issue form for KB-04 sandbox runs.
 - When a reader reports confusion or a blocked step, record the page, environment or version when relevant, expected result, actual result, and the smallest confusing term or instruction.

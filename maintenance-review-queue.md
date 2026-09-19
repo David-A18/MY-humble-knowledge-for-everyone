@@ -9,14 +9,14 @@ Audience: Maintainers and contributors planning review work
 Page type: Maintenance queue
 Maintainer: Unassigned
 Last substantive review: 2026-09-19
-Applicable versions: Repository state at commit `f7196bb`
-Validation evidence: Markdown lint and local link validation passed for the queue introduction batch
+Applicable versions: Current repository state recorded in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md)
+Validation evidence: Markdown lint and local link validation passed for the queue introduction and external-evidence checklist batches
 Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks still need suitable environments
 Next review: When KB-14 reader testing starts, or by 2026-10-19
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
 
-Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run sessions and the [reader test results template](reader-test-results-template.md) or reader-test GitHub issue form to record results.
+Use the [external evidence request checklist](external-evidence-request.md) to identify missing outside inputs, the [reader test facilitator guide](reader-test-facilitator-guide.md) to run sessions, and the [reader test results template](reader-test-results-template.md) or reader-test GitHub issue form to record results.
 
 ## How to use this queue
 
@@ -81,12 +81,13 @@ Record only the fields needed for documentation improvement:
 
 ## Current blockers
 
-- KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated; use the [AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
-- KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance. Use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
+- KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated; use the [external evidence request checklist](external-evidence-request.md) before the run, then use the [AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
+- KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance. Use the external evidence request checklist before recruiting readers, then use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
 - KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question after KB-14 produces reader evidence.
 
 ## Related links
 
+- [External evidence request checklist](external-evidence-request.md)
 - [Reader test facilitator guide](reader-test-facilitator-guide.md)
 - [Reader test results template](reader-test-results-template.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
