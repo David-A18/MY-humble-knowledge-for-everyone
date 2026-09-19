@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Added the first local beginner route with `start-here.md`, a local Kubernetes deployment learning path, exact Kubernetes exercise manifests, and a Terraform local-state lifecycle exercise.
+- Added a processed-source ingestion register and contents navigation for long Git, K9s, and Crossplane reference pages.
 - Added maintained local-link validation scripts, validator fixtures, CI wiring, manual workflow triggers, and explicit workflow permissions for documentation validation.
 - Added visible article review-information standards to the writing instructions, templates, and contributor checklist.
 - Corrected Git restore guidance, Kafka manual-commit example behavior, Crossplane temporary AWS credential examples, and the Markdown lint baseline.
@@ -23,7 +24,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Refactored Git command documentation for easier reading with smaller tables and examples outside table cells.
 - Added AI documentation instructions for readable page structure, small tables, examples outside tables, explanations, risk notes, and validation expectations.
 - Added GitHub Actions documentation covering concepts, workflow structure, commands, `uses:` actions, examples, common solutions, and security guidance.
-- Expanded GitHub Actions `uses:` guidance with reference syntax, catalog navigation, action selection checks, and broader common-action coverage.
 - Expanded GitHub Actions `uses:` guidance with reference syntax, catalog navigation, action selection checks, and broader common-action coverage.
 - Expanded Kubernetes and EKS documentation with daily `kubectl` commands, common and advanced command references, operational workflows, troubleshooting solutions, tricks, best practices, EKS operations, and AWS-focused deployment guidance.
 - Added an agent instruction to commit and push completed documentation work after successful validation.

@@ -73,6 +73,7 @@ What it does: finds existing pages that may already cover the raw source.
 7. Update [GLOSSARY.md](../GLOSSARY.md) when important new terms appear.
 8. Update [CHANGELOG.md](../CHANGELOG.md) for meaningful additions.
 9. Move completed raw files to [processed](processed/README.md), preserving filenames unless a conflict requires a suffix.
+10. Add or update the processed source's row in the [ingestion register](processed/ingestion-register.md), linking every curated destination and recording verification status or `Unknown` where historical evidence is missing.
 
 ## Quality rules
 

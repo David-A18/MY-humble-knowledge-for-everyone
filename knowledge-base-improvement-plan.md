@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, and KB-10 have implementation evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
+Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-12, and KB-13 have implementation evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -80,8 +80,8 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-09 | Build the first beginner learning path | KB-03, KB-06, KB-07, KB-08 | L | Blocked |
 | KB-10 | Add a complete Terraform exercise | KB-06, KB-08 | M | Done |
 | KB-11 | Review ten priority operational guides | KB-03, KB-04, KB-05, KB-06, KB-08 | L | Todo |
-| KB-12 | Improve long-page readability | KB-06 | M | Todo |
-| KB-13 | Simplify governance and add source traceability | KB-07, KB-08 | M | Todo |
+| KB-12 | Improve long-page readability | KB-06 | M | Done |
+| KB-13 | Simplify governance and add source traceability | KB-07, KB-08 | M | Done |
 | KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Todo |
 | KB-15 | Decide whether a searchable site is worthwhile | KB-14 | M | Todo |
 
@@ -481,7 +481,7 @@ Authoritative sources and applicable versions: `markdownlint-cli2 v0.23.2`, `mar
 Checks executed, tool versions, and results: Initial `npx markdownlint-cli2 "**/*.md"` reproduced 20 issues in 16 files. After KB-02, Markdown lint checked 244 Markdown files with zero issues. Local link validator checked 244 Markdown files with local links, fragments, indexes, and reachability passing.
 Checks not executed and reason: External URL crawl was not rerun as part of KB-01; KB-08 keeps external availability separate from local structure.
 Remaining defects or dependencies: None for the baseline record.
-Publication commit or blocker: Not published yet; the broader goal still has blocked execution items.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: Continue with blocked environment-dependent validation when Docker and AWS sandbox access are available.
 
 Task ID: KB-02
@@ -495,7 +495,7 @@ Authoritative sources and applicable versions: `markdownlint-cli2 v0.23.2`, `mar
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with zero issues across 244 Markdown files. `git diff --check` passed.
 Checks not executed and reason: Rendered GitHub table inspection was not visually captured; the table pipe was escaped and lint passed.
 Remaining defects or dependencies: None.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: None for KB-02.
 
 Task ID: KB-03
@@ -509,7 +509,7 @@ Authoritative sources and applicable versions: Official `git-restore` documentat
 Checks executed, tool versions, and results: Disposable repository test showed `git restore demo.txt` changed the working tree from `unstaged` to staged index content, while `git restore --source=HEAD demo.txt` changed it to committed content.
 Checks not executed and reason: None.
 Remaining defects or dependencies: None.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: None for KB-03.
 
 Task ID: KB-04
@@ -523,7 +523,7 @@ Authoritative sources and applicable versions: AWS CLI credential-file documenta
 Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. Markdown lint and local link checks passed.
 Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because no authorized AWS sandbox credentials were available.
 Remaining defects or dependencies: Needs an authorized AWS sandbox run to verify ProviderConfig Secret authentication, credential expiry behavior, and cleanup.
-Publication commit or blocker: Not published yet; execution acceptance remains blocked on sandbox access.
+Publication commit or blocker: Source correction published in commit `1079a0d`; execution acceptance remains blocked on sandbox access.
 Next action: Run the S3 lab in an authorized sandbox and record provider/controller versions, identity, success, expiry symptoms, and cleanup.
 
 Task ID: KB-05
@@ -537,7 +537,7 @@ Authoritative sources and applicable versions: `kafka-python` `KafkaConsumer` AP
 Checks executed, tool versions, and results: Python 3.14.4 `ast.parse` accepted the updated example. Markdown lint and local link checks passed.
 Checks not executed and reason: No Kafka broker integration test was run; the page does not claim broker execution coverage.
 Remaining defects or dependencies: A future broker-backed example could test successful processing, failed record replay, and idempotency behavior.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: None required for the current evidence level.
 
 Task ID: KB-06
@@ -551,7 +551,7 @@ Authoritative sources and applicable versions: The existing repository writing s
 Checks executed, tool versions, and results: Markdown lint and local link checks passed.
 Checks not executed and reason: Temporary demonstration drafts were not retained as published content; template usability was checked by applying the standard to new learning-path and Terraform exercise pages in KB-09 and KB-10.
 Remaining defects or dependencies: None for canonical standard alignment.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: Continue applying the standard gradually during future article reviews.
 
 Task ID: KB-07
@@ -565,7 +565,7 @@ Authoritative sources and applicable versions: Current repository route hierarch
 Checks executed, tool versions, and results: Markdown lint and local link checks passed.
 Checks not executed and reason: No rendered screenshot review was captured.
 Remaining defects or dependencies: Labels should be refined as KB-11 and KB-14 produce more evidence.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: Update labels when routes move from outline to maintained.
 
 Task ID: KB-08
@@ -579,7 +579,7 @@ Authoritative sources and applicable versions: Node.js v22.23.2, Terraform v1.13
 Checks executed, tool versions, and results: `node scripts/test-local-link-validator.mjs` passed validator fixtures; `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed; Markdown lint passed; Terraform fmt check passed with Terraform v1.13.1 after adding a local `.tf` exercise.
 Checks not executed and reason: Remote GitHub Actions results were not inspected because the batch has not been pushed.
 Remaining defects or dependencies: External URL availability remains governed by lychee and can fail for network or remote-site reasons separate from local structure.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: Inspect CI after publication.
 
 Task ID: KB-09
@@ -593,7 +593,7 @@ Authoritative sources and applicable versions: kind v0.30.0 and kubectl v1.37.0 
 Checks executed, tool versions, and results: Markdown lint and local link checks passed. Temporary `kind` and `kubectl` binaries ran and reported versions. Python/PyYAML parsed all Kubernetes exercise YAML files and confirmed `apiVersion`, `kind`, and `metadata.name` are present.
 Checks not executed and reason: The cluster lifecycle could not run because `kind` could not connect to Docker at `/var/run/docker.sock`; Docker client was present, but the daemon was unavailable.
 Remaining defects or dependencies: Needs a Docker daemon to run the full local cluster exercise, verify the intentional image-pull failure, rollback, cleanup, and author completion notes.
-Publication commit or blocker: Not published yet; exercise execution acceptance remains blocked on local Docker daemon availability.
+Publication commit or blocker: Source and static evidence published in commit `1079a0d`; exercise execution acceptance remains blocked on local Docker daemon availability.
 Next action: Re-run the learning path when Docker daemon access is available.
 
 Task ID: KB-10
@@ -607,8 +607,36 @@ Authoritative sources and applicable versions: Terraform v1.13.1 local binary fr
 Checks executed, tool versions, and results: Terraform v1.13.1 ran `init`, `validate`, `fmt -check`, `plan`, `apply`, `state list`, `state show`, variable-change `plan` and `apply`, `output`, `destroy`, and final `state list` returned empty in an isolated `/tmp` directory.
 Checks not executed and reason: No cloud provider, remote backend, lock, drift, or real infrastructure behavior was tested because the exercise is intentionally local-only.
 Remaining defects or dependencies: None for the declared exercise scope.
-Publication commit or blocker: Not published yet; this batch is still uncommitted while the goal continues.
+Publication commit or blocker: Published in commit `1079a0d`.
 Next action: None for KB-10.
+
+Task ID: KB-12
+Status: Done
+Owner: Codex
+Date: 2026-09-19
+Starting commit and pre-existing changes: Started from clean `main` at `1079a0d`, tracking `origin/main`.
+Reader outcome: Long reference pages now offer direct contents navigation before the reader reaches large command or concept tables.
+Files changed: `git/commands/complete-command-catalog.md`, `kubernetes/applications-and-tools/k9s.md`, `kubernetes/crossplane/component-model.md`.
+Authoritative sources and applicable versions: Current repository headings and local Markdown link validator slug behavior.
+Checks executed, tool versions, and results: Markdown lint, local link validator fixtures, repository local link validation, and `git diff --check` passed.
+Checks not executed and reason: No rendered screenshot review was captured; the change is anchor navigation only.
+Remaining defects or dependencies: Further long pages can receive the same treatment during later article reviews.
+Publication commit or blocker: Pending validation and publication for the 2026-09-19 batch.
+Next action: Continue applying contents navigation when long pages are substantively edited.
+
+Task ID: KB-13
+Status: Done
+Owner: Codex
+Date: 2026-09-19
+Starting commit and pre-existing changes: Started from clean `main` at `1079a0d`, tracking `origin/main`.
+Reader outcome: Archived processed sources now map to curated destinations through a maintained register, and source-ingestion rules require future mappings.
+Files changed: `sources/processed/ingestion-register.md`, `sources/processed/README.md`, `sources/AGENTS.md`, `instructions.md`, `context.md`, `CHANGELOG.md`, and this plan.
+Authoritative sources and applicable versions: Current repository paths at `1079a0d`; historical ingestion details are explicitly marked `Unknown` where no handoff evidence was available.
+Checks executed, tool versions, and results: Markdown lint, local link validator fixtures, repository local link validation, and `git diff --check` passed.
+Checks not executed and reason: Historical ingestion source verification was not reconstructed beyond current path mapping and changelog evidence.
+Remaining defects or dependencies: Future ingestions must fill the register at the time material moves to `sources/processed`.
+Publication commit or blocker: Pending validation and publication for the 2026-09-19 batch.
+Next action: Use the register for all new source ingestion work.
 
 ## Maintenance cadence and success measures
 

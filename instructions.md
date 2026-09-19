@@ -226,6 +226,8 @@ Every focused article should end with links back to:
 - the major area index when different from the parent,
 - the root index.
 
+Portable example bundles may intentionally use their own reserved entry files. For example, the OKF v0.2 example bundle uses `index.md` as its bundle root and keeps `README.md` as a repository-friendly concept file. Document such exceptions near the bundle and in validator tests; do not generalize the exception to ordinary documentation directories.
+
 Example:
 
 ```markdown

@@ -6,6 +6,21 @@ Use this page to understand every Crossplane-specific component that appears in 
 
 This is the map to read before writing a platform API. Workflow pages show how to deploy resources; this page explains what each object is responsible for and how the objects interact.
 
+## Contents
+
+- [Big picture](#big-picture)
+- [Component map](#component-map)
+- [Crossplane core](#crossplane-core)
+- [Packages](#packages)
+- [Provider runtime and authentication](#provider-runtime-and-authentication)
+- [Managed-resource layer](#managed-resource-layer)
+- [Platform API layer](#platform-api-layer)
+- [Functions and environments](#functions-and-environments)
+- [Operations](#operations)
+- [How the pieces interact](#how-the-pieces-interact)
+- [Inspection commands](#inspection-commands)
+- [Related links](#related-links)
+
 ## Big picture
 
 Crossplane turns Kubernetes into a control plane for external systems. The Kubernetes API server stores desired state, Crossplane core decides which controllers or functions must act, and providers reconcile external APIs such as AWS.

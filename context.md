@@ -91,6 +91,7 @@ When adding or moving content, update every affected index immediately.
 | [sources/raw-topic-template.md](sources/raw-topic-template.md) | Optional metadata starter for raw topic notes. | Raw source metadata fields change. |
 | [sources/incoming/README.md](sources/incoming/README.md) | Drop zone for raw `.md` files waiting for ingestion. | Incoming source rules change. |
 | [sources/processed/README.md](sources/processed/README.md) | Archive for raw files already converted into curated docs. | Processed source archive rules change. |
+| [sources/processed/ingestion-register.md](sources/processed/ingestion-register.md) | Traceability register from archived raw source files to curated destinations. | Processed source mappings, verification status, or open ingestion questions change. |
 
 ### Assets
 

@@ -7,6 +7,19 @@ Use this catalog to recognize the Git command surface. Daily users should start 
 > [!IMPORTANT]
 > The official Git reference is the source of truth for command behavior. Some commands listed by `git help -a` depend on platform, installed extras, or Git version.
 
+## Contents
+
+- [Main porcelain commands](#main-porcelain-commands)
+- [Ancillary commands](#ancillary-commands)
+- [Interacting with other systems](#interacting-with-other-systems)
+- [Low-level manipulators](#low-level-manipulators)
+- [Low-level interrogators](#low-level-interrogators)
+- [Server and protocol commands](#server-and-protocol-commands)
+- [Internal helpers and repository interfaces](#internal-helpers-and-repository-interfaces)
+- [Developer-facing formats and protocols](#developer-facing-formats-and-protocols)
+- [Local external helpers shown by this workstation](#local-external-helpers-shown-by-this-workstation)
+- [Related links](#related-links)
+
 ## Main porcelain commands
 
 | Command | Use | Notes |

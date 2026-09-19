@@ -35,6 +35,22 @@ kubeconfig context
 > [!IMPORTANT]
 > K9s can only show and modify what your Kubernetes identity is allowed to access. If a view is empty or an action fails, check your active context, namespace, and RBAC permissions before assuming the cluster is broken.
 
+## Contents
+
+- [Start K9s](#start-k9s)
+- [Screen model](#screen-model)
+- [Move around](#move-around)
+- [Simple resource commands](#simple-resource-commands)
+- [Inspect and see things](#inspect-and-see-things)
+- [Filtering and searching](#filtering-and-searching)
+- [Common workflows](#common-workflows)
+- [Special views](#special-views)
+- [Risky actions](#risky-actions)
+- [Configuration that helps daily use](#configuration-that-helps-daily-use)
+- [Troubleshooting](#troubleshooting)
+- [Official documentation](#official-documentation)
+- [Related links](#related-links)
+
 ## Start K9s
 
 | Task | Command | When to use it |
