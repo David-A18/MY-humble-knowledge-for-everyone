@@ -77,3 +77,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added an agent-first knowledge-base reference architecture under AI tooling, covering OKF v0.2, knowledge standards, Git-backed corpus design, retrieval budgets, provenance, freshness, security, governance, evaluation, and a conformant public-safe OKF example bundle.
 - Added Apigee API management coverage under Google Cloud and SonarQube code quality plus GitHub integration coverage under DevOps, with root fast paths and glossary entries.
 - Added a content-only CI/CD process guide requiring documentation changes to land in `main`, with validation-focused checks, no required human review for normal content changes, and branch cleanup guidance.
+
+### Changed
+
+- Updated the external link-check exclusions to skip the official Crossplane documentation domain after repeated GitHub runner connectivity failures, while keeping local link and fragment validation active.

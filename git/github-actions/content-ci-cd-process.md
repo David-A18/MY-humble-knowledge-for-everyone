@@ -104,7 +104,7 @@ Documentation validation workflows should run on:
 | Local link validation | Local inline/reference links, heading fragments, required directory indexes, and root reachability. | `node scripts/validate-local-links.mjs` |
 | Local-link validator fixtures | Confirms valid links pass and intentional broken targets, fragments, fenced links, and the OKF portable-bundle exception behave as expected. | `node scripts/test-local-link-validator.mjs` |
 | Issue template validation | Parses GitHub issue form YAML and checks required repository conventions for fields, IDs, dropdown options, and required flags. | `python3 scripts/validate-issue-templates.py` |
-| External link validation | Checks remote URL availability with exclusions from `lychee.toml`. Network failures, authentication, and rate limits are external availability evidence, not local content structure evidence. | `lychee --config lychee.toml --root-dir . "**/*.md"` |
+| External link validation | Checks remote URL availability with exclusions from `lychee.toml`. Network failures, authentication, runner connectivity, and rate limits are external availability evidence, not local content structure evidence. The Crossplane documentation domain is excluded because GitHub-hosted lychee runners repeatedly fail to connect even when the same official URLs return `200` locally. | `lychee --config lychee.toml --root-dir . "**/*.md"` |
 | Terraform formatting | Formats tracked Terraform example files when they exist; reports a skip when the repository has no `.tf` examples. | `terraform fmt -recursive -check terraform` |
 
 Use Node.js 22 or newer for the local validator scripts. Current baseline evidence was refreshed with `markdownlint-cli2 v0.23.2`, `markdownlint v0.41.1`, and Git 2.53.0.
