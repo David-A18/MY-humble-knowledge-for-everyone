@@ -482,7 +482,7 @@ Checks executed, tool versions, and results: Initial `npx markdownlint-cli2 "**/
 Checks not executed and reason: External URL crawl was not rerun as part of KB-01; KB-08 keeps external availability separate from local structure.
 Remaining defects or dependencies: None for the baseline record.
 Publication commit or blocker: Published in commit `1079a0d`.
-Next action: Continue with blocked environment-dependent validation when Docker and AWS sandbox access are available.
+Next action: Continue with the remaining blocked AWS sandbox validation and reader testing when those external prerequisites are available.
 
 Task ID: KB-02
 Status: Done
@@ -678,7 +678,7 @@ Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` p
 Checks not executed and reason: Static-site generator and hosting capabilities were not evaluated because the decision does not select a generator, host, prototype, or public deployment path. Reader testing remains unavailable, so the ADR records a conservative current decision and a revisit trigger rather than fabricated site evidence.
 Remaining defects or dependencies: Reopen the ADR after KB-14 records reader outcomes, especially if repeated tasks fail because of search, mobile readability, or navigation limits.
 Publication commit or blocker: Published in commit `46c9811`; this record was finalized in the follow-up publication-evidence commit.
-Next action: Complete KB-04, KB-09, and KB-14 when their external prerequisites are available.
+Next action: Complete KB-04 and KB-14 when their external prerequisites are available.
 
 ## Maintenance cadence and success measures
 
@@ -698,7 +698,7 @@ These are initial operating targets, not external compliance requirements or sch
 | Markdown validation | Historical review: 20 errors; refresh in KB-01 | Zero errors in the configured curated scope. |
 | Local navigation | Historical scan found no missing targets | Maintain no known broken targets/fragments under the stronger validator. |
 | Review evidence | Ten-page cohort selected in KB-11 | All ten record genuine review scope, versions where relevant, and limitations. |
-| Beginner exercise | Full path not yet completed | Recorded end-to-end author run, followed by independent reader trials. |
+| Beginner exercise | End-to-end author run recorded in KB-09; independent reader trials pending | Independent reader trials recorded through KB-14. |
 | Findability | Not measured | Initial goal: intended page found for at least 8 of 10 questions within two minutes per question; report participant variation. |
 | Learner blockers | Not measured | No unresolved blocking step in the tested first path before calling it beginner-ready. |
 | Source traceability | Uneven | All new ingestions mapped; existing archives mapped or explicitly marked unknown. |
