@@ -19,7 +19,7 @@ body:
     id: repository_commit
     attributes:
       label: Repository commit tested
-      placeholder: "d3023ff"
+      placeholder: "current commit hash tested"
     validations:
       required: true
   - type: input

@@ -29,7 +29,7 @@ body:
     attributes:
       label: Repository commit tested
       description: Commit hash or branch used during the session.
-      placeholder: "6022585"
+      placeholder: "current commit hash tested"
     validations:
       required: true
   - type: textarea
