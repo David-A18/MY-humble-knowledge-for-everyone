@@ -8,6 +8,8 @@ Use the [knowledge-base improvement plan](knowledge-base-improvement-plan.md) to
 
 Known defects and validation hardening have started in the plan. The first local beginner route and Terraform exercise now exist; Kubernetes execution remains blocked until Docker daemon access is available, and Crossplane AWS credential execution remains blocked until an authorized sandbox is available. Use the expansion ideas below as a backlog after those foundations; track implementation status in the plan rather than duplicating it here.
 
+Use the [maintenance review queue](maintenance-review-queue.md) to schedule priority guide reviews, record blocked validation follow-ups, and run reader-task testing before making larger navigation or site-search decisions.
+
 ## Near term
 
 - Expand Git command references and recovery procedures.
@@ -35,3 +37,4 @@ Known defects and validation hardening have started in the plan. The first local
 2. Prefer high-signal commands, diagnostics, and decision criteria.
 3. Keep pages small enough to maintain.
 4. Update navigation immediately when adding new pages.
+5. Use reader feedback and review evidence from the maintenance queue before starting broad restructuring work.

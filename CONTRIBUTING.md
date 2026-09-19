@@ -43,3 +43,9 @@ Use the templates in [templates](templates/README.md) when starting new content.
 - Update indexes when adding, moving, or removing pages.
 - Update [GLOSSARY.md](GLOSSARY.md) when adding important new terms.
 - Update [CHANGELOG.md](CHANGELOG.md) for meaningful structural or content additions.
+
+## Maintenance and reader feedback
+
+- Use the [maintenance review queue](maintenance-review-queue.md) for priority article reviews, blocked validation follow-ups, and reader-task testing.
+- When a reader reports confusion or a blocked step, record the page, environment or version when relevant, expected result, actual result, and the smallest confusing term or instruction.
+- Do not record unnecessary personal information about readers. Broad experience level is enough for knowledge-base improvement work.

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a maintenance review queue with priority guide review dates, blocked validation follow-ups, a reader-task testing protocol, and contributor navigation links.
 - Added the first local beginner route with `start-here.md`, a local Kubernetes deployment learning path, exact Kubernetes exercise manifests, and a Terraform local-state lifecycle exercise.
 - Added review-information blocks to ten priority operational guides covering Git recovery, Crossplane, Terraform, Kafka, Velero, and EKS deployment, with current source-review evidence and explicit integration-test limits.
 - Added a processed-source ingestion register and contents navigation for long Git, K9s, and Crossplane reference pages.

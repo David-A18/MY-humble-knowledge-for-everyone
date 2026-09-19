@@ -22,10 +22,25 @@ body:
       description: What is incorrect, unclear, outdated, or broken?
     validations:
       required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment or version
+      description: Tool, product, operating system, or environment version when relevant.
+      placeholder: "Terraform v1.13.1, Kubernetes v1.34, Amazon EKS, Ubuntu"
+    validations:
+      required: false
   - type: textarea
     id: expected
     attributes:
       label: Expected correction
       description: What should the page say or link to instead?
+    validations:
+      required: false
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result or blocker
+      description: What happened when you followed the documentation?
     validations:
       required: false

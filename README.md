@@ -65,6 +65,7 @@ Use these shortcuts when you already know the topic name and do not want to brow
 | [Roadmap](ROADMAP.md) | Planned expansion areas and prioritization. |
 | [Knowledge-base review](knowledge-base-review.md) | Repository assessment, evidence, and prioritized improvements reviewed on 2026-09-18. |
 | [Knowledge-base improvement plan](knowledge-base-improvement-plan.md) | Ordered work packages, contributor instructions, acceptance criteria, and maintenance measures based on the review. |
+| [Maintenance review queue](maintenance-review-queue.md) | Priority guide review queue, reader-task testing protocol, and blocked validation follow-ups. |
 | [Contributing](CONTRIBUTING.md) | Writing standards, review checklist, and contribution flow. |
 | [Changelog](CHANGELOG.md) | Notable repository changes. |
 

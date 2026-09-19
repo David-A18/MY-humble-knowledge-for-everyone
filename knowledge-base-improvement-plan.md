@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-11, KB-12, and KB-13 have implementation evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
+Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-10, KB-11, KB-12, and KB-13 have implementation evidence. KB-14 has a maintenance queue scaffold but remains blocked on actual reader testing and KB-09 execution evidence. KB-04 and KB-09 have source/documentation corrections but remain blocked on external execution environments.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -82,7 +82,7 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-11 | Review ten priority operational guides | KB-03, KB-04, KB-05, KB-06, KB-08 | L | Done |
 | KB-12 | Improve long-page readability | KB-06 | M | Done |
 | KB-13 | Simplify governance and add source traceability | KB-07, KB-08 | M | Done |
-| KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Todo |
+| KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Blocked |
 | KB-15 | Decide whether a searchable site is worthwhile | KB-14 | M | Todo |
 
 Dependencies indicate required inputs, not a requirement to postpone a small independent correction. If a dependency proves unnecessary, update the table with an explanation. Keep one primary work package active per contributor to make changes easy to review.
@@ -651,6 +651,20 @@ Checks not executed and reason: Historical ingestion source verification was not
 Remaining defects or dependencies: Future ingestions must fill the register at the time material moves to `sources/processed`.
 Publication commit or blocker: Published in commit `d166a1d`.
 Next action: Use the register for all new source ingestion work.
+
+Task ID: KB-14
+Status: Blocked
+Owner: Codex
+Date: 2026-09-19
+Starting commit and pre-existing changes: Started from clean `main` at `f7196bb`, tracking `origin/main`.
+Reader outcome: Maintainers now have a linked queue for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
+Files changed: `maintenance-review-queue.md`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
+Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
+Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 245 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 245 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
+Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. The local Kubernetes beginner path is still not end-to-end executed because Docker daemon access remains unavailable.
+Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, create follow-up issues or edits for repeated blockers, and rerun the local Kubernetes path when Docker is available.
+Publication commit or blocker: Pending validation and publication for the 2026-09-19 KB-14 scaffold batch.
+Next action: Obtain reader participation and Docker-capable local execution, then complete KB-14 acceptance evidence.
 
 ## Maintenance cadence and success measures
 

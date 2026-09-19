@@ -79,6 +79,7 @@ When adding or moving content, update every affected index immediately.
 | [ROADMAP.md](ROADMAP.md) | Planned future work. | Priorities or planned topic areas change. |
 | [knowledge-base-review.md](knowledge-base-review.md) | Dated repository review with evidence and improvement priorities. | A new assessment or clearly marked follow-up is recorded; preserve the reviewed baseline. |
 | [knowledge-base-improvement-plan.md](knowledge-base-improvement-plan.md) | Execution plan for review findings, with dependencies, acceptance criteria, and evidence tracking. | Work package scope, status, implementation evidence, or priorities change. |
+| [maintenance-review-queue.md](maintenance-review-queue.md) | Priority guide review queue, reader-task testing protocol, and blocked validation follow-ups. | Maintenance queue items, reader testing, review ownership, or blocked validation evidence changes. |
 | [GLOSSARY.md](GLOSSARY.md) | Shared terms and acronyms. | New important terminology appears in articles. |
 | [LICENSE](LICENSE) | Repository license. | License ownership or terms intentionally change. |
 
