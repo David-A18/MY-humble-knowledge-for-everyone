@@ -621,7 +621,7 @@ Authoritative sources and applicable versions: Official Git 2.55.0 documentation
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 244 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: AWS, EKS, Crossplane, Velero, kind, Kubernetes, and Kafka broker integration tests were not executed because the needed sandbox cloud accounts, clusters, Docker daemon, and broker environment were not available in this workspace. The affected pages now state those limits.
 Remaining defects or dependencies: KB-04 still needs authorized AWS/Crossplane sandbox execution. KB-09 still needs a Docker-capable local cluster run. KB-14 must test reader tasks with actual readers and start the maintenance loop.
-Publication commit or blocker: Pending validation and publication for the 2026-09-19 KB-11 batch.
+Publication commit or blocker: Published in commit `77d0d1c`; this record was finalized in the follow-up publication-evidence commit.
 Next action: Run repository validation, publish the batch if checks pass, then continue with KB-14 or KB-15 only when their dependencies can be satisfied.
 
 Task ID: KB-12
