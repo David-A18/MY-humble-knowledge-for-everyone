@@ -124,6 +124,7 @@ When adding or moving content, update every affected index immediately.
 | [scripts/validate-local-links.mjs](scripts/validate-local-links.mjs) | Repository-aware local Markdown link, fragment, directory-index, and root-reachability validator. | Local link rules, exclusions, or navigation invariants change. |
 | [scripts/test-local-link-validator.mjs](scripts/test-local-link-validator.mjs) | Fixture tests for valid links, broken targets, missing fragments, fenced examples, and the OKF portable-bundle exception. | Validator behavior changes. |
 | [scripts/validate-issue-templates.py](scripts/validate-issue-templates.py) | GitHub issue form YAML, repository-label manifest, and repository-convention validator. | Issue template schema, label manifest, or validation rules change. |
+| [scripts/test-issue-template-validator.py](scripts/test-issue-template-validator.py) | Fixture tests for issue-template and label-manifest validation behavior. | Issue-template validator behavior changes. |
 
 ### Git
 
