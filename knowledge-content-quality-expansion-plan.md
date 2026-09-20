@@ -272,7 +272,7 @@ For every checked section, confirm all of the following:
     syntax, permissions, supply-chain safety, secrets, and troubleshooting.
   - [ ] [Git tricks](knowledge/git/tricks/index.md) — accurate use cases,
     limitations, and safer alternatives where needed.
-  - [ ] [Git troubleshooting](knowledge/git/troubleshooting/index.md) — safe
+  - [x] [Git troubleshooting](knowledge/git/troubleshooting/index.md) — safe
     decision trees for undo, conflicts, recovery, and escalation.
 
 ### Terraform

@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-09-21
+
+- **Git troubleshooting quality pass**: Expanded the stable undo-and-recovery guide with official Git source records, safer decision paths, expected results, recovery limits, untracked cleanup guidance, reflog branch recovery, and disposable-repository validation evidence.
+
 ## 2026-09-20
 
 - **Quality refactor**: Added a deterministic concept catalog, retrieval-case data, command-path validation, stronger metadata checks, and CI coverage for each.

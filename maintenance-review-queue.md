@@ -8,11 +8,11 @@ Status: Draft
 Audience: Maintainers and contributors planning review work
 Page type: Maintenance queue
 Maintainer: Unassigned
-Last substantive review: 2026-09-20
+Last substantive review: 2026-09-21
 Applicable versions: Current repository state recorded in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 Validation evidence: Markdown lint and local link validation passed for the queue introduction and external-evidence checklist batches
 Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks remain optional evidence that needs suitable environments
-Next review: When KB-14 reader testing starts, or by 2026-10-19
+Next review: When KB-14 reader testing starts, another priority guide is updated, or by 2026-10-21
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
 
@@ -30,7 +30,7 @@ Use the [external evidence request checklist](external-evidence-request.md) to i
 
 | Guide | Owner | Next review | Reason | Current evidence | Open evidence |
 | --- | --- | --- | --- | --- | --- |
-| [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) | Unassigned | 2026-12-19 | Safety-critical recovery guidance | Source reviewed against official Git documentation and locally reproduced in a disposable repository | Broader conflict, sparse-checkout, and submodule scenarios |
+| [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) | Unassigned | 2026-12-21 | Safety-critical recovery guidance | Source reviewed against official Git status, diff, restore, revert, reset, reflog, and clean documentation; core examples locally reproduced in a disposable repository with Git 2.53.0 | Broader merge-conflict, sparse-checkout, submodule, corrupt-repository, detached-HEAD, and deleted-branch scenarios |
 | [Crossplane local AWS S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md) | Unassigned | After sandbox AWS execution or 2026-12-19 | Real cloud resources and credentials | Crossplane and AWS STS source review plus [validation template](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) | Live kind, Crossplane, provider, and AWS sandbox run |
 | [Crossplane providers and authentication](knowledge/kubernetes/crossplane/providers-and-authentication.md) | Unassigned | 2026-12-19 | Credential and provider behavior changes quickly | Crossplane v2.4 source review | Provider-controller authentication execution |
 | [Terraform core workflow](knowledge/terraform/commands/core-workflow.md) | Unassigned | 2026-12-19 | Core workflow used by learners | Terraform source review and local exercise execution | Remote backend, cloud provider, and policy behavior |

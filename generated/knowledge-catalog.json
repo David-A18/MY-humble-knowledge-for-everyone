@@ -1523,10 +1523,16 @@
       "maturity": "maintained",
       "path": "knowledge/git/troubleshooting/undo-and-recovery.md",
       "source_ids": [
+        "git-status",
+        "git-diff",
         "git-restore",
-        "git-revert"
+        "git-revert",
+        "git-reset",
+        "git-reflog",
+        "git-clean",
+        "pro-git-undoing-things"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": "2026-12-21",
       "status": "stable",
       "tags": [
         "git",
