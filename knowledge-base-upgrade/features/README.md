@@ -22,7 +22,7 @@ Next review: Before merging `develop` into `main`
 
 ## Intake rule
 
-A feature belongs here when it changes the knowledge-base system itself. Topic content still belongs in the topic hierarchy, such as [Kubernetes](../../kubernetes/README.md), [Terraform](../../terraform/README.md), or [AI tooling](../../ai/ai-tooling/README.md).
+A feature belongs here when it changes the knowledge-base system itself. Topic content still belongs in the topic hierarchy, such as [Kubernetes](../../knowledge/kubernetes/index.md), [Terraform](../../knowledge/terraform/index.md), or [AI tooling](../../knowledge/ai/ai-tooling/index.md).
 
 ## Related links
 

@@ -35,6 +35,6 @@ Avoid write tools until the repository has a documented approval, audit, and rol
 ## Related links
 
 - [Knowledge-base upgrade hub](../README.md)
-- [Model Context Protocol guide](../../ai/ai-tooling/model-context-protocol.md)
+- [Model Context Protocol guide](../../knowledge/ai/ai-tooling/model-context-protocol.md)
 - [MCP configuration templates](configs/README.md)
 - [Back to root index](../../README.md)

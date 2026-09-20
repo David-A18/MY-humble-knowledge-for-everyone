@@ -1,56 +1,29 @@
 # Contributing
 
-Thank you for improving `engineering-knowledge-base`. Contributions should make the repository easier to navigate, more accurate, or more useful during real operational work.
+Thank you for improving this knowledge base. Read [AGENTS.md](AGENTS.md),
+[context.md](context.md), and [instructions.md](instructions.md) before editing.
 
-## Contribution principles
+## Add or improve knowledge
 
-- Prefer practical guidance over broad theory.
-- Keep articles focused on one task, concept, command family, or troubleshooting scenario.
-- Use relative links for internal repository navigation.
-- Link to official documentation for product behavior, limits, and command references.
-- Do not include secrets, customer-specific data, private infrastructure details, or unverified claims.
+1. Start from [knowledge/index.md](knowledge/index.md) and find the nearest parent `index.md`.
+2. Choose one Diátaxis reader outcome and use the corresponding `type`.
+3. Add complete OKF profile frontmatter and focused, original Markdown content.
+4. Update the nearest parent index, related concepts, and `knowledge/log.md` for notable changes.
+5. Add provenance and review metadata only when you can substantiate it.
+6. Run the required validation suite in [AGENTS.md](AGENTS.md).
 
-## Article checklist
+## Content checklist
 
-- [ ] File and directory names use lowercase kebab-case.
-- [ ] The page has a clear purpose and audience.
-- [ ] The page type is clear: tutorial, how-to, reference, explanation, troubleshooting, or ADR.
-- [ ] Substantially reviewed operational pages include the review-information block from [instructions](instructions.md).
-- [ ] Long pages include a table of contents.
-- [ ] Commands use fenced code blocks with language identifiers.
-- [ ] Runnable examples state tools, versions, permissions, starting state, expected result, and cleanup.
-- [ ] Illustrative examples say they are illustrative before the code block.
-- [ ] Risky operations include warnings or rollback notes.
-- [ ] Internal links are relative and verified.
-- [ ] External links use descriptive text and point to authoritative sources.
-- [ ] The article links back to its parent index and the root `README.md`.
+- [ ] The concept is in `knowledge/` and has the required OKF profile fields.
+- [ ] The parent `index.md` lists the concept or child directory.
+- [ ] Internal links are relative and resolve locally.
+- [ ] Commands have prerequisites, explanation, and nearby safety notes.
+- [ ] Technical claims use official sources where appropriate.
+- [ ] The content is original or use is explicitly permitted and attributed.
+- [ ] The change is recorded in `knowledge/log.md` or [CHANGELOG.md](CHANGELOG.md) when notable.
 
-## Recommended article structure
+## License
 
-1. Purpose
-2. When to use it
-3. Prerequisites
-4. Procedure or explanation
-5. Examples
-6. Troubleshooting
-7. Related links
-
-Use the templates in [templates](templates/README.md) when starting new content.
-
-## Pull request expectations
-
-- Use `develop` for knowledge-base upgrade work that adds features, maintainer tools, reusable skills, MCP templates, or upgrade instructions before merging to `main`.
-- Keep changes scoped.
-- Update indexes when adding, moving, or removing pages.
-- Update [GLOSSARY.md](GLOSSARY.md) when adding important new terms.
-- Update [CHANGELOG.md](CHANGELOG.md) for meaningful structural or content additions.
-
-## Maintenance and reader feedback
-
-- Use the [knowledge-base upgrade hub](knowledge-base-upgrade/README.md) for feature, tool, skill, MCP-template, and upgrade-instruction work.
-- Use the [maintenance review queue](maintenance-review-queue.md) for priority article reviews, optional validation follow-ups, and reader-task testing.
-- Use the [external evidence request checklist](external-evidence-request.md) before collecting optional AWS sandbox or reader-test evidence.
-- Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run KB-14 sessions consistently.
-- Use the reader-test results issue form for KB-14 sessions and the Crossplane AWS S3 validation issue form for KB-04 sandbox runs. Keep issue-template labels declared in [.github/labels.yml](.github/labels.yml), then check live labels with `python3 scripts/check-github-labels.py --repo David-A18/MY-humble-knowledge-for-everyone` when `gh` is available.
-- When a reader reports confusion or a blocked step, record the page, environment or version when relevant, expected result, actual result, and the smallest confusing term or instruction.
-- Do not record unnecessary personal information about readers. Broad experience level is enough for knowledge-base improvement work.
+By contributing original material under `knowledge/`, you license it under
+[CC BY 4.0](LICENSES/README.md). Contributions to code, scripts, configuration,
+and automation are licensed under the [MIT License](LICENSE).

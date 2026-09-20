@@ -1,0 +1,33 @@
+name: OKF validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  okf-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.x"
+
+      - name: Install validation dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Test OKF validator
+        run: python scripts/test-okf-validator.py
+
+      - name: Validate knowledge bundle
+        run: python scripts/validate-okf.py knowledge

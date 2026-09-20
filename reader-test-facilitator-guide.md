@@ -14,14 +14,14 @@ Validation evidence: Guide structure reviewed against KB-14 acceptance criteria;
 Known limitations: This guide prepares reader testing but does not replace actual reader participation
 Next review: After the first completed reader-test session
 
-Use this guide with [Start here](start-here.md), the [maintenance review queue](maintenance-review-queue.md), and the [reader test results template](reader-test-results-template.md). The goal is to learn where readers get lost, which terms confuse them, and which tasks cannot be completed from the current navigation.
+Use this guide with [Start here](knowledge/start-here.md), the [maintenance review queue](maintenance-review-queue.md), and the [reader test results template](reader-test-results-template.md). The goal is to learn where readers get lost, which terms confuse them, and which tasks cannot be completed from the current navigation.
 
 ## Facilitator rules
 
 - Recruit 3-5 willing readers through an authorized channel.
 - Record broad experience level only: beginner, early practitioner, experienced engineer, or another general category.
 - Do not record names, email addresses, employers, private infrastructure details, screenshots with secrets, access tokens, or credential-bearing terminal output.
-- Ask readers to start from [Start here](start-here.md) unless a task says otherwise.
+- Ask readers to start from [Start here](knowledge/start-here.md) unless a task says otherwise.
 - Let the reader search and navigate naturally before giving hints.
 - Record the first page they used for an answer, not the page you expected them to use.
 - Treat confusion as product evidence, not as reader failure.
@@ -52,15 +52,15 @@ The expected route is not a grading key. If a reader reaches a different useful 
 
 | Task | Reader prompt | Expected route or evidence | Completion signal |
 | --- | --- | --- | --- |
-| 1 | Find how to undo an unstaged Git edit without rewriting shared history. | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) or [Git issue-solving commands](git/commands/solve-issues.md) | Reader identifies `git restore <file>` for an unstaged working-tree edit and avoids history rewrite commands. |
-| 2 | Find the first local Kubernetes learning path and identify its prerequisites. | [Start here](start-here.md) to [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Reader names the local Kubernetes path and its required tools. |
-| 3 | Diagnose a Kubernetes workload restart using the documented route. | [Kubernetes troubleshooting](kubernetes/troubleshooting/README.md), [daily kubectl usage](kubernetes/commands/daily-usage.md), or [Kubernetes workflows](kubernetes/commands/workflows.md) | Reader finds inspection commands such as `kubectl get pods`, `kubectl describe pod`, logs, events, or rollout status. |
-| 4 | Distinguish Crossplane provider, managed resource, XRD, Composition, and XR. | [Crossplane component model](kubernetes/crossplane/component-model.md) or [XRDs, Compositions, and XR calls](kubernetes/crossplane/xrd-composition-and-xr-calls.md) | Reader can describe each component in their own words. |
-| 5 | Find how to validate a Velero restore before trusting it. | [Velero backup and restore workflows](migrations/velero/backup-restore-workflows.md) | Reader finds restore inspection, logs, describe commands, workload checks, or restore drill guidance. |
-| 6 | Choose whether Terraform or Crossplane is the better starting point for a reusable platform API. | [Terraform vs Crossplane](kubernetes/crossplane/terraform-vs-crossplane.md) | Reader identifies the decision criteria and chooses a direction with a reason. |
-| 7 | Find how to update kubeconfig and validate permissions before deploying to EKS. | [Deploying to EKS](cross-topic-guides/deploying-to-eks.md) or [EKS operations](cross-topic-guides/eks-operations.md) | Reader finds kubeconfig update and authorization or access checks before deployment. |
-| 8 | Explain when Kafka at-least-once processing can cause duplicate side effects. | [Kafka delivery guarantees and failure handling](databases/kafka/delivery-guarantees-and-failure-handling.md) | Reader explains that processing can succeed while offset commit fails, causing replay and duplicate side effects unless handlers are idempotent. |
-| 9 | Identify the next step after finishing the local beginner route. | [Start here](start-here.md) or [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Reader finds a next topic such as Terraform, Kubernetes troubleshooting, Crossplane, EKS, or Velero. |
+| 1 | Find how to undo an unstaged Git edit without rewriting shared history. | [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) or [Git issue-solving commands](knowledge/git/commands/solve-issues.md) | Reader identifies `git restore <file>` for an unstaged working-tree edit and avoids history rewrite commands. |
+| 2 | Find the first local Kubernetes learning path and identify its prerequisites. | [Start here](knowledge/start-here.md) to [Local deployment learning path](knowledge/cross-topic-guides/local-deployment-learning-path.md) | Reader names the local Kubernetes path and its required tools. |
+| 3 | Diagnose a Kubernetes workload restart using the documented route. | [Kubernetes troubleshooting](knowledge/kubernetes/troubleshooting/index.md), [daily kubectl usage](knowledge/kubernetes/commands/daily-usage.md), or [Kubernetes workflows](knowledge/kubernetes/commands/workflows.md) | Reader finds inspection commands such as `kubectl get pods`, `kubectl describe pod`, logs, events, or rollout status. |
+| 4 | Distinguish Crossplane provider, managed resource, XRD, Composition, and XR. | [Crossplane component model](knowledge/kubernetes/crossplane/component-model.md) or [XRDs, Compositions, and XR calls](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md) | Reader can describe each component in their own words. |
+| 5 | Find how to validate a Velero restore before trusting it. | [Velero backup and restore workflows](knowledge/migrations/velero/backup-restore-workflows.md) | Reader finds restore inspection, logs, describe commands, workload checks, or restore drill guidance. |
+| 6 | Choose whether Terraform or Crossplane is the better starting point for a reusable platform API. | [Terraform vs Crossplane](knowledge/kubernetes/crossplane/terraform-vs-crossplane.md) | Reader identifies the decision criteria and chooses a direction with a reason. |
+| 7 | Find how to update kubeconfig and validate permissions before deploying to EKS. | [Deploying to EKS](knowledge/cross-topic-guides/deploying-to-eks.md) or [EKS operations](knowledge/cross-topic-guides/eks-operations.md) | Reader finds kubeconfig update and authorization or access checks before deployment. |
+| 8 | Explain when Kafka at-least-once processing can cause duplicate side effects. | [Kafka delivery guarantees and failure handling](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md) | Reader explains that processing can succeed while offset commit fails, causing replay and duplicate side effects unless handlers are idempotent. |
+| 9 | Identify the next step after finishing the local beginner route. | [Start here](knowledge/start-here.md) or [Local deployment learning path](knowledge/cross-topic-guides/local-deployment-learning-path.md) | Reader finds a next topic such as Terraform, Kubernetes troubleshooting, Crossplane, EKS, or Velero. |
 | 10 | Report one confusing term, missing prerequisite, or blocked step. | Any page used during the session | Reader provides a specific term, instruction, prerequisite, or navigation step to improve. |
 
 ## Scoring rules

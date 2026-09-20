@@ -22,7 +22,7 @@ Use the [maintenance review queue](maintenance-review-queue.md) to schedule prio
 
 - Add end-to-end deployment walkthroughs that combine GitHub Actions, Terraform, AWS, and Kubernetes.
 - Add architecture decision examples for common cloud trade-offs.
-- Add diagrams under [assets/diagrams](assets/diagrams/README.md).
+- Add diagrams under [assets/diagrams](knowledge/assets/diagrams/index.md).
 - Add command output examples and failure-mode screenshots where they improve comprehension.
 
 ## Long term

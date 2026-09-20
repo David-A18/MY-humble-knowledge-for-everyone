@@ -111,7 +111,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F3. **Owner:** Unassigned.
 
-**Edit:** [OKF example bundle](ai/ai-tooling/knowledge-bases/examples/okf-v0.2/README.md), [XRD guide](kubernetes/crossplane/xrd-composition-and-xr-calls.md), and lint configuration only if necessary.
+**Edit:** [OKF example bundle](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md), [XRD guide](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md), and lint configuration only if necessary.
 
 **Instructions:**
 
@@ -126,7 +126,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F1. **Owner:** Unassigned.
 
-**Edit:** [Undo and recovery](git/troubleshooting/undo-and-recovery.md) and any related Git pages containing the same explanation.
+**Edit:** [Undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) and any related Git pages containing the same explanation.
 
 **Instructions:**
 
@@ -141,7 +141,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F2 and F6. **Owner:** Unassigned.
 
-**Edit:** [Crossplane S3 lab](kubernetes/crossplane/local-aws-s3-lab.md), [provider authentication](kubernetes/crossplane/providers-and-authentication.md), and relevant snippets found by search.
+**Edit:** [Crossplane S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md), [provider authentication](knowledge/kubernetes/crossplane/providers-and-authentication.md), and relevant snippets found by search.
 
 **Instructions:**
 
@@ -157,7 +157,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F4. **Owner:** Unassigned.
 
-**Edit:** [Kafka delivery guarantees](databases/kafka/delivery-guarantees-and-failure-handling.md).
+**Edit:** [Kafka delivery guarantees](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md).
 
 **Instructions:**
 
@@ -177,7 +177,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F4, F6, F9. **Owner:** Unassigned.
 
-**Edit:** [Templates](templates/README.md), [writing instructions](instructions.md), and [contributor checklist](CONTRIBUTING.md).
+**Edit:** [Templates](knowledge/templates/index.md), [writing instructions](instructions.md), and [contributor checklist](CONTRIBUTING.md).
 
 **Instructions:**
 
@@ -193,7 +193,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F7 and part of F10. **Owner:** Unassigned.
 
-**Edit:** [Root index](README.md), [cross-topic index](cross-topic-guides/README.md), affected area indexes, [source router](sources/AGENTS.md), and [documentation-error form](.github/ISSUE_TEMPLATE/documentation-error.yml).
+**Edit:** [Root index](README.md), [cross-topic index](knowledge/cross-topic-guides/index.md), affected area indexes, [source router](sources/AGENTS.md), and [documentation-error form](.github/ISSUE_TEMPLATE/documentation-error.yml).
 
 **Instructions:**
 
@@ -208,7 +208,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F8. **Owner:** Unassigned.
 
-**Edit:** Existing workflows under `.github/workflows/`, [content CI/CD process](git/github-actions/content-ci-cd-process.md), and a small maintained validation entry point if needed.
+**Edit:** Existing workflows under `.github/workflows/`, [content CI/CD process](knowledge/git/github-actions/content-ci-cd-process.md), and a small maintained validation entry point if needed.
 
 **Instructions:**
 
@@ -230,7 +230,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F5. **Owner:** Unassigned.
 
-**Edit:** [Kubernetes fundamentals](kubernetes/fundamentals/README.md), [kind guidance](kubernetes/applications-and-tools/kind-custom-clusters.md), [troubleshooting](kubernetes/troubleshooting/common-solutions.md), and relevant Git indexes. Proposed new paths: `start-here.md` and `cross-topic-guides/local-deployment-learning-path.md`; create and link them only during this package.
+**Edit:** [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/index.md), [kind guidance](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md), [troubleshooting](knowledge/kubernetes/troubleshooting/common-solutions.md), and relevant Git indexes. Proposed new paths: `start-here.md` and `cross-topic-guides/local-deployment-learning-path.md`; create and link them only during this package.
 
 **Instructions:**
 
@@ -247,7 +247,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F4, F5, F8. **Owner:** Unassigned.
 
-**Edit:** [Terraform examples](terraform/examples/README.md), [core workflow](terraform/commands/core-workflow.md), and [state management](terraform/fundamentals/state-management.md). Put actual exercise files in a focused subdirectory under `terraform/examples/` with its own `README.md`.
+**Edit:** [Terraform examples](knowledge/terraform/examples/index.md), [core workflow](knowledge/terraform/commands/core-workflow.md), and [state management](knowledge/terraform/fundamentals/state-management.md). Put actual exercise files in a focused subdirectory under `terraform/examples/` with its own `README.md`.
 
 **Instructions:**
 
@@ -265,16 +265,16 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 Use this initial cohort; replace a page only with a documented reason based on reader impact:
 
-1. [Git undo and recovery](git/troubleshooting/undo-and-recovery.md).
-2. [Crossplane local AWS S3 lab](kubernetes/crossplane/local-aws-s3-lab.md).
-3. [Crossplane providers and authentication](kubernetes/crossplane/providers-and-authentication.md).
-4. [Terraform core workflow](terraform/commands/core-workflow.md).
-5. [Terraform state management](terraform/fundamentals/state-management.md).
-6. [Kafka delivery guarantees and failure handling](databases/kafka/delivery-guarantees-and-failure-handling.md).
-7. [Velero AWS S3 and EBS installation](migrations/velero/aws-s3-ebs-installation.md).
-8. [Velero backup and restore workflows](migrations/velero/backup-restore-workflows.md).
-9. [Velero migration and disaster recovery](migrations/velero/cluster-migration-and-disaster-recovery.md).
-10. [Deploying to EKS](cross-topic-guides/deploying-to-eks.md).
+1. [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md).
+2. [Crossplane local AWS S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md).
+3. [Crossplane providers and authentication](knowledge/kubernetes/crossplane/providers-and-authentication.md).
+4. [Terraform core workflow](knowledge/terraform/commands/core-workflow.md).
+5. [Terraform state management](knowledge/terraform/fundamentals/state-management.md).
+6. [Kafka delivery guarantees and failure handling](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md).
+7. [Velero AWS S3 and EBS installation](knowledge/migrations/velero/aws-s3-ebs-installation.md).
+8. [Velero backup and restore workflows](knowledge/migrations/velero/backup-restore-workflows.md).
+9. [Velero migration and disaster recovery](knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md).
+10. [Deploying to EKS](knowledge/cross-topic-guides/deploying-to-eks.md).
 
 **Instructions:** Review each page's consequential claims against current official sources; record applicable versions, last substantive review, actual reviewer, and validation scope. Reuse evidence from completed corrective tasks when it still applies. Check prerequisites, warning placement, success checks, failure handling, and cleanup. Record unavailable integration tests explicitly.
 
@@ -284,7 +284,7 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Finding:** F9. **Owner:** Unassigned.
 
-**Start with:** [Git catalog](git/commands/complete-command-catalog.md), [K9s](kubernetes/applications-and-tools/k9s.md), [Crossplane component model](kubernetes/crossplane/component-model.md), and other long pages listed in the review.
+**Start with:** [Git catalog](knowledge/git/commands/complete-command-catalog.md), [K9s](knowledge/kubernetes/applications-and-tools/k9s.md), [Crossplane component model](knowledge/kubernetes/crossplane/component-model.md), and other long pages listed in the review.
 
 **Instructions:** Add concise contents navigation where readers jump between tasks. Use descriptive headings and narrow tables. Explain acronyms at first meaningful use. Check rendered tables, code, heading navigation, and diagrams on wide and narrow screens. Describe diagram meaning in surrounding text. Split only when a page serves genuinely separate reader goals; update incoming links if a split changes paths or anchors.
 
@@ -332,7 +332,7 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Finding:** F13. **Owner:** Unassigned.
 
-**Deliverable:** A decision record using the [ADR template](templates/architecture-decision-record-template.md), linked from the [decision index](decision-records/README.md).
+**Deliverable:** A decision record using the [ADR template](knowledge/templates/architecture-decision-record-template.md), linked from the [decision index](knowledge/decision-records/index.md).
 
 **Instructions:** Compare staying with repository navigation against a small static reading site using KB-14's findability evidence. Assess maintenance effort, search, mobile readability, accessibility, link compatibility, archives, and single-source publishing. If a prototype is useful, keep it bounded and evaluate it with the same tasks. Verify current tool capabilities before choosing a generator or host.
 
@@ -442,7 +442,7 @@ Also run the repository-aware link check and the technical checks relevant to th
 - [ ] The staged diff includes only intended content.
 - [ ] Publication and remaining limitations are recorded in the handoff.
 
-Follow [instructions.md](instructions.md) and the [content CI/CD process](git/github-actions/content-ci-cd-process.md) for committing and pushing validated work to the canonical branch. Use explicit file staging or hunk staging when other changes exist. Never force-push or discard unrelated changes to complete a documentation task.
+Follow [instructions.md](instructions.md) and the [content CI/CD process](knowledge/git/github-actions/content-ci-cd-process.md) for committing and pushing validated work to the canonical branch. Use explicit file staging or hunk staging when other changes exist. Never force-push or discard unrelated changes to complete a documentation task.
 
 If repository-wide checks fail, record which failures predate the task and validate the changed files separately to assess the change. A clean changed-file check does not waive the existing full-validation publication rule. Stop publication at that blocker and leave a precise handoff; do not silently weaken checks or broaden the task to unrelated fixes.
 
@@ -738,7 +738,7 @@ What it does: scopes implementation to one verifiable package while preserving e
 - [Context map](context.md)
 - [Writing instructions](instructions.md)
 - [Contributing](CONTRIBUTING.md)
-- [Templates](templates/README.md)
-- [Knowledge-base provenance and freshness](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md)
-- [Knowledge-base evaluation](ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
+- [Templates](knowledge/templates/index.md)
+- [Knowledge-base provenance and freshness](knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md)
+- [Knowledge-base evaluation](knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
 - [Back to root index](README.md)

@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a canonical `knowledge/` Open Knowledge Format v0.2 bundle with structured concept metadata, reserved indexes, migration history, strict validation, and CI coverage.
+- Added a Diátaxis-oriented authoring profile, CC BY 4.0 licensing for curated knowledge and visual assets, and a migration guide for previous content paths.
 - Added a `develop`-branch knowledge-base upgrade hub with feature, tool, skill, MCP server, and instruction indexes plus public-safe templates.
 - Extended documentation validation workflow push triggers to cover the new `develop` branch.
 - Added a live GitHub label checker for maintainers to compare `.github/labels.yml` with repository labels.

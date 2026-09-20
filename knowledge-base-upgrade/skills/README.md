@@ -30,5 +30,5 @@ These files are repository-reviewed skill drafts. To use one in a local Codex sk
 
 - [Knowledge-base upgrade hub](../README.md)
 - [Upgrade workflow](../instructions/upgrade-workflow.md)
-- [AI tooling](../../ai/ai-tooling/README.md)
+- [AI tooling](../../knowledge/ai/ai-tooling/index.md)
 - [Back to root index](../../README.md)

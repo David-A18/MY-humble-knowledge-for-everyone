@@ -109,19 +109,19 @@ The navigation scan found nearly complete reachability from the root. The one cu
 
 ### Several articles teach operational judgment
 
-The [Velero migration guide](migrations/velero/cluster-migration-and-disaster-recovery.md) distinguishes Kubernetes objects, provider snapshots, portable file data, application validation, and rollback boundaries. That helps readers avoid equating a successful restore command with a successful migration.
+The [Velero migration guide](knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md) distinguishes Kubernetes objects, provider snapshots, portable file data, application validation, and rollback boundaries. That helps readers avoid equating a successful restore command with a successful migration.
 
-The [Kafka delivery guide](databases/kafka/delivery-guarantees-and-failure-handling.md) discusses duplicate processing, idempotency, external side effects, and outbox patterns. Its conceptual scope is useful even though one code example needs clarification, described below.
+The [Kafka delivery guide](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md) discusses duplicate processing, idempotency, external side effects, and outbox patterns. Its conceptual scope is useful even though one code example needs clarification, described below.
 
-The [Crossplane S3 lab](kubernetes/crossplane/local-aws-s3-lab.md) includes a sandbox requirement, identity checks, reconciliation observation, and external-resource cleanup. Those are good elements to retain when correcting its credential example.
+The [Crossplane S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md) includes a sandbox requirement, identity checks, reconciliation observation, and external-resource cleanup. Those are good elements to retain when correcting its credential example.
 
 ### There is already a maintainable contribution foundation
 
-The [templates](templates/README.md), [contributor guide](CONTRIBUTING.md), [issue forms](.github/ISSUE_TEMPLATE/documentation-error.yml), [CODEOWNERS](.github/CODEOWNERS), and [MIT license](LICENSE) reduce the work needed to welcome contributors. The [source ingestion instructions](sources/AGENTS.md) explicitly require classification, verification, and curation rather than blind copying.
+The [templates](knowledge/templates/index.md), [contributor guide](CONTRIBUTING.md), [issue forms](.github/ISSUE_TEMPLATE/documentation-error.yml), [CODEOWNERS](.github/CODEOWNERS), and [MIT license](LICENSE) reduce the work needed to welcome contributors. The [source ingestion instructions](sources/AGENTS.md) explicitly require classification, verification, and curation rather than blind copying.
 
 ### The repository already explains many of its own next steps
 
-The [provenance and freshness guide](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) and [evaluation guide](ai/ai-tooling/knowledge-bases/evaluation-and-quality.md) describe source authority, verification, lifecycle, and measurable retrieval quality. A lightweight application of those ideas to the main corpus would be more useful than introducing another elaborate knowledge-management architecture.
+The [provenance and freshness guide](knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) and [evaluation guide](knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md) describe source authority, verification, lifecycle, and measurable retrieval quality. A lightweight application of those ideas to the main corpus would be more useful than introducing another elaborate knowledge-management architecture.
 
 ## Coverage by knowledge area
 
@@ -129,23 +129,23 @@ Counts include indexes and examples. The assessment concerns documentation cover
 
 | Area | Markdown files | Assessment and next useful addition |
 | --- | --- | --- |
-| [Git](git/README.md) | 22 | Broad command and recovery coverage. Correct restore semantics; add a beginner exercise covering working tree, index, commit, and safe undo. |
-| [Terraform](terraform/README.md) | 10 | Seven pages are marked outlines; only two non-index articles exist. Add one complete configuration with plan, apply, validation, state explanation, and cleanup. |
-| [Kubernetes](kubernetes/README.md) | 53 | Strong advanced tooling and command coverage. Complete the fundamentals route before expanding specialist tooling further. |
-| [Cloud](cloud/README.md) | 38 | Useful AWS compute, edge, and architecture material. Azure remains a starting outline; Google Cloud has Apigee coverage. Show those differences clearly. |
-| [Databases](databases/README.md) | 14 | Useful Kafka and MongoDB explanations. Add a reproducible local exercise and stronger operational diagnostic examples. |
-| [Migrations](migrations/README.md) | 11 | Velero provides a comparatively developed reading sequence. Add a tested compatibility matrix and a small recovery rehearsal with evidence. |
-| [Security](security/README.md) | 5 | Focused identity-federation coverage. Add a beginner identity/permissions path and connect it to practical AWS and Kubernetes exercises. |
-| [FinOps](finops/README.md) | 1 | Top-level outline; some AWS tagging guidance exists elsewhere. Start with one cost-allocation or cleanup exercise linked to existing cloud material. |
-| [DevOps](devops/README.md) | 4 | SonarQube and GitHub integration provide a concrete starting point. Connect them to a complete delivery exercise. |
-| [Programming languages](programming-languages/README.md) | 2 | Bootstrap/bootstrapping is currently the only focused article. Clarify that this is selective coverage, not a general language curriculum. |
-| [MLOps](mlops/README.md) | 1 | Outline. Keep visibly planned until there is a bounded, useful learning outcome. |
-| [AI](ai/README.md) | 30 | Substantial tooling and knowledge-base guidance, including a structured example bundle. Distinguish example metadata from real repository verification. |
-| [AI agents](ai-agents/README.md) | 1 | Outline with related tooling links. Clarify its boundary with AI tooling before creating overlapping articles. |
-| [LLM](llm/README.md) | 1 | Outline with related links. Define a distinct audience and first practical outcome. |
-| [ML](ml/README.md) | 1 | Outline. Reserve expansion for demonstrated reader demand. |
-| [Solutions architect](solutions-architect/README.md) | 2 | The PoC guide is useful. Add an applied decision exercise with constraints and evidence. |
-| [Cross-topic guides](cross-topic-guides/README.md) | 16 | Valuable integration routes, but five are marked outlines, including end-to-end deployment and observability. Complete one full journey first. |
+| [Git](knowledge/git/index.md) | 22 | Broad command and recovery coverage. Correct restore semantics; add a beginner exercise covering working tree, index, commit, and safe undo. |
+| [Terraform](knowledge/terraform/index.md) | 10 | Seven pages are marked outlines; only two non-index articles exist. Add one complete configuration with plan, apply, validation, state explanation, and cleanup. |
+| [Kubernetes](knowledge/kubernetes/index.md) | 53 | Strong advanced tooling and command coverage. Complete the fundamentals route before expanding specialist tooling further. |
+| [Cloud](knowledge/cloud/index.md) | 38 | Useful AWS compute, edge, and architecture material. Azure remains a starting outline; Google Cloud has Apigee coverage. Show those differences clearly. |
+| [Databases](knowledge/databases/index.md) | 14 | Useful Kafka and MongoDB explanations. Add a reproducible local exercise and stronger operational diagnostic examples. |
+| [Migrations](knowledge/migrations/index.md) | 11 | Velero provides a comparatively developed reading sequence. Add a tested compatibility matrix and a small recovery rehearsal with evidence. |
+| [Security](knowledge/security/index.md) | 5 | Focused identity-federation coverage. Add a beginner identity/permissions path and connect it to practical AWS and Kubernetes exercises. |
+| [FinOps](knowledge/finops/index.md) | 1 | Top-level outline; some AWS tagging guidance exists elsewhere. Start with one cost-allocation or cleanup exercise linked to existing cloud material. |
+| [DevOps](knowledge/devops/index.md) | 4 | SonarQube and GitHub integration provide a concrete starting point. Connect them to a complete delivery exercise. |
+| [Programming languages](knowledge/programming-languages/index.md) | 2 | Bootstrap/bootstrapping is currently the only focused article. Clarify that this is selective coverage, not a general language curriculum. |
+| [MLOps](knowledge/mlops/index.md) | 1 | Outline. Keep visibly planned until there is a bounded, useful learning outcome. |
+| [AI](knowledge/ai/index.md) | 30 | Substantial tooling and knowledge-base guidance, including a structured example bundle. Distinguish example metadata from real repository verification. |
+| [AI agents](knowledge/ai-agents/index.md) | 1 | Outline with related tooling links. Clarify its boundary with AI tooling before creating overlapping articles. |
+| [LLM](knowledge/llm/index.md) | 1 | Outline with related links. Define a distinct audience and first practical outcome. |
+| [ML](knowledge/ml/index.md) | 1 | Outline. Reserve expansion for demonstrated reader demand. |
+| [Solutions architect](knowledge/solutions-architect/index.md) | 2 | The PoC guide is useful. Add an applied decision exercise with constraints and evidence. |
+| [Cross-topic guides](knowledge/cross-topic-guides/index.md) | 16 | Valuable integration routes, but five are marked outlines, including end-to-end deployment and observability. Complete one full journey first. |
 
 The concentration in AWS and Kubernetes is a reasonable strength for a small project. The improvement is to describe that strength honestly and help readers follow it, rather than trying to make all 17 areas equally deep immediately.
 
@@ -155,7 +155,7 @@ Priority definitions: **P1** means correct soon because it affects reliability o
 
 ### F1 — P1: Correct the Git restore explanation
 
-**Evidence:** [Undo and recovery](git/troubleshooting/undo-and-recovery.md), under “Discard one file's local edits,” says that `git restore path/to/file` replaces the file with the committed version.
+**Evidence:** [Undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md), under “Discard one file's local edits,” says that `git restore path/to/file` replaces the file with the committed version.
 
 **Finding:** By default, this command restores the working tree from the index. The committed version and index can differ. The [official Git reference](https://git-scm.com/docs/git-restore) confirms the default source. A disposable local repository reproduced the difference: `HEAD` contained `committed`, the index contained `staged`, and running restore changed the working file to `staged`.
 
@@ -167,7 +167,7 @@ Priority definitions: **P1** means correct soon because it affects reliability o
 
 ### F2 — P1: Complete the temporary AWS credentials example
 
-**Evidence:** The [Crossplane S3 lab](kubernetes/crossplane/local-aws-s3-lab.md), under “Create temporary AWS credentials,” includes an access key and secret key but omits a session token.
+**Evidence:** The [Crossplane S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md), under “Create temporary AWS credentials,” includes an access key and secret key but omits a session token.
 
 **Finding:** For AWS STS temporary credentials, the session token is part of the credential set. The [AWS shared credentials documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) shows `aws_session_token` alongside the key and secret. A long-lived IAM access key that is later deleted is a different credential model.
 
@@ -187,7 +187,7 @@ Priority definitions: **P1** means correct soon because it affects reliability o
 | MD034 | 4 | Bare source URLs in the OKF example's source-reference documents. |
 | MD056 | 1 | An unescaped pipe inside an inline command in the Crossplane XRD guide's troubleshooting table. |
 
-The table error is in [XRDs, Compositions, and XR calls](kubernetes/crossplane/xrd-composition-and-xr-calls.md), baseline line 498. The other failures are under the [OKF example bundle](ai/ai-tooling/knowledge-bases/examples/okf-v0.2/README.md).
+The table error is in [XRDs, Compositions, and XR calls](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md), baseline line 498. The other failures are under the [OKF example bundle](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md).
 
 **Recommendation:** Resolve the title/frontmatter convention deliberately, preserve required example metadata, format source links, and escape the table pipe. Keep the scope of any lint exception narrow. The MD025 results do not mean those files necessarily contain two visible H1 lines.
 
@@ -195,7 +195,7 @@ The table error is in [XRDs, Compositions, and XR calls](kubernetes/crossplane/x
 
 ### F4 — P1: Make runnable examples distinguishable from conceptual sketches
 
-**Evidence:** The [Kafka delivery guide](databases/kafka/delivery-guarantees-and-failure-handling.md) contains a Python “Manual commit consumer pattern” with `consumer.poll(timeout_ms=1000)` iterated as records, but it names no client library or setup.
+**Evidence:** The [Kafka delivery guide](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md) contains a Python “Manual commit consumer pattern” with `consumer.poll(timeout_ms=1000)` iterated as records, but it names no client library or setup.
 
 **Finding:** For `kafka-python`, the matching `poll` API returns a mapping from topic-partitions to lists of records, as documented by the [project's KafkaConsumer reference](https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html). Iterating that mapping directly yields keys, not the records used by the snippet. Because the article does not identify a library, this is an ambiguous example contract rather than proof of a failure in every possible client implementation.
 
@@ -205,7 +205,7 @@ The table error is in [XRDs, Compositions, and XR calls](kubernetes/crossplane/x
 
 ### F5 — P1: Complete a beginner path through existing content
 
-**Evidence:** [Kubernetes fundamentals](kubernetes/fundamentals/README.md), [Terraform examples](terraform/examples/README.md), and [end-to-end deployment](cross-topic-guides/end-to-end-deployment.md) are outlines, while advanced Crossplane and platform material is extensive. The root primarily asks readers to choose a technology.
+**Evidence:** [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/index.md), [Terraform examples](knowledge/terraform/examples/index.md), and [end-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) are outlines, while advanced Crossplane and platform material is extensive. The root primarily asks readers to choose a technology.
 
 **Reader impact:** The reader who needs the most guidance must already know the vocabulary and prerequisites to navigate effectively.
 
@@ -217,7 +217,7 @@ The table error is in [XRDs, Compositions, and XR calls](kubernetes/crossplane/x
 
 **Evidence:** The templates do not require a review date, tested environment, or validation method. Frontmatter appears in 16 knowledge-area files, all within the OKF example bundle. Outside that bundle, structured review metadata is not consistently present. Version details do appear in prose and commands, so this is not a claim that versioning is entirely absent.
 
-The [Helm guide](kubernetes/applications-and-tools/helm.md) recommends reviewed chart versions, while the [Crossplane S3 lab](kubernetes/crossplane/local-aws-s3-lab.md) installs the core chart without a version and pins a provider separately. Readers cannot identify a single documented, tested combination from that lab.
+The [Helm guide](knowledge/kubernetes/applications-and-tools/helm.md) recommends reviewed chart versions, while the [Crossplane S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md) installs the core chart without a version and pins a provider separately. Readers cannot identify a single documented, tested combination from that lab.
 
 **Recommendation:** Start with the most consequential operational pages. Record audience, content status, last substantive review, source verification versus execution testing, and the relevant tool/provider versions. Pin versions in reproducible labs; explain version-dependent choices in general references.
 
@@ -225,7 +225,7 @@ The [Helm guide](kubernetes/applications-and-tools/helm.md) recommends reviewed 
 
 ### F7 — P2: Expose content maturity before readers open a page
 
-**Evidence:** The [root area table](README.md) presents established material and early outlines together. Some area indexes retain an outline marker even after acquiring substantive child articles. The [cross-topic index](cross-topic-guides/README.md) does not identify its five outline guides in the listing.
+**Evidence:** The [root area table](README.md) presents established material and early outlines together. Some area indexes retain an outline marker even after acquiring substantive child articles. The [cross-topic index](knowledge/cross-topic-guides/index.md) does not identify its five outline guides in the listing.
 
 **Recommendation:** Add concise maturity labels to entry points, such as “available guides,” “partial coverage,” and “planned.” Distinguish an index's scope from each child article's readiness. Review labels when content changes.
 
@@ -233,7 +233,7 @@ The [Helm guide](kubernetes/applications-and-tools/helm.md) recommends reviewed 
 
 ### F8 — P2: Make checks match the promises in the documentation
 
-**Evidence:** The [Terraform format workflow](.github/workflows/terraform-format.yml) runs `terraform fmt -recursive -check`, but the baseline contains no `.tf` files. It does not validate Terraform embedded in Markdown. The three workflows lack `workflow_dispatch`, although the [content CI/CD process](git/github-actions/content-ci-cd-process.md) lists it as an expected trigger. The workflows also use action tags and have no explicit `permissions` block.
+**Evidence:** The [Terraform format workflow](.github/workflows/terraform-format.yml) runs `terraform fmt -recursive -check`, but the baseline contains no `.tf` files. It does not validate Terraform embedded in Markdown. The three workflows lack `workflow_dispatch`, although the [content CI/CD process](knowledge/git/github-actions/content-ci-cd-process.md) lists it as an expected trigger. The workflows also use action tags and have no explicit `permissions` block.
 
 The [link workflow](.github/workflows/link-check.yml) uses `fail: false` on the action but then explicitly exits on a nonzero result. It should not be described as silently ignoring failures.
 
@@ -247,9 +247,9 @@ Separate local link failures from temporary external-site failures so maintainer
 
 **Evidence:** [CONTRIBUTING.md](CONTRIBUTING.md) asks for tables of contents on long pages. Using 1,500 whitespace-delimited words as a review heuristic, 23 knowledge-area pages are long; 16 of those have no internal heading-fragment navigation links. This is a discoverability signal, not a mandatory length limit. GitHub also provides its own heading outline.
 
-Examples worth reviewing include the [Git command catalog](git/commands/complete-command-catalog.md), [K9s guide](kubernetes/applications-and-tools/k9s.md), and [Crossplane component model](kubernetes/crossplane/component-model.md).
+Examples worth reviewing include the [Git command catalog](knowledge/git/commands/complete-command-catalog.md), [K9s guide](knowledge/kubernetes/applications-and-tools/k9s.md), and [Crossplane component model](knowledge/kubernetes/crossplane/component-model.md).
 
-The [command template](templates/command-reference-template.md) tells authors to explain risk before a command but places its warning after the example. It also omits the `What it does:` pattern requested by [instructions.md](instructions.md). The Terraform apply warning similarly follows the command.
+The [command template](knowledge/templates/command-reference-template.md) tells authors to explain risk before a command but places its warning after the example. It also omits the `What it does:` pattern requested by [instructions.md](instructions.md). The Terraform apply warning similarly follows the command.
 
 **Recommendation:** Fix the templates first. Add a compact contents list where readers need to jump among independent tasks. Put safety context before relevant mutations. Keep diagrams accompanied by prose; preserve useful text flows already present. Check wide tables on narrow screens before expanding them.
 
@@ -271,7 +271,7 @@ Concrete drift is visible: [sources/AGENTS.md](sources/AGENTS.md) omits Terrafor
 
 **Recommendation:** Add a small ingestion register with original source path, curated destination links, ingestion date, and remaining uncertainties. When known, record original author/source and reuse permission context; do not assume repository licensing establishes rights for every imported note. Exclude raw archives from any future default public search or retrieval index, while preserving deliberate access to them.
 
-The OKF bundle also needs an explicit navigation exception: its [README](ai/ai-tooling/knowledge-bases/examples/okf-v0.2/README.md) delegates to `index.md`. Four example files omit direct parent-README links, and ten omit direct repository-root links. They are reachable through the bundle. Forcing repository navigation into a portable example may be less appropriate than documenting the exception.
+The OKF bundle also needs an explicit navigation exception: its [README](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md) delegates to `index.md`. Four example files omit direct parent-README links, and ten omit direct repository-root links. They are reachable through the bundle. Forcing repository navigation into a portable example may be less appropriate than documenting the exception.
 
 **Acceptance:** A maintainer can trace an ingested document to its curated destinations, and a reader or retrieval tool can distinguish archive, example, and authoritative guidance.
 
@@ -305,8 +305,8 @@ Keep the existing topic hierarchy. Add a short goal-based entry layer rather tha
 
 1. Teach working tree, index, commits, branches, and recovery through one disposable Git repository.
 2. Explain Pods, Deployments, Services, namespaces, labels, and reconciliation before introducing platform abstractions.
-3. Run a local workload using the existing [kind guidance](kubernetes/applications-and-tools/kind-custom-clusters.md).
-4. Introduce one deliberate failure and use the [troubleshooting sequence](kubernetes/troubleshooting/common-solutions.md) to diagnose it.
+3. Run a local workload using the existing [kind guidance](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md).
+4. Introduce one deliberate failure and use the [troubleshooting sequence](knowledge/kubernetes/troubleshooting/common-solutions.md) to diagnose it.
 5. Verify recovery and remove the lab resources.
 6. Offer AWS/EKS and Crossplane as subsequent paths with explicit account, cost, identity, and prerequisite requirements.
 
@@ -320,7 +320,7 @@ Assessment should test understanding and diagnosis, not just successful command 
 
 ### Use documentation types lightly
 
-The [existing templates](templates/README.md) already support much of the needed structure. Label the main intent of a page without introducing four new directory trees everywhere:
+The [existing templates](knowledge/templates/index.md) already support much of the needed structure. Label the main intent of a page without introducing four new directory trees everywhere:
 
 - **Tutorial:** a bounded learning exercise with a known starting state and successful ending.
 - **How-to:** steps for a specific task, assuming relevant prior knowledge.
@@ -371,7 +371,7 @@ Do not require exhaustive testing of every command catalog. Prioritize runnable 
 
 The existing single default [CODEOWNERS](.github/CODEOWNERS) entry is reasonable for a small project. Add area ownership when contributors are available, and allow the maintainer to remain responsible for multiple areas.
 
-Retain the lightweight publication approach for ordinary content. Use the additional technical scrutiny already contemplated by the [content CI/CD guide](git/github-actions/content-ci-cd-process.md) for sensitive security guidance, destructive operations, and consequential product claims. This review does not recommend mandatory human approval for every typo or navigation fix.
+Retain the lightweight publication approach for ordinary content. Use the additional technical scrutiny already contemplated by the [content CI/CD guide](knowledge/git/github-actions/content-ci-cd-process.md) for sensitive security guidance, destructive operations, and consequential product claims. This review does not recommend mandatory human approval for every typo or navigation fix.
 
 ### Start with a small review queue
 
@@ -486,8 +486,8 @@ The report records findings and recommendations. Adding it does not fix the base
 - [Roadmap](ROADMAP.md)
 - [Contributing](CONTRIBUTING.md)
 - [Writing instructions](instructions.md)
-- [Templates](templates/README.md)
+- [Templates](knowledge/templates/index.md)
 - [Source ingestion instructions](sources/AGENTS.md)
-- [Knowledge-base provenance, trust, and freshness](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md)
-- [Knowledge-base evaluation and quality](ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
+- [Knowledge-base provenance, trust, and freshness](knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md)
+- [Knowledge-base evaluation and quality](knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
 - [Historical GitHub Actions pipeline report](github-actions-pipeline-report.md)

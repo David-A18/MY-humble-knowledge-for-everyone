@@ -19,11 +19,11 @@ Use this skill when converting raw Markdown notes into curated knowledge-base pa
 
 | Source signal | Preferred route |
 | --- | --- |
-| AWS, Azure, or Google Cloud | [Cloud](../../../cloud/README.md) and provider subsection. |
-| Crossplane concepts or providers | [Kubernetes Crossplane](../../../kubernetes/crossplane/README.md). |
-| Multi-technology platform workflow | [Cross-topic guides](../../../cross-topic-guides/README.md). |
-| Kafka, MongoDB, or data modeling | [Databases](../../../databases/README.md). |
-| AI tools, MCP, skills, or knowledge-base operations | [AI tooling](../../../ai/ai-tooling/README.md) or [knowledge-base upgrade hub](../../README.md). |
+| AWS, Azure, or Google Cloud | [Cloud](../../../knowledge/cloud/index.md) and provider subsection. |
+| Crossplane concepts or providers | [Kubernetes Crossplane](../../../knowledge/kubernetes/crossplane/index.md). |
+| Multi-technology platform workflow | [Cross-topic guides](../../../knowledge/cross-topic-guides/index.md). |
+| Kafka, MongoDB, or data modeling | [Databases](../../../knowledge/databases/index.md). |
+| AI tools, MCP, skills, or knowledge-base operations | [AI tooling](../../../knowledge/ai/ai-tooling/index.md) or [knowledge-base upgrade hub](../../README.md). |
 
 ## Related links
 

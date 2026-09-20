@@ -49,8 +49,8 @@ Use this hub when an improvement changes how the knowledge base is maintained, s
 
 ## Related links
 
-- [AI tooling](../ai/ai-tooling/README.md)
-- [Agent knowledge bases](../ai/ai-tooling/knowledge-bases/README.md)
+- [AI tooling](../knowledge/ai/ai-tooling/index.md)
+- [Agent knowledge bases](../knowledge/ai/ai-tooling/knowledge-bases/index.md)
 - [AI agent router](../AGENTS.md)
 - [AI agent context](../context.md)
 - [Contributing](../CONTRIBUTING.md)

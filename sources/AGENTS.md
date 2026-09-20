@@ -30,27 +30,27 @@ Use these values when present, but verify them against the actual content.
 
 | Raw topic | Destination |
 | --- | --- |
-| AWS-specific cloud content | [cloud/aws](../cloud/aws/README.md) |
-| Azure-specific cloud content | [cloud/azure](../cloud/azure/README.md) |
-| Google Cloud content | [cloud/gcloud](../cloud/gcloud/README.md) |
-| Provider-neutral cloud content | [cloud](../cloud/README.md) |
-| Database and data-platform content | [databases](../databases/README.md) |
-| Kubernetes content | [kubernetes](../kubernetes/README.md) |
-| Crossplane content | [kubernetes/crossplane](../kubernetes/crossplane/README.md) |
-| Git content | [git](../git/README.md) |
-| Terraform content | [terraform](../terraform/README.md) |
-| Migration, backup, restore, or disaster-recovery content | [migrations](../migrations/README.md) |
-| Security content | [security](../security/README.md) |
-| FinOps content | [finops](../finops/README.md) |
-| DevOps content | [devops](../devops/README.md) |
-| Programming language content | [programming-languages](../programming-languages/README.md) |
-| MLOps content | [mlops](../mlops/README.md) |
-| AI content | [ai](../ai/README.md) |
-| AI agent content | [ai-agents](../ai-agents/README.md) |
-| LLM content | [llm](../llm/README.md) |
-| ML content | [ml](../ml/README.md) |
-| Solutions architect content | [solutions-architect](../solutions-architect/README.md) |
-| Multi-technology workflow | [cross-topic guides](../cross-topic-guides/README.md) |
+| AWS-specific cloud content | [cloud/aws](../knowledge/cloud/aws/index.md) |
+| Azure-specific cloud content | [cloud/azure](../knowledge/cloud/azure/index.md) |
+| Google Cloud content | [cloud/gcloud](../knowledge/cloud/gcloud/index.md) |
+| Provider-neutral cloud content | [cloud](../knowledge/cloud/index.md) |
+| Database and data-platform content | [databases](../knowledge/databases/index.md) |
+| Kubernetes content | [kubernetes](../knowledge/kubernetes/index.md) |
+| Crossplane content | [kubernetes/crossplane](../knowledge/kubernetes/crossplane/index.md) |
+| Git content | [git](../knowledge/git/index.md) |
+| Terraform content | [terraform](../knowledge/terraform/index.md) |
+| Migration, backup, restore, or disaster-recovery content | [migrations](../knowledge/migrations/index.md) |
+| Security content | [security](../knowledge/security/index.md) |
+| FinOps content | [finops](../knowledge/finops/index.md) |
+| DevOps content | [devops](../knowledge/devops/index.md) |
+| Programming language content | [programming-languages](../knowledge/programming-languages/index.md) |
+| MLOps content | [mlops](../knowledge/mlops/index.md) |
+| AI content | [ai](../knowledge/ai/index.md) |
+| AI agent content | [ai-agents](../knowledge/ai-agents/index.md) |
+| LLM content | [llm](../knowledge/llm/index.md) |
+| ML content | [ml](../knowledge/ml/index.md) |
+| Solutions architect content | [solutions-architect](../knowledge/solutions-architect/index.md) |
+| Multi-technology workflow | [cross-topic guides](../knowledge/cross-topic-guides/index.md) |
 
 ## Ingestion workflow
 
@@ -66,11 +66,11 @@ What it does: finds existing pages that may already cover the raw source.
 
 1. Update the closest existing article when the raw source improves an existing page.
 2. Create a new focused article only when the raw source is distinct enough to stand alone.
-3. Use the closest template from [templates](../templates/README.md).
+3. Use the closest template from [templates](../knowledge/templates/index.md).
 4. Convert rough notes into practical guidance with purpose, context, examples, decision points, risks, and related links.
 5. Verify current product behavior against official documentation before adding technical claims.
 6. Add or update parent indexes and related cross-links.
-7. Update [GLOSSARY.md](../GLOSSARY.md) when important new terms appear.
+7. Update [GLOSSARY.md](../knowledge/glossary.md) when important new terms appear.
 8. Update [CHANGELOG.md](../CHANGELOG.md) for meaningful additions.
 9. Move completed raw files to [processed](processed/README.md), preserving filenames unless a conflict requires a suffix.
 10. Add or update the processed source's row in the [ingestion register](processed/ingestion-register.md), linking every curated destination and recording verification status or `Unknown` where historical evidence is missing.

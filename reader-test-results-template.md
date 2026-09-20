@@ -23,7 +23,7 @@ Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run
 | Date | YYYY-MM-DD |
 | Facilitator | Unassigned |
 | Reader profile | Beginner, early practitioner, experienced engineer, or other broad category |
-| Starting page | [Start here](start-here.md) |
+| Starting page | [Start here](knowledge/start-here.md) |
 | Repository commit | Commit hash tested |
 | Environment notes | Browser, terminal, operating system, or tool versions when relevant |
 | Consent to record anonymous findings | Yes or no |
