@@ -65,7 +65,7 @@ Keep the current directory hierarchy unless a specific navigation problem justif
 
 ## Work tracker and dependencies
 
-Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-findings). Each task owner starts as `Unassigned`. Effort is comparative: **S** is a focused edit, **M** is a bounded article or tooling change, and **L** involves several connected deliverables. These are not calendar estimates.
+Work packages KB-01–KB-15 record the historical improvement cycle. The current OKF priorities are in the [knowledge-base readiness review](knowledge-base-review.md#findings-and-exact-next-actions). Each task owner starts as `Unassigned`. Effort is comparative: **S** is a focused edit, **M** is a bounded article or tooling change, and **L** involves several connected deliverables. These are not calendar estimates.
 
 | ID | Work package | Depends on | Effort | Status |
 | --- | --- | --- | --- | --- |

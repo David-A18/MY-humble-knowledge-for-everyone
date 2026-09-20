@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a post-OKF readiness review with current structural evidence, migration-integrity findings, and a phased plan for human and AI knowledge quality.
 - Added a canonical `knowledge/` Open Knowledge Format v0.2 bundle with structured concept metadata, reserved indexes, migration history, strict validation, and CI coverage.
 - Added a Diátaxis-oriented authoring profile, CC BY 4.0 licensing for curated knowledge and visual assets, and a migration guide for previous content paths.
 - Added a `develop`-branch knowledge-base upgrade hub with feature, tool, skill, MCP server, and instruction indexes plus public-safe templates.

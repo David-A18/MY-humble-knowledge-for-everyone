@@ -29,6 +29,8 @@ configurations, and automation remain under the [MIT License](LICENSE).
 - [Writing instructions](instructions.md)
 - [Roadmap](ROADMAP.md)
 - [Changelog](CHANGELOG.md)
+- [Current knowledge-base review](knowledge-base-review.md)
+- [GitHub Actions pipeline report](github-actions-pipeline-report.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Knowledge-base upgrade hub](knowledge-base-upgrade/README.md)
 - [Raw source intake](sources/README.md)
