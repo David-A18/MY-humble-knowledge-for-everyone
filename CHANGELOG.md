@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a generated, deterministic knowledge catalog, golden retrieval cases, command-path validation, stricter OKF metadata rules, and CI checks for those quality gates.
+- Added standalone Kubernetes fundamentals and Terraform local-state tutorial concepts so their learning outcomes carry searchable OKF metadata.
 - Added a post-OKF readiness review with current structural evidence, migration-integrity findings, and a phased plan for human and AI knowledge quality.
 - Added a canonical `knowledge/` Open Knowledge Format v0.2 bundle with structured concept metadata, reserved indexes, migration history, strict validation, and CI coverage.
 - Added a Diátaxis-oriented authoring profile, CC BY 4.0 licensing for curated knowledge and visual assets, and a migration guide for previous content paths.

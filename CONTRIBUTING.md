@@ -9,8 +9,11 @@ Thank you for improving this knowledge base. Read [AGENTS.md](AGENTS.md),
 2. Choose one Diátaxis reader outcome and use the corresponding `type`.
 3. Add complete OKF profile frontmatter and focused, original Markdown content.
 4. Update the nearest parent index, related concepts, and `knowledge/log.md` for notable changes.
-5. Add provenance and review metadata only when you can substantiate it.
-6. Run the required validation suite in [AGENTS.md](AGENTS.md).
+5. Add provenance and review metadata only when you can substantiate it. Use a
+   named maintainer or `unassigned`; use `stable` only with sources and a review deadline.
+6. Rebuild the catalog with `python3 scripts/build-knowledge-catalog.py` after
+   changing concept metadata.
+7. Run the required validation suite in [AGENTS.md](AGENTS.md).
 
 ## Content checklist
 
@@ -19,6 +22,7 @@ Thank you for improving this knowledge base. Read [AGENTS.md](AGENTS.md),
 - [ ] Internal links are relative and resolve locally.
 - [ ] Commands have prerequisites, explanation, and nearby safety notes.
 - [ ] Technical claims use official sources where appropriate.
+- [ ] The generated catalog is current after metadata changes.
 - [ ] The content is original or use is explicitly permitted and attributed.
 - [ ] The change is recorded in `knowledge/log.md` or [CHANGELOG.md](CHANGELOG.md) when notable.
 

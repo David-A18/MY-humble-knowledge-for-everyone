@@ -8,6 +8,24 @@ This directory is the canonical Open Knowledge Format v0.2 bundle for this
 repository. Start with a subject area, then follow its index to focused
 concepts, procedures, references, and learning paths.
 
+## Start by goal
+
+| Goal | Start here | Outcome |
+| --- | --- | --- |
+| Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
+| Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
+| Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
+| Learn Terraform safely | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |
+| Design a Crossplane platform API | [Crossplane component model](kubernetes/crossplane/component-model.md) | Understand providers, managed resources, XRDs, compositions, and XRs. |
+| Plan backup or migration work | [Velero](migrations/velero/index.md) | Choose backup, restore, migration, and disaster-recovery guidance. |
+
+## Reading and trust signals
+
+- `draft` means useful material that still needs a completed review cycle.
+- `stable` means the concept has current recorded sources and a freshness deadline.
+- `deprecated` means do not use the concept for new work; follow its replacement link.
+- Source records and review deadlines appear in concept frontmatter. AI tools can use the generated [knowledge catalog](../generated/README.md) to filter and route concepts without treating the catalog as a second source of truth.
+
 ## Engineering topics
 
 - [Cloud](cloud/index.md) - Provider-neutral cloud guidance and AWS, Azure, Google Cloud, edge, and solution patterns.

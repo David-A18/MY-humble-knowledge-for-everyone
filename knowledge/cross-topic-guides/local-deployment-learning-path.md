@@ -6,7 +6,7 @@ tags: [cross-topic-guides, local-deployment-learning-path]
 status: draft
 maturity: draft
 audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maintainer: unassigned
 ---
 
 # Local deployment learning path
@@ -68,7 +68,7 @@ From the repository root, create a small working copy:
 
 ```bash
 mkdir -p /tmp/kb-local-path
-cp kubernetes/examples/local-deployment-learning-path/*.yaml /tmp/kb-local-path/
+cp knowledge/kubernetes/examples/local-deployment-learning-path/*.yaml /tmp/kb-local-path/
 cd /tmp/kb-local-path
 git init
 git add .

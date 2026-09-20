@@ -1,57 +1,49 @@
 ---
-type: "Template"
-title: "Troubleshooting title"
-description: "Diagnose and resolve a specific failure mode."
-tags: [templates, troubleshooting-template]
+type: Template
+title: Troubleshooting guide template
+description: Start a symptom-led troubleshooting guide with safe diagnostics, recovery, and prevention.
+tags: [templates, troubleshooting]
 status: draft
-maturity: initial-outline
-audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maturity: draft
+audience: Engineering learners and practitioners
+maintainer: unassigned
 ---
 
-# Troubleshooting title
+# Troubleshooting guide template
 
-Status: Initial outline
-Audience: Beginning platform engineer
-Page type: Troubleshooting
-Maintainer: Unassigned
-Last substantive review: Not yet reviewed
-Applicable versions: To be established before execution
-Validation evidence: Not yet tested
-Known limitations: To be documented
-Next review: Assign after substantive review
+> [!IMPORTANT]
+> Replace the frontmatter and placeholders. A troubleshooting guide starts from an observable symptom and ends with a safe diagnosis, recovery, or escalation condition.
 
 ## Purpose
 
-Diagnose and resolve a specific failure mode.
+Name the failure mode, affected system boundary, and reader outcome.
 
 ## Symptoms
 
-- Observable symptom.
-- Error message.
-- Metric or log pattern.
+- Observable symptom, error message, metric, or log pattern.
+- Scope: which environment, resources, or versions the guide applies to.
 
 ## First checks
 
-- [ ] Confirm scope and impact.
-- [ ] Capture exact error messages.
-- [ ] Check recent changes.
-- [ ] Identify rollback options.
+- [ ] Confirm the target context and impact.
+- [ ] Capture the exact error before changing anything.
+- [ ] Check recent changes and rollback options.
+- [ ] Preserve evidence that an escalation will need.
 
 ## Decision sequence
 
-1. Check the most common cause.
-2. If confirmed, apply the documented fix.
-3. If not confirmed, collect additional evidence.
-4. Escalate with logs, commands, timestamps, and affected resources.
+1. Run a safe diagnostic and state what result confirms the common cause.
+2. If confirmed, apply the least-destructive recovery action.
+3. If not confirmed, collect the next discriminating evidence.
+4. Stop and escalate when the documented safety boundary is reached.
 
-## Commands
+## Diagnostics
 
 ```bash
 tool inspect --target example
 ```
 
-What it does: gather evidence before changing the system.
+What it does: gathers evidence before changing the system.
 
 ## Recovery
 
@@ -62,15 +54,20 @@ What it does: gather evidence before changing the system.
 tool recover --target example
 ```
 
-What it does: describe the recovery action and its rollback path.
+What it does: describe the recovery action, its expected result, and its rollback path.
 
 ## Prevention
 
 - Preventive practice.
 - Monitoring or alerting recommendation.
+- Link to the relevant how-to or reference page.
+
+## Evidence and freshness
+
+Use official sources for product-specific behavior and set a review deadline for fast-changing systems.
 
 ## Related links
 
 - [Writing instructions](../../instructions.md)
 - [Back to templates index](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

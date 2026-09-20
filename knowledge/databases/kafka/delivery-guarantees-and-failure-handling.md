@@ -6,7 +6,15 @@ tags: [databases, kafka]
 status: draft
 maturity: draft
 audience: "Engineers designing Kafka producers, consumers, and recovery paths"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: apache-kafka-documentation
+    resource: https://kafka.apache.org/documentation/
+    title: Apache Kafka documentation
+  - id: kafka-python-consumer
+    resource: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
+    title: kafka-python KafkaConsumer API
+stale_after: 2026-12-19
 ---
 
 # Kafka delivery guarantees and failure handling

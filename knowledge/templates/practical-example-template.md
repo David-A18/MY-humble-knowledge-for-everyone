@@ -1,35 +1,28 @@
 ---
-type: "Template"
-title: "Practical example title"
-description: "Describe the concrete result the reader will produce."
-tags: [templates, practical-example-template]
+type: Template
+title: Tutorial template
+description: Start a bounded, reproducible learning tutorial with prerequisites, validation, recovery, and cleanup.
+tags: [templates, tutorial]
 status: draft
-maturity: initial-outline
-audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maturity: draft
+audience: Beginning platform engineer
+maintainer: unassigned
 ---
 
-# Practical example title
+# Tutorial template
 
-Status: Initial outline
-Audience: Beginning platform engineer
-Page type: Tutorial
-Maintainer: Unassigned
-Last substantive review: Not yet reviewed
-Applicable versions: To be established before execution
-Validation evidence: Not yet tested
-Known limitations: To be documented
-Next review: Assign after substantive review
+> [!IMPORTANT]
+> Replace the frontmatter and placeholders. A tutorial teaches one bounded experience from a known starting point to a verified result.
 
 ## Goal
 
-Describe the concrete result the reader will produce.
+Describe the concrete result the reader will produce and what they will understand afterwards.
 
 ## Prerequisites
 
-- Tool versions.
-- Permissions.
-- Required accounts or environments.
+- Tool versions and installation links.
+- Permissions, accounts, local resources, and cost boundaries.
+- A disposable environment when commands can modify state.
 
 ## Files
 
@@ -39,10 +32,11 @@ Describe the concrete result the reader will produce.
 
 ## Steps
 
-1. Prepare the environment.
-2. Apply the configuration.
-3. Validate the result.
-4. Clean up resources.
+1. Prepare the environment and confirm the target context.
+2. Apply the configuration or command.
+3. Observe the intended result.
+4. Introduce one safe, useful diagnostic or failure condition when it teaches the goal.
+5. Recover and confirm the result again.
 
 ## Validation
 
@@ -52,16 +46,12 @@ tool validate --target example
 
 What it does: confirms the exercise reached the intended state.
 
-Expected output:
-
-```text
-example output
-```
+Expected result: state the visible condition that proves success.
 
 ## Cleanup
 
 > [!WARNING]
-> Place warnings before commands that delete resources or affect shared infrastructure.
+> Put this warning before commands that delete resources, incur cost, or affect shared infrastructure.
 
 ```bash
 tool delete --target example
@@ -69,8 +59,14 @@ tool delete --target example
 
 What it does: removes resources created by the exercise and prevents ongoing cost or state drift.
 
+Expected result: state how the reader proves cleanup is complete.
+
+## Evidence and freshness
+
+Record actual local or sandbox execution in `verified`; do not claim execution that did not happen.
+
 ## Related links
 
 - [Writing instructions](../../instructions.md)
 - [Back to templates index](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

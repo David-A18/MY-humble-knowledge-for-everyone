@@ -6,7 +6,15 @@ tags: [kubernetes, crossplane, providers-and-authentication]
 status: draft
 maturity: draft
 audience: "Platform engineers designing Crossplane provider authentication"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: crossplane-providers
+    resource: https://docs.crossplane.io/latest/packages/providers/
+    title: Crossplane provider packages
+  - id: crossplane-managed-resources
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane managed resources
+stale_after: 2026-12-19
 ---
 
 # Crossplane providers and authentication

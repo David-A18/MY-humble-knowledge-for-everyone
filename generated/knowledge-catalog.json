@@ -1,0 +1,2692 @@
+{
+  "bundle_root": "knowledge",
+  "catalog_version": "1",
+  "concept_count": 159,
+  "concepts": [
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide explains how to design custom AI tools for Claude, Claude Code, Codex, and OpenAI workflows. It focuses on practical choices: function tools, MCP servers, skills, Markdown instructions, and platform-specific configuration.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/create-ai-tools-for-claude-and-codex.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling"
+      ],
+      "title": "Create AI tools for Claude and Codex",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide defines how to measure whether an AI knowledge base works. A corpus is not good because it contains many files. It is good when agents can find the right evidence quickly, trust it appropriately, cite it correctly, and keep it current.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Evaluation and quality",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "sum by (pod) (",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/pod-restart-rate.md",
+      "source_ids": [
+        "kube-state-metrics"
+      ],
+      "stale_after": "2026-10-08",
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Computation",
+      "type": "Attested Computation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Retrieval should return enough evidence to answer the question, not every potentially related document. A small read-only serving layer can expose search and fetch capabilities while hiding whether the implementation uses lexical search, semantic reranking, or another derived index.[^mcp-2026-07-28]",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/retrieval-budget.md",
+      "source_ids": [
+        "mcp-2026-07-28"
+      ],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Retrieval budget",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use deterministic parsers for machine-readable facts. HTTP API operations should come from OpenAPI descriptions, and JSON shape constraints should come from JSON Schema where those producers exist.[^openapi-3-2][^json-schema-2020-12]",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/source-schema-extraction.md",
+      "source_ids": [
+        "openapi-3-2",
+        "json-schema-2020-12"
+      ],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Source schema extraction",
+      "type": "Playbook"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This file exists because the repository convention expects Markdown directories to include README.md. In OKF v0.2, README.md is not reserved, so this file is a normal concept document with frontmatter and concept ID README.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md",
+      "source_ids": [],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "OKF example bundle README",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This reference points to [prometheus-receipt-shape.py](prometheus-receipt-shape.py), a small deterministic example attester.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters/prometheus-receipt-shape.md",
+      "source_ids": [],
+      "stale_after": "2026-10-08",
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Prometheus receipt shape",
+      "type": "Attester Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This is a synthetic executor contract. It is not a production credential, endpoint, or runnable integration.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors/run-prometheus-query.md",
+      "source_ids": [],
+      "stale_after": "2026-10-08",
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Run Prometheus query",
+      "type": "Executor Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this source when a knowledge concept needs deterministic JSON validation rules or schema metadata.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/json-schema-2020-12.md",
+      "source_ids": [],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "JSON Schema Draft 2020-12",
+      "type": "Source Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this source when a knowledge concept references Kubernetes object state metrics exposed for Prometheus-style querying.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/kube-state-metrics.md",
+      "source_ids": [],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "kube-state-metrics project",
+      "type": "Source Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this source when a knowledge concept needs to describe an agent-facing serving adapter or MCP capability surface.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/mcp-2026-07-28.md",
+      "source_ids": [],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Model Context Protocol 2026-07-28",
+      "type": "Source Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this source when a knowledge concept needs exact HTTP API structure, such as paths, operations, parameters, request bodies, responses, examples, and security schemes.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/openapi-3-2.md",
+      "source_ids": [],
+      "stale_after": "2026-11-08",
+      "status": "stable",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "OpenAPI Specification v3.2.0",
+      "type": "Source Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide classifies the standards, specifications, conventions, protocols, and implementation technologies that appear around AI knowledge bases. The goal is to avoid treating every useful file format or retrieval tool as the same kind of \"standard.\"",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Knowledge standards landscape",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This article audits Open Knowledge Format v0.2 as a specification for portable, Git-friendly knowledge bundles that humans and agents can read, traverse, cite, and validate.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/okf-v0.2.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "OKF v0.2",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide explains how an agent knowledge base records where knowledge came from, how it was verified, whether it is still fresh, and what to do when sources disagree.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Provenance, trust, and freshness",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide defines an agent-first, Git-backed, standards-aware knowledge system. It is for engineers, platform engineers, AI or LLMOps engineers, solutions architects, and agents that need a trustworthy corpus for retrieval, reasoning, citation, and maintenance.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Reference architecture",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide explains how to design retrieval for agent knowledge bases as a measurable context budget rather than a race to return more text.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Retrieval and context efficiency",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide defines the security model for AI knowledge bases, retrieval systems, MCP serving, and agent-assisted maintenance.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "knowledge-bases"
+      ],
+      "title": "Security and governance",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide is the compatibility entry point for agent-ready knowledge-base design. Use it to choose the right deeper guide for Markdown in Git, OKF v0.2, retrieval, provenance, freshness, security, evaluation, and MCP serving.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling"
+      ],
+      "title": "Knowledge-base creation, management, and optimization",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This guide explains what Model Context Protocol is and how to design MCP servers that expose useful, safe tools and context to AI applications.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-tooling/model-context-protocol.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "ai-tooling",
+        "model-context-protocol"
+      ],
+      "title": "Model Context Protocol",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "architecture"
+      ],
+      "title": "Stateful design decision checklist",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to classify AWS application components by where state lives and how that affects scaling, recovery, and operations.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/architecture/stateful-vs-stateless.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "architecture"
+      ],
+      "title": "Stateful vs. stateless on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to move application compute toward replaceable, horizontally scalable replicas while keeping required state in services designed to persist, replicate, secure, and recover it.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/architecture/stateless-application-patterns.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "architecture"
+      ],
+      "title": "Stateless application patterns on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Amazon Elastic Container Registry (ECR), secure",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/compute/amazon-ecr.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "compute"
+      ],
+      "title": "Amazon ECR",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to understand Amazon Elastic Container Service (Amazon ECS), what runs there, how its main components fit together, and which operational patterns are practical in real AWS environments.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/compute/amazon-ecs.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "compute"
+      ],
+      "title": "Amazon ECS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to choose between Amazon ECS and Amazon EKS for container workloads on AWS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/compute/ecs-vs-eks.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "compute"
+      ],
+      "title": "ECS vs. EKS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to plan a full-platform migration from Amazon EKS to Amazon ECS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/compute/eks-to-ecs-migration.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "compute"
+      ],
+      "title": "EKS to ECS migration",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand when Amazon Managed Streaming for Apache Kafka is the right AWS home for Kafka workloads.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/databases/amazon-msk.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "databases"
+      ],
+      "title": "Amazon MSK",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to compare Amazon DocumentDB and MongoDB Atlas for MongoDB-oriented workloads on AWS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/databases/documentdb-vs-mongodb-atlas.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "databases"
+      ],
+      "title": "DocumentDB vs. MongoDB Atlas",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to choose how MongoDB-style workloads should run in or near AWS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/databases/mongodb-on-aws.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "databases"
+      ],
+      "title": "MongoDB on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use consistent tags to support AWS cost allocation, ownership, and operational reporting.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/finops/cost-allocation-tags.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "finops"
+      ],
+      "title": "Cost allocation tags",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to design Amazon CloudFront distributions for AWS applications, APIs, static sites, and EKS ingress paths.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/cloudfront.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "networking"
+      ],
+      "title": "CloudFront",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Document practical behavior and troubleshooting checks for AWS security groups.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/security-groups.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "networking"
+      ],
+      "title": "Security groups",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand AWS networking features where connection state changes security, routing, and troubleshooting.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/stateful-networking.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "networking"
+      ],
+      "title": "Stateful networking",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand how AWS trusts an external OpenID Connect provider and exchanges a valid token for temporary IAM credentials.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "aws",
+        "security"
+      ],
+      "title": "IAM OIDC provider and STS web identity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to choose between Akamai, Amazon CloudFront, or a multi-CDN approach.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/edge/akamai-vs-cloudfront.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "edge",
+        "akamai-vs-cloudfront"
+      ],
+      "title": "Akamai vs. CloudFront",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand the basic CDN and edge-computing vocabulary used by CloudFront, Akamai, and multi-CDN designs.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/edge/cdn-and-edge-fundamentals.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "edge",
+        "cdn-and-edge-fundamentals"
+      ],
+      "title": "CDN and edge fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to design CDN cache behavior without exposing private data, overwhelming the origin, or leaving a bypass path around the edge layer.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/edge/cdn-caching-and-origin-protection.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "edge"
+      ],
+      "title": "CDN caching and origin protection",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to operate more than one CDN provider without creating inconsistent cache, security, DNS, logging, or rollback behavior.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/edge/multi-cdn-operations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "edge",
+        "multi-cdn-operations"
+      ],
+      "title": "Multi-CDN operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand where Google Cloud Apigee fits, how its main objects work together, and what to check before using it as an API management platform.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/gcloud/apigee.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "gcloud",
+        "apigee"
+      ],
+      "title": "Apigee API management",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand what blue-green deployment means, what kind of cloud solution it is, how to recognize it in real environments, and which services usually participate.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/solutions/blue-green-deployment.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "solutions",
+        "blue-green-deployment"
+      ],
+      "title": "Blue-green deployment",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to run Apache APISIX as a Kubernetes API gateway on Amazon EKS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/apisix-on-eks.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "apisix-on-eks"
+      ],
+      "title": "APISIX on EKS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to place a CDN such as CloudFront or Akamai in front of workloads running on Amazon EKS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/cdn-in-front-of-eks.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "cdn-in-front-of-eks"
+      ],
+      "title": "CDN in front of EKS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to run Crossplane in Kubernetes while managing AWS resources with clear bootstrap, authentication, account, GitOps, and ownership boundaries.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/crossplane-on-aws.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "crossplane-on-aws"
+      ],
+      "title": "Crossplane on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Application and platform engineers deploying to Amazon EKS",
+      "description": "Plan the moving parts of deploying applications to Amazon EKS.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/deploying-to-eks.md",
+      "source_ids": [
+        "eks-update-kubeconfig",
+        "kubernetes-deployments"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "deploying-to-eks"
+      ],
+      "title": "Deploying to EKS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect practical Amazon EKS operations that combine AWS CLI checks with kubectl workflows.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/eks-operations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "eks-operations"
+      ],
+      "title": "EKS operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to connect Kubernetes applications on EKS to Amazon MSK.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/eks-to-msk-applications.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "eks-to-msk-applications"
+      ],
+      "title": "EKS to MSK applications",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to design a dedicated EKS tooling cluster that supports workload clusters.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides"
+      ],
+      "title": "EKS tooling cluster architecture",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to choose between IRSA and EKS Pod Identity for AWS permissions from Pods.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/eks-workload-identity.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "eks-workload-identity"
+      ],
+      "title": "EKS workload identity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Map a complete delivery path from source control to running cloud infrastructure and application validation.",
+      "maintainer": "unassigned",
+      "maturity": "initial-outline",
+      "path": "knowledge/cross-topic-guides/end-to-end-deployment.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "end-to-end-deployment"
+      ],
+      "title": "End-to-end deployment",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Outline CI/CD workflows for validating and deploying Kubernetes workloads from GitHub Actions.",
+      "maintainer": "unassigned",
+      "maturity": "initial-outline",
+      "path": "knowledge/cross-topic-guides/github-actions-with-kubernetes.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "github-actions-with-kubernetes"
+      ],
+      "title": "GitHub Actions with Kubernetes",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Define a safe CI workflow for formatting, validating, and reviewing Terraform changes with GitHub Actions.",
+      "maintainer": "unassigned",
+      "maturity": "initial-outline",
+      "path": "knowledge/cross-topic-guides/github-actions-with-terraform.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "github-actions-with-terraform"
+      ],
+      "title": "GitHub Actions with Terraform",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to operate EKS workloads with GitOps controllers such as Argo CD or Flux.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/gitops-on-eks.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "gitops-on-eks"
+      ],
+      "title": "GitOps on EKS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect guidance for running Kubernetes workloads on AWS infrastructure.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/kubernetes-on-aws.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "kubernetes-on-aws"
+      ],
+      "title": "Kubernetes on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Create a local Kubernetes cluster, deploy a small web workload, break it with a bad image tag, diagnose the failure, recover, and clean up.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/local-deployment-learning-path.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "local-deployment-learning-path"
+      ],
+      "title": "Local deployment learning path",
+      "type": "Learning Path"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Describe the monitoring, logging, tracing, and alerting capabilities needed for cloud and Kubernetes operations.",
+      "maintainer": "unassigned",
+      "maturity": "initial-outline",
+      "path": "knowledge/cross-topic-guides/observability-stack.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "observability-stack"
+      ],
+      "title": "Observability stack",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Capture practical patterns for managing AWS infrastructure with Terraform.",
+      "maintainer": "unassigned",
+      "maturity": "initial-outline",
+      "path": "knowledge/cross-topic-guides/terraform-on-aws.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides",
+        "terraform-on-aws"
+      ],
+      "title": "Terraform on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to reason about Kafka consumer progress, scaling, lag, and safe replay.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/kafka/consumer-groups-lag-and-replay.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "kafka",
+        "consumer-groups-lag-and-replay"
+      ],
+      "title": "Kafka consumer groups, lag, and replay",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineers designing Kafka producers, consumers, and recovery paths",
+      "description": "Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md",
+      "source_ids": [
+        "apache-kafka-documentation",
+        "kafka-python-consumer"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "databases",
+        "kafka"
+      ],
+      "title": "Kafka delivery guarantees and failure handling",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand the core Kafka mental model before designing producers, consumers, or AWS streaming architectures.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/kafka/fundamentals.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "kafka"
+      ],
+      "title": "Kafka fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to operate Kafka by watching the signals that usually explain reliability, performance, and consumer health.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/kafka/operations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "kafka",
+        "operations"
+      ],
+      "title": "Kafka operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to design Kafka topics and events that are understandable, replayable, and operable.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/kafka/topic-and-event-design.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "kafka",
+        "topic-and-event-design"
+      ],
+      "title": "Topic and event design",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to choose MongoDB document shapes that match application access patterns.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/mongodb/data-modeling.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "mongodb",
+        "data-modeling"
+      ],
+      "title": "MongoDB data modeling",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand MongoDB's core data model and when document databases are useful.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/mongodb/fundamentals.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "mongodb"
+      ],
+      "title": "MongoDB fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to operate MongoDB with attention to query performance, replication, sharding, backup, and recovery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/mongodb/operations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "mongodb",
+        "operations"
+      ],
+      "title": "MongoDB operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to decide when MongoDB needs replica sets, sharding, read preferences, write concern, and restore testing.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/mongodb/replication-sharding-and-consistency.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "mongodb"
+      ],
+      "title": "MongoDB replication, sharding, and consistency",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to combine MongoDB's flexible document model with enough schema discipline and indexing to keep applications correct and queries predictable.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/mongodb/schema-validation-and-indexing.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases",
+        "mongodb",
+        "schema-validation-and-indexing"
+      ],
+      "title": "MongoDB schema validation and indexing",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to decide whether a relational database or document database is a better starting point for a workload.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/relational-vs-document-databases.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases"
+      ],
+      "title": "Relational vs. document databases",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The repository is intended to grow over time across Git, GitHub Actions, Terraform, Kubernetes, AWS, FinOps, architecture, troubleshooting, and best practices. A single large document would become difficult to navigate, review, and maintain.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/decision-records/ADR-0001-knowledge-base-structure.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "decision-records"
+      ],
+      "title": "ADR-0001: Knowledge base structure",
+      "type": "Decision Record"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The knowledge base needs a clear place for raw Markdown notes before they are converted into curated documentation. It also needs explicit routes for topics that are expected to grow beyond the initial Git, Terraform, Kubernetes, and AWS sections.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/decision-records/ADR-0002-source-ingestion-and-topic-taxonomy.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "decision-records"
+      ],
+      "title": "ADR-0002: Source ingestion and topic taxonomy",
+      "type": "Decision Record"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The knowledge base is currently published as a Git repository with Markdown indexes, focused articles, local validation scripts, and an explicit maintenance review queue. The improvement plan asks whether a searchable static reading site would be worthwhile after reader-task testing produces findability evidence.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/decision-records/adr-0003-searchable-site-decision.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "decision-records"
+      ],
+      "title": "ADR-0003: Keep repository navigation before adding a searchable site",
+      "type": "Decision Record"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Keep OKF Markdown as the single curated source of truth while generating a deterministic catalog and testing navigation, command paths, and retrieval cases in CI.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/decision-records/adr-0004-machine-readable-discovery.md",
+      "source_ids": [
+        "okf-v02",
+        "diataxis",
+        "mkdocs-navigation",
+        "backstage-techdocs"
+      ],
+      "stale_after": "2027-03-20",
+      "status": "draft",
+      "tags": [
+        "decision-records",
+        "okf",
+        "retrieval",
+        "quality"
+      ],
+      "title": "ADR-0004: Keep Markdown canonical and generate discovery artifacts",
+      "type": "Decision Record"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to set the right mental model for SonarQube Server and GitHub integration: repository import and binding, GitHub Actions analysis, pull request decoration, required checks, and security alert reporting.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/code-quality/sonarqube-github-integration.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "code-quality",
+        "sonarqube-github-integration"
+      ],
+      "title": "SonarQube GitHub integration",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand SonarQube Server as a code quality and security analysis platform, how analysis reaches the server, and how teams should use quality gates in delivery workflows.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/code-quality/sonarqube.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "code-quality",
+        "sonarqube"
+      ],
+      "title": "SonarQube",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/commands/advanced-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "advanced-commands"
+      ],
+      "title": "Advanced Git commands",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page when you know what you want to do, but you are not sure which Git commands belong together.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/commands/common-use-cases.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "common-use-cases"
+      ],
+      "title": "Common Git use cases",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this catalog to recognize the Git command surface. Daily users should start with [Daily Git commands](daily-commands.md), [Common Git use cases](common-use-cases.md), and [Solve Git issues](solve-issues.md). This page keeps the complete inventory skimmable by separating command tables from examples.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/commands/complete-command-catalog.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "complete-command-catalog"
+      ],
+      "title": "Complete Git command catalog",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page for the Git commands most developers run every day: inspect work, stage changes, commit, branch, sync with remotes, and keep short-term work safe.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/commands/daily-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "daily-commands"
+      ],
+      "title": "Daily Git commands",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page when you made a mistake and need the safest command for the situation.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/commands/solve-issues.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "solve-issues"
+      ],
+      "title": "Solve Git issues",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to diagnose why Git is behaving unexpectedly before choosing a fix.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/commands/troubleshooting-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "troubleshooting-commands"
+      ],
+      "title": "Git troubleshooting commands",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand the uses: parameter and find common, general-purpose, and important actions for real workflows.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/actions-and-uses-catalog.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "actions-and-uses-catalog"
+      ],
+      "title": "GitHub Actions `uses` catalog",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to authenticate GitHub Actions to AWS without storing long-lived AWS access keys as repository secrets.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/aws-oidc-federation.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "aws-oidc-federation"
+      ],
+      "title": "AWS OIDC federation",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page for commands that operate GitHub Actions from the terminal and workflow commands used inside running jobs.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions"
+      ],
+      "title": "GitHub Actions commands",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page when a workflow fails or behaves unexpectedly. Start with inspection, then apply the smallest safe fix.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/common-solutions.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "common-solutions"
+      ],
+      "title": "GitHub Actions common solutions",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand the main building blocks of GitHub Actions before writing or debugging workflow files.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/components-and-concepts.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "components-and-concepts"
+      ],
+      "title": "GitHub Actions components and concepts",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This page defines the repository CI/CD process for documentation-only changes. The goal is to keep main as the single published source of truth while keeping content updates lightweight.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/content-ci-cd-process.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "content-ci-cd-process"
+      ],
+      "title": "Content CI/CD process",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to copy common workflow shapes and understand how each example works.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/examples-and-use-cases.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "examples-and-use-cases"
+      ],
+      "title": "GitHub Actions examples and use cases",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to design safer workflows: least-privilege tokens, protected environments, secret handling, dependency trust, and OIDC authentication.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/security-secrets-and-permissions.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions"
+      ],
+      "title": "GitHub Actions security, secrets, and permissions",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand the structure of workflow YAML files and where each key belongs.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/github-actions/workflow-structure.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "workflow-structure"
+      ],
+      "title": "GitHub Actions workflow structure",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Developers learning safe Git recovery",
+      "description": "Use Git's inspection tools before undoing work, then choose the least destructive recovery path.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/git/troubleshooting/undo-and-recovery.md",
+      "source_ids": [
+        "git-restore",
+        "git-revert"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "stable",
+      "tags": [
+        "git",
+        "troubleshooting",
+        "undo-and-recovery"
+      ],
+      "title": "Undo and recovery",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Common terms used across the knowledge base.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/glossary.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "glossary"
+      ],
+      "title": "Glossary",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Apache APISIX as an API gateway for Kubernetes and EKS environments.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/apache-apisix.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "apache-apisix"
+      ],
+      "title": "Apache APISIX",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to understand how Apache APISIX, the APISIX Ingress Controller, Gateway API, and Kubernetes Services fit together before choosing a deployment mode.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools"
+      ],
+      "title": "APISIX architecture and deployment",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to place the right policy in Apache APISIX without turning the gateway into hidden business logic.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools"
+      ],
+      "title": "APISIX security, traffic, and observability",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to compare Argo CD and Flux for Kubernetes GitOps delivery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "argo-cd-vs-flux"
+      ],
+      "title": "Argo CD vs. Flux",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to understand Flux as a source-to-artifact-to-reconciler pipeline and to decide when to use Kustomization or HelmRelease.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "flux-reconciliation-and-helm"
+      ],
+      "title": "Flux reconciliation and Helm releases",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Flux as a GitOps toolkit for Kubernetes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/flux.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "flux"
+      ],
+      "title": "Flux",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to choose between Kubernetes Ingress, Gateway API, and gateway-specific custom resources.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "gateway-api-and-ingress"
+      ],
+      "title": "Gateway API and Ingress",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to keep GitOps controllers powerful enough to reconcile clusters without giving every team uncontrolled cluster-wide deployment authority.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools"
+      ],
+      "title": "GitOps security and multi-tenancy",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand GitOps as an operating model for Kubernetes delivery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/gitops.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "gitops"
+      ],
+      "title": "GitOps",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Helm's chart and release model, safely inspect and",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/helm.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "helm"
+      ],
+      "title": "Helm for Kubernetes and Crossplane",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand what K9s is, how to move around in it, and how to inspect common Kubernetes resources without typing every kubectl command manually.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/k9s.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "k9s"
+      ],
+      "title": "K9s",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to create local Kubernetes clusters with kind for development, CI, and platform-tooling labs.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "kind-custom-clusters"
+      ],
+      "title": "kind custom clusters",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide when a local kind cluster cannot pull or see images that were built on the host machine.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools"
+      ],
+      "title": "kind images and local registries",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to design a Kubernetes tooling cluster that hosts platform tools without accidentally creating a fragile, over-privileged control point.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/tooling-cluster-architecture.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "tooling-cluster-architecture"
+      ],
+      "title": "Tooling cluster architecture",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to decide when a dedicated Kubernetes tooling cluster is useful.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/tooling-clusters.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "applications-and-tools",
+        "tooling-clusters"
+      ],
+      "title": "Tooling clusters",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect advanced kubectl commands for structured output, API discovery, server-side operations, debugging, node maintenance, and authorization checks.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/commands/advanced-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "advanced-commands"
+      ],
+      "title": "Kubernetes advanced commands",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect common kubectl commands for applying manifests, comparing changes, managing rollouts, scaling workloads, deleting resources, filtering output, and exporting useful views.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/commands/common-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "common-commands"
+      ],
+      "title": "Kubernetes common commands",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect the kubectl commands used most often during daily Kubernetes and EKS work: checking context, inspecting resources, reading logs, entering containers, and temporarily forwarding traffic.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/commands/daily-usage.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "daily-usage"
+      ],
+      "title": "Kubernetes daily usage commands",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect eksctl commands that are specific to Amazon EKS operations and different from normal kubectl work.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/commands/eksctl-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "eksctl-commands"
+      ],
+      "title": "eksctl commands for Amazon EKS",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Collect common kubectl commands for inspecting Kubernetes resources.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/commands/kubectl-basics.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kubectl-basics"
+      ],
+      "title": "kubectl basics",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Provide repeatable command sequences for common operational workflows: inspecting a workload, deploying safely, rolling back, debugging service reachability, and checking resource pressure.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/commands/workflows.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "workflows"
+      ],
+      "title": "Kubernetes command workflows",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Kubernetes custom resources, CustomResourceDefinitions, and operators.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/core-objects/custom-resources-and-crds.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "core-objects",
+        "custom-resources-and-crds"
+      ],
+      "title": "Custom resources and CRDs",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Kubernetes objects and storage decisions for stateful workloads.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/core-objects/stateful-workloads.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "core-objects",
+        "stateful-workloads"
+      ],
+      "title": "Stateful workloads",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this walkthrough to see what a new platform capability generated by",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/application-delivery-platform-api.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane"
+      ],
+      "title": "Application delivery platform API with Crossplane and ECR",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this workflow to understand every component and interaction from installing Crossplane to deploying, observing, updating, and deleting AWS resources.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/aws-resource-workflow.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "aws-resource-workflow"
+      ],
+      "title": "Crossplane AWS resource workflow",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Maintainers validating Crossplane AWS authentication guidance",
+      "description": "Record an authorized sandbox execution of the [Crossplane local AWS S3 lab](local-aws-s3-lab.md) without committing credentials, account-sensitive output, or private infrastructure details.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "aws-s3-lab-validation-template"
+      ],
+      "title": "Crossplane AWS S3 lab validation template",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Show how one Crossplane XR can request multiple deployable AWS networking resources: a VPC, private subnets, a network ACL, ACL rules, a route table, route table associations, and VPC endpoints.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/aws-vpc-platform-api.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "aws-vpc-platform-api"
+      ],
+      "title": "AWS VPC platform API with Crossplane",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand every Crossplane-specific component that appears in a professional control plane: XRDs, XRs, Compositions, Functions, Configuration packages, providers, managed resources, activation policies, operations, environment data, usages, and package runtime controls.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/component-model.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "component-model"
+      ],
+      "title": "Crossplane component model",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to design Crossplane platform APIs with Composite Resource Definitions, composite resources, composition functions, composition revisions, and local rendering.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/compositions.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "compositions"
+      ],
+      "title": "Crossplane compositions",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand how to deploy multiple related resources with Crossplane, how to model Terraform-style count and foreach, and how resources reference each other when one resource needs values from another.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/deployment-patterns-and-references.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane"
+      ],
+      "title": "Crossplane deployment patterns and references",
+      "type": "Reference"
+    },
+    {
+      "audience": "Platform engineers practicing Crossplane with AWS in a sandbox",
+      "description": "Use this hands-on lab to install Crossplane in a local Kubernetes cluster, install an AWS S3 provider, create a real S3 bucket, observe reconciliation, test drift correction, and clean up safely.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/local-aws-s3-lab.md",
+      "source_ids": [
+        "crossplane-install",
+        "upbound-provider-aws-s3",
+        "aws-sts-credentials"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "local-aws-s3-lab"
+      ],
+      "title": "Crossplane local AWS S3 lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand direct managed resources, reconciliation fields, references, import behavior, pause controls, and deletion safety in Crossplane.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/managed-resources-and-lifecycle.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "managed-resources-and-lifecycle"
+      ],
+      "title": "Crossplane managed resources and lifecycle",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to run Crossplane as a critical control plane with GitOps, package promotion, observability, backup, upgrade, and operational workflow practices.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/production-gitops-and-operations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane"
+      ],
+      "title": "Crossplane production, GitOps, and operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand how professional platform teams actually work with Crossplane: what they give developers, what they keep private, how they review changes, and how Crossplane fits with GitOps, Terraform, AWS identity, policy, and observability.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/professional-operating-model.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "professional-operating-model"
+      ],
+      "title": "Crossplane professional operating model",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Platform engineers designing Crossplane provider authentication",
+      "description": "Use this page to understand Crossplane provider packages, provider configs, authentication choices, package health, and schema validation.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/providers-and-authentication.md",
+      "source_ids": [
+        "crossplane-providers",
+        "crossplane-managed-resources"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "providers-and-authentication"
+      ],
+      "title": "Crossplane providers and authentication",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to distinguish the Crossplane building blocks that are often confused:",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/providers-compositions-and-managed-resources.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane"
+      ],
+      "title": "Crossplane providers, managed resources, and compositions",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page as the reference list for the Crossplane section. Prefer these official sources when verifying examples, provider schemas, authentication behavior, operations, and production guidance.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/references.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "references"
+      ],
+      "title": "Crossplane references",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to decide when Terraform is enough, when Crossplane adds a better operating model, and which problems Crossplane solves that Terraform does not solve naturally.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/terraform-vs-crossplane.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "terraform-vs-crossplane"
+      ],
+      "title": "Terraform vs Crossplane",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Diagnose Crossplane provider, composition, managed-resource, authentication, deletion, and runtime failures.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/troubleshooting.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "troubleshooting"
+      ],
+      "title": "Crossplane troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand the Crossplane platform API model from first principles: what an XRD is, what a Composition is, what an XR is, and what the Crossplane equivalent of a Terraform module call is.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "xrd-composition-and-xr-calls"
+      ],
+      "title": "Crossplane XRDs, Compositions, and XR calls",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Learn the cluster, Namespace, Pod, Deployment, Service, label, and reconciliation concepts used in the local learning path.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md",
+      "source_ids": [
+        "kubernetes-concepts",
+        "kubernetes-workloads"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "fundamentals",
+        "beginner"
+      ],
+      "title": "Kubernetes fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Diagnose Apache APISIX and APISIX Ingress Controller failures in Kubernetes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/apisix.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "apisix"
+      ],
+      "title": "APISIX troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Diagnose frequent Kubernetes workload issues by moving from safe inspection commands to targeted fixes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/common-solutions.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "common-solutions"
+      ],
+      "title": "Kubernetes common solutions",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Diagnose a pod that starts, exits, and is restarted repeatedly by Kubernetes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/crashloopbackoff.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "crashloopbackoff"
+      ],
+      "title": "CrashLoopBackOff",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Diagnose common local Kubernetes problems when using kind.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/kind.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "kind"
+      ],
+      "title": "kind troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers installing Velero on EKS",
+      "description": "Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/aws-s3-ebs-installation.md",
+      "source_ids": [
+        "velero-aws-plugin",
+        "eks-ebs-csi"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "aws-s3-ebs-installation"
+      ],
+      "title": "Velero AWS S3 and EBS installation",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Operators running Velero backup, schedule, and restore workflows",
+      "description": "Use this page for the day-to-day Velero commands that create backups, schedules, restores, namespace mappings, and inspection output.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/backup-restore-workflows.md",
+      "source_ids": [
+        "velero-backup-reference",
+        "velero-restore-reference"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "backup-restore-workflows"
+      ],
+      "title": "Velero backup and restore workflows",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers planning Kubernetes migration or disaster recovery with Velero",
+      "description": "Use this page to plan Velero-based Kubernetes cluster migration, disaster recovery, and cross-cluster restores.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md",
+      "source_ids": [
+        "velero-migration",
+        "velero-disaster-recovery"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero"
+      ],
+      "title": "Velero cluster migration and disaster recovery",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand Velero's server, CLI, custom resources, controllers, plugins, and data movement components.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/components-and-architecture.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "components-and-architecture"
+      ],
+      "title": "Velero components and architecture",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand what Velero is, where it fits, and the limits to account for before using it for Kubernetes migration or recovery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/fundamentals.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero"
+      ],
+      "title": "Velero fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand how Velero can be triggered from automation systems such as GitHub Actions, what the pipeline can safely do, and what configuration must already exist in AWS, EKS, Kubernetes, and Velero.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/possible-integrations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "possible-integrations"
+      ],
+      "title": "Velero possible integrations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to map Velero capabilities to realistic Kubernetes operations.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/real-use-cases-and-runbooks.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "real-use-cases-and-runbooks"
+      ],
+      "title": "Velero real use cases and runbooks",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to choose how Velero should store backup artifacts and protect Kubernetes persistent volume data.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/storage-and-volume-backups.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "storage-and-volume-backups"
+      ],
+      "title": "Velero storage and volume backups",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to diagnose Velero backup, restore, storage, snapshot, node-agent, and data movement issues.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/migrations/velero/troubleshooting-and-operations.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "troubleshooting-and-operations"
+      ],
+      "title": "Velero troubleshooting and operations",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "This article explains the two meanings developers usually intend when they say",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/programming-languages/bootstrap-and-bootstrapping.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "programming-languages",
+        "bootstrap-and-bootstrapping"
+      ],
+      "title": "Bootstrap and bootstrapping",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to separate human authentication to Amazon EKS from workload identity and to bind authenticated users or groups to Kubernetes permissions safely.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/security/identity-federation/eks-human-identity-and-rbac.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "security",
+        "identity-federation",
+        "eks-human-identity-and-rbac"
+      ],
+      "title": "EKS human identity and Kubernetes RBAC",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this page to understand OpenID Connect before applying it to AWS, EKS, or GitHub Actions.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/security/identity-federation/oidc-fundamentals.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "security",
+        "identity-federation",
+        "oidc-fundamentals"
+      ],
+      "title": "OIDC fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use this guide to validate OIDC and JWT tokens safely before trusting identity claims in an application, gateway, or federation flow.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/security/identity-federation/oidc-token-validation.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "security",
+        "identity-federation",
+        "oidc-token-validation"
+      ],
+      "title": "OIDC token validation",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "A Proof of Concept, usually shortened to PoC, is a small, time-boxed effort",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/solutions-architect/proof-of-concept.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "solutions-architect",
+        "proof-of-concept"
+      ],
+      "title": "Proof of Concept",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/start-here.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "start-here"
+      ],
+      "title": "Start here",
+      "type": "Learning Path"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Record a durable decision, the context that led to it, alternatives, consequences, ownership, and review trigger.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/templates/architecture-decision-record-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "templates",
+        "decision-record"
+      ],
+      "title": "ADR-0000: Decision title",
+      "type": "Template"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Start a safe, scannable command reference with context checks, expected results, and recovery guidance.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/templates/command-reference-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "templates",
+        "command-reference"
+      ],
+      "title": "Command reference template",
+      "type": "Template"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Start a focused explanation or how-to guide with complete OKF metadata, evidence, and navigation.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/templates/knowledge-article-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "templates",
+        "knowledge-article"
+      ],
+      "title": "Knowledge article template",
+      "type": "Template"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Start a bounded, reproducible learning tutorial with prerequisites, validation, recovery, and cleanup.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/templates/practical-example-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "templates",
+        "tutorial"
+      ],
+      "title": "Tutorial template",
+      "type": "Template"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Start a symptom-led troubleshooting guide with safe diagnostics, recovery, and prevention.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/templates/troubleshooting-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "templates",
+        "troubleshooting"
+      ],
+      "title": "Troubleshooting guide template",
+      "type": "Template"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Document the standard command flow for making and reviewing Terraform changes.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/terraform/commands/core-workflow.md",
+      "source_ids": [
+        "terraform-cli",
+        "terraform-init"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "stable",
+      "tags": [
+        "terraform",
+        "core-workflow"
+      ],
+      "title": "Core Terraform workflow",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Learn Terraform initialization, validation, planning, local state inspection, change review, and cleanup without a cloud account.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md",
+      "source_ids": [
+        "terraform-cli",
+        "terraform-state"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "tutorial",
+        "state",
+        "beginner"
+      ],
+      "title": "Terraform local state lifecycle",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Explain how Terraform state maps configuration to real infrastructure and why state handling is operationally sensitive.",
+      "maintainer": "unassigned",
+      "maturity": "maintained",
+      "path": "knowledge/terraform/fundamentals/state-management.md",
+      "source_ids": [
+        "terraform-state",
+        "terraform-backends"
+      ],
+      "stale_after": "2026-12-19",
+      "status": "stable",
+      "tags": [
+        "terraform",
+        "state-management"
+      ],
+      "title": "State management",
+      "type": "Explanation"
+    }
+  ]
+}

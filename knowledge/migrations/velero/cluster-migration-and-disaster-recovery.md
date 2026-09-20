@@ -6,7 +6,15 @@ tags: [migrations, velero]
 status: draft
 maturity: draft
 audience: "Platform engineers planning Kubernetes migration or disaster recovery with Velero"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: velero-migration
+    resource: https://velero.io/docs/v1.18/migration-case/
+    title: Velero cluster migration
+  - id: velero-disaster-recovery
+    resource: https://velero.io/docs/v1.18/disaster-case/
+    title: Velero disaster recovery
+stale_after: 2026-12-19
 ---
 
 # Velero cluster migration and disaster recovery

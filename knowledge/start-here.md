@@ -6,7 +6,7 @@ tags: [start-here]
 status: draft
 maturity: draft
 audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maintainer: unassigned
 ---
 
 # Start here
@@ -45,7 +45,7 @@ No cloud account is required for the first exercises.
 | 1 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Understand working tree, index, `HEAD`, and safe restore behavior. |
 | 2 | [Kubernetes fundamentals](kubernetes/fundamentals/index.md) | Learn Pods, Deployments, Services, namespaces, labels, and reconciliation. |
 | 3 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
-| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/index.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
+| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
 
 ## Understanding checks
 

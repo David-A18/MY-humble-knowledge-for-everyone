@@ -6,7 +6,15 @@ tags: [cross-topic-guides, deploying-to-eks]
 status: draft
 maturity: draft
 audience: "Application and platform engineers deploying to Amazon EKS"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: eks-update-kubeconfig
+    resource: https://docs.aws.amazon.com/cli/latest/reference/eks/update-kubeconfig.html
+    title: AWS CLI update-kubeconfig reference
+  - id: kubernetes-deployments
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    title: Kubernetes Deployments
+stale_after: 2026-12-19
 ---
 
 # Deploying to EKS

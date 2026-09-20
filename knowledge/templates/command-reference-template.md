@@ -1,46 +1,43 @@
 ---
-type: "Template"
-title: "Command reference title"
-description: "Collect commands for a focused tool, workflow, or operational task."
-tags: [templates, command-reference-template]
+type: Template
+title: Command reference template
+description: Start a safe, scannable command reference with context checks, expected results, and recovery guidance.
+tags: [templates, command-reference]
 status: draft
-maturity: initial-outline
-audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maturity: draft
+audience: Engineering learners and practitioners
+maintainer: unassigned
 ---
 
-# Command reference title
+# Command reference template
 
-Status: Initial outline
-Audience: Beginning platform engineer
-Page type: Reference
-Maintainer: Unassigned
-Last substantive review: Not yet reviewed
-Applicable versions: To be established before execution
-Validation evidence: Not yet tested
-Known limitations: To be documented
-Next review: Assign after substantive review
+> [!IMPORTANT]
+> Replace the frontmatter and command placeholders. A command reference is a `Reference`, not a tutorial; keep it precise and task-oriented.
 
 ## Purpose
 
-Collect commands for a focused tool, workflow, or operational task.
+State which tool, command family, or operational task this reference covers.
+
+## Before running commands
+
+- State the required tools, versions, permissions, account, cluster, or working directory.
+- Show a harmless context check before a command can alter data or infrastructure.
+- Link to the related tutorial or troubleshooting guide when the task needs more explanation.
 
 ## Quick reference
 
-| Task | Command |
-| --- | --- |
-| Describe the task | `tool command --flag` |
+| Task | Command | Success signal |
+| --- | --- | --- |
+| Describe the task | `tool command --flag` | State what confirms the result. |
 
-## Commands
+## Command details
 
 ### Command name
 
-Use this when:
-
-- Condition or scenario.
+Use this when: describe the exact condition.
 
 > [!WARNING]
-> Explain any destructive or irreversible behavior before the command.
+> Explain destructive, irreversible, credential-sensitive, or production-impacting behavior before the affected command.
 
 ```bash
 tool command --flag value
@@ -48,14 +45,16 @@ tool command --flag value
 
 What it does: explain the command in plain language.
 
-Expected output:
+Expected result: show a short expected output or observable invariant.
 
-```text
-example output
-```
+If it fails: name the first diagnostic command or link to a troubleshooting guide.
+
+## Evidence and freshness
+
+Use official command documentation in frontmatter `sources`. Record the version or review scope in the page only when it is real.
 
 ## Related links
 
 - [Writing instructions](../../instructions.md)
 - [Back to templates index](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

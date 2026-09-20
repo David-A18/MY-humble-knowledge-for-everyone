@@ -40,6 +40,9 @@ Use the official [OKF v0.2 specification](https://github.com/GoogleCloudPlatform
 ## Validation
 
 - [`scripts/validate-okf.py`](scripts/validate-okf.py) enforces the repository's strict OKF producer profile.
+- [`scripts/build-knowledge-catalog.py`](scripts/build-knowledge-catalog.py) derives a deterministic catalog for AI retrieval and maintenance tooling.
+- [`scripts/validate-command-paths.py`](scripts/validate-command-paths.py) rejects fenced examples that still reference pre-OKF root paths.
+- [`scripts/validate-retrieval-cases.py`](scripts/validate-retrieval-cases.py) keeps golden retrieval tasks aligned with real concepts and source IDs.
 - [`scripts/validate-local-links.mjs`](scripts/validate-local-links.mjs) enforces valid internal links and reachability, a stricter rule than OKF consumer conformance.
 - Markdown lint, issue-template validation, GitHub label checks, link validation, Terraform format checks, and OKF validation run in CI on `develop` and `main`.
 

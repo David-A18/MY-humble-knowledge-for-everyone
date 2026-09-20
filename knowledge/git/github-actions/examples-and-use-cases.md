@@ -176,7 +176,7 @@ name: Terraform plan
 on:
   pull_request:
     paths:
-      - "terraform/**"
+       - "knowledge/terraform/**"
       - ".github/workflows/terraform-plan.yml"
 
 permissions:

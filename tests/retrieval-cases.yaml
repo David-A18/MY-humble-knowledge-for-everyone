@@ -1,0 +1,40 @@
+version: "1"
+cases:
+  - id: git-undo-unstaged-edit
+    question: How do I discard an unstaged edit without rewriting shared history?
+    expected_paths: [knowledge/git/troubleshooting/undo-and-recovery.md]
+    required_source_ids: [git-restore]
+  - id: local-kubernetes-learning
+    question: What local Kubernetes route can I complete without an AWS account?
+    expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-concepts]
+  - id: terraform-local-state
+    question: How can I practice Terraform state safely without creating cloud resources?
+    expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
+    required_source_ids: [terraform-cli, terraform-state]
+  - id: crossplane-provider-authentication
+    question: How do Crossplane providers authenticate to external APIs?
+    expected_paths: [knowledge/kubernetes/crossplane/providers-and-authentication.md]
+    required_source_ids: [crossplane-providers]
+  - id: eks-deployment
+    question: How do I update kubeconfig and validate permissions before deploying to EKS?
+    expected_paths: [knowledge/cross-topic-guides/deploying-to-eks.md]
+    required_source_ids: [eks-update-kubeconfig]
+  - id: kafka-duplicate-effects
+    question: When can at-least-once Kafka processing cause duplicate side effects?
+    expected_paths: [knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md]
+    required_source_ids: [apache-kafka-documentation]
+  - id: velero-restore
+    question: How do I create and inspect a Velero restore?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
+  - id: crossplane-components
+    question: What are Crossplane providers, managed resources, XRDs, compositions, and XRs?
+    expected_paths: [knowledge/kubernetes/crossplane/component-model.md]
+  - id: velero-cluster-migration
+    question: How should I plan a Velero-based cluster migration or disaster recovery restore?
+    expected_paths: [knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md]
+    required_source_ids: [velero-migration]
+  - id: next-learning-route
+    question: What should I learn after completing the local beginner route?
+    expected_paths: [knowledge/start-here.md]

@@ -6,7 +6,15 @@ tags: [migrations, velero, aws-s3-ebs-installation]
 status: draft
 maturity: draft
 audience: "Platform engineers installing Velero on EKS"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: velero-aws-plugin
+    resource: https://github.com/vmware-tanzu/velero-plugin-for-aws
+    title: Velero AWS plugin
+  - id: eks-ebs-csi
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html
+    title: Amazon EBS CSI driver for Amazon EKS
+stale_after: 2026-12-19
 ---
 
 # Velero AWS S3 and EBS installation

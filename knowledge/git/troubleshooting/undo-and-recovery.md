@@ -6,7 +6,15 @@ tags: [git, troubleshooting, undo-and-recovery]
 status: stable
 maturity: maintained
 audience: "Developers learning safe Git recovery"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: git-restore
+    resource: https://git-scm.com/docs/git-restore
+    title: git-restore documentation
+  - id: git-revert
+    resource: https://git-scm.com/docs/git-revert
+    title: git-revert documentation
+stale_after: 2026-12-19
 ---
 
 # Undo and recovery

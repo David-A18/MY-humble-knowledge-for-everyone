@@ -33,5 +33,7 @@ configurations, and automation remain under the [MIT License](LICENSE).
 - [GitHub Actions pipeline report](github-actions-pipeline-report.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Knowledge-base upgrade hub](knowledge-base-upgrade/README.md)
+- [Generated knowledge catalog](generated/README.md)
+- [Knowledge-quality test data](tests/README.md)
 - [Raw source intake](sources/README.md)
 - [Maintenance review queue](maintenance-review-queue.md)

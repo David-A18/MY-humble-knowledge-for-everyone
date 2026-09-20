@@ -186,7 +186,7 @@ server.registerResource(
       {
         uri: uri.href,
         mimeType: "text/markdown",
-        text: await readKnowledgeEntry("ai/ai-tooling/model-context-protocol.md"),
+         text: await readKnowledgeEntry("knowledge/ai/ai-tooling/model-context-protocol.md"),
       },
     ],
   }),

@@ -44,7 +44,7 @@ What it does: `git diff` shows work that is not staged yet. `git diff --staged` 
 ### List tracked files
 
 ```bash
-git ls-files git/commands
+git ls-files knowledge/git/commands
 ```
 
 What it does: prints files that are already in Git's index. Ignored files can still appear here if they were tracked before being added to `.gitignore`.
@@ -62,7 +62,7 @@ What it does: prints files that are already in Git's index. Ignored files can st
 ### Stage changes
 
 ```bash
-git add git/commands/daily-commands.md
+git add knowledge/git/commands/daily-commands.md
 git add -p README.md
 ```
 

@@ -6,7 +6,18 @@ tags: [kubernetes, crossplane, local-aws-s3-lab]
 status: draft
 maturity: draft
 audience: "Platform engineers practicing Crossplane with AWS in a sandbox"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: crossplane-install
+    resource: https://docs.crossplane.io/latest/get-started/install/
+    title: Install Crossplane
+  - id: upbound-provider-aws-s3
+    resource: https://marketplace.upbound.io/providers/upbound/provider-aws-s3
+    title: Upbound AWS S3 provider
+  - id: aws-sts-credentials
+    resource: https://docs.aws.amazon.com/STS/latest/APIReference/API_Credentials.html
+    title: AWS STS credentials
+stale_after: 2026-12-19
 ---
 
 # Crossplane local AWS S3 lab

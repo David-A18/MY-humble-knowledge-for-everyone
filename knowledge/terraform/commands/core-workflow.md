@@ -6,7 +6,15 @@ tags: [terraform, core-workflow]
 status: stable
 maturity: maintained
 audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: terraform-cli
+    resource: https://developer.hashicorp.com/terraform/cli
+    title: Terraform CLI documentation
+  - id: terraform-init
+    resource: https://developer.hashicorp.com/terraform/cli/commands/init
+    title: terraform init reference
+stale_after: 2026-12-19
 ---
 
 # Core Terraform workflow

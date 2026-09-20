@@ -35,7 +35,10 @@ maintainer: unassigned
 ---
 ```
 
-Use `status: stable` only when a page has current, recorded review evidence.
+`maintainer` must be `unassigned`, `human:<handle>`, or `team:<name>`.
+Use `status: stable` only when a page has current, recorded review evidence,
+official `sources`, and `stale_after`. Keep draft content discoverable, but do
+not present it as fully trusted guidance.
 Do not add `generated`, `verified`, `sources`, or `stale_after` during a move or
 mechanical edit. Add them when the stated evidence actually exists. Cite sources
 for important technical claims with keyed Markdown footnotes linked to
@@ -48,6 +51,9 @@ for important technical claims with keyed Markdown footnotes linked to
 - `log.md` files use newest-first `## YYYY-MM-DD` headings.
 - Use relative links that resolve in GitHub. Include a concise description beside each index link.
 - Keep examples outside tables, explain what they do, and place risk warnings before risky actions.
+- Keep indexes focused on navigation. Move a substantial tutorial, reference, or
+  explanation into a named concept so people and agents can discover its metadata.
+- Rebuild the generated catalog after changing concept metadata; do not edit it by hand.
 
 ## Licensing and citations
 

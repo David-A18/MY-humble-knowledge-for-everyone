@@ -43,16 +43,16 @@ as documented.
 | --- | ---: | --- |
 | Markdown files in `knowledge/` | 235 | A substantial portable corpus. |
 | Reserved `index.md` files | 77 | Every knowledge directory has an entry point. |
-| Curated concepts with required OKF profile | 156 | Every non-reserved Markdown concept is parseable. |
+| Curated concepts with required OKF profile | 159 | Every non-reserved Markdown concept is parseable. |
 | Local-link, fragment, index, and reachability errors | 0 | Readers and agents can traverse the Markdown graph. |
 | Markdown-lint errors | 0 | The writing format has a clean automated baseline. |
-| Concepts marked `draft` | 146 | The status is honest, but most content has not completed a review cycle. |
+| Concepts marked `draft` | 149 | The status is honest, but most content has not completed a review cycle. |
 | Concepts marked `stable` | 10 | Seven belong to the embedded OKF example; three are ordinary curated guides. |
-| Concepts with structured sources | 3 | All three are inside the embedded OKF example. |
-| Concepts with structured verification or freshness data | 10 | All ten are inside the embedded OKF example. |
+| Concepts with structured sources | 16 | Thirteen are real curated concepts; the rest remain in the embedded OKF example. |
+| Concepts with structured freshness data | 23 | Thirteen real curated concepts now carry a freshness deadline; verification records still belong to the embedded example. |
 | Concepts with an assigned maintainer | 0 | No current person or team owns a review deadline. |
 | Concepts typed `Explanation` | 112 | The Diátaxis classification is heavily skewed and needs editorial review. |
-| Concepts typed `Tutorial` | 1 | Several practical learning experiences are not surfaced as tutorial concepts. |
+| Concepts typed `Tutorial` | 2 | The local Terraform exercise is now a standalone tutorial; more operational pages still need editorial classification. |
 | Concepts under 150 words | 22 | Ten are intentional OKF-example records; the remaining short pages are mostly outlines or incomplete guides. |
 
 The bundle is technically valid, but the data above shows the distinction
@@ -96,41 +96,21 @@ completeness.
 
 ## Findings and exact next actions
 
-### P0 — Repair post-migration command paths and the Terraform quality gate
+### P0 — Completed: repair post-migration command paths and the Terraform quality gate
 
-The Markdown-link validator cannot inspect paths embedded in shell commands,
-JSON examples, or YAML snippets. The OKF move left nine references to the old
-root-level layout. They make examples or future agent integrations point at
-paths that no longer exist.
+The Markdown-link validator cannot inspect paths embedded in shell commands, JSON examples, or YAML snippets. The OKF move had left nine references to the former root-level layout, and the Terraform formatter searched a directory that no longer existed.
 
-| File | Required correction |
-| --- | --- |
-| [local Kubernetes path](knowledge/cross-topic-guides/local-deployment-learning-path.md) | Change `cp kubernetes/examples/...` to `cp knowledge/kubernetes/examples/...`. |
-| [Terraform local-state tutorial](knowledge/terraform/examples/local-state-lifecycle/index.md) | Change both `cp terraform/examples/...` paths to `cp knowledge/terraform/examples/...`. |
-| [daily Git commands](knowledge/git/commands/daily-commands.md) | Change `git ls-files git/commands` and `git add git/commands/daily-commands.md` to their `knowledge/git/...` paths. |
-| [provenance guide](knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) | Update the sample concept path to begin with `knowledge/`. |
-| [retrieval guide](knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Update the JSON sample path to begin with `knowledge/`. |
-| [MCP guide](knowledge/ai/ai-tooling/model-context-protocol.md) | Update the `readKnowledgeEntry` sample path to begin with `knowledge/`. |
-| [GitHub Actions example](knowledge/git/github-actions/examples-and-use-cases.md) | Update the illustrative `terraform/**` change filter to `knowledge/terraform/**` when it describes this repository. |
-| [Terraform workflow](.github/workflows/terraform-format.yml) | Change `find terraform` and `terraform fmt ... terraform` to `knowledge/terraform`. The current workflow is green because it finds no root `terraform/` directory and skips the actual example. |
-| [PR template](.github/PULL_REQUEST_TEMPLATE.md) | Replace the obsolete `README.md`-index checklist item with `index.md` for knowledge directories. |
+This refactor corrected those paths in the local Kubernetes and Terraform tutorials, Git examples, AI retrieval/MCP examples, and the GitHub Actions path filter. It also changed the Terraform workflow to format `knowledge/terraform`, corrected the PR template to require `index.md`, and added a fenced command-path validator with fixtures.
 
-Add a fence-aware command-path validator after these fixes. It should flag
-references to moved top-level knowledge directories inside executable Markdown
-fences. This closes the quality gap that local-link validation cannot see.
-
-**Done when:** the affected examples work from the repository root, the
-Terraform workflow formats `knowledge/terraform`, the PR template reflects
-OKF, and the new validator has fixtures for an old and a valid path.
+**Verified result:** command-path validation passes for the bundle, the Terraform workflow now targets the real examples, and CI verifies this rule on both `develop` and `main`.
 
 ### P1 — Turn trust and freshness into real metadata
 
 The three ordinary `stable` guides—Git undo and recovery, Terraform core
-workflow, and Terraform state management—contain useful human-readable review
-blocks. None has structured `sources`, `verified`, or `stale_after` metadata.
-Every such record currently belongs to the intentionally illustrative OKF
-example, so an AI consumer cannot distinguish actual reviewed guidance from
-ordinary draft content reliably.
+workflow, and Terraform state management—now have structured official sources
+and freshness deadlines. Ten priority operational guides, the two extracted
+learning concepts, and ADR-0004 also now carry source records. Verification
+records and real owners still need to be added without inventing evidence.
 
 Review the ten priority guides already named in the maintenance queue. For each
 guide, record only evidence that really happened, using official sources and a
@@ -288,10 +268,10 @@ and fixes linked to the evidence.
 
 | Phase | Work | Exit criterion |
 | --- | --- | --- |
-| 0 — Restore migration integrity | Fix the nine path references, Terraform workflow scope, and PR template; add command-path validation. | Commands and CI point only at canonical `knowledge/` paths. |
+| 0 — Restore migration integrity | **Complete.** Fixed nine path references, Terraform workflow scope, PR template, and command-path validation. | Commands and CI point only at canonical `knowledge/` paths. |
 | 1 — Establish trust | Review the ten priority guides, assign owners, record structured sources, verification, and deadlines. | Every selected guide has honest machine-readable trust information. |
 | 2 — Make learning reliable | Extract substantial index content, repair the local path, complete the Kubernetes diagnosis and Terraform foundation routes. | A fresh reader can complete the local route and choose a next route. |
-| 3 — Improve AI retrieval | Create a generated catalog and golden retrieval tests. | An agent's discovery, filtering, and evidence behavior is measurable. |
+| 3 — Improve AI retrieval | **Baseline complete.** Generated catalog and golden retrieval cases are validated in CI; add a real retrieval runner when a serving tool is selected. | An agent's discovery, filtering, and evidence behavior is measurable. |
 | 4 — Expand deliberately | Use reader demand and review capacity to select the next focused articles. | New content has an owner, source plan, and correct Diátaxis outcome before drafting. |
 
 ## Definition of a mature knowledge base

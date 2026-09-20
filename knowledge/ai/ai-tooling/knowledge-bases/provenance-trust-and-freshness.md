@@ -62,7 +62,7 @@ source_path: docs/concepts/workloads/pods
 source_hash: sha256:example
 renderer_version: docs-renderer/1.2.0
 knowledge_concepts:
-  - ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/source-schema-extraction
+   - knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/source-schema-extraction
 generated_hash: sha256:example-output
 last_reconciled_at: 2026-08-08T10:00:00Z
 status: active

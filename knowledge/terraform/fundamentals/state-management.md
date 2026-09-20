@@ -6,7 +6,15 @@ tags: [terraform, state-management]
 status: stable
 maturity: maintained
 audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: terraform-state
+    resource: https://developer.hashicorp.com/terraform/language/state
+    title: Terraform state documentation
+  - id: terraform-backends
+    resource: https://developer.hashicorp.com/terraform/language/backend
+    title: Terraform backend documentation
+stale_after: 2026-12-19
 ---
 
 # State management

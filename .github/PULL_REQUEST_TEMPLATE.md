@@ -8,7 +8,7 @@
 ## Documentation checklist
 
 - [ ] Internal links are relative and verified.
-- [ ] New directories include a `README.md` index.
+- [ ] New knowledge directories include an `index.md` entry point.
 - [ ] New articles are linked from the relevant index.
 - [ ] Commands use fenced code blocks with language identifiers.
 - [ ] Risky procedures include warnings or rollback notes.

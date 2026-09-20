@@ -31,3 +31,16 @@ jobs:
 
       - name: Validate knowledge bundle
         run: python scripts/validate-okf.py knowledge
+
+      - name: Test knowledge-quality validators
+        run: |
+          python scripts/test-command-path-validator.py
+          python scripts/test-retrieval-case-validator.py
+
+      - name: Validate canonical command paths
+        run: python scripts/validate-command-paths.py knowledge
+
+      - name: Verify generated knowledge catalog
+        run: |
+          python scripts/build-knowledge-catalog.py --check
+          python scripts/validate-retrieval-cases.py

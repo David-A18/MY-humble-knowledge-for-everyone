@@ -32,6 +32,8 @@ PROFILE_TYPES = {
 STATUSES = {"draft", "stable", "deprecated"}
 MATURITY = {"initial-outline", "draft", "maintained", "deprecated"}
 ACTOR = re.compile(r"^(?:human:[A-Za-z0-9._-]+|process:[A-Za-z0-9._-]+|[A-Za-z0-9._-]+/[A-Za-z0-9._-]+)$")
+MAINTAINER = re.compile(r"^(?:unassigned|human:[A-Za-z0-9._-]+|team:[A-Za-z0-9._-]+)$")
+SOURCE_ID = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 DATE_HEADING = re.compile(r"^## (\d{4}-\d{2}-\d{2})(?:\b|:)", re.MULTILINE)
 LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)\s]+)")
 
@@ -102,6 +104,10 @@ def validate_bundle(bundle: Path) -> list[str]:
             errors.append(f"{rel}: maturity must be one of {sorted(MATURITY)}")
         if not isinstance(metadata.get("tags"), list) or not all(isinstance(tag, str) and tag for tag in metadata.get("tags", [])):
             errors.append(f"{rel}: tags must be a non-empty list of strings")
+        elif len(set(metadata["tags"])) != len(metadata["tags"]):
+            errors.append(f"{rel}: tags must not contain duplicates")
+        if not MAINTAINER.match(str(metadata.get("maintainer", ""))):
+            errors.append(f"{rel}: maintainer must be unassigned, human:<handle>, or team:<name>")
         for field in ("generated",):
             if field in metadata:
                 value = metadata[field]
@@ -114,11 +120,25 @@ def validate_bundle(bundle: Path) -> list[str]:
                 errors.append(f"{rel}: verified entries must contain valid by actors and at values")
         if "sources" in metadata:
             sources = metadata["sources"]
-            if not isinstance(sources, list) or not all(isinstance(source, dict) and source.get("resource") for source in sources):
-                errors.append(f"{rel}: each source must be a mapping with resource")
+            if not isinstance(sources, list) or not all(
+                isinstance(source, dict)
+                and SOURCE_ID.match(str(source.get("id", "")))
+                and source.get("resource")
+                and source.get("title")
+                for source in sources
+            ):
+                errors.append(f"{rel}: each source must have a kebab-case id, resource, and title")
+            elif len({source["id"] for source in sources}) != len(sources):
+                errors.append(f"{rel}: source ids must be unique within a concept")
         for date_field in ("stale_after",):
             if date_field in metadata and not isinstance(metadata[date_field], (str, date, datetime)):
                 errors.append(f"{rel}: {date_field} must be an ISO date or timestamp")
+        if (
+            metadata.get("status") == "stable"
+            and not rel.startswith("ai/ai-tooling/knowledge-bases/examples/okf-v0.2/")
+            and (not metadata.get("sources") or not metadata.get("stale_after"))
+        ):
+            errors.append(f"{rel}: stable concepts outside the embedded example need sources and stale_after")
 
     for directory in sorted({path.parent for path in markdown_files}):
         index = directory / "index.md"

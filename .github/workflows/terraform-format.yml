@@ -23,8 +23,8 @@ jobs:
 
       - name: Check Terraform formatting
         run: |
-          if ! find terraform -name '*.tf' -type f | grep -q .; then
+          if ! find knowledge/terraform -name '*.tf' -type f | grep -q .; then
             echo "No Terraform example files found; skipping terraform fmt."
             exit 0
           fi
-          terraform fmt -recursive -check terraform
+          terraform fmt -recursive -check knowledge/terraform

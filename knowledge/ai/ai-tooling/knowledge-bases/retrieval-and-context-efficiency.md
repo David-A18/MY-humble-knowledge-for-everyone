@@ -59,7 +59,7 @@ Search results should include enough metadata for an agent to decide what to fet
 {
   "id": "knowledge-bases/provenance-trust-and-freshness",
   "title": "Provenance, trust, and freshness",
-  "path": "ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md",
+   "path": "knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md",
   "section": "Reconciliation state",
   "summary": "Tracks producer revisions, hashes, renderer versions, affected concepts, and reconciliation status.",
   "status": "stable",

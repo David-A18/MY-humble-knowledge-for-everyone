@@ -6,7 +6,7 @@ tags: [kubernetes, crossplane, aws-s3-lab-validation-template]
 status: draft
 maturity: draft
 audience: "Maintainers validating Crossplane AWS authentication guidance"
-maintainer: "Unassigned"
+maintainer: unassigned
 ---
 
 # Crossplane AWS S3 lab validation template

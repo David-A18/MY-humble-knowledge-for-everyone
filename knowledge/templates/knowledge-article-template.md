@@ -1,71 +1,52 @@
 ---
-type: "Template"
-title: "Article title"
-description: "Explain what this article helps the reader understand or accomplish."
-tags: [templates, knowledge-article-template]
+type: Template
+title: Knowledge article template
+description: Start a focused explanation or how-to guide with complete OKF metadata, evidence, and navigation.
+tags: [templates, knowledge-article]
 status: draft
-maturity: initial-outline
-audience: "Beginning platform engineer"
-maintainer: "Unassigned"
+maturity: draft
+audience: Engineering learners and practitioners
+maintainer: unassigned
 ---
 
-# Article title
+# Knowledge article template
 
-Status: Initial outline
-Audience: Beginning platform engineer
-Page type: Explanation or how-to
-Maintainer: Unassigned
-Last substantive review: Not yet reviewed
-Applicable versions: To be established before execution
-Validation evidence: Not yet tested
-Known limitations: To be documented
-Next review: Assign after substantive review
+> [!IMPORTANT]
+> Copy this file, then replace every frontmatter value. Choose either `Explanation` or `How-to Guide` as the new concept type; do not make one page serve both reader outcomes.
 
 ## Purpose
 
-Explain what this article helps the reader understand or accomplish.
+State the single question the reader will understand or the single task they will complete.
 
 ## When to use this
 
-- Scenario 1.
-- Scenario 2.
+- Describe the starting situation.
+- State the result the reader should expect.
+- Link prerequisite concepts or official documentation.
 
-## Prerequisites
+## Explanation or procedure
 
-- Required access, tools, or context.
-- Links to parent concepts or official documentation.
+For an **Explanation**, describe the model, relationships, trade-offs, and decision criteria.
 
-## Key ideas
-
-| Concept | Why it matters |
-| --- | --- |
-| Example concept | Explain the operational impact. |
-
-## Procedure
-
-> [!WARNING]
-> Place destructive, expensive, credential-sensitive, or production-impacting warnings before the command they affect.
+For a **How-to Guide**, state prerequisites, then give safe dependency-ordered steps. Put a warning before any destructive, expensive, credential-sensitive, or production-impacting action.
 
 ```bash
 tool command --flag value
 ```
 
-What it does: explain what the command changes, reads, or validates.
+What it does: explain what the command reads, changes, or validates.
 
-Expected output:
+Expected result: describe the observable success condition and the first useful failure signal.
 
-```text
-example output
-```
+## Evidence and freshness
 
-## Troubleshooting
-
-| Symptom | Likely cause | Next step |
-| --- | --- | --- |
-| Example symptom | Example cause | Example action |
+- Add official source records to frontmatter for material technical claims.
+- Record `stale_after` when the page is reviewed.
+- Add a `verified` record only for a real review or execution event.
+- Keep `status: draft` until the page has current evidence and an owner.
 
 ## Related links
 
 - [Writing instructions](../../instructions.md)
 - [Back to templates index](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

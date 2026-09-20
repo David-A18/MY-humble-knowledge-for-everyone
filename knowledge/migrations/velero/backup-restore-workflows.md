@@ -6,7 +6,15 @@ tags: [migrations, velero, backup-restore-workflows]
 status: draft
 maturity: draft
 audience: "Operators running Velero backup, schedule, and restore workflows"
-maintainer: "Unassigned"
+maintainer: unassigned
+sources:
+  - id: velero-backup-reference
+    resource: https://velero.io/docs/v1.18/backup-reference/
+    title: Velero backup reference
+  - id: velero-restore-reference
+    resource: https://velero.io/docs/v1.18/restore-reference/
+    title: Velero restore reference
+stale_after: 2026-12-19
 ---
 
 # Velero backup and restore workflows
