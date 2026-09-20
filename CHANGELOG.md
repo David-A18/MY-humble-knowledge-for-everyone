@@ -84,5 +84,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Linked maintenance-queue blocker entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.
 - Clarified validation and reader-test issue form commit placeholders so future evidence submitters record the current commit under test.
 - Updated the external link-check exclusions to skip the official Crossplane documentation domain after repeated GitHub runner connectivity failures, while keeping local link and fragment validation active.
