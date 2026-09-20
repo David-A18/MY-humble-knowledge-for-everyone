@@ -37,6 +37,7 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | Writing format, examples, tables, risk notes | [instructions.md](instructions.md) | [instructions.md](instructions.md), [templates](templates/README.md) | [context.md](context.md), [CHANGELOG.md](CHANGELOG.md) |
 | Contribution or review process | [CONTRIBUTING.md](CONTRIBUTING.md) | [CONTRIBUTING.md](CONTRIBUTING.md), [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) | [context.md](context.md), [CHANGELOG.md](CHANGELOG.md) |
 | Planned work or priorities | [ROADMAP.md](ROADMAP.md), [improvement plan](knowledge-base-improvement-plan.md) | [ROADMAP.md](ROADMAP.md), [improvement plan](knowledge-base-improvement-plan.md) | [README.md](README.md) if navigation changes |
+| Knowledge-base features, tools, skills, MCP templates, or upgrade instructions | [knowledge-base-upgrade/README.md](knowledge-base-upgrade/README.md) | [knowledge-base-upgrade](knowledge-base-upgrade/README.md) | [README.md](README.md), [context.md](context.md), [CHANGELOG.md](CHANGELOG.md) |
 | Shared terms or acronyms | [GLOSSARY.md](GLOSSARY.md) | [GLOSSARY.md](GLOSSARY.md) | Related articles that use the term |
 | Architecture or repository decisions | [decision-records/README.md](decision-records/README.md) | New ADR from [ADR template](templates/architecture-decision-record-template.md) | [decision-records/README.md](decision-records/README.md), [CHANGELOG.md](CHANGELOG.md) |
 | Visual references | [assets/README.md](assets/README.md) | [assets/diagrams](assets/diagrams/README.md), [assets/images](assets/images/README.md), [assets/icons](assets/icons/README.md) | Article that uses the asset |
@@ -65,6 +66,7 @@ Use this file as the first routing guide for AI agents improving this knowledge 
 | [Programming languages](programming-languages/README.md) | [programming-languages/README.md](programming-languages/README.md) | Language notes, tooling, runtime behavior, and practical examples. |
 | [MLOps](mlops/README.md) | [mlops/README.md](mlops/README.md) | ML delivery, deployment, monitoring, governance, and operations. |
 | [AI](ai/README.md) | [ai/README.md](ai/README.md) | AI concepts, workflows, systems, safety, and engineering use. |
+| [Knowledge-base upgrade](knowledge-base-upgrade/README.md) | [knowledge-base-upgrade/README.md](knowledge-base-upgrade/README.md) | Repository-specific features, tools, skills, MCP server templates, branch flow, and upgrade instructions. |
 | [AI agents](ai-agents/README.md) | [ai-agents/README.md](ai-agents/README.md) | Agent workflows, tool use, routing, evaluation, and operational safety. |
 | [LLM](llm/README.md) | [llm/README.md](llm/README.md) | Large language model prompting, retrieval, evaluation, deployment, and operations. |
 | [ML](ml/README.md) | [ml/README.md](ml/README.md) | Machine learning fundamentals, datasets, training, evaluation, and model risks. |

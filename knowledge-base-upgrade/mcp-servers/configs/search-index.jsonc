@@ -1,0 +1,29 @@
+{
+  "$schema": "https://example.invalid/mcp-client-config.schema.json",
+  "description": "Template for a read-only search-index MCP server. The index should be generated from Markdown and treated as rebuildable.",
+  "mcpServers": {
+    "knowledge-base-search-index": {
+      "command": "REPLACE_WITH_SEARCH_INDEX_SERVER_COMMAND",
+      "args": [
+        "--index",
+        "REPLACE_WITH_PATH_TO_GENERATED_INDEX_JSON",
+        "--repository-root",
+        "REPLACE_WITH_ABSOLUTE_PATH_TO_REPOSITORY",
+        "--readonly"
+      ],
+      "env": {
+        "KB_SEARCH_MODE": "readonly"
+      },
+      "allowedOperations": [
+        "search_knowledge",
+        "fetch_page",
+        "list_routes"
+      ],
+      "disallowedOperations": [
+        "edit_page",
+        "delete_page",
+        "execute_command"
+      ]
+    }
+  }
+}

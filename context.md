@@ -55,6 +55,7 @@ When adding or moving content, update every affected index immediately.
 | Change AI documentation structure standards | [instructions.md](instructions.md) |
 | Record notable repository changes | [CHANGELOG.md](CHANGELOG.md) |
 | Update planned work | [ROADMAP.md](ROADMAP.md) |
+| Add knowledge-base features, tools, skills, MCP server templates, or upgrade instructions | [knowledge-base-upgrade](knowledge-base-upgrade/README.md) |
 | Define shared terms | [GLOSSARY.md](GLOSSARY.md) |
 | Add reusable article structures | [templates](templates/README.md) |
 | Add architecture or repository decisions | [decision-records](decision-records/README.md) |
@@ -79,6 +80,7 @@ When adding or moving content, update every affected index immediately.
 | [ROADMAP.md](ROADMAP.md) | Planned future work. | Priorities or planned topic areas change. |
 | [knowledge-base-review.md](knowledge-base-review.md) | Dated repository review with evidence and improvement priorities. | A new assessment or clearly marked follow-up is recorded; preserve the reviewed baseline. |
 | [knowledge-base-improvement-plan.md](knowledge-base-improvement-plan.md) | Execution plan for review findings, with dependencies, acceptance criteria, and evidence tracking. | Work package scope, status, implementation evidence, or priorities change. |
+| [knowledge-base-upgrade/README.md](knowledge-base-upgrade/README.md) | Develop-branch hub for knowledge-base features, tools, skills, MCP server templates, and upgrade instructions. | Upgrade routes, features, tools, skills, MCP templates, or branch instructions change. |
 | [maintenance-review-queue.md](maintenance-review-queue.md) | Priority guide review queue, reader-task testing protocol, and optional validation follow-ups. | Maintenance queue items, reader testing, review ownership, or validation evidence changes. |
 | [external-evidence-request.md](external-evidence-request.md) | Public-safe checklist for optional AWS sandbox and reader-test evidence. | External validation prerequisites, evidence fields, or privacy rules change. |
 | [reader-test-facilitator-guide.md](reader-test-facilitator-guide.md) | Facilitator script, expected routes, scoring rules, and privacy guidance for KB-14 reader sessions. | Reader-test session protocol, task prompts, expected routes, or scoring rules change. |

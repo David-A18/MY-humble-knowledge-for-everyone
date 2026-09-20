@@ -65,6 +65,7 @@ Use these shortcuts when you already know the topic name and do not want to brow
 | [Roadmap](ROADMAP.md) | Planned expansion areas and prioritization. |
 | [Knowledge-base review](knowledge-base-review.md) | Repository assessment, evidence, and prioritized improvements reviewed on 2026-09-18. |
 | [Knowledge-base improvement plan](knowledge-base-improvement-plan.md) | Ordered work packages, contributor instructions, acceptance criteria, and maintenance measures based on the review. |
+| [Knowledge-base upgrade hub](knowledge-base-upgrade/README.md) | Develop-branch area for knowledge-base features, tools, skills, MCP server templates, and upgrade instructions. |
 | [Maintenance review queue](maintenance-review-queue.md) | Priority guide review queue, reader-task testing protocol, and optional validation follow-ups. |
 | [External evidence request checklist](external-evidence-request.md) | Public-safe checklist for optional AWS sandbox and reader-test evidence. |
 | [Reader test facilitator guide](reader-test-facilitator-guide.md) | Session script, expected routes, scoring rules, and privacy guidance for KB-14 reader testing. |

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://example.invalid/mcp-client-config.schema.json",
+  "description": "Template for a read-only filesystem MCP server pointed at this knowledge base. Replace command, args, and path for the target host before use.",
+  "mcpServers": {
+    "knowledge-base-filesystem-readonly": {
+      "command": "REPLACE_WITH_SERVER_COMMAND",
+      "args": [
+        "REPLACE_WITH_READONLY_FLAG",
+        "REPLACE_WITH_ABSOLUTE_PATH_TO_REPOSITORY"
+      ],
+      "env": {
+        "KB_MODE": "readonly"
+      },
+      "allowedOperations": [
+        "list",
+        "read"
+      ],
+      "disallowedOperations": [
+        "write",
+        "delete",
+        "shell",
+        "network"
+      ]
+    }
+  }
+}

@@ -39,6 +39,7 @@ Use the templates in [templates](templates/README.md) when starting new content.
 
 ## Pull request expectations
 
+- Use `develop` for knowledge-base upgrade work that adds features, maintainer tools, reusable skills, MCP templates, or upgrade instructions before merging to `main`.
 - Keep changes scoped.
 - Update indexes when adding, moving, or removing pages.
 - Update [GLOSSARY.md](GLOSSARY.md) when adding important new terms.
@@ -46,6 +47,7 @@ Use the templates in [templates](templates/README.md) when starting new content.
 
 ## Maintenance and reader feedback
 
+- Use the [knowledge-base upgrade hub](knowledge-base-upgrade/README.md) for feature, tool, skill, MCP-template, and upgrade-instruction work.
 - Use the [maintenance review queue](maintenance-review-queue.md) for priority article reviews, optional validation follow-ups, and reader-task testing.
 - Use the [external evidence request checklist](external-evidence-request.md) before collecting optional AWS sandbox or reader-test evidence.
 - Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run KB-14 sessions consistently.

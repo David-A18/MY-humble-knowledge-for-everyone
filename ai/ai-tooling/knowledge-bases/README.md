@@ -67,6 +67,7 @@ producer changes
 | [Security and governance](security-and-governance.md) | Prompt injection, poisoning, retrieval authorization, MCP risks, write-path abuse, and governance mapping. |
 | [Evaluation and quality](evaluation-and-quality.md) | Golden questions, retrieval metrics, answer evaluation, cost metrics, freshness metrics, determinism, observability, and cache safety. |
 | [OKF v0.2 example bundle](examples/okf-v0.2/index.md) | Small public-safe OKF bundle with root version declaration, concept documents, claim-level sources, trust metadata, and Attested Computation. |
+| [Knowledge-base upgrade hub](../../../knowledge-base-upgrade/README.md) | Repository-specific feature, tool, skill, MCP, and instruction scaffold for upgrading this knowledge base. |
 
 ## How everything fits together
 

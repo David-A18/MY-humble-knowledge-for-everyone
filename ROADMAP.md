@@ -8,7 +8,7 @@ Use the [knowledge-base improvement plan](knowledge-base-improvement-plan.md) to
 
 The improvement plan has completed its documentation-scope work. The first local beginner route and Terraform exercise now exist and have author execution evidence. Crossplane AWS runtime validation and reader testing remain optional follow-up evidence rather than blockers for the knowledge base. Use the expansion ideas below as a backlog after those foundations; track implementation status in the plan rather than duplicating it here.
 
-Use the [maintenance review queue](maintenance-review-queue.md) to schedule priority guide reviews, record optional validation follow-ups, and run reader-task testing before making larger navigation or site-search decisions.
+Use the [maintenance review queue](maintenance-review-queue.md) to schedule priority guide reviews, record optional validation follow-ups, and run reader-task testing before making larger navigation or site-search decisions. Use the [knowledge-base upgrade hub](knowledge-base-upgrade/README.md) on `develop` for repository-level features, tools, skills, MCP server templates, and upgrade instructions.
 
 ## Near term
 

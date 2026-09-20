@@ -10,6 +10,7 @@ AI tooling guidance for MCP servers, Claude and Codex custom tools, skills, and 
 | [Create AI tools for Claude and Codex](create-ai-tools-for-claude-and-codex.md) | You need to expose custom actions, APIs, files, skills, or MCP servers to Claude, Claude Code, Codex, or OpenAI tools. |
 | [Knowledge-base creation, management, and optimization](knowledge-bases-creation-management-and-optimization.md) | You need a short entry point for agent-ready Markdown, retrieval, and OKF knowledge-base design. |
 | [Agent knowledge bases](knowledge-bases/README.md) | You need the full Git-backed, standards-aware reference architecture for AI agent knowledge systems. |
+| [Knowledge-base upgrade hub](../../knowledge-base-upgrade/README.md) | You need the repository-specific upgrade plan for features, tools, skills, MCP server templates, and instructions. |
 
 ## How the pieces fit
 

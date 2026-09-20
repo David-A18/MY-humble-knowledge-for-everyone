@@ -1,0 +1,29 @@
+{
+  "$schema": "https://example.invalid/mcp-client-config.schema.json",
+  "description": "Template for a GitHub-backed documentation review MCP server. Keep credentials outside this file.",
+  "mcpServers": {
+    "knowledge-base-github-review": {
+      "command": "REPLACE_WITH_GITHUB_MCP_SERVER_COMMAND",
+      "args": [
+        "--repo",
+        "David-A18/MY-humble-knowledge-for-everyone",
+        "--readonly"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "USE_HOST_SECRET_STORE_OR_ENVIRONMENT"
+      },
+      "allowedOperations": [
+        "list_issues",
+        "read_issue",
+        "list_commits",
+        "read_pull_request"
+      ],
+      "disallowedOperations": [
+        "push",
+        "merge",
+        "delete_branch",
+        "write_issue_comment"
+      ]
+    }
+  }
+}
