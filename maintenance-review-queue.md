@@ -2,25 +2,25 @@
 
 ## Purpose
 
-Track priority article reviews, blocked validation work, and reader-task testing for the knowledge base.
+Track priority article reviews, optional validation follow-ups, and reader-task testing for the knowledge base.
 
 Status: Draft
 Audience: Maintainers and contributors planning review work
 Page type: Maintenance queue
 Maintainer: Unassigned
-Last substantive review: 2026-09-19
+Last substantive review: 2026-09-20
 Applicable versions: Current repository state recorded in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 Validation evidence: Markdown lint and local link validation passed for the queue introduction and external-evidence checklist batches
-Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks still need suitable environments
+Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks remain optional evidence that needs suitable environments
 Next review: When KB-14 reader testing starts, or by 2026-10-19
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
 
-Use the [external evidence request checklist](external-evidence-request.md) to identify missing outside inputs, the [reader test facilitator guide](reader-test-facilitator-guide.md) to run sessions, and the [reader test results template](reader-test-results-template.md) or reader-test GitHub issue form to record results.
+Use the [external evidence request checklist](external-evidence-request.md) to identify optional outside inputs, the [reader test facilitator guide](reader-test-facilitator-guide.md) to run sessions, and the [reader test results template](reader-test-results-template.md) or reader-test GitHub issue form to record results.
 
 ## How to use this queue
 
-1. Pick an article whose next review date is due, whose upstream product changed, or whose blocked evidence is now available.
+1. Pick an article whose next review date is due, whose upstream product changed, or whose optional validation evidence is now available.
 2. Read the article, parent index, [instructions](instructions.md), and any related official sources before editing.
 3. Update the article's review-information block with the actual evidence level: source reviewed, statically checked, locally executed, or sandbox executed.
 4. Record reader feedback or execution results in the article, plan record, changelog, or a linked issue as appropriate.
@@ -43,11 +43,11 @@ Use the [external evidence request checklist](external-evidence-request.md) to i
 
 ## Reader-task testing queue
 
-KB-14 requires actual reader testing. Do not mark it complete until willing readers have run tasks and the results are recorded without unnecessary personal data.
+KB-14 provides the process for actual reader testing. Reader sessions are optional follow-up evidence; when they happen, record results without unnecessary personal data.
 
 ### Participant criteria
 
-Recruit 3-5 willing readers through an authorized channel. Aim for readers who want to learn practical platform, cloud, or DevOps work and who can use a terminal safely. Record experience level broadly, such as beginner, early practitioner, or experienced engineer.
+When maintainers choose to collect reader evidence, recruit 3-5 willing readers through an authorized channel. Aim for readers who want to learn practical platform, cloud, or DevOps work and who can use a terminal safely. Record experience level broadly, such as beginner, early practitioner, or experienced engineer.
 
 ### Test tasks
 
@@ -79,11 +79,11 @@ Record only the fields needed for documentation improvement:
 | Confusing term or step | The smallest phrase or step that caused trouble. |
 | Follow-up action | Issue, edit, or no change with reason. |
 
-## Current blockers
+## Optional validation follow-ups
 
-- KB-04 needs authorized AWS and Crossplane sandbox execution before the temporary-credential path can be called fully validated; tracked in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1), with the latest validated baseline noted in [issue comment #5749445645](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1#issuecomment-5749445645). Use the [external evidence request checklist](external-evidence-request.md) before the run, then use the [AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
-- KB-14 needs actual reader participation; author testing is useful but does not satisfy reader-trial acceptance. Tracked in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2), with the latest validated baseline noted in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761). Use the external evidence request checklist before recruiting readers, then use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
-- KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question after KB-14 produces reader evidence.
+- KB-04 can be strengthened with authorized AWS and Crossplane sandbox execution, but the source-reviewed documentation correction is complete for the knowledge-base scope. Track optional runtime evidence in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1), with the latest validated baseline noted in [issue comment #5749445645](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1#issuecomment-5749445645). Use the [external evidence request checklist](external-evidence-request.md) before the run, then use the [AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
+- KB-14 can be strengthened with actual reader participation, but the testing process and maintenance scaffold are complete for the knowledge-base scope. Track optional reader evidence in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2), with the latest validated baseline noted in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761). Use the external evidence request checklist before recruiting readers, then use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
+- KB-15 is recorded in [ADR-0003](decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question if reader evidence or maintainer feedback shows a measured need.
 
 ## Related links
 

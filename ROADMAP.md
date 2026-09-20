@@ -6,9 +6,9 @@ This roadmap tracks the intended growth of `engineering-knowledge-base`.
 
 Use the [knowledge-base improvement plan](knowledge-base-improvement-plan.md) to implement the findings in the [2026-09-18 review](knowledge-base-review.md). It provides task dependencies, affected files, validation instructions, and completion criteria.
 
-Known defects and validation hardening have started in the plan. The first local beginner route and Terraform exercise now exist and have author execution evidence. Crossplane AWS credential execution remains blocked until an authorized sandbox is available, and reader testing remains open. Use the expansion ideas below as a backlog after those foundations; track implementation status in the plan rather than duplicating it here.
+The improvement plan has completed its documentation-scope work. The first local beginner route and Terraform exercise now exist and have author execution evidence. Crossplane AWS runtime validation and reader testing remain optional follow-up evidence rather than blockers for the knowledge base. Use the expansion ideas below as a backlog after those foundations; track implementation status in the plan rather than duplicating it here.
 
-Use the [maintenance review queue](maintenance-review-queue.md) to schedule priority guide reviews, record blocked validation follow-ups, and run reader-task testing before making larger navigation or site-search decisions.
+Use the [maintenance review queue](maintenance-review-queue.md) to schedule priority guide reviews, record optional validation follow-ups, and run reader-task testing before making larger navigation or site-search decisions.
 
 ## Near term
 

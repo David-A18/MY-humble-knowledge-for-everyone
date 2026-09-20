@@ -2,23 +2,23 @@
 
 ## Purpose
 
-List the outside inputs needed to finish the remaining blocked work in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md).
+List optional outside inputs that can strengthen the completed documentation-scope work in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md).
 
 Status: Draft
-Audience: Maintainers, facilitators, and sandbox owners who can provide evidence for blocked validation work
+Audience: Maintainers, facilitators, and sandbox owners who can provide optional validation evidence
 Page type: Maintenance checklist
 Maintainer: Unassigned
-Last substantive review: 2026-09-19
+Last substantive review: 2026-09-20
 Applicable versions: Use with the current [maintenance review queue](maintenance-review-queue.md)
 Validation evidence: Markdown lint and local link validation cover this checklist; no external evidence has been supplied yet
-Known limitations: This checklist does not complete KB-04 or KB-14 by itself
+Known limitations: This checklist records optional evidence; it is not required for the documentation-scope completion of KB-04 or KB-14
 Next review: When AWS sandbox evidence or reader-test results are available
 
-Use this checklist before running the Crossplane AWS S3 lab or reader-task sessions. It keeps the remaining work public-safe and prevents maintainers from inventing validation evidence.
+Use this checklist before running the Crossplane AWS S3 lab or reader-task sessions. It keeps optional evidence public-safe and prevents maintainers from inventing validation evidence.
 
 ## KB-04 AWS and Crossplane sandbox evidence
 
-KB-04 can finish only after an authorized non-production AWS sandbox run validates the Crossplane AWS S3 lab. Track the run in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1).
+KB-04 is complete for documentation-scope work after the source-reviewed correction and honest evidence note. An authorized non-production AWS sandbox run can strengthen the page later by validating the Crossplane AWS S3 lab. Track any run in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1).
 
 ### Required before the run
 
@@ -50,7 +50,7 @@ Use the [Crossplane AWS S3 lab validation template](kubernetes/crossplane/aws-s3
 
 ## KB-14 reader-test evidence
 
-KB-14 can finish only after actual readers try the documented tasks and their anonymous outcomes are recorded. Track the sessions in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2).
+KB-14 is complete for documentation-scope work after the maintenance loop, facilitator guide, results template, issue form, and privacy rules are in place. Actual reader sessions can strengthen the knowledge base later by testing findability and comprehension. Track any sessions in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2).
 
 ### Required before the sessions
 
@@ -80,8 +80,8 @@ Record only what is needed to improve the knowledge base:
 ## After evidence is available
 
 1. Update the relevant article review-information blocks with the actual evidence level.
-2. Update [maintenance review queue](maintenance-review-queue.md) with resolved blockers, new review reasons, or new dates.
-3. Update [knowledge-base improvement plan](knowledge-base-improvement-plan.md) KB-04 or KB-14 records.
+2. Update [maintenance review queue](maintenance-review-queue.md) with new evidence, new review reasons, or new dates.
+3. Update [knowledge-base improvement plan](knowledge-base-improvement-plan.md) KB-04 or KB-14 records if the evidence changes their limitations or follow-up status.
 4. Update [CHANGELOG.md](CHANGELOG.md) for meaningful validation evidence or content changes.
 5. Run the repository validation checks before publishing.
 

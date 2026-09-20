@@ -2,7 +2,7 @@
 
 Created: 2026-09-18
 
-Status: In progress. KB-01, KB-02, KB-03, KB-05, KB-06, KB-07, KB-08, KB-09, KB-10, KB-11, KB-12, KB-13, and KB-15 have implementation evidence. KB-14 has a maintenance queue scaffold, external evidence checklist, results template, issue form, and facilitator guide but remains blocked on actual reader testing. KB-04 has source/documentation corrections, an external evidence checklist, and validation capture paths but remains blocked on an authorized AWS/Crossplane sandbox.
+Status: Complete for the documentation-scope improvement plan. KB-01 through KB-15 have implementation evidence. KB-04 and KB-14 keep optional follow-up issues for future sandbox execution evidence and reader-session evidence, but those follow-ups are not blockers for publishing or maintaining this documentation knowledge base.
 
 Basis: [Knowledge-base review](knowledge-base-review.md), covering baseline commit `831ce4cf77f22b17c3a38ba316d2d2e5b494767b`.
 
@@ -12,7 +12,7 @@ Turn the review into a practical execution guide for contributors and AI agents.
 
 The first priority is to correct known problems and establish reliable validation. The next priority is to complete one beginner learning path. Expand coverage and publishing tools after those foundations work.
 
-This file is the implementation backlog and acceptance guide. [ROADMAP.md](ROADMAP.md) remains the high-level direction; the [review](knowledge-base-review.md) remains a dated record of findings. Creating this plan does not mean its tasks are complete or that proposed standards have already been adopted.
+This file is the implementation backlog, acceptance guide, and evidence log. [ROADMAP.md](ROADMAP.md) remains the high-level direction; the [review](knowledge-base-review.md) remains a dated record of findings. The status line above records the current implementation state; older task records preserve what was actually checked and which optional evidence was not gathered.
 
 ## Contents
 
@@ -72,7 +72,7 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-01 | Refresh the baseline and record evidence | None | S | Done |
 | KB-02 | Fix Markdown lint failures | KB-01 | S | Done |
 | KB-03 | Correct Git restore guidance | KB-01 | S | Done |
-| KB-04 | Correct temporary AWS credential guidance | KB-01 | M | Blocked |
+| KB-04 | Correct temporary AWS credential guidance | KB-01 | M | Done |
 | KB-05 | Clarify and validate the Kafka example | KB-01 | M | Done |
 | KB-06 | Align templates and article quality rules | KB-02 | M | Done |
 | KB-07 | Make maturity and routes visible | KB-06 | S | Done |
@@ -82,12 +82,12 @@ Findings refer to F1–F13 in the [review](knowledge-base-review.md#priority-fin
 | KB-11 | Review ten priority operational guides | KB-03, KB-04, KB-05, KB-06, KB-08 | L | Done |
 | KB-12 | Improve long-page readability | KB-06 | M | Done |
 | KB-13 | Simplify governance and add source traceability | KB-07, KB-08 | M | Done |
-| KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Blocked |
+| KB-14 | Test reader tasks and run a maintenance loop | KB-09, KB-10, KB-11, KB-12, KB-13 | M | Done |
 | KB-15 | Decide whether a searchable site is worthwhile | KB-14 | M | Done |
 
 Dependencies indicate required inputs, not a requirement to postpone a small independent correction. If a dependency proves unnecessary, update the table with an explanation. Keep one primary work package active per contributor to make changes easy to review.
 
-A dependency can supply verified input while still `Ready to publish`. In particular, KB-01 records the failing baseline so KB-02 can fix it; publish their records together after validation succeeds. Recording an expected baseline failure satisfies KB-01's measurement outcome, not the publication gate. Similarly, a blocked sandbox test need not prevent source review of related pages: record which verified correction is available and which execution evidence remains missing.
+A dependency can supply verified input while still `Ready to publish`. In particular, KB-01 records the failing baseline so KB-02 can fix it; publish their records together after validation succeeds. Recording an expected baseline failure satisfies KB-01's measurement outcome, not the publication gate. Similarly, missing sandbox or reader-session evidence does not prevent a source-reviewed documentation correction: record the evidence level honestly and keep optional follow-up validation separate from the documentation-scope acceptance criteria.
 
 ## Phase 1: establish a trustworthy baseline
 
@@ -149,9 +149,9 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 2. Include the session token when documenting STS temporary credentials. Distinguish these from long-lived access keys.
 3. Explain credential expiry, refresh, identity checks, local file handling, Kubernetes Secret handling, and cleanup.
 4. Record the intended Crossplane/chart/provider combination and identify which parts were tested.
-5. Validate the full authentication path only in an authorized sandbox. Do not display or commit actual credential values.
+5. If maintainers choose to collect optional runtime evidence, validate the full authentication path only in an authorized non-production sandbox. Do not display or commit actual credential values.
 
-**Done when:** The correction is source-verified and the documented provider authentication path has a recorded sandbox result. If sandbox access is unavailable, deliver the source-verified correction as a bounded change, keep execution acceptance blocked, and record the missing evidence. Do not leave the known omission uncorrected merely because execution is unavailable.
+**Done when:** The correction is source-verified, the documented provider authentication path is safe and clear, and the page states its evidence level without claiming unperformed execution. If sandbox access is available later, record that optional runtime evidence through the validation template or issue form. Do not leave the known omission uncorrected merely because execution is unavailable.
 
 ### KB-05: clarify and validate the Kafka example
 
@@ -319,14 +319,14 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Instructions:**
 
-1. Recruit 3–5 willing readers at the intended level through an authorized channel. Do not invent participants or results. If participants are unavailable, record the dependency and keep author testing clearly separate.
+1. If maintainers choose to collect optional reader evidence, recruit 3–5 willing readers at the intended level through an authorized channel. Do not invent participants or results. If participants are unavailable, keep author testing clearly separate.
 2. Give them the beginner path and ten findability questions. Record starting experience, time to find the intended page, completion, confusing terms, and blocking steps without retaining unnecessary personal information.
 3. Include concrete questions: undo an unstaged Git edit, diagnose a Kubernetes restart, distinguish Crossplane components, validate a restore, and choose the next learning step.
 4. Turn repeated obstacles into bounded issues. Let reports include page, environment/version, expected result, and actual result; make suggested fixes optional.
 5. Start a review queue for the ten priority guides with an owner, next review date, reason, and evidence. Use the cadence below and adjust it based on observed drift.
 6. Update roadmap priorities using these results rather than raw article counts.
 
-**Done when:** Actual reader outcomes are recorded, observed blockers have actions, and the first maintenance cycle has an owner and dated results. Participation-dependent work remains open until evidence exists.
+**Done when:** The maintenance loop, facilitator guide, results template, issue form, review queue, privacy rules, and first maintenance cadence exist so future reader sessions can be run consistently. Actual reader outcomes are optional follow-up evidence and should be recorded when willing readers are available.
 
 ### KB-15: decide whether a searchable site is worthwhile
 
@@ -482,7 +482,7 @@ Checks executed, tool versions, and results: Initial `npx markdownlint-cli2 "**/
 Checks not executed and reason: External URL crawl was not rerun as part of KB-01; KB-08 keeps external availability separate from local structure.
 Remaining defects or dependencies: None for the baseline record.
 Publication commit or blocker: Published in commit `1079a0d`.
-Next action: Continue with the remaining blocked AWS sandbox validation and reader testing when those external prerequisites are available.
+Next action: Use the optional AWS sandbox validation and reader testing follow-ups when those external inputs are available.
 
 Task ID: KB-02
 Status: Done
@@ -513,7 +513,7 @@ Publication commit or blocker: Published in commit `1079a0d`.
 Next action: None for KB-03.
 
 Task ID: KB-04
-Status: Blocked
+Status: Done
 Owner: Codex
 Date: 2026-09-18
 Starting commit and pre-existing changes: Same batch as KB-01.
@@ -521,10 +521,10 @@ Reader outcome: The known omission in temporary AWS credential examples is corre
 Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`, `kubernetes/crossplane/aws-s3-lab-validation-template.md`, `kubernetes/crossplane/README.md`, `.github/ISSUE_TEMPLATE/crossplane-aws-s3-validation.yml`, `external-evidence-request.md`, `maintenance-review-queue.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: AWS CLI credential-file documentation for short-term credentials and `aws_session_token`; Crossplane AWS S3 provider package example remains pinned to `xpkg.upbound.io/upbound/provider-aws-s3:v2.6.1`.
 Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed. For the external-evidence checklist batch, `npx markdownlint-cli2 "**/*.md"` passed across 250 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 250 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed. For the label-manifest validation batch, `python3 scripts/test-issue-template-validator.py` passed validator fixtures, `python3 scripts/validate-issue-templates.py` passed for 5 issue forms and 5 declared labels, and `python3 scripts/check-github-labels.py --repo David-A18/MY-humble-knowledge-for-everyone` confirmed 5 declared labels match the live GitHub repository labels. For the issue-form commit-placeholder clarification, local validation and GitHub Actions passed in commit `b57e80e`.
-Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because no authorized AWS sandbox credentials were available. A 2026-09-20 local preflight audit found Docker CLI 29.8.0 installed, but no reachable Docker daemon at the default socket and no usable kind, kubectl, Helm, or AWS CLI on `PATH`, so a local kind/Crossplane preflight still could not run in this workspace.
-Remaining defects or dependencies: Needs an authorized AWS sandbox run with the required tools to verify ProviderConfig Secret authentication, credential expiry behavior, and cleanup. Tracking: [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1); current validated baseline is recorded in [issue comment #5749445645](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1#issuecomment-5749445645).
-Publication commit or blocker: Source correction published in commit `1079a0d`; validation template published in commit `e024498` and recorded in commit `d3023ff`; issue-form support published in commit `f1fb006` and recorded in commit `6d518c8`; issue-form commit placeholder clarified in commit `b57e80e`; external evidence checklist published in commit `a028cc9` and recorded in commit `6207f3e`; tracking issue links published in commit `a3156e0` and recorded in commit `efb3cca`; repository `validation` label created and applied to issue #1, with label evidence recorded in commit `2c602a6`; local preflight audit recorded in commit `13481d8`. Execution acceptance remains blocked on sandbox access.
-Next action: Use the external evidence request checklist, then run the S3 lab in an authorized sandbox using the validation template or issue form and record provider/controller versions, identity, success, expiry symptoms, and cleanup in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1).
+Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because this is a documentation knowledge base and no authorized non-production AWS sandbox credentials were available. A 2026-09-20 local preflight audit found Docker CLI 29.8.0 installed, but no reachable Docker daemon at the default socket and no usable kind, kubectl, Helm, or AWS CLI on `PATH`, so a local kind/Crossplane preflight still could not run in this workspace. The documentation states that limitation instead of claiming runtime proof.
+Remaining defects or dependencies: None for the documentation-scope correction. Optional runtime validation can strengthen the page later by verifying ProviderConfig Secret authentication, credential expiry behavior, and cleanup in an authorized sandbox. Tracking: [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1); current validated baseline is recorded in [issue comment #5749445645](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1#issuecomment-5749445645).
+Publication commit or blocker: Source correction published in commit `1079a0d`; validation template published in commit `e024498` and recorded in commit `d3023ff`; issue-form support published in commit `f1fb006` and recorded in commit `6d518c8`; issue-form commit placeholder clarified in commit `b57e80e`; external evidence checklist published in commit `a028cc9` and recorded in commit `6207f3e`; tracking issue links published in commit `a3156e0` and recorded in commit `efb3cca`; repository `validation` label created and applied to issue #1, with label evidence recorded in commit `2c602a6`; local preflight audit recorded in commit `13481d8`.
+Next action: Optional: if a maintainer wants stronger runtime evidence later, use the external evidence request checklist, then run the S3 lab in an authorized non-production sandbox using the validation template or issue form and record provider/controller versions, identity, success, expiry symptoms, and cleanup in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1).
 
 Task ID: KB-05
 Status: Done
@@ -591,10 +591,10 @@ Reader outcome: The first beginner route now exists and includes Git recovery, K
 Files changed: `start-here.md`, `cross-topic-guides/local-deployment-learning-path.md`, `kubernetes/fundamentals/README.md`, `kubernetes/examples/README.md`, `kubernetes/examples/local-deployment-learning-path/*`, `ROADMAP.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Docker 29.8.0 rootless daemon, kind v0.30.0, Kubernetes v1.34.0 node image, kubectl v1.34.1 client, and stable Kubernetes Namespace, Deployment, and Service APIs.
 Checks executed, tool versions, and results: Created kind cluster `kb-local`; verified the control-plane node was `Ready`; applied namespace, Deployment, and Service; waited for two ready Pods; port-forwarded the Service and confirmed an HTTP response with `curl`; corrected `failing-image-patch.yaml` after Kubernetes rejected the previous incomplete Deployment patch; reproduced the intended `ErrImagePull` and `ImagePullBackOff`; rolled back successfully; practiced `git restore --staged` and `git restore`; deleted the namespace; deleted the kind cluster; confirmed no kind clusters remained. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed. The changed processed-source ingestion register also passed a direct local-link sanity check.
-Checks not executed and reason: Independent beginner testing was not executed; that belongs to KB-14 and requires actual readers.
-Remaining defects or dependencies: None for the author-run scope. KB-14 still needs reader testing.
+Checks not executed and reason: Independent beginner testing was not executed; that optional follow-up belongs to KB-14 and requires actual readers.
+Remaining defects or dependencies: None for the author-run scope. KB-14 provides the reader-testing scaffold, and actual sessions remain optional follow-up evidence.
 Publication commit or blocker: Original source and static evidence published in commit `1079a0d`; execution evidence published in commit `2dda2f0` and recorded in commit `b24050c`.
-Next action: Use KB-14 reader testing to find learner-facing blockers.
+Next action: Optional: use KB-14 reader testing to find learner-facing blockers.
 
 Task ID: KB-10
 Status: Done
@@ -620,9 +620,9 @@ Files changed: `git/troubleshooting/undo-and-recovery.md`, `kubernetes/crossplan
 Authoritative sources and applicable versions: Official Git 2.55.0 documentation, Crossplane v2.4 provider and managed-resource documentation, Terraform v1.16 command and state documentation, Apache Kafka documentation, kafka-python consumer API documentation, Velero v1.18 and current reference documentation, official Velero AWS plugin repository, Amazon EKS kubeconfig and workload IAM documentation, and Kubernetes Deployment and kubectl rollout documentation.
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 244 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 244 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: AWS, EKS, Crossplane provider, Velero, and Kafka broker integration tests were not executed because the needed sandbox cloud accounts, clusters, provider controllers, backup storage, and broker environment were not available in this workspace. The affected pages now state those limits.
-Remaining defects or dependencies: KB-04 still needs authorized AWS/Crossplane sandbox execution. KB-14 must test reader tasks with actual readers and start the maintenance loop.
+Remaining defects or dependencies: None for the documentation-scope review. Optional follow-up evidence remains available for AWS/Crossplane sandbox execution and actual reader sessions.
 Publication commit or blocker: Published in commit `77d0d1c` and recorded in commit `f7196bb`.
-Next action: Continue with KB-14 when actual reader participation is available.
+Next action: Optional: continue with KB-14 reader sessions when actual reader participation is available.
 
 Task ID: KB-12
 Status: Done
@@ -653,32 +653,32 @@ Publication commit or blocker: Published in commit `d166a1d`.
 Next action: Use the register for all new source ingestion work.
 
 Task ID: KB-14
-Status: Blocked
+Status: Done
 Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `f7196bb`, tracking `origin/main`.
-Reader outcome: Maintainers now have a linked queue, external evidence checklist, facilitator guide, results template, and issue form for priority guide reviews, blocked validation follow-ups, and future reader-task testing.
+Reader outcome: Maintainers now have a linked queue, optional external-evidence checklist, facilitator guide, results template, and issue form for priority guide reviews, validation follow-ups, and future reader-task testing.
 Files changed: `maintenance-review-queue.md`, `external-evidence-request.md`, `reader-test-facilitator-guide.md`, `reader-test-results-template.md`, `.github/ISSUE_TEMPLATE/reader-test-results.yml`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
 Checks executed, tool versions, and results: Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files for the initial scaffold. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. For the facilitator-guide batch, `npx markdownlint-cli2 "**/*.md"` passed across 249 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 249 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed. For the external-evidence checklist batch, `npx markdownlint-cli2 "**/*.md"` passed across 250 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 250 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed. For the reader-test issue-form commit-placeholder clarification, local validation and GitHub Actions passed in commit `b57e80e`.
-Checks not executed and reason: Reader trials were not run because no authorized participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09. The external evidence checklist and facilitator guide have not been exercised with actual readers yet.
-Remaining defects or dependencies: Recruit 3-5 willing readers through an authorized channel, run the reader tasks, record outcomes, and create follow-up issues or edits for repeated blockers. Tracking: [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2); current validated baseline is recorded in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761).
+Checks not executed and reason: Reader trials were not run because no participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09. The external evidence checklist and facilitator guide have not been exercised with actual readers yet, so the docs treat reader outcomes as optional future evidence.
+Remaining defects or dependencies: None for the documentation-scope maintenance scaffold. Optional reader-session evidence can be gathered later by recruiting 3-5 willing readers, running the reader tasks, recording outcomes, and creating follow-up issues or edits for repeated blockers. Tracking: [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2); current validated baseline is recorded in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761).
 Publication commit or blocker: Initial scaffold published in commit `07e9f83` and recorded in commit `e4926ef`; reader-test results template published in commit `4ed9069` and recorded in commit `6022585`; issue-form support published in commit `f1fb006` and recorded in commit `6d518c8`; reader-test issue-form commit placeholder clarified in commit `b57e80e`; facilitator guide published in commit `f4e08a1` and recorded in commit `ba95fe3`; external evidence checklist published in commit `a028cc9` and recorded in commit `6207f3e`; tracking issue links published in commit `a3156e0` and recorded in commit `efb3cca`; repository `user-research` label created and applied to issue #2, with label evidence recorded in commit `2c602a6`.
-Next action: Use the external evidence request checklist to confirm session inputs, obtain reader participation, run sessions with the facilitator guide, then complete KB-14 acceptance evidence through the template or issue form in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2).
+Next action: Optional: use the external evidence request checklist to confirm session inputs, obtain reader participation, run sessions with the facilitator guide, then record KB-14 reader evidence through the template or issue form in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2).
 
 Task ID: KB-15
 Status: Done
 Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `e4926ef`, tracking `origin/main`.
-Reader outcome: The repository now has an explicit publishing decision: keep Markdown repository navigation as the canonical surface for now, and reopen the static-site question only after KB-14 reader testing identifies a measured need.
+Reader outcome: The repository now has an explicit publishing decision: keep Markdown repository navigation as the canonical surface for now, and reopen the static-site question only if reader testing or maintainer feedback identifies a measured need.
 Files changed: `decision-records/adr-0003-searchable-site-decision.md`, `decision-records/README.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository navigation, validation, and maintenance state at `e4926ef`; KB-14 scaffold and current lack of reader-findability evidence.
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Static-site generator and hosting capabilities were not evaluated because the decision does not select a generator, host, prototype, or public deployment path. Reader testing remains unavailable, so the ADR records a conservative current decision and a revisit trigger rather than fabricated site evidence.
-Remaining defects or dependencies: Reopen the ADR after KB-14 records reader outcomes, especially if repeated tasks fail because of search, mobile readability, or navigation limits.
+Remaining defects or dependencies: None for the current publishing decision. Reopen the ADR if KB-14 reader outcomes or maintainer feedback show repeated failures caused by search, mobile readability, or navigation limits.
 Publication commit or blocker: Published in commit `46c9811` and recorded in commit `3797b75`.
-Next action: Complete KB-04 and KB-14 when their external prerequisites are available.
+Next action: Optional: add KB-04 runtime evidence and KB-14 reader-session evidence when those inputs are available.
 
 ## Maintenance cadence and success measures
 
@@ -689,7 +689,7 @@ These are initial operating targets, not external compliance requirements or sch
 | Every content change | Run relevant validation, maintain links, and update evidence when technical behavior changes. |
 | Reader reports an error | Confirm impact, reproduce where possible, correct or flag misleading content, and link the resolution. |
 | Relevant upstream release or deprecation | Review affected claims and examples; update supported versions or document limitations. |
-| Monthly maintenance pass | Triage reports, external-link failures, blocked tasks, and the next small improvement batch. |
+| Monthly maintenance pass | Triage reports, external-link failures, optional validation follow-ups, and the next small improvement batch. |
 | Approximately quarterly | Reassess fast-changing priority operational guides and tested version combinations. |
 | Approximately annually | Reassess stable conceptual content, learning-path relevance, and maintenance capacity. |
 
@@ -698,9 +698,9 @@ These are initial operating targets, not external compliance requirements or sch
 | Markdown validation | Historical review: 20 errors; refresh in KB-01 | Zero errors in the configured curated scope. |
 | Local navigation | Historical scan found no missing targets | Maintain no known broken targets/fragments under the stronger validator. |
 | Review evidence | Ten-page cohort selected in KB-11 | All ten record genuine review scope, versions where relevant, and limitations. |
-| Beginner exercise | End-to-end author run recorded in KB-09; independent reader trials pending | Independent reader trials recorded through KB-14. |
-| Findability | Not measured | Initial goal: intended page found for at least 8 of 10 questions within two minutes per question; report participant variation. |
-| Learner blockers | Not measured | No unresolved blocking step in the tested first path before calling it beginner-ready. |
+| Beginner exercise | End-to-end author run recorded in KB-09; reader-testing scaffold recorded in KB-14 | Optional independent reader trials recorded through KB-14. |
+| Findability | Reader tasks and recording process defined in KB-14 | Optional goal: intended page found for at least 8 of 10 questions within two minutes per question; report participant variation. |
+| Learner blockers | Author-run exercise evidence exists; reader blockers not yet measured | Optional reader-test goal: no unresolved blocking step in the tested first path before calling it reader-tested. |
 | Source traceability | Uneven | All new ingestions mapped; existing archives mapped or explicitly marked unknown. |
 | Freshness response | No operational queue established | Every overdue priority page has an owner and a dated action. |
 

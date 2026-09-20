@@ -65,8 +65,8 @@ Use these shortcuts when you already know the topic name and do not want to brow
 | [Roadmap](ROADMAP.md) | Planned expansion areas and prioritization. |
 | [Knowledge-base review](knowledge-base-review.md) | Repository assessment, evidence, and prioritized improvements reviewed on 2026-09-18. |
 | [Knowledge-base improvement plan](knowledge-base-improvement-plan.md) | Ordered work packages, contributor instructions, acceptance criteria, and maintenance measures based on the review. |
-| [Maintenance review queue](maintenance-review-queue.md) | Priority guide review queue, reader-task testing protocol, and blocked validation follow-ups. |
-| [External evidence request checklist](external-evidence-request.md) | Public-safe checklist for the AWS sandbox and reader-test evidence needed to unblock the remaining plan work. |
+| [Maintenance review queue](maintenance-review-queue.md) | Priority guide review queue, reader-task testing protocol, and optional validation follow-ups. |
+| [External evidence request checklist](external-evidence-request.md) | Public-safe checklist for optional AWS sandbox and reader-test evidence. |
 | [Reader test facilitator guide](reader-test-facilitator-guide.md) | Session script, expected routes, scoring rules, and privacy guidance for KB-14 reader testing. |
 | [Reader test results template](reader-test-results-template.md) | Session template for recording KB-14 reader-task outcomes without unnecessary personal data. |
 | [Contributing](CONTRIBUTING.md) | Writing standards, review checklist, and contribution flow. |

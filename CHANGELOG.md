@@ -12,8 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added fixture tests for issue-template and label-manifest validation behavior and wired them into CI.
 - Added a versioned GitHub label manifest and extended issue-template validation so template labels must be declared before publication.
 - Added repository labels for `validation` and `user-research`, then applied them to the KB-04 and KB-14 tracking issues.
-- Added GitHub tracking issues for the remaining KB-04 AWS sandbox validation and KB-14 reader-test evidence blockers.
-- Added an external evidence request checklist for the remaining KB-04 AWS sandbox and KB-14 reader-test blockers.
+- Added GitHub tracking issues for optional KB-04 AWS sandbox validation and KB-14 reader-test evidence.
+- Added an external evidence request checklist for optional KB-04 AWS sandbox and KB-14 reader-test evidence.
 - Added a reader test facilitator guide for KB-14 sessions, with a standard prompt, expected routes, scoring rules, hint guidance, and follow-up workflow.
 - Added maintained issue-template validation with a local Python checker and GitHub Actions workflow.
 - Added GitHub issue forms for KB-14 reader-test results and KB-04 Crossplane AWS S3 sandbox validation runs.
@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a reader-test results template for KB-14 sessions, including task outcomes, blocker tracking, terminology feedback, privacy guidance, and follow-up actions.
 - Completed the local Kubernetes beginner path author run with rootless Docker, kind, and kubectl; fixed the failing-image manifest so the exercise produces the intended `ErrImagePull` diagnosis and rollback flow.
 - Added ADR-0003, deciding to keep repository Markdown navigation as the canonical publishing surface until reader testing shows a measured need for a searchable static site.
-- Added a maintenance review queue with priority guide review dates, blocked validation follow-ups, a reader-task testing protocol, and contributor navigation links.
+- Added a maintenance review queue with priority guide review dates, optional validation follow-ups, a reader-task testing protocol, and contributor navigation links.
 - Added the first local beginner route with `start-here.md`, a local Kubernetes deployment learning path, exact Kubernetes exercise manifests, and a Terraform local-state lifecycle exercise.
 - Added review-information blocks to ten priority operational guides covering Git recovery, Crossplane, Terraform, Kafka, Velero, and EKS deployment, with current source-review evidence and explicit integration-test limits.
 - Added a processed-source ingestion register and contents navigation for long Git, K9s, and Crossplane reference pages.
@@ -84,7 +84,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Reframed KB-04 AWS sandbox execution and KB-14 reader sessions as optional validation follow-ups instead of blockers for the documentation-scope improvement plan.
 - Recorded the KB-04 local preflight environment audit: Docker CLI is present, but no Docker daemon or required Kubernetes/AWS CLIs are available in the workspace.
-- Linked maintenance-queue blocker entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.
+- Linked maintenance-queue follow-up entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.
 - Clarified validation and reader-test issue form commit placeholders so future evidence submitters record the current commit under test.
 - Updated the external link-check exclusions to skip the official Crossplane documentation domain after repeated GitHub runner connectivity failures, while keeping local link and fragment validation active.
