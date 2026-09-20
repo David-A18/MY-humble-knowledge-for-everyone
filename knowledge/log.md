@@ -2,6 +2,7 @@
 
 ## 2026-09-21
 
+- **Terraform state quality pass**: Expanded the stable state-management guide with official Terraform state, backend, locking, remote-state, sensitive-data, plan, and state-command sources; added safer mental models, command guidance, drift handling, and recovery decision points.
 - **Git troubleshooting quality pass**: Expanded the stable undo-and-recovery guide with official Git source records, safer decision paths, expected results, recovery limits, untracked cleanup guidance, reflog branch recovery, and disposable-repository validation evidence.
 
 ## 2026-09-20

@@ -100,6 +100,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Expanded the stable Git undo-and-recovery guide with official Git source
   records, safer decision paths, expected results, untracked cleanup guidance,
   reflog recovery, and updated maintenance evidence.
+- Expanded the stable Terraform state-management guide with official Terraform
+  state, backend, locking, sensitive-data, plan, and state-command sources,
+  plus safer state-command, drift, and recovery guidance.
 - Reframed KB-04 AWS sandbox execution and KB-14 reader sessions as optional validation follow-ups instead of blockers for the documentation-scope improvement plan.
 - Recorded the KB-04 local preflight environment audit: Docker CLI is present, but no Docker daemon or required Kubernetes/AWS CLIs are available in the workspace.
 - Linked maintenance-queue follow-up entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.

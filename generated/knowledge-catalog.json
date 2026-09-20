@@ -2709,9 +2709,19 @@
       "path": "knowledge/terraform/fundamentals/state-management.md",
       "source_ids": [
         "terraform-state",
-        "terraform-backends"
+        "terraform-backends",
+        "terraform-state-locking",
+        "terraform-remote-state",
+        "terraform-sensitive-data",
+        "terraform-state-cli",
+        "terraform-state-list",
+        "terraform-state-show",
+        "terraform-state-mv",
+        "terraform-state-rm",
+        "terraform-plan",
+        "terraform-moved-blocks"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": "2026-12-21",
       "status": "stable",
       "tags": [
         "terraform",
