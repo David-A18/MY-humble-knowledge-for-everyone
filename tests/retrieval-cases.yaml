@@ -38,3 +38,11 @@ cases:
   - id: next-learning-route
     question: What should I learn after completing the local beginner route?
     expected_paths: [knowledge/start-here.md]
+  - id: kubectl-safe-inspection
+    question: How do I confirm my Kubernetes context and inspect Pods, logs, and events safely?
+    expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
+    required_source_ids: [kubectl-reference]
+  - id: cloud-cost-allocation
+    question: How do I establish cloud cost ownership and a shared-cost allocation policy?
+    expected_paths: [knowledge/finops/cost-allocation-basics.md]
+    required_source_ids: [finops-allocation]

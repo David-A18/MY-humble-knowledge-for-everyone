@@ -43,13 +43,13 @@ as documented.
 | --- | ---: | --- |
 | Markdown files in `knowledge/` | 235 | A substantial portable corpus. |
 | Reserved `index.md` files | 77 | Every knowledge directory has an entry point. |
-| Curated concepts with required OKF profile | 159 | Every non-reserved Markdown concept is parseable. |
+| Curated concepts with required OKF profile | 161 | Every non-reserved Markdown concept is parseable. |
 | Local-link, fragment, index, and reachability errors | 0 | Readers and agents can traverse the Markdown graph. |
 | Markdown-lint errors | 0 | The writing format has a clean automated baseline. |
-| Concepts marked `draft` | 149 | The status is honest, but most content has not completed a review cycle. |
+| Concepts marked `draft` | 151 | The status is honest, but most content has not completed a review cycle. |
 | Concepts marked `stable` | 10 | Seven belong to the embedded OKF example; three are ordinary curated guides. |
-| Concepts with structured sources | 16 | Thirteen are real curated concepts; the rest remain in the embedded OKF example. |
-| Concepts with structured freshness data | 23 | Thirteen real curated concepts now carry a freshness deadline; verification records still belong to the embedded example. |
+| Concepts with structured sources | 19 | Sixteen are real curated concepts; the rest remain in the embedded OKF example. |
+| Concepts with structured freshness data | 26 | Sixteen real curated concepts now carry a freshness deadline; verification records still belong to the embedded example. |
 | Concepts with an assigned maintainer | 0 | No current person or team owns a review deadline. |
 | Concepts typed `Explanation` | 112 | The Diátaxis classification is heavily skewed and needs editorial review. |
 | Concepts typed `Tutorial` | 2 | The local Terraform exercise is now a standalone tutorial; more operational pages still need editorial classification. |
@@ -109,7 +109,7 @@ This refactor corrected those paths in the local Kubernetes and Terraform tutori
 The three ordinary `stable` guides—Git undo and recovery, Terraform core
 workflow, and Terraform state management—now have structured official sources
 and freshness deadlines. Ten priority operational guides, the two extracted
-learning concepts, and ADR-0004 also now carry source records. Verification
+learning concepts, three foundation guides, and ADR-0004 also now carry source records. Verification
 records and real owners still need to be added without inventing evidence.
 
 Review the ten priority guides already named in the maintenance queue. For each
@@ -164,9 +164,10 @@ has its own non-reserved Markdown file and complete profile metadata.
 
 ### P1 — Complete reader journeys before adding new areas
 
-The main route is usable but uneven. `AI agents`, `LLM`, `ML`, `MLOps`,
-`FinOps`, Azure, several Terraform sections, and several Kubernetes sections
-are planned indexes with little or no focused content. They are useful roadmaps
+The main route is usable but uneven. `AI agents`, `LLM`, `ML`, `MLOps`, Azure,
+and several Terraform and Kubernetes sections are planned indexes with little
+or no focused content. FinOps, Terraform fundamentals, and `kubectl` inspection
+now have source-backed starting guides. They are useful roadmaps
 for maintainers, but they are not yet satisfying destinations for readers.
 
 Do not try to fill every topic. Finish these small, high-value journeys first:

@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 159,
+  "concept_count": 161,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1250,6 +1250,27 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Establish a practical cloud cost-allocation policy using ownership metadata, hierarchy, shared-cost rules, and measurable coverage.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/cost-allocation-basics.md",
+      "source_ids": [
+        "finops-allocation",
+        "finops-cost-allocation-guide"
+      ],
+      "stale_after": "2026-12-20",
+      "status": "draft",
+      "tags": [
+        "finops",
+        "cost-allocation",
+        "tagging",
+        "governance"
+      ],
+      "title": "Cost allocation basics",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands.",
       "maintainer": "unassigned",
       "maturity": "draft",
@@ -1846,17 +1867,22 @@
       "type": "How-to Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Collect common kubectl commands for inspecting Kubernetes resources.",
+      "audience": "Beginning platform engineer",
+      "description": "Inspect the current Kubernetes context, workloads, logs, events, and resource details safely before making changes.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/kubectl-basics.md",
-      "source_ids": [],
-      "stale_after": null,
+      "source_ids": [
+        "kubectl-reference",
+        "kubectl-commands"
+      ],
+      "stale_after": "2026-12-20",
       "status": "draft",
       "tags": [
         "kubernetes",
-        "kubectl-basics"
+        "kubectl",
+        "troubleshooting",
+        "beginner"
       ],
       "title": "kubectl basics",
       "type": "How-to Guide"
@@ -2686,6 +2712,29 @@
         "state-management"
       ],
       "title": "State management",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Understand Terraform configuration, providers, resources, state, planning, application, and safe local practice before managing real infrastructure.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/fundamentals/terraform-fundamentals.md",
+      "source_ids": [
+        "terraform-language",
+        "terraform-providers",
+        "terraform-resources",
+        "terraform-state"
+      ],
+      "stale_after": "2026-12-20",
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "fundamentals",
+        "infrastructure-as-code",
+        "beginner"
+      ],
+      "title": "Terraform fundamentals",
       "type": "Explanation"
     }
   ]

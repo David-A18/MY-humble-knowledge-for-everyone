@@ -1,6 +1,6 @@
 # Terraform fundamentals
 
-Status: Initial outline
+Status: Draft
 
 Core Terraform concepts and mental models.
 
@@ -8,13 +8,12 @@ Core Terraform concepts and mental models.
 
 | Article | Purpose |
 | --- | --- |
+| [Terraform fundamentals](terraform-fundamentals.md) | Understand configuration, providers, resources, state, plan, apply, and safe local practice. |
 | [State management](state-management.md) | Understand Terraform state, locking, and safety practices. |
 
-## Expected future content
+## Next additions
 
-- Providers and resources.
 - Input variables and outputs.
-- Plan and apply lifecycle.
 - Remote state and backends.
 
 [Back to Terraform index](../index.md) | [Back to root index](../../../README.md)

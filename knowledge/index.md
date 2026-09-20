@@ -37,14 +37,14 @@ concepts, procedures, references, and learning paths.
 - [Security](security/index.md) - Identity federation and cross-platform security guidance.
 - [FinOps](finops/index.md) - Cost visibility, allocation, and accountability.
 - [DevOps](devops/index.md) - Delivery, automation, reliability, and code quality.
-- [Programming languages](programming-languages/index.md) - Language behavior, tooling, and practical examples.
+- [Programming languages](programming-languages/index.md) - Selective language and bootstrapping notes, not a complete language curriculum.
 
 ## AI and architecture
 
 - [AI](ai/index.md) - AI systems, tooling, MCP, knowledge bases, and safe engineering use.
-- [AI agents](ai-agents/index.md) - Agent workflows, evaluation, and operational safety.
-- [LLM](llm/index.md) - Prompting, retrieval, evaluation, and operations.
-- [ML](ml/index.md) and [MLOps](mlops/index.md) - Machine learning and operational practices.
+- [AI agents](ai-agents/index.md) - Planned coverage for agent workflows, evaluation, and operational safety; use AI tooling for current agent knowledge-base guidance.
+- [LLM](llm/index.md) - Planned LLM route; current retrieval and evaluation material lives in AI tooling.
+- [ML](ml/index.md) and [MLOps](mlops/index.md) - Planned topic maps, not yet a complete learning curriculum.
 - [Solutions architect](solutions-architect/index.md) - Design trade-offs, proofs of concept, and architecture reviews.
 - [Cross-topic guides](cross-topic-guides/index.md) - End-to-end workflows across technologies.
 
