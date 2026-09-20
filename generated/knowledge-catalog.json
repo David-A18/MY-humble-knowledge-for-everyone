@@ -2669,9 +2669,15 @@
       "path": "knowledge/terraform/commands/core-workflow.md",
       "source_ids": [
         "terraform-cli",
-        "terraform-init"
+        "terraform-fmt",
+        "terraform-init",
+        "terraform-validate",
+        "terraform-plan",
+        "terraform-apply",
+        "terraform-providers-lock",
+        "terraform-dependency-lock"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": "2026-12-21",
       "status": "stable",
       "tags": [
         "terraform",

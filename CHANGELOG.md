@@ -103,6 +103,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Expanded the stable Terraform state-management guide with official Terraform
   state, backend, locking, sensitive-data, plan, and state-command sources,
   plus safer state-command, drift, and recovery guidance.
+- Expanded the stable Terraform core workflow guide with official command
+  sources, expected results, saved-plan handling, provider lock-file review,
+  CI validation boundaries, and stop signals.
 - Reframed KB-04 AWS sandbox execution and KB-14 reader sessions as optional validation follow-ups instead of blockers for the documentation-scope improvement plan.
 - Recorded the KB-04 local preflight environment audit: Docker CLI is present, but no Docker daemon or required Kubernetes/AWS CLIs are available in the workspace.
 - Linked maintenance-queue follow-up entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.

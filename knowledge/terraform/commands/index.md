@@ -1,14 +1,15 @@
 # Terraform commands
 
-Status: Initial outline
+Status: Draft
 
-Command references for common Terraform workflows.
+Command references for common Terraform workflows, with emphasis on safe review
+points before a command can change infrastructure.
 
 ## Articles
 
 | Article | Purpose |
 | --- | --- |
-| [Core workflow](core-workflow.md) | Initialize, format, validate, plan, and apply Terraform safely. |
+| [Core workflow](core-workflow.md) | Format, initialize, validate, plan, review, apply, and handle provider lock files safely. |
 
 ## Expected future content
 
