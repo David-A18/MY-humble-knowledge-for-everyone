@@ -152,6 +152,232 @@ Prioritize high-demand and high-risk material with strong primary evidence.
 Defer pages that cannot yet be sourced, bounded, or maintained. Record the
 chosen reader outcome, evidence plan, and intended index route before drafting.
 
+## Master section quality checklist
+
+This is the complete current checklist of indexed sections in `knowledge/`.
+Each checkbox represents a section-level review, not an automatic assertion
+that every page is correct or `stable`. Tick a box only after the section's
+index, direct concepts, navigation, terminology, evidence gaps, and expansion
+needs have been reviewed and recorded in the relevant change, review queue, or
+issue.
+
+For every checked section, confirm all of the following:
+
+- Its index accurately describes the current content and links to every direct
+  concept and child section.
+- Every direct concept has a clear Diátaxis outcome, accurate scope, and an
+  appropriate lifecycle status.
+- Important technical claims have an evidence plan; high-risk or operational
+  pages have source, validation, and freshness needs recorded honestly.
+- Missing prerequisites, terminology, examples, troubleshooting paths, and
+  related links are captured as focused follow-up work.
+- The section is represented in reader tasks or retrieval cases when people or
+  AI agents need to find it for a core task.
+
+### Bundle entry points and shared material
+
+- [ ] [Knowledge bundle entry](knowledge/index.md) — top-level navigation,
+  trust signals, and goal-based routes.
+- [ ] [Start here](knowledge/start-here.md) — local beginner route, completion
+  signals, and links to the next learning route.
+- [ ] [Glossary](knowledge/glossary.md) — shared terms, definitions, and links
+  to canonical explanations.
+- [ ] [Decision records](knowledge/decision-records/index.md) — repository and
+  architecture decision history, consequences, and review triggers.
+- [ ] [Templates](knowledge/templates/index.md) — current Diátaxis templates,
+  evidence instructions, and contributor usability.
+- [ ] [Assets](knowledge/assets/index.md) — asset discovery, licensing, and
+  accessibility guidance.
+  - [ ] [Diagrams](knowledge/assets/diagrams/index.md) — accuracy, source
+    attribution, text alternatives, and where a diagram improves understanding.
+  - [ ] [Icons](knowledge/assets/icons/index.md) — licensing, purpose, and
+    accessible use.
+  - [ ] [Images](knowledge/assets/images/index.md) — licensing, captions,
+    alternative text, and maintenance.
+
+### Cloud
+
+- [ ] [Cloud](knowledge/cloud/index.md) — provider-neutral scope, provider
+  selection, and links to practical routes.
+  - [ ] [AWS](knowledge/cloud/aws/index.md) — service selection, account and
+    identity boundaries, and cross-links to Kubernetes and Terraform.
+    - [ ] [AWS architecture](knowledge/cloud/aws/architecture/index.md) —
+      reliability, trade-offs, and reference patterns.
+    - [ ] [AWS compute](knowledge/cloud/aws/compute/index.md) — workload
+      selection, operations, limits, and cost implications.
+    - [ ] [AWS databases](knowledge/cloud/aws/databases/index.md) — workload
+      fit, resilience, performance, and operational boundaries.
+    - [ ] [AWS FinOps](knowledge/cloud/aws/finops/index.md) — allocation,
+      cost controls, ownership, and optimization evidence.
+    - [ ] [AWS fundamentals](knowledge/cloud/aws/fundamentals/index.md) —
+      account model, regions, identity, and foundational vocabulary.
+    - [ ] [AWS governance and access](knowledge/cloud/aws/governance-and-access/index.md)
+      — IAM, organization boundaries, least privilege, and audit trails.
+    - [ ] [AWS networking](knowledge/cloud/aws/networking/index.md) — VPC,
+      routing, connectivity, DNS, and security boundaries.
+    - [ ] [AWS security](knowledge/cloud/aws/security/index.md) — threat model,
+      identity, data protection, and incident-response links.
+    - [ ] [AWS solutions architect](knowledge/cloud/aws/solutions-architect/index.md)
+      — design criteria, trade-offs, and review examples.
+    - [ ] [AWS storage](knowledge/cloud/aws/storage/index.md) — storage choice,
+      durability, lifecycle, recovery, and cost implications.
+    - [ ] [AWS troubleshooting](knowledge/cloud/aws/troubleshooting/index.md)
+      — symptom-led diagnostics, safe checks, and recovery paths.
+  - [ ] [Azure](knowledge/cloud/azure/index.md) — scope, authoritative sources,
+    first useful learning routes, and maintenance capacity.
+  - [ ] [Edge and CDN](knowledge/cloud/edge/index.md) — caching model, routing,
+    invalidation, observability, and provider-specific limits.
+  - [ ] [Google Cloud](knowledge/cloud/gcloud/index.md) — scope, authoritative
+    sources, first useful learning routes, and maintenance capacity.
+  - [ ] [Cloud solutions](knowledge/cloud/solutions/index.md) — reusable
+    deployment, reliability, migration, scaling, and operations patterns.
+
+### Kubernetes
+
+- [ ] [Kubernetes](knowledge/kubernetes/index.md) — core model, learning
+  progression, safe operations, and navigation across subtopics.
+  - [ ] [Applications and tools](knowledge/kubernetes/applications-and-tools/index.md)
+    — tool purpose, access boundaries, operational workflows, and currency.
+  - [ ] [Best practices](knowledge/kubernetes/best-practices/index.md) —
+    context, exceptions, security, reliability, and source-backed guidance.
+  - [ ] [Commands](knowledge/kubernetes/commands/index.md) — context safety,
+    command scope, expected output, and read-versus-write boundaries.
+  - [ ] [Core objects](knowledge/kubernetes/core-objects/index.md) — object
+    relationships, lifecycle, ownership, and practical examples.
+  - [ ] [Crossplane](knowledge/kubernetes/crossplane/index.md) — provider
+    lifecycle, credentials, managed-resource safety, compositions, and runtime
+    evidence limits.
+  - [ ] [Examples](knowledge/kubernetes/examples/index.md) — prerequisites,
+    runnable scope, verification, cleanup, and learning value.
+    - [ ] [Local deployment learning path](knowledge/kubernetes/examples/local-deployment-learning-path/index.md)
+      — beginner instructions, expected local results, failure recovery, and
+      completion evidence.
+  - [ ] [Fundamentals](knowledge/kubernetes/fundamentals/index.md) — vocabulary,
+    control-plane model, workload lifecycle, and links to applied routes.
+  - [ ] [Tricks](knowledge/kubernetes/tricks/index.md) — correctness, scope,
+    security implications, and when not to use a shortcut.
+  - [ ] [Troubleshooting](knowledge/kubernetes/troubleshooting/index.md) —
+    symptom-to-diagnosis paths for pods, services, DNS, storage, scheduling,
+    ingress, and safe recovery.
+
+### Git and delivery automation
+
+- [ ] [Git](knowledge/git/index.md) — state model, learning route, collaboration
+  practices, and recovery boundaries.
+  - [ ] [Git best practices](knowledge/git/best-practices/index.md) — branch,
+    commit, review, and shared-history guidance with trade-offs.
+  - [ ] [Git commands](knowledge/git/commands/index.md) — intent, preconditions,
+    state changes, expected output, and recovery for commands.
+  - [ ] [GitHub Actions](knowledge/git/github-actions/index.md) — workflow
+    syntax, permissions, supply-chain safety, secrets, and troubleshooting.
+  - [ ] [Git tricks](knowledge/git/tricks/index.md) — accurate use cases,
+    limitations, and safer alternatives where needed.
+  - [ ] [Git troubleshooting](knowledge/git/troubleshooting/index.md) — safe
+    decision trees for undo, conflicts, recovery, and escalation.
+
+### Terraform
+
+- [ ] [Terraform](knowledge/terraform/index.md) — core workflow, state safety,
+  learning progression, and links to provider-specific material.
+  - [ ] [Terraform best practices](knowledge/terraform/best-practices/index.md)
+    — scope, exceptions, policy, security, and collaboration practices.
+  - [ ] [Terraform commands](knowledge/terraform/commands/index.md) — command
+    state changes, plan review, permissions, expected results, and recovery.
+  - [ ] [Terraform examples](knowledge/terraform/examples/index.md) — runnable
+    assumptions, local safety, validation, and cleanup.
+    - [ ] [Local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md)
+      — tutorial precision, state inspection, failure modes, and destroy proof.
+  - [ ] [Terraform fundamentals](knowledge/terraform/fundamentals/index.md) —
+    providers, resources, state, modules, variables, and lifecycle model.
+  - [ ] [Terraform language](knowledge/terraform/language/index.md) — syntax,
+    type behavior, expressions, and version-sensitive references.
+  - [ ] [Terraform project structure](knowledge/terraform/project-structure/index.md)
+    — repository layout, module boundaries, environments, and ownership.
+  - [ ] [Terraform troubleshooting](knowledge/terraform/troubleshooting/index.md)
+    — diagnostics, state safety, drift, locking, and escalation paths.
+
+### Data, migration, security, and operations
+
+- [ ] [Databases](knowledge/databases/index.md) — data-model and platform-choice
+  criteria, operational risk, and cross-topic routes.
+  - [ ] [Kafka](knowledge/databases/kafka/index.md) — delivery semantics,
+    consumer and producer behavior, observability, replay, and runtime limits.
+  - [ ] [MongoDB](knowledge/databases/mongodb/index.md) — modeling, validation,
+    scaling, consistency, backup, and operational guidance.
+- [ ] [Migrations](knowledge/migrations/index.md) — migration planning,
+  prerequisites, cutover, verification, rollback, and disaster recovery.
+  - [ ] [Velero](knowledge/migrations/velero/index.md) — backup, restore,
+    storage, snapshots, migration, validation drills, and cleanup evidence.
+- [ ] [Security](knowledge/security/index.md) — cross-topic threat model,
+  security boundaries, and routes to authoritative guidance.
+  - [ ] [Identity federation](knowledge/security/identity-federation/index.md)
+    — trust relationships, credential lifecycle, permissions, and auditability.
+- [ ] [FinOps](knowledge/finops/index.md) — allocation, accountability, budgets,
+  anomalies, optimization, and decision criteria.
+- [ ] [DevOps](knowledge/devops/index.md) — delivery, reliability, automation,
+  observability, and operational feedback loops.
+  - [ ] [Code quality](knowledge/devops/code-quality/index.md) — quality signals,
+    tool configuration, false positives, and remediation decisions.
+- [ ] [Programming languages](knowledge/programming-languages/index.md) — clear
+  curriculum boundaries, language-specific evidence, and practical examples.
+
+### AI, machine learning, and knowledge engineering
+
+- [ ] [AI](knowledge/ai/index.md) — safe engineering use, system boundaries,
+  current coverage, and links to specialized material.
+  - [ ] [AI tooling](knowledge/ai/ai-tooling/index.md) — tool selection,
+    authentication and access limits, workflow safety, and current product
+    documentation.
+    - [ ] [Knowledge bases](knowledge/ai/ai-tooling/knowledge-bases/index.md)
+      — knowledge architecture, authoring, provenance, freshness, retrieval,
+      and agent behavior.
+      - [ ] [OKF v0.2 example bundle](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/index.md)
+        — conformance to the upstream format, clear separation from the
+        canonical bundle, and safe illustrative data.
+        - [ ] [Example concepts](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/index.md)
+          — example metadata and reader purpose.
+        - [ ] [Example references](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/index.md)
+          — fixture navigation and source/attestation semantics.
+          - [ ] [Example attesters](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters/index.md)
+            — illustrative attester records and non-production boundaries.
+          - [ ] [Example executors](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors/index.md)
+            — illustrative execution records and non-production boundaries.
+          - [ ] [Example sources](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/index.md)
+            — illustrative source records and provenance semantics.
+- [ ] [AI agents](knowledge/ai-agents/index.md) — agent workflows, tools,
+  evaluation, safety, retrieval, and operational ownership.
+- [ ] [LLM](knowledge/llm/index.md) — prompting, retrieval, evaluation,
+  deployment, limits, and responsible-use guidance.
+- [ ] [ML](knowledge/ml/index.md) — data, training, evaluation, model risk, and
+  practical learning routes.
+- [ ] [MLOps](knowledge/mlops/index.md) — lifecycle, deployment, monitoring,
+  governance, reproducibility, and incident response.
+
+### Architecture and combined workflows
+
+- [ ] [Solutions architect](knowledge/solutions-architect/index.md) —
+  requirement discovery, trade-offs, architecture review, proof of concept,
+  reliability, security, and cost.
+- [ ] [Cross-topic guides](knowledge/cross-topic-guides/index.md) — end-to-end
+  routes across GitHub Actions, Terraform, cloud, Kubernetes, deployment, and
+  observability; verify each route's handoffs and prerequisites.
+
+### How to use the checklist
+
+1. Start with one top-level section and its direct child routes. Do not tick a
+   parent merely because a single child was reviewed.
+2. Create a short review record: scope inspected, evidence reviewed, reader
+   outcome, gaps found, follow-up links, and the next review decision.
+3. Turn broad gaps into small, separately reviewable changes. For example,
+   create one Kubernetes DNS troubleshooting guide instead of extending a
+   general Kubernetes page with a partial answer.
+4. Update the checkbox in the same pull request that records the section
+   review. Reopen it when upstream changes, reader feedback, or a major new
+   child route changes the section's quality assessment.
+5. Use the completed checklist to choose the next highest-value backlog item;
+   a checked section can still gain new content, but it must pass the same
+   quality standard.
+
 ## Expansion phases
 
 ### Phase 1: make priority operational guidance dependable
