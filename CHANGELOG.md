@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a content quality and expansion plan with page-level precision and
+  explanation standards, phased coverage priorities, evidence rules, and
+  reader- and AI-oriented measures.
 - Added a generated, deterministic knowledge catalog, golden retrieval cases, command-path validation, stricter OKF metadata rules, and CI checks for those quality gates.
 - Added standalone Kubernetes fundamentals and Terraform local-state tutorial concepts so their learning outcomes carry searchable OKF metadata.
 - Added reviewed-source foundation guides for safe `kubectl` inspection, Terraform concepts, and FinOps cost allocation.

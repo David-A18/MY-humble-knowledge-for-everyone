@@ -310,6 +310,7 @@ usefulness and trust much faster than adding more unreviewed topics.
 
 - [Knowledge bundle](knowledge/index.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
+- [Knowledge content quality and expansion plan](knowledge-content-quality-expansion-plan.md)
 - [Maintenance review queue](maintenance-review-queue.md)
 - [Reader test facilitator guide](reader-test-facilitator-guide.md)
 - [Contributor guide](CONTRIBUTING.md)

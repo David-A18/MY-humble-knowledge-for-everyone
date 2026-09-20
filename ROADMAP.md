@@ -10,6 +10,11 @@ The improvement plan has completed its documentation-scope work. The first local
 
 Use the [maintenance review queue](maintenance-review-queue.md) to schedule priority guide reviews, record optional validation follow-ups, and run reader-task testing before making larger navigation or site-search decisions. Use the [knowledge-base upgrade hub](knowledge-base-upgrade/README.md) on `develop` for repository-level features, tools, skills, MCP server templates, and upgrade instructions.
 
+Use the [knowledge content quality and expansion plan](knowledge-content-quality-expansion-plan.md)
+to select and review new content. It defines the precision standard,
+explanation model, evidence protocol, and reader- and AI-oriented measures for
+this roadmap's work.
+
 ## Near term
 
 - Expand Git command references and recovery procedures.
