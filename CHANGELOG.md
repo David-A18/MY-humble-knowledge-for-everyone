@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Added a `develop`-branch knowledge-base upgrade hub with feature, tool, skill, MCP server, and instruction indexes plus public-safe templates.
+- Extended documentation validation workflow push triggers to cover the new `develop` branch.
 - Added a live GitHub label checker for maintainers to compare `.github/labels.yml` with repository labels.
 - Added fixture tests for issue-template and label-manifest validation behavior and wired them into CI.
 - Added a versioned GitHub label manifest and extended issue-template validation so template labels must be declared before publication.
