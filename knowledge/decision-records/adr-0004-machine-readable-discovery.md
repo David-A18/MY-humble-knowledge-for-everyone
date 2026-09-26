@@ -27,7 +27,7 @@ stale_after: 2027-03-20
 
 ## Decision state
 
-Accepted
+Accepted. Its site-deferral sentence was superseded by [ADR-0005](adr-0005-git-backed-reading-site.md); the canonical Markdown, catalog, and quality-gate decisions remain active.
 
 ## Context
 

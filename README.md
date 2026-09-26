@@ -34,6 +34,7 @@ configurations, and automation remain under the [MIT License](LICENSE).
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Knowledge content quality and expansion plan](knowledge-content-quality-expansion-plan.md)
 - [Knowledge-base upgrade hub](knowledge-base-upgrade/README.md)
+- [Git-backed knowledge website plan](knowledge-base-upgrade/features/knowledge-website/README.md)
 - [Generated knowledge catalog](generated/README.md)
 - [Knowledge-quality test data](tests/README.md)
 - [Raw source intake](sources/README.md)

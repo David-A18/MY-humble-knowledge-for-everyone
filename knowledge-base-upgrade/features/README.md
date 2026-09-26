@@ -19,6 +19,7 @@ Next review: Before merging `develop` into `main`
 | Feature guide | Use it for |
 | --- | --- |
 | [Feature backlog](feature-backlog.md) | Prioritized ideas for search, navigation, feedback, provenance, and maintenance upgrades. |
+| [Git-backed knowledge website](knowledge-website/README.md) | Requirements, source contract, architecture, and rollout for the separate reading site. |
 
 ## Intake rule
 

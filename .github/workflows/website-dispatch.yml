@@ -1,0 +1,24 @@
+name: Notify knowledge website
+
+on:
+  workflow_run:
+    workflows: ["OKF validation"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      vars.SITE_REPOSITORY != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Signal the website repository
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+          SITE_REPOSITORY: ${{ vars.SITE_REPOSITORY }}
+        run: gh api -X POST "repos/${SITE_REPOSITORY}/dispatches" -f event_type=knowledge-main-updated
