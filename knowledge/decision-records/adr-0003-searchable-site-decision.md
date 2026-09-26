@@ -11,7 +11,7 @@ maintainer: "unassigned"
 
 # ADR-0003: Keep repository navigation before adding a searchable site
 
-Status: Accepted
+Status: Superseded by [ADR-0005](adr-0005-git-backed-reading-site.md). The decision below records the earlier position.
 
 ## Context
 

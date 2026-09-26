@@ -15,6 +15,7 @@ reading and AI-agent retrieval.
 | Root files | Repository entry point, governance, licensing, plans, and contributor instructions. |
 | [`sources/`](sources/README.md) | Raw or archived input, not curated OKF knowledge. |
 | [`knowledge-base-upgrade/`](knowledge-base-upgrade/README.md) | Develop-branch upgrade work and maintainer tooling. |
+| [Website upgrade plan](knowledge-base-upgrade/features/knowledge-website/README.md) | Source-side contract and rollout plan for a separate static reading site. |
 | [`.github/`](.github/PULL_REQUEST_TEMPLATE.md) and [`scripts/`](scripts/validate-okf.py) | Automation and validation, licensed under MIT. |
 
 ## Navigation model

@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 161,
+  "concept_count": 162,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1212,6 +1212,24 @@
         "quality"
       ],
       "title": "ADR-0004: Keep Markdown canonical and generate discovery artifacts",
+      "type": "Decision Record"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Present the canonical OKF bundle through a separate static website built from a reviewed, pinned knowledge-base revision.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/decision-records/adr-0005-git-backed-reading-site.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "decision-records",
+        "okf",
+        "publishing",
+        "website"
+      ],
+      "title": "ADR-0005: Publish a Git-backed reading site",
       "type": "Decision Record"
     },
     {

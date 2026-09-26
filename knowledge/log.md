@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-09-26
+
+- **Publishing decision**: ADR-0005 accepts a separate static reading site built from pinned `main` revisions and moves reader testing to after the first release. The Markdown bundle remains canonical.
+
 ## 2026-09-21
 
 - **Terraform workflow quality pass**: Expanded the stable core workflow guide with official Terraform CLI command sources, expected results, saved-plan handling, provider lock-file guidance, CI validation boundaries, and stop signals.

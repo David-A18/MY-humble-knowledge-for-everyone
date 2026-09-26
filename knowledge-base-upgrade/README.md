@@ -20,7 +20,7 @@ Use this hub when an improvement changes how the knowledge base is maintained, s
 
 | Area | Use it for |
 | --- | --- |
-| [Features](features/README.md) | Search, navigation, feedback, evidence, and reader-experience improvements. |
+| [Features](features/README.md) | Search, navigation, feedback, evidence, and the [knowledge website plan](features/knowledge-website/README.md). |
 | [Tools](tools/README.md) | Maintainer command catalogs, validation commands, generated indexes, and local automation ideas. |
 | [Skills](skills/README.md) | Reusable AI-agent workflows for curation, ingestion, and evidence recording. |
 | [MCP servers](mcp-servers/README.md) | Public-safe MCP server roles and configuration templates for read-only knowledge-base access. |

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added ADR-0005 and a source-side website specification for a separate static reading site built from a reviewed, pinned knowledge-base revision.
 - Added a content quality and expansion plan with page-level precision and
   explanation standards, phased coverage priorities, evidence rules, and
   reader- and AI-oriented measures.
