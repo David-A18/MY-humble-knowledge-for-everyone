@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added ADR-0005 and a source-side website specification for a separate static reading site built from a reviewed, pinned knowledge-base revision.
+- Added a content quality and expansion plan with page-level precision and
+  explanation standards, phased coverage priorities, evidence rules, and
+  reader- and AI-oriented measures.
+- Added a complete indexed-section checklist to the content quality and
+  expansion plan, covering every current knowledge-base topic route.
+- Added a generated, deterministic knowledge catalog, golden retrieval cases, command-path validation, stricter OKF metadata rules, and CI checks for those quality gates.
+- Added standalone Kubernetes fundamentals and Terraform local-state tutorial concepts so their learning outcomes carry searchable OKF metadata.
+- Added reviewed-source foundation guides for safe `kubectl` inspection, Terraform concepts, and FinOps cost allocation.
+- Added a post-OKF readiness review with current structural evidence, migration-integrity findings, and a phased plan for human and AI knowledge quality.
+- Added a canonical `knowledge/` Open Knowledge Format v0.2 bundle with structured concept metadata, reserved indexes, migration history, strict validation, and CI coverage.
+- Added a Diátaxis-oriented authoring profile, CC BY 4.0 licensing for curated knowledge and visual assets, and a migration guide for previous content paths.
+- Added a `develop`-branch knowledge-base upgrade hub with feature, tool, skill, MCP server, and instruction indexes plus public-safe templates.
+- Extended documentation validation workflow push triggers to cover the new `develop` branch.
 - Added a live GitHub label checker for maintainers to compare `.github/labels.yml` with repository labels.
 - Added fixture tests for issue-template and label-manifest validation behavior and wired them into CI.
 - Added a versioned GitHub label manifest and extended issue-template validation so template labels must be declared before publication.
@@ -84,6 +98,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Expanded the stable Git undo-and-recovery guide with official Git source
+  records, safer decision paths, expected results, untracked cleanup guidance,
+  reflog recovery, and updated maintenance evidence.
+- Expanded the stable Terraform state-management guide with official Terraform
+  state, backend, locking, sensitive-data, plan, and state-command sources,
+  plus safer state-command, drift, and recovery guidance.
+- Expanded the stable Terraform core workflow guide with official command
+  sources, expected results, saved-plan handling, provider lock-file review,
+  CI validation boundaries, and stop signals.
 - Reframed KB-04 AWS sandbox execution and KB-14 reader sessions as optional validation follow-ups instead of blockers for the documentation-scope improvement plan.
 - Recorded the KB-04 local preflight environment audit: Docker CLI is present, but no Docker daemon or required Kubernetes/AWS CLIs are available in the workspace.
 - Linked maintenance-queue follow-up entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.

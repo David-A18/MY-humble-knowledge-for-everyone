@@ -33,7 +33,7 @@ KB-04 is complete for documentation-scope work after the source-reviewed correct
 
 ### AWS evidence to record
 
-Use the [Crossplane AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form. Record public-safe summaries only:
+Use the [Crossplane AWS S3 lab validation template](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form. Record public-safe summaries only:
 
 - Repository commit tested.
 - Tool versions and installed Crossplane/provider versions.
@@ -88,7 +88,7 @@ Record only what is needed to improve the knowledge base:
 ## Related links
 
 - [Maintenance review queue](maintenance-review-queue.md)
-- [Crossplane AWS S3 lab validation template](kubernetes/crossplane/aws-s3-lab-validation-template.md)
+- [Crossplane AWS S3 lab validation template](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md)
 - [Reader test facilitator guide](reader-test-facilitator-guide.md)
 - [Reader test results template](reader-test-results-template.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)

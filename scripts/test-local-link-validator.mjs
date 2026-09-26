@@ -52,9 +52,11 @@ assert.deepEqual(
 );
 
 assert.deepEqual(
-  run("portable-bundle", {
-    "README.md": "# Root\n",
-    "ai/ai-tooling/knowledge-bases/examples/okf-v0.2/index.md": "# Portable bundle\n",
+  run("okf-bundle", {
+    "README.md": "# Root\n\n[Knowledge](knowledge/index.md)\n",
+    "knowledge/index.md": "# Knowledge\n\n[Guide](guides/index.md)\n",
+    "knowledge/guides/index.md": "# Guides\n\n[Guide](one.md)\n",
+    "knowledge/guides/one.md": "# Guide\n",
   }),
   [],
 );

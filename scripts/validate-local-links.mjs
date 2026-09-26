@@ -11,7 +11,7 @@ const defaultIgnoredParts = [
   "sources/processed",
 ];
 
-const portableBundlePrefix = "ai/ai-tooling/knowledge-bases/examples/okf-v0.2/";
+const okfBundlePrefix = "knowledge/";
 
 function toPosix(filePath) {
   return filePath.split(path.sep).join("/");
@@ -169,11 +169,13 @@ function resolveLocalTarget(root, sourceRel, rawTarget) {
   }
 
   if (fs.existsSync(candidate) && fs.statSync(candidate).isDirectory()) {
+    const index = path.join(candidate, "index.md");
     const readme = path.join(candidate, "README.md");
+    const directoryEntry = fs.existsSync(index) ? index : readme;
     return {
-      fullPath: readme,
-      rel: toPosix(path.relative(root, readme)),
-      exists: fs.existsSync(readme),
+      fullPath: directoryEntry,
+      rel: toPosix(path.relative(root, directoryEntry)),
+      exists: fs.existsSync(directoryEntry),
     };
   }
 
@@ -228,10 +230,14 @@ export function validateRepository(rootDirectory) {
 
   for (const file of markdownFiles) {
     const dir = path.dirname(file);
-    if (file.startsWith(portableBundlePrefix)) {
-      continue;
-    }
-    if (dir !== "." && !dir.startsWith(".github") && path.basename(file) !== "README.md") {
+    if (file.startsWith(okfBundlePrefix)) {
+      if (path.basename(file) !== "index.md" && path.basename(file) !== "log.md") {
+        const index = toPosix(path.join(dir, "index.md"));
+        if (!markdownSet.has(index)) {
+          errors.push(`${file}: OKF directory is missing index.md`);
+        }
+      }
+    } else if (dir !== "." && !dir.startsWith(".github") && path.basename(file) !== "README.md") {
       const readme = toPosix(path.join(dir, "README.md"));
       if (!markdownSet.has(readme)) {
         errors.push(`${file}: documentation directory is missing README.md`);
@@ -255,9 +261,6 @@ export function validateRepository(rootDirectory) {
   }
 
   for (const file of markdownFiles) {
-    if (file.startsWith(portableBundlePrefix)) {
-      continue;
-    }
     if (!reachable.has(file)) {
       errors.push(`${file}: not reachable from README.md through local Markdown links`);
     }
