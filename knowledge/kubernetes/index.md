@@ -22,7 +22,7 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | --- | --- | --- |
 | APISIX | [Apache APISIX](applications-and-tools/apache-apisix.md) | [Architecture and deployment](applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
 | Flux | [Flux](applications-and-tools/flux.md) | [Flux reconciliation and Helm releases](applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](../cross-topic-guides/gitops-on-eks.md). |
-| GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Choose between UI-centered application operations and composable controller-based reconciliation. |
+| GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Start from [GitOps](applications-and-tools/gitops.md), then compare documented defaults, interfaces, and ownership boundaries. |
 | K9s | [K9s](applications-and-tools/k9s.md) | Navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
 | Velero | [Velero](../migrations/velero/index.md) | [Storage and volume backups](../migrations/velero/storage-and-volume-backups.md), [backup and restore workflows](../migrations/velero/backup-restore-workflows.md), [cluster migration and disaster recovery](../migrations/velero/cluster-migration-and-disaster-recovery.md). |
 

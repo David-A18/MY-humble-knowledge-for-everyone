@@ -19,9 +19,9 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 | Need | Read |
 | --- | --- |
-| Understand the GitOps operating model. | [GitOps](gitops.md) |
-| Compare Argo CD and Flux. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
-| Understand Flux controllers and repository structure. | [Flux](flux.md) |
+| Understand GitOps as a pulled, continuously reconciled operating model and what a green sync does not prove. | [GitOps](gitops.md) |
+| Compare Argo CD and Flux on documented differences and defaults, or split ownership between them. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
+| Understand the Flux chain from source to artifact to reconciler, and what `Ready` proves. | [Flux](flux.md) |
 | Follow source, Kustomization, and HelmRelease reconciliation. | [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) |
 | Scope controller permissions, tenancy, and secrets. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
 | Operate GitOps on Amazon EKS. | [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md) |
@@ -59,9 +59,9 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [APISIX architecture and deployment](apisix-architecture-and-deployment.md) | Understand APISIX data-plane, controller, Gateway API, and EKS exposure patterns. |
 | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) | Place authentication, rate limits, release policy, and telemetry in APISIX safely. |
 | [Gateway API and Ingress](gateway-api-and-ingress.md) | Choose between Ingress, Gateway API, and gateway-specific CRDs. |
-| [GitOps](gitops.md) | Understand Kubernetes GitOps reconciliation. |
-| [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare two common GitOps controllers. |
-| [Flux](flux.md) | Understand Flux controllers and repository design. |
+| [GitOps](gitops.md) | Understand the four GitOps principles, what CI publishes versus what a controller pulls, and the limits of a green sync. |
+| [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare application model, components, interfaces, sync defaults, and multi-cluster boundaries from each project's documentation. |
+| [Flux](flux.md) | Understand which Flux controller fetches, which reconciles, and which capabilities are optional. |
 | [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) | Follow Flux source, Kustomization, and HelmRelease reconciliation. |
 | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Scope GitOps controller permissions, secrets, and ownership boundaries. |
 | [Helm for Kubernetes and Crossplane](helm.md) | Use Helm charts and releases safely, including Crossplane installation and provider lifecycle boundaries. |

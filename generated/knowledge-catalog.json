@@ -1725,11 +1725,28 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to compare Argo CD and Flux for Kubernetes GitOps delivery.",
+      "description": "Compare Argo CD and Flux on documented differences: how each models an application, its components and interfaces, sync and health, pruning and self-heal defaults, and multi-cluster boundaries, with one worked decision.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md",
-      "source_ids": [],
+      "source_ids": [
+        "argo-cd-overview",
+        "argo-cd-architecture",
+        "argo-cd-installation",
+        "argo-cd-declarative-setup",
+        "argo-cd-application-sources",
+        "argo-cd-multiple-sources",
+        "argo-cd-automated-sync",
+        "argo-cd-resource-health",
+        "argo-cd-projects",
+        "argo-cd-applicationset",
+        "argo-cd-sync-options",
+        "flux-components",
+        "flux-kustomization",
+        "flux-helmrelease",
+        "flux-optional-components",
+        "flux-faq"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1759,11 +1776,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Flux as a GitOps toolkit for Kubernetes.",
+      "description": "Understand the Flux chain: source-controller fetches a revision into an artifact, kustomize-controller or helm-controller reconciles it, and notification and image automation are separate, optional capabilities.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/flux.md",
-      "source_ids": [],
+      "source_ids": [
+        "flux-components",
+        "flux-concepts",
+        "flux-source-controller",
+        "flux-gitrepository",
+        "flux-kustomization",
+        "flux-helmrelease",
+        "flux-optional-components",
+        "flux-notification-controller",
+        "flux-image-automation",
+        "flux-image-policies"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1809,11 +1837,19 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand GitOps as an operating model for Kubernetes delivery.",
+      "description": "Understand GitOps as a declarative, versioned, pulled, and continuously reconciled operating model, and what a successful sync does and does not prove.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/gitops.md",
-      "source_ids": [],
+      "source_ids": [
+        "opengitops-principles",
+        "opengitops-glossary",
+        "flux-kustomization",
+        "flux-secrets-management",
+        "argo-cd-automated-sync",
+        "argo-cd-resource-health",
+        "argo-cd-secret-management"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

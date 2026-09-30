@@ -477,12 +477,38 @@ added (`green-pipeline-is-not-working-deployment`,
 check that the expected paths and source IDs exist. They do not test
 retrieval ranking or answer quality.
 
+### Wave 4 (2026-09-30)
+
+Three existing Explanation concepts under Kubernetes applications and tools
+were rewritten. None was reviewed by anyone other than the author, none was
+reader-tested, and no example was run against a cluster, Flux, or Argo CD.
+All three remain `status: draft` and `maturity: draft`. No `verified`,
+`stale_after`, `generated`, or maintainer value was added.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [GitOps](knowledge/kubernetes/applications-and-tools/gitops.md) | Rewritten to the standard. | Keyed citations to the OpenGitOps principles and glossary and to Flux and Argo CD documentation; the service walk-through is labelled illustrative. The statement that an unreconciled hand edit can later be overwritten is reasoning, not a quoted claim. | Independent technical review; reader test; freshness decision. |
+| [Flux](knowledge/kubernetes/applications-and-tools/flux.md) | Rewritten to the standard. | Keyed citations to Flux component, source, Kustomization, HelmRelease, and installation documentation; the commit walk-through is conceptual, with invented revisions, no YAML, and no cluster run. The statement that a failed fetch leaves the previous revision applied is reasoning from the documented chain. | Independent technical review; a check against a running Flux installation; reader test; freshness decision. |
+| [Argo CD vs. Flux](knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md) | Rewritten to the standard. | Keyed citations to Argo CD and Flux documentation for each comparison row; the team decision is invented. The explanation of why overlapping ownership conflicts is labelled in the page as reasoned, because neither project documents the two tools managing one resource. Operational overhead is described only as what each installation runs. | Independent technical review by someone who has operated both tools; reader test; freshness decision. |
+
+The cited pages were read on 2026-09-30 from the Argo CD `stable`
+documentation and the current Flux documentation. The links are not pinned to
+a version, so defaults described in the three pages can change when either
+project releases; that is a reason for a freshness decision, which has not
+been made.
+
+Supporting changes in the same wave: the applications-and-tools index and the
+Kubernetes index fast path now describe the three pages, and one golden
+retrieval case was added (`gitops-prune-and-self-heal-defaults`). The case is
+static: it checks that the expected paths and source IDs exist. It does not
+test retrieval ranking or answer quality.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 163
-concepts. The "authored to the standard" column covers waves 1, 2, and 3
-together: fourteen concepts, none of them independently reviewed. The
-remaining 149 have not been touched or reviewed against the standard.
+concepts. The "authored to the standard" column covers waves 1 to 4
+together: seventeen concepts, none of them independently reviewed. The
+remaining 146 have not been touched or reviewed against the standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
@@ -498,14 +524,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 0 | 2 |
 | FinOps | 1 | 0 | 1 |
 | Git | 17 | 1 | 16 |
-| Kubernetes | 45 | 2 | 43 |
+| Kubernetes | 45 | 5 | 40 |
 | Migrations | 9 | 0 | 9 |
 | Programming languages | 1 | 0 | 1 |
 | Security | 3 | 1 | 2 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **163** | **14** | **149** |
+| **Total** | **163** | **17** | **146** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -523,6 +549,9 @@ as not yet reviewed above.
 - The sibling pages the wave 2 rewrites now link to and partly overlap:
   Kafka fundamentals, MongoDB data modeling, OIDC token validation, CDN
   caching and origin protection, and stateful workloads.
+- The sibling pages the wave 4 rewrites now link to and partly overlap: Flux
+  reconciliation and Helm releases, GitOps security and multi-tenancy, and
+  tooling clusters.
 - The remaining cross-topic guides, which are marked as developed but have
   not been assessed against the standard, starting with deploying to EKS and
   GitOps on EKS.

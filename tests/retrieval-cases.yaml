@@ -28,6 +28,10 @@ cases:
     question: Does the Terraform S3 backend lock state by default, and is DynamoDB locking still the recommended approach?
     expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
     required_source_ids: [terraform-s3-backend]
+  - id: gitops-prune-and-self-heal-defaults
+    question: If I delete a manifest from Git or edit a resource by hand, will Argo CD or Flux delete or revert it by default?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md, knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-automated-sync, flux-kustomization]
   - id: local-kubernetes-learning
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
