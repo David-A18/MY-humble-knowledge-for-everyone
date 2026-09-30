@@ -1103,11 +1103,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to operate Kafka by watching the signals that usually explain reliability, performance, and consumer health.",
+      "description": "Use Kafka's producer, broker, consumer, and application signals to locate the first likely failure boundary without treating one metric as proof.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/kafka/operations.md",
-      "source_ids": [],
+      "source_ids": [
+        "kafka-monitoring",
+        "kafka-ops",
+        "kafka-design"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
