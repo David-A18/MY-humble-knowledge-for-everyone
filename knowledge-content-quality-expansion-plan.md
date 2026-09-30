@@ -31,6 +31,9 @@ Update 2026-09-30: after the first teaching-hub wave added Git fundamentals,
 the catalog records 163 concepts: 153 `draft` and 10 `stable`. The number of
 concepts with a freshness deadline is unchanged at 26.
 
+Later on 2026-09-30, the programming terminology split added two focused
+concepts, bringing the catalog to 165 concepts: 155 `draft` and 10 `stable`.
+
 The repository already provides the foundations this plan will use:
 
 - OKF metadata, directory indexes, local-link validation, and a generated
@@ -534,12 +537,28 @@ The AWS and FinOps pages were consulted on 2026-09-30. In particular, AWS
 backfill can apply activation to earlier billing periods, but only dates when
 a resource was actually tagged can have that historical tag value.
 
+### Wave 7 (2026-09-30)
+
+The programming section's long page mixed the Bootstrap web toolkit with the
+general first-time setup meaning. It is now a short disambiguation route, and
+two focused explanations carry the detail. All three pages remain drafts.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Bootstrap and bootstrapping](knowledge/programming-languages/bootstrap-and-bootstrapping.md) | Rewritten as a term disambiguation with a bounded example and next routes. | Keyed citations to Bootstrap and Terraform documentation; the team sentence is illustrative. | Independent editorial review; reader test. |
+| [Bootstrap frontend toolkit](knowledge/programming-languages/bootstrap-frontend-toolkit.md) | New explanation of CSS classes, optional JavaScript, and a responsive grid with a text sketch. | Keyed Bootstrap 5.3 citations; HTML and visual expectation are illustrative and were not browser-tested. | Browser check of the sample; accessibility review; reader test; freshness decision. |
+| [Bootstrapping a system](knowledge/programming-languages/bootstrapping-a-system.md) | New explanation of dependency order with project and Terraform backend examples and a diagram. | Keyed npm and HashiCorp citations; no npm install, Terraform run, or AWS change was performed. | Technical review; a safe first-run check; reader test; freshness decision. |
+
+The Bootstrap 5.3, npm CLI v11, and current Terraform documentation were
+consulted on 2026-09-30. The text diagram and Mermaid relationships are
+teaching aids, not observed results.
+
 ### Not yet reviewed against the teaching standard
 
-Counts come from the generated catalog on 2026-09-30, which records 163
-concepts. The "authored to the standard" column covers waves 1 to 6
-together: twenty-one concepts, none of them independently reviewed. The
-remaining 142 have not been touched or reviewed against the standard.
+Counts come from the generated catalog on 2026-09-30, which records 165
+concepts. The "authored to the standard" column covers waves 1 to 7
+together: twenty-four concepts, none of them independently reviewed. The
+remaining 141 have not been touched or reviewed against the standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
@@ -557,12 +576,12 @@ demonstration, so most teaching elements do not apply there.
 | Git | 17 | 1 | 16 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 0 | 9 |
-| Programming languages | 1 | 0 | 1 |
+| Programming languages | 3 | 3 | 0 |
 | Security | 3 | 1 | 2 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **163** | **21** | **142** |
+| **Total** | **165** | **24** | **141** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

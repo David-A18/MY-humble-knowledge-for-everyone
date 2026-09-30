@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 163,
+  "concept_count": 165,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -2669,11 +2669,14 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This article explains the two meanings developers usually intend when they say",
+      "description": "Distinguish the Bootstrap web toolkit from bootstrapping a project or system, then choose the explanation you need.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/programming-languages/bootstrap-and-bootstrapping.md",
-      "source_ids": [],
+      "source_ids": [
+        "bootstrap-introduction",
+        "terraform-backend"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -2681,6 +2684,50 @@
         "bootstrap-and-bootstrapping"
       ],
       "title": "Bootstrap and bootstrapping",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning web learners and practitioners",
+      "description": "Understand how Bootstrap CSS classes and optional JavaScript components change an HTML page without replacing HTML, CSS, or application code.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/programming-languages/bootstrap-frontend-toolkit.md",
+      "source_ids": [
+        "bootstrap-introduction",
+        "bootstrap-grid",
+        "bootstrap-modal",
+        "bootstrap-download"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "programming-languages",
+        "bootstrap",
+        "frontend"
+      ],
+      "title": "Bootstrap frontend toolkit",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning engineering learners and practitioners",
+      "description": "Understand why some projects and infrastructure need a one-time foundation before their normal setup or automation can run.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/programming-languages/bootstrapping-a-system.md",
+      "source_ids": [
+        "npm-install",
+        "terraform-backend",
+        "terraform-s3-backend",
+        "terraform-init"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "programming-languages",
+        "bootstrapping",
+        "setup"
+      ],
+      "title": "Bootstrapping a system",
       "type": "Explanation"
     },
     {
