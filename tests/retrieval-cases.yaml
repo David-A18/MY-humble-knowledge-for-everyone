@@ -4,6 +4,10 @@ cases:
     question: How do I discard an unstaged edit without rewriting shared history?
     expected_paths: [knowledge/git/troubleshooting/undo-and-recovery.md]
     required_source_ids: [git-restore]
+  - id: git-edit-stage-commit-push
+    question: As a beginner, what happens to my change between editing a file, staging it, committing it, and pushing it in Git?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-reset-demystified]
   - id: local-kubernetes-learning
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]

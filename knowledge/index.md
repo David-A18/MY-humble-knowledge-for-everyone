@@ -13,6 +13,7 @@ concepts, procedures, references, and learning paths.
 | Goal | Start here | Outcome |
 | --- | --- | --- |
 | Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
+| Understand how Git tracks and shares changes | [Git fundamentals](git/git-fundamentals.md) | Picture the working tree, index, commits, branches, and remotes before running recovery commands. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
 | Learn Terraform safely | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |

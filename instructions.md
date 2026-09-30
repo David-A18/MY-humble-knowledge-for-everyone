@@ -18,6 +18,54 @@ Use [Diátaxis](https://diataxis.fr/) to choose one primary job for each concept
 and `Attester Reference` are reserved for the embedded OKF example, where they
 demonstrate the format's open vocabulary.
 
+## Teach for understanding
+
+The knowledge base is a teaching hub. A beginner should leave a page with an
+accurate mental model, then follow specific official documentation for deeper
+study. Simplify by leaving detail out, never by stating something false.
+
+For an Explanation, and for the conceptual opening of a foundational Tutorial
+or Learning Path, include these elements in roughly this order:
+
+1. **Simple definition.** One or two sentences in plain language. Define every
+   term before relying on it.
+2. **Why it matters.** The problem the subject solves and what goes wrong when
+   people misunderstand it.
+3. **Accurate mental model.** The parts, how they relate, and what moves
+   between them. Prefer a small table or list of parts over a feature tour.
+4. **Analogy with limitations.** An original analogy, followed by a list of
+   the places where it breaks. Use each break to teach a true fact. Do not
+   reuse the analogy an official source already uses; link to it instead.
+5. **One bounded example.** Realistic names, a clear start and end, and what
+   changes at each step. Label it as illustrative unless it was actually run,
+   and never imply a runtime test that did not happen.
+6. **Visual, only if it teaches a relationship.** Use a small Mermaid diagram
+   for a flow, ownership chain, or lifecycle that prose alone makes hard to
+   see. Skip decorative diagrams.
+7. **Text alternative.** Directly after each diagram, name the actors, the
+   direction of flow, and the decision the diagram helps the reader make.
+8. **Official primary references.** Keyed footnotes for material claims, plus
+   a short "deeper study" list placed after the practical explanation. Link
+   the specific page that answers the next question, not only a product home
+   page.
+9. **Check your understanding and next step.** Two to four questions the
+   reader should now be able to answer, and links to the how-to, tutorial, or
+   troubleshooting page that applies the model.
+
+Tailor the elements to the Diátaxis type instead of forcing every element onto
+every page:
+
+| Type | Required teaching elements | Usually omit |
+| --- | --- | --- |
+| `Explanation` | All nine; a common-misconceptions list is encouraged. | Step-by-step commands, which belong in a how-to guide. |
+| `Tutorial` | Definition, why it matters, the tutorial itself as the bounded example, understanding checks, and next step. Link to the matching explanation for the model. | A long analogy; repeated conceptual background. |
+| `How-to Guide` | Purpose, prerequisites, expected results, and a link to the explanation for the model. | Analogy; diagrams other than a decision flow. |
+| `Troubleshooting Guide` | Symptom-first entry, safe first checks, and a link to the explanation. A small decision diagram can help. | Analogy. |
+| `Reference` | Precise facts and a link to the explanation. | Analogy; narrative examples; diagrams unless they show structure. |
+| `Glossary` | A one-sentence definition and a link to the canonical explanation. | Analogy, examples, and diagrams. |
+| `Decision Record` | Context, decision, consequences, and reconsideration trigger. | Analogy; diagrams unless the decision changes an architecture. |
+| `Learning Path` | Sequence, outcome per step, understanding checks, and next route. Put explanations before the tasks that depend on them. | Repeating the content of linked pages. |
+
 ## Concept metadata
 
 Use this frontmatter for every concept under `knowledge/`:

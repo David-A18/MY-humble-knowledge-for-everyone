@@ -27,6 +27,10 @@ The generated catalog records 161 concepts in `knowledge/`: 151 `draft` and
 an assigned maintainer. This is a strong structural starting point, but it
 means that breadth must not be presented as uniform technical authority.
 
+Update 2026-09-30: after the first teaching-hub wave added Git fundamentals,
+the catalog records 163 concepts: 153 `draft` and 10 `stable`. The number of
+concepts with a freshness deadline is unchanged at 26.
+
 The repository already provides the foundations this plan will use:
 
 - OKF metadata, directory indexes, local-link validation, and a generated
@@ -123,6 +127,11 @@ action. A useful default sequence is:
    what the reader should observe.
 6. Link to the specific how-to, reference, or troubleshooting route needed for
    the reader's next action.
+
+The detailed learner-facing standard, including analogies with stated limits
+and how to tailor it by Diátaxis type, is in [Teach for
+understanding](instructions.md#teach-for-understanding). Progress against it is
+tracked in the [teaching-hub coverage tracker](#teaching-hub-coverage-tracker).
 
 Use a Mermaid diagram when a relationship or lifecycle is difficult to infer
 from prose. Each diagram needs nearby text that names the actors, direction of
@@ -377,6 +386,87 @@ For every checked section, confirm all of the following:
 5. Use the completed checklist to choose the next highest-value backlog item;
    a checked section can still gain new content, but it must pass the same
    quality standard.
+
+## Teaching-hub coverage tracker
+
+This tracker records which concepts have been written or rewritten against the
+[Teach for understanding](instructions.md#teach-for-understanding) standard. It
+is separate from the section checklist above: a page can meet the teaching
+standard while its section review is still open.
+
+"Authored to the standard" means only that the page was drafted with the
+standard's elements and passed the repository's static checks. It does not
+mean the page has been independently reviewed, reader-tested, or verified
+against a running system, and it does not change the page's lifecycle status.
+
+### Wave 1 (2026-09-30)
+
+| Concept | Type | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- | --- |
+| [Git fundamentals](knowledge/git/git-fundamentals.md) | Explanation | New page, authored to the standard. | Keyed citations to Pro Git chapters; the walk-through is labelled illustrative. No execution or review record. | Independent technical review; reader test; freshness decision. |
+| [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to Kubernetes concept pages; the trace is labelled conceptual. No cluster run for this rewrite. | Independent technical review; reader test; a freshness decision for the rewritten text. |
+| [Terraform fundamentals](knowledge/terraform/fundamentals/terraform-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to HashiCorp documentation; the `terraform_data` example is labelled illustrative and not executed for this page. | Independent technical review; reader test; a freshness decision for the rewritten text. |
+| [Start here](knowledge/start-here.md) | Learning Path | Route order only: Git fundamentals now precedes Git undo and recovery. | Existing validation evidence left unchanged; a known limitation records that the new and rewritten explanations are unreviewed. | Route re-review after reader testing. |
+
+The `stale_after` dates on Kubernetes fundamentals (2026-12-19) and Terraform
+fundamentals (2026-12-20) were set on the earlier versions of those pages and
+were carried over unchanged. They are not evidence that the rewritten text was
+re-reviewed. Git fundamentals has no freshness date because no review has
+happened.
+
+Supporting changes in the same wave, none of which is a reviewed concept:
+
+- The [knowledge article template](knowledge/templates/knowledge-article-template.md)
+  now offers separate Explanation and How-to Guide skeletons that follow the
+  standard. It is an authoring aid, remains a draft, has not been independently
+  reviewed or tried by a contributor, and is still counted as not yet reviewed
+  in the table below.
+- A golden retrieval case, `git-edit-stage-commit-push`, points to Git
+  fundamentals. It checks that the path and source ID exist; it does not
+  measure retrieval ranking or answer quality.
+
+### Not yet reviewed against the teaching standard
+
+Counts come from the generated catalog on 2026-09-30, which records 163
+concepts. The embedded OKF example under AI tooling uses reserved types for
+format demonstration, so most teaching elements do not apply there.
+
+| Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
+| --- | --- | --- | --- |
+| Bundle root (Start here, glossary) | 2 | 0 (Start here route order updated only) | 2 |
+| AI, including the embedded OKF example | 20 | 0 | 20 |
+| Cloud | 21 | 0 | 21 |
+| Cross-topic guides | 16 | 0 | 16 |
+| Databases | 11 | 0 | 11 |
+| Decision records | 5 | 0 | 5 |
+| DevOps | 2 | 0 | 2 |
+| FinOps | 1 | 0 | 1 |
+| Git | 17 | 1 | 16 |
+| Kubernetes | 45 | 1 | 44 |
+| Migrations | 9 | 0 | 9 |
+| Programming languages | 1 | 0 | 1 |
+| Security | 3 | 0 | 3 |
+| Solutions architect | 1 | 0 | 1 |
+| Templates | 5 | 0 | 5 |
+| Terraform | 4 | 1 | 3 |
+| **Total** | **163** | **3** | **160** |
+
+The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
+workflow, and Terraform state management applied the precision protocol. They
+have not yet been assessed against the teaching standard, so they are counted
+as not yet reviewed above.
+
+### Candidates for the next wave
+
+- Try the revised knowledge article template on the next new Explanation and
+  How-to Guide, and record what a contributor found unclear.
+- Align the practical example, troubleshooting, and command reference
+  templates with the type-specific expectations.
+- Link glossary entries for working tree, index, reconciliation, and state to
+  the new explanations.
+- Kubernetes core objects and the local deployment learning path's
+  "Concepts before commands" section.
+- Terraform language basics, variables, and outputs as focused explanations.
 
 ## Expansion phases
 

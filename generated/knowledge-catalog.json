@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 162,
+  "concept_count": 163,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1384,6 +1384,32 @@
       "type": "Troubleshooting Guide"
     },
     {
+      "audience": "Beginning developer or platform engineer",
+      "description": "Build a beginner mental model of how a change moves from the working tree to the index, into a commit, and to a remote repository, and how branches and HEAD point at commits.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/git/git-fundamentals.md",
+      "source_ids": [
+        "pro-git-reset-demystified",
+        "pro-git-getting-repository",
+        "pro-git-recording-changes",
+        "pro-git-branches",
+        "pro-git-remotes",
+        "git-glossary",
+        "git-repository-layout"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "fundamentals",
+        "beginner",
+        "version-control"
+      ],
+      "title": "Git fundamentals",
+      "type": "Explanation"
+    },
+    {
       "audience": "Engineering learners and practitioners",
       "description": "Use this page to understand the uses: parameter and find common, general-purpose, and important actions for real workflows.",
       "maintainer": "unassigned",
@@ -2261,7 +2287,15 @@
       "path": "knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md",
       "source_ids": [
         "kubernetes-concepts",
-        "kubernetes-workloads"
+        "kubernetes-workloads",
+        "kubernetes-controllers",
+        "kubernetes-pods",
+        "kubernetes-deployments",
+        "kubernetes-namespaces",
+        "kubernetes-labels",
+        "kubernetes-services",
+        "kubernetes-endpointslices",
+        "kubernetes-taints-tolerations"
       ],
       "stale_after": "2026-12-19",
       "status": "draft",
@@ -2633,7 +2667,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Start a focused explanation or how-to guide with complete OKF metadata, evidence, and navigation.",
+      "description": "Start either a teaching-oriented explanation or a task-oriented how-to guide from a separate skeleton, with complete OKF metadata, evidence, and navigation.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/templates/knowledge-article-template.md",
@@ -2764,7 +2798,12 @@
         "terraform-language",
         "terraform-providers",
         "terraform-resources",
-        "terraform-state"
+        "terraform-state",
+        "terraform-state-purpose",
+        "terraform-cli-run",
+        "terraform-plan",
+        "terraform-data",
+        "terraform-sensitive-data"
       ],
       "stale_after": "2026-12-20",
       "status": "draft",

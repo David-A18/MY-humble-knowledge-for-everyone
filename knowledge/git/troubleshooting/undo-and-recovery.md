@@ -256,6 +256,7 @@ Expected result: `git status --short` no longer lists the removed untracked path
 - [git reflog documentation](https://git-scm.com/docs/git-reflog)
 - [git clean documentation](https://git-scm.com/docs/git-clean)
 - [Pro Git: Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things)
+- [Git fundamentals](../git-fundamentals.md) - the working tree, index, commit, and remote model this guide relies on
 - [Solve Git issues](../commands/solve-issues.md)
 - [Back to Git troubleshooting](index.md)
 - [Back to Git index](../index.md)

@@ -1,5 +1,10 @@
 # Knowledge bundle log
 
+## 2026-09-30
+
+- **Teaching-hub first batch**: Added a beginner Git fundamentals explanation and rewrote the Kubernetes and Terraform fundamentals explanations with plain definitions, analogies with stated limits, Mermaid diagrams with text alternatives, bounded illustrative examples, understanding checks, and keyed official-source citations. Start here now reads Git fundamentals before Git undo and recovery. All three pages remain drafts without new review or execution evidence.
+- **Authoring template**: The knowledge article template now provides separate Explanation and How-to Guide skeletons aligned with the teaching standard in the writing instructions.
+
 ## 2026-09-26
 
 - **Publishing decision**: ADR-0005 accepts a separate static reading site built from pinned `main` revisions and moves reader testing to after the first release. The Markdown bundle remains canonical.

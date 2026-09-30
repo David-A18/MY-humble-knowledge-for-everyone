@@ -18,7 +18,7 @@ Maintainer: Unassigned
 Last substantive review: 2026-09-19
 Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
 Validation evidence: Source reviewed and statically checked; Kubernetes learning path executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; Terraform exercise locally executed with Terraform v1.13.1
-Known limitations: Independent beginner testing belongs to the maintenance loop in the improvement plan
+Known limitations: Independent beginner testing belongs to the maintenance loop in the improvement plan. The Git fundamentals explanation added to step 1 on 2026-09-30 and the rewritten Kubernetes and Terraform fundamentals explanations are source-cited drafts that have not yet been independently reviewed or reader-tested.
 Next review: After KB-14 reader testing or by 2026-12-19
 
 ## Purpose
@@ -42,16 +42,21 @@ No cloud account is required for the first exercises.
 
 | Step | Read or do this | Outcome |
 | --- | --- | --- |
-| 1 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Understand working tree, index, `HEAD`, and safe restore behavior. |
-| 2 | [Kubernetes fundamentals](kubernetes/fundamentals/index.md) | Learn Pods, Deployments, Services, namespaces, labels, and reconciliation. |
-| 3 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
-| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
+| 1 | [Git fundamentals](git/git-fundamentals.md) | Picture how a change moves from the working tree to the index, into a commit, and to a remote; see how branches and `HEAD` point at commits; tell a local commit from a push. |
+| 2 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose a safe restore, unstage, revert, or reset path. |
+| 3 | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Learn desired state, reconciliation, and how Deployments, ReplicaSets, Pods, labels, and Services connect. |
+| 4 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
+| 5 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
+
+If plan, apply, and state are new to you, read [Terraform
+fundamentals](terraform/fundamentals/terraform-fundamentals.md) before step 5.
 
 ## Understanding checks
 
 After the local deployment path, you should be able to answer:
 
 - What is the difference between `HEAD`, the Git index, and the working tree?
+- What is the difference between committing a change and pushing it?
 - Why does a Deployment create Pods through a ReplicaSet instead of being a Pod itself?
 - How does a Service choose which Pods receive traffic?
 - What changed when the workload failed, and which command showed the reason?
