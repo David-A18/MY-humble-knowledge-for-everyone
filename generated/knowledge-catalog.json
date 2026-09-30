@@ -1198,11 +1198,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to operate MongoDB with attention to query performance, replication, sharding, backup, and recovery.",
+      "description": "Trace a user-visible MongoDB problem to the right query, member, shard, or recovery check before changing the system.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/mongodb/operations.md",
-      "source_ids": [],
+      "source_ids": [
+        "mongodb-explain-slow",
+        "mongodb-index-use",
+        "mongodb-profiler",
+        "mongodb-replica-troubleshooting",
+        "mongodb-router",
+        "mongodb-atlas-recovery"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
