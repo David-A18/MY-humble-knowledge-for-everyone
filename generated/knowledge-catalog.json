@@ -2629,11 +2629,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand what Velero is, where it fits, and the limits to account for before using it for Kubernetes migration or recovery.",
+      "description": "Understand what a Velero backup protects, how a restore uses it, and why a successful backup does not prove an application can recover.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/fundamentals.md",
-      "source_ids": [],
+      "source_ids": [
+        "velero-how",
+        "velero-fsb",
+        "velero-csi",
+        "velero-restore",
+        "k8s-pv"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
