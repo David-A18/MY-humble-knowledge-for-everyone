@@ -1642,11 +1642,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand the structure of workflow YAML files and where each key belongs.",
+      "description": "Read a workflow file from its trigger through jobs and steps, and understand how permissions, dependencies, and conditions change what runs.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/workflow-structure.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-workflow-syntax",
+        "github-triggering",
+        "github-token",
+        "github-checkout",
+        "github-setup-node"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

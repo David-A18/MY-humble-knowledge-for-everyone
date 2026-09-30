@@ -7,7 +7,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | Article | Purpose |
 | --- | --- |
 | [Components and concepts](components-and-concepts.md) | Trace one run from event to jobs, steps, and results before learning the YAML syntax. |
-| [Workflow structure](workflow-structure.md) | Workflow file layout, top-level keys, triggers, jobs, steps, matrix jobs, and concurrency. |
+| [Workflow structure](workflow-structure.md) | Read one complete YAML file and see how triggers, permissions, jobs, and steps fit. |
 | [Commands](commands.md) | GitHub CLI workflow/run commands and workflow command files such as `$GITHUB_ENV` and `$GITHUB_OUTPUT`. |
 | [`uses` catalog](actions-and-uses-catalog.md) | How `uses:` works, how to navigate action references, and common official, general-purpose, and third-party actions. |
 | [Examples and use cases](examples-and-use-cases.md) | CI, matrix testing, manual deploys, Docker publishing, Terraform checks, AWS OIDC, and scheduled jobs. |
