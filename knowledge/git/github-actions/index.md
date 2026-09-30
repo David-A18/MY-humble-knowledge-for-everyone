@@ -13,7 +13,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | [Examples and use cases](examples-and-use-cases.md) | CI, matrix testing, manual deploys, Docker publishing, Terraform checks, AWS OIDC, and scheduled jobs. |
 | [Content CI/CD process](content-ci-cd-process.md) | Follow a knowledge change through `develop` validation, promotion to canonical `main`, and a conditional website update. |
 | [Common solutions](common-solutions.md) | Fixes for trigger, checkout, token, secret, OIDC, cache, matrix, concurrency, and debugging problems. |
-| [Security, secrets, and permissions](security-secrets-and-permissions.md) | Least-privilege tokens, secrets, variables, environments, OIDC, action pinning, and pull request safety. |
+| [Security, secrets, and permissions](security-secrets-and-permissions.md) | Decide which code a job runs, which credentials it receives, and what those credentials can change. |
 | [AWS OIDC federation](aws-oidc-federation.md) | Follow one job's OIDC token through AWS role trust to temporary credentials and limited API access. |
 
 ## Recommended learning path

@@ -1734,11 +1734,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to design safer workflows: least-privilege tokens, protected environments, secret handling, dependency trust, and OIDC authentication.",
+      "description": "Understand what a workflow job can read or change, then separate untrusted pull request checks from jobs that receive secrets or write permissions.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/security-secrets-and-permissions.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-actions-secure-use",
+        "github-actions-workflow-syntax",
+        "github-actions-secrets",
+        "github-actions-pull-request-target",
+        "github-actions-deployments",
+        "github-actions-oidc"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

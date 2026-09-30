@@ -905,12 +905,21 @@ invented teaching material, not observations. The statement that Pod
 creation rights also expose a service account's mapped AWS role is the workload identity
 page's inference from two cited sources, and is labelled as such there.
 
+### Wave 33 (2026-10-01)
+
+The GitHub Actions security page now teaches one decision: what code a job
+runs, what credential it receives, and what that credential can change.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [GitHub Actions security, secrets, and permissions](knowledge/git/github-actions/security-secrets-and-permissions.md) | Rewritten with a limited workshop analogy, trust-boundary diagram, invented documentation PR/deployment sequence, distinct token/secret/environment/OIDC controls, and an event-risk table. Removed a movable action-version example and an implied automatic environment approval gate. | Keyed current GitHub documentation for workflow syntax, secure use, secrets, deployment environments, OIDC, and `pull_request_target`. No workflow ran. | Independent Actions security review; controlled PR and deployment workflow exercise; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 32
-together: fifty-five concepts, none of them independently reviewed after
-their teaching passes. The remaining 110 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 33
+together: fifty-six concepts, none of them independently reviewed after
+their teaching passes. The remaining 109 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -926,7 +935,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 6 | 11 |
+| Git | 17 | 7 | 10 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -934,7 +943,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **55** | **110** |
+| **Total** | **165** | **56** | **109** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
