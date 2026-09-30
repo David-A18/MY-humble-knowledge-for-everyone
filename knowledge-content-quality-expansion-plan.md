@@ -572,19 +572,34 @@ The SQLite and Elasticsearch documentation was consulted on 2026-09-30.
 The example no longer implies that the draft provenance page was stable or
 human-reviewed.
 
+### Wave 9 (2026-09-30)
+
+The bundle entry now puts the reader's question before the OKF format, and
+Start here now offers honest first-topic choices while preserving the
+previously tested local platform exercise route.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Start here](knowledge/start-here.md) | Expanded from a platform-only route into a topic chooser with a reusable read-example-check-sources sequence and a distinct local exercise path. | The previously recorded local Kubernetes and Terraform exercise evidence remains scoped to that local path. The new topic choices and route have no independent reader test or execution evidence. | First-time reader test across several interests; revise confusing handoffs; review planned-area labels and route choices. |
+
+The `knowledge/index.md` introduction and goal table now lead with a
+reader question. This is a navigation and teaching change, not a claim that
+all listed subjects are complete.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 8
-together: twenty-five concepts, none of them independently reviewed. The
-remaining 140 have not been touched or reviewed against the standard.
+concepts. The "authored to the standard" column covers waves 1 to 9
+together: twenty-six concepts, none of them independently reviewed after
+their teaching passes. The remaining 139 have not yet been authored or
+assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
 
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
-| Bundle root (Start here, glossary) | 2 | 0 (Start here route order updated only) | 2 |
+| Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 1 | 19 |
 | Cloud | 21 | 2 | 19 |
 | Cross-topic guides | 16 | 5 | 11 |
@@ -600,7 +615,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **25** | **140** |
+| **Total** | **165** | **26** | **139** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

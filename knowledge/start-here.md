@@ -1,31 +1,71 @@
 ---
 type: "Learning Path"
 title: "Start here"
-description: "Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure."
+description: "Choose a first learning route in the knowledge base, then use the local platform path if you want a complete hands-on sequence without a cloud account."
 tags: [start-here]
 status: draft
 maturity: draft
-audience: "Beginning platform engineer"
+audience: "Curious learners and beginning engineers"
 maintainer: unassigned
 ---
 
 # Start here
 
 Status: Draft
-Audience: Beginning platform engineer
-Page type: Tutorial route
+Audience: Curious learners and beginning engineers
+Page type: Learning Path
 Maintainer: Unassigned
-Last substantive review: 2026-09-19
+Earlier route review: 2026-09-19 (before the expanded topic choices)
 Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
-Validation evidence: Source reviewed and statically checked; Kubernetes learning path executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; Terraform exercise locally executed with Terraform v1.13.1
-Known limitations: Independent beginner testing belongs to the maintenance loop in the improvement plan. The Git fundamentals explanation added to step 1 on 2026-09-30 and the rewritten Kubernetes and Terraform fundamentals explanations are source-cited drafts that have not yet been independently reviewed or reader-tested.
+Validation evidence: The earlier local platform route was source reviewed and statically checked; its Kubernetes exercise was executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; its Terraform exercise was locally executed with Terraform v1.13.1. These results do not validate the newly broadened topic choices.
+Known limitations: The broader entry route and new or rewritten explanations have not been independently reader-tested. Many listed areas remain partial; the local platform route is the only complete beginner exercise sequence documented here.
 Next review: After KB-14 reader testing or by 2026-12-19
 
 ## Purpose
 
-Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure.
+Use this page when you have a learning question but do not yet know where to
+begin. Pick one topic below, read its plain-language explanation, try its
+bounded example or exercise, then follow its official documentation links
+when you want the full product or standard detail.
 
-The first path keeps everything on your machine. It teaches the basic loop used in real work: make a Git change, deploy a small workload, break it on purpose, diagnose the symptom, recover, and clean up.
+The knowledge base is a growing library, not a complete course in every
+subject yet. A `draft` page is a useful starting point whose review is still
+open. Check a page's scope and source links before using it for important
+work.
+
+## Choose your first question
+
+| If you want to understand... | Start here | What you can explain afterward |
+| --- | --- | --- |
+| How a change moves through Git | [Git fundamentals](git/git-fundamentals.md) | Working tree, index, commit, branch, and remote are different places or pointers. |
+| How Kubernetes keeps an application running | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Desired state, controllers, Pods, and Services each have a role. |
+| How Terraform decides what to change | [Terraform fundamentals](terraform/fundamentals/terraform-fundamentals.md) | Configuration, state, plan, and apply form a connected loop. |
+| Why teams choose different databases | [Relational vs. document databases](databases/relational-vs-document-databases.md) | Relationships and document boundaries affect modeling choices. |
+| How an outside web request reaches a service | [Gateway API and Ingress](kubernetes/applications-and-tools/gateway-api-and-ingress.md) | A route describes traffic; an implementation serves it. |
+| How cloud costs get an owner | [Cost allocation basics](finops/cost-allocation-basics.md) | Direct, shared, and still unallocated cost need different decisions. |
+| How a knowledge search finds evidence for an AI answer | [Retrieval and context efficiency](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Search finds candidates; fetching and checking sources support an answer. This route assumes some AI tooling context. |
+| What “Bootstrap” means in web work | [Bootstrap and bootstrapping](programming-languages/bootstrap-and-bootstrapping.md) | The UI toolkit and first-time system setup are separate ideas. |
+
+If your topic is absent, use the [topic map](index.md) and
+[glossary](glossary.md). Planned areas are labelled as such in their indexes;
+do not assume a thin section contains a complete learning path.
+
+## How to use one page
+
+1. Read the **purpose** and the short model before the details.
+2. Trace its example or diagram and say what each part does in your own words.
+3. Use its understanding questions to find what is still unclear.
+4. Follow the page's official documentation links for deeper or current
+   product behavior. Check draft, review, and freshness notes before acting.
+5. Move through the related links when the next question is different.
+
+For a complete local practice sequence, use the route below.
+
+## Complete local platform route
+
+This path stays on your machine. It teaches a loop used in real work: make a
+Git change, deploy a small workload, break it on purpose, diagnose the
+symptom, recover, and clean up. It is one option within the wider library.
 
 ## Prerequisites
 
@@ -38,7 +78,7 @@ The first path keeps everything on your machine. It teaches the basic loop used 
 
 No cloud account is required for the first exercises.
 
-## First learning route
+## Local learning steps
 
 | Step | Read or do this | Outcome |
 | --- | --- | --- |
@@ -51,7 +91,7 @@ No cloud account is required for the first exercises.
 If plan, apply, and state are new to you, read [Terraform
 fundamentals](terraform/fundamentals/terraform-fundamentals.md) before step 5.
 
-## Understanding checks
+## Local route understanding checks
 
 After the local deployment path, you should be able to answer:
 
@@ -62,7 +102,7 @@ After the local deployment path, you should be able to answer:
 - What changed when the workload failed, and which command showed the reason?
 - Which cleanup command proves the local Kubernetes resources are gone?
 
-## Next routes
+## After the local route
 
 After completing the local path, choose based on your goal:
 

@@ -2807,8 +2807,8 @@
       "type": "Explanation"
     },
     {
-      "audience": "Beginning platform engineer",
-      "description": "Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure.",
+      "audience": "Curious learners and beginning engineers",
+      "description": "Choose a first learning route in the knowledge base, then use the local platform path if you want a complete hands-on sequence without a cloud account.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/start-here.md",

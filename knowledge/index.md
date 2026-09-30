@@ -4,14 +4,19 @@ okf_version: "0.2"
 
 # Engineering knowledge base
 
-This directory is the canonical Open Knowledge Format v0.2 bundle for this
-repository. Start with a subject area, then follow its index to focused
-concepts, procedures, references, and learning paths.
+Start with a question. Each subject area leads to focused explanations,
+examples, procedures, and links to official documentation for deeper study.
+The library is growing; topic indexes show both current material and planned
+coverage.
+
+This directory is the canonical Open Knowledge Format v0.2 bundle for the
+repository. Its Markdown pages are the source material for the reading site.
 
 ## Start by goal
 
 | Goal | Start here | Outcome |
 | --- | --- | --- |
+| Find a first topic and learn how to use a page | [Start here](start-here.md) | Choose a clear entry point, understand draft labels, and follow official sources after the simple explanation. |
 | Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
 | Understand how Git tracks and shares changes | [Git fundamentals](git/git-fundamentals.md) | Picture the working tree, index, commits, branches, and remotes before running recovery commands. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
