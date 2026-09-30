@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub eighteenth wave**: Rewrote stateful networking around one HTTPS request and return packet, distinguishing security-group connection tracking from stateless network ACL checks. The network is illustrative; no AWS rules or traffic were tested. The page remains `draft`.
 - **Teaching-hub seventeenth wave**: Reworked the AWS stateful design checklist around authoritative state, failure scope, RTO/RPO targets, and recovery evidence. An invented order-store example separates live replication from a retained recovery copy and points network-state details to their own guide. No AWS system or recovery exercise was run; the page remains `draft`.
 - **Teaching-hub sixteenth wave**: Rewrote Velero components and architecture around request objects, controllers, and external backup storage. A second-cluster example explains backup sync and volume-data boundaries. The scenario is illustrative; no cluster or reader test was run. The page remains `draft`.
 - **Teaching-hub fifteenth wave**: Rewrote Velero fundamentals as a first mental model of Kubernetes object backup, optional volume protection, and the application restore check. Moved operational commands out of the introduction and linked the existing detailed guides. The recovery scenario is illustrative; no backup, restore, or reader test was run. The page remains `draft`.

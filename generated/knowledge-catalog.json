@@ -591,11 +591,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand AWS networking features where connection state changes security, routing, and troubleshooting.",
+      "description": "Understand why AWS security groups allow reply traffic while network ACLs must evaluate both directions of a connection.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/stateful-networking.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-sg",
+        "aws-nacl",
+        "aws-nacl-custom",
+        "aws-vpc-security"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
