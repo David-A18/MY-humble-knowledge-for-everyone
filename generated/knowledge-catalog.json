@@ -1668,11 +1668,14 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This page defines the repository CI/CD process for documentation-only changes. The goal is to keep main as the single published source of truth while keeping content updates lightweight.",
+      "description": "Follow a knowledge-page change from a working branch through validation on develop to the canonical main revision and optional website sync.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/content-ci-cd-process.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-workflow-events",
+        "github-protected-branches"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

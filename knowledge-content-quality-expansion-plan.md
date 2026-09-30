@@ -830,12 +830,25 @@ transactions explained as distinct boundaries.
 The Kafka documentation was consulted on 2026-09-30. No external side
 effect or offset commit was observed in a running system.
 
+### Wave 28 (2026-09-30)
+
+The Content CI/CD process page now follows the repository's actual
+`develop`-to-`main` path and explains why source publication and website
+deployment are separate decisions.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Content CI/CD process](knowledge/git/github-actions/content-ci-cd-process.md) | Rewritten with a bounded editing-table analogy, branch-flow diagram, illustrative Kafka page edit, and an evidence table. Removed outdated direct-`main` and review-skipping policy. | Current `AGENTS.md`, `CONTRIBUTING.md`, workflow files, ADR-0005, website rollout plan, and keyed official GitHub workflow-event and branch-protection documentation. No merge or site dispatch ran. | Independent repository-governance review; verify live protection settings before claiming enforcement; reader test; freshness decision. |
+
+The local workflow and governance files were inspected on 2026-09-30. The
+diagram explains the intended flow, not an observed deployment.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 27
-together: forty-seven concepts, none of them independently reviewed after
-their teaching passes. The remaining 118 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 28
+together: forty-eight concepts, none of them independently reviewed after
+their teaching passes. The remaining 117 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -851,7 +864,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 4 | 13 |
+| Git | 17 | 5 | 12 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -859,7 +872,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **47** | **118** |
+| **Total** | **165** | **48** | **117** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
