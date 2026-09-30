@@ -390,11 +390,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to move application compute toward replaceable, horizontally scalable replicas while keeping required state in services designed to persist, replicate, secure, and recover it.",
+      "description": "Learn how replaceable app replicas can use shared storage and queues without losing uploads, sessions, or work in progress.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/architecture/stateless-application-patterns.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-stateless",
+        "aws-s3",
+        "aws-sqs-delivery",
+        "aws-lambda-design"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

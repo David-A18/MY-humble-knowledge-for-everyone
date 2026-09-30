@@ -9,7 +9,7 @@ Architecture guidance, reference patterns, and design trade-offs for AWS workloa
 | Article | Purpose |
 | --- | --- |
 | [Stateful vs. stateless](stateful-vs-stateless.md) | Ask what a replacement replica needs to recover and where that state lives. |
-| [Stateless application patterns](stateless-application-patterns.md) | Move application compute toward replaceable replicas with externalized state. |
+| [Stateless application patterns](stateless-application-patterns.md) | See how shared state and a queue let app replicas be replaced, and what partial failures still need handling. |
 | [Stateful design decision checklist](stateful-design-decision-checklist.md) | Review state ownership, recovery, networking, data, and Kubernetes risks before production. |
 
 ## Expected content
