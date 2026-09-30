@@ -1315,11 +1315,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to set the right mental model for SonarQube Server and GitHub integration: repository import and binding, GitHub Actions analysis, pull request decoration, required checks, and security alert reporting.",
+      "description": "Understand how code moves from a GitHub pull request to SonarQube analysis and how the result returns to reviewers.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/devops/code-quality/sonarqube-github-integration.md",
-      "source_ids": [],
+      "source_ids": [
+        "sonar-github-actions",
+        "sonar-github-binding",
+        "sonar-pr-analysis",
+        "sonar-github-app",
+        "sonar-security-alerts"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1332,11 +1338,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand SonarQube Server as a code quality and security analysis platform, how analysis reaches the server, and how teams should use quality gates in delivery workflows.",
+      "description": "Understand what SonarQube Server checks, how a quality gate works, and why a passing gate is only one part of code review.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/devops/code-quality/sonarqube.md",
-      "source_ids": [],
+      "source_ids": [
+        "sonar-analysis-process",
+        "sonar-new-code",
+        "sonar-quality-gates"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

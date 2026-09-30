@@ -8,7 +8,7 @@ Status: Initial outline
 
 | Section | Focus |
 | --- | --- |
-| [Code quality](code-quality/index.md) | Static analysis, quality gates, pull request feedback, and CI/CD quality checks. |
+| [Code quality](code-quality/index.md) | Start with what static analysis can show, then trace a result back to a pull request. |
 
 ## Expected content
 

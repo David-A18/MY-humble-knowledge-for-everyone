@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub tenth wave**: Rewrote the two SonarQube explanations around the scanner-to-gate and GitHub-to-SonarQube paths. Replaced moved documentation links with current SonarQube Server 2026.1 pages, added bounded examples and keyed official citations, and separated gate visibility from merge policy. Both remain `draft`; no SonarQube instance, GitHub integration, or reader test was run.
 - **Teaching-hub ninth wave**: Broadened Start here from a platform-only entry into a question-led topic chooser and page-reading pattern while preserving the earlier local exercise route and its scoped evidence. The knowledge bundle index now welcomes readers before introducing its format. The new route choices remain `draft` and have not been reader-tested.
 - **Teaching-hub eighth wave**: Rewrote retrieval and context efficiency around the search-to-fetch path, small result metadata, a bounded illustrative example, and measured budgets. Corrected an example that had implied a real draft page was stable and human-reviewed. The page remains `draft`; no retrieval ranking or reader result is claimed.
 - **Teaching-hub seventh wave**: Split the mixed Bootstrap and bootstrapping page into a short term guide plus focused explanations of the frontend toolkit and first-time system setup. The new pages include illustrative layout and dependency diagrams, bounded examples, and official Bootstrap, npm, and Terraform references. All remain `draft`; no browser, CLI, cloud, or independent review result is claimed.

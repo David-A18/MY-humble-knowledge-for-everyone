@@ -586,12 +586,28 @@ The `knowledge/index.md` introduction and goal table now lead with a
 reader question. This is a navigation and teaching change, not a claim that
 all listed subjects are complete.
 
+### Wave 10 (2026-09-30)
+
+The two DevOps code-quality explanations were rewritten to distinguish the
+scanner, quality profile, new-code definition, and gate; and to show how
+GitHub Actions analysis, project binding, pull request decoration, required
+checks, and code scanning alerts fit together. Both remain drafts.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [SonarQube](knowledge/devops/code-quality/sonarqube.md) | Rewritten with an editor analogy, a four-part model, an illustrative change flow, and gate-versus-test limits. | Keyed current SonarQube Server 2026.1 documentation for analysis, new code, and quality gates. The change is invented; no scanner or server was run. | Independent technical review; example against a real project; reader test; freshness decision. |
+| [SonarQube GitHub integration](knowledge/devops/code-quality/sonarqube-github-integration.md) | Rewritten with three distinct connections, an illustrative pull request path, and diagnosis by missing step. | Keyed current SonarQube Server 2026.1 documentation for Actions, App setup, binding, pull request analysis, and security alerts. No GitHub App or check was configured. | Edition-specific integration review; real pull request check; reader test; freshness decision. |
+
+The official SonarQube Server 2026.1 pages were consulted on 2026-09-30.
+Several old `devops-platform-integration` URLs had moved and were replaced.
+These pages explain behavior; they do not record a deployed integration.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 9
-together: twenty-six concepts, none of them independently reviewed after
-their teaching passes. The remaining 139 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 10
+together: twenty-eight concepts, none of them independently reviewed after
+their teaching passes. The remaining 137 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -605,7 +621,7 @@ demonstration, so most teaching elements do not apply there.
 | Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 3 | 8 |
 | Decision records | 5 | 0 | 5 |
-| DevOps | 2 | 0 | 2 |
+| DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 1 | 16 |
 | Kubernetes | 45 | 7 | 38 |
@@ -615,7 +631,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **26** | **139** |
+| **Total** | **165** | **28** | **137** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
