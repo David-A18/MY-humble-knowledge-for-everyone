@@ -885,12 +885,32 @@ The external sources were consulted on 2026-10-01. The ranked results, MRR
 arithmetic, answers, API, revisions, and conflict are invented teaching
 material, not observations.
 
+### Wave 32 (2026-10-01)
+
+The EKS human-access and workload-identity explanations now form one route
+that keeps three questions apart: a person's AWS permissions, a person's
+Kubernetes API permissions, and a Pod's AWS permissions. The human-access
+page corrects an earlier claim that Kubernetes RBAC is always the second
+gate. Both pages remain `draft` with an unassigned maintainer and no
+`verified`, `generated`, or `stale_after` value.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [EKS human identity and Kubernetes RBAC](knowledge/security/identity-federation/eks-human-identity-and-rbac.md) | Rewritten around IAM authentication, the access entry, and two additive authorization methods: scoped EKS access policies and group names used by RBAC bindings. Adds a limited workshop analogy, an authorization-flow diagram, an invented developer who has console access but no Pod read access until either method grants it, the documented `kubectl auth can-i --list` and impersonation limits, and scoped external OIDC sign-in. Standalone state-changing AWS CLI commands and the unexecuted RoleBinding manifest were replaced by a field table and official how-to links. | Keyed citations to the current Amazon EKS access entry, access policy, access policy permissions, create access entry, Kubernetes API access, and external OIDC pages, plus Kubernetes RBAC and authorization documentation. No cluster, access entry, or `kubectl` check ran. | Independent EKS security review; controlled access-entry exercise that confirms the documented `kubectl auth can-i` behaviour; reader test; freshness decision. |
+| [EKS workload identity](knowledge/cross-topic-guides/eks-workload-identity.md) | Rewritten around the service account as the shared starting point and two credential paths: IRSA token to STS `AssumeRoleWithWebIdentity`, and Pod Identity association to agent to EKS Auth. Adds a limited hotel-and-gym analogy, a two-path diagram, a condition-based choice table covering environment, agent, SDK, trust reuse, session tags, and cross-account roles, narrow-boundary habits including the IMDS caveat, and an invented two-workload example. Kubernetes RBAC is kept separate. | Keyed citations to the current Amazon EKS service-account comparison, Pod Identity overview, how-it-works, association, and target-role pages, IRSA overview, Pod configuration, SDK and cross-account pages, the EKS Best Practices IAM chapter, and Kubernetes RBAC good practices. No cluster, association, role, or credential exchange ran. | Independent EKS/IAM security review; controlled exercise of both paths; reader test; freshness decision. |
+
+The official AWS and Kubernetes pages were consulted on 2026-10-01. The
+cluster, roles, namespaces, workloads, and people in both examples are
+invented teaching material, not observations. The statement that Pod
+creation rights also expose a service account's mapped AWS role is the workload identity
+page's inference from two cited sources, and is labelled as such there.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 31
-together: fifty-three concepts, none of them independently reviewed after
-their teaching passes. The remaining 112 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 32
+together: fifty-five concepts, none of them independently reviewed after
+their teaching passes. The remaining 110 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -901,7 +921,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 9 | 12 |
-| Cross-topic guides | 16 | 5 | 11 |
+| Cross-topic guides | 16 | 6 | 10 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -910,11 +930,11 @@ demonstration, so most teaching elements do not apply there.
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
-| Security | 3 | 2 | 1 |
+| Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **53** | **112** |
+| **Total** | **165** | **55** | **110** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

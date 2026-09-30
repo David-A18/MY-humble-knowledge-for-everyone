@@ -873,11 +873,23 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to choose between IRSA and EKS Pod Identity for AWS permissions from Pods.",
+      "description": "Understand how Pods on Amazon EKS obtain temporary AWS credentials through a service account, and choose between IRSA and EKS Pod Identity from the conditions of a specific workload.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/eks-workload-identity.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-eks-service-accounts",
+        "aws-eks-pod-identities",
+        "aws-eks-pod-id-how-it-works",
+        "aws-eks-pod-id-association",
+        "aws-eks-pod-id-target-role",
+        "aws-eks-irsa",
+        "aws-eks-irsa-pod-configuration",
+        "aws-eks-irsa-sdk",
+        "aws-eks-irsa-cross-account",
+        "aws-eks-bp-iam",
+        "k8s-rbac-good-practices"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -2863,11 +2875,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to separate human authentication to Amazon EKS from workload identity and to bind authenticated users or groups to Kubernetes permissions safely.",
+      "description": "Understand how a person's IAM identity reaches the Kubernetes API on Amazon EKS, and how an access entry grants permissions through EKS access policies, Kubernetes RBAC groups, or both.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/security/identity-federation/eks-human-identity-and-rbac.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-eks-grant-k8s-access",
+        "aws-eks-access-entries",
+        "aws-eks-creating-access-entries",
+        "aws-eks-access-policies",
+        "aws-eks-access-policy-permissions",
+        "aws-eks-external-oidc",
+        "k8s-rbac",
+        "k8s-authorization"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
