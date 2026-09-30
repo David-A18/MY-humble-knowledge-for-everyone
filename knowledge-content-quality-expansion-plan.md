@@ -679,12 +679,25 @@ The Velero v1.18 documentation was consulted on 2026-09-30. This first
 explanation does not certify the detailed Velero runbooks or a workload's
 recovery design.
 
+### Wave 16 (2026-09-30)
+
+The Velero architecture page now follows a request from the Kubernetes API
+through its controller to backup storage and a separate restore cluster.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Velero components and architecture](knowledge/migrations/velero/components-and-architecture.md) | Rewritten with a bounded request-and-controller model, limited order-slip analogy, storage diagram, second-cluster example, and diagnosis questions. | Keyed official Velero v1.18 how-it-works, locations, and File System Backup documentation. No cluster, backup, or restore ran. | Independent Velero review; real backup discovery and restore exercise; reader test; freshness decision. |
+
+The Velero v1.18 documentation was consulted on 2026-09-30. This page
+explains component responsibility; it does not certify the operating
+runbooks or the durability of a particular backup location.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 15
-together: thirty-five concepts, none of them independently reviewed after
-their teaching passes. The remaining 130 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 16
+together: thirty-six concepts, none of them independently reviewed after
+their teaching passes. The remaining 129 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -702,13 +715,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 4 | 13 |
 | Kubernetes | 45 | 7 | 38 |
-| Migrations | 9 | 1 | 8 |
+| Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 1 | 2 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **35** | **130** |
+| **Total** | **165** | **36** | **129** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

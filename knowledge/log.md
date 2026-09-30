@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub sixteenth wave**: Rewrote Velero components and architecture around request objects, controllers, and external backup storage. A second-cluster example explains backup sync and volume-data boundaries. The scenario is illustrative; no cluster or reader test was run. The page remains `draft`.
 - **Teaching-hub fifteenth wave**: Rewrote Velero fundamentals as a first mental model of Kubernetes object backup, optional volume protection, and the application restore check. Moved operational commands out of the introduction and linked the existing detailed guides. The recovery scenario is illustrative; no backup, restore, or reader test was run. The page remains `draft`.
 - **OKF guide correction**: Corrected a stale claim that this repository lacked an OKF bundle; `knowledge/` is the declared v0.2 bundle. Labelled the guide's metadata sample as invented so its reviewer and dates cannot be mistaken for evidence. This targeted correction is not counted as a complete teaching pass.
 - **Teaching-hub fourteenth wave**: Rewrote blue-green deployment around the two-version release path and a shared-data rollback boundary. The example is illustrative; official AWS, Azure, and Google Cloud references support the provider-specific traffic choices. It remains `draft`; no deployment or reader test was run.

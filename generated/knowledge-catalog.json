@@ -2612,11 +2612,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Velero's server, CLI, custom resources, controllers, plugins, and data movement components.",
+      "description": "Understand how a Velero request becomes a backup or restore, which component does each part, and where the backup remains available.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/components-and-architecture.md",
-      "source_ids": [],
+      "source_ids": [
+        "velero-how",
+        "velero-locations",
+        "velero-fsb"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
