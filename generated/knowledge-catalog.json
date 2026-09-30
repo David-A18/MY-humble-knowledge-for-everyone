@@ -1079,11 +1079,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand the core Kafka mental model before designing producers, consumers, or AWS streaming architectures.",
+      "description": "Follow one event from a producer into a Kafka topic and out to independent consumer groups, with ordering and retention limits.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/kafka/fundamentals.md",
-      "source_ids": [],
+      "source_ids": [
+        "kafka-intro",
+        "kafka-design",
+        "kafka-topic-configs"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

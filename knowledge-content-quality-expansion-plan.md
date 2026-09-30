@@ -728,12 +728,26 @@ resource and explains what a source-group reference does and does not do.
 The Amazon VPC documentation was consulted on 2026-09-30. This page does
 not certify a specific security-group configuration or application access.
 
+### Wave 20 (2026-09-30)
+
+Kafka fundamentals now follows one event into a partition and out to two
+independent consumer groups, leaving topic design and delivery guarantees to
+their own pages.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Kafka fundamentals](knowledge/databases/kafka/fundamentals.md) | Rewritten with a bounded order event, limited notice-board analogy, producer-to-group diagram, partition-local ordering, independent offsets, and retention limits. | Keyed Apache Kafka introduction, 4.1 design, and topic-configuration documentation. The scenario is invented; no Kafka cluster ran. | Independent Kafka review; an actual producer/consumer exercise; reader test; freshness decision. |
+
+The Apache Kafka documentation was consulted on 2026-09-30. This page does
+not claim that an unconfigured cluster has any particular delivery or
+durability guarantee.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 19
-together: thirty-nine concepts, none of them independently reviewed after
-their teaching passes. The remaining 126 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 20
+together: forty concepts, none of them independently reviewed after their
+teaching passes. The remaining 125 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -745,7 +759,7 @@ demonstration, so most teaching elements do not apply there.
 | AI, including the embedded OKF example | 20 | 1 | 19 |
 | Cloud | 21 | 8 | 13 |
 | Cross-topic guides | 16 | 5 | 11 |
-| Databases | 11 | 3 | 8 |
+| Databases | 11 | 4 | 7 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
@@ -757,7 +771,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **39** | **126** |
+| **Total** | **165** | **40** | **125** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
