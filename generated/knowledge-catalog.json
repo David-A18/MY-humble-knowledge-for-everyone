@@ -843,11 +843,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Map a complete delivery path from source control to running cloud infrastructure and application validation.",
+      "description": "Understand the delivery chain from a reviewed change to a working service: what each stage proves, what it cannot prove, and who owns recovery.",
       "maintainer": "unassigned",
-      "maturity": "initial-outline",
+      "maturity": "draft",
       "path": "knowledge/cross-topic-guides/end-to-end-deployment.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-deployment-environments",
+        "terraform-plan",
+        "kubernetes-container-images",
+        "kubernetes-deployments"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -859,11 +864,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Outline CI/CD workflows for validating and deploying Kubernetes workloads from GitHub Actions.",
+      "description": "Understand what a GitHub Actions deployment job does, what Kubernetes controllers do afterwards, and which checks and permissions belong to each side.",
       "maintainer": "unassigned",
-      "maturity": "initial-outline",
+      "maturity": "draft",
       "path": "knowledge/cross-topic-guides/github-actions-with-kubernetes.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-deployment-environments",
+        "github-oidc-reference",
+        "kubernetes-container-images",
+        "kubernetes-deployments",
+        "kubernetes-rbac",
+        "kubernetes-probes"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -875,11 +887,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Define a safe CI workflow for formatting, validating, and reviewing Terraform changes with GitHub Actions.",
+      "description": "Understand the three different jobs Terraform does in CI: validating a pull request, producing a plan for review, and applying a reviewed change behind a gate.",
       "maintainer": "unassigned",
-      "maturity": "initial-outline",
+      "maturity": "draft",
       "path": "knowledge/cross-topic-guides/github-actions-with-terraform.md",
-      "source_ids": [],
+      "source_ids": [
+        "terraform-validate",
+        "terraform-plan",
+        "terraform-apply",
+        "terraform-backends",
+        "terraform-state-locking",
+        "terraform-s3-backend",
+        "terraform-automation",
+        "github-deployment-environments",
+        "github-oidc-reference"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -939,11 +961,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Describe the monitoring, logging, tracing, and alerting capabilities needed for cloud and Kubernetes operations.",
+      "description": "Understand how metrics, logs, and traces answer different questions about a user journey, how an SLO and an alert turn signals into a decision, and where the boundaries of an observability stack lie.",
       "maintainer": "unassigned",
-      "maturity": "initial-outline",
+      "maturity": "draft",
       "path": "knowledge/cross-topic-guides/observability-stack.md",
-      "source_ids": [],
+      "source_ids": [
+        "opentelemetry-observability-primer",
+        "opentelemetry-signals",
+        "opentelemetry-metrics",
+        "opentelemetry-logs",
+        "opentelemetry-traces",
+        "opentelemetry-context-propagation",
+        "opentelemetry-sampling",
+        "opentelemetry-collector",
+        "google-sre-book-slo"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -955,11 +987,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Capture practical patterns for managing AWS infrastructure with Terraform.",
+      "description": "Understand the four boundaries in a Terraform-on-AWS setup: the AWS provider, the identity with its account and region, the managed resources, and the backend that holds state.",
       "maintainer": "unassigned",
-      "maturity": "initial-outline",
+      "maturity": "draft",
       "path": "knowledge/cross-topic-guides/terraform-on-aws.md",
-      "source_ids": [],
+      "source_ids": [
+        "terraform-aws-provider",
+        "terraform-s3-backend",
+        "terraform-backends",
+        "terraform-state-locking",
+        "aws-iam-best-practices"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

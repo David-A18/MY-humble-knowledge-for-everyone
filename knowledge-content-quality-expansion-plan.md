@@ -448,19 +448,51 @@ pages were updated, and two golden retrieval cases were added
 The cases check that paths and source IDs exist. They do not measure retrieval
 ranking or answer quality.
 
+### Wave 3 (2026-09-30)
+
+Five cross-topic Explanation concepts were rewritten from initial outlines.
+Their `maturity` moved from `initial-outline` to `draft` because each now has
+full content; that is a statement about completeness of the draft, not about
+review. `status` stays `draft`. No `verified`, `stale_after`, `generated`, or
+maintainer value was added, and no example was run.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [End-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) | Rewritten to the standard. | Keyed citations to GitHub, Terraform, and Kubernetes documentation; the service walk-through is labelled illustrative. | Independent technical review; reader test; freshness decision. |
+| [GitHub Actions with Kubernetes](knowledge/cross-topic-guides/github-actions-with-kubernetes.md) | Rewritten to the standard. | Keyed citations to GitHub and Kubernetes documentation; no workflow file and no cluster run. | Independent technical review; reader test; freshness decision. |
+| [GitHub Actions with Terraform](knowledge/cross-topic-guides/github-actions-with-terraform.md) | Rewritten to the standard. | Keyed citations to Terraform CLI documentation, HashiCorp's automation tutorial, and GitHub documentation; the pipeline walk-through is invented. The partial-apply statement is labelled as not quoted from the cited pages. | Independent technical and security review; reader test; freshness decision. |
+| [Terraform on AWS](knowledge/cross-topic-guides/terraform-on-aws.md) | Rewritten to the standard. | Keyed citations to the S3 backend, backend, locking, AWS provider, and AWS IAM documentation; the wrong-account example is reasoned, with placeholder account numbers and no AWS call. The AWS provider registry page is rendered by script, so its content was checked against the provider's documentation source. | Independent technical and security review; reader test; freshness decision. |
+| [Observability stack](knowledge/cross-topic-guides/observability-stack.md) | Rewritten to the standard. | Keyed citations to OpenTelemetry documentation and the Google SRE Book; the incident story is invented. | Independent technical review; a check against one concrete stack; reader test; freshness decision. |
+
+The two Terraform pages have no analogy of their own. They rely on the
+analogy in Terraform fundamentals and use a diagram and a worked example
+instead, which the type-tailoring guidance allows when an analogy would not
+add understanding.
+
+Supporting changes in the same wave: the cross-topic index now describes the
+five pages and lists them as drafts, and three golden retrieval cases were
+added (`green-pipeline-is-not-working-deployment`,
+`terraform-saved-plan-artifact-sensitivity`, and
+`terraform-s3-backend-locking-default`). Retrieval cases are static: they
+check that the expected paths and source IDs exist. They do not test
+retrieval ranking or answer quality.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 163
-concepts. The "authored to the standard" column covers waves 1 and 2
-together: nine concepts, none of them independently reviewed. The embedded OKF example under AI tooling uses reserved types for
-format demonstration, so most teaching elements do not apply there.
+concepts. The "authored to the standard" column covers waves 1, 2, and 3
+together: fourteen concepts, none of them independently reviewed. The
+remaining 149 have not been touched or reviewed against the standard.
+
+The embedded OKF example under AI tooling uses reserved types for format
+demonstration, so most teaching elements do not apply there.
 
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 0 (Start here route order updated only) | 2 |
 | AI, including the embedded OKF example | 20 | 0 | 20 |
 | Cloud | 21 | 1 | 20 |
-| Cross-topic guides | 16 | 0 | 16 |
+| Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 3 | 8 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 0 | 2 |
@@ -473,7 +505,7 @@ format demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **163** | **9** | **154** |
+| **Total** | **163** | **14** | **149** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -491,6 +523,12 @@ as not yet reviewed above.
 - The sibling pages the wave 2 rewrites now link to and partly overlap:
   Kafka fundamentals, MongoDB data modeling, OIDC token validation, CDN
   caching and origin protection, and stateful workloads.
+- The remaining cross-topic guides, which are marked as developed but have
+  not been assessed against the standard, starting with deploying to EKS and
+  GitOps on EKS.
+- A dedicated observability section, if reader demand supports it; the
+  observability explanation currently links to troubleshooting pages because
+  no such section exists.
 - The local deployment learning path's "Concepts before commands" section.
 - Terraform language basics, variables, and outputs as focused explanations.
 

@@ -16,6 +16,18 @@ cases:
     question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
     expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
     required_source_ids: [openid-connect-core, github-actions-oidc-aws]
+  - id: green-pipeline-is-not-working-deployment
+    question: If CI passed and the Kubernetes rollout completed, does that prove the deployment works for users?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cross-topic-guides/github-actions-with-kubernetes.md]
+    required_source_ids: [kubernetes-deployments]
+  - id: terraform-saved-plan-artifact-sensitivity
+    question: Is it safe to store a saved Terraform plan file as a CI artifact, and why must apply in CI sit behind an approval gate?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-terraform.md]
+    required_source_ids: [terraform-plan, terraform-apply]
+  - id: terraform-s3-backend-locking-default
+    question: Does the Terraform S3 backend lock state by default, and is DynamoDB locking still the recommended approach?
+    expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
+    required_source_ids: [terraform-s3-backend]
   - id: local-kubernetes-learning
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]

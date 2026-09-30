@@ -13,11 +13,11 @@ Guides that connect multiple engineering areas into practical workflows.
 
 | Guide | Coverage | Focus |
 | --- | --- | --- |
-| [Terraform on AWS](terraform-on-aws.md) | Outline | Use Terraform to manage AWS infrastructure safely. |
+| [Terraform on AWS](terraform-on-aws.md) | Draft | Understand the boundaries between the AWS provider, identity with its account and region, resources, and backend state. |
 | [Local deployment learning path](local-deployment-learning-path.md) | Draft | Deploy, break, diagnose, recover, and clean up a local Kubernetes workload. |
 | [Kubernetes on AWS](kubernetes-on-aws.md) | Developed | Operate Kubernetes workloads on AWS. |
-| [GitHub Actions with Terraform](github-actions-with-terraform.md) | Outline | Validate and run Terraform from GitHub Actions. |
-| [GitHub Actions with Kubernetes](github-actions-with-kubernetes.md) | Outline | Build CI/CD workflows for Kubernetes deployments. |
+| [GitHub Actions with Terraform](github-actions-with-terraform.md) | Draft | Tell pull request validation, plan, and gated apply apart, and see why plan files are sensitive. |
+| [GitHub Actions with Kubernetes](github-actions-with-kubernetes.md) | Draft | Understand what a deployment job does, what Kubernetes controllers do afterwards, and what a green run does not prove. |
 | [Deploying to EKS](deploying-to-eks.md) | Developed | Plan an EKS deployment workflow. |
 | [EKS operations](eks-operations.md) | Developed | Combine AWS CLI and `kubectl` for day-to-day EKS operations. |
 | [CDN in front of EKS](cdn-in-front-of-eks.md) | Developed | Put CloudFront, Akamai, or another CDN in front of EKS workloads. |
@@ -27,7 +27,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [GitOps on EKS](gitops-on-eks.md) | Developed | Operate EKS workloads with Argo CD or Flux. |
 | [EKS workload identity](eks-workload-identity.md) | Developed | Choose between IRSA and EKS Pod Identity. |
 | [EKS tooling cluster architecture](eks-tooling-cluster-architecture.md) | Developed | Design a dedicated EKS tooling cluster. |
-| [Observability stack](observability-stack.md) | Outline | Outline observability components across cloud and Kubernetes. |
-| [End-to-end deployment](end-to-end-deployment.md) | Outline | Connect source control, CI/CD, infrastructure, and runtime validation. |
+| [Observability stack](observability-stack.md) | Draft | Understand which questions metrics, logs, and traces answer, and how an SLO and alert turn signals into a decision. |
+| [End-to-end deployment](end-to-end-deployment.md) | Draft | Follow the delivery chain from reviewed change to user check and recovery, and what each gate does and does not prove. |
 
 [Back to root index](../../README.md)
