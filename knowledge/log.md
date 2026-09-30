@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub thirteenth wave**: Rewrote stateful vs. stateless on AWS around replica replacement, shared state, and the limits of a “stateless” label. The cart example is illustrative and draws on official AWS reliability and Lambda guidance. It remains `draft`; no AWS workload or reader test was run.
 - **Teaching-hub twelfth wave**: Narrowed Daily Git commands to a safe local commit path with expected signals, an unstage recovery step, and official Git command sources. The sequence was run in a disposable local repository; no remote or reader test was involved. The page remains `draft`.
 - **Teaching-hub eleventh wave**: Rewrote GitHub Actions components and concepts and workflow structure as a connected beginner route. The first page teaches a run from event to result; the second reads one complete YAML file and its nesting, permissions, and job boundaries. Both remain `draft`; no example workflow or reader test was run.
 - **Glossary navigation pass**: Grouped existing terms for browsing, added six beginner Git, reconciliation, and Terraform state terms, and linked 22 terms to deeper routes. Corrected the page type to `Glossary`. Unlinked specialist terms still need canonical explanations, so this is not counted as a complete teaching pass.

@@ -370,11 +370,14 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to classify AWS application components by where state lives and how that affects scaling, recovery, and operations.",
+      "description": "Understand where an application keeps information between requests and what happens when one compute replica is replaced.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/architecture/stateful-vs-stateless.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-stateless",
+        "aws-lambda-design"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
