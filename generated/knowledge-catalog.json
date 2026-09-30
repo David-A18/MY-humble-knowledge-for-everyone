@@ -1215,11 +1215,19 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to decide when MongoDB needs replica sets, sharding, read preferences, write concern, and restore testing.",
+      "description": "Tell apart MongoDB copies for availability, shards for capacity, and read/write settings for what an acknowledged operation means.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/mongodb/replication-sharding-and-consistency.md",
-      "source_ids": [],
+      "source_ids": [
+        "mongodb-replication",
+        "mongodb-sharding",
+        "mongodb-router",
+        "mongodb-write-concern",
+        "mongodb-read-concern",
+        "mongodb-read-preference",
+        "mongodb-atlas-recovery"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
