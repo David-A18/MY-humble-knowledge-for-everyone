@@ -649,12 +649,24 @@ The AWS documentation was consulted on 2026-09-30. This page gives a
 classification model and does not claim a particular service or workload
 meets its recovery goals.
 
+### Wave 14 (2026-09-30)
+
+The blue-green deployment explanation was narrowed from a broad cloud
+service catalog to the release path and its rollback boundary.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Blue-green deployment](knowledge/cloud/solutions/blue-green-deployment.md) | Rewritten with a two-stage analogy, illustrative checkout release, traffic diagram, stage questions, and shared-data rollback limit. | Keyed AWS CodeDeploy and ECS, Azure Container Apps, and Cloud Run documentation. No deployment, traffic migration, or rollback was executed. | Independent release engineering review; a real cutover and rollback exercise; reader test; freshness decision. |
+
+The provider documentation was consulted on 2026-09-30. The diagrams and
+release path are illustrative, not evidence of a production cutover.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 13
-together: thirty-three concepts, none of them independently reviewed after
-their teaching passes. The remaining 132 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 14
+together: thirty-four concepts, none of them independently reviewed after
+their teaching passes. The remaining 131 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -664,7 +676,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 1 | 19 |
-| Cloud | 21 | 4 | 17 |
+| Cloud | 21 | 5 | 16 |
 | Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 3 | 8 |
 | Decision records | 5 | 0 | 5 |
@@ -678,7 +690,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **33** | **132** |
+| **Total** | **165** | **34** | **131** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

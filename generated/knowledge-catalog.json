@@ -712,11 +712,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand what blue-green deployment means, what kind of cloud solution it is, how to recognize it in real environments, and which services usually participate.",
+      "description": "Understand how two application versions share a release window, when traffic moves, and why switching back may not undo data changes.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/solutions/blue-green-deployment.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-codedeploy",
+        "aws-ecs-blue-green",
+        "azure-container-apps",
+        "cloud-run-rollouts"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

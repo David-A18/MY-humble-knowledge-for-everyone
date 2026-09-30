@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub fourteenth wave**: Rewrote blue-green deployment around the two-version release path and a shared-data rollback boundary. The example is illustrative; official AWS, Azure, and Google Cloud references support the provider-specific traffic choices. It remains `draft`; no deployment or reader test was run.
 - **Teaching-hub thirteenth wave**: Rewrote two AWS architecture explanations around replica replacement and where required state lives. The cart and photo-upload examples are illustrative; the pages explain shared-store, partial-failure, and duplicate-work limits with official AWS sources. Both remain `draft`; no AWS workload or reader test was run.
 - **Teaching-hub twelfth wave**: Narrowed Daily Git commands to a safe local commit path with expected signals, an unstage recovery step, and official Git command sources. The sequence was run in a disposable local repository; no remote or reader test was involved. The page remains `draft`.
 - **Teaching-hub eleventh wave**: Rewrote GitHub Actions components and concepts and workflow structure as a connected beginner route. The first page teaches a run from event to result; the second reads one complete YAML file and its nesting, permissions, and job boundaries. Both remain `draft`; no example workflow or reader test was run.

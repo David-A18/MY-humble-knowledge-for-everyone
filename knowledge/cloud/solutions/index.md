@@ -6,12 +6,12 @@ Provider-neutral cloud solution patterns for application delivery, reliability, 
 
 | Question | Read |
 | --- | --- |
-| What is blue-green deployment and how do I recognize it? | [Blue-green deployment](blue-green-deployment.md) |
+| How can two versions share a release window, and when can traffic move back? | [Blue-green deployment](blue-green-deployment.md) |
 
 ## Articles
 
 | Article | Purpose |
 | --- | --- |
-| [Blue-green deployment](blue-green-deployment.md) | Understand the blue-green release pattern, the services involved, recognition signals, and common risks. |
+| [Blue-green deployment](blue-green-deployment.md) | Follow the prepare, test, switch, observe, and retire stages, including shared-data rollback limits. |
 
 [Back to cloud index](../index.md) | [Back to root index](../../../README.md)
