@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub twenty-third wave**: Rewrote MongoDB data modeling around the embed-or-reference decision for an invented support ticket. The example distinguishes a historical name snapshot from a current user record and bounds comment growth. No database workload or reader test ran; the page remains `draft`.
 - **Teaching-hub twenty-second wave**: Rewrote Kafka operations as a signal-to-fault-boundary explanation, with an invented one-partition lag incident and separate broker, group, and application checks. No Kafka cluster or reader test ran. The page remains `draft`.
 - **Teaching-hub twenty-first wave**: Rewrote Kafka consumer groups, lag, and replay as a conceptual companion to fundamentals. Removed operational offset-reset commands from the Explanation, clarified that lag is a position gap rather than proof of business progress, and linked to current official operations guidance. The example is invented; no Kafka cluster or reader test ran. The page remains `draft`.
 - **Teaching-hub twentieth wave**: Rewrote Kafka fundamentals around one illustrative `OrderPaid` event, partition-local order, independent consumer-group positions, and retention limits. The diagram and example are conceptual; no Kafka cluster or reader test ran. The page remains `draft`.

@@ -1147,11 +1147,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to choose MongoDB document shapes that match application access patterns.",
+      "description": "Choose what to embed in a MongoDB document and what to store separately by following one support-ticket access pattern.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/mongodb/data-modeling.md",
-      "source_ids": [],
+      "source_ids": [
+        "mongodb-workload",
+        "mongodb-relationships",
+        "mongodb-embedding",
+        "mongodb-referencing",
+        "mongodb-unbounded-arrays"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
