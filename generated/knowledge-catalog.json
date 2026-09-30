@@ -1064,13 +1064,17 @@
     },
     {
       "audience": "Engineers designing Kafka producers, consumers, and recovery paths",
-      "description": "Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records.",
+      "description": "Understand how a Kafka event can be lost or repeated across publishing, processing, and offset commits, then protect the business effect.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md",
       "source_ids": [
-        "apache-kafka-documentation",
-        "kafka-python-consumer"
+        "kafka-design",
+        "kafka-producer-configs",
+        "kafka-topic-configs",
+        "kafka-producer-api",
+        "kafka-consumer-api",
+        "debezium-outbox"
       ],
       "stale_after": "2026-12-19",
       "status": "draft",
