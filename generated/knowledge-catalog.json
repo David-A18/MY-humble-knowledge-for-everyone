@@ -617,11 +617,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand how AWS trusts an external OpenID Connect provider and exchanges a valid token for temporary IAM credentials.",
+      "description": "Understand how AWS checks an external OIDC token before issuing temporary role credentials, and where trust ends and permissions begin.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-create-oidc-provider",
+        "aws-oidc-role",
+        "aws-sts-web-identity"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1595,11 +1599,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to authenticate GitHub Actions to AWS without storing long-lived AWS access keys as repository secrets.",
+      "description": "Understand how a GitHub Actions job obtains temporary AWS credentials and how IAM limits the job's access.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/aws-oidc-federation.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-oidc-reference",
+        "github-oidc-aws",
+        "aws-github-role",
+        "aws-credentials-action"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

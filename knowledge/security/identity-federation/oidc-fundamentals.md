@@ -216,6 +216,13 @@ without a stored AWS secret.
 | `aud` | `sts.amazonaws.com` | The audience GitHub's documentation gives for the official AWS credentials action.[^github-actions-oidc-aws] |
 | `sub` | `repo:octo-org/octo-repo:ref:refs/heads/main` | Says which repository and branch the job ran from. |
 
+This `sub` is an illustrative **older-format** value. GitHub's current
+[OIDC reference](https://docs.github.com/en/actions/reference/security/oidc)
+also documents immutable owner and repository IDs in subjects for newer,
+opted-in, renamed, or transferred repositories. The actual subject must
+match the repository and workflow context before it is used in an AWS
+trust policy.
+
 What to notice:
 
 - **The trust decision has several parts, and `sub` is the one that names
