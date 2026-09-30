@@ -1569,11 +1569,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand the main building blocks of GitHub Actions before writing or debugging workflow files.",
+      "description": "Understand how an event starts a workflow, how jobs and steps run, and where actions, runners, secrets, artifacts, and caches fit.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/components-and-concepts.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-actions-basics",
+        "github-workflow-syntax",
+        "github-secrets",
+        "github-artifacts",
+        "github-caching"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

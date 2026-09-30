@@ -1,168 +1,148 @@
 ---
 type: "Explanation"
 title: "GitHub Actions components and concepts"
-description: "Use this page to understand the main building blocks of GitHub Actions before writing or debugging workflow files."
+description: "Understand how an event starts a workflow, how jobs and steps run, and where actions, runners, secrets, artifacts, and caches fit."
 tags: [git, github-actions, components-and-concepts]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: github-actions-basics
+    resource: https://docs.github.com/en/actions/get-started/understand-github-actions
+    title: GitHub Docs - Understanding GitHub Actions
+  - id: github-workflow-syntax
+    resource: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+    title: GitHub Docs - Workflow syntax for GitHub Actions
+  - id: github-secrets
+    resource: https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets
+    title: GitHub Docs - Using secrets in GitHub Actions
+  - id: github-artifacts
+    resource: https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts
+    title: GitHub Docs - Workflow artifacts
+  - id: github-caching
+    resource: https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching
+    title: GitHub Docs - Dependency caching
 ---
 
 # GitHub Actions components and concepts
 
-## Purpose
+## The idea in plain language
 
-Use this page to understand the main building blocks of GitHub Actions before writing or debugging workflow files.
+GitHub Actions lets a repository react to an event, such as a push or pull
+request, by running a set of tasks. The instructions live in a YAML
+**workflow** file under `.github/workflows/`. A workflow contains **jobs**;
+each job runs **steps** on a **runner**.[^github-actions-basics]
 
-## Core components
+Think of a workshop order. An event places the order, the workflow describes
+the whole job, each job gets a workbench, and each step is one instruction at
+that bench. The analogy has a limit: separate jobs normally run on separate
+runners, so a file created in one job does not appear automatically in
+another.[^github-actions-basics]
 
-| Component | Meaning | Why it matters |
+## Follow one run
+
+Suppose a repository has a workflow that checks a proposed change. This is
+an illustrative path, not a workflow run observed in this repository.
+
+```mermaid
+flowchart LR
+  event["Pull request event"] --> workflow["Workflow run"]
+  workflow --> test["Test job on a runner"]
+  workflow --> lint["Lint job on another runner"]
+  test --> result["Results in GitHub"]
+  lint --> result
+```
+
+Text alternative: a pull request event starts one workflow run. GitHub may
+schedule independent test and lint jobs on different runners. Each job runs
+its own ordered steps and sends its result back to the workflow. Jobs without
+declared dependencies can run in parallel; `needs:` gives a job a dependency
+on another.[^github-actions-basics][^github-workflow-syntax]
+
+## The building blocks
+
+| Word | What it means | Example question |
 | --- | --- | --- |
-| Workflow | An automated process defined in `.github/workflows/*.yml`. | It is the top-level pipeline file GitHub runs. |
-| Event | The trigger that starts a workflow. | It decides when automation starts. |
-| Job | A group of steps that runs on the same runner. | Jobs can run in parallel or depend on each other. |
-| Step | One command or action inside a job. | Steps run in order inside the job. |
-| Action | A reusable task called with `uses:`. | Actions avoid rewriting common setup or deployment logic. |
-| Runner | The machine that executes jobs. | The runner controls OS, tools, network access, and cost. |
-| Context | Structured data available to expressions. | Contexts expose run, repository, matrix, secret, input, and step data. |
-| Expression | Dynamic syntax inside `${{ }}`. | Expressions control conditions, values, matrix logic, and outputs. |
-| Secret | Encrypted sensitive value. | Secrets protect tokens, passwords, and credentials. |
-| Variable | Non-secret configuration value. | Variables keep reusable values out of hardcoded YAML. |
-| Artifact | File saved from a workflow run. | Artifacts share build outputs, reports, and packages. |
-| Cache | Reused dependency or build data. | Caches speed up repeated workflow runs. |
+| Event | Activity that starts a workflow run. | Did a push, pull request, schedule, or manual request trigger it? |
+| Workflow | One YAML definition of automated work. | Which file describes this run? |
+| Job | Steps that share one runner. | Which checks can run together, and which need `needs:`? |
+| Runner | The machine or environment executing one job. | Does it have the needed operating system and network access? |
+| Step | One shell command or reusable action inside a job. | Which step failed first? |
+| Action | Reusable code called by a step with `uses:`. | Whose code is this action, and which revision runs? |
 
-## Workflow execution model
+These are the core relationships in GitHub's model.[^github-actions-basics]
+The word **workflow run** means one execution of a workflow in response to
+an event. A new event can start a new run of the same file.
 
-### Minimal workflow
+## Read a tiny workflow
+
+This example has no checkout or project test. If saved as
+`.github/workflows/hello.yml` on the repository's default branch, it can be
+started manually from GitHub Actions; the only work is printing a line.
+It has not been run as part of this page.
 
 ```yaml
-name: CI
+name: Hello
 
 on:
-  pull_request:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  test:
+  greet:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Run tests
-        run: npm test
+      - name: Say hello
+        run: echo "Hello from this runner"
 ```
 
-How it works: GitHub watches for the configured events. When a pull request opens or code is pushed to `main`, GitHub creates a workflow run, schedules the `test` job on an Ubuntu runner, and executes each step in order.
+Read it from top to bottom: `on` names the manual event;
+`permissions` limits the workflow's `GITHUB_TOKEN`; `jobs.greet` names the
+job; `runs-on` chooses a runner; and `run` executes a shell command inside
+that runner.[^github-workflow-syntax]
 
-What it does: checks out the repository, then runs the test command inside the runner workspace.
+To test a real project, a job usually needs more: checkout, language setup,
+dependency installation, and a project-specific test command. See
+[workflow structure](workflow-structure.md) for where those keys belong and
+[examples](examples-and-use-cases.md) for larger patterns. Do not copy an
+example's command until its repository and dependencies match your project.
 
-## Jobs and steps
+## Data that moves through a run
 
-| Concept | How it works | Common use |
+| Item | Purpose | Boundary to remember |
 | --- | --- | --- |
-| Sequential steps | Steps in one job run from top to bottom. | Install dependencies, build, then test. |
-| Parallel jobs | Jobs without dependencies can run at the same time. | Test Linux, macOS, and Windows together. |
-| Dependent jobs | `needs:` makes one job wait for another. | Deploy only after tests pass. |
-| Step output | A step can expose a value for later steps. | Reuse a computed version, path, or image tag. |
-| Job output | A job can expose values to dependent jobs. | Pass build metadata to deploy jobs. |
+| Context or expression | Read event, repository, job, and step data in workflow YAML, often through `${{ ... }}`.[^github-workflow-syntax] | Event data may be untrusted input; inspect it before using it in shell code. |
+| Variable | Store non-secret configuration reused by a workflow.[^github-workflow-syntax] | Do not put tokens or passwords here. |
+| Secret | Provide a sensitive value to a step that needs it.[^github-secrets] | Access depends on event and repository rules; avoid printing it. |
+| Artifact | Save a run output such as a report for download or another job.[^github-artifacts] | It is a result of a run, not a permanent source repository. |
+| Cache | Reuse dependency files across runs to save setup time.[^github-caching] | It may be absent or stale; correctness must not depend on a cache hit. |
 
-### Dependent jobs
+If a later job needs a file made by an earlier job, explicitly pass it as an
+artifact or recreate it. `needs:` orders jobs but does not share a working
+directory. If two steps are in the same job, they do share that job's
+runner.[^github-actions-basics][^github-artifacts]
 
-```yaml
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: npm test
+## Check your understanding
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - run: ./deploy.sh
-```
+- What starts a workflow run, and where is the workflow defined?
+- Which steps share files without an artifact transfer?
+- Why does `needs:` solve ordering but not file sharing?
+- Where should a token go, and what should remain a variable?
 
-How it works: `deploy` waits for `test` to complete successfully because it declares `needs: test`.
+## Official documentation for deeper study
 
-What it does: prevents deployment when the test job fails.
+- [Understanding GitHub Actions](https://docs.github.com/en/actions/get-started/understand-github-actions) explains events, workflows, jobs, steps, actions, and runners.
+- [Workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax) defines the YAML keys and their conditions.
+- [Using secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets) covers secret storage and access limits.
+- [Workflow artifacts](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts) and [dependency caching](https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching) explain the two different ways to retain files.
 
-## Contexts, variables, and expressions
+See the [GitHub Actions index](index.md) and [Git fundamentals](../git-fundamentals.md).
 
-| Item | Syntax | When to use it |
-| --- | --- | --- |
-| GitHub context | `${{ github.ref }}` | Repository, event, actor, SHA, and ref metadata. |
-| Environment variable | `$GITHUB_SHA` or `${{ env.NAME }}` | Values available inside shell commands or workflow YAML. |
-| Repository variable | `${{ vars.APP_NAME }}` | Non-secret config shared across workflows. |
-| Secret | `${{ secrets.NPM_TOKEN }}` | Sensitive values that must not be printed. |
-| Step output | `${{ steps.build.outputs.version }}` | Data created by an earlier step. |
-| Matrix value | `${{ matrix.node }}` | Current value in a matrix job. |
-
-### Use contexts and variables
-
-```yaml
-env:
-  APP_NAME: ${{ vars.APP_NAME }}
-
-jobs:
-  print-context:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Show safe metadata
-        run: |
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Commit: $GITHUB_SHA"
-          echo "App: $APP_NAME"
-```
-
-How it works: GitHub evaluates `${{ vars.APP_NAME }}` before the job runs, then injects `APP_NAME` as an environment variable for the shell step.
-
-What it does: prints safe workflow metadata and a repository variable.
-
-> [!WARNING]
-> Do not print secrets or entire contexts that may contain sensitive values. Treat `secrets`, tokens, and event payloads carefully.
-
-## Actions and `uses`
-
-| `uses` target | Meaning | Example |
-| --- | --- | --- |
-| Public action | Action from another repository. | `actions/checkout@v4` |
-| Local action | Action stored in the same repository. | `./.github/actions/setup` |
-| Reusable workflow | Workflow called from another workflow. | `org/repo/.github/workflows/deploy.yml@v1` |
-| Docker action | Action packaged as a container. | `docker://alpine:3.20` |
-
-### Use an action
-
-```yaml
-steps:
-  - name: Check out repository
-    uses: actions/checkout@v4
-```
-
-How it works: GitHub downloads the referenced action version and runs the action inside the step.
-
-What it does: checks out the repository into `$GITHUB_WORKSPACE` so later steps can access the code.
-
-### Understand the reference
-
-```text
-actions/checkout@v4
-```
-
-How it works: the text before `@` identifies the action location. The text after `@` identifies the version, tag, branch, or commit SHA.
-
-What it does: tells GitHub exactly which reusable action code to run.
-
-For a fuller catalog and selection guide, use [`uses` catalog](actions-and-uses-catalog.md).
-
-## Related links
-
-- [Understanding GitHub Actions](https://docs.github.com/articles/getting-started-with-github-actions)
-- [Contexts reference](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts)
-- [Variables reference](https://docs.github.com/en/actions/reference/workflows-and-actions/variables)
-- [Back to GitHub Actions](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+[^github-actions-basics]: [Understanding GitHub Actions](https://docs.github.com/en/actions/get-started/understand-github-actions).
+[^github-workflow-syntax]: [Workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax).
+[^github-secrets]: [Using secrets in GitHub Actions](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets).
+[^github-artifacts]: [Workflow artifacts](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts).
+[^github-caching]: [Dependency caching](https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching).

@@ -607,12 +607,24 @@ six beginner terms were added, and 22 terms received routes to deeper pages.
 It remains outside the authored count: many specialized definitions still
 lack a canonical explanation link and need an editorial pass.
 
+### Wave 11 (2026-09-30)
+
+The first GitHub Actions learning page was rewritten to teach the event to
+workflow to job to step chain before introducing detailed workflow syntax.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [GitHub Actions components and concepts](knowledge/git/github-actions/components-and-concepts.md) | Rewritten with a workshop analogy, an illustrative parallel-job diagram, a small manual workflow, data boundaries, and understanding checks. | Keyed current GitHub documentation for the core model, workflow syntax, secrets, artifacts, and caching. The YAML has not been run. | Independent technical review; run the tiny workflow in a safe repository; reader test; freshness decision. |
+
+The current GitHub documentation was consulted on 2026-09-30. The page is a
+draft explanation, not evidence of an operating pipeline.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 10
-together: twenty-eight concepts, none of them independently reviewed after
-their teaching passes. The remaining 137 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 11
+together: twenty-nine concepts, none of them independently reviewed after
+their teaching passes. The remaining 136 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -628,7 +640,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 1 | 16 |
+| Git | 17 | 2 | 15 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 0 | 9 |
 | Programming languages | 3 | 3 | 0 |
@@ -636,7 +648,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **28** | **137** |
+| **Total** | **165** | **29** | **136** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
