@@ -574,11 +574,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Document practical behavior and troubleshooting checks for AWS security groups.",
+      "description": "Understand how an AWS security group allows traffic to a resource, how group references work, and what to check when access fails.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/security-groups.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-sg",
+        "aws-sg-rules",
+        "aws-vpc-security"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

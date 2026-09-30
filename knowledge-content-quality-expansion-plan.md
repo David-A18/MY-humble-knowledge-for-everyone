@@ -716,12 +716,24 @@ from application data and follows the request and reply separately.
 The Amazon VPC documentation was consulted on 2026-09-30. The example is not
 an authorization to open any particular public port or ephemeral range.
 
+### Wave 19 (2026-09-30)
+
+The security-groups explanation now follows a new request to a database
+resource and explains what a source-group reference does and does not do.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Security groups](knowledge/cloud/aws/networking/security-groups.md) | Rewritten with a web-to-database model, bounded group-reference example, limited guest-list analogy, direction and association questions, and a separate return-path route. | Keyed Amazon VPC security-group, rule, and VPC security documentation. The scenario is invented; no AWS rule or packet test ran. | Independent AWS network-security review; a real path and rule test; reader test; freshness decision. |
+
+The Amazon VPC documentation was consulted on 2026-09-30. This page does
+not certify a specific security-group configuration or application access.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 18
-together: thirty-eight concepts, none of them independently reviewed after
-their teaching passes. The remaining 127 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 19
+together: thirty-nine concepts, none of them independently reviewed after
+their teaching passes. The remaining 126 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -731,7 +743,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 1 | 19 |
-| Cloud | 21 | 7 | 14 |
+| Cloud | 21 | 8 | 13 |
 | Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 3 | 8 |
 | Decision records | 5 | 0 | 5 |
@@ -745,7 +757,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **38** | **127** |
+| **Total** | **165** | **39** | **126** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
