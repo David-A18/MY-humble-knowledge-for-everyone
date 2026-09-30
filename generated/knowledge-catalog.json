@@ -1679,7 +1679,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Common terms used across the knowledge base.",
+      "description": "Find short definitions of knowledge-base terms and follow linked concepts for examples and official sources.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/glossary.md",
@@ -1690,7 +1690,7 @@
         "glossary"
       ],
       "title": "Glossary",
-      "type": "Explanation"
+      "type": "Glossary"
     },
     {
       "audience": "Engineering learners and practitioners",

@@ -57,7 +57,7 @@ repository. Its Markdown pages are the source material for the reading site.
 ## Learning and reference material
 
 - [Start here](start-here.md) - A beginner-friendly local learning route.
-- [Glossary](glossary.md) - Shared terminology.
+- [Glossary](glossary.md) - Short definitions, with deeper routes where a concept page exists.
 - [Decision records](decision-records/index.md) - Recorded repository and architecture decisions.
 - [Templates](templates/index.md) - Diátaxis-aligned documentation starters.
 - [Assets](assets/index.md) - Guidance for diagrams, images, and icons.

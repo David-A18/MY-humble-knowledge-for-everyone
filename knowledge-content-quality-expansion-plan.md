@@ -602,6 +602,11 @@ The official SonarQube Server 2026.1 pages were consulted on 2026-09-30.
 Several old `devops-platform-integration` URLs had moved and were replaced.
 These pages explain behavior; they do not record a deployed integration.
 
+After this wave, the glossary was reorganized into browsable letter ranges,
+six beginner terms were added, and 22 terms received routes to deeper pages.
+It remains outside the authored count: many specialized definitions still
+lack a canonical explanation link and need an editorial pass.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
