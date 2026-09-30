@@ -397,6 +397,11 @@ This tracker records which concepts have been written or rewritten against the
 is separate from the section checklist above: a page can meet the teaching
 standard while its section review is still open.
 
+Run `python3 scripts/validate-teaching-coverage.py` after each wave. It
+compares the wave entries and area totals with the generated catalog, catches
+duplicate or missing paths, and reports the current count. It checks the
+accounting only; it cannot establish that an explanation is clear or correct.
+
 "Authored to the standard" means only that the page was drafted with the
 standard's elements and passed the repository's static checks. It does not
 mean the page has been independently reviewed, reader-tested, or verified
