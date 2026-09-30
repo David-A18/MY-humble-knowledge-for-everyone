@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **OKF guide correction**: Corrected a stale claim that this repository lacked an OKF bundle; `knowledge/` is the declared v0.2 bundle. Labelled the guide's metadata sample as invented so its reviewer and dates cannot be mistaken for evidence. This targeted correction is not counted as a complete teaching pass.
 - **Teaching-hub fourteenth wave**: Rewrote blue-green deployment around the two-version release path and a shared-data rollback boundary. The example is illustrative; official AWS, Azure, and Google Cloud references support the provider-specific traffic choices. It remains `draft`; no deployment or reader test was run.
 - **Teaching-hub thirteenth wave**: Rewrote two AWS architecture explanations around replica replacement and where required state lives. The cart and photo-upload examples are illustrative; the pages explain shared-store, partial-failure, and duplicate-work limits with official AWS sources. Both remain `draft`; no AWS workload or reader test was run.
 - **Teaching-hub twelfth wave**: Narrowed Daily Git commands to a safe local commit path with expected signals, an unstage recovery step, and official Git command sources. The sequence was run in a disposable local repository; no remote or reader test was involved. The page remains `draft`.

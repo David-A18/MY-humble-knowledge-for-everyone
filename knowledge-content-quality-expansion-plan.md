@@ -661,6 +661,11 @@ service catalog to the release path and its rollback boundary.
 The provider documentation was consulted on 2026-09-30. The diagrams and
 release path are illustrative, not evidence of a production cutover.
 
+A separate accuracy correction in the OKF v0.2 guide now identifies
+`knowledge/` as this repository's declared bundle and marks its sample
+verification metadata as invented. That guide remains outside the authored
+count until it receives a full teaching and source review.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165

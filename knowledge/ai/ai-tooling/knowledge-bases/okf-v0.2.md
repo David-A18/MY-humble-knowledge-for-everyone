@@ -68,7 +68,11 @@ A dedicated bundle claimed to conform to OKF v0.2 must satisfy the official conf
 2. Every concept frontmatter block contains a non-empty `type`.
 3. Every reserved `index.md` or `log.md` follows its defined structure when present.
 
-This engineering repository is not automatically an OKF bundle just because it documents OKF concepts. A safer pattern is to keep a dedicated conformant example or export bundle, such as [examples/okf-v0.2](examples/okf-v0.2/index.md), while the main repository remains an ordinary Markdown knowledge base.
+The [`knowledge/` directory](../../../index.md) in this
+repository declares an OKF v0.2 bundle. Governance files, automation, and
+source notes outside that directory are not part of the bundle. The
+[embedded example](examples/okf-v0.2/index.md) is a separate small bundle
+for format study.
 
 Consumers must be permissive. A consumer should not reject a bundle merely because it sees unknown `type` values, extra frontmatter keys, missing optional metadata, missing optional indexes, or tolerable broken knowledge links.
 
@@ -87,6 +91,10 @@ This declaration belongs only in the bundle-root `index.md`. Nested `index.md` f
 ## Concept frontmatter
 
 Only `type` is always required for concept documents.
+
+The following frontmatter is an illustrative format example. Its actor,
+timestamps, source modification date, and verification entry are invented;
+they do not describe a reviewed page in this repository.
 
 ```yaml
 ---
