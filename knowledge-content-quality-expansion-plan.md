@@ -518,12 +518,28 @@ The current Kubernetes documentation was consulted on 2026-09-30. These
 pages contain no manifests to apply. The diagrams illustrate relationships,
 not observed infrastructure.
 
+### Wave 6 (2026-09-30)
+
+The FinOps allocation how-to and its AWS tag explanation were rewritten as a
+connected reader route. Both remain drafts. The previously recorded
+`stale_after` on cost allocation basics was carried over; it is not evidence
+that this rewrite was independently reviewed.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Cost allocation basics](knowledge/finops/cost-allocation-basics.md) | Added a direct, shared, and unallocated cost model, an illustrative reconciled report, expected outcome, and checks. | Keyed FinOps Framework citation and existing structured source records; the 100-unit report is invented and no provider report was run. | Independent FinOps and finance review; a real provider report check; reader test; freshness decision for the rewrite. |
+| [AWS cost allocation tags](knowledge/cloud/aws/finops/cost-allocation-tags.md) | Rewritten to separate resource tagging from billing activation, explain reporting delays and historical backfill, and bound tag coverage. | Keyed citations to AWS Billing and FinOps documentation; the EC2 scenario is illustrative, with no account access or billing action. | Independent AWS billing review; a real report check; reader test; freshness decision. |
+
+The AWS and FinOps pages were consulted on 2026-09-30. In particular, AWS
+backfill can apply activation to earlier billing periods, but only dates when
+a resource was actually tagged can have that historical tag value.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 163
-concepts. The "authored to the standard" column covers waves 1 to 5
-together: nineteen concepts, none of them independently reviewed. The
-remaining 144 have not been touched or reviewed against the standard.
+concepts. The "authored to the standard" column covers waves 1 to 6
+together: twenty-one concepts, none of them independently reviewed. The
+remaining 142 have not been touched or reviewed against the standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
@@ -532,12 +548,12 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 0 (Start here route order updated only) | 2 |
 | AI, including the embedded OKF example | 20 | 0 | 20 |
-| Cloud | 21 | 1 | 20 |
+| Cloud | 21 | 2 | 19 |
 | Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 3 | 8 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 0 | 2 |
-| FinOps | 1 | 0 | 1 |
+| FinOps | 1 | 1 | 0 |
 | Git | 17 | 1 | 16 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 0 | 9 |
@@ -546,7 +562,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **163** | **19** | **144** |
+| **Total** | **163** | **21** | **142** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

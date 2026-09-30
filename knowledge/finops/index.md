@@ -6,8 +6,8 @@ Status: Draft
 
 ## Start here
 
-- [Cost allocation basics](cost-allocation-basics.md) - Define ownership metadata, shared-cost rules, and coverage metrics.
-- [AWS cost allocation tags](../cloud/aws/finops/cost-allocation-tags.md) - Apply AWS-specific tag activation and reporting practices.
+- [Cost allocation basics](cost-allocation-basics.md) - Build a first direct, shared, and unallocated cost policy with a reconciled example.
+- [AWS cost allocation tags](../cloud/aws/finops/cost-allocation-tags.md) - Understand how a resource tag becomes a billing dimension and what backfill can recover.
 
 ## Next additions
 

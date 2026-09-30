@@ -520,11 +520,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use consistent tags to support AWS cost allocation, ownership, and operational reporting.",
+      "description": "Understand how an AWS resource tag becomes a billing dimension, what activation and backfill can recover, and why some costs need another rule.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/finops/cost-allocation-tags.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-cost-allocation-tags",
+        "aws-activate-tags",
+        "aws-tag-backfill",
+        "finops-allocation"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1341,7 +1346,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Establish a practical cloud cost-allocation policy using ownership metadata, hierarchy, shared-cost rules, and measurable coverage.",
+      "description": "Build a simple cost-allocation policy that assigns direct costs, handles shared costs explicitly, and measures what remains unallocated.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/finops/cost-allocation-basics.md",
