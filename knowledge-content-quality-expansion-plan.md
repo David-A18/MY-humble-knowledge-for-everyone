@@ -742,12 +742,24 @@ The Apache Kafka documentation was consulted on 2026-09-30. This page does
 not claim that an unconfigured cluster has any particular delivery or
 durability guarantee.
 
+### Wave 21 (2026-09-30)
+
+The Kafka consumer-group explanation now separates partition assignment,
+position lag, and replay consequences from the operational offset command.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Kafka consumer groups, lag, and replay](knowledge/databases/kafka/consumer-groups-lag-and-replay.md) | Rewritten with an illustrative two-partition assignment, limited bookmark analogy, offset-gap example, and replay side-effect boundary. | Keyed Apache Kafka 4.1 design, operations, and topic-configuration documentation. No consumer group or reset ran. | Independent Kafka and payment-flow review; a real consumer/replay exercise; reader test; freshness decision. |
+
+The Apache Kafka documentation was consulted on 2026-09-30. The example
+does not establish a measured consumer lag or authorize an offset reset.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 20
-together: forty concepts, none of them independently reviewed after their
-teaching passes. The remaining 125 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 21
+together: forty-one concepts, none of them independently reviewed after
+their teaching passes. The remaining 124 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -759,7 +771,7 @@ demonstration, so most teaching elements do not apply there.
 | AI, including the embedded OKF example | 20 | 1 | 19 |
 | Cloud | 21 | 8 | 13 |
 | Cross-topic guides | 16 | 5 | 11 |
-| Databases | 11 | 4 | 7 |
+| Databases | 11 | 5 | 6 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
@@ -771,7 +783,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **40** | **125** |
+| **Total** | **165** | **41** | **124** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

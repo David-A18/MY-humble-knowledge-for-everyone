@@ -1043,11 +1043,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to reason about Kafka consumer progress, scaling, lag, and safe replay.",
+      "description": "Understand how a consumer group divides partitions, what lag can and cannot tell you, and why replay needs a side-effect plan.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/kafka/consumer-groups-lag-and-replay.md",
-      "source_ids": [],
+      "source_ids": [
+        "kafka-design",
+        "kafka-ops",
+        "kafka-topic-configs"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
