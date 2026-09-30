@@ -503,12 +503,27 @@ retrieval case was added (`gitops-prune-and-self-heal-defaults`). The case is
 static: it checks that the expected paths and source IDs exist. It does not
 test retrieval ranking or answer quality.
 
+### Wave 5 (2026-09-30)
+
+Two existing Kubernetes explanations were rewritten around a single reader
+decision each. Both stay `draft` and have no independent review, reader test,
+running-cluster result, assigned maintainer, or new freshness record.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Gateway API and Ingress](knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md) | Rewritten to explain the external request path, object roles, route ownership, and choice of API. | Keyed citations to Kubernetes and Gateway API documentation; the two-team request path is illustrative. Acceptance of a route is explicitly separated from external reachability. | Independent technical review; implementation-specific feature check; reader test; freshness decision. |
+| [Stateful workloads](knowledge/kubernetes/core-objects/stateful-workloads.md) | Rewritten to explain Pod identity, separate storage claims, placement, and two deletion policies. | Keyed citations to Kubernetes storage and controller documentation; the three-Pod failure is illustrative, with no cluster run or restore test. | Independent technical review; storage-driver behavior check; reader test; freshness decision. |
+
+The current Kubernetes documentation was consulted on 2026-09-30. These
+pages contain no manifests to apply. The diagrams illustrate relationships,
+not observed infrastructure.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 163
-concepts. The "authored to the standard" column covers waves 1 to 4
-together: seventeen concepts, none of them independently reviewed. The
-remaining 146 have not been touched or reviewed against the standard.
+concepts. The "authored to the standard" column covers waves 1 to 5
+together: nineteen concepts, none of them independently reviewed. The
+remaining 144 have not been touched or reviewed against the standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
@@ -524,14 +539,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 0 | 2 |
 | FinOps | 1 | 0 | 1 |
 | Git | 17 | 1 | 16 |
-| Kubernetes | 45 | 5 | 40 |
+| Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 0 | 9 |
 | Programming languages | 1 | 0 | 1 |
 | Security | 3 | 1 | 2 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **163** | **17** | **146** |
+| **Total** | **163** | **19** | **144** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -552,6 +567,8 @@ as not yet reviewed above.
 - The sibling pages the wave 4 rewrites now link to and partly overlap: Flux
   reconciliation and Helm releases, GitOps security and multi-tenancy, and
   tooling clusters.
+- The network and storage procedures adjacent to wave 5: APISIX architecture,
+  Velero storage and volume backups, and the missing beginner Service concept.
 - The remaining cross-topic guides, which are marked as developed but have
   not been assessed against the standard, starting with deploying to EKS and
   GitOps on EKS.

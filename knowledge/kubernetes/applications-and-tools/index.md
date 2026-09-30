@@ -11,7 +11,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Understand what APISIX is and what it does. | [Apache APISIX](apache-apisix.md) |
 | Understand APISIX components and request flow. | [APISIX architecture and deployment](apisix-architecture-and-deployment.md) |
 | Configure auth, rate limits, traffic release, metrics, logs, and traces. | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) |
-| Choose between Ingress, Gateway API, and APISIX CRDs. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
+| Follow an external request to a Service and choose between Ingress, Gateway API, and implementation-specific routes. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
 | Run APISIX on Amazon EKS. | [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md) |
 | Troubleshoot 404, 401, 403, 429, 503, TLS, and upstream failures. | [APISIX troubleshooting](../troubleshooting/apisix.md) |
 
@@ -58,7 +58,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Apache APISIX](apache-apisix.md) | Understand APISIX as a Kubernetes API gateway. |
 | [APISIX architecture and deployment](apisix-architecture-and-deployment.md) | Understand APISIX data-plane, controller, Gateway API, and EKS exposure patterns. |
 | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) | Place authentication, rate limits, release policy, and telemetry in APISIX safely. |
-| [Gateway API and Ingress](gateway-api-and-ingress.md) | Choose between Ingress, Gateway API, and gateway-specific CRDs. |
+| [Gateway API and Ingress](gateway-api-and-ingress.md) | Understand the request path, controller requirement, Gateway API ownership, and route choice. |
 | [GitOps](gitops.md) | Understand the four GitOps principles, what CI publishes versus what a controller pulls, and the limits of a green sync. |
 | [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare application model, components, interfaces, sync defaults, and multi-cluster boundaries from each project's documentation. |
 | [Flux](flux.md) | Understand which Flux controller fetches, which reconciles, and which capabilities are optional. |

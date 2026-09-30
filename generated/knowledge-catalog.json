@@ -1804,11 +1804,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to choose between Kubernetes Ingress, Gateway API, and gateway-specific custom resources.",
+      "description": "Understand how an external HTTP request reaches a Kubernetes Service, and choose between Ingress, Gateway API, and implementation-specific routes.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md",
-      "source_ids": [],
+      "source_ids": [
+        "kubernetes-ingress",
+        "kubernetes-gateway",
+        "gateway-api-overview",
+        "gateway-api-httproute",
+        "kubernetes-service"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -2087,11 +2093,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Kubernetes objects and storage decisions for stateful workloads.",
+      "description": "Understand when a StatefulSet helps, how each Pod keeps its storage identity, and why stable volumes are not backups or data replication.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/core-objects/stateful-workloads.md",
-      "source_ids": [],
+      "source_ids": [
+        "kubernetes-statefulset",
+        "kubernetes-pv",
+        "kubernetes-storageclass",
+        "kubernetes-dynamic-provisioning",
+        "kubernetes-deployment"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
