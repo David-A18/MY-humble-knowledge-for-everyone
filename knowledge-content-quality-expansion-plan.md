@@ -621,12 +621,25 @@ permissions in one bounded example.
 The current GitHub documentation was consulted on 2026-09-30. The page is a
 draft explanation, not evidence of an operating pipeline.
 
+### Wave 12 (2026-09-30)
+
+The Daily Git commands page was narrowed to the one task a beginner needs
+most often: turn one intended file change into a reviewed local commit.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Daily Git commands](knowledge/git/commands/daily-commands.md) | Rewritten as a four-step how-to with read/write labels, expected status and diff signals, safe unstaging, scope limits, and next routes. | Keyed official Git manual pages. The inspect-stage-review-unstage-restage-commit sequence passed in a disposable local repository on 2026-09-30; no push or shared history operation was run. | Independent technical review; reader test; freshness decision. |
+
+The Git command documentation was consulted on 2026-09-30. The disposable
+check confirms the command sequence under one local setup; it does not
+validate every Git version, repository state, or team policy.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 11
-together: thirty concepts, none of them independently reviewed after
-their teaching passes. The remaining 135 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 12
+together: thirty-one concepts, none of them independently reviewed after
+their teaching passes. The remaining 134 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -642,7 +655,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 3 | 14 |
+| Git | 17 | 4 | 13 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 0 | 9 |
 | Programming languages | 3 | 3 | 0 |
@@ -650,7 +663,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **30** | **135** |
+| **Total** | **165** | **31** | **134** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

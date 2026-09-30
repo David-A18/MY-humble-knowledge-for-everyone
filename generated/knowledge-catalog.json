@@ -1428,11 +1428,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page for the Git commands most developers run every day: inspect work, stage changes, commit, branch, sync with remotes, and keep short-term work safe.",
+      "description": "Inspect one local change, stage only the intended file, review the staged snapshot, and create a commit safely.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/commands/daily-commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-status",
+        "git-diff",
+        "git-add",
+        "git-commit",
+        "git-restore"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

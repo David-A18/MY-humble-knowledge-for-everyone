@@ -6,7 +6,7 @@ Command references and practical workflows for working with Git repositories saf
 
 | Article | Purpose |
 | --- | --- |
-| [Daily commands](daily-commands.md) | Everyday inspection, staging, committing, branching, remote sync, stash, and log commands. |
+| [Daily commands](daily-commands.md) | Practice one safe local loop: inspect a change, stage a file, review the snapshot, and commit. |
 | [Common use cases](common-use-cases.md) | Scenario-based workflows for starting repositories, feature branches, releases, remotes, stashes, and worktrees. |
 | [Solve Git issues](solve-issues.md) | Safe commands for undoing mistakes, restoring files, recovering commits, and aborting in-progress operations. |
 | [Troubleshooting commands](troubleshooting-commands.md) | Diagnostic commands for conflicts, remotes, credentials, ignored files, line endings, hooks, corruption, and slow repositories. |
