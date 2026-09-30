@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-01
+
+- **Teaching-hub thirty-first wave**: Rewrote provenance, trust, and freshness around three separate questions and three separate versions: producer, corpus, and retrieval index. An invented Orders API schema change follows detect, propose, review, and merge, and shows why an unresolved source conflict is surfaced rather than silently resolved. The earlier reconciliation sample, whose realistic dates and hashes could be mistaken for evidence, is now a labelled placeholder. Rewrote evaluation and quality around separately scored content, ranking, grounding, freshness, and efficiency, with an invented hit@k, reciprocal-rank, and answer-check example; it states that the current retrieval cases are static path and source-ID checks, not a measured ranking. No reconciler, search, or reader test ran; both pages remain `draft`.
+
 ## 2026-09-30
 
 - **Teaching-hub thirtieth wave**: Rewrote OIDC token validation around a receiver's trust decision, distinguishing ID tokens, RFC 9068 JWT access tokens, and opaque access tokens. An invented two-token example shows why valid-looking claims or a valid issuer alone are insufficient. Removed a misleading universal pseudocode recipe and explained that keys come from the preconfigured issuer. No real token, application, or reader test ran; the page remains `draft`.

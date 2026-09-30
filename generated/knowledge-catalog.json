@@ -21,11 +21,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide defines how to measure whether an AI knowledge base works. A corpus is not good because it contains many files. It is good when agents can find the right evidence quickly, trust it appropriately, cite it correctly, and keep it current.",
+      "description": "Design a small test of whether a knowledge base helps people and agents find accurate, attributable answers, keeping content, ranking, grounding, freshness, and efficiency separate.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md",
-      "source_ids": [],
+      "source_ids": [
+        "stanford-ir-ranked-evaluation",
+        "azure-rag-retrieval",
+        "beir"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -249,11 +253,15 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide explains how an agent knowledge base records where knowledge came from, how it was verified, whether it is still fresh, and what to do when sources disagree.",
+      "description": "Distinguish where a knowledge claim came from, how much review supports it, and whether its source may have changed, then decide what to do when a page and its upstream source disagree.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md",
-      "source_ids": [],
+      "source_ids": [
+        "okf-spec",
+        "w3c-prov-dm",
+        "w3c-prov-o"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

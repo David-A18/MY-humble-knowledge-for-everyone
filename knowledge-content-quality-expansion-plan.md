@@ -868,12 +868,29 @@ offering a single pseudocode recipe for ID and access tokens.
 | --- | --- | --- | --- |
 | [OIDC token validation](knowledge/security/identity-federation/oidc-token-validation.md) | Rewritten with a trust-boundary diagram, limited signed-letter analogy, invented two-token rejection example, and separate ID-token, JWT access-token, and opaque-token paths. | OpenID Connect Core and Discovery, RFC 8725, RFC 9068, and RFC 7662 are cited. No application or token was tested. | Independent identity-security review; test with the selected provider and library; reader test; freshness decision. |
 
+### Wave 31 (2026-10-01)
+
+Two AI knowledge-base explanations now teach the evidence behind an answer:
+where a claim came from and whether it is current, and how to test that a
+knowledge base leads to an accurate, attributable answer. Both remain
+`draft` with an unassigned maintainer and no `verified`, `generated`, or
+`stale_after` value.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Provenance, trust, and freshness](knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) | Rewritten around three separate questions, producer versus corpus versus index revisions, a limited timetable analogy, a claim-dependent authority table, and an invented Orders API schema change from detection to merge with a surfaced conflict. The old reconciliation YAML, which used realistic-looking dates and hashes, was replaced by a labelled placeholder record. | Keyed citations to the OKF v0.2 specification, W3C PROV-DM, and W3C PROV-O. The page states that PROV is optional in this bundle. No reconciler, renderer, or review workflow ran. | Independent review by a knowledge-systems maintainer; a real reconciliation exercise; reader test; freshness decision. The OKF specification link follows the upstream `main` branch and is not pinned. |
+| [Evaluation and quality](knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md) | Rewritten around five separately scored layers, a limited mystery-shopper analogy, an evaluation-loop diagram, an invented question with ranked results, hit@k, precision at k, reciprocal rank, MRR, and a pass/fail answer check. Authorization-before-disclosure and deterministic generated-region rules are kept at conceptual depth; the long observability and cache lists were trimmed. | Keyed citations to the Stanford IR book's ranked-evaluation section, the Azure Architecture Center RAG retrieval guide (for the MRR definition and negative questions), and the BEIR paper. The page states that `tests/retrieval-cases.yaml` is a static path and source-ID check. No search, ranking, answer scoring, or reader test ran. | Independent review; a measured retrieval run over the golden cases; reader test; freshness decision. |
+
+The external sources were consulted on 2026-10-01. The ranked results, MRR
+arithmetic, answers, API, revisions, and conflict are invented teaching
+material, not observations.
+
 ### Not yet reviewed against the teaching standard
 
-Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 30
-together: fifty-one concepts, none of them independently reviewed after
-their teaching passes. The remaining 114 have not yet been authored or
+Counts come from the generated catalog on 2026-10-01, which records 165
+concepts. The "authored to the standard" column covers waves 1 to 31
+together: fifty-three concepts, none of them independently reviewed after
+their teaching passes. The remaining 112 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -882,7 +899,7 @@ demonstration, so most teaching elements do not apply there.
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
-| AI, including the embedded OKF example | 20 | 1 | 19 |
+| AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 9 | 12 |
 | Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 11 | 0 |
@@ -897,7 +914,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **51** | **114** |
+| **Total** | **165** | **53** | **112** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
