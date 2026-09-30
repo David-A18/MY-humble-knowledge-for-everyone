@@ -32,9 +32,10 @@ class TeachingCoverageTests(unittest.TestCase):
         self.assertTrue(any("multiple teaching waves" in error for error in MODULE.validate(CATALOG, changed)))
 
     def test_incorrect_summary_is_rejected(self) -> None:
+        total, authored, remaining = MODULE.summary_rows(PLAN)["Total"]
         changed = PLAN.replace(
-            "| **Total** | **165** | **24** | **141** |",
-            "| **Total** | **165** | **25** | **140** |",
+            f"| **Total** | **{total}** | **{authored}** | **{remaining}** |",
+            f"| **Total** | **{total}** | **{authored + 1}** | **{remaining - 1}** |",
             1,
         )
         self.assertNotEqual(changed, PLAN)

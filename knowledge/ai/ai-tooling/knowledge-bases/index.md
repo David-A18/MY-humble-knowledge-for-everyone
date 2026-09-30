@@ -62,7 +62,7 @@ producer changes
 | [Reference architecture](reference-architecture.md) | System boundaries, data flow, maintenance loop, implementation steps, and the central mental model. |
 | [OKF v0.2](okf-v0.2.md) | Specification-level OKF audit, conformance rules, lifecycle, actors, sources, trust, freshness, and Attested Computation. |
 | [Knowledge standards landscape](knowledge-standards-landscape.md) | Classifying OKF, RDF, JSON-LD, RDFS, OWL, SKOS, SHACL, PROV, OpenAPI, AsyncAPI, JSON Schema, MCP, AGENTS.md, llms.txt, and retrieval systems. |
-| [Retrieval and context efficiency](retrieval-and-context-efficiency.md) | Lexical-first retrieval, optional semantic reranking, progressive disclosure, budgets, and anti-patterns. |
+| [Retrieval and context efficiency](retrieval-and-context-efficiency.md) | Understand the search-to-fetch path, result trust signals, measured budgets, and when another ranking method is justified. |
 | [Provenance, trust, and freshness](provenance-trust-and-freshness.md) | Source authority, claim attribution, reconciliation, staleness, conflict handling, and versioning. |
 | [Security and governance](security-and-governance.md) | Prompt injection, poisoning, retrieval authorization, MCP risks, write-path abuse, and governance mapping. |
 | [Evaluation and quality](evaluation-and-quality.md) | Golden questions, retrieval metrics, answer evaluation, cost metrics, freshness metrics, determinism, observability, and cache safety. |

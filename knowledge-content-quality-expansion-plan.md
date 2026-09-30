@@ -558,12 +558,26 @@ The Bootstrap 5.3, npm CLI v11, and current Terraform documentation were
 consulted on 2026-09-30. The text diagram and Mermaid relationships are
 teaching aids, not observed results.
 
+### Wave 8 (2026-09-30)
+
+The AI retrieval explanation was rewritten to distinguish searching from
+fetching, give a small result example with honest lifecycle status, and show
+how a budget can be evaluated. It remains a draft.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Retrieval and context efficiency](knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Rewritten with a plain model, library analogy, search-to-fetch diagram, illustrative result, method choices, and measurement questions. | Keyed SQLite and Elasticsearch documentation for full-text matching and BM25. The example is explicitly invented and uses the real target page's `draft` status; no retrieval service or ranking evaluation ran. | Independent technical review; a measured search evaluation; reader test; freshness decision. |
+
+The SQLite and Elasticsearch documentation was consulted on 2026-09-30.
+The example no longer implies that the draft provenance page was stable or
+human-reviewed.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 7
-together: twenty-four concepts, none of them independently reviewed. The
-remaining 141 have not been touched or reviewed against the standard.
+concepts. The "authored to the standard" column covers waves 1 to 8
+together: twenty-five concepts, none of them independently reviewed. The
+remaining 140 have not been touched or reviewed against the standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
@@ -571,7 +585,7 @@ demonstration, so most teaching elements do not apply there.
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 0 (Start here route order updated only) | 2 |
-| AI, including the embedded OKF example | 20 | 0 | 20 |
+| AI, including the embedded OKF example | 20 | 1 | 19 |
 | Cloud | 21 | 2 | 19 |
 | Cross-topic guides | 16 | 5 | 11 |
 | Databases | 11 | 3 | 8 |
@@ -586,7 +600,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **24** | **141** |
+| **Total** | **165** | **25** | **140** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

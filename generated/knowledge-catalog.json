@@ -283,11 +283,14 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide explains how to design retrieval for agent knowledge bases as a measurable context budget rather than a race to return more text.",
+      "description": "Understand how a knowledge search finds a small, trustworthy set of pages before an AI agent reads enough evidence to answer.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md",
-      "source_ids": [],
+      "source_ids": [
+        "sqlite-fts5",
+        "elasticsearch-similarity"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
