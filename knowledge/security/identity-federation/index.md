@@ -7,7 +7,7 @@ Identity federation knowledge for OIDC, token trust, external identity providers
 | Article | Purpose |
 | --- | --- |
 | [OIDC fundamentals](oidc-fundamentals.md) | Understand OpenID Connect sign-in, ID tokens, claims, and discovery, and how workload federation differs. |
-| [OIDC token validation](oidc-token-validation.md) | Validate JWT signatures, issuer, audience, time claims, JWKS keys, and token purpose. |
+| [OIDC token validation](oidc-token-validation.md) | See why decoding proves nothing and how a receiver checks issuer, signature, audience, token purpose, and local authorization. |
 | [EKS human identity and Kubernetes RBAC](eks-human-identity-and-rbac.md) | Separate human EKS authentication from workload identity and bind access with RBAC. |
 | [AWS IAM OIDC provider and STS web identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md) | Understand AWS trust for external OIDC tokens. |
 | [EKS workload identity](../../cross-topic-guides/eks-workload-identity.md) | Choose between IRSA and EKS Pod Identity. |

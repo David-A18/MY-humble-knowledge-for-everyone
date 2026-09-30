@@ -2895,11 +2895,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to validate OIDC and JWT tokens safely before trusting identity claims in an application, gateway, or federation flow.",
+      "description": "Understand why a decoded token is untrusted, and which checks let an application accept an OIDC ID token or a supported OAuth access token.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/security/identity-federation/oidc-token-validation.md",
-      "source_ids": [],
+      "source_ids": [
+        "openid-core",
+        "openid-discovery",
+        "jwt-best-practices",
+        "jwt-access-token-profile",
+        "oauth-token-introspection"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
