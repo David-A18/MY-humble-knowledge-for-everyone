@@ -779,12 +779,24 @@ belongs inside a ticket document, and which data should be stored separately.
 The MongoDB documentation was consulted on 2026-09-30. The example's
 requirements and data are invented; they do not establish a production model.
 
+### Wave 24 (2026-09-30)
+
+The MongoDB schema-validation and indexing page now follows the ticket model
+through separate write-shape and read-access decisions.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [MongoDB schema validation and indexing](knowledge/databases/mongodb/schema-validation-and-indexing.md) | Rewritten with a bounded library analogy, write/read diagram, illustrative validator and compound index, and an explain-plan check. | Keyed official MongoDB validation, invalid-document, query optimization, compound-index, and explain documentation. No MongoDB deployment or query ran. | Independent MongoDB review; validation and query exercise on representative data; reader test; freshness decision. |
+
+The MongoDB documentation was consulted on 2026-09-30. No performance claim
+is based on a measured workload.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 23
-together: forty-three concepts, none of them independently reviewed after
-their teaching passes. The remaining 122 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 24
+together: forty-four concepts, none of them independently reviewed after
+their teaching passes. The remaining 121 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -796,7 +808,7 @@ demonstration, so most teaching elements do not apply there.
 | AI, including the embedded OKF example | 20 | 1 | 19 |
 | Cloud | 21 | 8 | 13 |
 | Cross-topic guides | 16 | 5 | 11 |
-| Databases | 11 | 7 | 4 |
+| Databases | 11 | 8 | 3 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
@@ -808,7 +820,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **43** | **122** |
+| **Total** | **165** | **44** | **121** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
