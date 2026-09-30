@@ -8,7 +8,7 @@ Database and data-platform knowledge for modeling, operations, reliability, perf
 | --- | --- |
 | [Kafka](kafka/index.md) | Event streaming concepts, topic design, operations, and AWS integration. |
 | [MongoDB](mongodb/index.md) | Document modeling, indexes, replication, sharding, operations, and cloud choices. |
-| [Relational vs. document databases](relational-vs-document-databases.md) | Decide when document or relational models fit better. |
+| [Relational vs. document databases](relational-vs-document-databases.md) | See one order modeled as tables and as a document, then decide which model fits a workload's access and consistency patterns. |
 
 ## Expected future content
 

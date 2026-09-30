@@ -8,6 +8,14 @@ cases:
     question: As a beginner, what happens to my change between editing a file, staging it, committing it, and pushing it in Git?
     expected_paths: [knowledge/git/git-fundamentals.md]
     required_source_ids: [pro-git-reset-demystified]
+  - id: cdn-cache-key-personalized-leak
+    question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-cache-key]
+  - id: oidc-signin-versus-workload-federation
+    question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [openid-connect-core, github-actions-oidc-aws]
   - id: local-kubernetes-learning
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]

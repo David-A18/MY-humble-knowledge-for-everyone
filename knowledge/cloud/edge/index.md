@@ -18,7 +18,7 @@ If you are looking for **Akamai** information, start with [Akamai vs. CloudFront
 
 | Article | Purpose |
 | --- | --- |
-| [CDN and edge fundamentals](cdn-and-edge-fundamentals.md) | Understand edge locations, caching, cache misses, origin offload, and edge compute. |
+| [CDN and edge fundamentals](cdn-and-edge-fundamentals.md) | Understand origin, edge, cache hit and miss, cache key, TTL, invalidation, and how caching differs from edge compute. |
 | [CDN caching and origin protection](cdn-caching-and-origin-protection.md) | Design cache keys, TTLs, purges, and direct-origin controls safely. |
 | [Akamai vs. CloudFront](akamai-vs-cloudfront.md) | Compare Akamai and Amazon CloudFront at a decision-guide level. |
 | [Multi-CDN operations](multi-cdn-operations.md) | Operate multiple CDN providers with consistent DNS, cache, security, logging, and rollback behavior. |

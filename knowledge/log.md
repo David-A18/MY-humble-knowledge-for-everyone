@@ -2,6 +2,7 @@
 
 ## 2026-09-30
 
+- **Teaching-hub second wave**: Rewrote six explanations to the teaching standard with plain definitions, analogies with stated limits, bounded illustrative examples, diagrams with text alternatives, understanding checks, and keyed official-source citations: relational vs. document databases, MongoDB fundamentals, Kafka topic and event design, custom resources and CRDs, OIDC fundamentals, and CDN and edge fundamentals. All six remain drafts with no review, execution, or freshness evidence added.
 - **Teaching-hub first batch**: Added a beginner Git fundamentals explanation and rewrote the Kubernetes and Terraform fundamentals explanations with plain definitions, analogies with stated limits, Mermaid diagrams with text alternatives, bounded illustrative examples, understanding checks, and keyed official-source citations. Start here now reads Git fundamentals before Git undo and recovery. All three pages remain drafts without new review or execution evidence.
 - **Authoring template**: The knowledge article template now provides separate Explanation and How-to Guide skeletons aligned with the teaching standard in the writing instructions.
 

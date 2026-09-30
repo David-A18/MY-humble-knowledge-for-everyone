@@ -9,7 +9,7 @@ Focused notes for the Kubernetes objects used most often in application operatio
 | Article | Purpose |
 | --- | --- |
 | [Stateful workloads](stateful-workloads.md) | Understand StatefulSets, PVCs, StorageClasses, and stateful design. |
-| [Custom resources and CRDs](custom-resources-and-crds.md) | Understand Kubernetes API extensions, CRDs, and operators. |
+| [Custom resources and CRDs](custom-resources-and-crds.md) | Understand how a CRD registers a type, a custom resource is one instance, and a controller or operator supplies the behaviour. |
 
 ## Expected content
 

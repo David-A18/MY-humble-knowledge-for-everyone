@@ -425,31 +425,55 @@ Supporting changes in the same wave, none of which is a reviewed concept:
   fundamentals. It checks that the path and source ID exist; it does not
   measure retrieval ranking or answer quality.
 
+### Wave 2 (2026-09-30)
+
+Six existing Explanation concepts were rewritten. None was reviewed by anyone
+other than the author, none was reader-tested, and none of the examples was
+run against a real system. All six remain `draft`, and none has a
+`stale_after`, `verified`, or maintainer value, because no review or ownership
+decision has happened.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Relational vs. document databases](knowledge/databases/relational-vs-document-databases.md) | Rewritten to the standard. | Keyed citations to PostgreSQL and MongoDB documentation; the order example is labelled illustrative. | Independent technical review; reader test; freshness decision. |
+| [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard. | Keyed citations to the MongoDB manual and, for the backup point, MongoDB's Atlas architecture guidance; the ticket document is labelled illustrative JSON, not database output. | Independent technical review; reader test; freshness decision. |
+| [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard. | Keyed citations to Apache Kafka 4.1 documentation and the Apache Avro specification; partitions and offsets in the example are invented. The cross-partition ordering and event-format statements are labelled in the page as inferences, because the cited Kafka pages do not state them. | Independent technical review, including the version-pinned Kafka links; reader test; freshness decision. |
+| [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard. | Keyed citations to Kubernetes and Crossplane documentation; the platform API walk-through is conceptual, with no manifest and no cluster run. | Independent technical review; reader test; freshness decision. |
+| [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. | Independent security review before anyone relies on it; reader test; freshness decision. |
+| [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard. | Keyed citations to RFC 9111 and the CloudFront Developer Guide; the cache-key example is reasoned from the model, not a recorded test. Only CloudFront's provider behaviour was checked. | Independent technical review; a second provider's documentation for the provider-neutral claims; reader test; freshness decision. |
+
+Supporting changes in the same wave: parent index descriptions for the six
+pages were updated, and two golden retrieval cases were added
+(`cdn-cache-key-personalized-leak` and `oidc-signin-versus-workload-federation`).
+The cases check that paths and source IDs exist. They do not measure retrieval
+ranking or answer quality.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-09-30, which records 163
-concepts. The embedded OKF example under AI tooling uses reserved types for
+concepts. The "authored to the standard" column covers waves 1 and 2
+together: nine concepts, none of them independently reviewed. The embedded OKF example under AI tooling uses reserved types for
 format demonstration, so most teaching elements do not apply there.
 
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 0 (Start here route order updated only) | 2 |
 | AI, including the embedded OKF example | 20 | 0 | 20 |
-| Cloud | 21 | 0 | 21 |
+| Cloud | 21 | 1 | 20 |
 | Cross-topic guides | 16 | 0 | 16 |
-| Databases | 11 | 0 | 11 |
+| Databases | 11 | 3 | 8 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 0 | 2 |
 | FinOps | 1 | 0 | 1 |
 | Git | 17 | 1 | 16 |
-| Kubernetes | 45 | 1 | 44 |
+| Kubernetes | 45 | 2 | 43 |
 | Migrations | 9 | 0 | 9 |
 | Programming languages | 1 | 0 | 1 |
-| Security | 3 | 0 | 3 |
+| Security | 3 | 1 | 2 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **163** | **3** | **160** |
+| **Total** | **163** | **9** | **154** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -464,8 +488,10 @@ as not yet reviewed above.
   templates with the type-specific expectations.
 - Link glossary entries for working tree, index, reconciliation, and state to
   the new explanations.
-- Kubernetes core objects and the local deployment learning path's
-  "Concepts before commands" section.
+- The sibling pages the wave 2 rewrites now link to and partly overlap:
+  Kafka fundamentals, MongoDB data modeling, OIDC token validation, CDN
+  caching and origin protection, and stateful workloads.
+- The local deployment learning path's "Concepts before commands" section.
 - Terraform language basics, variables, and outputs as focused explanations.
 
 ## Expansion phases

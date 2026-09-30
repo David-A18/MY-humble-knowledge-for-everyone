@@ -6,7 +6,7 @@ MongoDB knowledge for document modeling, indexing, replication, sharding, operat
 
 | Article | Purpose |
 | --- | --- |
-| [MongoDB fundamentals](fundamentals.md) | Understand documents, collections, BSON, CRUD, and aggregation basics. |
+| [MongoDB fundamentals](fundamentals.md) | Understand documents, collections, `_id`, embedding and references, validation, indexes, replica sets, and sharding. |
 | [MongoDB data modeling](data-modeling.md) | Choose embedding, referencing, schema validation, and access-pattern driven design. |
 | [Schema validation and indexing](schema-validation-and-indexing.md) | Combine flexible documents with JSON Schema validation, indexes, and explain-plan checks. |
 | [Replication, sharding, and consistency](replication-sharding-and-consistency.md) | Decide on replica sets, sharding, read/write concerns, backups, and restore testing. |

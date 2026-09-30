@@ -622,11 +622,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand the basic CDN and edge-computing vocabulary used by CloudFront, Akamai, and multi-CDN designs.",
+      "description": "Use this page to understand how a CDN caches responses at the edge: origin, cache hit and miss, cache key, TTL, invalidation, and how caching differs from edge compute.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/edge/cdn-and-edge-fundamentals.md",
-      "source_ids": [],
+      "source_ids": [
+        "rfc-9111-http-caching",
+        "cloudfront-how-it-works",
+        "cloudfront-cache-key",
+        "cloudfront-expiration",
+        "cloudfront-invalidation",
+        "cloudfront-edge-functions"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1033,11 +1040,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to design Kafka topics and events that are understandable, replayable, and operable.",
+      "description": "Use this page to understand the design choices behind Kafka topics and events: event boundaries, keys and ordering, schema evolution, retention, and replay.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/kafka/topic-and-event-design.md",
-      "source_ids": [],
+      "source_ids": [
+        "apache-kafka-introduction",
+        "apache-kafka-design",
+        "apache-kafka-topic-configs",
+        "apache-kafka-operations",
+        "apache-avro-specification"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1067,11 +1080,23 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand MongoDB's core data model and when document databases are useful.",
+      "description": "Use this page to understand MongoDB's core data model: documents, collections, identity, embedding and references, validation, indexes, replica sets, and sharding.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/mongodb/fundamentals.md",
-      "source_ids": [],
+      "source_ids": [
+        "mongodb-documents",
+        "mongodb-databases-collections",
+        "mongodb-data-modeling",
+        "mongodb-embedding",
+        "mongodb-referencing",
+        "mongodb-schema-validation",
+        "mongodb-indexes",
+        "mongodb-replication",
+        "mongodb-sharding",
+        "mongodb-replica-set-elections",
+        "mongodb-atlas-disaster-recovery"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1133,11 +1158,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to decide whether a relational database or document database is a better starting point for a workload.",
+      "description": "Use this page to understand how relational tables and document databases shape the same data differently, and to decide which is a better starting point for a workload.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/databases/relational-vs-document-databases.md",
-      "source_ids": [],
+      "source_ids": [
+        "postgresql-table-basics",
+        "postgresql-constraints",
+        "postgresql-joins",
+        "postgresql-json-types",
+        "postgresql-transactions",
+        "mongodb-data-modeling",
+        "mongodb-embedding",
+        "mongodb-lookup",
+        "mongodb-transactions"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1955,11 +1990,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Kubernetes custom resources, CustomResourceDefinitions, and operators.",
+      "description": "Use this page to understand how a CustomResourceDefinition adds a new type to the Kubernetes API, how a custom resource is one instance of it, and why a controller or operator supplies the behaviour.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/core-objects/custom-resources-and-crds.md",
-      "source_ids": [],
+      "source_ids": [
+        "kubernetes-custom-resources",
+        "kubernetes-crd-task",
+        "kubernetes-operator-pattern",
+        "kubernetes-finalizers",
+        "crossplane-xrd"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -2570,11 +2611,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand OpenID Connect before applying it to AWS, EKS, or GitHub Actions.",
+      "description": "Use this page to understand OpenID Connect sign-in, ID tokens, and claims, and how OIDC-compatible workload federation differs, before applying it to AWS, EKS, or GitHub Actions.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/security/identity-federation/oidc-fundamentals.md",
-      "source_ids": [],
+      "source_ids": [
+        "openid-connect-core",
+        "openid-connect-discovery",
+        "github-actions-oidc",
+        "github-actions-oidc-aws",
+        "aws-sts-assume-role-with-web-identity"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
