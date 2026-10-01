@@ -2,6 +2,7 @@
 
 ## 2026-10-01
 
+- **Teaching-hub thirty-seventh wave**: Rewrote multi-CDN operations around independent edge caches and a shared origin. An invented documentation-site migration shows outcome comparison, weighted DNS limits, purging both providers, and a shared-origin failure that DNS cannot fix. Akamai and AWS behaviours are sourced separately; no DNS, CDN, purge, failover, or reader test ran. The page remains `draft`.
 - **Teaching-hub thirty-sixth wave**: Rewrote CDN in front of EKS around the CDN-to-ALB-to-Pod path. The invented asset/account example distinguishes cache hits from origin requests, and the diagram separates ALB IP targets from instance targets through NodePort. Added cache, origin-access, TLS, and Pod-target boundaries with official sources. No CDN, ALB, cluster, or reader test ran; the page remains `draft`.
 - **Teaching-hub thirty-fifth wave**: Rewrote the CloudFront service overview around ordered cache behaviours, two origins, viewer and origin TLS, S3 origin access, WAF, and logging limits. The site and request paths are invented; no distribution or reader test ran. The page remains `draft`.
 - **Teaching-hub thirty-fourth wave**: Rewrote CDN caching and origin protection around two boundaries: safe response sharing and direct-origin access. Corrected the reversed cache-key trade-off and added CloudFront's positive-minimum-TTL warning, an invented catalog/account example, and S3 OAC, VPC origin, and public custom-origin options. No CDN or reader test ran; the page remains `draft`.

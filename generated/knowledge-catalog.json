@@ -722,11 +722,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to operate more than one CDN provider without creating inconsistent cache, security, DNS, logging, or rollback behavior.",
+      "description": "Understand what must stay consistent when one public site can be served through two CDN providers.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/edge/multi-cdn-operations.md",
-      "source_ids": [],
+      "source_ids": [
+        "akamai-caching",
+        "akamai-rules",
+        "akamai-purge",
+        "akamai-datastream",
+        "cloudfront-cache-policy",
+        "cloudfront-invalidation",
+        "cloudfront-logging",
+        "route53-weighted",
+        "route53-dns-cache",
+        "route53-health"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
