@@ -980,12 +980,22 @@ keeping registry operations in the official procedures.
 | --- | --- | --- | --- |
 | [Amazon ECR](knowledge/cloud/aws/compute/amazon-ecr.md) | Rewritten around registry, repository, image, tag, digest, access, retention, and scanning, with a bounded warehouse analogy, invented photo API release, and build-to-ECR-to-ECS diagram. Distinguishes Helm chart artifacts from application images and removes unexecuted live commands. | Keyed current ECR registry, image, policy, tag, lifecycle, scan, and Helm documentation plus the ECS execution-role guide. No image, task, scan, or registry operation ran. | Independent ECR/ECS review; controlled pull, retention, and rollback check; reader test; freshness decision. |
 
+### Wave 41 (2026-10-01)
+
+The EKS-to-ECS migration page now follows the application contract and
+cutover evidence instead of assuming each Kubernetes object has a direct
+replacement.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [EKS to ECS migration](knowledge/cloud/aws/compute/eks-to-ecs-migration.md) | Rewritten with a bounded restaurant-move analogy, invented photo API, parallel-runtime diagram, responsibility map, traffic/data/rollback boundaries, workload exceptions, and understanding checks. Removed untested commands and categorical fit claims. | Keyed current Kubernetes and AWS ECS, EKS Auto Mode, and ALB docs; no cluster, task, route, data migration, or workload test ran. | Independent AWS/Kubernetes and data-recovery review; controlled migration and rollback exercise; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 40
-together: sixty-four concepts, none of them independently reviewed after
-their teaching passes. The remaining 101 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 41
+together: sixty-five concepts, none of them independently reviewed after
+their teaching passes. The remaining 100 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -995,7 +1005,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
-| Cloud | 21 | 16 | 5 |
+| Cloud | 21 | 17 | 4 |
 | Cross-topic guides | 16 | 7 | 9 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
@@ -1009,7 +1019,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **64** | **101** |
+| **Total** | **165** | **65** | **100** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

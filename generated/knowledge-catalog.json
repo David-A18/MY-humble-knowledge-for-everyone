@@ -506,11 +506,26 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to plan a full-platform migration from Amazon EKS to Amazon ECS.",
+      "description": "Understand what changes when an application moves from EKS to ECS and how to judge a safe parallel cutover.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/compute/eks-to-ecs-migration.md",
-      "source_ids": [],
+      "source_ids": [
+        "k8s-deployment",
+        "k8s-ingress",
+        "k8s-custom-resources",
+        "ecs-task-definitions",
+        "ecs-services",
+        "ecs-load-balancing",
+        "ecs-service-connect",
+        "ecs-task-role",
+        "ecs-execution-role",
+        "ecs-auto-scaling",
+        "ecs-storage",
+        "ecs-scheduler",
+        "alb-weighted-rules",
+        "eks-auto-mode"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
