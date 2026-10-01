@@ -999,12 +999,22 @@ responsibilities already taught in the database section.
 | --- | --- | --- | --- |
 | [Amazon MSK](knowledge/cloud/aws/databases/amazon-msk.md) | Expanded from an outline into a managed-boundary explanation with a limited sorting-center analogy, invented order event, diagram, Provisioned/Serverless choice, network and IAM gates, lag limits, and understanding checks. | Keyed current AWS MSK overview, cluster-type, client-access, IAM, monitoring, lag, and quota docs. No cluster, client, metric, or event was tested. | Independent Kafka/AWS review; representative client and failure check; reader test; freshness decision. |
 
+### Wave 43 (2026-10-01)
+
+The MongoDB-on-AWS pages now form a broad hosting-choice guide and a
+focused comparison of the two managed options.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [MongoDB on AWS](knowledge/cloud/aws/databases/mongodb-on-aws.md) | Rewritten with a limited workshop analogy, three ownership paths, invented ticket application, candidate diagram, and decision sequence covering behavior, access, recovery, and observed cost. | Keyed current MongoDB Atlas, self-managed MongoDB, and AWS DocumentDB primary docs; no cluster, query, restore, or cost test ran. | Independent database architecture review; representative workload and restore exercise; reader test; freshness decision. |
+| [DocumentDB vs. MongoDB Atlas](knowledge/cloud/aws/databases/documentdb-vs-mongodb-atlas.md) | Rewritten as a version-aware comparison with an invented ticket workload, parallel-candidate test diagram, compatibility and network boundaries, restore criteria, and understanding checks. | Keyed current AWS DocumentDB 8.0 compatibility, API, differences, VPC, and backup docs plus MongoDB Atlas cluster, endpoint, and restore docs. No database, query, failover, or cost test ran. | Independent DocumentDB/Atlas review; side-by-side behavior, performance, and restore test; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 42
-together: sixty-six concepts, none of them independently reviewed after
-their teaching passes. The remaining 99 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 43
+together: sixty-eight concepts, none of them independently reviewed after
+their teaching passes. The remaining 97 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1014,7 +1024,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
-| Cloud | 21 | 18 | 3 |
+| Cloud | 21 | 20 | 1 |
 | Cross-topic guides | 16 | 7 | 9 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
@@ -1028,7 +1038,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **66** | **99** |
+| **Total** | **165** | **68** | **97** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

@@ -565,11 +565,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to compare Amazon DocumentDB and MongoDB Atlas for MongoDB-oriented workloads on AWS.",
+      "description": "Compare Amazon DocumentDB and MongoDB Atlas by application behavior, network access, recovery, and operating ownership.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/databases/documentdb-vs-mongodb-atlas.md",
-      "source_ids": [],
+      "source_ids": [
+        "docdb-compatibility",
+        "docdb-supported-apis",
+        "docdb-differences",
+        "docdb-how-it-works",
+        "docdb-vpc",
+        "docdb-backups",
+        "atlas-clusters",
+        "atlas-private-endpoints",
+        "atlas-backups",
+        "atlas-restore"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -582,11 +593,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to choose how MongoDB-style workloads should run in or near AWS.",
+      "description": "Understand three ways to run a MongoDB-oriented application on AWS and choose what to test before selecting one.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/databases/mongodb-on-aws.md",
-      "source_ids": [],
+      "source_ids": [
+        "atlas-providers",
+        "atlas-clusters",
+        "atlas-private-endpoints",
+        "mongo-production",
+        "mongo-security",
+        "mongo-backups",
+        "docdb-overview",
+        "docdb-compatibility",
+        "docdb-differences",
+        "docdb-backups"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
