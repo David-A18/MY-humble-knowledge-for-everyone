@@ -1009,12 +1009,21 @@ focused comparison of the two managed options.
 | [MongoDB on AWS](knowledge/cloud/aws/databases/mongodb-on-aws.md) | Rewritten with a limited workshop analogy, three ownership paths, invented ticket application, candidate diagram, and decision sequence covering behavior, access, recovery, and observed cost. | Keyed current MongoDB Atlas, self-managed MongoDB, and AWS DocumentDB primary docs; no cluster, query, restore, or cost test ran. | Independent database architecture review; representative workload and restore exercise; reader test; freshness decision. |
 | [DocumentDB vs. MongoDB Atlas](knowledge/cloud/aws/databases/documentdb-vs-mongodb-atlas.md) | Rewritten as a version-aware comparison with an invented ticket workload, parallel-candidate test diagram, compatibility and network boundaries, restore criteria, and understanding checks. | Keyed current AWS DocumentDB 8.0 compatibility, API, differences, VPC, and backup docs plus MongoDB Atlas cluster, endpoint, and restore docs. No database, query, failover, or cost test ran. | Independent DocumentDB/Atlas review; side-by-side behavior, performance, and restore test; reader test; freshness decision. |
 
+### Wave 44 (2026-10-01)
+
+The Apigee page now teaches the request path and the separate app-access
+path, including the policies that must actually run.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Apigee API management](knowledge/cloud/gcloud/apigee.md) | Rewritten with a limited museum analogy, invented learning API, request and product-access diagram, proxy and environment vocabulary, app-key and quota policy boundaries, hybrid ownership, and understanding checks. | Keyed current Google Cloud Apigee proxy, environment, product, app, policy, analytics, and hybrid docs. No proxy, policy, request, runtime, or analytics result was tested. | Independent Apigee/security review; controlled access and quota checks; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 43
-together: sixty-eight concepts, none of them independently reviewed after
-their teaching passes. The remaining 97 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 44
+together: sixty-nine concepts, none of them independently reviewed after
+their teaching passes. The remaining 96 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1024,7 +1033,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
-| Cloud | 21 | 20 | 1 |
+| Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 7 | 9 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
@@ -1038,7 +1047,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **68** | **97** |
+| **Total** | **165** | **69** | **96** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

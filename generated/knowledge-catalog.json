@@ -841,11 +841,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand where Google Cloud Apigee fits, how its main objects work together, and what to check before using it as an API management platform.",
+      "description": "Understand how an Apigee proxy handles a request, how API products give apps access, and when its managed or hybrid runtime fits.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/gcloud/apigee.md",
-      "source_ids": [],
+      "source_ids": [
+        "apigee-proxies",
+        "apigee-environments",
+        "apigee-products",
+        "apigee-apps",
+        "apigee-verify-key",
+        "apigee-api-keys",
+        "apigee-quota",
+        "apigee-spike-arrest",
+        "apigee-hybrid",
+        "apigee-analytics"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

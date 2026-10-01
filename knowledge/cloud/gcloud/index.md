@@ -16,7 +16,7 @@ Status: Initial outline
 
 | Article | Purpose |
 | --- | --- |
-| [Apigee API management](apigee.md) | Understand Apigee API proxies, environments, policies, API products, developer apps, hybrid runtime placement, and operational checks. |
+| [Apigee API management](apigee.md) | Follow a request through a proxy and see how products, app keys, policies, and runtime placement fit. |
 
 ## Official documentation
 
