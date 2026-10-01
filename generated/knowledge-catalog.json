@@ -687,11 +687,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to design CDN cache behavior without exposing private data, overwhelming the origin, or leaving a bypass path around the edge layer.",
+      "description": "Decide which requests may share a cached response and whether someone can bypass the CDN to reach the origin.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/edge/cdn-caching-and-origin-protection.md",
-      "source_ids": [],
+      "source_ids": [
+        "rfc-9111-http-caching",
+        "cloudfront-cache-key",
+        "cloudfront-cache-policy",
+        "cloudfront-origin-request-policy",
+        "cloudfront-s3-oac",
+        "cloudfront-vpc-origins",
+        "cloudfront-custom-origin",
+        "cloudfront-invalidation"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
