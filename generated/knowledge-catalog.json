@@ -538,11 +538,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand when Amazon Managed Streaming for Apache Kafka is the right AWS home for Kafka workloads.",
+      "description": "Understand what Amazon MSK manages for Apache Kafka, what applications still own, and how clients connect and observe progress.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/databases/amazon-msk.md",
-      "source_ids": [],
+      "source_ids": [
+        "msk-overview",
+        "msk-provisioned",
+        "msk-serverless",
+        "msk-client-access",
+        "msk-iam",
+        "msk-monitoring",
+        "msk-lag",
+        "msk-standard-practices",
+        "msk-quotas"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
