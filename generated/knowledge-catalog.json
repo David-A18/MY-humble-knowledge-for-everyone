@@ -565,11 +565,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to design Amazon CloudFront distributions for AWS applications, APIs, static sites, and EKS ingress paths.",
+      "description": "Understand how a CloudFront distribution routes site requests to origins, applies edge policies, and exposes AWS applications safely.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/cloudfront.md",
-      "source_ids": [],
+      "source_ids": [
+        "cloudfront-how-it-works",
+        "cloudfront-cache-behaviors",
+        "cloudfront-cache-policy",
+        "cloudfront-origin-request-policy",
+        "cloudfront-alternate-domain",
+        "cloudfront-origin-protocol",
+        "cloudfront-s3-oac",
+        "cloudfront-waf",
+        "cloudfront-logging"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

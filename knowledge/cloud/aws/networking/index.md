@@ -9,7 +9,7 @@ VPC, routing, connectivity, and traffic-control notes.
 | Article | Purpose |
 | --- | --- |
 | [Security groups](security-groups.md) | See how resource-level allow rules and group references admit a web-to-database request. |
-| [CloudFront](cloudfront.md) | Design CloudFront distributions, origins, cache behavior, and EKS edge paths. |
+| [CloudFront](cloudfront.md) | Follow ordered path behaviours, two TLS connections, and origin protection for an AWS site. |
 | [Stateful networking](stateful-networking.md) | Follow one request and reply through a stateful security group and a stateless subnet ACL. |
 
 ## Expected future content
