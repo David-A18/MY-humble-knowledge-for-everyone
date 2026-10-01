@@ -441,11 +441,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to understand Amazon Elastic Container Service (Amazon ECS), what runs there, how its main components fit together, and which operational patterns are practical in real AWS environments.",
+      "description": "Understand how Amazon ECS turns a container definition into running tasks, keeps a service available, and chooses compute capacity.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/compute/amazon-ecs.md",
-      "source_ids": [],
+      "source_ids": [
+        "ecs-task-definitions",
+        "ecs-services",
+        "ecs-capacity",
+        "ecs-task-role",
+        "ecs-execution-role",
+        "ecs-task-networking",
+        "ecs-load-balancing",
+        "ecs-storage"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -458,11 +467,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to choose between Amazon ECS and Amazon EKS for container workloads on AWS.",
+      "description": "Compare Amazon ECS and EKS by the orchestration API, platform extensions, workload identity, and operating work your team needs.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/compute/ecs-vs-eks.md",
-      "source_ids": [],
+      "source_ids": [
+        "ecs-task-definitions",
+        "ecs-services",
+        "ecs-capacity",
+        "ecs-task-role",
+        "eks-overview",
+        "eks-auto-mode",
+        "eks-service-accounts",
+        "kubernetes-deployments",
+        "kubernetes-custom-resources"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

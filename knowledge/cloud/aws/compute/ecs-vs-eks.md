@@ -1,124 +1,190 @@
 ---
 type: "Explanation"
 title: "ECS vs. EKS"
-description: "Use this guide to choose between Amazon ECS and Amazon EKS for container workloads on AWS."
+description: "Compare Amazon ECS and EKS by the orchestration API, platform extensions, workload identity, and operating work your team needs."
 tags: [cloud, aws, compute]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: ecs-task-definitions
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html
+    title: Amazon ECS Developer Guide - Task definitions
+  - id: ecs-services
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html
+    title: Amazon ECS Developer Guide - Services
+  - id: ecs-capacity
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html
+    title: Amazon ECS Developer Guide - Launch types and capacity providers
+  - id: ecs-task-role
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
+    title: Amazon ECS Developer Guide - Task IAM role
+  - id: eks-overview
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html
+    title: Amazon EKS User Guide - What is Amazon EKS
+  - id: eks-auto-mode
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/automode.html
+    title: Amazon EKS User Guide - Automate cluster infrastructure with EKS Auto Mode
+  - id: eks-service-accounts
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html
+    title: Amazon EKS User Guide - Grant workloads access to AWS
+  - id: kubernetes-deployments
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    title: Kubernetes documentation - Deployments
+  - id: kubernetes-custom-resources
+    resource: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
+    title: Kubernetes documentation - Custom Resources
 ---
 
 # ECS vs. EKS
 
 ## Purpose
 
-Use this guide to choose between Amazon ECS and Amazon EKS for container workloads on AWS.
+Amazon ECS and Amazon EKS both run containerized applications on AWS. The
+main difference is the **control interface** used to describe and operate
+them. ECS uses AWS task definitions, tasks, and services. EKS provides a
+managed Kubernetes control plane, so teams use Kubernetes objects such as
+Pods and Deployments, and can extend its API with custom resources.
+[^ecs-task-definitions][^eks-overview][^kubernetes-custom-resources]
 
-The short version: choose ECS when AWS-native simplicity is more valuable than Kubernetes platform flexibility. Choose EKS when Kubernetes APIs, Kubernetes ecosystem tools, CRDs, operators, or multi-environment portability are core requirements.
+This explanation helps a team ask which interface and operating model it
+actually needs. A web API or queue worker can run on either platform; the
+workload name alone does not decide the answer.
 
-## Decision summary
+## The mental model
 
-| Situation | Choose | Reason |
+Imagine **two control panels for the same machine**. Both can ask for two
+running copies of a container, but their switches, extension points, and
+maintenance steps differ. The analogy stops when capacity, networking,
+identity, and storage enter the picture: the same container image can run on
+both, but its deployment configuration and AWS integration must be designed
+for the chosen platform.
+
+| Question | ECS | EKS |
 | --- | --- | --- |
-| Team wants the simplest AWS-native container platform | ECS | Fewer platform components and no Kubernetes control plane to operate. |
-| Team already depends on Kubernetes APIs or controllers | EKS | Existing manifests, operators, CRDs, Helm charts, and GitOps flows stay native. |
-| Application is a normal web API or worker | ECS | ECS services, task definitions, ALB/NLB, Service Connect, and task roles cover the common needs. |
-| Platform exposes custom Kubernetes APIs | EKS | ECS does not provide a Kubernetes API server, CRDs, admission webhooks, or Kubernetes controllers. |
-| Portability across Kubernetes providers matters | EKS | Workloads remain Kubernetes-native. |
-| AWS service integration and IAM-first operations matter most | ECS | ECS integrates directly with IAM, ELB, CloudWatch, EventBridge, ECR, Secrets Manager, and VPC networking. |
+| What describes a running copy? | A task definition describes it; a task is a running instance. | A Pod template describes it; a Pod is a running instance. |
+| What maintains several copies? | An ECS service requests a desired task count. | A Kubernetes Deployment manages ReplicaSets and Pods toward a desired count. |
+| What is the main API? | AWS ECS APIs for clusters, task definitions, tasks, and services. | Kubernetes API objects, plus AWS EKS APIs for the managed cluster. |
+| How is application AWS access attached? | An IAM task role. | A Kubernetes service account mapped through EKS Pod Identity or IRSA. |
+| Can the platform define a new Kubernetes object kind? | ECS has its own API, not Kubernetes CRDs. | Kubernetes custom resource definitions (CRDs) extend the API. |
 
-## Comparison
+An ECS service replaces a stopped task to maintain its desired count.
+Kubernetes Deployments reconcile their Pods through ReplicaSets. Neither
+statement proves that the application gives a correct answer to a user.
+[^ecs-services][^kubernetes-deployments] ECS task roles and EKS service-account
+identity are different ways to grant workloads AWS permissions; both require
+permissions scoped to the application.[^ecs-task-role][^eks-service-accounts]
 
-| Area | ECS | EKS |
-| --- | --- | --- |
-| Control plane | AWS-managed ECS orchestration service. | AWS-managed Kubernetes control plane. |
-| API model | ECS clusters, task definitions, tasks, services, capacity providers. | Kubernetes API objects such as Pods, Deployments, Services, Ingress, ConfigMaps, Secrets, CRDs. |
-| Data plane | ECS Managed Instances, Fargate, Fargate Spot, EC2 capacity providers, external instances. | EKS Auto Mode, managed node groups, self-managed nodes, Karpenter, Fargate, hybrid options. |
-| Workload definition | ECS task definition plus ECS service. | Kubernetes manifests, Helm charts, Kustomize overlays, or higher-level platform APIs. |
-| Networking | VPC-native task networking, task ENIs, security groups, ALB/NLB, Service Connect, Cloud Map. | VPC CNI, Kubernetes Services, Ingress/Gateway controllers, NetworkPolicy support depending on implementation. |
-| IAM for workloads | ECS task roles. | EKS Pod Identity or IAM roles for service accounts. |
-| Scaling | ECS Service Auto Scaling and capacity providers. | HPA, KEDA, Cluster Autoscaler, Karpenter, EKS Auto Mode, or managed node group scaling. |
-| Deployments | ECS rolling and blue/green service deployments. | Deployment rollouts, Helm/GitOps rollouts, progressive delivery controllers if installed. |
-| Platform extensions | AWS service integrations and deployment pipelines. | CRDs, operators, admission webhooks, controllers, service meshes, policy engines. |
-| Observability | CloudWatch metrics, logs, Container Insights, service events. | Kubernetes events and metrics plus CloudWatch, Container Insights, managed Prometheus, OpenTelemetry, and add-ons. |
-| Operations skill | AWS ECS, IAM, VPC, ELB, CloudWatch. | Kubernetes plus AWS integration knowledge. |
-| Portability | Container images are portable; orchestration definitions are ECS-specific. | Kubernetes manifests are portable with provider-specific integration changes. |
+```mermaid
+flowchart LR
+  image["Container image"] --> ecsdef["ECS task definition"]
+  image --> podtemplate["Kubernetes Pod template"]
+  ecsdef --> service["ECS service"]
+  podtemplate --> deployment["Kubernetes Deployment on EKS"]
+  service --> task["Running ECS tasks"]
+  deployment --> pods["Running Pods"]
+```
 
-## Choose ECS when
+Text alternative: one application image can be named in an ECS task
+definition or a Kubernetes Pod template. The ECS service creates and
+maintains tasks; an EKS Deployment creates and maintains Pods through
+Kubernetes controllers. The diagram helps show why moving an image is easier
+than translating the platform configuration around it.
 
-- Your workloads are stateless web services, APIs, workers, scheduled jobs, or finite tasks.
-- You want fewer platform components to patch, upgrade, and troubleshoot.
-- Your team prefers AWS IAM, CloudWatch, ELB, EventBridge, and IaC workflows over Kubernetes-native operations.
-- You do not need CRDs, operators, Kubernetes admission control, or a Kubernetes API for self-service.
-- You can express deployment, scaling, networking, and identity needs through ECS and AWS services.
+## Example: a photo API and a platform promise
 
-## Choose EKS when
+This team and its requirements are invented. No ECS service, EKS cluster, or
+cost comparison was run.
 
-- The platform already uses Kubernetes APIs as the main developer interface.
-- You depend on Helm charts, Kustomize overlays, GitOps controllers, operators, CRDs, or admission webhooks.
-- You need Kubernetes-native portability across AWS, on-premises, or other providers.
-- Your workloads need Kubernetes scheduling primitives or ecosystem tooling that ECS does not model directly.
-- Your team is staffed to operate Kubernetes upgrades, add-ons, policies, and cluster-level troubleshooting.
+A team has a photo API that accepts requests through an ALB, stores photos in
+S3, and needs two running copies. Both ECS and EKS can meet that requirement.
+The team must still define networking, application IAM access, logging,
+health checks, and a deployment path.
 
-## Cost and operations trade-offs
+Now the team makes one additional promise: developers will submit a custom
+`PhotoService` object, and an in-cluster controller will turn each object into
+the application's infrastructure. That promise uses the Kubernetes API and
+custom resources, so EKS preserves the proposed interface. Choosing ECS
+would require designing a different platform API or automation to replace it.
+Kubernetes documents CRDs as a way to add a new resource type to its API.
+[^kubernetes-custom-resources]
 
-ECS can reduce platform overhead because there is no Kubernetes control plane, cluster add-on fleet, or Kubernetes API extension layer to manage. That does not make ECS automatic. You still design VPC networking, IAM roles, task sizes, scaling policies, deployment strategy, observability, and cost allocation.
+If the team **does not** need that Kubernetes interface and already operates
+AWS services through IAM and infrastructure code, ECS may be a simpler
+operating model for this one API. That is a conditional inference from the
+documented API surfaces, not a measured claim that ECS is always cheaper,
+faster, or more reliable.
 
-EKS gives a richer platform surface but adds operational decisions. Even with a managed control plane, teams still own Kubernetes version strategy, add-ons, node or Fargate capacity, RBAC, admission policy, workload manifests, and controller health.
+## What does not decide the choice by itself
 
-## Migration impact
+- **"We want managed compute."** ECS can use Fargate, ECS Managed Instances,
+  or EC2 capacity providers. EKS has AWS-managed control-plane options and
+  EKS Auto Mode, which also manages much cluster infrastructure. Compare the
+  exact capacity and feature requirements, not a simple managed/unmanaged
+  label.[^ecs-capacity][^eks-auto-mode]
+- **"We have Docker images."** The image can be reused, but task
+  definitions, Kubernetes manifests, IAM wiring, service discovery, and
+  rollout controls do not translate automatically.
+- **"Kubernetes is portable."** Kubernetes API objects can travel between
+  Kubernetes implementations, but a workload using AWS load balancers,
+  identity, storage, or provider-specific custom resources still needs
+  adaptation. This is an inference from those integration points, not a
+  guarantee of portability.
+- **"ECS has fewer Kubernetes parts."** ECS avoids operating Kubernetes
+  objects and add-ons, but the team still owns its task roles, VPC rules,
+  capacity choices, application health, data, and releases. EKS Auto Mode
+  reduces some cluster work; it does not remove the application work.
+- **"One is cheaper."** A cost answer needs an actual workload shape,
+  capacity plan, cluster and network charges, operations effort, and current
+  prices. No such comparison is recorded here.
 
-Moving from EKS to ECS is a platform migration, not a simple manifest conversion. The container image may stay mostly the same, but these surfaces change:
+## A practical decision sequence
 
-| EKS source | ECS target |
-| --- | --- |
-| Deployment, StatefulSet, DaemonSet | ECS service, standalone task, scheduled task, or external AWS service. |
-| Pod template | Task definition. |
-| Kubernetes Service | ALB/NLB target group, Service Connect, or Cloud Map. |
-| Ingress or Gateway API | ALB/NLB listeners and rules, CloudFront, API Gateway, or service mesh alternative. |
-| HPA or KEDA | ECS Service Auto Scaling with CloudWatch metrics or EventBridge-driven scaling. |
-| IRSA or EKS Pod Identity | ECS task role. |
-| ConfigMap | Environment variables, task definition files, S3, SSM Parameter Store, or application config service. |
-| Secret | Secrets Manager or SSM Parameter Store reference. |
-| PVC and StorageClass | EFS, EBS, FSx, S3, or managed data service. |
-| Namespace and RBAC | AWS accounts, ECS clusters, IAM policies, tags, and pipeline boundaries. |
-| Argo CD or Flux | CodePipeline, GitHub Actions, Terraform, CDK, Copilot, or another ECS deployment pipeline. |
-| CRDs and operators | AWS managed services, IaC modules, custom automation, or keep that capability on EKS. |
+1. List the application's **required interfaces**: Kubernetes API objects,
+   operators, CRDs, or only a container service and AWS resources.
+2. List its **runtime needs**: compute type, storage lifetime, network paths,
+   identity, scaling, and how traffic reaches it.
+3. Identify who will maintain the platform and which operational skills and
+   automation the team already has.
+4. Build one small representative path on each viable option if the choice is
+   still unclear. Compare deployment, failure diagnosis, security boundaries,
+   and measured cost from that path.
 
-## Practical examples
+## Check your understanding
 
-### Simple public API
+1. Why can the photo API run on either platform before the custom-resource
+   promise is added?
+2. Which object maintains running copies in ECS, and which object starts the
+   Kubernetes reconciliation chain on EKS?
+3. Why is reusing a container image not the same as migrating the platform?
 
-Choose ECS when a service is already packaged as a container, uses RDS or DynamoDB for state, and only needs HTTP ingress. Run it as an ECS service on Fargate or ECS Managed Instances behind an ALB. Use a task role for AWS API access and service auto scaling for demand changes.
+## Deeper study
 
-### Internal microservices
+- [ECS task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)
+  and [services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
+  for its API model.
+- [Amazon EKS overview](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
+  and [EKS Auto Mode](https://docs.aws.amazon.com/eks/latest/userguide/automode.html)
+  for the managed Kubernetes choices.
+- [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+  and [custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+  for the API and extension model.
+- [ECS capacity choices](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html)
+  and [EKS workload AWS access](https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html)
+  for two important implementation questions.
 
-Choose ECS when services only need private service-to-service calls, logs, metrics, and IAM access. Use Service Connect for discovery and traffic metrics, task roles for AWS access, and private subnets with VPC endpoints where possible.
+Continue to [Amazon ECS](amazon-ecs.md) for its core objects,
+[Kubernetes fundamentals](../../../kubernetes/fundamentals/kubernetes-fundamentals.md)
+for the Kubernetes model, or [EKS to ECS migration](eks-to-ecs-migration.md)
+for the platform-change inventory. [Back to AWS compute](index.md)
 
-### Kubernetes platform product
-
-Choose EKS when developers submit custom resources, operators reconcile infrastructure, and Argo CD or Flux is the delivery control plane. ECS does not replace the Kubernetes API extension model directly.
-
-### Cost-sensitive worker fleet
-
-Choose ECS when queue workers can run on Fargate Spot or EC2 Spot capacity and tolerate interruption. Use idempotent processing, dead-letter queues, and backlog-based scaling.
-
-## Official documentation
-
-- [Amazon ECS documentation](https://docs.aws.amazon.com/ecs/)
-- [Amazon ECS clusters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html)
-- [ECS launch types and capacity providers](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html)
-- [Amazon ECS services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
-- [What is Amazon EKS?](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
-- [Amazon EKS Kubernetes concepts](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-concepts.html)
-
-## Related links
-
-- [Amazon ECS](amazon-ecs.md)
-- [EKS to ECS migration](eks-to-ecs-migration.md)
-- [Kubernetes on AWS](../../../cross-topic-guides/kubernetes-on-aws.md)
-- [EKS operations](../../../cross-topic-guides/eks-operations.md)
-- [AWS compute](index.md)
-- [AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+[^ecs-task-definitions]: [Amazon ECS - Task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html).
+[^ecs-services]: [Amazon ECS - Services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html).
+[^ecs-capacity]: [Amazon ECS - Launch types and capacity providers](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html).
+[^ecs-task-role]: [Amazon ECS - Task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html).
+[^eks-overview]: [Amazon EKS - What is Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html).
+[^eks-auto-mode]: [Amazon EKS - Automate cluster infrastructure with EKS Auto Mode](https://docs.aws.amazon.com/eks/latest/userguide/automode.html).
+[^eks-service-accounts]: [Amazon EKS - Grant workloads access to AWS](https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html).
+[^kubernetes-deployments]: [Kubernetes - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+[^kubernetes-custom-resources]: [Kubernetes - Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).

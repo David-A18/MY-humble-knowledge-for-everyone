@@ -961,12 +961,22 @@ with the documented provider controls instead of giving a categorical winner.
 | --- | --- | --- | --- |
 | [Akamai vs. CloudFront](knowledge/cloud/edge/akamai-vs-cloudfront.md) | Rewritten with a limited delivery-service analogy, parallel-path diagram, invented AWS-hosted site, provider-control mapping, selection questions, and understanding checks. Removed unsupported blanket recommendations and separated similarly named capabilities from measured equivalence. | Keyed current Akamai Property Manager, origin, security, EdgeWorkers, and activation documentation and CloudFront behaviour, origin, WAF, edge-function, and distribution-status documentation. No configuration, contract, performance, or cost evidence was tested. | Independent Akamai/CloudFront review; side-by-side workload test and current contract/entitlement check before choosing; reader test; freshness decision. |
 
+### Wave 39 (2026-10-01)
+
+The ECS and ECS-versus-EKS pages now form a beginner route from ECS objects
+to the platform API decision, with no categorical winner for a normal API.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Amazon ECS](knowledge/cloud/aws/compute/amazon-ecs.md) | Rewritten around task definition, running task, desired service count, and capacity provider. Uses a limited help-desk analogy, invented photo API, relationship diagram, and identity, network, storage, and health boundaries. Removed unexecuted live-change commands and the broad feature inventory. | Keyed current Amazon ECS task-definition, service, capacity, role, networking, load-balancing, and storage documentation. No AWS task or request ran. | Independent ECS review; controlled replacement and data-lifetime check; reader test; freshness decision. |
+| [ECS vs. EKS](knowledge/cloud/aws/compute/ecs-vs-eks.md) | Rewritten as a conditional choice about orchestration APIs and operating work, with a two-path diagram and invented photo API whose custom-resource requirement changes the fit. Corrects unconditional ECS recommendations and includes EKS Auto Mode. | Keyed current ECS, EKS, and Kubernetes primary docs; no platform, portability, price, or performance comparison ran. | Independent AWS/Kubernetes review; representative workload and cost comparison; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 38
-together: sixty-one concepts, none of them independently reviewed after
-their teaching passes. The remaining 104 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 39
+together: sixty-three concepts, none of them independently reviewed after
+their teaching passes. The remaining 102 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -976,7 +986,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
-| Cloud | 21 | 13 | 8 |
+| Cloud | 21 | 15 | 6 |
 | Cross-topic guides | 16 | 7 | 9 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
@@ -990,7 +1000,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **61** | **104** |
+| **Total** | **165** | **63** | **102** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
