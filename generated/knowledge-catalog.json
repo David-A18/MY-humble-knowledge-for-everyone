@@ -656,11 +656,24 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to choose between Akamai, Amazon CloudFront, or a multi-CDN approach.",
+      "description": "Compare Akamai and Amazon CloudFront by the site behaviour, origin access, and operations a real workload needs.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/edge/akamai-vs-cloudfront.md",
-      "source_ids": [],
+      "source_ids": [
+        "akamai-concepts",
+        "akamai-rules",
+        "akamai-origin",
+        "akamai-security",
+        "akamai-edgeworkers",
+        "akamai-activation",
+        "cloudfront-behaviors",
+        "cloudfront-s3-oac",
+        "cloudfront-vpc-origins",
+        "cloudfront-waf",
+        "cloudfront-edge-functions",
+        "cloudfront-distribution-status"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

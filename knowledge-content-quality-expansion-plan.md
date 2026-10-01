@@ -952,12 +952,21 @@ origin, and DNS steering affect a migration or failover.
 | --- | --- | --- | --- |
 | [Multi-CDN operations](knowledge/cloud/edge/multi-cdn-operations.md) | Rewritten with a limited two-shopfront analogy, independent-cache diagram, invented documentation-site traffic shift, outcome contract, purge comparison, DNS-cache limit, incident signals, and understanding checks. | Keyed current Akamai caching, rules, Fast Purge, and DataStream documentation plus CloudFront cache, invalidation, and logging and Route 53 weighted routing, DNS, and health-check documentation. No DNS, CDN, purge, or failover action ran. | Independent edge/SRE review; controlled parity, purge, and failover exercise; reader test; freshness decision. |
 
+### Wave 38 (2026-10-01)
+
+The Akamai-versus-CloudFront page now compares a site's required outcomes
+with the documented provider controls instead of giving a categorical winner.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Akamai vs. CloudFront](knowledge/cloud/edge/akamai-vs-cloudfront.md) | Rewritten with a limited delivery-service analogy, parallel-path diagram, invented AWS-hosted site, provider-control mapping, selection questions, and understanding checks. Removed unsupported blanket recommendations and separated similarly named capabilities from measured equivalence. | Keyed current Akamai Property Manager, origin, security, EdgeWorkers, and activation documentation and CloudFront behaviour, origin, WAF, edge-function, and distribution-status documentation. No configuration, contract, performance, or cost evidence was tested. | Independent Akamai/CloudFront review; side-by-side workload test and current contract/entitlement check before choosing; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 37
-together: sixty concepts, none of them independently reviewed after
-their teaching passes. The remaining 105 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 38
+together: sixty-one concepts, none of them independently reviewed after
+their teaching passes. The remaining 104 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -967,7 +976,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
-| Cloud | 21 | 12 | 9 |
+| Cloud | 21 | 13 | 8 |
 | Cross-topic guides | 16 | 7 | 9 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
@@ -981,7 +990,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **60** | **105** |
+| **Total** | **165** | **61** | **104** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
