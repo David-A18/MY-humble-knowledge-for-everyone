@@ -7,7 +7,7 @@ Compute services and operational notes for running workloads on AWS.
 | Article | Purpose |
 | --- | --- |
 | [Amazon ECS](amazon-ecs.md) | See how a task definition, service, running tasks, and capacity provider fit together. |
-| [Amazon ECR](amazon-ecr.md) | Manage private container and OCI artifact repositories, lifecycle controls, policies, Helm charts, and Crossplane integration. |
+| [Amazon ECR](amazon-ecr.md) | See how a build stores an image, how a digest identifies it, and how ECS pulls it. |
 | [ECS vs. EKS](ecs-vs-eks.md) | Compare the orchestration API and platform work against one application's requirements. |
 | [EKS to ECS migration](eks-to-ecs-migration.md) | Plan a full-platform migration from EKS workloads and Kubernetes operating models to ECS and AWS-native services. |
 

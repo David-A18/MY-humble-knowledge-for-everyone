@@ -424,11 +424,23 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Amazon Elastic Container Registry (ECR), secure",
+      "description": "Understand where Amazon ECR stores container images, how tags and digests identify them, and what a service needs to pull one.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/compute/amazon-ecr.md",
-      "source_ids": [],
+      "source_ids": [
+        "ecr-overview",
+        "ecr-registry",
+        "ecr-images",
+        "ecr-tags",
+        "ecr-pull",
+        "ecr-policies",
+        "ecr-lifecycle",
+        "ecr-scanning",
+        "ecr-helm",
+        "ecs-execution-role",
+        "ecs-task-image"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
