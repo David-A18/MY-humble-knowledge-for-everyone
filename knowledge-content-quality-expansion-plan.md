@@ -933,12 +933,22 @@ general caching lesson.
 | --- | --- | --- | --- |
 | [CloudFront](knowledge/cloud/aws/networking/cloudfront.md) | Rewritten with a limited reception-desk analogy, ordered path-rule example, routing diagram, separate viewer and origin TLS, S3 OAC, WAF, logging limits, and understanding checks. | Keyed current Amazon CloudFront documentation for delivery, behaviours, policies, domains, origin protocol, OAC, WAF, and logging. The site and requests are invented; no distribution was configured or queried. | Independent CloudFront/security review; controlled routing, TLS, cache, and direct-origin checks; reader test; freshness decision. |
 
+### Wave 36 (2026-10-01)
+
+The CDN-in-front-of-EKS explanation now connects a cache decision to the
+application target path without treating the Kubernetes Service as a universal
+packet hop.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [CDN in front of EKS](knowledge/cross-topic-guides/cdn-in-front-of-eks.md) | Rewritten with a limited two-route-sheet analogy, an invented asset and signed-in API example, a diagram of cache hits and ALB instance/IP target paths, three boundary checks, and understanding questions. | Keyed current CloudFront delivery, cache, VPC-origin, and origin-HTTPS documentation; EKS ALB Ingress and Kubernetes Ingress/Service documentation. No CDN, ALB, or cluster was configured or queried. | Independent AWS/Kubernetes security review; controlled cache, direct-origin, TLS, and target-path checks; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-01, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 35
-together: fifty-eight concepts, none of them independently reviewed after
-their teaching passes. The remaining 107 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 36
+together: fifty-nine concepts, none of them independently reviewed after
+their teaching passes. The remaining 106 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -949,7 +959,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 11 | 10 |
-| Cross-topic guides | 16 | 6 | 10 |
+| Cross-topic guides | 16 | 7 | 9 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -962,7 +972,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **58** | **107** |
+| **Total** | **165** | **59** | **106** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

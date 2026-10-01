@@ -794,16 +794,25 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to place a CDN such as CloudFront or Akamai in front of workloads running on Amazon EKS.",
+      "description": "Follow a request from a CDN through an AWS load balancer to an EKS application, and decide where caching, routing, TLS, and origin access belong.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/cdn-in-front-of-eks.md",
-      "source_ids": [],
+      "source_ids": [
+        "cloudfront-how-it-works",
+        "cloudfront-cache-policy",
+        "cloudfront-vpc-origins",
+        "cloudfront-origin-https",
+        "eks-alb-ingress",
+        "kubernetes-ingress",
+        "kubernetes-service"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "cross-topic-guides",
-        "cdn-in-front-of-eks"
+        "cloud",
+        "kubernetes"
       ],
       "title": "CDN in front of EKS",
       "type": "Explanation"
