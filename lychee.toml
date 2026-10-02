@@ -16,8 +16,13 @@ exclude = [
   "^https://docs\\.crossplane\\.io(/.*)?$",
 ]
 
-# Check public sources without overwhelming a single host. Transient 503s
-# still fail after retries; permanent broken links remain failures.
+# Check public sources without overwhelming a single host. GitHub served
+# intermittent 503/504 responses to valid links on three consecutive CI
+# attempts; pace that host while keeping real broken links as failures.
 max_concurrency = 16
-max_retries = 4
-retry_wait_time = 2
+max_retries = 6
+retry_wait_time = 3
+
+[hosts."github.com"]
+concurrency = 2
+request_interval = "300ms"
