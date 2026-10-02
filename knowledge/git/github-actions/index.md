@@ -9,7 +9,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | [Components and concepts](components-and-concepts.md) | Trace one run from event to jobs, steps, and results before learning the YAML syntax. |
 | [Workflow structure](workflow-structure.md) | Read one complete YAML file and see how triggers, permissions, jobs, and steps fit. |
 | [Inspect an Actions run](commands.md) | Find a run, read its failed job and step, decide whether a fix or rerun is appropriate, and distinguish CLI commands from job files. |
-| [`uses` catalog](actions-and-uses-catalog.md) | How `uses:` works, how to navigate action references, and common official, general-purpose, and third-party actions. |
+| [Choose an action](actions-and-uses-catalog.md) | Read `uses`, find a candidate source, and check its revision, inputs, runner, and authority before adding it. |
 | [Workflow shapes and use cases](examples-and-use-cases.md) | Choose events, jobs, permissions, and evidence for CI, publishing, deployment, maintenance, and Terraform work. |
 | [Content CI/CD process](content-ci-cd-process.md) | Follow a knowledge change through `develop` validation, promotion to canonical `main`, and a conditional website update. |
 | [Common solutions](common-solutions.md) | Locate the first failed handoff from event to run, job, step, permission, or deployment. |
@@ -20,24 +20,21 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 
 1. Read [Components and concepts](components-and-concepts.md).
 2. Read [Workflow structure](workflow-structure.md).
-3. Use the [`uses` catalog](actions-and-uses-catalog.md) to choose reusable actions safely.
+3. Use [Choose an action](actions-and-uses-catalog.md) to check a reusable dependency before adding it.
 4. Choose a starting shape from [Workflow shapes and use cases](examples-and-use-cases.md), then adapt its example to your repository.
 5. Use [Common solutions](common-solutions.md) when a workflow fails.
 6. Review [Security, secrets, and permissions](security-secrets-and-permissions.md) before adding deploys or third-party actions.
 
 ## Finding actions
 
-Start with the [`uses` catalog](actions-and-uses-catalog.md) in this repository for general-purpose and common important actions. Then verify the action in its official repository or Marketplace listing before adding it to a workflow.
+Start with [Choose an action](actions-and-uses-catalog.md) for common source repositories. Then verify the code, current release, inputs, and permissions in that action's own documentation before adding it to a workflow.
 
-The catalog is organized by need:
+The source map is organized by need:
 
-- official GitHub-maintained actions,
-- language and runtime setup,
-- cloud authentication and deployments,
-- Docker and containers,
-- quality and security checks,
-- release and automation helpers,
-- common community actions.
+- repository files and language setup,
+- caching and artifacts,
+- cloud authentication and infrastructure tooling,
+- container registry and image work.
 
 ## Official documentation
 

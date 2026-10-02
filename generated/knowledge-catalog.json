@@ -1850,19 +1850,27 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand the uses: parameter and find common, general-purpose, and important actions for real workflows.",
+      "description": "Read a uses reference, find a maintained action for a job, and check its code, version, inputs, and authority before adoption.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/actions-and-uses-catalog.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-workflow-syntax",
+        "github-secure-use",
+        "github-reusable-workflows",
+        "github-token",
+        "github-checkout",
+        "github-setup-node"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "git",
         "github-actions",
-        "actions-and-uses-catalog"
+        "actions-and-uses-catalog",
+        "reference"
       ],
-      "title": "GitHub Actions `uses` catalog",
+      "title": "Choose a GitHub Actions action",
       "type": "Reference"
     },
     {
