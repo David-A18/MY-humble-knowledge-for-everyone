@@ -1343,12 +1343,24 @@ and the image path from a host or registry to a node.
 | [How kind custom clusters fit together](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md) | Host/container-node model, limited multi-node analogy, illustrative two-node configuration, complete host-to-Pod port path, node-versus-app-image distinction, and understanding checks. | Current official kind Configuration, Quick Start, Node Image, and Kubernetes Service documentation checked. Example YAML parsed; both Mermaid diagrams rendered and inspected. No kind cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable cluster with matching and mismatched NodePort; beginner model task; freshness decision. |
 | [How images reach a kind Pod](knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md) | Side-load-versus-registry decision, host/node network boundary, pull-policy behavior, private-registry scope, image-flow diagram, and evidence-based failure routes. Removed bare registry push commands that omitted setup. | Current official kind Quick Start, Local Registry, Private Registries, and Kubernetes Images documentation checked. Mermaid rendered and inspected. No image build, registry, cluster, or Opus review occurred. | Independent Kubernetes and Opus review; disposable side-load and configured-registry exercises; beginner image-path task; freshness decision. |
 
+### Wave 76 (2026-10-02)
+
+The Kubernetes command pages now separate a read-only opening inspection
+from a reviewed live change. The first leads readers to the right
+diagnostic path; the second makes diff, apply, rollout, and user
+verification distinct checks.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Begin a safe kubectl inspection session](knowledge/kubernetes/commands/daily-usage.md) | Context-and-namespace check, Deployment and Pod scan, one-Pod evidence path, bounded address analogy, diagram and text alternative, symptom routes. | Current official Kubernetes context, get, describe, logs, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; beginner inspection in a disposable cluster; access-variation check; freshness decision. |
+| [Review and apply a Kubernetes manifest change](knowledge/kubernetes/commands/common-commands.md) | Scoped target-to-user path, `kubectl diff` exit-code interpretation, manifest review, apply, rollout and user verification, source-of-truth recovery boundary, diagram and text alternative. | Current official Kubernetes diff, apply, rollout-status, Deployment, and context documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable rollout and failed-rollout exercise; beginner change task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 75
-together: one hundred two concepts, none of them independently reviewed after
-their teaching passes. The remaining 63 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 76
+together: one hundred four concepts, none of them independently reviewed after
+their teaching passes. The remaining 61 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1365,14 +1377,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 12 | 33 |
+| Kubernetes | 45 | 14 | 31 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **102** | **63** |
+| **Total** | **165** | **104** | **61** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

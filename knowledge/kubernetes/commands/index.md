@@ -1,13 +1,14 @@
 # Kubernetes commands
 
-Command references for `kubectl` and day-to-day cluster inspection.
+Task-led `kubectl` guides for checking a target, reading workload
+evidence, and making a reviewed change.
 
 ## Articles
 
 | Article | Purpose |
 | --- | --- |
-| [Daily usage](daily-usage.md) | Context, namespace, inspection, logs, events, exec, and port-forward commands. |
-| [Common commands](common-commands.md) | Apply, diff, rollout, scale, delete, selectors, and output formatting. |
+| [Begin a safe kubectl inspection session](daily-usage.md) | Confirm the context and namespace, scan workloads, and choose an evidence-led next step. |
+| [Review and apply a Kubernetes manifest change](common-commands.md) | Compare a reviewed Deployment file with live state, apply it, and verify rollout and user outcome. |
 | [Advanced commands](advanced-commands.md) | JSONPath, API discovery, dry runs, server-side apply, debug, node maintenance, and auth checks. |
 | [Workflows](workflows.md) | Command sequences for deployments, rollback, service debugging, and resource pressure checks. |
 | [eksctl commands for Amazon EKS](eksctl-commands.md) | AWS-native EKS commands for clusters, node groups, add-ons, IAM access, Pod Identity, Fargate, and logging. |

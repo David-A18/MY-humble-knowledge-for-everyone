@@ -2489,35 +2489,53 @@
       "type": "How-to Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Collect common kubectl commands for applying manifests, comparing changes, managing rollouts, scaling workloads, deleting resources, filtering output, and exporting useful views.",
+      "audience": "Beginning platform engineer",
+      "description": "Confirm the target, inspect a manifest diff, apply one reviewed Deployment change, and verify the workload and user path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/common-commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "current-context",
+        "kubectl-diff",
+        "kubectl-apply",
+        "rollout-status",
+        "deployments"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "common-commands"
+        "kubectl",
+        "deployments",
+        "manifests",
+        "beginner"
       ],
-      "title": "Kubernetes common commands",
+      "title": "Review and apply a Kubernetes manifest change",
       "type": "How-to Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Collect the kubectl commands used most often during daily Kubernetes and EKS work: checking context, inspecting resources, reading logs, entering containers, and temporarily forwarding traffic.",
+      "audience": "Beginning platform engineer",
+      "description": "Confirm the cluster and namespace, scan workload state, and choose the next investigation without changing resources.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/daily-usage.md",
-      "source_ids": [],
+      "source_ids": [
+        "current-context",
+        "get-contexts",
+        "kubectl-get",
+        "kubectl-describe",
+        "kubectl-logs",
+        "debug-pods"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "daily-usage"
+        "kubectl",
+        "daily-usage",
+        "beginner"
       ],
-      "title": "Kubernetes daily usage commands",
+      "title": "Begin a safe kubectl inspection session",
       "type": "How-to Guide"
     },
     {
