@@ -39,7 +39,7 @@ cases:
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
-    required_source_ids: [terraform-cli, terraform-state]
+    required_source_ids: [terraform-data, terraform-state]
   - id: crossplane-provider-authentication
     question: How do Crossplane providers authenticate to external APIs?
     expected_paths: [knowledge/kubernetes/crossplane/providers-and-authentication.md]

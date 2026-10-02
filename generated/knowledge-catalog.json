@@ -3347,13 +3347,17 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Learn Terraform initialization, validation, planning, local state inspection, change review, and cleanup without a cloud account.",
+      "description": "Create, update, inspect, and remove one local Terraform resource while learning what plans and state record.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md",
       "source_ids": [
-        "terraform-cli",
-        "terraform-state"
+        "terraform-data",
+        "terraform-plan",
+        "terraform-show",
+        "terraform-apply",
+        "terraform-state",
+        "terraform-sensitive"
       ],
       "stale_after": "2026-12-19",
       "status": "draft",
