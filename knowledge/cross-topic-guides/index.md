@@ -23,7 +23,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [CDN in front of EKS](cdn-in-front-of-eks.md) | Draft | Follow cache hits and misses through CloudFront, an ALB, and the EKS application's target mode. |
 | [APISIX on EKS](apisix-on-eks.md) | Draft | Follow AWS entry, APISIX route configuration, gateway traffic, and backend health. |
 | [EKS to MSK applications](eks-to-msk-applications.md) | Draft | See the network, identity, and processing gates from an EKS Pod to MSK. |
-| [Crossplane on AWS](crossplane-on-aws.md) | Developed | Run Crossplane in Kubernetes while managing AWS resources with bootstrap, identity, GitOps, and operations boundaries. |
+| [Crossplane on AWS](crossplane-on-aws.md) | Draft | Follow a resource request through Crossplane into AWS, including identity, ownership, and recovery boundaries. |
 | [GitOps on EKS](gitops-on-eks.md) | Draft | Follow a Git change through GitOps, Kubernetes, and AWS controllers on EKS. |
 | [EKS workload identity](eks-workload-identity.md) | Draft | Understand how Pods get temporary AWS credentials through a service account, and choose IRSA or EKS Pod Identity from a workload's conditions. |
 | [EKS tooling cluster architecture](eks-tooling-cluster-architecture.md) | Draft | Decide when central GitOps helps and how target access and recovery work. |

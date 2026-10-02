@@ -942,11 +942,19 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to run Crossplane in Kubernetes while managing AWS resources with clear bootstrap, authentication, account, GitOps, and ownership boundaries.",
+      "description": "Understand how a Kubernetes request becomes an AWS resource, and where provider credentials, account scope, ownership, and recovery fit.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/crossplane-on-aws.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-providers",
+        "crossplane-managed",
+        "crossplane-composition",
+        "crossplane-v2",
+        "eks-pod-identity",
+        "eks-pod-identity-flow",
+        "eks-irsa"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

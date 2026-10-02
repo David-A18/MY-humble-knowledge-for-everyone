@@ -1092,12 +1092,24 @@ strategic merge patch, and every `kubectl` command names the intended context.
 | --- | --- | --- | --- |
 | [Local deployment learning path](knowledge/cross-topic-guides/local-deployment-learning-path.md) | Reworked with a sequence/outcome map, clearer Deployment/Service/port-forward model, two-replica rolling-update arithmetic, bounded failure interpretation, explicit context, recovery, and official next steps. | Current kind, Kubernetes, and Git references were checked. The earlier revision recorded a 2026-09-19 local run. This revised patch and command sequence were **not** run: no active Docker daemon, kind, or kubectl is available in the current environment. Claude Code remained at its weekly limit, so no Opus review occurred. | Run the revised path end to end in a disposable local cluster; independent Kubernetes and Opus review; KB-14 reader test; freshness decision. |
 
+### Wave 53 (2026-10-02)
+
+The Crossplane-on-AWS explanation now follows a request through its
+Kubernetes and AWS objects, then teaches the four decisions that
+control bootstrap, identity, API exposure, and external ownership.
+This completes an initial teaching pass for all sixteen cross-topic
+guides, not their independent review or reader testing.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Crossplane on AWS](knowledge/cross-topic-guides/crossplane-on-aws.md) | Rewritten with a bounded library-desk analogy, invented payments bucket request, XR-to-MR-to-AWS diagram, four-boundary table, Pod Identity/IRSA conditions, ownership and deletion cautions, and failure handoffs. | Keyed current Crossplane and Amazon EKS documentation. No provider, bucket, IAM role, controller, account, application, deletion, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Crossplane/AWS security and Opus review; controlled provider-identity, account, lifecycle, and deletion exercises; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 52
-together: seventy-seven concepts, none of them independently reviewed after
-their teaching passes. The remaining 88 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 53
+together: seventy-eight concepts, none of them independently reviewed after
+their teaching passes. The remaining 87 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1108,7 +1120,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 21 | 0 |
-| Cross-topic guides | 16 | 15 | 1 |
+| Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -1121,7 +1133,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **77** | **88** |
+| **Total** | **165** | **78** | **87** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -1144,8 +1156,8 @@ as not yet reviewed above.
   tooling clusters.
 - The network and storage procedures adjacent to wave 5: APISIX architecture,
   Velero storage and volume backups, and the missing beginner Service concept.
-- The remaining cross-topic guide, Crossplane on AWS, has not been
-  assessed against the standard.
+- The cross-topic guides now need independent technical review and
+  reader-task testing after their initial teaching passes.
 - A dedicated observability section, if reader demand supports it; the
   observability explanation currently links to troubleshooting pages because
   no such section exists.
