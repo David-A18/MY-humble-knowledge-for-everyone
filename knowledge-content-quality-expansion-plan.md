@@ -1309,12 +1309,34 @@ terminated container and prior logs to a specific next investigation.
 | --- | --- | --- | --- |
 | [Diagnose CrashLoopBackOff](knowledge/kubernetes/troubleshooting/crashloopbackoff.md) | Context check, last-state and previous-log inspection, decision diagram and text alternative, cause table, invented missing-setting example, verification after a fix. | Current official Kubernetes Pod lifecycle, debug, logs, probe, and resource documentation checked. Mermaid rendered and visually inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; novice symptom task; disposable cluster reproduction; freshness decision. |
 
+### Wave 73 (2026-10-02)
+
+The kubectl entry now follows one beginner task from cluster context
+to Deployment, Pods, events, and logs. It avoids assuming that a
+Deployment name is also its Pod label and treats workload readiness
+as different from a user-path test.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Inspect a Kubernetes Deployment with kubectl](knowledge/kubernetes/commands/kubectl-basics.md) | Read-only context-to-Pod task, selector check, evidence interpretation, invented two-replica case, decision table, diagram and text alternative. Removed an unsupported freshness date. | Current official Kubernetes kubectl context/get/logs, Deployment, and Pod debugging documentation checked. Mermaid rendered and visually inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; beginner task in disposable cluster; permission and platform variation; freshness decision. |
+
+### Wave 74 (2026-10-02)
+
+The kind page now uses local image pull failure as its primary
+troubleshooting outcome. It checks the selected cluster and the Pod's
+recorded image and pull policy before giving a scoped image-load action.
+Other local symptoms lead to their own evidence and official guidance.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Diagnose a local image pull in kind](knowledge/kubernetes/troubleshooting/kind.md) | Read-first local image path, computer-versus-node image model, conditional `kind load` fix, post-fix check, and routes for context, runtime, scheduling, and host-port symptoms. | Current official kind and Kubernetes documentation checked. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable kind reproduction for matching and mismatched tags and pull policies; beginner symptom task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 72
-together: ninety-eight concepts, none of them independently reviewed after
-their teaching passes. The remaining 67 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 74
+together: one hundred concepts, none of them independently reviewed after
+their teaching passes. The remaining 65 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1331,14 +1353,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 8 | 37 |
+| Kubernetes | 45 | 10 | 35 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **98** | **67** |
+| **Total** | **165** | **100** | **65** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

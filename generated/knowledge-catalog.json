@@ -2524,15 +2524,19 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Inspect the current Kubernetes context, workloads, logs, events, and resource details safely before making changes.",
+      "description": "Check the current cluster, find a Deployment's Pods, and read their state, events, and logs without changing the workload.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/kubectl-basics.md",
       "source_ids": [
         "kubectl-reference",
-        "kubectl-commands"
+        "current-context",
+        "kubectl-get",
+        "deployments",
+        "debug-pods",
+        "kubectl-logs"
       ],
-      "stale_after": "2026-12-20",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
@@ -2540,7 +2544,7 @@
         "troubleshooting",
         "beginner"
       ],
-      "title": "kubectl basics",
+      "title": "Inspect a Kubernetes Deployment with kubectl",
       "type": "How-to Guide"
     },
     {
@@ -2983,20 +2987,29 @@
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose common local Kubernetes problems when using kind.",
+      "audience": "Beginning platform engineer",
+      "description": "Confirm the kind cluster and Pod image before loading a locally built image into the cluster.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/kind.md",
-      "source_ids": [],
+      "source_ids": [
+        "kind-quick-start",
+        "kind-configuration",
+        "kind-known-issues",
+        "kubernetes-images",
+        "kubernetes-debug-pods",
+        "kubectl-get"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "troubleshooting",
-        "kind"
+        "kind",
+        "images",
+        "beginner"
       ],
-      "title": "kind troubleshooting",
+      "title": "Diagnose a local image pull in kind",
       "type": "Troubleshooting Guide"
     },
     {

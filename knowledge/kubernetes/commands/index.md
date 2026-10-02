@@ -11,7 +11,7 @@ Command references for `kubectl` and day-to-day cluster inspection.
 | [Advanced commands](advanced-commands.md) | JSONPath, API discovery, dry runs, server-side apply, debug, node maintenance, and auth checks. |
 | [Workflows](workflows.md) | Command sequences for deployments, rollback, service debugging, and resource pressure checks. |
 | [eksctl commands for Amazon EKS](eksctl-commands.md) | AWS-native EKS commands for clusters, node groups, add-ons, IAM access, Pod Identity, Fargate, and logging. |
-| [kubectl basics](kubectl-basics.md) | Common commands for inspecting workloads and cluster resources. |
+| [Inspect a Deployment with kubectl](kubectl-basics.md) | Confirm the cluster, follow a Deployment to its Pods, then read states, events, and logs. |
 
 ## Official documentation
 

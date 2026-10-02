@@ -9,7 +9,7 @@ Symptom-driven guides for diagnosing Kubernetes workload and cluster issues.
 | [Diagnose CrashLoopBackOff](crashloopbackoff.md) | Read the last container failure, previous logs, and events before changing the workload. |
 | [Common solutions](common-solutions.md) | Diagnose Pending pods, image pulls, service/DNS issues, failed rollouts, and permission errors. |
 | [APISIX troubleshooting](apisix.md) | Diagnose APISIX gateway, route, plugin, backend, and TLS issues. |
-| [kind troubleshooting](kind.md) | Diagnose local `kind` cluster, context, image, port, and scheduling issues. |
+| [Diagnose a local image pull in kind](kind.md) | Confirm the local cluster and Pod image before loading a built image; route other kind symptoms by evidence. |
 
 ## Common starting commands
 
