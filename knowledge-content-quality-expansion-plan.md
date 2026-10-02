@@ -1063,12 +1063,21 @@ Kubernetes, Pod-identity, and user-path evidence.
 | --- | --- | --- | --- |
 | [EKS operations](knowledge/cross-topic-guides/eks-operations.md) | Rewritten with a limited library analogy, invented lesson-API incident, boundary diagram, evidence table, and understanding checks. Corrected the Pod Identity annotation claim. | Keyed current Amazon EKS and Kubernetes documentation. No account, cluster, Pod, credential, service, user request, or reader test ran. Claude Code was at its weekly subscription limit, so no Opus review occurred. | Independent EKS security and Opus review; controlled incident checks; reader test; freshness decision. |
 
+### Wave 50 (2026-10-02)
+
+The Kubernetes-on-AWS page now teaches how Kubernetes objects meet AWS
+resources, with ownership varying by the EKS mode and chosen integrations.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Kubernetes on AWS](knowledge/cross-topic-guides/kubernetes-on-aws.md) | Rewritten with a limited theatre analogy, invented photo API, Kubernetes-to-AWS mapping, ownership diagram, standard/Auto Mode differences, and understanding checks. | Keyed current Amazon EKS, Amazon ECR, and Kubernetes documentation. No cluster, ALB, Pod, S3 object, EBS volume, request, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent EKS/security and Opus review; controlled network, IAM, and storage checks; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 49
-together: seventy-four concepts, none of them independently reviewed after
-their teaching passes. The remaining 91 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 50
+together: seventy-five concepts, none of them independently reviewed after
+their teaching passes. The remaining 90 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1079,7 +1088,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 21 | 0 |
-| Cross-topic guides | 16 | 12 | 4 |
+| Cross-topic guides | 16 | 13 | 3 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -1092,7 +1101,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **74** | **91** |
+| **Total** | **165** | **75** | **90** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -1117,7 +1126,7 @@ as not yet reviewed above.
   Velero storage and volume backups, and the missing beginner Service concept.
 - The remaining cross-topic guides, which are marked as developed but have
   not been assessed against the standard, including Crossplane on AWS and
-  Kubernetes on AWS.
+  EKS tooling cluster architecture.
 - A dedicated observability section, if reader demand supports it; the
   observability explanation currently links to troubleshooting pages because
   no such section exists.

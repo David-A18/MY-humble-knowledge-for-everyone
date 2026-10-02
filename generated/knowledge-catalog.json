@@ -1171,11 +1171,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Collect guidance for running Kubernetes workloads on AWS infrastructure.",
+      "description": "Understand how Kubernetes objects meet AWS compute, networking, identity, and storage in Amazon EKS.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/kubernetes-on-aws.md",
-      "source_ids": [],
+      "source_ids": [
+        "eks-overview",
+        "eks-auto-mode",
+        "eks-vpc-cni",
+        "eks-load-balancer",
+        "eks-service-accounts",
+        "eks-ecr-images",
+        "eks-ebs-csi",
+        "k8s-service",
+        "k8s-persistent-volumes"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
