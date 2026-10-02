@@ -1416,12 +1416,25 @@ controls from actual Kubernetes authorization.
 | --- | --- | --- | --- |
 | [Inspect a failing Pod with K9s](knowledge/kubernetes/applications-and-tools/k9s.md) | Context-to-Pod evidence path, invented image-pull row, status-versus-cause distinction, symptom table, diagram and text alternative, read-only-mode limit, focused official sources. Removed unverified shortcuts, config recipes, and live modification routes. | Current official K9s overview, commands, and configuration plus Kubernetes Pod lifecycle and Pod-debug documentation checked. Mermaid rendered and inspected. No K9s binary, cluster session, or Opus review occurred. | Independent K9s/Kubernetes and Opus review; versioned K9s walkthrough in a disposable cluster; novice Pod-inspection task; freshness decision. |
 
+### Wave 82 (2026-10-03)
+
+The APISIX troubleshooting page now answers one symptom question:
+which component returned a 404 for a specific request? It separates
+the request path from the controller configuration path, uses an
+invented Gateway API route, and treats accepted route status as
+evidence about configuration rather than a guarantee of matching
+the real request.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Trace an APISIX 404 to its first failed handoff](knowledge/kubernetes/troubleshooting/apisix.md) | Exact-request capture, entry/gateway/route/backend boundaries, controller handoff diagram and text alternative, read-only HTTPRoute inspection, conditional listener-port mismatch, evidence-to-next-step table, official source routes. | Current official APISIX deployment, Gateway API support, configuration troubleshooting, Gateway API HTTPRoute, and Kubernetes Service-debug documentation checked. Mermaid rendered and inspected. No gateway, cluster, request, or Opus review occurred. | Independent APISIX/Gateway API and Opus review; disposable route-match and listener-port reproductions; novice 404 task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 81
-together: one hundred ten concepts, none of them independently reviewed after
-their teaching passes. The remaining 55 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 82
+together: one hundred eleven concepts, none of them independently reviewed after
+their teaching passes. The remaining 54 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1438,14 +1451,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 20 | 25 |
+| Kubernetes | 45 | 21 | 24 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **110** | **55** |
+| **Total** | **165** | **111** | **54** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

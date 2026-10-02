@@ -82,7 +82,7 @@ What it does: shows the common gateway contract APISIX owns for one API route be
 - [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md)
 - [Gateway API and Ingress](gateway-api-and-ingress.md)
 - [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md)
-- [APISIX troubleshooting](../troubleshooting/apisix.md)
+- [Trace an APISIX 404](../troubleshooting/apisix.md)
 - [Apache APISIX Ingress Controller documentation](https://apisix.apache.org/docs/ingress-controller/)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)

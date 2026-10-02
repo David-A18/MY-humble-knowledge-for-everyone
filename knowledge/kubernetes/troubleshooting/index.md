@@ -8,7 +8,7 @@ Symptom-driven guides for diagnosing Kubernetes workload and cluster issues.
 | --- | --- |
 | [Diagnose CrashLoopBackOff](crashloopbackoff.md) | Read the last container failure, previous logs, and events before changing the workload. |
 | [Find the first failing Kubernetes boundary](common-solutions.md) | Match Pod, image, readiness, Service, and access symptoms to evidence before changing resources. |
-| [APISIX troubleshooting](apisix.md) | Diagnose APISIX gateway, route, plugin, backend, and TLS issues. |
+| [Trace an APISIX 404 to its first failed handoff](apisix.md) | Separate entry, route-match, controller, and backend causes of a 404. |
 | [Diagnose a local image pull in kind](kind.md) | Confirm the local cluster and Pod image before loading a built image; route other kind symptoms by evidence. |
 
 ## Start with the symptom

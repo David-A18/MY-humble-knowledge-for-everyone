@@ -3008,20 +3008,28 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose Apache APISIX and APISIX Ingress Controller failures in Kubernetes.",
+      "audience": "Beginning platform engineer",
+      "description": "Determine whether an HTTP 404 came from the entry path, APISIX route matching, or a backend application before changing gateway configuration.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/apisix.md",
-      "source_ids": [],
+      "source_ids": [
+        "apisix-architecture",
+        "apisix-config-troubleshoot",
+        "apisix-gateway-api",
+        "gateway-httproute",
+        "k8s-debug-service"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
+        "apisix",
+        "gateway-api",
         "troubleshooting",
-        "apisix"
+        "beginner"
       ],
-      "title": "APISIX troubleshooting",
+      "title": "Trace an APISIX 404 to its first failed handoff",
       "type": "Troubleshooting Guide"
     },
     {

@@ -21,7 +21,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Configure auth, rate limits, traffic release, metrics, logs, and traces. | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) |
 | Follow an external request to a Service and choose between Ingress, Gateway API, and implementation-specific routes. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
 | Run APISIX on Amazon EKS. | [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md) |
-| Troubleshoot 404, 401, 403, 429, 503, TLS, and upstream failures. | [APISIX troubleshooting](../troubleshooting/apisix.md) |
+| Find where a 404 arises along an APISIX request path. | [Trace an APISIX 404](../troubleshooting/apisix.md) |
 
 ## Quick path: Flux and GitOps
 
