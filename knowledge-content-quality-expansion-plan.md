@@ -1266,12 +1266,34 @@ from claims about future readers or production readiness.
 | --- | --- | --- | --- |
 | [Proof of concept](knowledge/solutions-architect/proof-of-concept.md) | One-unknown model, decision-flow diagram and text alternative, bounded invented search example, evidence and production boundaries, official next-step links. | Official Google Cloud migration, Azure Well-Architected, and AWS Redshift PoC guidance checked. Mermaid rendered and visually inspected. No experiment or Opus review occurred. | Independent architecture and Opus review; novice reader task; a real PoC record if this repository later runs one; freshness decision. |
 
+### Wave 69 (2026-10-02)
+
+The reference architecture now gives readers a small, accurate
+source-to-article-to-reader model and a separate change path. It
+labels reconciliation and optional AI access as design choices rather
+than implying that those services already run.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Reference architecture](knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md) | Distinguishes upstream product authority, curated Markdown authority, and rebuildable outputs; shows the reading and change paths; provides a Terraform-state example and new-topic rule. | Official OKF, Git, Astro, Pagefind, MCP, and HashiCorp documentation checked. Two Mermaid diagrams rendered and visually inspected. No Opus review occurred. | Independent architecture and Opus review; novice reader task; actual website and reconciliation behavior check; freshness decision. |
+
+### Wave 70 (2026-10-02)
+
+The AI knowledge-security page now starts with a trust boundary a
+beginner can remember: retrieved text is evidence, not permission or
+instruction. The invented example ties that boundary to document
+access at search and fetch time and to a separate review path for edits.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Security and governance](knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md) | Three trust boundaries, bounded public/private retrieval example, diagram and text alternative, risk-to-evidence table, official deeper study. | Current OWASP prompt-injection, Azure AI Search document access, MCP tools, and NIST AI RMF guidance checked. Mermaid rendered and visually inspected. No attack test or Opus review occurred. | Independent security and Opus review; novice reader task; adversarial retrieval test if a private corpus is introduced; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 68
-together: ninety-four concepts, none of them independently reviewed after
-their teaching passes. The remaining 71 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 70
+together: ninety-six concepts, none of them independently reviewed after
+their teaching passes. The remaining 69 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1280,7 +1302,7 @@ demonstration, so most teaching elements do not apply there.
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
-| AI, including the embedded OKF example | 20 | 5 | 15 |
+| AI, including the embedded OKF example | 20 | 7 | 13 |
 | Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -1295,7 +1317,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **94** | **71** |
+| **Total** | **165** | **96** | **69** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

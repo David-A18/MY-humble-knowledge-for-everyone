@@ -59,12 +59,12 @@ producer changes
 
 | Guide | Use it for |
 | --- | --- |
-| [Reference architecture](reference-architecture.md) | System boundaries, data flow, maintenance loop, implementation steps, and the central mental model. |
+| [Reference architecture](reference-architecture.md) | Follow an official source into a curated article, a Git revision, reader views, and a later correction. |
 | [OKF v0.2](okf-v0.2.md) | Specification-level OKF audit, conformance rules, lifecycle, actors, sources, trust, freshness, and Attested Computation. |
 | [Knowledge standards landscape](knowledge-standards-landscape.md) | Classifying OKF, RDF, JSON-LD, RDFS, OWL, SKOS, SHACL, PROV, OpenAPI, AsyncAPI, JSON Schema, MCP, AGENTS.md, llms.txt, and retrieval systems. |
 | [Retrieval and context efficiency](retrieval-and-context-efficiency.md) | Understand the search-to-fetch path, result trust signals, measured budgets, and when another ranking method is justified. |
 | [Provenance, trust, and freshness](provenance-trust-and-freshness.md) | Tell where a claim came from, how much review supports it, and whether its source may have changed; follow an invented schema change from detection to review and see why unresolved conflicts are surfaced. |
-| [Security and governance](security-and-governance.md) | Prompt injection, poisoning, retrieval authorization, MCP risks, write-path abuse, and governance mapping. |
+| [Security and governance](security-and-governance.md) | Understand why retrieved text cannot grant authority, how document access is checked, and why edits take a separate reviewed path. |
 | [Evaluation and quality](evaluation-and-quality.md) | Design a small golden-question test that scores content, ranking, answer grounding, freshness, and efficiency separately, with a worked hit@k and reciprocal-rank example. |
 | [Knowledge-base examples](examples/index.md) | Public-safe OKF and agent-knowledge-base examples. |
 | [Knowledge-base upgrade hub](../../../../knowledge-base-upgrade/README.md) | Repository-specific feature, tool, skill, MCP, and instruction scaffold for upgrading this knowledge base. |

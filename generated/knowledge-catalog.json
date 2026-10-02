@@ -274,11 +274,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide defines an agent-first, Git-backed, standards-aware knowledge system. It is for engineers, platform engineers, AI or LLMOps engineers, solutions architects, and agents that need a trustworthy corpus for retrieval, reasoning, citation, and maintenance.",
+      "description": "See how official sources, curated Markdown, rebuildable search and website output, and optional AI access fit into one knowledge system.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md",
-      "source_ids": [],
+      "source_ids": [
+        "okf-spec",
+        "git-version-control",
+        "astro-collections",
+        "pagefind-docs",
+        "mcp-architecture",
+        "terraform-state"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -311,11 +318,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide defines the security model for AI knowledge bases, retrieval systems, MCP serving, and agent-assisted maintenance.",
+      "description": "Understand why retrieved documents do not have authority over an AI assistant, how access checks protect private knowledge, and how article changes stay reviewable.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md",
-      "source_ids": [],
+      "source_ids": [
+        "owasp-prompt-injection",
+        "azure-document-access",
+        "mcp-tools",
+        "nist-ai-rmf"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
