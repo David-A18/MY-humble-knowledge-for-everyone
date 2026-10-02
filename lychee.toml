@@ -23,6 +23,15 @@ max_concurrency = 16
 max_retries = 6
 retry_wait_time = 3
 
+# Check the raw files behind three GitHub blob links that repeatedly returned
+# 503 to Actions runners. The published Markdown keeps its readable GitHub
+# links, while a missing source file still fails the external-link check.
+remap = [
+  '^https://github\.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC\.md$ https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md',
+  '^https://github\.com/open-gitops/documents/blob/main/GLOSSARY\.md$ https://raw.githubusercontent.com/open-gitops/documents/main/GLOSSARY.md',
+  '^https://github\.com/crossplane-contrib/provider-upjet-aws/blob/main/AUTHENTICATION\.md$ https://raw.githubusercontent.com/crossplane-contrib/provider-upjet-aws/main/AUTHENTICATION.md',
+]
+
 [hosts."github.com"]
 concurrency = 2
 request_interval = "300ms"
