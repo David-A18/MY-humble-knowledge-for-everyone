@@ -948,15 +948,21 @@
     },
     {
       "audience": "Application and platform engineers deploying to Amazon EKS",
-      "description": "Plan the moving parts of deploying applications to Amazon EKS.",
+      "description": "Understand the access, image, rollout, and user-path checks involved in deploying an application to Amazon EKS.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/deploying-to-eks.md",
       "source_ids": [
         "eks-update-kubeconfig",
-        "kubernetes-deployments"
+        "eks-k8s-access",
+        "eks-ecr-images",
+        "eks-service-accounts",
+        "k8s-deployments",
+        "k8s-pod-lifecycle",
+        "k8s-services",
+        "k8s-rollout-status"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "cross-topic-guides",

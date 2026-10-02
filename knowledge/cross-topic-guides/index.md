@@ -18,7 +18,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [Kubernetes on AWS](kubernetes-on-aws.md) | Developed | Operate Kubernetes workloads on AWS. |
 | [GitHub Actions with Terraform](github-actions-with-terraform.md) | Draft | Tell pull request validation, plan, and gated apply apart, and see why plan files are sensitive. |
 | [GitHub Actions with Kubernetes](github-actions-with-kubernetes.md) | Draft | Understand what a deployment job does, what Kubernetes controllers do afterwards, and what a green run does not prove. |
-| [Deploying to EKS](deploying-to-eks.md) | Developed | Plan an EKS deployment workflow. |
+| [Deploying to EKS](deploying-to-eks.md) | Draft | Follow deployer access, image pull, rollout, and user-path checks. |
 | [EKS operations](eks-operations.md) | Developed | Combine AWS CLI and `kubectl` for day-to-day EKS operations. |
 | [CDN in front of EKS](cdn-in-front-of-eks.md) | Draft | Follow cache hits and misses through CloudFront, an ALB, and the EKS application's target mode. |
 | [APISIX on EKS](apisix-on-eks.md) | Developed | Run Apache APISIX as an EKS API gateway. |
