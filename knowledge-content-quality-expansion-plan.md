@@ -1368,12 +1368,24 @@ limit, or node pressure?
 | [Find the first failing Kubernetes boundary](knowledge/kubernetes/troubleshooting/common-solutions.md) | Read-first symptom map, staged request diagram, invented Service example, selector/readiness/EndpointSlice distinction, `publishNotReadyAddresses` caveat, and focused next routes. Removed unreviewed test-Pod creation and rollback recipes. | Current official Kubernetes Pod lifecycle, Debug Pods, Debug Services, Service, and EndpointSlices documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; novice symptom-to-check task; disposable Service-selector and readiness reproductions; freshness decision. |
 | [Investigate Kubernetes resource pressure](knowledge/kubernetes/commands/workflows.md) | Requests-versus-limits-versus-node-pressure model, read-only diagnostic path, optional metrics with delay and scope limits, invented insufficient-memory scheduling case, diagram and text alternative. | Current official Kubernetes resource management, node-pressure, kubectl top, metrics pipeline, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable scheduling/OOM/eviction cases; novice resource-symptom task; freshness decision. |
 
+### Wave 78 (2026-10-03)
+
+The former advanced command catalog now focuses on one reader task:
+distinguish what an API field permits, what a Deployment currently stores,
+and what the API server would accept from a proposed manifest. The tricks
+index now routes readers to focused tasks and retains only read-oriented
+examples.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Inspect a Kubernetes API field before changing a manifest](knowledge/kubernetes/commands/advanced-commands.md) | Schema/live/proposed model, invented Deployment, scoped inspection and server dry-run steps, permissions and dry-run limits, diagram and text alternative. Moved debugging, node maintenance, and field ownership to their official procedures. | Current official Kubernetes api-resources, explain, get, apply, and API dry-run documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable dry-run success, authorization failure, and webhook case; novice field-inspection task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 77
-together: one hundred six concepts, none of them independently reviewed after
-their teaching passes. The remaining 59 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 78
+together: one hundred seven concepts, none of them independently reviewed after
+their teaching passes. The remaining 58 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1390,14 +1402,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 16 | 29 |
+| Kubernetes | 45 | 17 | 28 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **106** | **59** |
+| **Total** | **165** | **107** | **58** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

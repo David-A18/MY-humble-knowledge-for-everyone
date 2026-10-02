@@ -2473,19 +2473,28 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Collect advanced kubectl commands for structured output, API discovery, server-side operations, debugging, node maintenance, and authorization checks.",
+      "audience": "Beginning platform engineer",
+      "description": "Find a field in the cluster's API schema, compare it with a live Deployment, and check a proposed manifest without persisting it.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/advanced-commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "api-resources",
+        "explain",
+        "get",
+        "apply",
+        "dry-run"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "advanced-commands"
+        "kubectl",
+        "api-discovery",
+        "manifests",
+        "beginner"
       ],
-      "title": "Kubernetes advanced commands",
+      "title": "Inspect a Kubernetes API field before changing a manifest",
       "type": "How-to Guide"
     },
     {
