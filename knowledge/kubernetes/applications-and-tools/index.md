@@ -30,7 +30,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Understand GitOps as a pulled, continuously reconciled operating model and what a green sync does not prove. | [GitOps](gitops.md) |
 | Compare Argo CD and Flux on documented differences and defaults, or split ownership between them. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
 | Understand the Flux chain from source to artifact to reconciler, and what `Ready` proves. | [Flux](flux.md) |
-| Follow source, Kustomization, and HelmRelease reconciliation. | [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) |
+| Follow a HelmRelease declaration from Git to an installed chart. | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) |
 | Scope controller permissions, tenancy, and secrets. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
 | Operate GitOps on Amazon EKS. | [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md) |
 
@@ -70,7 +70,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [GitOps](gitops.md) | Understand the four GitOps principles, what CI publishes versus what a controller pulls, and the limits of a green sync. |
 | [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare application model, components, interfaces, sync defaults, and multi-cluster boundaries from each project's documentation. |
 | [Flux](flux.md) | Understand which Flux controller fetches, which reconciles, and which capabilities are optional. |
-| [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) | Follow Flux source, Kustomization, and HelmRelease reconciliation. |
+| [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) | Understand the two controller handoffs and what their status reports prove. |
 | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Scope GitOps controller permissions, secrets, and ownership boundaries. |
 | [How Helm turns a chart into a release](helm.md) | Understand chart inputs, release revisions, preview limits, and the Crossplane controller boundary. |
 | [Tooling clusters](tooling-clusters.md) | Decide when to use a dedicated platform tooling cluster. |

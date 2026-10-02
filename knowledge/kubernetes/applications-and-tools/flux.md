@@ -50,8 +50,9 @@ After reading it you should be able to follow one change from a repository to
 a cluster and say which part to inspect when it stops.
 
 The page is conceptual and contains nothing to run. It assumes the model in
-[GitOps](gitops.md). For fields, commands, and YAML, continue to
-[Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md).
+[GitOps](gitops.md). To follow a HelmRelease declaration from Git through
+both controllers, continue to
+[How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md).
 
 ## What Flux is
 
@@ -250,8 +251,8 @@ Where the analogy stops being accurate:
 
 ## Next steps
 
-- Fields, commands, and YAML for the objects on this page:
-  [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md).
+- A worked Git-to-chart example with fields, status commands, and YAML:
+  [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md).
 - The operating model underneath: [GitOps](gitops.md).
 - Comparing Flux with another tool: [Argo CD vs. Flux](argo-cd-vs-flux.md).
 - Scoping permissions and secrets:
@@ -274,7 +275,7 @@ Where the analogy stops being accurate:
 
 - [GitOps](gitops.md)
 - [Argo CD vs. Flux](argo-cd-vs-flux.md)
-- [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md)
+- [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)
 - [Back to root index](../../../README.md)

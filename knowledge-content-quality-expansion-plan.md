@@ -1429,12 +1429,24 @@ the real request.
 | --- | --- | --- | --- |
 | [Trace an APISIX 404 to its first failed handoff](knowledge/kubernetes/troubleshooting/apisix.md) | Exact-request capture, entry/gateway/route/backend boundaries, controller handoff diagram and text alternative, read-only HTTPRoute inspection, conditional listener-port mismatch, evidence-to-next-step table, official source routes. | Current official APISIX deployment, Gateway API support, configuration troubleshooting, Gateway API HTTPRoute, and Kubernetes Service-debug documentation checked. Mermaid rendered and inspected. No gateway, cluster, request, or Opus review occurred. | Independent APISIX/Gateway API and Opus review; disposable route-match and listener-port reproductions; novice 404 task; freshness decision. |
 
+### Wave 83 (2026-10-03)
+
+The Flux reconciliation page now follows a `HelmRelease` declaration in Git
+through two different controllers. The example deliberately uses an unusable
+chart address and invented versions. An explicit `healthChecks` entry shows
+when a ready `Kustomization` also waits for the Helm release, while the
+separate chart-source path explains where the package comes from.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How Flux applies a HelmRelease from Git](knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Request-and-installer analogy with limits, two-path diagram and text alternative, invented Git/chart example, minimal manifests, source-to-reconciler status table, explicit health-check and pruning implications, focused official source routes. | Current official Flux Kustomization, HelmRelease, Helm-repository, Helm guide, and troubleshooting documentation checked. Mermaid rendered and inspected. No Flux or Helm binary, chart fetch, cluster run, or Opus review occurred. | Independent Flux/Helm and Opus review; disposable chart/release exercise including fetch and health-check failures; novice controller-handoff task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 82
-together: one hundred eleven concepts, none of them independently reviewed after
-their teaching passes. The remaining 54 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 83
+together: one hundred twelve concepts, none of them independently reviewed after
+their teaching passes. The remaining 53 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1451,14 +1463,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 21 | 24 |
+| Kubernetes | 45 | 22 | 23 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **111** | **54** |
+| **Total** | **165** | **112** | **53** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

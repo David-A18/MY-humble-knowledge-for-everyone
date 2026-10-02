@@ -256,7 +256,7 @@ Where the analogy stops being accurate:
 
 - The shared operating model: [GitOps](gitops.md).
 - Flux's controllers and status signals: [Flux](flux.md) and
-  [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md).
+  [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md).
 - Projects, service accounts, and tenancy in both tools:
   [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md).
 - One installation or many: [Tooling clusters](tooling-clusters.md).

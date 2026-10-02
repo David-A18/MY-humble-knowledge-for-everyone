@@ -138,7 +138,7 @@ When an unexpected object appears in a cluster:
 - Official documentation: [Flux security documentation](https://fluxcd.io/flux/security/)
 - [GitOps](gitops.md)
 - [Argo CD vs. Flux](argo-cd-vs-flux.md)
-- [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md)
+- [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)
 - [Back to root index](../../../README.md)

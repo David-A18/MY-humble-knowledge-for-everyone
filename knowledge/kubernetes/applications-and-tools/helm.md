@@ -110,7 +110,7 @@ or shared.[^helm-template][^helm-upgrade]
 
 If a release is managed by Flux or another controller, change its
 reviewed source rather than running a separate manual upgrade.
-[Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md)
+[How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md)
 shows the additional source and controller handoffs.
 
 ## Revisions are not time travel

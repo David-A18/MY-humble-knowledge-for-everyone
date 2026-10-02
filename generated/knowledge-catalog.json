@@ -2249,20 +2249,30 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to understand Flux as a source-to-artifact-to-reconciler pipeline and to decide when to use Kustomization or HelmRelease.",
+      "audience": "Beginning Flux and Kubernetes learner",
+      "description": "Follow the two Flux handoffs that turn a HelmRelease declaration in Git into an installed chart, and read the status at each boundary.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md",
-      "source_ids": [],
+      "source_ids": [
+        "flux-kustomization",
+        "flux-helmrelease",
+        "flux-helm-guide",
+        "flux-gitrepository",
+        "flux-helmrepository",
+        "flux-troubleshooting"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "flux-reconciliation-and-helm"
+        "flux",
+        "gitops",
+        "helm",
+        "reconciliation",
+        "beginner"
       ],
-      "title": "Flux reconciliation and Helm releases",
+      "title": "How Flux applies a HelmRelease from Git",
       "type": "Explanation"
     },
     {

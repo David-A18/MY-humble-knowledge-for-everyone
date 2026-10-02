@@ -314,7 +314,7 @@ Where the analogy stops being accurate:
 ## Next steps
 
 - One tool's parts and how a revision moves through them: [Flux](flux.md),
-  then [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md).
+  then [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md).
 - Choosing between two tools: [Argo CD vs. Flux](argo-cd-vs-flux.md).
 - Controller permissions, tenancy, and secrets:
   [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md).
@@ -344,7 +344,7 @@ Where the analogy stops being accurate:
 
 - [Argo CD vs. Flux](argo-cd-vs-flux.md)
 - [Flux](flux.md)
-- [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md)
+- [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md)
 - [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md)
 - [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md)
 - [Back to Kubernetes applications and tools](index.md)
