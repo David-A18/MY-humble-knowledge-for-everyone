@@ -4,6 +4,14 @@ Status: Initial outline
 
 Notes for tools commonly used to package, deploy, and operate Kubernetes workloads.
 
+## Quick path: kind
+
+| Need | Read |
+| --- | --- |
+| Understand node layout, context, and host port mappings. | [How kind custom clusters fit together](kind-custom-clusters.md) |
+| Choose how a locally built image reaches a kind Pod. | [How images reach a kind Pod](kind-images-and-local-registries.md) |
+| Diagnose a Pod that cannot pull a local image. | [Diagnose a local image pull in kind](../troubleshooting/kind.md) |
+
 ## Quick path: APISIX
 
 | Need | Read |
@@ -67,8 +75,8 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Helm for Kubernetes and Crossplane](helm.md) | Use Helm charts and releases safely, including Crossplane installation and provider lifecycle boundaries. |
 | [Tooling clusters](tooling-clusters.md) | Decide when to use a dedicated platform tooling cluster. |
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
-| [kind custom clusters](kind-custom-clusters.md) | Create local Kubernetes clusters for labs and CI. |
-| [kind images and local registries](kind-images-and-local-registries.md) | Load host-built images into kind or use a local registry. |
+| [How kind custom clusters fit together](kind-custom-clusters.md) | Explain node roles, context, node images, and the full host-port-to-Pod path. |
+| [How images reach a kind Pod](kind-images-and-local-registries.md) | Choose between loading an image into kind nodes and pulling from a configured registry. |
 | [K9s](k9s.md) | Use K9s to navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
 | [Velero](../../migrations/velero/index.md) | Back up, restore, migrate, and recover Kubernetes resources and persistent volumes. |
 

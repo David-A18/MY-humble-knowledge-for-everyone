@@ -2392,36 +2392,50 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to create local Kubernetes clusters with kind for development, CI, and platform-tooling labs.",
+      "audience": "Beginning platform engineer",
+      "description": "Understand what kind cluster configuration changes, from node roles and Kubernetes version to host port access.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md",
-      "source_ids": [],
+      "source_ids": [
+        "kind-quick-start",
+        "kind-configuration",
+        "kind-node-image",
+        "kubernetes-service"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "kind-custom-clusters"
+        "kind",
+        "local-clusters",
+        "beginner"
       ],
-      "title": "kind custom clusters",
+      "title": "How kind custom clusters fit together",
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this guide when a local kind cluster cannot pull or see images that were built on the host machine.",
+      "audience": "Beginning platform engineer",
+      "description": "Choose between loading an image into kind nodes and pulling from a configured registry.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md",
-      "source_ids": [],
+      "source_ids": [
+        "kind-quick-start",
+        "kind-local-registry",
+        "kind-private-registries",
+        "kubernetes-images"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools"
+        "kind",
+        "container-images",
+        "registries",
+        "beginner"
       ],
-      "title": "kind images and local registries",
+      "title": "How images reach a kind Pod",
       "type": "Explanation"
     },
     {

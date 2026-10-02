@@ -1331,12 +1331,24 @@ Other local symptoms lead to their own evidence and official guidance.
 | --- | --- | --- | --- |
 | [Diagnose a local image pull in kind](knowledge/kubernetes/troubleshooting/kind.md) | Read-first local image path, computer-versus-node image model, conditional `kind load` fix, post-fix check, and routes for context, runtime, scheduling, and host-port symptoms. | Current official kind and Kubernetes documentation checked. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable kind reproduction for matching and mismatched tags and pull policies; beginner symptom task; freshness decision. |
 
+### Wave 75 (2026-10-02)
+
+The two kind explanations now form a route from cluster shape to image
+distribution and finally to symptom diagnosis. Their examples separate
+configuration at cluster creation, a NodePort Service inside the cluster,
+and the image path from a host or registry to a node.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How kind custom clusters fit together](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md) | Host/container-node model, limited multi-node analogy, illustrative two-node configuration, complete host-to-Pod port path, node-versus-app-image distinction, and understanding checks. | Current official kind Configuration, Quick Start, Node Image, and Kubernetes Service documentation checked. Example YAML parsed; both Mermaid diagrams rendered and inspected. No kind cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable cluster with matching and mismatched NodePort; beginner model task; freshness decision. |
+| [How images reach a kind Pod](knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md) | Side-load-versus-registry decision, host/node network boundary, pull-policy behavior, private-registry scope, image-flow diagram, and evidence-based failure routes. Removed bare registry push commands that omitted setup. | Current official kind Quick Start, Local Registry, Private Registries, and Kubernetes Images documentation checked. Mermaid rendered and inspected. No image build, registry, cluster, or Opus review occurred. | Independent Kubernetes and Opus review; disposable side-load and configured-registry exercises; beginner image-path task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 74
-together: one hundred concepts, none of them independently reviewed after
-their teaching passes. The remaining 65 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 75
+together: one hundred two concepts, none of them independently reviewed after
+their teaching passes. The remaining 63 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1353,14 +1365,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 10 | 35 |
+| Kubernetes | 45 | 12 | 33 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **100** | **65** |
+| **Total** | **165** | **102** | **63** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
