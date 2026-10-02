@@ -11,7 +11,7 @@ evidence, and making a reviewed change.
 | [Review and apply a Kubernetes manifest change](common-commands.md) | Compare a reviewed Deployment file with live state, apply it, and verify rollout and user outcome. |
 | [Inspect a Kubernetes API field before changing a manifest](advanced-commands.md) | Compare the field schema, live Deployment, and proposed file with a server dry run. |
 | [Investigate Kubernetes resource pressure](workflows.md) | Separate scheduling requests, container limits, and node pressure using Pod and node evidence. |
-| [eksctl commands for Amazon EKS](eksctl-commands.md) | AWS-native EKS commands for clusters, node groups, add-ons, IAM access, Pod Identity, Fargate, and logging. |
+| [Choose the right control path for an EKS change](eksctl-commands.md) | Identify the Kubernetes, EKS compute, or IAM owner before choosing a procedure. |
 | [Inspect a Deployment with kubectl](kubectl-basics.md) | Confirm the cluster, follow a Deployment to its Pods, then read states, events, and logs. |
 
 ## Official documentation

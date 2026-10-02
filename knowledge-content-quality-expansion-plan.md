@@ -1380,12 +1380,24 @@ examples.
 | --- | --- | --- | --- |
 | [Inspect a Kubernetes API field before changing a manifest](knowledge/kubernetes/commands/advanced-commands.md) | Schema/live/proposed model, invented Deployment, scoped inspection and server dry-run steps, permissions and dry-run limits, diagram and text alternative. Moved debugging, node maintenance, and field ownership to their official procedures. | Current official Kubernetes api-resources, explain, get, apply, and API dry-run documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable dry-run success, authorization failure, and webhook case; novice field-inspection task; freshness decision. |
 
+### Wave 79 (2026-10-03)
+
+The former eksctl command catalog now helps a reader choose the owner of
+an EKS change before choosing a tool or procedure. Its invented Pending-Pod
+case separates Deployment replicas, scheduling evidence, and the cluster's
+compute path. It also corrects the earlier implication that eksctl's cluster
+dry run is a complete AWS change preview.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Choose the right control path for an EKS change](knowledge/kubernetes/commands/eksctl-commands.md) | Workload/compute/access ownership model, bounded class-and-building analogy, invented lesson-API case, read-only target checks, diagram and text alternative, focused AWS and Kubernetes references. Removed live infrastructure mutation recipes. | Current official eksctl overview, cluster, node-group, access-entry, Pod Identity, Auto Mode, and dry-run documentation checked, along with Kubernetes Deployment documentation. Mermaid rendered and inspected. No AWS or cluster command or Opus review occurred. | Independent EKS and Opus review; disposable target-and-scheduling scenario; novice owner-selection task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 78
-together: one hundred seven concepts, none of them independently reviewed after
-their teaching passes. The remaining 58 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 79
+together: one hundred eight concepts, none of them independently reviewed after
+their teaching passes. The remaining 57 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1402,14 +1414,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 17 | 28 |
+| Kubernetes | 45 | 18 | 27 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **107** | **58** |
+| **Total** | **165** | **108** | **57** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

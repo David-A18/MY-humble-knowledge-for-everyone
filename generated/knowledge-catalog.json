@@ -2548,19 +2548,30 @@
       "type": "How-to Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Collect eksctl commands that are specific to Amazon EKS operations and different from normal kubectl work.",
+      "audience": "Beginning platform engineer",
+      "description": "Identify whether an EKS task belongs to a Kubernetes object, AWS cluster infrastructure, or IAM before choosing a tool or procedure.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/eksctl-commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "eksctl-overview",
+        "eksctl-nodegroups",
+        "eksctl-auto-mode",
+        "eksctl-access",
+        "eksctl-pod-identity",
+        "eksctl-dry-run",
+        "kubernetes-deployments"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "eksctl-commands"
+        "eks",
+        "eksctl",
+        "operations",
+        "beginner"
       ],
-      "title": "eksctl commands for Amazon EKS",
+      "title": "Choose the right control path for an EKS change",
       "type": "How-to Guide"
     },
     {
