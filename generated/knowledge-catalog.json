@@ -1206,11 +1206,18 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Create a local Kubernetes cluster, deploy a small web workload, break it with a bad image tag, diagnose the failure, recover, and clean up.",
+      "description": "Learn the path from a local Kubernetes Deployment to a working request, then diagnose and recover from a failed image rollout.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/local-deployment-learning-path.md",
-      "source_ids": [],
+      "source_ids": [
+        "kind-quick-start",
+        "kubernetes-deployment",
+        "kubernetes-service",
+        "kubernetes-port-forward",
+        "kubernetes-patch",
+        "git-restore"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

@@ -14,7 +14,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | Guide | Coverage | Focus |
 | --- | --- | --- |
 | [Terraform on AWS](terraform-on-aws.md) | Draft | Understand the boundaries between the AWS provider, identity with its account and region, resources, and backend state. |
-| [Local deployment learning path](local-deployment-learning-path.md) | Draft | Deploy, break, diagnose, recover, and clean up a local Kubernetes workload. |
+| [Local deployment learning path](local-deployment-learning-path.md) | Draft | Learn how a local Deployment and Service work, diagnose a failed image rollout, and recover. |
 | [Kubernetes on AWS](kubernetes-on-aws.md) | Draft | Map Kubernetes objects to AWS compute, networking, identity, and storage. |
 | [GitHub Actions with Terraform](github-actions-with-terraform.md) | Draft | Tell pull request validation, plan, and gated apply apart, and see why plan files are sensitive. |
 | [GitHub Actions with Kubernetes](github-actions-with-kubernetes.md) | Draft | Understand what a deployment job does, what Kubernetes controllers do afterwards, and what a green run does not prove. |
