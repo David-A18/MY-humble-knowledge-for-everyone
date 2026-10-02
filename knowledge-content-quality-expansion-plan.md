@@ -1392,12 +1392,24 @@ dry run is a complete AWS change preview.
 | --- | --- | --- | --- |
 | [Choose the right control path for an EKS change](knowledge/kubernetes/commands/eksctl-commands.md) | Workload/compute/access ownership model, bounded class-and-building analogy, invented lesson-API case, read-only target checks, diagram and text alternative, focused AWS and Kubernetes references. Removed live infrastructure mutation recipes. | Current official eksctl overview, cluster, node-group, access-entry, Pod Identity, Auto Mode, and dry-run documentation checked, along with Kubernetes Deployment documentation. Mermaid rendered and inspected. No AWS or cluster command or Opus review occurred. | Independent EKS and Opus review; disposable target-and-scheduling scenario; novice owner-selection task; freshness decision. |
 
+### Wave 80 (2026-10-03)
+
+The Helm page now teaches the chart, values, rendered manifest, and
+release-revision relationship before pointing to deeper procedures. An
+invented two-environment example separates a chart package from two
+installations. Crossplane installation remains an example of where Helm's
+release boundary ends and another controller's package lifecycle begins.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How Helm turns a chart into a release](knowledge/kubernetes/applications-and-tools/helm.md) | Blueprint analogy with limits, chart/values/release diagram and text alternative, invented dev/prod release comparison, preview-versus-server-versus-user checks, rollback and CRD boundaries, Crossplane controller handoff. Replaced unrun install and provider mutation recipes with official procedures. | Current official Helm usage, template, upgrade, status, and CRD documentation plus Crossplane install and provider documentation checked. Mermaid rendered and inspected. No Helm binary, cluster exercise, or Opus review occurred. | Independent Helm/Crossplane and Opus review; disposable chart rendering and cluster release exercise; novice chart-versus-release task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 79
-together: one hundred eight concepts, none of them independently reviewed after
-their teaching passes. The remaining 57 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 80
+together: one hundred nine concepts, none of them independently reviewed after
+their teaching passes. The remaining 56 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1414,14 +1426,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 18 | 27 |
+| Kubernetes | 45 | 19 | 26 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **108** | **57** |
+| **Total** | **165** | **109** | **56** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

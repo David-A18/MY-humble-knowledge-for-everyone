@@ -2358,20 +2358,30 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Helm's chart and release model, safely inspect and",
+      "audience": "Beginning Kubernetes learner",
+      "description": "Understand charts, values, rendered manifests, release revisions, and the checks needed beyond a successful Helm command.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/helm.md",
-      "source_ids": [],
+      "source_ids": [
+        "helm-intro",
+        "helm-template",
+        "helm-upgrade",
+        "helm-status",
+        "helm-crds",
+        "crossplane-install",
+        "crossplane-providers"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "helm"
+        "helm",
+        "charts",
+        "releases",
+        "beginner"
       ],
-      "title": "Helm for Kubernetes and Crossplane",
+      "title": "How Helm turns a chart into a release",
       "type": "Explanation"
     },
     {

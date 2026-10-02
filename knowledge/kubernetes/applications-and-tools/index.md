@@ -38,8 +38,8 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 | Need | Read |
 | --- | --- |
-| Understand charts, releases, values, rendering, upgrades, and rollbacks. | [Helm for Kubernetes and Crossplane](helm.md) |
-| Install or upgrade Crossplane with Helm safely. | [Crossplane section](../crossplane/index.md) and [Helm for Kubernetes and Crossplane](helm.md#install-crossplane-with-helm) |
+| Understand charts, releases, values, rendering, upgrades, and rollbacks. | [How Helm turns a chart into a release](helm.md) |
+| Understand Helm's role in a Crossplane installation. | [Helm and Crossplane's controller boundary](helm.md#crossplane-is-a-second-controller-layer), then the [official Crossplane install procedure](https://docs.crossplane.io/latest/get-started/install/). |
 | Publish or consume Helm OCI charts in Amazon ECR. | [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md#helm-charts-in-ecr-through-oci) |
 
 ## Quick path: Velero
@@ -72,7 +72,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Flux](flux.md) | Understand which Flux controller fetches, which reconciles, and which capabilities are optional. |
 | [Flux reconciliation and Helm releases](flux-reconciliation-and-helm.md) | Follow Flux source, Kustomization, and HelmRelease reconciliation. |
 | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Scope GitOps controller permissions, secrets, and ownership boundaries. |
-| [Helm for Kubernetes and Crossplane](helm.md) | Use Helm charts and releases safely, including Crossplane installation and provider lifecycle boundaries. |
+| [How Helm turns a chart into a release](helm.md) | Understand chart inputs, release revisions, preview limits, and the Crossplane controller boundary. |
 | [Tooling clusters](tooling-clusters.md) | Decide when to use a dedicated platform tooling cluster. |
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
 | [How kind custom clusters fit together](kind-custom-clusters.md) | Explain node roles, context, node images, and the full host-port-to-Pod path. |

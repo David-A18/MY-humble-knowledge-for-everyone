@@ -131,7 +131,7 @@ while people still use Git to author changes.[^flux-concepts]
 A `HelmRelease` needs a chart. It gets one through the same chain: the chart
 arrives as an artifact from a source object, and helm-controller consumes
 it.[^flux-helmrelease] Helm is a second reconciler beside kustomize-controller,
-not a separate system. [Helm for Kubernetes and Crossplane](helm.md) explains
+not a separate system. [How Helm turns a chart into a release](helm.md) explains
 charts and releases.
 
 ## Example: one commit through the chain
