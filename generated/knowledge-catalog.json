@@ -328,11 +328,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide is the compatibility entry point for agent-ready knowledge-base design. Use it to choose the right deeper guide for Markdown in Git, OKF v0.2, retrieval, provenance, freshness, security, evaluation, and MCP serving.",
+      "description": "Understand how a reviewed Markdown article becomes a clear lesson that people can find on a website or through an AI assistant.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-version-control",
+        "okf-spec",
+        "pagefind-docs",
+        "astro-collections",
+        "mcp-architecture",
+        "terraform-state"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -344,11 +351,18 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide explains what Model Context Protocol is and how to design MCP servers that expose useful, safe tools and context to AI applications.",
+      "description": "Understand how an AI application uses MCP to ask another program for information or an action, and where the protocol's responsibility ends.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/model-context-protocol.md",
-      "source_ids": [],
+      "source_ids": [
+        "mcp-architecture",
+        "mcp-base",
+        "mcp-tools",
+        "mcp-resources",
+        "mcp-transports",
+        "mcp-typescript-sdk"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

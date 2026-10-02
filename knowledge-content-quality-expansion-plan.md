@@ -1232,12 +1232,35 @@ a remote, or touches repository maintenance data.
 | --- | --- | --- | --- |
 | [Find the right Git command](knowledge/git/commands/complete-command-catalog.md) | Task-to-command map with official manual links; state and effect boundaries; installed-command discovery; a bounded unstaged-versus-staged file example; links to focused Git teaching routes. | Official Git command, everyday, CLI, and revision documentation checked. `git help -a` and the status/diff example were checked on Git 2.53.0, with the file example reproduced in a disposable repository. No Opus review occurred. | Independent Git and Opus review; novice command-selection task; version and platform variation; freshness decision. |
 
+### Wave 66 (2026-10-02)
+
+The MCP entry now teaches one relationship: how an AI host uses a
+client to request a server capability. A bounded knowledge-search
+example shows what the protocol carries and where source quality,
+permissions, and answer evaluation remain separate responsibilities.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Model Context Protocol](knowledge/ai/ai-tooling/model-context-protocol.md) | Host, client, and server roles; tools, resources, and prompts; illustrative Terraform-state lookup; transport and permission boundaries; current official learning links. Removed obsolete, unrun SDK recipes. | Official MCP architecture, base protocol, tools, resources, transport, and TypeScript SDK v2 documentation checked. Mermaid rendered and visually inspected. No live MCP server or Opus review occurred. | Independent MCP and Opus review; novice concept task; current SDK example in a separate how-to if needed; freshness decision. |
+
+### Wave 67 (2026-10-02)
+
+The knowledge-base overview now starts with the reader's goal:
+understand a topic simply, then follow the official documentation for
+precise details. It shows how one curated Markdown article becomes
+discoverable without treating the website or search index as another
+source of truth.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Knowledge-base creation, management, and optimization](knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md) | Plain-language source-to-reader model; bounded Terraform-state example; diagram and text alternative; roles for topic indexes, static website, search, and optional AI access; new-topic path. | Official Git, OKF, Astro, Pagefind, MCP, and HashiCorp documentation checked. Mermaid rendered and visually inspected. No Opus review occurred. | Independent content/architecture and Opus review; novice reader task; website integration check; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 65
-together: ninety-one concepts, none of them independently reviewed after
-their teaching passes. The remaining 74 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 67
+together: ninety-three concepts, none of them independently reviewed after
+their teaching passes. The remaining 72 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1246,7 +1269,7 @@ demonstration, so most teaching elements do not apply there.
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
-| AI, including the embedded OKF example | 20 | 3 | 17 |
+| AI, including the embedded OKF example | 20 | 5 | 15 |
 | Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -1261,7 +1284,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **91** | **74** |
+| **Total** | **165** | **93** | **72** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

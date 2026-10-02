@@ -1,77 +1,145 @@
 ---
-type: "Explanation"
-title: "Knowledge-base creation, management, and optimization"
-description: "This guide is the compatibility entry point for agent-ready knowledge-base design. Use it to choose the right deeper guide for Markdown in Git, OKF v0.2, retrieval, provenance, freshness, security, evaluation, and MCP serving."
+type: Explanation
+title: Knowledge-base creation, management, and optimization
+description: Understand how a reviewed Markdown article becomes a clear lesson that people can find on a website or through an AI assistant.
 tags: [ai, ai-tooling]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Engineering learners and practitioners
+maintainer: unassigned
+sources:
+  - id: git-version-control
+    resource: https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control
+    title: Git book, about version control
+  - id: okf-spec
+    resource: https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+    title: Open Knowledge Format specification
+  - id: pagefind-docs
+    resource: https://pagefind.app/docs/
+    title: Pagefind documentation
+  - id: astro-collections
+    resource: https://docs.astro.build/en/guides/content-collections/
+    title: Astro content collections
+  - id: mcp-architecture
+    resource: https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture
+    title: MCP architecture overview
+  - id: terraform-state
+    resource: https://developer.hashicorp.com/terraform/language/state
+    title: Terraform state documentation
 ---
 
 # Knowledge-base creation, management, and optimization
 
-## Purpose
+## The simple idea
 
-This guide is the compatibility entry point for agent-ready knowledge-base design. Use it to choose the right deeper guide for Markdown in Git, OKF v0.2, retrieval, provenance, freshness, security, evaluation, and MCP serving.
+A useful knowledge base starts with **an article that helps a person
+understand one thing**. The article should explain the idea in ordinary
+language, show a small example, say where the explanation has limits,
+and link to the original documentation. Readers can learn the basics
+here, then use the official source when they need exact behavior or
+instructions.
 
-The detailed engineering reference now lives under [Agent knowledge bases](knowledge-bases/index.md).
+The website, search box, and an AI assistant are different ways to
+*reach* that article. They do not replace the article or make it correct
+automatically. In this repository, the reader-facing articles live as
+Markdown in [the knowledge bundle](../../index.md). Git records changes
+to those files over time, and the bundle uses OKF metadata to describe
+each concept and its lifecycle.[^git-version-control][^okf-spec]
 
-## Core model
+Imagine a library: articles are the books, the topic indexes are the
+shelves, and search is the catalog. The website is a reading room.
+This analogy stops at trust. A shelf or catalog can help find a book,
+but an author and reviewer still have to check what the book says.
 
-An agent-ready knowledge system should separate source facts, curated knowledge, disposable indexes, serving interfaces, and maintenance workflows.
+## Follow one article to a reader
 
 ```mermaid
 flowchart LR
-    Producers["Authoritative producers"] --> Extraction["Deterministic extraction"]
-    Extraction --> Corpus["Git-backed knowledge corpus"]
-    Corpus --> Indexes["Disposable retrieval indexes"]
-    Indexes --> Serving["Read-only serving layer"]
-    Serving --> MCP["Optional MCP adapter"]
-    MCP --> Agents["Agents and humans"]
-    Agents --> Proposal["Patch or PR proposal"]
-    Proposal --> Review["Validation and human review"]
-    Review --> Corpus
+  sources["Official sources"] --> author["Plain-language article"]
+  author --> review["Validation and review status"]
+  review --> git["Markdown in Git"]
+  git --> site["Website pages"]
+  git --> search["Rebuildable search index"]
+  search --> site
+  git -.-> mcp["Optional AI access"]
+  site --> reader["Reader"]
+  mcp --> reader
 ```
 
-The Git corpus is the knowledge source of truth. Search indexes, vector indexes, graph indexes, embeddings, caches, and MCP resources are derived serving state that must be rebuildable from Git.
+Text alternative: an author checks official sources, writes an article,
+and records its validation and review status. The versioned Markdown is
+stored in Git. A website presents it; a rebuildable search index helps
+people find it. An optional AI connection can read it too. The reader
+still needs the article's source links.
 
-## Reader path
+Consider [Terraform state management](../../terraform/fundamentals/state-management.md).
+A beginner might search “Why does Terraform need state?”, read a
+short explanation and example, then open [HashiCorp's state
+documentation](https://developer.hashicorp.com/terraform/language/state)
+for the exact rules.[^terraform-state] If the explanation changes, the
+Markdown file changes first. The website and search output should then
+be rebuilt from that revision. This is a design pattern, not a claim
+that this example was tested with a reader.
 
-| Need | Read |
-| --- | --- |
-| Understand the whole architecture | [Reference architecture](knowledge-bases/reference-architecture.md) |
-| Audit OKF v0.2 details and conformance | [OKF v0.2](knowledge-bases/okf-v0.2.md) |
-| Compare OKF with RDF, JSON-LD, OpenAPI, AsyncAPI, MCP, and retrieval tooling | [Knowledge standards landscape](knowledge-bases/knowledge-standards-landscape.md) |
-| Design progressive disclosure and retrieval budgets | [Retrieval and context efficiency](knowledge-bases/retrieval-and-context-efficiency.md) |
-| Track sources, trust, freshness, conflicts, and reconciliation | [Provenance, trust, and freshness](knowledge-bases/provenance-trust-and-freshness.md) |
-| Secure RAG, MCP serving, ingestion, and maintenance paths | [Security and governance](knowledge-bases/security-and-governance.md) |
-| Measure retrieval, answer quality, cost, freshness, and determinism | [Evaluation and quality](knowledge-bases/evaluation-and-quality.md) |
-| Inspect a small conformant bundle | [OKF v0.2 example bundle](knowledge-bases/examples/okf-v0.2/index.md) |
+## Keep the layers separate
 
-## Choosing the right approach
-
-| Situation | Prefer | Why |
+| Layer | Job | If it is wrong or missing |
 | --- | --- | --- |
-| The corpus is small and review matters | Plain Markdown plus Git | Lowest operational cost and easiest human review. |
-| Agents need portable metadata, provenance, lifecycle, and trust signals | OKF v0.2 | Adds structured frontmatter without requiring a database or runtime. |
-| Manual navigation is too slow | Lexical search | Cheap, inspectable, and usually the first retrieval layer to add. |
-| Vocabulary mismatch is measured and important | Semantic reranking | Helps when keyword search misses conceptually relevant content. |
-| Typed relationships must be exchanged across organizations | RDF, JSON-LD, SKOS, OWL, or SHACL | Adds semantic-web representation and validation where the problem justifies it. |
-| Agents need a standard runtime interface | MCP | Exposes search and fetch capabilities without defining the storage model. |
-| Retrieval requirements justify specialized infrastructure | Vector database or graph database | Use only when measurements show local indexes or simpler search are insufficient. |
+| **Source documentation** | Supplies authoritative product or standard details. | Recheck the official source before making a claim. |
+| **Curated article** | Teaches one outcome in simple language and cites sources. | Edit and review the Markdown; do not patch only the website. |
+| **Topic index and metadata** | Tell readers what exists, where it belongs, and whether it is draft or mature. | Fix links and labels so new material has a home. |
+| **Website and search** | Present articles and help readers discover them. | Rebuild them from the approved article revision. |
+| **Optional AI access** | Lets an assistant retrieve selected articles. | Check what it retrieved and how it used the source. |
 
-> [!IMPORTANT]
-> Do not ask an LLM to recreate machine-readable facts that can be parsed exactly from OpenAPI, AsyncAPI, JSON Schema, Terraform, Kubernetes manifests, SQL schemas, Git metadata, or structured APIs. Use deterministic extraction for facts and reserve model-authored content for explanation, relationships, trade-offs, and operational reasoning.
+A static website can build pages from Markdown; Astro documents
+content collections for working with content, and Pagefind can create
+search data from built pages.[^astro-collections][^pagefind-docs]
+An MCP server can expose retrieval to an AI host, but MCP only
+standardizes that exchange. It does not define the content store or
+verify the answer.[^mcp-architecture] These are options for presenting
+and finding knowledge, not extra copies to maintain by hand.
 
-## Related links
+## Make room for more topics
 
-- Official specification: [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md)
-- Official specification: [Model Context Protocol](https://modelcontextprotocol.io/specification/2026-07-28/basic/index)
-- [Agent knowledge bases](knowledge-bases/index.md)
-- [Model Context Protocol](model-context-protocol.md)
-- [Create AI tools for Claude and Codex](create-ai-tools-for-claude-and-codex.md)
-- [Back to AI tooling](index.md)
-- [Back to AI index](../index.md)
-- [Back to LLM index](../../llm/index.md)
-- [Back to root index](../../../README.md)
+A growing knowledge base needs a predictable path for a new article.
+Here, a contributor should:
+
+1. Choose the closest topic directory and read its `index.md`.
+2. Give the concept one main reader outcome: understand, complete a
+   task, inspect a reference, or solve a problem.
+3. Write a simple definition, a bounded example, limits, and links to
+   primary sources. Record only real provenance and review evidence.
+4. Add the page to its parent index, then run the repository's
+   validation and link checks before review.
+
+The [contribution guide](../../../CONTRIBUTING.md) and
+[authoring instructions](../../../instructions.md) contain the exact
+requirements. The directory and metadata rules make a new article
+discoverable without changing the website by hand.[^okf-spec]
+
+## Check your understanding
+
+- If search shows an outdated sentence, which file should an author
+  correct first?
+- What can an official documentation link add after a simple article?
+- Why does an AI answer still need source checking when it retrieved
+  an article successfully?
+
+## Explore further
+
+- [Reference architecture](knowledge-bases/reference-architecture.md)
+  explains source files, derived indexes, serving, and maintenance.
+- [Retrieval and context efficiency](knowledge-bases/retrieval-and-context-efficiency.md)
+  explains search and bounded results.
+- [Provenance, trust, and freshness](knowledge-bases/provenance-trust-and-freshness.md)
+  explains how to record source and review signals without inventing them.
+- [Model Context Protocol](model-context-protocol.md) explains optional
+  AI access.
+- [Back to AI tooling](index.md).
+
+[^git-version-control]: [Git book, about version control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control), source record `git-version-control`.
+[^okf-spec]: [Open Knowledge Format specification](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md), source record `okf-spec`.
+[^pagefind-docs]: [Pagefind documentation](https://pagefind.app/docs/), source record `pagefind-docs`.
+[^astro-collections]: [Astro content collections](https://docs.astro.build/en/guides/content-collections/), source record `astro-collections`.
+[^mcp-architecture]: [MCP architecture overview](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture), source record `mcp-architecture`.
+[^terraform-state]: [HashiCorp, Terraform state](https://developer.hashicorp.com/terraform/language/state), source record `terraform-state`.

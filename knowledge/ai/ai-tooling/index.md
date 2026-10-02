@@ -6,9 +6,9 @@ AI tooling guidance for MCP servers, Claude and Codex custom tools, skills, and 
 
 | Guide | Start here when |
 | --- | --- |
-| [Model Context Protocol](model-context-protocol.md) | You need to understand MCP hosts, clients, servers, tools, resources, prompts, transports, schemas, and server design. |
+| [Model Context Protocol](model-context-protocol.md) | You want a beginner explanation of how an AI application reaches a server for information or an action, and what MCP does not guarantee. |
 | [Create AI tools for Claude and Codex](create-ai-tools-for-claude-and-codex.md) | You need to expose custom actions, APIs, files, skills, or MCP servers to Claude, Claude Code, Codex, or OpenAI tools. |
-| [Knowledge-base creation, management, and optimization](knowledge-bases-creation-management-and-optimization.md) | You need a short entry point for agent-ready Markdown, retrieval, and OKF knowledge-base design. |
+| [Knowledge-base creation, management, and optimization](knowledge-bases-creation-management-and-optimization.md) | You want to see how a simple, sourced article becomes a page people can find, and how new topics fit into the bundle. |
 | [Agent knowledge bases](knowledge-bases/index.md) | You need the full Git-backed, standards-aware reference architecture for AI agent knowledge systems. |
 | [Knowledge-base upgrade hub](../../../knowledge-base-upgrade/README.md) | You need the repository-specific upgrade plan for features, tools, skills, MCP server templates, and instructions. |
 
