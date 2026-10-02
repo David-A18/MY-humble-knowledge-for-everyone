@@ -1288,12 +1288,23 @@ access at search and fetch time and to a separate review path for edits.
 | --- | --- | --- | --- |
 | [Security and governance](knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md) | Three trust boundaries, bounded public/private retrieval example, diagram and text alternative, risk-to-evidence table, official deeper study. | Current OWASP prompt-injection, Azure AI Search document access, MCP tools, and NIST AI RMF guidance checked. Mermaid rendered and visually inspected. No attack test or Opus review occurred. | Independent security and Opus review; novice reader task; adversarial retrieval test if a private corpus is introduced; freshness decision. |
 
+### Wave 71 (2026-10-02)
+
+The standards page now answers a reader's first question: which job
+needs a format or tool? An invented Orders API shows why an API schema,
+a beginner article, search, MCP, and an optional relationship graph do
+different work.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Knowledge standards landscape](knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md) | Task-based layer map, bounded Orders API example, optional graph roles, diagram and text alternative, official specification links, RDF maturity distinction. | Current primary OKF, OpenAPI, AsyncAPI, JSON Schema, W3C, MCP, AGENTS.md, and llms.txt documents checked. Mermaid rendered and visually inspected. No Opus review occurred. | Independent standards and Opus review; novice choice task; freshness check for evolving specifications. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 70
-together: ninety-six concepts, none of them independently reviewed after
-their teaching passes. The remaining 69 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 71
+together: ninety-seven concepts, none of them independently reviewed after
+their teaching passes. The remaining 68 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1302,7 +1313,7 @@ demonstration, so most teaching elements do not apply there.
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
-| AI, including the embedded OKF example | 20 | 7 | 13 |
+| AI, including the embedded OKF example | 20 | 8 | 12 |
 | Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -1317,7 +1328,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **96** | **69** |
+| **Total** | **165** | **97** | **68** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
