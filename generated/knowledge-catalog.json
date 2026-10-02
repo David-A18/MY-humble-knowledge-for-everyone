@@ -891,11 +891,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to run Apache APISIX as a Kubernetes API gateway on Amazon EKS.",
+      "description": "Understand the AWS entry, APISIX gateway, route controller, and backend handoffs for an API running on Amazon EKS.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/apisix-on-eks.md",
-      "source_ids": [],
+      "source_ids": [
+        "apisix-ingress-start",
+        "apisix-routes",
+        "apisix-deployment-architecture",
+        "apisix-gateway-api",
+        "apisix-configuration-troubleshooting",
+        "apisix-plugin",
+        "aws-eks-nlb",
+        "aws-eks-auto-nlb",
+        "aws-nlb-listeners"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

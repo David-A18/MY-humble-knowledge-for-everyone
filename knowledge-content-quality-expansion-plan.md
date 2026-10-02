@@ -1045,12 +1045,21 @@ Kubernetes rollout, and user verification.
 | --- | --- | --- | --- |
 | [Deploying to EKS](knowledge/cross-topic-guides/deploying-to-eks.md) | Rewritten with a limited delivery analogy, invented photo API, diagram, failure-owner table, and understanding checks. Removed unexecuted live commands and unsupported review and freshness claims. | Keyed current Amazon EKS, Amazon ECR, and Kubernetes documentation. No AWS account, image, cluster, Deployment, or user request was tested. | Independent EKS/security review; controlled release and recovery exercise; reader test; freshness decision. |
 
+### Wave 48 (2026-10-02)
+
+The APISIX-on-EKS page now follows both the client request and the
+Kubernetes-to-gateway configuration change.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [APISIX on EKS](knowledge/cross-topic-guides/apisix-on-eks.md) | Rewritten with a limited venue analogy, invented lesson API, two-path diagram, ownership and failure tables, TLS placement, plugin boundaries, and understanding checks. | Keyed current Apache APISIX and Amazon EKS/NLB documentation. No cluster, gateway, route, plugin, load balancer, client request, or reader test ran. Claude Code was unavailable at its weekly subscription limit, so this pass did not receive Opus review. | Independent APISIX/EKS security and Opus review; controlled route, policy, TLS, and failure checks; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 47
-together: seventy-two concepts, none of them independently reviewed after
-their teaching passes. The remaining 93 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 48
+together: seventy-three concepts, none of them independently reviewed after
+their teaching passes. The remaining 92 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1061,7 +1070,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 21 | 0 |
-| Cross-topic guides | 16 | 10 | 6 |
+| Cross-topic guides | 16 | 11 | 5 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -1074,7 +1083,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **72** | **93** |
+| **Total** | **165** | **73** | **92** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -1098,8 +1107,8 @@ as not yet reviewed above.
 - The network and storage procedures adjacent to wave 5: APISIX architecture,
   Velero storage and volume backups, and the missing beginner Service concept.
 - The remaining cross-topic guides, which are marked as developed but have
-  not been assessed against the standard, including APISIX on EKS and
-  Crossplane on AWS.
+  not been assessed against the standard, including Crossplane on AWS and
+  EKS operations.
 - A dedicated observability section, if reader demand supports it; the
   observability explanation currently links to troubleshooting pages because
   no such section exists.

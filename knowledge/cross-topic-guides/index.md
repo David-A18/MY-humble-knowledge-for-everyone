@@ -21,7 +21,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [Deploying to EKS](deploying-to-eks.md) | Draft | Follow deployer access, image pull, rollout, and user-path checks. |
 | [EKS operations](eks-operations.md) | Developed | Combine AWS CLI and `kubectl` for day-to-day EKS operations. |
 | [CDN in front of EKS](cdn-in-front-of-eks.md) | Draft | Follow cache hits and misses through CloudFront, an ALB, and the EKS application's target mode. |
-| [APISIX on EKS](apisix-on-eks.md) | Developed | Run Apache APISIX as an EKS API gateway. |
+| [APISIX on EKS](apisix-on-eks.md) | Draft | Follow AWS entry, APISIX route configuration, gateway traffic, and backend health. |
 | [EKS to MSK applications](eks-to-msk-applications.md) | Draft | See the network, identity, and processing gates from an EKS Pod to MSK. |
 | [Crossplane on AWS](crossplane-on-aws.md) | Developed | Run Crossplane in Kubernetes while managing AWS resources with bootstrap, identity, GitOps, and operations boundaries. |
 | [GitOps on EKS](gitops-on-eks.md) | Draft | Follow a Git change through GitOps, Kubernetes, and AWS controllers on EKS. |
