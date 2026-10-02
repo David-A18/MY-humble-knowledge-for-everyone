@@ -54,10 +54,10 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 | Need | Read |
 | --- | --- |
-| Understand what K9s is and how it maps to Kubernetes resources. | [K9s](k9s.md) |
-| Move through K9s views, filters, namespaces, and contexts. | [K9s navigation](k9s.md#move-around) |
-| Inspect Pods, logs, events, Deployments, Services, and cluster health. | [K9s inspection workflows](k9s.md#inspect-and-see-things) |
-| Use aliases, hotkeys, plugins, and read-only mode safely. | [K9s daily configuration](k9s.md#configuration-that-helps-daily-use) |
+| Understand what K9s reads from Kubernetes. | [Inspect a failing Pod with K9s](k9s.md#what-you-will-do) |
+| Start in a known context and namespace. | [Confirm the target](k9s.md#1-confirm-the-target) |
+| Read a Pod's status, events, and logs. | [Select a Pod](k9s.md#2-open-the-pod-view-and-select-one-pod) and [read its evidence](k9s.md#3-read-the-evidence-for-the-selected-pod). |
+| Choose a next investigation without a blind repair. | [Follow the first failed boundary](k9s.md#4-follow-the-first-failed-boundary). |
 
 ## Articles
 
@@ -77,7 +77,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
 | [How kind custom clusters fit together](kind-custom-clusters.md) | Explain node roles, context, node images, and the full host-port-to-Pod path. |
 | [How images reach a kind Pod](kind-images-and-local-registries.md) | Choose between loading an image into kind nodes and pulling from a configured registry. |
-| [K9s](k9s.md) | Use K9s to navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
+| [Inspect a failing Pod with K9s](k9s.md) | Select a target and read one Pod's status, events, and logs before choosing a troubleshooting route. |
 | [Velero](../../migrations/velero/index.md) | Back up, restore, migrate, and recover Kubernetes resources and persistent volumes. |
 
 ## Expected content

@@ -2385,21 +2385,28 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand what K9s is, how to move around in it, and how to inspect common Kubernetes resources without typing every kubectl command manually.",
+      "audience": "Beginning Kubernetes learner",
+      "description": "Use K9s in a selected context and namespace to inspect a Pod row, events, and logs before choosing a Kubernetes troubleshooting path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/k9s.md",
-      "source_ids": [],
+      "source_ids": [
+        "k9s-overview",
+        "k9s-commands",
+        "k8s-debug-pods",
+        "k8s-pod-lifecycle"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "k9s"
+        "k9s",
+        "pods",
+        "troubleshooting",
+        "beginner"
       ],
-      "title": "K9s",
-      "type": "Explanation"
+      "title": "Inspect a failing Pod with K9s",
+      "type": "How-to Guide"
     },
     {
       "audience": "Beginning platform engineer",

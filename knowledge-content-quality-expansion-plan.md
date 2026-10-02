@@ -1404,12 +1404,24 @@ release boundary ends and another controller's package lifecycle begins.
 | --- | --- | --- | --- |
 | [How Helm turns a chart into a release](knowledge/kubernetes/applications-and-tools/helm.md) | Blueprint analogy with limits, chart/values/release diagram and text alternative, invented dev/prod release comparison, preview-versus-server-versus-user checks, rollback and CRD boundaries, Crossplane controller handoff. Replaced unrun install and provider mutation recipes with official procedures. | Current official Helm usage, template, upgrade, status, and CRD documentation plus Crossplane install and provider documentation checked. Mermaid rendered and inspected. No Helm binary, cluster exercise, or Opus review occurred. | Independent Helm/Crossplane and Opus review; disposable chart rendering and cluster release exercise; novice chart-versus-release task; freshness decision. |
 
+### Wave 81 (2026-10-03)
+
+The K9s page now follows one inspection task from context and namespace
+to a selected Pod, its description, logs, and the next evidence route.
+It replaces a large, version-sensitive shortcut inventory with the small
+set of keys documented for that task and distinguishes read-only UI
+controls from actual Kubernetes authorization.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Inspect a failing Pod with K9s](knowledge/kubernetes/applications-and-tools/k9s.md) | Context-to-Pod evidence path, invented image-pull row, status-versus-cause distinction, symptom table, diagram and text alternative, read-only-mode limit, focused official sources. Removed unverified shortcuts, config recipes, and live modification routes. | Current official K9s overview, commands, and configuration plus Kubernetes Pod lifecycle and Pod-debug documentation checked. Mermaid rendered and inspected. No K9s binary, cluster session, or Opus review occurred. | Independent K9s/Kubernetes and Opus review; versioned K9s walkthrough in a disposable cluster; novice Pod-inspection task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 80
-together: one hundred nine concepts, none of them independently reviewed after
-their teaching passes. The remaining 56 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 81
+together: one hundred ten concepts, none of them independently reviewed after
+their teaching passes. The remaining 55 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1426,14 +1438,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 19 | 26 |
+| Kubernetes | 45 | 20 | 25 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **109** | **56** |
+| **Total** | **165** | **110** | **55** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
