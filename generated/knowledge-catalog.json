@@ -1774,11 +1774,19 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page when you made a mistake and need the safest command for the situation.",
+      "description": "Identify whether a Git mistake is in a file, the staging area, a local commit, or shared history before choosing a recovery path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/commands/solve-issues.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-status",
+        "git-diff",
+        "git-restore",
+        "git-revert",
+        "git-reset",
+        "git-reflog",
+        "git-clean"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1786,7 +1794,7 @@
         "solve-issues"
       ],
       "title": "Solve Git issues",
-      "type": "How-to Guide"
+      "type": "Troubleshooting Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
