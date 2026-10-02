@@ -1136,12 +1136,23 @@ that change tracked files, credentials, or repository maintenance state.
 | --- | --- | --- | --- |
 | [Git troubleshooting commands](knowledge/git/commands/troubleshooting-commands.md) | Rewritten with branch/upstream, ignored-file, conflict, and object-integrity paths; each explains what the check can and cannot establish. | Current official Git documentation was checked. A disposable repository reproduced a tracked `build/output.txt` still appearing in status despite a matching ignore rule. No remote rejection, conflict, corruption, or reader test was run. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Git/Opus review; reader tasks for rejected push and tracked-file confusion; freshness decision. |
 
+### Wave 57 (2026-10-02)
+
+GitHub Actions common solutions now traces the first missing
+handoff from event to run, job, step, credentials, and outcome.
+It distinguishes GitHub token scope, secret availability, and
+cloud OIDC trust before suggesting a configuration change.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [GitHub Actions common solutions](knowledge/git/github-actions/common-solutions.md) | Rewritten as a Troubleshooting Guide with an event-to-outcome diagram, text alternative, bounded branch/path trigger example, symptom table, repository versus cloud authority map, and environment/concurrency limits. | Keyed current official GitHub documentation. No workflow, runner, secret, OIDC exchange, deployment, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent GitHub Actions/security and Opus review; controlled trigger, fork, permission, OIDC, and queue cases; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 56
-together: eighty-one concepts, none of them independently reviewed after
-their teaching passes. The remaining 84 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 57
+together: eighty-two concepts, none of them independently reviewed after
+their teaching passes. The remaining 83 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1157,7 +1168,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 10 | 7 |
+| Git | 17 | 11 | 6 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -1165,7 +1176,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **81** | **84** |
+| **Total** | **165** | **82** | **83** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They

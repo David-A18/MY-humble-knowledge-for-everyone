@@ -1905,11 +1905,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page when a workflow fails or behaves unexpectedly. Start with inspection, then apply the smallest safe fix.",
+      "description": "Find the first missing handoff from an event to a workflow, job, step, permission, or deployment before changing the YAML.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/common-solutions.md",
-      "source_ids": [],
+      "source_ids": [
+        "actions-trigger",
+        "actions-syntax",
+        "actions-logs",
+        "actions-token",
+        "actions-secrets",
+        "actions-oidc",
+        "actions-environments",
+        "actions-concurrency"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -1918,7 +1927,7 @@
         "common-solutions"
       ],
       "title": "GitHub Actions common solutions",
-      "type": "Explanation"
+      "type": "Troubleshooting Guide"
     },
     {
       "audience": "Engineering learners and practitioners",

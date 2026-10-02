@@ -12,7 +12,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | [`uses` catalog](actions-and-uses-catalog.md) | How `uses:` works, how to navigate action references, and common official, general-purpose, and third-party actions. |
 | [Examples and use cases](examples-and-use-cases.md) | CI, matrix testing, manual deploys, Docker publishing, Terraform checks, AWS OIDC, and scheduled jobs. |
 | [Content CI/CD process](content-ci-cd-process.md) | Follow a knowledge change through `develop` validation, promotion to canonical `main`, and a conditional website update. |
-| [Common solutions](common-solutions.md) | Fixes for trigger, checkout, token, secret, OIDC, cache, matrix, concurrency, and debugging problems. |
+| [Common solutions](common-solutions.md) | Locate the first failed handoff from event to run, job, step, permission, or deployment. |
 | [Security, secrets, and permissions](security-secrets-and-permissions.md) | Decide which code a job runs, which credentials it receives, and what those credentials can change. |
 | [AWS OIDC federation](aws-oidc-federation.md) | Follow one job's OIDC token through AWS role trust to temporary credentials and limited API access. |
 

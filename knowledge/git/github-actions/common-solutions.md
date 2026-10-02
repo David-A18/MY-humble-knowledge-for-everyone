@@ -1,203 +1,214 @@
 ---
-type: "Explanation"
+type: "Troubleshooting Guide"
 title: "GitHub Actions common solutions"
-description: "Use this page when a workflow fails or behaves unexpectedly. Start with inspection, then apply the smallest safe fix."
+description: "Find the first missing handoff from an event to a workflow, job, step, permission, or deployment before changing the YAML."
 tags: [git, github-actions, common-solutions]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: actions-trigger
+    resource: https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow
+    title: GitHub Actions - Triggering a workflow
+  - id: actions-syntax
+    resource: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+    title: GitHub Actions - Workflow syntax
+  - id: actions-logs
+    resource: https://docs.github.com/en/actions/how-tos/monitor-workflows/use-workflow-run-logs
+    title: GitHub Actions - Using workflow run logs
+  - id: actions-token
+    resource: https://docs.github.com/en/actions/concepts/security/github_token
+    title: GitHub Actions - GITHUB_TOKEN
+  - id: actions-secrets
+    resource: https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets
+    title: GitHub Actions - Using secrets
+  - id: actions-oidc
+    resource: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers
+    title: GitHub Actions - Configuring OpenID Connect in cloud providers
+  - id: actions-environments
+    resource: https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments
+    title: GitHub Actions - Deploying with GitHub Actions
+  - id: actions-concurrency
+    resource: https://docs.github.com/en/actions/concepts/workflows-and-actions/concurrency
+    title: GitHub Actions - Concurrency
 ---
 
 # GitHub Actions common solutions
 
-## Purpose
+## Start at the first missing handoff
 
-Use this page when a workflow fails or behaves unexpectedly. Start with inspection, then apply the smallest safe fix.
+When automation fails, ask **how far it got**. An event must match
+a workflow trigger before a run exists. A run must admit a job
+before the job can reach a step. A successful step can still
+lack permission to publish or deploy. This order prevents
+changing secrets or permissions when the workflow never
+started at all.
 
-## First checks
-
-| Symptom | Check | Likely cause |
-| --- | --- | --- |
-| Workflow did not start | `on` trigger and branch/path filters | Event does not match workflow filters. |
-| Step cannot find files | `actions/checkout` exists before commands | Repository was not checked out. |
-| Push or release fails | `permissions` block | `GITHUB_TOKEN` lacks required write permission. |
-| Secret is empty | Secret scope and event type | Secret is unavailable for fork or environment. |
-| Deployment waits | Environment protection rules | Required reviewers or wait timer. |
-| Job is slow | Cache and matrix strategy | Dependencies reinstall every run or too many jobs. |
-| Workflow cancels | `concurrency` group | Newer run canceled older run. |
-
-### Inspect a failed run
-
-```bash
-gh run list --limit 10
-gh run view 1234567890 --log-failed
+```mermaid
+flowchart TB
+  event["Event<br/>push, PR, or dispatch"] --> trigger{"Trigger and filters match?"}
+  trigger -- "yes" --> run["Workflow run"]
+  run --> job{"Job condition and dependencies pass?"}
+  job -- "yes" --> step["Runner executes steps"]
+  step --> access["Token, secret, or cloud access"]
+  access --> outcome["Check the intended outcome"]
 ```
 
-How it works: GitHub CLI lists recent runs, then fetches failed logs for one run.
+Text alternative: a repository event reaches a workflow only
+when its event and filters match. A run then decides which
+jobs can start; a runner executes their steps. A step's
+token, secret, or cloud identity controls later actions.
+Finally, a completed step needs an outcome check. Locate
+the first missing stage before choosing a fix.
 
-What it does: gives you the error context before changing YAML.
+| What you see | First place to inspect | Common boundary |
+| --- | --- | --- |
+| No run exists | Event, workflow file, branch/path filters, and how the event was created. | Trigger did not match or the creating token does not trigger that event. |
+| Run exists; job is skipped | Job `if`, `needs`, and upstream job results. | Condition or dependency prevented it. |
+| Job starts; a step fails | Failed step log and the exact command. | Files, dependencies, runtime environment, or command behavior. |
+| Step runs; publishing is denied | Job `permissions`, repository rules, and API response. | Token scope or policy. |
+| Cloud login fails | OIDC permission, cloud trust policy, and provider response. | Token request or external trust/authorization. |
+| Deployment waits or run is canceled | Environment approvals and concurrency group. | Intentional gate or cancellation policy. |
 
-## Workflow did not start
+## 1. No workflow run appeared
 
-### Check event filters
+Read the event type and the workflow's `on` section. For
+`push` and `pull_request`, a branch filter and a path
+filter must **both** match. A skipped workflow may leave
+a required check pending.[^actions-trigger]
+
+For example, this illustrative trigger runs for a push to
+`main` only when a changed path matches `src/**`:
 
 ```yaml
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "src/**"
 ```
 
-How it works: both the branch filter and path filter must match for this workflow to run.
+A docs-only push to `main` does not satisfy the path filter.
+A source change on another branch does not satisfy the branch
+filter. Inspect the changed paths and actual event before
+editing filters. Broadening a trigger can start more jobs
+than intended.
 
-What it does: prevents runs for pushes outside `main` or changes outside `src/**`.
+Also check *who created the event*. Most events caused by
+the repository's `GITHUB_TOKEN` do not start another
+workflow. GitHub documents exceptions, including
+`workflow_dispatch` and `repository_dispatch`, and
+special approval behavior for pull requests created by
+automation. Do not assume a workflow-created push will
+start a second push workflow.[^actions-trigger]
 
-Common fix: loosen filters while debugging, then add the narrow filters back intentionally.
+## 2. A run exists but a job or step did not run
 
-## Repository files are missing
+Open the run graph and the first skipped or failed job. Job
+`if` conditions and `needs` dependencies control whether
+a job starts; a failed or skipped dependency normally skips
+its dependents too. A step that did start has its own log.
+[^actions-syntax]
 
-### Add checkout before commands
+For a failed run, the GitHub UI shows job and step logs. With
+GitHub CLI access to the repository, you can inspect a known
+run ID:
 
-```yaml
-steps:
-  - uses: actions/checkout@v4
-  - run: ls
-  - run: npm test
+```bash
+gh run view <run-id> --log-failed
 ```
 
-How it works: hosted runners start with an empty workspace. `actions/checkout` fetches repository content into `$GITHUB_WORKSPACE`.
+This reads failed logs; it does not rerun the job or change
+the workflow. Logs may contain sensitive data, so avoid
+pasting full logs into public issues.[^actions-logs]
 
-What it does: makes project files available to later shell commands.
+If a step cannot find repository files, first confirm what
+the runner checked out and its working directory. A runner
+does not automatically have a usable copy of repository
+source merely because a workflow file exists; a checkout
+step or another explicit download supplies the files.
+Follow [Workflow structure](workflow-structure.md) for
+job and step boundaries.
 
-## Token permission failures
+## 3. A job ran but lacks authority
 
-### Grant least required permission
+Separate three different questions:
 
-```yaml
-permissions:
-  contents: read
-  packages: write
-```
+| Question | Evidence to inspect | Meaning |
+| --- | --- | --- |
+| Can this job write to the repository? | Job or workflow `permissions`, `GITHUB_TOKEN` scope, API error, and branch rules. | GitHub authorization, not cloud authorization. |
+| Can this job read a secret? | Event type, fork origin, secret scope, and environment gate. | Repository, organization, and environment secrets have different availability. |
+| Can this job assume a cloud role? | `id-token: write`, OIDC exchange response, and cloud trust conditions. | GitHub can issue a token, but the cloud provider decides whether to trust it. |
 
-How it works: the workflow's `GITHUB_TOKEN` receives only the permissions listed.
+`GITHUB_TOKEN` is job-scoped to the repository and limited by
+its effective permissions. Grant only the permission an
+authorized publishing job needs; granting `contents: write`
+does not bypass a repository rule or make an unrelated cloud
+role available.[^actions-token][^actions-syntax]
 
-What it does: allows package publishing while keeping repository contents read-only.
+Most secrets other than `GITHUB_TOKEN` are not supplied to
+workflows triggered from a fork. Environment secrets also
+wait for the environment's protection rules. Do not print a
+secret to test whether it exists; inspect the event and
+configuration, then use a non-sensitive success signal.
+[^actions-secrets][^actions-environments]
 
-> [!TIP]
-> Start from least privilege. Add write permissions only when a step actually needs them.
+`id-token: write` lets a job request a GitHub OIDC token; it
+does **not** grant cloud write access by itself. The cloud
+trust policy must accept the token's claims, and the
+resulting cloud role needs the intended service permissions.
+See [AWS OIDC federation](aws-oidc-federation.md) for that
+specific path.[^actions-oidc]
 
-## Secret is empty or unavailable
+## 4. Deployment waits or a run disappears
 
-### Use repository or environment secrets
+An environment can require approval or a wait before its
+job runs and before environment secrets are available.
+Check the job's environment and the repository's
+protection rules before treating the wait as a failure.
+[^actions-environments]
 
-```yaml
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - run: ./deploy.sh
-        env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
-```
+A concurrency group can keep one run active while another
+waits. With the default single pending slot, a newer
+pending run replaces an older pending run in the same
+group; `cancel-in-progress: true` can also cancel a
+currently running one. If every deployment must run in
+order, inspect the configured queue behavior rather than
+assuming `cancel-in-progress: false` retains every pending
+run.[^actions-concurrency]
 
-How it works: GitHub injects the secret into the step environment if the event and environment allow access.
+## Check your understanding
 
-What it does: makes the secret available to `deploy.sh` without hardcoding it in the repository.
+1. If no run exists, why is changing a cloud secret unlikely
+   to fix the problem?
+2. Why does a job with `id-token: write` still need a cloud
+   trust policy?
+3. How can a workflow run exist while a deployment job
+   remains waiting?
+4. Why might a workflow-created push fail to start another
+   workflow?
 
-> [!WARNING]
-> Secrets are not passed to workflows from forks in the same way as trusted repository workflows. Be careful with pull request automation that needs credentials.
+## Deeper study
 
-## OIDC authentication fails
+- [Triggering a workflow](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow)
+  for event filters and token-created events.
+- [Workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
+  for job conditions, dependencies, and permissions.
+- [Workflow run logs](https://docs.github.com/en/actions/how-tos/monitor-workflows/use-workflow-run-logs)
+  for locating the first failed step.
+- [Using secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets),
+  [OIDC](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers),
+  and [concurrency](https://docs.github.com/en/actions/concepts/workflows-and-actions/concurrency)
+  for the later gates.
 
-### Add OIDC permission
+[Back to GitHub Actions](index.md)
 
-```yaml
-permissions:
-  id-token: write
-  contents: read
-```
-
-How it works: `id-token: write` allows the job to request an OIDC token from GitHub.
-
-What it does: enables cloud login actions such as `aws-actions/configure-aws-credentials` to exchange the token for short-lived credentials.
-
-Common fix: verify the cloud trust policy also matches the repository, branch, environment, or subject claim you expect.
-
-## Cache does not restore
-
-### Use stable cache keys
-
-```yaml
-steps:
-  - uses: actions/setup-node@v4
-    with:
-      node-version: 22
-      cache: npm
-```
-
-How it works: setup-node can cache npm dependencies based on lockfile data.
-
-What it does: reduces dependency install time when the lockfile has not changed.
-
-Common fix: make sure the lockfile exists and is committed.
-
-## Matrix jobs are too noisy
-
-### Disable fail-fast
-
-```yaml
-strategy:
-  fail-fast: false
-  matrix:
-    node-version: [20, 22]
-```
-
-How it works: `fail-fast: false` lets all matrix jobs finish even if one fails.
-
-What it does: gives you the full compatibility picture instead of stopping at the first failure.
-
-## Deployments overlap
-
-### Add deployment concurrency
-
-```yaml
-concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: false
-```
-
-How it works: GitHub allows only one run in the same concurrency group at a time.
-
-What it does: prevents overlapping deploys for the same branch.
-
-## Debug expression values
-
-### Print safe context values
-
-```yaml
-steps:
-  - run: |
-      echo "ref=${{ github.ref }}"
-      echo "event=${{ github.event_name }}"
-      echo "runner_os=${{ runner.os }}"
-```
-
-How it works: GitHub evaluates expressions before the shell command runs.
-
-What it does: prints safe metadata that helps debug conditions and triggers.
-
-> [!WARNING]
-> Do not print `secrets` or full event payloads unless you understand what they contain.
-
-## Related links
-
-- [GitHub Actions workflow syntax](https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions)
-- [Using secrets in GitHub Actions](https://docs.github.com/actions/security-guides/using-secrets-in-github-actions)
-- [Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use)
-- [Back to GitHub Actions](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+[^actions-trigger]: [GitHub Actions - Triggering a workflow](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
+[^actions-syntax]: [GitHub Actions - Workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax).
+[^actions-logs]: [GitHub Actions - Using workflow run logs](https://docs.github.com/en/actions/how-tos/monitor-workflows/use-workflow-run-logs).
+[^actions-token]: [GitHub Actions - GITHUB_TOKEN](https://docs.github.com/en/actions/concepts/security/github_token).
+[^actions-secrets]: [GitHub Actions - Using secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets).
+[^actions-oidc]: [GitHub Actions - Configuring OIDC](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers).
+[^actions-environments]: [GitHub Actions - Deploying with GitHub Actions](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments).
+[^actions-concurrency]: [GitHub Actions - Concurrency](https://docs.github.com/en/actions/concepts/workflows-and-actions/concurrency).
