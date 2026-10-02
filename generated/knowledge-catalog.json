@@ -1033,15 +1033,24 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to design a dedicated EKS tooling cluster that supports workload clusters.",
+      "description": "Decide when a separate EKS management cluster helps, and trace its access, failure, and recovery boundaries.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md",
-      "source_ids": [],
+      "source_ids": [
+        "eks-endpoint",
+        "eks-access-entries",
+        "argo-clusters",
+        "argo-projects",
+        "argo-disaster-recovery",
+        "flux-remote-clusters",
+        "flux-bootstrap"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cross-topic-guides"
+        "cross-topic-guides",
+        "eks-tooling-cluster-architecture"
       ],
       "title": "EKS tooling cluster architecture",
       "type": "Explanation"

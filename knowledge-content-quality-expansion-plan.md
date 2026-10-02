@@ -1072,12 +1072,22 @@ resources, with ownership varying by the EKS mode and chosen integrations.
 | --- | --- | --- | --- |
 | [Kubernetes on AWS](knowledge/cross-topic-guides/kubernetes-on-aws.md) | Rewritten with a limited theatre analogy, invented photo API, Kubernetes-to-AWS mapping, ownership diagram, standard/Auto Mode differences, and understanding checks. | Keyed current Amazon EKS, Amazon ECR, and Kubernetes documentation. No cluster, ALB, Pod, S3 object, EBS volume, request, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent EKS/security and Opus review; controlled network, IAM, and storage checks; reader test; freshness decision. |
 
+### Wave 51 (2026-10-02)
+
+The EKS tooling-cluster guide now shows the choice between local and
+central controllers, the target-cluster authority required, and the
+limits of a central outage.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [EKS tooling cluster architecture](knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md) | Rewritten with a bounded school-district analogy, invented two-workload-cluster example, management/user-path diagram, local-versus-central comparison, failure table, and recovery questions. | Keyed current Amazon EKS, Argo CD, and Flux documentation. No cluster, controller, credentials, outage, recovery, application request, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent EKS/GitOps security and Opus review; controlled cross-cluster access, outage, and recovery exercise; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 50
-together: seventy-five concepts, none of them independently reviewed after
-their teaching passes. The remaining 90 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 51
+together: seventy-six concepts, none of them independently reviewed after
+their teaching passes. The remaining 89 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1088,7 +1098,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 21 | 0 |
-| Cross-topic guides | 16 | 13 | 3 |
+| Cross-topic guides | 16 | 14 | 2 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -1101,7 +1111,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **75** | **90** |
+| **Total** | **165** | **76** | **89** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
@@ -1124,9 +1134,8 @@ as not yet reviewed above.
   tooling clusters.
 - The network and storage procedures adjacent to wave 5: APISIX architecture,
   Velero storage and volume backups, and the missing beginner Service concept.
-- The remaining cross-topic guides, which are marked as developed but have
-  not been assessed against the standard, including Crossplane on AWS and
-  EKS tooling cluster architecture.
+- The remaining cross-topic guides, Crossplane on AWS and the local
+  deployment learning path, have not been assessed against the standard.
 - A dedicated observability section, if reader demand supports it; the
   observability explanation currently links to troubleshooting pages because
   no such section exists.
