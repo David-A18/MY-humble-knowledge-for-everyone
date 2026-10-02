@@ -15,3 +15,9 @@ exclude = [
   # runners intermittently fail to connect to this Netlify-backed domain.
   "^https://docs\\.crossplane\\.io(/.*)?$",
 ]
+
+# Check public sources without overwhelming a single host. Transient 503s
+# still fail after retries; permanent broken links remain failures.
+max_concurrency = 16
+max_retries = 4
+retry_wait_time = 2
