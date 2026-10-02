@@ -983,11 +983,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Collect practical Amazon EKS operations that combine AWS CLI checks with kubectl workflows.",
+      "description": "Investigate an EKS application symptom by separating AWS cluster state, Kubernetes state, workload identity, and the user path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/eks-operations.md",
-      "source_ids": [],
+      "source_ids": [
+        "eks-kubeconfig",
+        "eks-access-entries",
+        "eks-addons",
+        "eks-auto-mode",
+        "eks-pod-id-association",
+        "eks-irsa-pod-config",
+        "k8s-debug-pods",
+        "k8s-debug-services"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
