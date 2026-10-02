@@ -2037,9 +2037,9 @@
     },
     {
       "audience": "Developers learning safe Git recovery",
-      "description": "Use Git's inspection tools before undoing work, then choose the least destructive recovery path.",
+      "description": "Locate a Git mistake before changing anything, then choose a path-scoped fix, a revert, or a recovery branch.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/git/troubleshooting/undo-and-recovery.md",
       "source_ids": [
         "git-status",
@@ -2049,14 +2049,16 @@
         "git-reset",
         "git-reflog",
         "git-clean",
+        "git-switch",
         "pro-git-undoing-things"
       ],
-      "stale_after": "2026-12-21",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "git",
         "troubleshooting",
-        "undo-and-recovery"
+        "undo-and-recovery",
+        "beginner"
       ],
       "title": "Undo and recovery",
       "type": "Troubleshooting Guide"

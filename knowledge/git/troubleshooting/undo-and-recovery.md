@@ -1,272 +1,292 @@
 ---
-type: "Troubleshooting Guide"
-title: "Undo and recovery"
-description: "Use Git's inspection tools before undoing work, then choose the least destructive recovery path."
-tags: [git, troubleshooting, undo-and-recovery]
-status: stable
-maturity: maintained
-audience: "Developers learning safe Git recovery"
+type: Troubleshooting Guide
+title: Undo and recovery
+description: Locate a Git mistake before changing anything, then choose a path-scoped fix, a revert, or a recovery branch.
+tags: [git, troubleshooting, undo-and-recovery, beginner]
+status: draft
+maturity: draft
+audience: Developers learning safe Git recovery
 maintainer: unassigned
 sources:
   - id: git-status
     resource: https://git-scm.com/docs/git-status
-    title: git-status documentation
+    title: git status documentation
   - id: git-diff
     resource: https://git-scm.com/docs/git-diff
-    title: git-diff documentation
+    title: git diff documentation
   - id: git-restore
     resource: https://git-scm.com/docs/git-restore
-    title: git-restore documentation
+    title: git restore documentation
   - id: git-revert
     resource: https://git-scm.com/docs/git-revert
-    title: git-revert documentation
+    title: git revert documentation
   - id: git-reset
     resource: https://git-scm.com/docs/git-reset
-    title: git-reset documentation
+    title: git reset documentation
   - id: git-reflog
     resource: https://git-scm.com/docs/git-reflog
-    title: git-reflog documentation
+    title: git reflog documentation
   - id: git-clean
     resource: https://git-scm.com/docs/git-clean
-    title: git-clean documentation
+    title: git clean documentation
+  - id: git-switch
+    resource: https://git-scm.com/docs/git-switch
+    title: git switch documentation
   - id: pro-git-undoing-things
     resource: https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things
     title: Pro Git - Undoing Things
-stale_after: 2026-12-21
 ---
 
 # Undo and recovery
 
-## Purpose
+## First, find out where the mistake lives
 
-Use Git's inspection tools before undoing work, then choose the least destructive recovery path.
+Git keeps your **working tree** (files on disk), the **index** (what is
+staged for the next commit), and **commits** separately. A remote branch
+is another copy of commit history. An undo command for one place can
+damage useful work in another. Read [Git fundamentals](../git-fundamentals.md)
+if these four places are unfamiliar.
 
-Status: Maintained
-Audience: Developers learning safe Git recovery
-Page type: Troubleshooting
-Maintainer: Unassigned
-Last substantive review: 2026-09-21
-Applicable versions: Official Git reference documentation current on 2026-09-21; locally reproduced with Git 2.53.0
-Validation evidence: Source reviewed against official Git status, diff, restore, revert, reset, reflog, and clean documentation; core examples executed in a disposable local repository
-Known limitations: Examples cover normal single-repository tracked-file, untracked-file, revert, reset, and reflog behavior. Sparse checkout, submodule working trees, corrupt repositories, and complex merge-conflict recovery still need separate focused guides.
-Next review: 2026-12-21 or after a relevant Git undo, restore, reset, reflog, or clean behavior change
-
-## First checks
-
-Run these commands from the repository root before choosing a recovery action:
+From the repository you mean to repair, inspect before changing anything:
 
 ```bash
 git status --short --branch
 git diff
 git diff --staged
-git log --oneline --decorate --graph --max-count=20
+git log --oneline --decorate --max-count=8
 ```
 
-What it does: `git status --short --branch` shows the current branch and a compact file-state summary. `git diff` shows changes in the working tree that are not staged. `git diff --staged` shows changes already staged for the next commit. The short log shows recent commits and branch labels so you can decide whether the problem is a file-state issue, a local commit issue, or a shared-history issue.[^git-status][^git-diff]
+`git status` identifies the branch and changed paths. The first diff
+shows tracked working-tree edits that are not staged; the staged diff
+shows what the next commit would contain. The log helps locate recent
+commits. An untracked file appears in status but not in either ordinary
+diff.[^git-status][^git-diff]
 
-Expected result: you should know which bucket you are in before running a destructive command.
-
-| Bucket | Signal | Safer first move |
+| What you see | Where the mistake is | Start with |
 | --- | --- | --- |
-| Unstaged tracked edits | `git status` shows a modified path, and `git diff` shows the unwanted change. | Restore only the affected path after confirming the diff. |
-| Staged by mistake | `git diff --staged` shows a change that should not be in the next commit. | Unstage the path and keep the file content. |
-| Bad local commit | The commit exists only on your branch or fork and has not been pulled by others. | Create a backup branch, then amend or reset depending on whether you need the content. |
-| Bad shared commit | The commit was pushed to a branch others may use. | Prefer a revert commit. |
-| Lost branch tip | A reset, amend, rebase, or branch move hid a commit you still need. | Inspect reflog and create a recovery branch. |
-| Untracked build output | `git status` shows `??` paths that should be deleted. | Preview with `git clean -fdn` before deleting anything. |
+| A tracked file differs only in `git diff` | Working tree | Inspect that path, then restore only the unwanted working-tree edits. |
+| A file appears in `git diff --staged` | Index | Unstage that path if the content should stay on disk. |
+| A bad commit exists only in your private branch | Local history | Save a branch reference before changing commit history. |
+| A bad commit is on a branch others may use | Shared history | Create a new revert commit instead of moving shared history. |
+| A commit seems to have vanished after reset or rebase | Ref position | Find it in the local reflog and give it a branch name. |
+| Status shows `??` build files | Untracked working tree | Preview exactly which paths would be deleted. |
 
-> [!IMPORTANT]
-> If you are not certain whether a commit has been shared, treat it as shared and use `git revert` or ask the repository owner. Rewriting a branch that collaborators use can make their local histories diverge.
+If you do not know whether a commit has been shared, treat it as
+shared until you check with the branch owner. A force push can make
+collaborators' local histories diverge.[^git-reset][^git-revert]
 
-## Common recovery commands
+```mermaid
+flowchart TD
+  inspect["Inspect status, diffs, and recent commits"] --> place{"Where is the mistake?"}
+  place -- "working tree or index" --> file["Use path-scoped restore"]
+  place -- "commit" --> shared{"Other people may use this history?"}
+  shared -- "yes or unsure" --> revert["Make a revert commit"]
+  shared -- "no" --> local["Save a branch, then consider local reset"]
+  place -- "tip seems lost" --> reflog["Inspect reflog; create recovery branch"]
+  place -- "untracked paths" --> clean["Preview clean before deletion"]
+```
 
-| Situation | Safer command | When to use it |
-| --- | --- | --- |
-| File was staged by mistake | `git restore --staged <path>` | You want to keep the file changes but remove them from the next commit. |
-| Unstaged file changes should be discarded | `git restore <path>` | You want the working tree file back to the version in the index. |
-| File should match the current commit | `git restore --source=HEAD <path>` | You want to ignore a staged version and restore the file from `HEAD`. |
-| Bad commit was pushed | `git revert <commit>` | You need a public-history-safe undo commit. |
-| Local commits should be regrouped | `git reset --soft <commit>` or `git reset <commit>` | The commits are local and you want to keep the file content. |
-| Local branch and tracked files should match a commit | `git reset --hard <commit>` | You intentionally want to discard tracked changes and local commits after saving anything important. |
-| Commit or branch tip seems lost | `git reflog` | You need to find a previous `HEAD` or branch position. |
-| Untracked files should be removed | `git clean -fdn`, then `git clean -fd` | You want to delete untracked files or directories after reviewing the preview. |
+Text alternative: inspection leads to a location decision. File and
+index mistakes use a path-scoped restore. A shared or uncertain commit
+uses revert; a private commit can be saved under a branch before reset.
+A missing tip uses reflog and a recovery branch. Untracked paths require
+a deletion preview. The diagram helps you avoid using a history command
+for a file-state mistake.
 
-## Recovery workflows
+## If a file was staged by mistake
 
-### Unstage a file
+Use this when you want to keep the file content but remove it from
+the next commit:
 
 ```bash
-git restore --staged path/to/file
+git restore --staged -- path/to/file
+git diff --staged -- path/to/file
+git diff -- path/to/file
 ```
 
-What it does: restores the path in the index from `HEAD`, which removes it from the staging area while keeping the working tree content.[^git-restore]
+The first command copies the version from `HEAD` into the index for
+that path; it leaves the working-tree file alone. The staged diff
+should no longer show the path, while the working-tree diff still
+shows the edit. A newly added file becomes untracked again.
+[^git-restore]
 
-Expected result: `git diff --staged -- path/to/file` no longer shows the file, and `git diff -- path/to/file` still shows the local edit.
-
-### Discard one file's local edits
+## If only the unstaged edit is wrong
 
 > [!WARNING]
-> `git restore path/to/file` discards unstaged edits in that file. If the file is staged, the working tree is restored from the staged version, not necessarily from `HEAD`.[^git-restore]
+> The next command discards **unstaged tracked edits** for the named path.
+> Read `git diff -- path/to/file` first. Git may not be able to recover
+> edits that were never committed.[^git-restore][^pro-git-undoing-things]
 
 ```bash
-git restore path/to/file
+git diff -- path/to/file
+git restore --worktree -- path/to/file
+git diff -- path/to/file
 ```
 
-What it does: replaces the working tree file with the version currently in the index. Use `git restore --source=HEAD path/to/file` when you explicitly want the working tree file restored from the current commit.
+`git restore --worktree` copies the index version into the working-tree
+file. It does not remove a staged change. The final working-tree diff
+should be empty for that path.[^git-restore]
 
-Expected result: `git diff -- path/to/file` is empty for that path.
+### One concrete file example
 
-If it fails: check for a typo in the path, confirm the file is tracked with `git ls-files -- path/to/file`, and inspect whether the repository is in an unmerged conflict state.
+This example was reproduced in a disposable local repository. Suppose
+`notes.md` began as `published`. You changed it to `draft A` and staged
+that version. Then you changed the same file again to `draft B` by
+mistake. Before recovery, the two diffs mean different things:
 
-### Restore a file from the current commit
+| Inspection | What it shows |
+| --- | --- |
+| `git diff --staged -- notes.md` | The intended `published → draft A` change. |
+| `git diff -- notes.md` | The unwanted `draft A → draft B` change. |
+
+Running `git restore --worktree -- notes.md` removes only the second
+edit. The working-tree file returns to `draft A`, and the staged
+`draft A` remains ready for review. This is why "restore the file"
+does not always mean "make it match the last commit."
+
+If **both** the staged and unstaged versions are unwanted, inspect both
+diffs first. Then restore the path in both places from `HEAD`:
 
 > [!WARNING]
-> This discards both unstaged working tree edits and any staged version for the selected path.
+> This discards both staged and unstaged edits for the selected path.
 
 ```bash
-git restore --source=HEAD --staged --worktree path/to/file
+git restore --source=HEAD --staged --worktree -- path/to/file
 ```
 
-What it does: restores both the index and the working tree copy from `HEAD`. The Git restore documentation describes the index as `--staged` and the working tree as `--worktree`; using both updates both locations.[^git-restore]
+Check that both `git diff -- path/to/file` and
+`git diff --staged -- path/to/file` are empty afterward.
+[^git-restore]
 
-Expected result: neither `git diff -- path/to/file` nor `git diff --staged -- path/to/file` shows that path.
+## If a bad commit has been shared
 
-### Undo a pushed commit
-
-> [!IMPORTANT]
-> `git revert` requires a clean working tree. Commit, stash, or restore unrelated local changes before running it.[^git-revert]
+A revert makes a **new commit** that reverses the selected commit's
+changes. It keeps the existing commit history available to everyone.
+Use the exact commit ID after checking the log and the diff. Git
+requires a clean working tree for this ordinary revert flow.
+[^git-revert]
 
 ```bash
+git show --stat abc1234
 git revert abc1234
+git log --oneline --max-count=3
 ```
 
-What it does: creates a new commit that reverses the selected commit without rewriting shared history.[^git-revert]
+`abc1234` is an illustrative commit ID; replace it with the one you
+verified. The final log should show a new revert commit. If revert
+reports a conflict, follow its conflict instructions and use
+`git revert --continue` after resolving and staging, or
+`git revert --abort` to abandon that in-progress revert. A merge
+commit needs extra mainline context; stop and consult the Git revert
+reference rather than applying this ordinary-commit example to it.
+[^git-revert]
 
-Expected result: `git log --oneline --max-count=3` shows a new commit whose message starts with `Revert`.
+## If the commit is private and its content should stay
 
-If it conflicts: resolve the conflicted files, stage them, and run `git revert --continue`. If the selected revert was the wrong action, use `git revert --abort` before continuing.
-
-### Regroup local commits without losing content
-
-> [!WARNING]
-> Use reset only for local history that other people have not based work on. Create a backup branch first when the work matters.
+Use this only when the commit has **not** been shared or used as a base
+by anyone else. Save its current tip first:
 
 ```bash
-git branch backup/before-reset
+git branch recovery/before-reset
 git reset --soft HEAD~1
+git status --short --branch
 ```
 
-What it does: creates a recovery reference, then moves the current branch back one commit while leaving the index and working tree unchanged. This is useful when the last local commit should be recommitted with a different message or combined with more staged changes.[^git-reset]
+`--soft` moves the current branch back one commit but keeps the index
+and working-tree content. The former commit's changes remain staged,
+so you can review and recommit them. The recovery branch still names
+the old commit if you choose the wrong target.[^git-reset]
 
-Expected result: `git status --short --branch` shows the branch at the earlier commit with the previous commit's changes still staged.
+This guide does not offer a generic `git reset --hard origin/main`
+recipe. `--hard` also overwrites tracked working-tree changes, and
+the correct target depends on your branch and remote state. Save
+uncommitted work and identify the exact intended commit before any
+hard reset.[^git-reset]
 
-```bash
-git branch backup/before-reset
-git reset HEAD~1
-```
+## If a branch tip or commit seems lost
 
-What it does: moves the branch back one commit and leaves the previous commit's changes in the working tree as unstaged changes.
-
-Expected result: `git diff` shows the previous commit's file changes, and `git diff --staged` is empty unless other staged work already existed.
-
-### Discard local tracked changes and local commits
-
-> [!WARNING]
-> `git reset --hard <commit>` overwrites tracked files and moves the branch. Save needed work first with a commit, stash, patch file, or backup branch.
-
-```bash
-git branch backup/before-hard-reset
-git reset --hard origin/main
-```
-
-What it does: saves the current tip under a backup branch, then makes the current branch, index, and tracked working tree match `origin/main`. Official Git documentation describes `--hard` as updating the index and working tree to the target commit and removing tracked files that are not present there.[^git-reset]
-
-Expected result: `git status --short --branch` shows a clean tracked working tree against the selected branch.
-
-If it fails: do not repeat the command blindly. Check whether files are unmerged, whether the remote reference exists with `git branch -r`, and whether untracked files are blocking checkout of tracked paths.
-
-### Recover a moved branch tip
+A reset, amend, rebase, or branch move can leave a commit outside the
+normal branch log. The **reflog** records recent local ref movements;
+it is a recovery clue, not a remote backup and not permanent storage.
+[^git-reflog]
 
 ```bash
 git reflog --date=local
-```
-
-What it does: shows recent positions of `HEAD` and branch refs so you can find commits that no longer appear in normal branch history. Git records reflogs locally when reference tips move, and the `HEAD` reflog also records branch switching.[^git-reflog]
-
-Expected result: find the commit hash or `HEAD@{n}` entry from before the bad reset, amend, rebase, or branch move.
-
-After you find the entry, protect it with a branch:
-
-```bash
+git show --stat abc1234
 git switch -c recovery/lost-work abc1234
 ```
 
-What it does: creates a named branch at the recovered commit so normal cleanup does not leave your only reference in reflog history.
+Replace `abc1234` with the ID you identified in the reflog. Inspect it
+with `git show` before creating a new branch at that commit. The new
+branch gives the commit a normal reference again. If the ID is absent,
+check `git reflog show <branch>` for the affected local branch. A
+different clone may not have that reflog entry.[^git-reflog]
+[^git-switch]
 
-If you cannot find it: check the branch-specific reflog with `git reflog show <branch>`. Reflog is local to the repository and is not a remote backup; another clone may not have the same entries.
-
-### Preview and remove untracked files
-
-> [!WARNING]
-> `git clean -fd` deletes untracked files and directories. Git cannot recover untracked files that were never committed unless another backup system has them.
-
-```bash
-git clean -fdn
-```
-
-What it does: previews the untracked files and directories that `git clean -fd` would remove. The official command uses `-n` or `--dry-run` to show what would be done without deleting anything.[^git-clean]
-
-Expected result: every listed path is safe to delete.
-
-```bash
-git clean -fd
-```
-
-What it does: removes the listed untracked files and directories. Use `git clean -fdX` when you only want ignored files, such as build outputs, and `git clean -fdx` only when ignored and unignored untracked files should both be removed.[^git-clean]
-
-Expected result: `git status --short` no longer lists the removed untracked paths.
+## If untracked files should be deleted
 
 > [!WARNING]
-> Avoid history-rewriting commands on shared branches unless the team has agreed on the workflow.
+> Git cannot restore an untracked file that was never committed.
+> Preview a **specific directory** and inspect every listed path before
+> deleting it.[^git-clean]
 
-## Decision sequence
+```bash
+git status --short --untracked-files=all -- build/
+git clean -n -- build/
+```
 
-1. Inspect status, unstaged diff, staged diff, and recent history before changing state.
-2. If a file is staged by mistake, unstage it with `git restore --staged <path>`.
-3. If unstaged tracked edits are unwanted, restore only the affected path.
-4. If untracked files are unwanted, preview with `git clean -fdn` before deleting.
-5. If a bad commit is shared, prefer `git revert`.
-6. If a bad commit is local and the content should stay, create a backup branch and use `git reset --soft` or `git reset`.
-7. If a local branch moved unexpectedly, inspect `git reflog` and create a recovery branch before doing more cleanup.
+The status command lists individual untracked files. The clean preview
+may summarize them as `Would remove build/`, so inspect the directory
+contents before proceeding. Only when the directory contains exactly
+the disposable files you intended:
 
-## Recovery limits
+```bash
+git clean -f -- build/
+```
 
-- Uncommitted changes discarded by `git restore`, `git reset --hard`, or `git clean` are often unrecoverable from Git. Pro Git explicitly warns that some undo operations can lose work when used incorrectly.[^pro-git-undoing-things]
-- Reflog is local repository history, not a shared remote record. Clone-specific reflogs can differ.
-- Sparse checkout and submodules change restore and reset behavior. The Git restore and reset references include options for sparse checkout and submodule recursion; use a focused guide before applying broad recovery commands in those repositories.[^git-restore][^git-reset]
-- During merge, rebase, cherry-pick, or revert conflicts, prefer the operation-specific `--abort`, `--continue`, and conflict-resolution workflow instead of mixing unrelated reset commands.
+`-n` is a dry run and `-f` allows deletion. The path limits the
+operation to `build/`, including its matched untracked contents. Ignored
+files need separate `-X` or `-x` choices; do not add either flag just because
+the first preview shows nothing.[^git-status][^git-clean]
 
-## Related links
+## Stop and get a focused procedure when
 
-- [git status documentation](https://git-scm.com/docs/git-status)
-- [git diff documentation](https://git-scm.com/docs/git-diff)
-- [git restore documentation](https://git-scm.com/docs/git-restore)
-- [git revert documentation](https://git-scm.com/docs/git-revert)
-- [git reset documentation](https://git-scm.com/docs/git-reset)
-- [git reflog documentation](https://git-scm.com/docs/git-reflog)
-- [git clean documentation](https://git-scm.com/docs/git-clean)
-- [Pro Git: Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things)
-- [Git fundamentals](../git-fundamentals.md) - the working tree, index, commit, and remote model this guide relies on
-- [Solve Git issues](../commands/solve-issues.md)
-- [Back to Git troubleshooting](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+- A merge, rebase, cherry-pick, or revert is in progress and paths are
+  unmerged. Finish or abort that operation using its own guidance.
+- The repository uses sparse checkout or submodules; broad restore
+  and reset commands can affect more than the visible path.
+- A shared branch would require history rewriting or a force push.
+- Object corruption, missing objects, or an unknown remote state is
+  involved. See [Git troubleshooting commands](../commands/troubleshooting-commands.md).
 
-[^git-status]: Official Git status documentation, source record `git-status`.
-[^git-diff]: Official Git diff documentation, source record `git-diff`.
-[^git-restore]: Official Git restore documentation, source record `git-restore`.
-[^git-revert]: Official Git revert documentation, source record `git-revert`.
-[^git-reset]: Official Git reset documentation, source record `git-reset`.
-[^git-reflog]: Official Git reflog documentation, source record `git-reflog`.
-[^git-clean]: Official Git clean documentation, source record `git-clean`.
-[^pro-git-undoing-things]: Pro Git "Undoing Things", source record `pro-git-undoing-things`.
+## Check your understanding
+
+1. Which diff shows an edit that is staged for the next commit?
+2. In the `notes.md` example, why does working-tree restore keep
+   `draft A`?
+3. Why is revert safer for a commit others may have pulled?
+4. What does a recovery branch add after you find a commit in reflog?
+
+## Official documentation and next step
+
+- [Restore files and index entries](https://git-scm.com/docs/git-restore)
+  and [compare working and staged changes](https://git-scm.com/docs/git-diff).
+- [Revert a commit](https://git-scm.com/docs/git-revert),
+  [reset a private branch](https://git-scm.com/docs/git-reset), and
+  [inspect reflog](https://git-scm.com/docs/git-reflog).
+- [Preview untracked cleanup](https://git-scm.com/docs/git-clean).
+- Return to [Solve Git issues](../commands/solve-issues.md) if you still
+  need help locating the mistake, or [Git fundamentals](../git-fundamentals.md)
+  for the working tree, index, commit, and remote model.
+- Return to [Git troubleshooting](index.md) or the
+  [knowledge index](../../index.md).
+
+[^git-status]: [git status documentation](https://git-scm.com/docs/git-status).
+[^git-diff]: [git diff documentation](https://git-scm.com/docs/git-diff).
+[^git-restore]: [git restore documentation](https://git-scm.com/docs/git-restore).
+[^git-revert]: [git revert documentation](https://git-scm.com/docs/git-revert).
+[^git-reset]: [git reset documentation](https://git-scm.com/docs/git-reset).
+[^git-reflog]: [git reflog documentation](https://git-scm.com/docs/git-reflog).
+[^git-clean]: [git clean documentation](https://git-scm.com/docs/git-clean).
+[^git-switch]: [git switch documentation](https://git-scm.com/docs/git-switch).
+[^pro-git-undoing-things]: [Pro Git: Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things).

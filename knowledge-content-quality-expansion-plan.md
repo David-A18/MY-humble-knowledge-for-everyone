@@ -1168,12 +1168,23 @@ the new text, so both now show `draft` status and need fresh review.
 | [Terraform state management](knowledge/terraform/fundamentals/state-management.md) | Explains address-to-object binding, backend and lock boundaries, drift, and reviewed moves/removals through an invented server, bounded register analogy, diagram and text alternative, and understanding checks. | Current official HashiCorp state, backend, locking, plan, sensitive-data, moved, and removed documentation checked. Mermaid diagram rendered and visually inspected. The example was not run. Claude Code remained at its weekly limit. | Independent Terraform and Opus review; novice reader test; freshness decision. |
 | [Review and apply a Terraform change](knowledge/terraform/commands/core-workflow.md) | Turns a command reference into a target-to-verification How-to Guide with expected evidence at each stage, saved-plan approval boundary, partial-apply caution, and service check. | Current official HashiCorp CLI and lock-file documentation checked. The `fmt -recursive -check` and `workspace show` commands passed in the separate disposable local lab; no cloud plan or apply ran for the illustrative staging service. Claude Code remained at its weekly limit. | Independent Terraform and Opus review; project-specific approval, backend, and service checks; novice reader test; freshness decision. |
 
+### Wave 60 (2026-10-02)
+
+Git undo and recovery now starts with the location of the mistake
+and uses narrow changes before considering history edits. The prior
+2026-09-21 review does not cover the rewritten text, so the page is
+`draft` pending fresh review.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) | Symptom-to-location table and decision diagram; a staged-versus-working-tree file example; scoped restore, revert, private soft reset, reflog branch, and untracked cleanup paths with explicit stop conditions. | Current official Git documentation checked. A Git 2.53.0 disposable repository reproduced the file example and confirmed restore, branch-backed soft reset, scoped clean, and revert. `git clean -n -- build/` summarized the directory, prompting an added individual-file inspection step. Mermaid diagram rendered and visually inspected. Claude Code remained at its weekly limit. | Independent Git and Opus review; novice reader tasks including shared commit and lost tip; complex conflict and sparse-checkout cases; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 59
-together: eighty-five concepts, none of them independently reviewed after
-their teaching passes. The remaining 80 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 60
+together: eighty-six concepts, none of them independently reviewed after
+their teaching passes. The remaining 79 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1189,7 +1200,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 11 | 6 |
+| Git | 17 | 12 | 5 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -1197,11 +1208,11 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **85** | **80** |
+| **Total** | **165** | **86** | **79** |
 
-The 2026-09-21 quality pass on Git undo and recovery applied the precision
-protocol. It has not yet been assessed against the teaching standard, so it
-is counted as not yet reviewed above.
+All four Terraform concepts and the Git undo guide have now received an
+initial teaching pass. Their rewritten drafts still need independent
+review and reader tasks before stronger trust claims.
 
 ### Candidates for the next wave
 
