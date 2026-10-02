@@ -14,8 +14,8 @@ Status: Initial outline
 
 ## Articles
 
-- [Proof of Concept](proof-of-concept.md): explains PoC meaning, vocabulary,
-  success criteria, scope control, deliverables, examples, and review questions.
+- [Proof of concept](proof-of-concept.md): see how a small, bounded test
+  turns one important unknown into evidence for a decision.
 
 ## Related cloud solution patterns
 

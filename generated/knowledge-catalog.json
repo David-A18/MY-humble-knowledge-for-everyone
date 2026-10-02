@@ -3272,18 +3272,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "A Proof of Concept, usually shortened to PoC, is a small, time-boxed effort",
+      "description": "Understand how a small, focused experiment helps a team decide whether an idea can work under the constraints that matter.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/solutions-architect/proof-of-concept.md",
-      "source_ids": [],
+      "source_ids": [
+        "google-poc",
+        "microsoft-poc",
+        "aws-poc"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "solutions-architect",
         "proof-of-concept"
       ],
-      "title": "Proof of Concept",
+      "title": "Proof of concept",
       "type": "Explanation"
     },
     {
