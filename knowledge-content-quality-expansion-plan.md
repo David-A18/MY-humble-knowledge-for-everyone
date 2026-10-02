@@ -1210,12 +1210,23 @@ whose versions and permissions can drift.
 | --- | --- | --- | --- |
 | [Choose a GitHub Actions action](knowledge/git/github-actions/actions-and-uses-catalog.md) | Explains step actions versus job-level reusable workflows; groups common official and vendor-maintained source repositories by need; gives a reviewed-ref, metadata, permission, and outcome checklist with a bounded checkout example. | Current official GitHub workflow syntax, secure-use, reusable-workflow, token, checkout, and setup-node documentation checked. The older unverified deployment, third-party, and obsolete-version snippets were removed. No sample workflow executed; Claude Code remained at its weekly limit. | Independent Actions/security and Opus review; novice action-selection task; workflow execution and freshness decision. |
 
+### Wave 64 (2026-10-02)
+
+The advanced Git page now shows one safe, useful operation in depth:
+inspect a previous commit beside unfinished work. The prior command
+inventory mixed routine read tasks, history rewrites, server commands,
+and a fictitious review note in a copyable example.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Inspect an older Git revision in a second worktree](knowledge/git/commands/advanced-commands.md) | Explains shared repository data versus separate files, indexes, and `HEAD`; a clean temporary checkout, checks before removal, diagram, and task-to-command boundaries for rebase, range-diff, cherry-pick, bisect, sparse checkout, fsck, and leased force push. | Current official Git documentation checked. The full worktree add, inspect, status, remove sequence passed in a disposable Git 2.53.0 repository while an edit in the original directory remained intact. Mermaid rendered and was visually inspected. Claude Code remained at its weekly limit. | Independent Git and Opus review; novice reader task; version and platform variation; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 63
-together: eighty-nine concepts, none of them independently reviewed after
-their teaching passes. The remaining 76 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 64
+together: ninety concepts, none of them independently reviewed after
+their teaching passes. The remaining 75 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1231,7 +1242,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 15 | 2 |
+| Git | 17 | 16 | 1 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -1239,12 +1250,12 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **89** | **76** |
+| **Total** | **165** | **90** | **75** |
 
-All four Terraform concepts, the Git undo guide, and the GitHub Actions
-workflow-shape, command, and action-selection guides have received an initial
-teaching pass. Their drafts still need independent review and reader tasks
-before stronger trust claims.
+All four Terraform concepts, the Git undo and worktree guides, and the GitHub
+Actions workflow-shape, command, and action-selection guides have received an
+initial teaching pass. Their drafts still need independent review and reader
+tasks before stronger trust claims.
 
 ### Candidates for the next wave
 

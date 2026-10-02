@@ -10,7 +10,7 @@ Command references and practical workflows for working with Git repositories saf
 | [Common use cases](common-use-cases.md) | Take one change from an updated base branch to a reviewable remote branch, with routes for other tasks. |
 | [Solve Git issues](solve-issues.md) | Identify where a mistake lives and choose the smallest recovery route before changing files or history. |
 | [Troubleshooting commands](troubleshooting-commands.md) | Diagnose branch or remote confusion, ignore rules, conflicts, and possible object damage before choosing a fix. |
-| [Advanced commands](advanced-commands.md) | Professional commands for rebasing, bisecting, patch workflows, worktrees, submodules, repository maintenance, and selected plumbing. |
+| [Inspect an older revision in a worktree](advanced-commands.md) | Use a second checkout without disturbing unfinished edits, then choose other history or repository commands by their effect. |
 | [Complete command catalog](complete-command-catalog.md) | Categorized catalog of Git porcelain, ancillary, low-level, server, email, migration, interface, protocol, and helper commands. |
 
 ## Official documentation

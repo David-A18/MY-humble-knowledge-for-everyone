@@ -1692,18 +1692,28 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands.",
+      "description": "Open an older commit beside current uncommitted work, inspect it without changing the first checkout, and remove the temporary worktree safely.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/commands/advanced-commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-worktree",
+        "git-status",
+        "git-rebase",
+        "git-range-diff",
+        "git-cherry-pick",
+        "git-bisect",
+        "git-push"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "git",
-        "advanced-commands"
+        "advanced-commands",
+        "worktree",
+        "history"
       ],
-      "title": "Advanced Git commands",
+      "title": "Inspect an older Git revision in a second worktree",
       "type": "How-to Guide"
     },
     {
