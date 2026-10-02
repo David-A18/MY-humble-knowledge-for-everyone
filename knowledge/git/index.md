@@ -12,7 +12,7 @@ Practical Git knowledge for daily development, repository maintenance, automatio
 
 | Section | Focus |
 | --- | --- |
-| [Commands](commands/index.md) | Daily commands, common workflows, recovery commands, troubleshooting diagnostics, advanced usage, and complete command catalog coverage. |
+| [Commands](commands/index.md) | Daily work, branch-to-review paths, recovery and diagnostics, a second-worktree exercise, and a task-based command map. |
 | [Troubleshooting](troubleshooting/index.md) | Recovery procedures for common Git problems; read Git fundamentals first if the three trees are unfamiliar. |
 | [Best practices](best-practices/index.md) | Branching, commit hygiene, and review readiness. |
 | [Tricks](tricks/index.md) | Useful productivity patterns and lesser-known commands. |

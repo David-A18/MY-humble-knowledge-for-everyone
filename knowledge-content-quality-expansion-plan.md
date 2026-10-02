@@ -1221,12 +1221,23 @@ and a fictitious review note in a copyable example.
 | --- | --- | --- | --- |
 | [Inspect an older Git revision in a second worktree](knowledge/git/commands/advanced-commands.md) | Explains shared repository data versus separate files, indexes, and `HEAD`; a clean temporary checkout, checks before removal, diagram, and task-to-command boundaries for rebase, range-diff, cherry-pick, bisect, sparse checkout, fsck, and leased force push. | Current official Git documentation checked. The full worktree add, inspect, status, remove sequence passed in a disposable Git 2.53.0 repository while an edit in the original directory remained intact. Mermaid rendered and was visually inspected. Claude Code remained at its weekly limit. | Independent Git and Opus review; novice reader task; version and platform variation; freshness decision. |
 
+### Wave 65 (2026-10-02)
+
+The version-sensitive “complete” Git inventory is now a task-based
+command map. Readers can find the exact manual for a command and see
+whether it reads files, changes the index, moves local history, contacts
+a remote, or touches repository maintenance data.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Find the right Git command](knowledge/git/commands/complete-command-catalog.md) | Task-to-command map with official manual links; state and effect boundaries; installed-command discovery; a bounded unstaged-versus-staged file example; links to focused Git teaching routes. | Official Git command, everyday, CLI, and revision documentation checked. `git help -a` and the status/diff example were checked on Git 2.53.0, with the file example reproduced in a disposable repository. No Opus review occurred. | Independent Git and Opus review; novice command-selection task; version and platform variation; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 64
-together: ninety concepts, none of them independently reviewed after
-their teaching passes. The remaining 75 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 65
+together: ninety-one concepts, none of them independently reviewed after
+their teaching passes. The remaining 74 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1242,7 +1253,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 16 | 1 |
+| Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -1250,12 +1261,11 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **90** | **75** |
+| **Total** | **165** | **91** | **74** |
 
-All four Terraform concepts, the Git undo and worktree guides, and the GitHub
-Actions workflow-shape, command, and action-selection guides have received an
-initial teaching pass. Their drafts still need independent review and reader
-tasks before stronger trust claims.
+All four Terraform and all 17 Git concepts have now received an initial
+teaching pass. Their drafts still need independent review and reader tasks
+before stronger trust claims.
 
 ### Candidates for the next wave
 

@@ -1746,19 +1746,27 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this catalog to recognize the Git command surface. Daily users should start with [Daily Git commands](daily-commands.md), [Common Git use cases](common-use-cases.md), and [Solve Git issues](solve-issues.md). This page keeps the complete inventory skimmable by separating command tables from examples.",
+      "description": "Choose a Git command by the state or task it affects, read its exact manual, and inspect before changing files, commits, or refs.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/commands/complete-command-catalog.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-command-reference",
+        "git-everyday",
+        "git-cli",
+        "git-revisions",
+        "git-status",
+        "git-diff"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "git",
-        "complete-command-catalog"
+        "complete-command-catalog",
+        "reference"
       ],
-      "title": "Complete Git command catalog",
-      "type": "How-to Guide"
+      "title": "Find the right Git command",
+      "type": "Reference"
     },
     {
       "audience": "Engineering learners and practitioners",
