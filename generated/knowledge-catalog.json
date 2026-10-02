@@ -1889,18 +1889,27 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page for commands that operate GitHub Actions from the terminal and workflow commands used inside running jobs.",
+      "description": "Find a workflow run, locate its first failed job and step, and decide whether to fix the revision or rerun it.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "gh-run-list",
+        "gh-run-view",
+        "gh-run-rerun",
+        "github-rerun",
+        "gh-workflow-run",
+        "github-workflow-commands"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "git",
-        "github-actions"
+        "github-actions",
+        "commands",
+        "troubleshooting"
       ],
-      "title": "GitHub Actions commands",
+      "title": "Inspect a GitHub Actions run from the terminal",
       "type": "How-to Guide"
     },
     {

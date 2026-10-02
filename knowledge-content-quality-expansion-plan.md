@@ -1190,12 +1190,22 @@ action versions and an invalid Terraform example, so the replacement is
 | --- | --- | --- | --- |
 | [GitHub Actions workflow shapes](knowledge/git/github-actions/examples-and-use-cases.md) | Event, job, permission, and inspectable-result model; PR, matrix, publishing, deployment, maintenance, and Terraform choices; one bounded PR test example; merge-gate and user-outcome boundaries; diagram and understanding checks. | Current official GitHub workflow, token, branch, environment, registry, and action documentation checked. The illustrative YAML parsed and the Mermaid diagram rendered and was visually inspected. No workflow executed in a repository; Claude Code remained at its weekly limit. | Independent Actions and Opus review; actual repository workflow run; novice reader tasks; freshness decision. |
 
+### Wave 62 (2026-10-02)
+
+The GitHub Actions command page now has a single reader task: inspect a
+run, locate the first failure, and choose an appropriate next action.
+The earlier broad command inventory mixed terminal and in-job controls.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Inspect a GitHub Actions run](knowledge/git/github-actions/commands.md) | One failed-run path through list, view, failed-step logs, and fix-versus-rerun choice; a boundary table distinguishes terminal CLI commands from job environment files and marks privileged controls. | Current official GitHub CLI and Actions documentation checked. Read-only `gh run list` and `gh run view` succeeded on this repository; `gh run rerun --help` confirmed flags. No workflow was triggered or rerun. Claude Code remained at its weekly limit. | Independent Actions and Opus review; novice reader task on a failed run; controlled rerun exercise; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 61
-together: eighty-seven concepts, none of them independently reviewed after
-their teaching passes. The remaining 78 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 62
+together: eighty-eight concepts, none of them independently reviewed after
+their teaching passes. The remaining 77 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1211,7 +1221,7 @@ demonstration, so most teaching elements do not apply there.
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
-| Git | 17 | 13 | 4 |
+| Git | 17 | 14 | 3 |
 | Kubernetes | 45 | 7 | 38 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
@@ -1219,11 +1229,12 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **87** | **78** |
+| **Total** | **165** | **88** | **77** |
 
 All four Terraform concepts, the Git undo guide, and the GitHub Actions
-workflow-shape guide have now received an initial teaching pass. Their drafts
-still need independent review and reader tasks before stronger trust claims.
+workflow-shape and command guides have received an initial teaching pass.
+Their drafts still need independent review and reader tasks before stronger
+trust claims.
 
 ### Candidates for the next wave
 
