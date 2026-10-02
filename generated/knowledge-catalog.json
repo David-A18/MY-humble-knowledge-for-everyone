@@ -2580,19 +2580,28 @@
       "type": "How-to Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Provide repeatable command sequences for common operational workflows: inspecting a workload, deploying safely, rolling back, debugging service reachability, and checking resource pressure.",
+      "audience": "Beginning platform engineer",
+      "description": "Separate scheduling requests, container limits, and node pressure before changing a workload's CPU or memory settings.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/commands/workflows.md",
-      "source_ids": [],
+      "source_ids": [
+        "resource-management",
+        "node-pressure",
+        "top-pod",
+        "metrics-pipeline",
+        "debug-pods"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "workflows"
+        "kubectl",
+        "resources",
+        "troubleshooting",
+        "beginner"
       ],
-      "title": "Kubernetes command workflows",
+      "title": "Investigate Kubernetes resource pressure",
       "type": "How-to Guide"
     },
     {
@@ -2979,20 +2988,28 @@
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose frequent Kubernetes workload issues by moving from safe inspection commands to targeted fixes.",
+      "audience": "Beginning platform engineer",
+      "description": "Start with a symptom, read the relevant Pod or Service evidence, and choose a focused diagnostic path before changing resources.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/common-solutions.md",
-      "source_ids": [],
+      "source_ids": [
+        "pod-lifecycle",
+        "debug-pods",
+        "debug-services",
+        "service",
+        "endpointslices"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "troubleshooting",
-        "common-solutions"
+        "pods",
+        "services",
+        "beginner"
       ],
-      "title": "Kubernetes common solutions",
+      "title": "Find the first failing Kubernetes boundary",
       "type": "Troubleshooting Guide"
     },
     {

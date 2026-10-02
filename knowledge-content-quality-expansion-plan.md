@@ -1355,12 +1355,25 @@ verification distinct checks.
 | [Begin a safe kubectl inspection session](knowledge/kubernetes/commands/daily-usage.md) | Context-and-namespace check, Deployment and Pod scan, one-Pod evidence path, bounded address analogy, diagram and text alternative, symptom routes. | Current official Kubernetes context, get, describe, logs, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; beginner inspection in a disposable cluster; access-variation check; freshness decision. |
 | [Review and apply a Kubernetes manifest change](knowledge/kubernetes/commands/common-commands.md) | Scoped target-to-user path, `kubectl diff` exit-code interpretation, manifest review, apply, rollout and user verification, source-of-truth recovery boundary, diagram and text alternative. | Current official Kubernetes diff, apply, rollout-status, Deployment, and context documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable rollout and failed-rollout exercise; beginner change task; freshness decision. |
 
+### Wave 77 (2026-10-03)
+
+The Kubernetes troubleshooting overview now helps a reader find the first
+failed handoff from Pod state to Service and user request. The former
+multi-workflow command page now answers a different, focused question:
+is a CPU or memory symptom caused by a scheduling request, a container
+limit, or node pressure?
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Find the first failing Kubernetes boundary](knowledge/kubernetes/troubleshooting/common-solutions.md) | Read-first symptom map, staged request diagram, invented Service example, selector/readiness/EndpointSlice distinction, `publishNotReadyAddresses` caveat, and focused next routes. Removed unreviewed test-Pod creation and rollback recipes. | Current official Kubernetes Pod lifecycle, Debug Pods, Debug Services, Service, and EndpointSlices documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; novice symptom-to-check task; disposable Service-selector and readiness reproductions; freshness decision. |
+| [Investigate Kubernetes resource pressure](knowledge/kubernetes/commands/workflows.md) | Requests-versus-limits-versus-node-pressure model, read-only diagnostic path, optional metrics with delay and scope limits, invented insufficient-memory scheduling case, diagram and text alternative. | Current official Kubernetes resource management, node-pressure, kubectl top, metrics pipeline, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable scheduling/OOM/eviction cases; novice resource-symptom task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
-Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 76
-together: one hundred four concepts, none of them independently reviewed after
-their teaching passes. The remaining 61 have not yet been authored or
+Counts come from the generated catalog on 2026-10-03, which records 165
+concepts. The "authored to the standard" column covers waves 1 to 77
+together: one hundred six concepts, none of them independently reviewed after
+their teaching passes. The remaining 59 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1377,14 +1390,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 14 | 31 |
+| Kubernetes | 45 | 16 | 29 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **104** | **61** |
+| **Total** | **165** | **106** | **59** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

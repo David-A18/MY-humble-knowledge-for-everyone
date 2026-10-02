@@ -163,8 +163,9 @@ owns the objects.[^k8s-deployments]
   [Pod lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/),
   and [Services](https://kubernetes.io/docs/concepts/services-networking/service/)
   for rollout, readiness, and routing behavior.
-- [Kubernetes command workflows](../kubernetes/commands/workflows.md)
-  and [EKS operations](eks-operations.md) for task-specific inspection.
+- [Review and apply a Kubernetes manifest change](../kubernetes/commands/common-commands.md)
+  for a reviewed live change, and [EKS operations](eks-operations.md)
+  for boundary-led inspection.
 
 [Back to cross-topic guides](index.md)
 

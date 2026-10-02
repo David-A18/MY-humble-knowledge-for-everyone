@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-03
+
+- **Teaching-hub seventy-seventh wave**: Reworked Kubernetes common solutions into a first-failing-boundary triage guide with an invented Service example. It distinguishes Pod phase from root cause, checks selectors, Pod readiness, and EndpointSlice conditions, and removes unreviewed test-Pod creation and automatic rollback recipes. Reworked Kubernetes command workflows into a focused resource-pressure investigation that separates scheduling requests, container limits, and node eviction; `kubectl top` is supporting evidence, not a peak or throttling measurement. Updated links that previously pointed to the broad multi-workflow page. Current Kubernetes primary documentation was checked and both diagrams were rendered and inspected. No cluster exercise, reader test, independent review, or Opus review occurred; both guides remain `draft`.
+
 ## 2026-10-02
 
 - **Teaching-hub seventy-sixth wave**: Replaced two broad kubectl command catalogs with task-led guides. Daily usage now teaches a read-only opening routine from context and namespace to one Pod's evidence. Common commands now teaches a reviewed manifest diff, scoped apply, rollout watch, and user-path check, while routing scale, delete, and rollback to their focused references. The latter explains `kubectl diff` exit code 1 as expected when differences exist and avoids presenting immediate rollback as a universal recovery. Current Kubernetes command and Deployment documentation was checked; diagrams were rendered. No cluster command, reader test, independent review, or Opus review occurred; both pages remain `draft`.

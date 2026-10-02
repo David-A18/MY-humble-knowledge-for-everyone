@@ -400,8 +400,8 @@ What it does: previews and applies the control plane upgrade, reviews node group
 
 ## Related links
 
-- [Daily Kubernetes usage commands](daily-usage.md)
-- [Kubernetes command workflows](workflows.md)
+- [Begin a safe kubectl inspection session](daily-usage.md)
+- [Investigate Kubernetes resource pressure](workflows.md)
 - [EKS operations](../../cross-topic-guides/eks-operations.md)
 - [Back to Kubernetes commands](index.md)
 - [Back to Kubernetes index](../index.md)

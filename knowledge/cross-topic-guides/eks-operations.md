@@ -45,7 +45,8 @@ request reveal whether users can complete their task. A green signal
 from one boundary is not proof that the next one works.
 
 This page is a symptom-first explanation. For concrete command syntax,
-use [Kubernetes command workflows](../kubernetes/commands/workflows.md)
+use the [safe kubectl inspection guide](../kubernetes/commands/daily-usage.md),
+the [resource-pressure investigation](../kubernetes/commands/workflows.md),
 and [eksctl commands](../kubernetes/commands/eksctl-commands.md).
 
 ## Four questions before a fix
