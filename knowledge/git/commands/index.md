@@ -9,7 +9,7 @@ Command references and practical workflows for working with Git repositories saf
 | [Daily commands](daily-commands.md) | Practice one safe local loop: inspect a change, stage a file, review the snapshot, and commit. |
 | [Common use cases](common-use-cases.md) | Take one change from an updated base branch to a reviewable remote branch, with routes for other tasks. |
 | [Solve Git issues](solve-issues.md) | Identify where a mistake lives and choose the smallest recovery route before changing files or history. |
-| [Troubleshooting commands](troubleshooting-commands.md) | Diagnostic commands for conflicts, remotes, credentials, ignored files, line endings, hooks, corruption, and slow repositories. |
+| [Troubleshooting commands](troubleshooting-commands.md) | Diagnose branch or remote confusion, ignore rules, conflicts, and possible object damage before choosing a fix. |
 | [Advanced commands](advanced-commands.md) | Professional commands for rebasing, bisecting, patch workflows, worktrees, submodules, repository maintenance, and selected plumbing. |
 | [Complete command catalog](complete-command-catalog.md) | Categorized catalog of Git porcelain, ancillary, low-level, server, email, migration, interface, protocol, and helper commands. |
 

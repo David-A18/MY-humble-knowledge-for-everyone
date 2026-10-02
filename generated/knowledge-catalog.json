@@ -1798,11 +1798,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to diagnose why Git is behaving unexpectedly before choosing a fix.",
+      "description": "Trace a Git problem to branch tracking, a remote, an ignored file, a conflict, or repository health before changing state.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/commands/troubleshooting-commands.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-status",
+        "git-branch",
+        "git-remote",
+        "git-fetch",
+        "git-log",
+        "git-check-ignore",
+        "git-ls-files",
+        "git-diff",
+        "git-fsck"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
