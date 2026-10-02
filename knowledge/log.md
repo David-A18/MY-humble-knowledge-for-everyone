@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-02
+
+- **Teaching-hub forty-fifth wave**: Rewrote EKS to MSK applications from a checklist into a three-gate explanation of broker reachability, Kafka authorization, and event processing. An invented order-to-shipment path and diagram connect EKS workload identity to MSK IAM actions and repeat-safe consumer effects. No Pod, broker, role, event, or reader test ran; the page remains `draft`.
+
 ## 2026-10-01
 
 - **Teaching-hub forty-fourth wave**: Rewrote Apigee around one request through an environment-group hostname, deployed proxy, attached policies, and backend, then separated the API product and developer-app access path. An invented learning API and diagram show why product registration alone does not verify keys or enforce quotas and why an app key does not authorize a person. Added managed-versus-hybrid runtime ownership. No Apigee request, policy, runtime, or reader test ran; the page remains `draft`.

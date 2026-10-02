@@ -983,11 +983,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to connect Kubernetes applications on EKS to Amazon MSK.",
+      "description": "Understand the network, identity, and application gates between a Pod on EKS and an Amazon MSK topic.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/eks-to-msk-applications.md",
-      "source_ids": [],
+      "source_ids": [
+        "msk-client-access",
+        "msk-bootstrap",
+        "msk-iam",
+        "msk-iam-use-cases",
+        "eks-service-accounts",
+        "eks-pod-identities",
+        "msk-lag",
+        "kafka-documentation"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

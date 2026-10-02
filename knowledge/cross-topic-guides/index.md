@@ -22,7 +22,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [EKS operations](eks-operations.md) | Developed | Combine AWS CLI and `kubectl` for day-to-day EKS operations. |
 | [CDN in front of EKS](cdn-in-front-of-eks.md) | Draft | Follow cache hits and misses through CloudFront, an ALB, and the EKS application's target mode. |
 | [APISIX on EKS](apisix-on-eks.md) | Developed | Run Apache APISIX as an EKS API gateway. |
-| [EKS to MSK applications](eks-to-msk-applications.md) | Developed | Connect EKS applications to Amazon MSK safely. |
+| [EKS to MSK applications](eks-to-msk-applications.md) | Draft | See the network, identity, and processing gates from an EKS Pod to MSK. |
 | [Crossplane on AWS](crossplane-on-aws.md) | Developed | Run Crossplane in Kubernetes while managing AWS resources with bootstrap, identity, GitOps, and operations boundaries. |
 | [GitOps on EKS](gitops-on-eks.md) | Developed | Operate EKS workloads with Argo CD or Flux. |
 | [EKS workload identity](eks-workload-identity.md) | Draft | Understand how Pods get temporary AWS credentials through a service account, and choose IRSA or EKS Pod Identity from a workload's conditions. |
