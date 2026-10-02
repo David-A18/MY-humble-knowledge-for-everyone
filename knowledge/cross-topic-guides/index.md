@@ -24,7 +24,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [APISIX on EKS](apisix-on-eks.md) | Developed | Run Apache APISIX as an EKS API gateway. |
 | [EKS to MSK applications](eks-to-msk-applications.md) | Draft | See the network, identity, and processing gates from an EKS Pod to MSK. |
 | [Crossplane on AWS](crossplane-on-aws.md) | Developed | Run Crossplane in Kubernetes while managing AWS resources with bootstrap, identity, GitOps, and operations boundaries. |
-| [GitOps on EKS](gitops-on-eks.md) | Developed | Operate EKS workloads with Argo CD or Flux. |
+| [GitOps on EKS](gitops-on-eks.md) | Draft | Follow a Git change through GitOps, Kubernetes, and AWS controllers on EKS. |
 | [EKS workload identity](eks-workload-identity.md) | Draft | Understand how Pods get temporary AWS credentials through a service account, and choose IRSA or EKS Pod Identity from a workload's conditions. |
 | [EKS tooling cluster architecture](eks-tooling-cluster-architecture.md) | Developed | Design a dedicated EKS tooling cluster. |
 | [Observability stack](observability-stack.md) | Draft | Understand which questions metrics, logs, and traces answer, and how an SLO and alert turn signals into a decision. |

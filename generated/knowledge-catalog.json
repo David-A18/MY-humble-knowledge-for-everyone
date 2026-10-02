@@ -1121,11 +1121,20 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to operate EKS workloads with GitOps controllers such as Argo CD or Flux.",
+      "description": "Follow a Git change through GitOps, Kubernetes, and AWS controllers on EKS, and separate their permissions and health signals.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/gitops-on-eks.md",
-      "source_ids": [],
+      "source_ids": [
+        "argo-sync",
+        "argo-health",
+        "argo-projects",
+        "flux-kustomizations",
+        "flux-secrets",
+        "eks-load-balancer",
+        "eks-auto-mode",
+        "eks-service-accounts"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

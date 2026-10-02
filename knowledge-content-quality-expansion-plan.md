@@ -1027,12 +1027,21 @@ explanations through the Pod's three separate gates.
 | --- | --- | --- | --- |
 | [EKS to MSK applications](knowledge/cross-topic-guides/eks-to-msk-applications.md) | Rewritten with a bounded delivery-driver analogy, invented order-to-shipment flow, diagram, network/identity/application gates, IAM authorization scope, lag limitations, and understanding checks. | Keyed current AWS MSK client, bootstrap, IAM, EKS workload identity, and consumer-lag docs plus Apache Kafka documentation. No Pod, cluster, role, event, or shipment was tested. | Independent EKS/Kafka security review; controlled connection and failure checks; reader test; freshness decision. |
 
+### Wave 46 (2026-10-02)
+
+The GitOps-on-EKS guide now follows one change through distinct Kubernetes
+and AWS reconciliation and verification boundaries.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [GitOps on EKS](knowledge/cross-topic-guides/gitops-on-eks.md) | Rewritten with a bounded building-plan analogy, invented photo API, diagram, three permission boundaries, controller-placement conditions, and understanding checks. | Keyed current Argo CD, Flux, and Amazon EKS documentation. No GitOps run, cluster, ALB, Pod, user request, or reader test occurred. | Independent GitOps/EKS security review; controlled rollout and user-path checks; reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 45
-together: seventy concepts, none of them independently reviewed after
-their teaching passes. The remaining 95 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 46
+together: seventy-one concepts, none of them independently reviewed after
+their teaching passes. The remaining 94 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1043,7 +1052,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 1 | 1 |
 | AI, including the embedded OKF example | 20 | 3 | 17 |
 | Cloud | 21 | 21 | 0 |
-| Cross-topic guides | 16 | 8 | 8 |
+| Cross-topic guides | 16 | 9 | 7 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 0 | 5 |
 | DevOps | 2 | 2 | 0 |
@@ -1056,7 +1065,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 1 | 3 |
-| **Total** | **165** | **70** | **95** |
+| **Total** | **165** | **71** | **94** |
 
 The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
 workflow, and Terraform state management applied the precision protocol. They
