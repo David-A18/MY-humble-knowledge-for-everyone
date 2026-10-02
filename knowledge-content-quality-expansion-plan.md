@@ -1157,12 +1157,23 @@ reviewed saved plans for create, in-place update, and destroy.
 | --- | --- | --- | --- |
 | [Terraform local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Rewritten as a Tutorial with a stage table, expected outcomes, stop conditions, state-file boundaries, and understanding checks. | The full revised sequence ran in a disposable local directory with Terraform v1.13.1 from an official archive verified against its published SHA-256 sum. Observed one addition, one in-place update, one destruction, and empty final state. No cloud resource or human reader test was involved. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Terraform and Opus review; novice reader exercise; freshness decision. |
 
+### Wave 59 (2026-10-02)
+
+The two older stable Terraform pages have been substantially rewritten
+for beginners. Their previous 2026-09-21 source review no longer covers
+the new text, so both now show `draft` status and need fresh review.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Terraform state management](knowledge/terraform/fundamentals/state-management.md) | Explains address-to-object binding, backend and lock boundaries, drift, and reviewed moves/removals through an invented server, bounded register analogy, diagram and text alternative, and understanding checks. | Current official HashiCorp state, backend, locking, plan, sensitive-data, moved, and removed documentation checked. Mermaid diagram rendered and visually inspected. The example was not run. Claude Code remained at its weekly limit. | Independent Terraform and Opus review; novice reader test; freshness decision. |
+| [Review and apply a Terraform change](knowledge/terraform/commands/core-workflow.md) | Turns a command reference into a target-to-verification How-to Guide with expected evidence at each stage, saved-plan approval boundary, partial-apply caution, and service check. | Current official HashiCorp CLI and lock-file documentation checked. The `fmt -recursive -check` and `workspace show` commands passed in the separate disposable local lab; no cloud plan or apply ran for the illustrative staging service. Claude Code remained at its weekly limit. | Independent Terraform and Opus review; project-specific approval, backend, and service checks; novice reader test; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-02, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 58
-together: eighty-three concepts, none of them independently reviewed after
-their teaching passes. The remaining 82 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 59
+together: eighty-five concepts, none of them independently reviewed after
+their teaching passes. The remaining 80 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1185,13 +1196,12 @@ demonstration, so most teaching elements do not apply there.
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 0 | 1 |
 | Templates | 5 | 0 | 5 |
-| Terraform | 4 | 2 | 2 |
-| **Total** | **165** | **83** | **82** |
+| Terraform | 4 | 4 | 0 |
+| **Total** | **165** | **85** | **80** |
 
-The 2026-09-21 quality passes on Git undo and recovery, the core Terraform
-workflow, and Terraform state management applied the precision protocol. They
-have not yet been assessed against the teaching standard, so they are counted
-as not yet reviewed above.
+The 2026-09-21 quality pass on Git undo and recovery applied the precision
+protocol. It has not yet been assessed against the teaching standard, so it
+is counted as not yet reviewed above.
 
 ### Candidates for the next wave
 

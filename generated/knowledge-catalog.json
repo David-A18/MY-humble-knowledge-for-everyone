@@ -3322,27 +3322,29 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Document the standard command flow for making and reviewing Terraform changes.",
+      "description": "Check the target, validate a Terraform configuration, review a saved plan, apply that plan, and verify the result.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/terraform/commands/core-workflow.md",
       "source_ids": [
-        "terraform-cli",
         "terraform-fmt",
         "terraform-init",
+        "terraform-workspace-show",
         "terraform-validate",
         "terraform-plan",
+        "terraform-show",
         "terraform-apply",
-        "terraform-providers-lock",
         "terraform-dependency-lock"
       ],
-      "stale_after": "2026-12-21",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "terraform",
-        "core-workflow"
+        "core-workflow",
+        "plan",
+        "apply"
       ],
-      "title": "Core Terraform workflow",
+      "title": "Review and apply a Terraform change",
       "type": "How-to Guide"
     },
     {
@@ -3372,31 +3374,28 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Explain how Terraform state maps configuration to real infrastructure and why state handling is operationally sensitive.",
+      "description": "Understand how Terraform state connects configuration to managed objects, and why storage, locking, and refactoring need care.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/terraform/fundamentals/state-management.md",
       "source_ids": [
         "terraform-state",
         "terraform-backends",
         "terraform-state-locking",
-        "terraform-remote-state",
         "terraform-sensitive-data",
-        "terraform-state-cli",
-        "terraform-state-list",
-        "terraform-state-show",
-        "terraform-state-mv",
-        "terraform-state-rm",
         "terraform-plan",
-        "terraform-moved-blocks"
+        "terraform-moved-blocks",
+        "terraform-removed-blocks",
+        "terraform-state-cli"
       ],
-      "stale_after": "2026-12-21",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "terraform",
-        "state-management"
+        "state-management",
+        "beginner"
       ],
-      "title": "State management",
+      "title": "Terraform state management",
       "type": "Explanation"
     },
     {
