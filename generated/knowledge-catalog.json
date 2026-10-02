@@ -1708,11 +1708,23 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page when you know what you want to do, but you are not sure which Git commands belong together.",
+      "description": "Take a small change from an updated base branch to a reviewable remote branch, then find the right route for other Git tasks.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/commands/common-use-cases.md",
-      "source_ids": [],
+      "source_ids": [
+        "git-status",
+        "git-fetch",
+        "git-pull",
+        "git-switch",
+        "git-add",
+        "git-diff",
+        "git-commit",
+        "git-push",
+        "git-log",
+        "git-stash",
+        "git-worktree"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
