@@ -2961,11 +2961,17 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Diagnose a pod that starts, exits, and is restarted repeatedly by Kubernetes.",
+      "description": "Find why a Kubernetes container keeps restarting by checking its last termination, previous logs, and Pod events before changing the workload.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/crashloopbackoff.md",
-      "source_ids": [],
+      "source_ids": [
+        "pod-lifecycle",
+        "debug-pods",
+        "kubectl-logs",
+        "probes",
+        "resources"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -2973,7 +2979,7 @@
         "troubleshooting",
         "crashloopbackoff"
       ],
-      "title": "CrashLoopBackOff",
+      "title": "Diagnose CrashLoopBackOff",
       "type": "Troubleshooting Guide"
     },
     {
