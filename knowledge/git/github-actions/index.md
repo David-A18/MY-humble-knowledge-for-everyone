@@ -10,7 +10,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 | [Workflow structure](workflow-structure.md) | Read one complete YAML file and see how triggers, permissions, jobs, and steps fit. |
 | [Commands](commands.md) | GitHub CLI workflow/run commands and workflow command files such as `$GITHUB_ENV` and `$GITHUB_OUTPUT`. |
 | [`uses` catalog](actions-and-uses-catalog.md) | How `uses:` works, how to navigate action references, and common official, general-purpose, and third-party actions. |
-| [Examples and use cases](examples-and-use-cases.md) | CI, matrix testing, manual deploys, Docker publishing, Terraform checks, AWS OIDC, and scheduled jobs. |
+| [Workflow shapes and use cases](examples-and-use-cases.md) | Choose events, jobs, permissions, and evidence for CI, publishing, deployment, maintenance, and Terraform work. |
 | [Content CI/CD process](content-ci-cd-process.md) | Follow a knowledge change through `develop` validation, promotion to canonical `main`, and a conditional website update. |
 | [Common solutions](common-solutions.md) | Locate the first failed handoff from event to run, job, step, permission, or deployment. |
 | [Security, secrets, and permissions](security-secrets-and-permissions.md) | Decide which code a job runs, which credentials it receives, and what those credentials can change. |
@@ -21,7 +21,7 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 1. Read [Components and concepts](components-and-concepts.md).
 2. Read [Workflow structure](workflow-structure.md).
 3. Use the [`uses` catalog](actions-and-uses-catalog.md) to choose reusable actions safely.
-4. Copy a starting point from [Examples and use cases](examples-and-use-cases.md).
+4. Choose a starting shape from [Workflow shapes and use cases](examples-and-use-cases.md), then adapt its example to your repository.
 5. Use [Common solutions](common-solutions.md) when a workflow fails.
 6. Review [Security, secrets, and permissions](security-secrets-and-permissions.md) before adding deploys or third-party actions.
 

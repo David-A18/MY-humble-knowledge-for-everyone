@@ -1974,19 +1974,29 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this page to copy common workflow shapes and understand how each example works.",
+      "description": "Choose a trigger, job permissions, and evidence for CI, publishing, deployment, and scheduled work before copying YAML.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/git/github-actions/examples-and-use-cases.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-workflow-syntax",
+        "github-events",
+        "github-token",
+        "github-environments",
+        "github-protected-branches",
+        "github-checkout",
+        "github-setup-node",
+        "github-container-registry"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "git",
         "github-actions",
-        "examples-and-use-cases"
+        "examples-and-use-cases",
+        "beginner"
       ],
-      "title": "GitHub Actions examples and use cases",
+      "title": "Choosing a GitHub Actions workflow shape",
       "type": "Explanation"
     },
     {
