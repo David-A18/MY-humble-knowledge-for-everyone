@@ -154,7 +154,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) | Follow desired state, provider observation, drift, import, pause, and deletion for one invented bucket. |
 | [How a Crossplane provider reaches an external API](providers-and-authentication.md) | Separate provider package health, provider configuration, Pod credentials, and external authorization for one invented bucket. |
 | [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md) | Compare direct provider-specific requests with a small XR and Composition backed by the same provider. |
-| [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
+| [How a Crossplane Composition fulfills one application request](compositions.md) | Follow an invented WebApplication from XRD validation through function output, composed Deployment and Service, revision choice, and user-path check. |
 | [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
 | [Terraform vs Crossplane](terraform-vs-crossplane.md) | Compare run-based Terraform workflows with Crossplane reconciliation and platform APIs, including what Crossplane solves that Terraform does not solve naturally. |
@@ -174,7 +174,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
-- [Crossplane compositions](compositions.md)
+- [How a Crossplane Composition fulfills one application request](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
 - [Terraform vs Crossplane](terraform-vs-crossplane.md)

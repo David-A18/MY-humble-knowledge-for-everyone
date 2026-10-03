@@ -1,322 +1,180 @@
 ---
-type: "Explanation"
-title: "Crossplane compositions"
-description: "Use this page to design Crossplane platform APIs with Composite Resource Definitions, composite resources, composition functions, composition revisions, and local rendering."
-tags: [kubernetes, crossplane, compositions]
+type: Explanation
+title: How a Crossplane Composition fulfills one application request
+description: Follow a small WebApplication request through XRD validation, a Composition function pipeline, composed resources, revision choice, and outcome checks.
+tags: [kubernetes, crossplane, compositions, platform-api, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-xrds
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-revisions
+    resource: https://docs.crossplane.io/latest/composition/composition-revisions/
+    title: Crossplane - Composition Revisions
+  - id: crossplane-cli
+    resource: https://docs.crossplane.io/cli/latest/command-reference/
+    title: Crossplane CLI - Command Reference
+  - id: kubernetes-deployment
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    title: Kubernetes - Deployments
+  - id: kubernetes-service
+    resource: https://kubernetes.io/docs/concepts/services-networking/service/
+    title: Kubernetes - Services
 ---
 
-# Crossplane compositions
+# How a Crossplane Composition fulfills one application request
 
-## Purpose
+## The idea in one minute
 
-Use this page to design Crossplane platform APIs with Composite Resource Definitions, composite resources, composition functions, composition revisions, and local rendering.
+A **Composite Resource Definition** (XRD) defines a new request
+type and its allowed fields. A **composite resource** (XR) is one
+request of that type. A **Composition** selects a pipeline of
+functions that returns the Kubernetes resources Crossplane should
+apply for that XR.[^crossplane-xrds][^crossplane-compositions]
 
-Compositions are where Crossplane becomes a platform-engineering tool. A platform team defines a small API that users can request, then implements that API with managed resources, ordinary Kubernetes resources, and function logic.
+Think of an order form and a recipe, with a limit to the analogy.
+The form checks what a customer may ask for; the recipe says how
+the kitchen will prepare it. The form alone does no work, and a
+recipe's output is not proof that the customer received a usable
+meal. Crossplane still relies on Kubernetes and provider
+controllers to reconcile the resulting resources.
 
-For definitions of every Crossplane-specific component around this model, start with the [Crossplane component model](component-model.md).
+Read [How Crossplane's components turn a request into a resource](component-model.md)
+first for the wider request path. This page focuses on the
+**XR-to-composed-resources handoff**.
 
-If you are still mapping Terraform module calls to Crossplane terminology, read [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) first.
+## One invented WebApplication request
 
-For a concrete AWS example that composes many resources behind one XR, see [AWS VPC platform API](aws-vpc-platform-api.md). It shows a `PlatformNetwork` XRD, the user-facing XR call, and a Composition that creates a VPC, subnets, NACLs, route table associations, and VPC endpoints.
+Imagine a platform team offers `WebApplication`. The caller may
+choose an image and a replica count. The platform team wants each
+request to yield a Kubernetes Deployment and Service. The example
+is invented; the previous long YAML on this page was not run in
+a cluster or rendered for verification.
 
-## Composition model
-
-| Layer | Owner | Responsibility |
+| Layer | In this example | Who owns it |
 | --- | --- | --- |
-| Composite Resource Definition | Platform team | Defines the API group, kind, scope, versions, validation, and allowed request shape. |
-| Composite resource | Application, service, or platform consumer | Requests an instance of the platform API. |
-| Composition | Platform team | Selects a function pipeline that turns an XR into composed resources. |
-| Composition Function | Platform team or package maintainer | Generates, patches, transforms, validates, or enriches desired resources. |
-| Composed resources | Crossplane and Kubernetes controllers | Reconcile external infrastructure or cluster resources. |
+| XRD | Declares `WebApplication` and validates fields such as `image` and `replicas`. | Platform team. |
+| XR | Requests `image: example/web:v1` and `replicas: 2` for one app. | Application team or its GitOps controller. |
+| Composition | Selects a compatible function pipeline for `WebApplication`. | Platform team. |
+| Function result | Describes the desired Deployment and Service. | Function logic chosen and reviewed by the platform team. |
+| Composed resources | Kubernetes objects applied by Crossplane and reconciled by their normal controllers. | Crossplane and Kubernetes controllers. |
 
-In Crossplane v2, namespaced XRs are the default model and a composition can compose ordinary Kubernetes resources as well as Crossplane managed resources.
-
-## Example platform API
-
-The user-facing request should be small and intent-focused:
-
-```yaml
-apiVersion: platform.example.com/v1alpha1
-kind: WebApplication
-metadata:
-  name: demo
-  namespace: default
-spec:
-  image: nginx:stable-alpine
-  replicas: 2
+```mermaid
+flowchart LR
+  request["WebApplication XR<br/>image and replicas"] --> validate["XRD schema<br/>validates request"]
+  validate --> select["Crossplane selects<br/>Composition"]
+  select --> fn["Function pipeline<br/>returns desired objects"]
+  fn -->|"Crossplane applies"| output["Deployment + Service<br/>Kubernetes"]
+  output --> runtime["Pods and network path<br/>Kubernetes controllers"]
+  runtime --> check["Application request<br/>user outcome"]
 ```
 
-What it does: asks for an application by intent. The platform implementation can decide labels, Service ports, security defaults, resource requests, network policy, and optional infrastructure.
+Text alternative: an application team submits one WebApplication
+XR. The XRD supplies the API schema. Crossplane chooses a
+Composition and runs its function steps to obtain desired
+Deployment and Service objects. Kubernetes controllers work to
+make Pods and a Service path available. A separate application
+request checks whether users can actually use the app.
 
-## Define the XRD
+The exact Deployment and Service fields matter: selectors must
+match Pod labels, images must pull, and Pods must become ready.
+An attractive XR name does not supply those details
+automatically. Current Crossplane v2 can compose ordinary
+Kubernetes resources as well as provider managed resources.
+[^crossplane-compositions][^kubernetes-deployment][^kubernetes-service]
 
-```yaml
-apiVersion: apiextensions.crossplane.io/v2
-kind: CompositeResourceDefinition
-metadata:
-  name: webapplications.platform.example.com
-spec:
-  scope: Namespaced
-  group: platform.example.com
-  names:
-    kind: WebApplication
-    plural: webapplications
-  versions:
-    - name: v1alpha1
-      served: true
-      referenceable: true
-      schema:
-        openAPIV3Schema:
-          type: object
-          properties:
-            spec:
-              type: object
-              properties:
-                image:
-                  type: string
-                replicas:
-                  type: integer
-                  minimum: 1
-                  maximum: 5
-                  default: 1
-              required:
-                - image
-```
+## The pipeline is implementation, not the user API
 
-What it does: creates a namespaced `WebApplication` API and restricts user input to a small schema.
+Crossplane calls the functions listed in a Composition in order.
+Each step sees the result accumulated so far and can return
+desired composed resources. One function might template the
+Deployment and Service; another might determine readiness. The
+pipeline's function packages must be installed and healthy for
+the Composition to work.[^crossplane-compositions]
 
-### Validate the XRD
+| Question | Where to look |
+| --- | --- |
+| Is `replicas` allowed to be zero or greater than five? | The XRD schema and any admission rules.[^crossplane-xrds] |
+| How does `image` reach the Deployment? | The selected Composition and function inputs/output.[^crossplane-compositions] |
+| Which name and labels does the Service use? | The function's rendered desired objects, then the applied Service and Deployment.[^crossplane-compositions][^kubernetes-service] |
+| Does the app answer a request? | The actual app route and response, beyond XR and Pod status. |
 
-```bash
-kubectl apply --dry-run=server -f webapplication-xrd.yaml
-kubectl apply -f webapplication-xrd.yaml
-kubectl get xrds
-```
+The XRD can reject invalid **request shape** early. It cannot
+guarantee the image exists, that the function emits correct
+selectors, or that a backend serves a correct response. Those
+need later checks.
 
-What it does: validates the XRD, installs it, and checks that the definition exists.
+## Changing the recipe changes existing requests
 
-## Install a composition function
+When a Composition changes, Crossplane creates a
+`CompositionRevision`. Its documentation describes an
+`Automatic` update policy that follows the latest revision and
+a `Manual` policy that requires an XR's revision reference to
+be changed deliberately. A team needs to know which policy its
+XRs use before changing a Composition; a new template can alter
+or remove real resources.[^crossplane-revisions]
 
-```yaml
-apiVersion: pkg.crossplane.io/v1
-kind: Function
-metadata:
-  name: function-patch-and-transform
-spec:
-  package: xpkg.crossplane.io/crossplane-contrib/function-patch-and-transform:v0.8.2
-```
+For the invented WebApplication, imagine changing the Service
+port. The platform team should compare the old and new desired
+objects, decide which XRs receive the revision, test the
+resulting Service path, and prepare recovery for affected
+applications. Merely seeing the new Composition accepted by
+Kubernetes would be weak evidence of a successful rollout.
 
-What it does: installs the Patch and Transform function package so a Composition can generate resources from an XR.
+## Check a Composition in layers
 
-```bash
-kubectl apply -f function.yaml
-kubectl get functions.pkg.crossplane.io -w
-```
+| Check | What it can establish | What remains unproven |
+| --- | --- | --- |
+| XRD schema validation | The request type and fields are accepted. | The function output and runtime behavior. |
+| Local Composition render | With a chosen XR, Composition, and Function packages, the CLI can show desired output for review.[^crossplane-cli] | External API permissions, controller reconciliation, and live traffic. |
+| Kubernetes/API and controller observation | The generated objects were admitted and their controllers report conditions. | The application's real user path. |
+| Disposable integration exercise | The rendered resources can reconcile in a representative cluster. | Production traffic, scale, and every failure mode. |
+| User-path check | A representative request reaches the application and produces the expected response. | Every future request or rollout. |
 
-What it does: installs the function and waits for it to report health.
+The Crossplane CLI's [Composition render command](https://docs.crossplane.io/cli/latest/command-reference/)
+supports an XR, Composition, and Function inputs. This page
+does not supply a working file set or claim that the old
+WebApplication YAML rendered successfully.[^crossplane-cli]
 
-> [!IMPORTANT]
-> Function versions have independent release cycles. Pin a tested version and verify compatibility with your Crossplane release before production use.
+For a provider-backed example, use
+[AWS VPC platform API](aws-vpc-platform-api.md). For how the
+resulting managed resources evolve, use
+[How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md).
 
-## Create a pipeline composition
+## Check your understanding
 
-```yaml
-apiVersion: apiextensions.crossplane.io/v1
-kind: Composition
-metadata:
-  name: webapplication-basic
-spec:
-  compositeTypeRef:
-    apiVersion: platform.example.com/v1alpha1
-    kind: WebApplication
-  mode: Pipeline
-  pipeline:
-    - step: create-resources
-      functionRef:
-        name: function-patch-and-transform
-      input:
-        apiVersion: pt.fn.crossplane.io/v1beta1
-        kind: Resources
-        resources:
-          - name: deployment
-            base:
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                namespace: default
-              spec:
-                selector:
-                  matchLabels:
-                    app: placeholder
-                template:
-                  metadata:
-                    labels:
-                      app: placeholder
-                  spec:
-                    containers:
-                      - name: application
-                        image: nginx:stable-alpine
-                        ports:
-                          - containerPort: 80
-            patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: metadata.name
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.namespace
-                toFieldPath: metadata.namespace
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: spec.selector.matchLabels.app
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: spec.template.metadata.labels.app
-              - type: FromCompositeFieldPath
-                fromFieldPath: spec.image
-                toFieldPath: spec.template.spec.containers[0].image
-              - type: FromCompositeFieldPath
-                fromFieldPath: spec.replicas
-                toFieldPath: spec.replicas
-          - name: service
-            base:
-              apiVersion: v1
-              kind: Service
-              metadata:
-                namespace: default
-              spec:
-                selector:
-                  app: placeholder
-                ports:
-                  - name: http
-                    port: 80
-                    targetPort: 80
-            patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: metadata.name
-                transforms:
-                  - type: string
-                    string:
-                      type: Format
-                      fmt: "%s-service"
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.namespace
-                toFieldPath: metadata.namespace
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: spec.selector.app
-```
+1. Which object decides whether an XR may contain a `replicas`
+   field, and which object decides what resources that value
+   changes?
+2. Why can the same `WebApplication` XR produce different
+   desired resources after a Composition revision?
+3. What does a local render show, and which live results does
+   it leave untested?
+4. Why is an XR's ready condition not a full application
+   success test?
 
-What it does: maps one `WebApplication` XR into a Deployment and Service.
+## Explore further
 
-## Create an XR
-
-```yaml
-apiVersion: platform.example.com/v1alpha1
-kind: WebApplication
-metadata:
-  name: demo
-  namespace: default
-spec:
-  image: nginx:stable-alpine
-  replicas: 2
-```
-
-What it does: creates an instance of the platform API. Crossplane runs the Composition pipeline and creates the composed Kubernetes resources.
-
-### Inspect composed resources
-
-```bash
-kubectl get webapplications.platform.example.com -n default
-kubectl describe webapplication demo -n default
-kubectl get deployments,services,pods -n default
-```
-
-What it does: checks XR readiness and confirms the generated resources exist.
-
-## Design rules
-
-- Keep the platform API small and stable.
-- Hide provider-specific details unless users must choose them.
-- Version APIs when breaking changes are needed.
-- Test rendering and reconciliation before exposing a composition broadly.
-- Decide how secrets and connection details flow to workloads.
-- Prefer namespaced APIs for tenant-facing abstractions.
-- Use schema enums, defaults, and validation to prevent invalid requests early.
-- Keep functions deterministic and reviewable.
-- Treat the XRD as the contract and the Composition as implementation.
-- Use composition revisions deliberately for rollout and rollback behavior.
-- Avoid exposing every cloud-provider field as a platform API field.
-
-## Composition revisions
-
-Crossplane creates revisions when Compositions change. XRs can automatically follow the latest revision or pin to a manual revision policy.
-
-Use automatic updates for low-risk APIs and early development. Use manual update policies when a composition change may alter production infrastructure.
-
-## Render and test before rollout
-
-### Render locally
-
-```bash
-crossplane composition render \
-  xr.yaml \
-  composition.yaml \
-  functions.yaml
-```
-
-What it does: runs the composition function pipeline locally and prints the resources Crossplane would produce.
-
-> [!NOTE]
-> Rendering improves reviewability but does not replace testing against real provider APIs, cloud permissions, quotas, and eventual consistency.
-
-### Recommended development loop
-
-```text
-Edit XRD, Composition, or Function
-        |
-YAML, policy, and server-side schema validation
-        |
-Local composition render
-        |
-Kind or local integration test
-        |
-Sandbox cloud integration test
-        |
-Pull request
-        |
-GitOps promotion
-```
-
-## Platform API checklist
-
-- [ ] The XRD exposes user intent, not provider internals.
-- [ ] Required fields are minimal and validated.
-- [ ] Defaults, enums, and constraints prevent common bad requests.
-- [ ] Composed resources use explicit provider configs.
-- [ ] Destructive lifecycle behavior is documented.
-- [ ] Connection details and secrets have a clear flow.
-- [ ] Composition rendering is part of CI.
-- [ ] A sandbox reconciliation test exists before production promotion.
-
-## Related links
-
-- [Crossplane](index.md)
-- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
-- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
-- [Crossplane component model](component-model.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
-- [AWS VPC platform API](aws-vpc-platform-api.md)
-- [Application delivery platform API](application-delivery-platform-api.md)
-- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
-- [Production, GitOps, and operations](production-gitops-and-operations.md)
-- [Crossplane references](references.md)
-- [Crossplane composition documentation](https://docs.crossplane.io/latest/composition/compositions/)
 - [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
+  explains API schema and versions.[^crossplane-xrds]
+- [Compositions](https://docs.crossplane.io/latest/composition/compositions/)
+  explains pipeline steps and composed resources.
+  [^crossplane-compositions]
+- [Composition Revisions](https://docs.crossplane.io/latest/composition/composition-revisions/)
+  explains update policies.[^crossplane-revisions]
 - [Crossplane CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+  documents local rendering.[^crossplane-cli]
+- [Back to Crossplane](index.md).
+
+[^crossplane-xrds]: [Crossplane, Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), source record `crossplane-xrds`.
+[^crossplane-compositions]: [Crossplane, Compositions](https://docs.crossplane.io/latest/composition/compositions/), source record `crossplane-compositions`.
+[^crossplane-revisions]: [Crossplane, Composition Revisions](https://docs.crossplane.io/latest/composition/composition-revisions/), source record `crossplane-revisions`.
+[^crossplane-cli]: [Crossplane CLI, Command Reference](https://docs.crossplane.io/cli/latest/command-reference/), source record `crossplane-cli`.
+[^kubernetes-deployment]: [Kubernetes, Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), source record `kubernetes-deployment`.
+[^kubernetes-service]: [Kubernetes, Services](https://kubernetes.io/docs/concepts/services-networking/service/), source record `kubernetes-service`.

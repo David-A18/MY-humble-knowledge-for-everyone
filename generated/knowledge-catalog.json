@@ -2840,20 +2840,29 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to design Crossplane platform APIs with Composite Resource Definitions, composite resources, composition functions, composition revisions, and local rendering.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow a small WebApplication request through XRD validation, a Composition function pipeline, composed resources, revision choice, and outcome checks.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/compositions.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-xrds",
+        "crossplane-compositions",
+        "crossplane-revisions",
+        "crossplane-cli",
+        "kubernetes-deployment",
+        "kubernetes-service"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "compositions"
+        "compositions",
+        "platform-api",
+        "beginner"
       ],
-      "title": "Crossplane compositions",
+      "title": "How a Crossplane Composition fulfills one application request",
       "type": "Explanation"
     },
     {

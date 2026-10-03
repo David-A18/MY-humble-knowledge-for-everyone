@@ -1549,12 +1549,25 @@ manifests were removed; focused pages retain the operational paths.
 | --- | --- | --- | --- |
 | [When to use a managed resource or a Crossplane platform API](knowledge/kubernetes/crossplane/providers-compositions-and-managed-resources.md) | Bounded ingredients-versus-meal analogy, invented image-repository request, converging-route diagram and text alternative, choice table, change scenario, bypass boundary, next-page routes, understanding checks. | Current official Crossplane overview, managed-resource, XRD, Composition, and Configuration documentation checked. Mermaid rendered and inspected. No provider, repository, Composition, request, reader task, or Opus review occurred. | Independent Crossplane/platform security and Opus review; disposable direct-MR-versus-XR exercise with provider access controls; novice choice task; freshness decision. |
 
+### Wave 92 (2026-10-03)
+
+The Composition page now follows an invented WebApplication request
+from XRD schema to selected function pipeline, composed Deployment
+and Service, and a separate user-path check. It distinguishes a
+schema-valid XR, locally rendered desired objects, live controller
+conditions, and application behavior. The long unrun manifest was
+removed, while official procedure and revision references remain.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a Crossplane Composition fulfills one application request](knowledge/kubernetes/crossplane/compositions.md) | Bounded form-and-recipe analogy, invented WebApplication input/output table, XR-to-resource diagram and text alternative, pipeline questions, revision scenario, layered validation table, understanding checks. | Current official Crossplane XRD, Composition, CompositionRevision, and CLI documentation plus Kubernetes Deployment and Service documentation checked. Mermaid rendered and inspected. No Crossplane CLI render, cluster, Deployment, Service, user request, reader task, or Opus review occurred. | Independent Crossplane/Kubernetes and Opus review; disposable local render and cluster exercise; novice schema-versus-implementation task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 91
-together: one hundred twenty concepts, none of them independently reviewed after
-their teaching passes. The remaining 45 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 92
+together: one hundred twenty-one concepts, none of them independently reviewed after
+their teaching passes. The remaining 44 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1571,14 +1584,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 30 | 15 |
+| Kubernetes | 45 | 31 | 14 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **120** | **45** |
+| **Total** | **165** | **121** | **44** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
