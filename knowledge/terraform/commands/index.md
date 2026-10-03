@@ -9,7 +9,7 @@ points before a command can change infrastructure.
 
 | Article | Purpose |
 | --- | --- |
-| [Core workflow](core-workflow.md) | Format, initialize, validate, plan, review, apply, and handle provider lock files safely. |
+| [Review and apply a Terraform change](core-workflow.md) | Check the target, validate the configuration, review a saved plan, apply that plan, and verify the result. |
 
 ## Expected future content
 

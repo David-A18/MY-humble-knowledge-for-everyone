@@ -6,7 +6,7 @@ Use these templates together with the canonical [AI documentation instructions](
 
 | Template | Use it for |
 | --- | --- |
-| [Knowledge article](knowledge-article-template.md) | Conceptual or procedural technical articles. |
+| [Knowledge article](knowledge-article-template.md) | Two separate skeletons: a teaching-oriented Explanation and a task-oriented How-to Guide. Copy one. |
 | [Command reference](command-reference-template.md) | Command collections with examples and expected outputs. |
 | [Troubleshooting](troubleshooting-template.md) | Symptom-driven diagnostic and recovery guides. |
 | [Architecture decision record](architecture-decision-record-template.md) | Decisions with context, options, and consequences. |

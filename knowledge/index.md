@@ -4,19 +4,25 @@ okf_version: "0.2"
 
 # Engineering knowledge base
 
-This directory is the canonical Open Knowledge Format v0.2 bundle for this
-repository. Start with a subject area, then follow its index to focused
-concepts, procedures, references, and learning paths.
+Start with a question. Each subject area leads to focused explanations,
+examples, procedures, and links to official documentation for deeper study.
+The library is growing; topic indexes show both current material and planned
+coverage.
+
+This directory is the canonical Open Knowledge Format v0.2 bundle for the
+repository. Its Markdown pages are the source material for the reading site.
 
 ## Start by goal
 
 | Goal | Start here | Outcome |
 | --- | --- | --- |
+| Find a first topic and learn how to use a page | [Start here](start-here.md) | Choose a clear entry point, understand draft labels, and follow official sources after the simple explanation. |
 | Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
+| Understand how Git tracks and shares changes | [Git fundamentals](git/git-fundamentals.md) | Picture the working tree, index, commits, branches, and remotes before running recovery commands. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
 | Learn Terraform safely | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |
-| Design a Crossplane platform API | [Crossplane component model](kubernetes/crossplane/component-model.md) | Understand providers, managed resources, XRDs, compositions, and XRs. |
+| Design a Crossplane platform API | [How Crossplane's components turn a request into a resource](kubernetes/crossplane/component-model.md) | Follow one simple request through XRD, XR, Composition, managed resource, and provider. |
 | Plan backup or migration work | [Velero](migrations/velero/index.md) | Choose backup, restore, migration, and disaster-recovery guidance. |
 
 ## Reading and trust signals
@@ -51,7 +57,7 @@ concepts, procedures, references, and learning paths.
 ## Learning and reference material
 
 - [Start here](start-here.md) - A beginner-friendly local learning route.
-- [Glossary](glossary.md) - Shared terminology.
+- [Glossary](glossary.md) - Short definitions, with deeper routes where a concept page exists.
 - [Decision records](decision-records/index.md) - Recorded repository and architecture decisions.
 - [Templates](templates/index.md) - Diátaxis-aligned documentation starters.
 - [Assets](assets/index.md) - Guidance for diagrams, images, and icons.

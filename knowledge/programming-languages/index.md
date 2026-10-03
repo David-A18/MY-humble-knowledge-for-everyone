@@ -13,8 +13,11 @@ Status: Initial outline
 
 ## Articles
 
-- [Bootstrap and bootstrapping](bootstrap-and-bootstrapping.md): explains
-  Bootstrap as a frontend toolkit and bootstrapping as a general setup or
-  startup process.
+- [Bootstrap and bootstrapping](bootstrap-and-bootstrapping.md): distinguish
+  the two meanings of a commonly confusing word.
+- [Bootstrap frontend toolkit](bootstrap-frontend-toolkit.md): understand
+  what Bootstrap CSS and JavaScript add to an HTML page.
+- [Bootstrapping a system](bootstrapping-a-system.md): understand a first-time
+  project or infrastructure dependency before normal work can run.
 
 [Back to root index](../../README.md)

@@ -20,17 +20,18 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 
 | Topic | Start here | Follow-up |
 | --- | --- | --- |
-| APISIX | [Apache APISIX](applications-and-tools/apache-apisix.md) | [Architecture and deployment](applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
-| Flux | [Flux](applications-and-tools/flux.md) | [Flux reconciliation and Helm releases](applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](../cross-topic-guides/gitops-on-eks.md). |
-| GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Choose between UI-centered application operations and composable controller-based reconciliation. |
-| K9s | [K9s](applications-and-tools/k9s.md) | Navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
+| kind local clusters | [How kind custom clusters fit together](applications-and-tools/kind-custom-clusters.md) | [How images reach a kind Pod](applications-and-tools/kind-images-and-local-registries.md), then [diagnose a local image pull](troubleshooting/kind.md) if a Pod cannot start. |
+| APISIX | [What Apache APISIX does for an API](applications-and-tools/apache-apisix.md) | [How the gateway and controller fit together](applications-and-tools/apisix-architecture-and-deployment.md), [APISIX request policies](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
+| Flux | [Flux](applications-and-tools/flux.md) | [How Flux applies a HelmRelease from Git](applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](../cross-topic-guides/gitops-on-eks.md). |
+| GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Start from [GitOps](applications-and-tools/gitops.md), then compare documented defaults, interfaces, and ownership boundaries. |
+| K9s | [Inspect a failing Pod with K9s](applications-and-tools/k9s.md) | Use a terminal UI to read Pod evidence and choose a troubleshooting path. |
 | Velero | [Velero](../migrations/velero/index.md) | [Storage and volume backups](../migrations/velero/storage-and-volume-backups.md), [backup and restore workflows](../migrations/velero/backup-restore-workflows.md), [cluster migration and disaster recovery](../migrations/velero/cluster-migration-and-disaster-recovery.md). |
 
 ## Fast paths for Crossplane
 
 | Topic | Start here | Follow-up |
 | --- | --- | --- |
-| XRDs, Compositions, and XR calls | [XRDs, Compositions, and XR calls](crossplane/xrd-composition-and-xr-calls.md) | [Component model](crossplane/component-model.md), [Compositions](crossplane/compositions.md), [Terraform vs Crossplane](crossplane/terraform-vs-crossplane.md), [AWS VPC platform API](crossplane/aws-vpc-platform-api.md). |
+| First Crossplane request | [How Crossplane's components turn a request into a resource](crossplane/component-model.md) | [How to request a Crossplane platform API](crossplane/xrd-composition-and-xr-calls.md), [Compositions](crossplane/compositions.md), [When to use Terraform or Crossplane](crossplane/terraform-vs-crossplane.md), [AWS VPC platform API](crossplane/aws-vpc-platform-api.md). |
 
 ## AWS and EKS workflows
 

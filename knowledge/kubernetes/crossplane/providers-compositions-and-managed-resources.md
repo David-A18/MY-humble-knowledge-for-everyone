@@ -1,265 +1,181 @@
 ---
-type: "Explanation"
-title: "Crossplane providers, managed resources, and compositions"
-description: "Use this page to distinguish the Crossplane building blocks that are often confused:"
-tags: [kubernetes, crossplane]
+type: Explanation
+title: When to use a managed resource or a Crossplane platform API
+description: Compare a direct provider-specific request with a small platform API backed by a Composition, using one invented image repository.
+tags: [kubernetes, crossplane, managed-resources, compositions, platform-api, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-overview
+    resource: https://docs.crossplane.io/latest/whats-crossplane/
+    title: Crossplane - What's Crossplane?
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: crossplane-xrds
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-configurations
+    resource: https://docs.crossplane.io/latest/packages/configurations/
+    title: Crossplane - Configurations
 ---
 
-# Crossplane providers, managed resources, and compositions
+# When to use a managed resource or a Crossplane platform API
 
-## Purpose
+## The choice in one minute
 
-Use this page to distinguish the Crossplane building blocks that are often confused:
-providers, managed resources, composite resources, compositions, functions, and
-configuration packages. It also explains how an Upbound AWS provider becomes a
-Kubernetes API and how a platform team uses that API to offer a simpler feature
-to its users.
+A **direct managed resource (MR)** lets a user request an external
+object through the provider's own Kubernetes API. A **platform API**
+lets a team define its own smaller request type: an XRD defines the
+type, an XR is one request, and a Composition turns that request into
+one or more composed resources. Those composed resources may include
+the *same* provider MRs. The provider controller still makes the
+external API calls.[^crossplane-overview][^crossplane-managed][^crossplane-xrds][^crossplane-compositions]
 
-## The short answer
+Think of ordering ingredients versus ordering a prepared meal. A
+direct MR exposes the supplier's choices; a platform API offers a
+small menu and lets a platform team maintain the recipe. The
+analogy stops at delivery: neither request proves the external
+resource is ready or that its settings meet a promise such as
+"private" until the implementation and result are checked.
 
-| Object | Created or owned by | Main job | It is not |
-| --- | --- | --- | --- |
-| Provider | Platform operator | Install controllers and managed-resource APIs for an external system. | A reusable application or infrastructure blueprint. |
-| Managed resource (MR) | Platform operator, Composition, or advanced user | Represent and reconcile one external object, such as an ECR repository. | A request for a whole platform capability. |
-| XRD | Platform team | Define the schema and name of a custom platform API. | The implementation of that API. |
-| XR | Platform consumer | Request one instance of the platform API. | The controller that calls AWS. |
-| Composition | Platform team | Map an XR to one or more composed resources through a function pipeline. | A cloud provider integration. |
-| Function | Platform team or package maintainer | Generate, transform, validate, or enrich composition output. | A provider controller. |
-| Configuration package | Platform team | Distribute XRDs, Compositions, Functions, and dependencies as one versioned platform release. | A replacement for provider credentials. |
+Read [How Crossplane's components turn a request into a resource](component-model.md)
+if the object names are new. This page focuses on **who should choose
+the settings**.
 
-The important boundary is this: a **provider supplies the capability to manage
-an external API**, while a **Composition uses that capability to implement a
-product-like platform API**. A managed resource is the individual object that
-the provider reconciles.
+## Two routes for one invented image repository
 
-## How the pieces work together
+Suppose the payments application needs an image repository. The
+example is invented; no provider, repository, Composition, or AWS
+request was run.
 
-```text
-Platform operator installs Crossplane and an AWS ECR provider
-                         |
-                         v
-Provider installs Repository and other ECR managed-resource APIs
-                         |
-Platform team defines an XRD and a Composition using those APIs
-                         |
-                         v
-Application team creates an XR, for example ApplicationDelivery
-                         |
-                         v
-Composition generates an ECR Repository and Kubernetes workload objects
-                         |
-                         v
-The ECR provider reconciles the Repository with the AWS ECR API
+**Direct route:** an authorized platform operator creates a
+provider-defined `Repository` MR and chooses the provider-specific
+fields. The installed provider controller reads that object, uses
+its selected provider configuration, and asks the registry service
+to create or update one repository.[^crossplane-managed]
+
+**Platform API route:** a platform team defines a
+`TeamImageRepository` XRD with a small contract, such as owner
+and intended retention class. The payments team creates an XR.
+Crossplane runs a selected Composition and its functions; the
+result can be a `Repository` MR plus other resources that the
+implementation actually declares. The provider controller then
+handles each MR's external API calls.[^crossplane-xrds][^crossplane-compositions]
+
+```mermaid
+flowchart LR
+  direct["Platform operator<br/>direct Repository MR"] --> mr["Provider Repository MR<br/>Kubernetes"]
+  team["Payments team<br/>TeamImageRepository XR"] --> comp["Composition<br/>platform-owned recipe"]
+  comp -->|"Crossplane applies result"| mr
+  mr --> provider["Provider controller<br/>external API calls"]
+  provider --> external["External registry<br/>real repository"]
 ```
 
-Kubernetes stores desired state for every object in this flow. The provider
-controller, not `kubectl`, authenticates and calls AWS. Crossplane core runs
-the composition pipeline; the provider controller reconciles the managed
-resource it produces.
+Text alternative: the direct route starts at a provider-defined
+Repository MR. The platform route starts at a TeamImageRepository
+XR and passes through a Composition that can produce a Repository
+MR. Both routes then rely on the same kind of provider controller
+to call the external registry. The platform route adds an API
+contract and implementation layer; it does not replace the provider.
 
-## What a provider is
-
-A provider is an OCI package installed through a Crossplane `Provider` object.
-It adds Kubernetes API types for the external resources it supports and starts
-controller pods that continuously reconcile those APIs with the external
-service. Providers are responsible for authentication, observation, external
-API calls, and controller logic.
-
-For example, the Upbound AWS ECR provider is a service-focused provider package
-from the AWS provider family. Its available managed resources and exact schema
-are determined by the installed package version. The marketplace is the source
-for package provenance and resource discovery; the cluster is the source of
-truth for the fields a manifest may use.
-
-### Provider installation lifecycle
-
-| Stage | What Crossplane does | What to verify |
+| Question | Direct MR | Platform API with XR and Composition |
 | --- | --- | --- |
-| Package requested | Reads `spec.package` from the `Provider` object. | Pin a reviewed version or digest. |
-| Revision installed | Pulls the OCI package and creates a `ProviderRevision`. | `INSTALLED` and package events. |
-| APIs activated | Makes provider managed-resource APIs available. | `kubectl api-resources` and activation policy. |
-| Runtime starts | Creates the provider controller deployment and service account. | Pods, runtime configuration, and workload identity. |
-| Reconciliation begins | Watches MRs and calls the external API through a ProviderConfig. | `HEALTHY`, conditions, and logs. |
+| Who chooses provider-specific fields? | The MR author, subject to policy. | The platform team can hide or fix them in the Composition. |
+| What must the requester know? | The installed provider's API group, kind, schema, and lifecycle. | The platform API's fields and promised behavior. |
+| How many resources can one request yield? | One MR represents one external object. | A Composition can produce one or many composed resources.[^crossplane-compositions] |
+| Who handles external calls? | The provider controller. | The same provider controller for provider MRs that the Composition creates. |
+| What is the added operating cost? | Users may repeat provider details and need access to sensitive MR or ProviderConfig choices. | Platform maintainers own XRD and Composition changes, compatibility, tests, and rollout. |
 
-### Install an ECR provider deliberately
+An XR is a useful interface only when its implementation is real.
+Calling it `TeamImageRepository` does not automatically apply
+retention, access controls, scanning, or any other standard.
+Those properties need to be declared, restricted, and verified.
 
-Use the current package location, a reviewed version or digest, and the
-provider's compatibility information from the official marketplace. Do not
-substitute a version from an old example.
+## When each route fits
 
-```yaml
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-aws-ecr
-spec:
-  package: xpkg.upbound.io/upbound/provider-aws-ecr:<reviewed-version-or-digest>
-  revisionActivationPolicy: Manual
-```
+Use a **direct MR** when the users are trusted to manage that
+provider-specific resource, the need is narrow, or the team is
+learning the installed API in a controlled environment. It is
+also appropriate when a platform API would hide fields that the
+operator must explicitly own. Direct access should still be
+bounded by Kubernetes RBAC, the provider's permissions, and
+resource policy.[^crossplane-managed]
 
-What it does: asks Crossplane to install an ECR provider package but leaves
-activation of a newly installed revision under operator control. `Manual` is a
-useful production choice when a provider upgrade might change CRDs or provider
-behavior; teams may choose automatic activation after testing.
+Use an **XR and Composition** when many teams need the same
+supported pattern, consumers should supply only a few intent
+fields, or the platform must coordinate multiple resources behind
+one contract. The XRD validates the request shape; the
+Composition selects and produces desired resources. This adds an
+implementation and versioning responsibility for the platform
+team.[^crossplane-xrds][^crossplane-compositions]
 
-> [!IMPORTANT]
-> A package name, API group, resource kind, and field can differ by provider
-> family and version. Consult the [Upbound AWS ECR provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ecr), then validate the installed API before applying a resource manifest.
+Do not treat the XR as a security boundary by its name alone.
+If application teams can also create arbitrary MRs or select a
+privileged `ProviderConfig`, they may bypass the platform API's
+defaults. The platform must control both its friendly API and
+access to the lower-level APIs.
 
-### Inspect package health and the installed schema
+## A change shows the ownership difference
 
-```bash
-kubectl get providers.pkg.crossplane.io
-kubectl get providerrevisions.pkg.crossplane.io
-kubectl get pods -n crossplane-system
-kubectl api-resources | grep -i ecr
-kubectl explain repository.ecr.aws.m.upbound.io.spec.forProvider
-```
+Imagine the organization changes the intended retention rule for
+new repositories. With direct MRs, each resource author must
+review and update the relevant provider fields, and existing
+repositories may have different histories. With a platform API,
+the platform team can update the Composition and decide how
+existing XRs adopt the new implementation. A Composition change
+is not automatically safe: it may change or remove real external
+resources. Review rendered output and rollout policy before
+promoting it.[^crossplane-compositions]
 
-What it does: checks package installation and runtime health, then discovers
-the API resource and its accepted fields in the current cluster. If the final
-command fails, do not guess the API group or schema; inspect the package
-revision, provider documentation, and API discovery output first.
+A Configuration package can bundle XRDs, Compositions, and
+dependencies for distribution between control planes. Packaging
+does not substitute for testing the behavior of an installed
+provider or the permissions of its controller.[^crossplane-configurations]
 
-## What a managed resource is
+In either route, a healthy provider package is different from a
+ready MR, and a ready MR is different from an application
+successfully pushing an image. Check each handoff separately.
 
-A managed resource is a provider-defined Kubernetes object that represents one
-external object. An ECR `Repository`, an S3 `Bucket`, and an EC2 `VPC` are
-examples. A managed resource usually contains desired external settings in
-`spec.forProvider`, a `providerConfigRef` that selects credentials and account
-targeting, and observed state in `status`.
+## Choose the next page
 
-### Direct managed resource example
-
-```yaml
-apiVersion: ecr.aws.m.upbound.io/v1beta1
-kind: Repository
-metadata:
-  name: payments-api
-  namespace: payments
-spec:
-  forProvider:
-    region: <aws-region>
-    name: payments-api
-    imageTagMutability: IMMUTABLE
-  providerConfigRef:
-    name: payments-aws
-```
-
-What it does: directly asks the installed ECR provider to reconcile one AWS
-ECR repository. The example is useful for an operator or an advanced team that
-is intentionally allowed to use AWS-specific APIs.
-
-> [!NOTE]
-> This is an API shape example, not a promise that every installed provider
-> version exposes the same fields. Use `kubectl explain` before applying it.
-
-### Managed-resource lifecycle
-
-```text
-Desired MR stored in Kubernetes
-        |
-Provider reads ProviderConfig credentials and endpoint settings
-        |
-Provider observes the external object
-        |
-Provider creates, updates, or only observes according to its policy and schema
-        |
-Provider records external identity, conditions, and observed status
-```
-
-An MR does not become ready just because `kubectl apply` succeeded. Read its
-`status.conditions`, events, provider logs, and external service state. See
-[Managed resources and lifecycle](managed-resources-and-lifecycle.md) for
-import, drift, references, management policies, finalizers, and safe deletion.
-
-## What a Composition is
-
-A Composition is platform-owned implementation logic for an XR. It selects a
-function pipeline that creates the desired composed resources. Those resources
-may be provider MRs, ordinary Kubernetes resources, or a mixture of both.
-
-For example, a `SecureRepository` XR can expose only a name and a region. Its
-Composition can create an ECR repository with the organization’s preferred
-tags, mutability setting, lifecycle policy, and access controls. Consumers ask
-for a feature; the platform owns how it is delivered.
-
-| Question | Direct MR | Composition-backed XR |
-| --- | --- | --- |
-| Who selects cloud-provider fields? | The resource author. | The platform implementation. |
-| How many resources are created? | Usually one. | One or many. |
-| Is the user API provider-specific? | Usually yes. | It can be stable and intent-focused. |
-| Who controls defaults and guardrails? | The MR author plus policy. | The platform team plus policy. |
-| Who calls AWS? | The provider controller. | Still the provider controller for each generated MR. |
-
-> [!IMPORTANT]
-> A Composition never replaces a provider. Without a provider that understands
-> the generated ECR `Repository` resource, Crossplane cannot reconcile it with
-> AWS. Without a Composition, a provider still supports direct managed
-> resources.
-
-## Functions and configuration packages
-
-Composition Functions add programmable or reusable behavior to a Composition
-pipeline. Use a declarative function such as Patch and Transform for fixed
-resource templates. Use a tested templating or language function when the API
-needs dynamic generation, loops, richer validation, or complex data shaping.
-
-A Configuration package bundles a platform API and its dependencies into a
-versioned OCI release. It commonly contains XRDs and Compositions and declares
-the provider and Function packages it needs. This allows a platform team to
-promote a reviewed capability between environments without making application
-teams install individual providers.
-
-| Need | Use |
+| If you need to... | Read |
 | --- | --- |
-| Connect Crossplane to AWS ECR | Provider plus ProviderConfig. |
-| Create one AWS-specific repository | Direct managed resource. |
-| Offer a standardized secure repository to teams | XRD, XR, Composition, and provider-managed resources. |
-| Generate a variable number of resources | Composition Function. |
-| Ship the whole platform capability | Configuration package. |
+| See every object in the request path | [How Crossplane's components turn a request into a resource](component-model.md) |
+| Understand provider identity and API access | [How a Crossplane provider reaches an external API](providers-and-authentication.md) |
+| Understand MR drift, import, and deletion | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) |
+| Design the XRD and Composition | [Compositions](compositions.md) |
+| See an application delivery design | [Application delivery platform API](application-delivery-platform-api.md) |
 
-## ProviderConfig ownership
+## Check your understanding
 
-ProviderConfig objects decide which credentials and target account a provider
-uses. They are not interchangeable with the provider package or Composition.
+1. Why can both routes end at the same provider controller?
+2. What can the XRD validate, and what must the Composition
+   actually implement?
+3. Why might a direct MR be the clearer choice for a specialized
+   platform operator?
+4. What lower-level permissions could let a user bypass a
+   supposedly standardized platform API?
 
-| Configuration type | Scope | Good use |
-| --- | --- | --- |
-| `ProviderConfig` | Namespace | Tenant, team, or environment-specific AWS identity. |
-| `ClusterProviderConfig` | Cluster | Deliberately shared platform identity. |
+## Explore further
 
-Keep application consumers from selecting privileged provider configs unless
-that choice is part of the platform contract. Combine Kubernetes RBAC,
-namespaces, provider IAM roles, admission policy, and AWS guardrails to limit
-blast radius.
+- [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
+  explains provider-defined external objects.[^crossplane-managed]
+- [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
+  explains the platform API schema.[^crossplane-xrds]
+- [Compositions](https://docs.crossplane.io/latest/composition/compositions/)
+  explains how an XR produces desired resources.[^crossplane-compositions]
+- [Configurations](https://docs.crossplane.io/latest/packages/configurations/)
+  explains package distribution.[^crossplane-configurations]
+- [Back to Crossplane](index.md).
 
-## Choosing the right level of abstraction
-
-Start with a direct MR when learning a provider, importing a small number of
-resources, or exposing cloud-specific controls is intentional. Create an XR and
-Composition when the same safe pattern will be requested repeatedly and users
-should not need to understand every provider field. Package the capability when
-it needs to be consistently installed and promoted across control planes.
-
-The [Application delivery platform API](application-delivery-platform-api.md)
-uses this model to generate an ECR repository and Kubernetes delivery resources
-from one request.
-
-## Related links
-
-- [Application delivery platform API](application-delivery-platform-api.md)
-- [Providers and authentication](providers-and-authentication.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
-- [Crossplane compositions](compositions.md)
-- [Crossplane component model](component-model.md)
-- [Crossplane providers documentation](https://docs.crossplane.io/latest/packages/providers/)
-- [Crossplane compositions documentation](https://docs.crossplane.io/latest/composition/compositions/)
-- [Upbound AWS ECR provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ecr)
-- [Back to Crossplane index](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^crossplane-overview]: [Crossplane, What's Crossplane?](https://docs.crossplane.io/latest/whats-crossplane/), source record `crossplane-overview`.
+[^crossplane-managed]: [Crossplane, Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/), source record `crossplane-managed`.
+[^crossplane-xrds]: [Crossplane, Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), source record `crossplane-xrds`.
+[^crossplane-compositions]: [Crossplane, Compositions](https://docs.crossplane.io/latest/composition/compositions/), source record `crossplane-compositions`.
+[^crossplane-configurations]: [Crossplane, Configurations](https://docs.crossplane.io/latest/packages/configurations/), source record `crossplane-configurations`.

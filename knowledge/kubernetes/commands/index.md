@@ -1,17 +1,18 @@
 # Kubernetes commands
 
-Command references for `kubectl` and day-to-day cluster inspection.
+Task-led `kubectl` guides for checking a target, reading workload
+evidence, and making a reviewed change.
 
 ## Articles
 
 | Article | Purpose |
 | --- | --- |
-| [Daily usage](daily-usage.md) | Context, namespace, inspection, logs, events, exec, and port-forward commands. |
-| [Common commands](common-commands.md) | Apply, diff, rollout, scale, delete, selectors, and output formatting. |
-| [Advanced commands](advanced-commands.md) | JSONPath, API discovery, dry runs, server-side apply, debug, node maintenance, and auth checks. |
-| [Workflows](workflows.md) | Command sequences for deployments, rollback, service debugging, and resource pressure checks. |
-| [eksctl commands for Amazon EKS](eksctl-commands.md) | AWS-native EKS commands for clusters, node groups, add-ons, IAM access, Pod Identity, Fargate, and logging. |
-| [kubectl basics](kubectl-basics.md) | Common commands for inspecting workloads and cluster resources. |
+| [Begin a safe kubectl inspection session](daily-usage.md) | Confirm the context and namespace, scan workloads, and choose an evidence-led next step. |
+| [Review and apply a Kubernetes manifest change](common-commands.md) | Compare a reviewed Deployment file with live state, apply it, and verify rollout and user outcome. |
+| [Inspect a Kubernetes API field before changing a manifest](advanced-commands.md) | Compare the field schema, live Deployment, and proposed file with a server dry run. |
+| [Investigate Kubernetes resource pressure](workflows.md) | Separate scheduling requests, container limits, and node pressure using Pod and node evidence. |
+| [Choose the right control path for an EKS change](eksctl-commands.md) | Identify the Kubernetes, EKS compute, or IAM owner before choosing a procedure. |
+| [Inspect a Deployment with kubectl](kubectl-basics.md) | Confirm the cluster, follow a Deployment to its Pods, then read states, events, and logs. |
 
 ## Official documentation
 

@@ -11,7 +11,7 @@ planned focused guides.
 
 | Article | Purpose |
 | --- | --- |
-| [Undo and recovery](undo-and-recovery.md) | Safely inspect, undo, and recover local Git changes, staged changes, pushed commits, local resets, lost branch tips, and untracked cleanup. |
+| [Undo and recovery](undo-and-recovery.md) | Locate a mistake before changing anything, then choose a path-scoped file fix, revert, private-history recovery, or scoped cleanup. |
 
 ## Expected future content
 

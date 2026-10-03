@@ -1,134 +1,140 @@
 ---
 type: "Explanation"
 title: "Stateless application patterns on AWS"
-description: "Use this guide to move application compute toward replaceable, horizontally scalable replicas while keeping required state in services designed to persist, replicate, secure, and recover it."
+description: "Learn how replaceable app replicas can use shared storage and queues without losing uploads, sessions, or work in progress."
 tags: [cloud, aws, architecture]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: aws-stateless
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html
+    title: AWS Well-Architected - Make systems stateless where possible
+  - id: aws-s3
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
+    title: Amazon S3 - What is Amazon S3?
+  - id: aws-sqs-delivery
+    resource: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues-at-least-once-delivery.html
+    title: Amazon SQS - At-least-once delivery
+  - id: aws-lambda-design
+    resource: https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html
+    title: AWS Lambda - Designing Lambda applications
 ---
 
 # Stateless application patterns on AWS
 
-## Purpose
+## The idea in plain language
 
-Use this guide to move application compute toward replaceable, horizontally scalable replicas while keeping required state in services designed to persist, replicate, secure, and recover it.
+A replaceable app replica should not be the only place that holds something
+users still need. Move **required state** to a suitable shared system, and
+let the app replica read it when handling a request. The goal is that a new
+replica can take over without needing the old replica's private memory or
+disk.[^aws-stateless]
 
-## Core rule
+“Stateless” describes the compute layer in this pattern. The whole
+application still has state, and its shared systems need their own access,
+availability, backup, and recovery design. Read [stateful vs.
+stateless](stateful-vs-stateless.md) first for the basic distinction.
 
-```text
-If a replica can be destroyed and recreated without losing required
-information or continuity, it behaves as stateless compute.
+## One picture of the pattern
+
+```mermaid
+flowchart LR
+  request["Request"] --> router["Router or load balancer"]
+  router --> a["Replaceable app A"]
+  router --> b["Replaceable app B"]
+  a --> state["Shared required state"]
+  b --> state
+  a --> queue["Shared work queue"]
+  b --> queue
 ```
 
-Stateless does not mean the application has no data. It means the compute instance does not privately own required history.
+Text alternative: requests can reach either app replica. Both replicas
+access the same required state; they can also submit work to a queue that
+outlives an individual app process. The drawing is a design model, not a
+deployed AWS architecture or a guarantee of availability.
 
-## How it works
+## Put each kind of information in the right place
 
-Stateless compute moves durable state out of the replica and into shared services.
-
-```text
-ALB
-  -> app replica A
-  -> app replica B
-  -> app replica C
-        |
-        +-> DynamoDB, RDS, S3, ElastiCache, SQS, MSK, Step Functions
-```
-
-Any healthy replica can serve the next request because required state is retrieved from shared stores or included in the request.
-
-## Components
-
-| Component | Role |
-| --- | --- |
-| Load balancer | Routes requests only to healthy replicas. |
-| Auto Scaling group, ECS service, or Kubernetes Deployment | Maintains replaceable compute capacity. |
-| Shared data store | Holds authoritative state. |
-| Configuration store | Provides reproducible runtime settings. |
-| Secret store | Provides credentials without baking them into images. |
-| Queue or workflow service | Holds work while workers remain replaceable. |
-| Observability pipeline | Keeps logs and metrics after a replica is gone. |
-
-## State inventory
-
-| State type | Avoid storing only in | Prefer |
+| Information | If kept only in one replica | A possible shared pattern |
 | --- | --- | --- |
-| Login session | Instance RAM or container filesystem. | Shared session store or token model. |
-| User uploads | Local disk or container layer. | S3 or EFS where POSIX access is required. |
-| Job progress | Process memory. | DynamoDB, RDS, SQS, Step Functions, or Kafka offsets. |
-| Configuration | Manual SSH changes. | Image, IaC, Parameter Store, Secrets Manager, or AppConfig. |
-| Logs | Local filesystem only. | CloudWatch Logs or another centralized store. |
-| Cache | Authoritative local cache. | ElastiCache, MemoryDB, or rebuildable local cache. |
+| Uploaded image | It can vanish when that replica is replaced. | Store the object in S3 and keep its identifier with the user's record.[^aws-s3] |
+| Login session or cart | A different replica cannot continue the interaction. | Use a shared session store or a design where each request carries what the app needs.[^aws-stateless] |
+| Background work request | A process crash can erase work that was only in memory. | Put the request in a durable queue or workflow service; design retry behavior.[^aws-lambda-design] |
+| Temporary calculation | Usually safe to recompute if the request is retried. | Keep it local only when loss and recomputation are acceptable. |
+| Cache copy | May disappear with the replica. | Rebuild from the authoritative store, or use a shared cache if recovery time requires it. |
 
-## Conversion workflow
+These are categories, not a prescription to use every listed AWS service.
+For each item, decide what must survive, how it is read, what consistency it
+needs, and who can access it. A shared store can become a bottleneck or
+failure point if its own design is ignored.
 
-1. List every piece of state the process uses.
-2. Mark each item as authoritative, derived, or disposable.
-3. Move authoritative state to a managed or shared service.
-4. Make configuration reproducible from code or approved runtime stores.
-5. Send logs, metrics, and traces off the replica.
-6. Add graceful shutdown so in-flight work drains or checkpoints.
-7. Terminate a healthy replica in a controlled test.
+## Follow an upload
 
-### Prove replaceability
+Imagine an app that receives a profile photo. This is an invented example;
+no upload or AWS resource was created for this page.
 
-```bash
-aws autoscaling terminate-instance-in-auto-scaling-group \
-  --instance-id i-0123456789abcdef0 \
-  --should-decrement-desired-capacity false
-```
+1. The app receives the photo and writes it as an object in a protected S3
+   bucket. S3 is an object store; an object has a key that the app can keep
+   with the user's record.[^aws-s3]
+2. The app saves the object's key in an authoritative user record only after
+   confirming the upload succeeded. This ordering is a design choice for
+   this example, not a universal transaction guarantee between two stores.
+3. A later request may land on another app replica. That replica reads the
+   user record and retrieves the object with appropriate permissions.
 
-What it does: removes one Auto Scaling instance while keeping desired capacity, forcing replacement.
+If the first replica disappears after step 2, the photo remains in the
+shared store, assuming the store and its access path are healthy. If it
+disappears between steps 1 and 2, the system may have an unreferenced object
+that needs cleanup. If step 2 happens before the upload succeeds, the record
+may point to a missing object. A real design must handle those partial
+failures and decide when to retry or clean up.
 
-> [!WARNING]
-> Run replacement tests only in an approved environment and window. Confirm the target is an interchangeable application replica, not a stateful database, broker, firewall, or manually configured singleton.
+## Replaceable workers still need careful retries
 
-### Kubernetes replacement example
+A queue can preserve a work request while workers start and stop. It does
+not mean processing happens exactly once. For example, AWS documents that
+an SQS **standard queue** may deliver a message more than once; consumers
+should be idempotent, meaning that processing the same request twice does
+not cause an unwanted second effect.[^aws-sqs-delivery] AWS gives the same
+design principle for Lambda event processing.[^aws-lambda-design]
 
-```bash
-kubectl delete pod -n payments -l app=payments-api
-kubectl rollout status deployment/payments-api -n payments
-```
+An illustrative payment worker could store a request ID with the completed
+payment and check it before charging again. The exact payment-provider API,
+transaction boundary, and failure behavior must be designed and tested for
+the real system; a queue alone cannot supply that proof.
 
-What it does: removes current application Pods and verifies that the Deployment replaces them successfully.
+## What to check before claiming replaceability
 
-## AWS patterns
+- Can a new replica start from code and configuration without manual edits?
+- Where are sessions, uploads, job progress, logs, and credentials stored?
+- Can a request be retried or duplicated without corrupting state?
+- If a replica exits during work, what resumes or compensates for it?
+- Can the shared state system meet the application’s availability and
+  recovery goals under the expected failure?
 
-| Workload | Stateless pattern | Stateful dependency |
-| --- | --- | --- |
-| Web API on ECS or EKS | Multiple interchangeable tasks or Pods. | RDS, DynamoDB, ElastiCache, S3. |
-| Background worker | Replaceable workers consuming from a queue. | SQS backlog, Kafka topic, Step Functions state. |
-| Lambda function | Treat every invocation as independent. | External state in AWS services. |
-| WebSocket service | Externalize connection registry and user state. | DynamoDB, API Gateway WebSocket connection IDs. |
-| Batch job | Checkpoint progress externally. | S3, database, queue, or workflow engine. |
+These questions are a design review, not evidence that a particular
+deployment passed a failure test. For an operational decision, continue to
+the [stateful design checklist](stateful-design-decision-checklist.md).
 
-## Common traps
+## Check your understanding
 
-| Trap | Why it hurts |
-| --- | --- |
-| Sticky sessions as the only session strategy. | Target failure still loses local session state. |
-| Writing uploads to container layers. | Data disappears when the container is replaced. |
-| Treating Lambda `/tmp` as durable. | Execution environment reuse is not guaranteed. |
-| Keeping logs only on instances. | Failed or replaced replicas remove diagnostic context. |
-| Scaling down workers without draining. | In-flight jobs can be repeated or abandoned. |
+- Why can two interchangeable app replicas still depend on a stateful
+  database or object store?
+- What can go wrong between writing an S3 object and saving its key?
+- Why must a worker handle a duplicate SQS standard-queue message?
 
-## Validation checklist
+## Official documentation for deeper study
 
-- A new replica starts without manual SSH or console edits.
-- Terminating a replica does not lose uploads, sessions, or job progress.
-- Logs and metrics remain available after termination.
-- Health checks remove bad replicas before users see errors.
-- Graceful shutdown drains in-flight requests or checkpoints work.
-- Backups protect state stores, not disposable compute nodes.
+- [AWS Well-Architected stateless guidance](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html) explains why to move session and user data out of replaceable compute.
+- [Amazon S3 introduction](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) explains objects, keys, access, and storage choices.
+- [SQS at-least-once delivery](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues-at-least-once-delivery.html) explains duplicate delivery for standard queues.
+- [Designing Lambda applications](https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html) covers replaceable execution environments and idempotency.
 
-## Related links
+See the [AWS architecture index](index.md) for related design choices.
 
-- Official documentation: [AWS Well-Architected stateless services guidance](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html)
-- Official documentation: [AWS Lambda application design](https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html)
-- [Stateful vs. stateless](stateful-vs-stateless.md)
-- [Stateful networking](../networking/stateful-networking.md)
-- [Back to AWS architecture](index.md)
-- [Back to AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+[^aws-stateless]: [Make systems stateless where possible](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html).
+[^aws-s3]: [What is Amazon S3?](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html).
+[^aws-sqs-delivery]: [Amazon SQS at-least-once delivery](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues-at-least-once-delivery.html).
+[^aws-lambda-design]: [Designing Lambda applications](https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html).

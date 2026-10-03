@@ -29,7 +29,7 @@ Status: Initial outline
 
 | Topic | Start here | Follow-up |
 | --- | --- | --- |
-| Apigee API management | [Apigee API management](gcloud/apigee.md) | Understand API proxies, policies, products, developer apps, environments, and hybrid deployment trade-offs. |
+| Apigee API management | [Apigee API management](gcloud/apigee.md) | See how a proxy handles a request and how a product grants app access. |
 
 ## Edge and CDN quick paths
 

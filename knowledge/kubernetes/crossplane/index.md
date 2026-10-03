@@ -96,7 +96,7 @@ What it does: lets a platform team hide encryption, public-access blocking, logg
 
 ## Crossplane versus Terraform
 
-For the focused decision guide, read [Terraform vs Crossplane](terraform-vs-crossplane.md).
+For the focused decision guide, read [When to use Terraform or Crossplane](terraform-vs-crossplane.md).
 
 | Area | Terraform | Crossplane |
 | --- | --- | --- |
@@ -149,15 +149,15 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 | Article | Purpose |
 | --- | --- |
-| [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
-| [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
-| [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
-| [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
-| [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
-| [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
+| [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md) | See what the platform team defines, what one XR asks for, and which checks establish delivery. |
+| [How Crossplane's components turn a request into a resource](component-model.md) | Follow an invented bucket request from XRD and XR through Composition, managed resource, provider, and external API; then place advanced components around that path. |
+| [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) | Follow desired state, provider observation, drift, import, pause, and deletion for one invented bucket. |
+| [How a Crossplane provider reaches an external API](providers-and-authentication.md) | Separate provider package health, provider configuration, Pod credentials, and external authorization for one invented bucket. |
+| [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md) | Compare direct provider-specific requests with a small XR and Composition backed by the same provider. |
+| [How a Crossplane Composition fulfills one application request](compositions.md) | Follow an invented WebApplication from XRD validation through function output, composed Deployment and Service, revision choice, and user-path check. |
 | [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
-| [Terraform vs Crossplane](terraform-vs-crossplane.md) | Compare run-based Terraform workflows with Crossplane reconciliation and platform APIs, including what Crossplane solves that Terraform does not solve naturally. |
+| [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
 | [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
 | [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
@@ -169,15 +169,15 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 ## Related links
 
-- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
-- [Component model](component-model.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
-- [Providers and authentication](providers-and-authentication.md)
-- [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
-- [Crossplane compositions](compositions.md)
+- [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md)
+- [How Crossplane's components turn a request into a resource](component-model.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
+- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
+- [How a Crossplane Composition fulfills one application request](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
-- [Terraform vs Crossplane](terraform-vs-crossplane.md)
+- [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Professional operating model](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)

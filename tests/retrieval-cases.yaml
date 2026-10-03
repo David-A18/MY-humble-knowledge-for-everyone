@@ -4,6 +4,34 @@ cases:
     question: How do I discard an unstaged edit without rewriting shared history?
     expected_paths: [knowledge/git/troubleshooting/undo-and-recovery.md]
     required_source_ids: [git-restore]
+  - id: git-edit-stage-commit-push
+    question: As a beginner, what happens to my change between editing a file, staging it, committing it, and pushing it in Git?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-reset-demystified]
+  - id: cdn-cache-key-personalized-leak
+    question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-cache-key]
+  - id: oidc-signin-versus-workload-federation
+    question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [openid-connect-core, github-actions-oidc-aws]
+  - id: green-pipeline-is-not-working-deployment
+    question: If CI passed and the Kubernetes rollout completed, does that prove the deployment works for users?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cross-topic-guides/github-actions-with-kubernetes.md]
+    required_source_ids: [kubernetes-deployments]
+  - id: terraform-saved-plan-artifact-sensitivity
+    question: Is it safe to store a saved Terraform plan file as a CI artifact, and why must apply in CI sit behind an approval gate?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-terraform.md]
+    required_source_ids: [terraform-plan, terraform-apply]
+  - id: terraform-s3-backend-locking-default
+    question: Does the Terraform S3 backend lock state by default, and is DynamoDB locking still the recommended approach?
+    expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
+    required_source_ids: [terraform-s3-backend]
+  - id: gitops-prune-and-self-heal-defaults
+    question: If I delete a manifest from Git or edit a resource by hand, will Argo CD or Flux delete or revert it by default?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md, knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-automated-sync, flux-kustomization]
   - id: local-kubernetes-learning
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
@@ -11,7 +39,7 @@ cases:
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
-    required_source_ids: [terraform-cli, terraform-state]
+    required_source_ids: [terraform-data, terraform-state]
   - id: crossplane-provider-authentication
     question: How do Crossplane providers authenticate to external APIs?
     expected_paths: [knowledge/kubernetes/crossplane/providers-and-authentication.md]
@@ -23,7 +51,7 @@ cases:
   - id: kafka-duplicate-effects
     question: When can at-least-once Kafka processing cause duplicate side effects?
     expected_paths: [knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md]
-    required_source_ids: [apache-kafka-documentation]
+    required_source_ids: [kafka-design]
   - id: velero-restore
     question: How do I create and inspect a Velero restore?
     expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]

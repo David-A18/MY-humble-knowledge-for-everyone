@@ -8,7 +8,7 @@ Cost visibility, allocation, accountability, and optimization practices for AWS.
 
 | Article | Purpose |
 | --- | --- |
-| [Cost allocation tags](cost-allocation-tags.md) | Define and use tags for ownership and cost reporting. |
+| [Cost allocation tags](cost-allocation-tags.md) | Understand tag activation, reporting delays, historical backfill, and costs that need another allocation rule. |
 
 ## Expected future content
 

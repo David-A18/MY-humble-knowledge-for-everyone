@@ -1,213 +1,191 @@
 ---
 type: "Explanation"
 title: "Kafka delivery guarantees and failure handling"
-description: "Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records."
+description: "Understand how a Kafka event can be lost or repeated across publishing, processing, and offset commits, then protect the business effect."
 tags: [databases, kafka]
 status: draft
 maturity: draft
 audience: "Engineers designing Kafka producers, consumers, and recovery paths"
 maintainer: unassigned
 sources:
-  - id: apache-kafka-documentation
-    resource: https://kafka.apache.org/documentation/
-    title: Apache Kafka documentation
-  - id: kafka-python-consumer
-    resource: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
-    title: kafka-python KafkaConsumer API
+  - id: kafka-design
+    resource: https://kafka.apache.org/41/design/design/
+    title: Apache Kafka 4.1 - Design
+  - id: kafka-producer-configs
+    resource: https://kafka.apache.org/41/configuration/producer-configs/
+    title: Apache Kafka 4.1 - Producer Configs
+  - id: kafka-topic-configs
+    resource: https://kafka.apache.org/41/configuration/topic-configs/
+    title: Apache Kafka 4.1 - Topic Configs
+  - id: kafka-producer-api
+    resource: https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
+    title: Apache Kafka 4.1 - KafkaProducer API
+  - id: kafka-consumer-api
+    resource: https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html
+    title: Apache Kafka 4.1 - KafkaConsumer API
+  - id: debezium-outbox
+    resource: https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html
+    title: Debezium - Outbox Event Router
 stale_after: 2026-12-19
 ---
 
 # Kafka delivery guarantees and failure handling
 
-## Purpose
+## Start with the outcome, not the label
 
-Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records.
+An event reaching Kafka, a consumer reading it, and a business action
+finishing are **three different outcomes**. Kafka's at-most-once,
+at-least-once, and exactly-once terms describe specific delivery and
+processing boundaries. They do not by themselves prove that an external
+database, shipping service, or email provider performed one action exactly
+once.[^kafka-design]
 
-Status: Draft
-Audience: Engineers designing Kafka producers, consumers, and recovery paths
-Page type: Architecture and operations guide
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Apache Kafka current documentation; kafka-python consumer API used by the example
-Validation evidence: Source reviewed against official Apache Kafka semantics documentation and kafka-python API documentation; Python example syntax was statically checked in the earlier correction batch
-Known limitations: Not executed against a live Kafka broker or consumer group during this review
-Next review: After broker-backed example execution or by 2026-12-19
-
-## Components
-
-| Component | Responsibility |
+| Delivery label | What it can mean for the consumer's work |
 | --- | --- |
-| Producer | Serializes records, assigns keys, sends batches, and retries delivery. |
-| Broker leader | Appends records to the partition log and acknowledges writes. |
-| Follower replicas | Copy partition data for availability. |
-| Consumer | Polls records and performs business processing. |
-| Offset commit | Records the consumer group's progress. |
-| Retry topic | Holds records that should be attempted later. |
-| Dead-letter topic | Holds records that could not be processed after bounded attempts. |
-| Outbox table | Bridges database transactions and event publication. |
+| At most once | Commit progress before work; a crash can skip the work. |
+| At least once | Finish work before committing; a crash can repeat the work. |
+| Exactly once | Under Kafka's transaction conditions, a Kafka output and consumed offset can commit together; this does not include an unrelated external effect.[^kafka-design] |
 
-## How failures move through Kafka
+If partitions and offsets are new, read [Kafka fundamentals](fundamentals.md)
+and [consumer groups, lag, and replay](consumer-groups-lag-and-replay.md)
+first. Here the reader outcome is to spot the failure window, then choose
+what must be safe to repeat.
 
-```text
-producer retry
-  -> broker append
-  -> consumer poll
-  -> side effect
-  -> offset commit
+## One event through the boundary
+
+Suppose an invented `OrderPaid` event has `eventId: evt-17` and
+`orderId: order-42`. A fulfillment consumer creates a shipment in a
+separate database, then commits its Kafka offset. In this **illustrative
+sequence**, one paid order should create one shipment.
+
+```mermaid
+flowchart LR
+  producer["Orders producer"] --> log["Kafka partition:<br/>OrderPaid evt-17"]
+  log --> consumer["Fulfillment consumer"]
+  consumer -- "1. create shipment" --> db["External shipment database"]
+  consumer -- "2. commit position" --> offset["Kafka group offset"]
+  db -. "crash may happen here" .-> offset
 ```
 
-Each arrow can fail. The safest design decides what happens if the process crashes before or after every step.
+Text alternative: the producer publishes `evt-17` to a Kafka partition. The
+fulfillment consumer reads it, creates a shipment in an external database,
+then commits its Kafka group position. The dotted line marks the interval
+after the database effect but before the offset commit; a crash there can
+cause the event to be read again. Kafka does not make that database write
+and offset commit one transaction.[^kafka-design]
 
-## Delivery guarantee choices
+Think of an offset as a bookmark in a numbered work queue. If you mark the
+page *before* doing the job, a crash can skip the job. If you do the job
+*before* marking the page, a crash can make you do it again. The analogy
+stops at Kafka's partitions, retained records, group reassignments, and
+producer transactions; the bookmark is not evidence of a shipment.
 
-| Guarantee | Meaning | Common fit |
+| Order of actions | Crash window | Business risk |
 | --- | --- | --- |
-| At-most-once | A record might be lost, but is not intentionally retried after processing starts. | Low-value telemetry where loss is acceptable. |
-| At-least-once | A record is retried until processed, but duplicates can happen. | Most business event consumers with idempotency. |
-| Exactly-once within Kafka | Kafka read-process-write can be transactional. | Stream processing that writes back to Kafka. |
+| Commit offset, then create shipment | After commit, before shipment. | Restart may skip a shipment that never happened. |
+| Create shipment, then commit offset | After shipment, before commit. | Restart can read `evt-17` again and request a duplicate shipment. |
+| Make shipment creation repeat-safe, then commit | The event may still replay. | Repeating it finds the existing result instead of making another shipment, if the deduplication rule and write are correctly coordinated. |
 
-> [!IMPORTANT]
-> Exactly-once Kafka processing does not make an external payment provider, email service, database, or HTTP API exactly-once. Define the transactional boundary before relying on the label.
+The consumer's **current position** advances as it polls, while its
+**committed position** is what it resumes from after a failure. The Kafka
+client supports automatic or application-controlled offset commits, so the
+processing order must match the chosen client and error
+path.[^kafka-consumer-api]
 
-## Producer safety settings
+For the invented one-shipment-per-order rule, a unique `orderId` in the
+shipment database can reject a second shipment request. Another design
+records `eventId` as processed in the **same database transaction** as the
+business change. A processed-ID record written separately *before* the
+shipment would simply create another loss window. If the effect is an
+external API call, use that provider's documented idempotency mechanism or
+reconcile the outcome; a local offset commit cannot make an unrelated API
+transactional. These are design examples, not a tested implementation.
 
-| Setting | Typical production direction | Why |
-| --- | --- | --- |
-| `acks` | `all` for important records. | Waits for stronger broker acknowledgement. |
-| `enable.idempotence` | `true` where supported. | Reduces duplicates from producer retries. |
-| `retries` | Enabled with bounded delivery timeout. | Handles transient broker or network failures. |
-| `compression.type` | Test `zstd`, `lz4`, or another supported codec. | Reduces network and storage pressure. |
-| Key selection | Stable business key. | Preserves ordering within that key. |
+## The producer has a different retry boundary
 
-### Baseline producer properties
+The producer can retry a send whose result is uncertain. In Kafka 4.1,
+`acks=all` waits for in-sync replica acknowledgements, while
+`enable.idempotence=true` prevents the producer's own retries from writing
+another copy of the same record when its required settings are satisfied.
+Idempotence is enabled by default unless conflicting settings disable it.
+The durability of `acks=all` also depends on the topic's replication and
+minimum in-sync replica settings.[^kafka-producer-configs][^kafka-topic-configs]
 
-```properties
-acks=all
-enable.idempotence=true
-compression.type=zstd
-delivery.timeout.ms=120000
-request.timeout.ms=30000
-linger.ms=5
-```
+That protection does **not** recognize a new application-level send of the
+same business event, and the producer API limits its idempotence guarantee
+to one producer session.[^kafka-producer-api] Nor can Kafka settings alone
+make an application's database commit and event publication atomic. When a
+service must save an order change and later publish its event, a
+transactional outbox writes both the change and an outbox row in one local
+database transaction; a separate publisher or change-data-capture connector
+then publishes the row. Debezium documents one such outbox
+route.[^debezium-outbox] The publisher and downstream consumers still need a plan
+for repeated delivery.
 
-What it does: starts with safer acknowledgement and retry behavior, then leaves throughput and latency tuning to load tests.
+## When processing fails repeatedly
 
-### Manual commit consumer pattern with kafka-python
+First separate a **transient failure** (for example, a dependency briefly
+unavailable) from a record that consistently fails (for example, a format
+the consumer cannot read). A consumer design may retry with backoff and a
+bounded attempt count, then move an unresolved record to a restricted
+quarantine or dead-letter topic for inspection. This is an **application
+pattern**, not a Kafka broker guarantee. A separate retry topic can also
+change when records are processed relative to later events, so document
+whether per-key order matters before choosing it.
 
-This example uses `kafka-python` and shows the polling shape for that client. It disables automatic commits so offsets advance only after this loop processes the returned records and calls `commit()`.
+Do not treat a dead-letter topic as successful processing. It needs an
+owner, a repair or replay path, retention, and access controls suitable for
+the original payload. Otherwise the queue can hide a failed business
+outcome while consumer lag appears healthy. See [Kafka operations](operations.md)
+for signals that separate broker progress from the user outcome.
 
-```python
-from kafka import KafkaConsumer
+## Where “exactly once” applies
 
-consumer = KafkaConsumer(
-    "orders.v1",
-    bootstrap_servers=["localhost:9092"],
-    group_id="payment-consumer",
-    enable_auto_commit=False,
-    auto_offset_reset="earliest",
-)
+Kafka transactions can put output records and consumed offsets in one
+Kafka transaction for a read-process-write flow between Kafka topics;
+consumers that should hide aborted transactions use `read_committed`
+isolation. Kafka's design documentation says an external destination needs
+cooperation with that destination for an equivalent end-to-end
+outcome.[^kafka-design] For `evt-17`, the shipping database is outside the Kafka
+transaction. Call the result **repeat-safe shipping** only after testing
+the database or provider rule across retries and crashes.
 
-records_by_partition = consumer.poll(timeout_ms=1000, max_records=100)
+## Check your understanding
 
-for _topic_partition, records in records_by_partition.items():
-    for record in records:
-        headers = dict(record.headers or [])
-        event_id = headers.get("event-id")
-        process_idempotently(event_id, record.value)
+1. What can happen if the consumer commits the offset before creating the
+   shipment and then crashes?
+2. Why can `evt-17` appear again after the shipment was created?
+3. Which duplicate does producer idempotence address, and which duplicate
+   does it leave to the application?
+4. Why does a Kafka topic-to-topic transaction not prove that an external
+   shipping request happened exactly once?
 
-consumer.commit()
-```
+## Official documentation for deeper study
 
-What it does: commits progress only after processing succeeds. If processing raises an exception before `consumer.commit()`, the offsets are not advanced and the batch can be replayed after restart. If processing succeeds for some records and then fails later in the same batch, those successful side effects can happen again unless `process_idempotently` records a stable event ID or operation ID.
+- [Kafka 4.1 design](https://kafka.apache.org/41/design/design/) explains
+  delivery semantics, offset commits, and transaction scope.
+- [Kafka 4.1 producer configurations](https://kafka.apache.org/41/configuration/producer-configs/)
+  documents acknowledgements, retries, and idempotence conditions.
+- [KafkaConsumer API](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html)
+  documents current and committed positions.
+- [Debezium Outbox Event Router](https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html)
+  documents one implementation of the outbox pattern.
 
-## Consumer failure patterns
+Continue with [consumer groups, lag, and replay](consumer-groups-lag-and-replay.md)
+or return to the [Kafka index](index.md).
 
-| Failure | Symptom | Safer response |
-| --- | --- | --- |
-| Poison record | Same record fails repeatedly. | Route to a dead-letter topic after bounded retries. |
-| Slow dependency | Lag grows and retries amplify traffic. | Add backoff, circuit breaking, and dependency protection. |
-| Crash after side effect | Duplicate business action on restart. | Use idempotency keys or an inbox table. |
-| Bad schema | Deserialization failures. | Validate compatibility before rollout and isolate bad records. |
-| Partition hot spot | One partition stays behind. | Revisit key choice and topic partition strategy. |
+## Review boundary
 
-## Retry topology
+The earlier version recorded a source review on 2026-09-19 and a static
+syntax check of a Python example. That example is no longer on this page.
+This rewrite was checked against the cited upstream documentation, but no
+Kafka broker, external shipment database, crash sequence, or reader test
+was run. The existing `stale_after` date is a review trigger, not proof that
+the current explanation is verified. The page remains `draft`.
 
-Avoid infinite tight retry loops in the main consumer. A common pattern is:
-
-```text
-orders.v1
-  -> payment-consumer
-  -> payment-retry-5m
-  -> payment-retry-1h
-  -> payment-dlq
-```
-
-What it does: gives transient failures time to recover while preserving a final place for records that need human or automated repair.
-
-## Dead-letter record contents
-
-Include enough information for repair:
-
-- original topic, partition, and offset,
-- original key and headers,
-- error class and message,
-- consumer name and version,
-- failed timestamp,
-- retry count,
-- correlation ID or trace ID,
-- original payload or pointer to a secure payload store.
-
-> [!WARNING]
-> Do not put secrets, tokens, or sensitive personal data into dead-letter topics unless the topic has the same security controls and retention policy as the source data.
-
-## Transactional outbox
-
-Use a transactional outbox when a service must update its database and publish an event based on that update.
-
-```text
-Application transaction
-  -> write order row
-  -> write outbox row
-
-Publisher or CDC connector
-  -> reads outbox row
-  -> publishes Kafka event
-```
-
-What it does: avoids the unsafe sequence where the database commit succeeds but the Kafka publish fails, or the Kafka publish succeeds but the database commit rolls back.
-
-### Outbox table sketch
-
-```sql
-CREATE TABLE outbox_events (
-  event_id UUID PRIMARY KEY,
-  aggregate_type TEXT NOT NULL,
-  aggregate_id TEXT NOT NULL,
-  event_type TEXT NOT NULL,
-  payload JSONB NOT NULL,
-  created_at TIMESTAMPTZ NOT NULL,
-  published_at TIMESTAMPTZ
-);
-```
-
-What it does: stores the event in the same database transaction as the business change so a publisher or CDC connector can publish it later.
-
-## Idempotency checklist
-
-- Include an event ID or operation ID.
-- Store processed IDs or enforce unique constraints.
-- Use conditional writes where available.
-- Make external API calls with provider-supported idempotency keys.
-- Keep retry handlers from changing the business meaning of an event.
-- Document whether replay is allowed for every topic.
-
-## Related links
-
-- Official documentation: [Kafka producer configuration](https://kafka.apache.org/documentation/#producerconfigs)
-- Official documentation: [Kafka design and guarantees](https://kafka.apache.org/documentation/#design)
-- [Topic and event design](topic-and-event-design.md)
-- [Consumer groups, lag, and replay](consumer-groups-lag-and-replay.md)
-- [Kafka operations](operations.md)
-- [Back to Kafka](index.md)
-- [Back to databases index](../index.md)
-- [Back to root index](../../../README.md)
+[^kafka-design]: [Apache Kafka 4.1: Design](https://kafka.apache.org/41/design/design/).
+[^kafka-producer-configs]: [Apache Kafka 4.1: Producer Configs](https://kafka.apache.org/41/configuration/producer-configs/).
+[^kafka-topic-configs]: [Apache Kafka 4.1: Topic Configs](https://kafka.apache.org/41/configuration/topic-configs/).
+[^kafka-producer-api]: [Apache Kafka 4.1: KafkaProducer API](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html).
+[^kafka-consumer-api]: [Apache Kafka 4.1: KafkaConsumer API](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html).
+[^debezium-outbox]: [Debezium: Outbox Event Router](https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html).

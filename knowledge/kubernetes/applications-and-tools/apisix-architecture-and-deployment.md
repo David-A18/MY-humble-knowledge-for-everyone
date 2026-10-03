@@ -1,200 +1,185 @@
 ---
-type: "Explanation"
-title: "APISIX architecture and deployment"
-description: "Use this guide to understand how Apache APISIX, the APISIX Ingress Controller, Gateway API, and Kubernetes Services fit together before choosing a deployment mode."
-tags: [kubernetes, applications-and-tools]
+type: Explanation
+title: How the APISIX gateway and controller fit together
+description: Separate the live request path, Kubernetes route translation, and APISIX configuration storage before choosing a deployment mode.
+tags: [kubernetes, apisix, gateway-api, ingress, deployment, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning Kubernetes platform learner
+maintainer: unassigned
+sources:
+  - id: apisix-deployment-modes
+    resource: https://apisix.apache.org/docs/apisix/deployment-modes/
+    title: Apache APISIX - Deployment modes
+  - id: apisix-controller-architecture
+    resource: https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/
+    title: APISIX Ingress Controller - Deployment Architecture
+  - id: apisix-controller-install
+    resource: https://apisix.apache.org/docs/ingress-controller/install/
+    title: APISIX Ingress Controller - Install with Helm
+  - id: apisix-gateway-api
+    resource: https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/
+    title: APISIX Ingress Controller - Gateway API support
+  - id: apisix-resources
+    resource: https://apisix.apache.org/docs/ingress-controller/concepts/resources/
+    title: APISIX Ingress Controller - Resources
+  - id: gateway-api-implementation
+    resource: https://gateway-api.sigs.k8s.io/guides/implementers-guide/
+    title: Gateway API - Implementer's Guide
 ---
 
-# APISIX architecture and deployment
+# How the APISIX gateway and controller fit together
 
-## Purpose
+## The idea in one minute
 
-Use this guide to understand how Apache APISIX, the APISIX Ingress Controller, Gateway API, and Kubernetes Services fit together before choosing a deployment mode.
+Two different programs usually appear in an APISIX installation on
+Kubernetes. The **APISIX gateway** accepts client traffic and proxies it
+to backends. The **APISIX Ingress Controller** watches supported Kubernetes
+route resources and turns them into gateway configuration. The controller
+configures the gateway; it is not an extra stop for each client request.
+[^apisix-controller-architecture]
 
-## Mental model
+There is a third choice: **how APISIX itself receives and holds its
+configuration**. APISIX documents traditional, decoupled, and standalone
+deployment modes. That is separate from whether your team writes
+`Ingress`, Gateway API routes, or APISIX custom resources in Kubernetes.
+[^apisix-deployment-modes][^apisix-resources]
 
-```text
-Client traffic
-  -> cloud load balancer
-  -> APISIX gateway data plane
-  -> plugins and route matching
-  -> Kubernetes Service and Pod endpoints
+If you have not met routes and upstreams yet, begin with
+[What Apache APISIX does for an API](apache-apisix.md).
 
-Configuration traffic
-  -> Git or kubectl
-  -> Kubernetes API
-  -> APISIX Ingress Controller
-  -> APISIX gateway configuration
+## One service, two paths
+
+Imagine the invented lesson API used in the introduction. A team wants
+`learn.example.com/lessons` to reach a backend called `lesson-api`.
+No gateway, controller, route, or backend was deployed or tested for this
+example.
+
+```mermaid
+flowchart LR
+  client["Reader<br/>request"] --> entry["External entry<br/>load balancer if used"]
+  entry --> gateway["APISIX gateway<br/>match and proxy"]
+  gateway --> backend["Lesson API<br/>backend targets"]
+  author["Team<br/>route declaration"] --> kube["Kubernetes API<br/>Gateway and HTTPRoute"]
+  kube --> controller["APISIX Ingress Controller<br/>watch and translate"]
+  controller -->|"configuration"| gateway
 ```
 
-The ingress controller is normally not in the user request path. It watches Kubernetes resources and programs the gateway.
+Text alternative: in the upper path, a reader's request reaches the
+external entry point, when one is used, then the APISIX gateway, then
+the lesson API backend targets. In the lower path, a team submits route
+resources to Kubernetes. The APISIX Ingress Controller watches them and
+updates the gateway configuration. The two paths meet at the gateway;
+the controller is not in the reader's request path.
 
-## How APISIX handles a request
+The entry point and APISIX gateway must be reachable and listening on
+the intended ports. A Gateway API `Gateway` listener declaration does not
+make APISIX open a new data-plane port: the APISIX support table states
+that the port must already be configured on the gateway. Which layer
+terminates TLS is also a deployment decision; do not infer it from the
+presence of `HTTPS` in a route diagram.[^apisix-gateway-api]
 
-1. A client connects through DNS and the cloud load balancer.
-2. APISIX accepts the connection on a gateway listener.
-3. TLS and SNI configuration select the certificate where APISIX terminates TLS.
-4. The router matches host, path, method, header, or other criteria.
-5. Plugins run in request phases such as rewrite, access, proxy, response, and log.
-6. APISIX selects an upstream target.
-7. The request is proxied to a Kubernetes Service endpoint or other backend.
-8. APISIX records logs, metrics, and tracing data.
+## What each Kubernetes object contributes
 
-This makes APISIX both a reverse proxy and a policy execution point.
+For the Gateway API path, the team can reason from the outside toward
+the backend:[^apisix-gateway-api]
 
-## Main components
-
-| Component | Role | Operational concern |
+| Object | Question it answers | What it does not do |
 | --- | --- | --- |
-| APISIX gateway | Data plane that receives requests and proxies to upstreams. | Scale, readiness, TLS, plugins, and resource limits. |
-| APISIX Ingress Controller | Reconciles Kubernetes resources into APISIX configuration. | RBAC, version compatibility, and controller errors. |
-| Gateway API resources | Standard Kubernetes API for gateways and routes. | Status conditions such as `Accepted` and `Programmed`. |
-| APISIX CRDs | APISIX-specific extensions for gateway behavior. | Avoid mixing incompatible API generations. |
-| Kubernetes Service and EndpointSlice | Backend discovery. | Service selectors, ready endpoints, and port names. |
+| `GatewayClass` | Which implementation should reconcile this family of Gateways? | It does not receive requests. |
+| `Gateway` | Which listeners and route attachments are requested? | It does not itself open an APISIX socket.[^apisix-gateway-api] |
+| `HTTPRoute` | Which host, path, and backend should an HTTP request use? | It does not prove an actual request reached APISIX. |
+| Kubernetes `Service` and `EndpointSlice` | Which application backend and endpoints are discoverable? | They do not make an unmatched APISIX route match.[^apisix-resources] |
 
-## APISIX object model
+The controller also supports `Ingress` and APISIX-specific resources.
+These offer different configuration surfaces; current Gateway API support
+varies by resource and field. Check the
+[APISIX support table](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/)
+for the installed controller version rather than assuming every field in
+the Gateway API specification is implemented.[^apisix-resources][^apisix-gateway-api]
 
-| Object | What it does | Kubernetes-facing equivalent |
+Status conditions are valuable, but scoped. Gateway API distinguishes
+`Accepted` from later `Programmed` and from `ResolvedRefs`, which reports
+whether references such as a backend target are valid. A condition should
+be read with its message and observed generation. Even `Programmed` does
+not establish that a user request succeeds end to end.[^gateway-api-implementation]
+
+## Where APISIX keeps its configuration
+
+The deployment mode changes the *configuration* path, not the basic
+purpose of the gateway. The current APISIX documentation describes these
+modes:[^apisix-deployment-modes]
+
+| Mode | Configuration and processes | Decision to make |
 | --- | --- | --- |
-| Route | Matches requests and attaches behavior. | `HTTPRoute`, `Ingress`, or APISIX route CRD. |
-| Upstream | Defines backend targets and load-balancing behavior. | Service endpoints or explicitly defined nodes. |
-| Service | Reusable APISIX policy and upstream abstraction. | Not the same as a Kubernetes `Service`. |
-| Consumer | Represents a known caller. | Often created through APISIX consumer resources. |
-| Plugin | Adds behavior such as auth, rate limit, rewrite, or telemetry. | Gateway policy or APISIX-specific configuration. |
-| SSL object | Stores certificate/SNI behavior. | Kubernetes `Secret` and gateway TLS config. |
+| Traditional | One APISIX instance has data-plane and control-plane roles; etcd stores configuration and an Admin API can change it. | Who operates etcd, and how is the Admin API protected? |
+| Decoupled | Separate APISIX control-plane and data-plane instances use etcd-backed configuration. | Does the extra separation justify the extra components and recovery path? |
+| Standalone, file-driven | APISIX loads local YAML or JSON configuration without etcd. | How is the complete file delivered and restored on every gateway instance? |
+| Standalone, API-driven | A dedicated API supplies full configuration held in memory; APISIX starts empty until updated. The APISIX documentation calls this an emerging mode designed for its Ingress Controller, and its controller deployment page labels standalone mode experimental. | Does the installed controller and gateway version support the required behavior, and how is configuration restored after restart? |
 
-## Deployment modes
+This is a map of the documented modes, not a claim that one is best for
+every cluster. For example, choosing a controller to read `HTTPRoute`
+objects does not, by itself, specify which APISIX mode stores the resulting
+configuration. Conversely, choosing standalone mode does not make every
+Gateway API feature available.[^apisix-controller-architecture][^apisix-gateway-api]
 
-| Mode | Good fit | Notes |
+The APISIX documentation warns against directly using the API-driven
+standalone endpoint without understanding its internal behavior. Use the
+current [controller installation guide](https://apisix.apache.org/docs/ingress-controller/install/)
+and [deployment architecture](https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/)
+for a particular version. Its current installation guide gives a
+Kubernetes version prerequisite and separate Helm paths for traditional
+and standalone controller integration; check those prerequisites before
+planning a rollout.[^apisix-deployment-modes][^apisix-controller-install]
+
+## Follow a failure to the responsible path
+
+The first question is whether the problem is in **request delivery** or
+**configuration delivery**. Do not begin by changing the route or the
+gateway until you have evidence about the failing boundary.
+
+| Observation | Investigate first | Why |
 | --- | --- | --- |
-| Traditional | Teams already operating APISIX Admin API and etcd. | Protect the Admin API and operate etcd carefully. |
-| Decoupled control and data plane | Larger or security-sensitive environments. | Separates management from public traffic. |
-| Standalone file-driven | Generated declarative configuration. | Requires a safe file distribution process. |
-| API-driven standalone | Kubernetes controller integrations. | Review maturity and version compatibility before production. |
+| Client cannot connect to the intended address or port. | External entry, Service exposure, gateway listener, and TLS placement. | The request may never reach APISIX. |
+| Kubernetes route exists, but its status rejects a parent or backend reference. | Gateway API attachment, reference, and controller messages. | The controller has reported a configuration problem.[^gateway-api-implementation] |
+| Route is accepted, but the same host and path produce an APISIX 404. | Exact request, supported match fields, and controller-to-gateway configuration. | Accepted configuration does not prove the gateway matched this request.[^apisix-gateway-api] |
+| Route matches, but the backend fails. | Backend `Service`, endpoints, application status, and gateway upstream behavior. | The request crossed the route boundary but may fail afterward.[^apisix-resources] |
 
-> [!IMPORTANT]
-> Choose the mode based on recovery, isolation, configuration durability, and support needs. Fewer components can still be harder to operate if configuration cannot be restored reliably after a restart.
+[Trace an APISIX 404](../troubleshooting/apisix.md) is the focused path
+for that symptom. [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md)
+adds AWS load-balancer ownership to the same model. Those guides keep
+environment-specific steps out of this architectural explanation.
 
-## Gateway API object flow
+## Check your understanding
 
-```text
-GatewayClass
-  -> Gateway
-  -> HTTPRoute
-  -> Service
-  -> EndpointSlice
-  -> Pods
-```
+1. The team creates an `HTTPRoute`. Which component reads it, and which
+   component handles the reader's HTTP request?
+2. Does an accepted Gateway listener cause APISIX to open its port?
+3. Which deployment mode uses a local file, and which documented mode
+   starts with empty in-memory configuration until an API update?
+4. A route is `Programmed`, but a reader cannot load a lesson. What
+   evidence would you seek before calling the problem solved?
 
-### Inspect route status
+## Explore further
 
-```bash
-kubectl describe gatewayclass apisix
-kubectl describe gateway public-api -n gateway-system
-kubectl describe httproute orders -n orders
-```
+- [APISIX deployment modes](https://apisix.apache.org/docs/apisix/deployment-modes/)
+  explains the configuration choices and their mechanisms.
+  [^apisix-deployment-modes]
+- [Ingress Controller deployment architecture](https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/)
+  explains how the controller configures APISIX.
+  [^apisix-controller-architecture]
+- [APISIX Gateway API support](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/)
+  lists supported resources and fields.[^apisix-gateway-api]
+- [Gateway API implementer's guide](https://gateway-api.sigs.k8s.io/guides/implementers-guide/)
+  explains the meaning and limits of status conditions.
+  [^gateway-api-implementation]
+- [Gateway API and Ingress](gateway-api-and-ingress.md) compares the
+  Kubernetes authoring surfaces.
+- [Back to Kubernetes applications and tools](index.md).
 
-What it does: shows whether the controller accepted and programmed the gateway and route resources.
-
-### Minimal HTTPRoute example
-
-```yaml
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: orders
-  namespace: orders
-spec:
-  parentRefs:
-    - name: public-api
-      namespace: gateway-system
-  hostnames:
-    - api.example.com
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /orders
-      backendRefs:
-        - name: orders-service
-          port: 8080
-```
-
-What it does: asks the gateway controller to route `api.example.com/orders` traffic to the `orders-service` backend.
-
-## EKS exposure pattern
-
-A common Amazon EKS path is:
-
-```text
-Route 53
-  -> AWS Network Load Balancer
-  -> APISIX gateway Service
-  -> APISIX Pods
-  -> application Service
-  -> application Pods
-```
-
-Use an NLB when APISIX should own Layer 7 gateway behavior while AWS provides a resilient Layer 4 entry point.
-
-### EKS Service exposure example
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: apisix-gateway
-  namespace: ingress-apisix
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
-spec:
-  type: LoadBalancer
-  ports:
-    - name: http
-      port: 80
-      targetPort: 9080
-    - name: https
-      port: 443
-      targetPort: 9443
-  selector:
-    app.kubernetes.io/name: apisix
-```
-
-What it does: exposes APISIX gateway Pods through an AWS Network Load Balancer using IP targets.
-
-## Troubleshooting order
-
-1. DNS record.
-2. AWS load balancer listener and target health.
-3. APISIX gateway Service and Pods.
-4. APISIX Ingress Controller logs.
-5. Gateway API or APISIX CRD status.
-6. Backend Service and EndpointSlice.
-7. Direct in-cluster request to the backend.
-8. Direct request to APISIX with the expected Host header.
-
-### Test the gateway directly
-
-```bash
-kubectl port-forward -n ingress-apisix svc/apisix-gateway 9080:80
-curl -i -H 'Host: api.example.com' http://127.0.0.1:9080/orders
-```
-
-What it does: separates APISIX route behavior from DNS and cloud load balancer behavior.
-
-## Related links
-
-- Official documentation: [APISIX deployment modes](https://apisix.apache.org/docs/apisix/deployment-modes/)
-- Official documentation: [APISIX Ingress Controller deployment architecture](https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/)
-- Official documentation: [APISIX Gateway API support](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/)
-- [Apache APISIX](apache-apisix.md)
-- [Gateway API and Ingress](gateway-api-and-ingress.md)
-- [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md)
-- [Back to Kubernetes applications and tools](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^apisix-deployment-modes]: [Apache APISIX, Deployment modes](https://apisix.apache.org/docs/apisix/deployment-modes/), source record `apisix-deployment-modes`.
+[^apisix-controller-architecture]: [Apache APISIX, Ingress Controller Deployment Architecture](https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/), source record `apisix-controller-architecture`.
+[^apisix-controller-install]: [Apache APISIX, Install with Helm](https://apisix.apache.org/docs/ingress-controller/install/), source record `apisix-controller-install`.
+[^apisix-gateway-api]: [Apache APISIX, Gateway API support](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/), source record `apisix-gateway-api`.
+[^apisix-resources]: [Apache APISIX, Ingress Controller Resources](https://apisix.apache.org/docs/ingress-controller/concepts/resources/), source record `apisix-resources`.
+[^gateway-api-implementation]: [Gateway API, Implementer's Guide](https://gateway-api.sigs.k8s.io/guides/implementers-guide/), source record `gateway-api-implementation`.

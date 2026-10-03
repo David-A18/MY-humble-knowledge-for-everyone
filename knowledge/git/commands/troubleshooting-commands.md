@@ -1,31 +1,55 @@
 ---
 type: "Troubleshooting Guide"
 title: "Git troubleshooting commands"
-description: "Use this page to diagnose why Git is behaving unexpectedly before choosing a fix."
+description: "Trace a Git problem to branch tracking, a remote, an ignored file, a conflict, or repository health before changing state."
 tags: [git, troubleshooting-commands]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: git-status
+    resource: https://git-scm.com/docs/git-status
+    title: Git - git-status
+  - id: git-branch
+    resource: https://git-scm.com/docs/git-branch
+    title: Git - git-branch
+  - id: git-remote
+    resource: https://git-scm.com/docs/git-remote
+    title: Git - git-remote
+  - id: git-fetch
+    resource: https://git-scm.com/docs/git-fetch
+    title: Git - git-fetch
+  - id: git-log
+    resource: https://git-scm.com/docs/git-log
+    title: Git - git-log
+  - id: git-check-ignore
+    resource: https://git-scm.com/docs/git-check-ignore
+    title: Git - git-check-ignore
+  - id: git-ls-files
+    resource: https://git-scm.com/docs/git-ls-files
+    title: Git - git-ls-files
+  - id: git-diff
+    resource: https://git-scm.com/docs/git-diff
+    title: Git - git-diff
+  - id: git-fsck
+    resource: https://git-scm.com/docs/git-fsck
+    title: Git - git-fsck
 ---
 
 # Git troubleshooting commands
 
-## Purpose
+## Start with the question, not a fix
 
-Use this page to diagnose why Git is behaving unexpectedly before choosing a fix.
+Use this page when Git behaves differently from what you expected:
+a push is rejected, a file seems ignored, a merge stops, or the
+repository may be damaged. The first job is to find **which
+boundary** failed: your current branch, its upstream, the remote
+repository, the index and working tree, or the object database.
+This page gathers evidence; [Solve Git issues](solve-issues.md)
+helps choose a recovery action after you know what happened.
 
-## First checks
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Check repository state | `git status --short --branch` | First step in almost every Git problem. |
-| Inspect branch tracking | `git branch -vv` | Push or pull goes to the wrong branch. |
-| Inspect remotes | `git remote -v` | Fetch, pull, or push reaches the wrong repository. |
-| Inspect remote refs | `git ls-remote <remote>` | A branch or tag exists remotely but not locally. |
-| Update remote-tracking refs | `git fetch --all --prune` | Local remote branch list is stale. |
-
-### Start with repository state
+From the affected repository, run:
 
 ```bash
 git status --short --branch
@@ -33,171 +57,155 @@ git branch -vv
 git remote -v
 ```
 
-What it does: shows your current branch, file state, upstream tracking, ahead/behind counts, and remote URLs.
+Expected result: you can name the current branch, see whether
+Git reports local edits or an unfinished operation, see whether
+that branch has an upstream, and identify its remote URL. These
+commands inspect local state; they do not fetch, merge, or push.
+Be careful when sharing a remote URL from a private repository:
+some URLs contain credentials or internal hostnames.[^git-status]
+[^git-branch][^git-remote]
 
-### Refresh remote information
-
-```bash
-git ls-remote origin
-git fetch --all --prune
-```
-
-What it does: checks what refs the remote advertises, then updates local remote-tracking refs without changing your current branch.
-
-## Push, pull, and branch problems
-
-| Task | Command | When to use it |
+| Symptom | First question | Focused check |
 | --- | --- | --- |
-| Diagnose rejected push | `git log --oneline --left-right --graph HEAD...@{upstream}` | Push is rejected because histories diverged. |
-| Diagnose detached HEAD | `git symbolic-ref --short HEAD` | You are not sure whether you are on a branch. |
-| Find current commit | `git rev-parse --short HEAD` | You need the exact commit currently checked out. |
+| Push was rejected | Is the remote or upstream wrong, or did the remote branch move? | [Branch and remote](#a-push-or-pull-uses-the-wrong-target-or-is-rejected). |
+| A file does not appear, or appears despite `.gitignore` | Is the path already tracked? Which ignore rule matches it? | [Ignore and tracking](#a-file-is-missing-or-ignore-seems-broken). |
+| Merge, rebase, or cherry-pick stopped | Which operation is active, and which paths are unmerged? | [Conflict](#an-operation-stopped-on-a-conflict). |
+| Git reports missing or corrupt objects | Does the object database pass a read-only integrity check? | [Repository health](#git-reports-object-errors). |
+| A commit or local edit seems lost | Was the branch tip moved, or was uncommitted content discarded? | [Undo and recovery](../troubleshooting/undo-and-recovery.md). |
 
-### Diagnose diverged history
+## A push or pull uses the wrong target or is rejected
+
+First read the exact error. An authentication failure, a protected
+branch rule, and a non-fast-forward rejection require different
+responses. Inspect the target before fetching:
 
 ```bash
-git log --oneline --left-right --graph HEAD...@{upstream}
+git branch -vv
+git remote -v
 ```
 
-What it does: shows commits that exist only locally and only upstream so you can decide whether to merge, rebase, or ask for help.
+`branch -vv` shows tracking information for local branches;
+`remote -v` shows fetch and push URLs. If the branch has no
+upstream, a command using `@{upstream}` below will fail; stop
+and decide which remote branch should be tracked.[^git-branch]
+[^git-remote]
 
-### Check detached HEAD
+If the URL and upstream are right, refresh your view and compare
+the two histories. These commands assume the upstream is on
+`origin`; use its actual remote name if yours differs:
 
 ```bash
-git symbolic-ref --short HEAD
-git rev-parse --short HEAD
+git fetch origin
+git log --left-right --graph --oneline HEAD...@{upstream}
 ```
 
-What it does: prints the current branch if `HEAD` is attached, or helps identify the checked-out commit if it is detached.
+`fetch` updates remote-tracking references; it does **not**
+merge into the checked-out branch. The log marks commits on
+each side of the split. If there are remote-only commits,
+the rejection may be a normal divergence. If the server
+reported permission or branch-rule denial, this graph does
+not override that message. Do not force-push as a diagnostic.
+[^git-fetch][^git-log]
 
-## Ignore, conflict, and file problems
+For the safe branch-to-review path, use
+[Common Git use cases](common-use-cases.md).
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Check ignored file rules | `git check-ignore -v <path>` | A file is ignored and you do not know why. |
-| See tracked ignored files | `git ls-files -ci --exclude-standard` | `.gitignore` is not stopping files already in Git. |
-| Remove a tracked ignored file | `git rm --cached <path>` | A file should stay locally but stop being tracked. |
-| Show conflict files | `git diff --name-only --diff-filter=U` | During merge, rebase, or cherry-pick conflicts. |
-| Inspect conflict stages | `git ls-files -u` | You need lower-level conflict details. |
-| Use a merge tool | `git mergetool` | Conflicts are easier to resolve visually. |
-| Reuse conflict resolutions | `git rerere status` | You enabled rerere and want to inspect recorded resolutions. |
+## A file is missing or ignore seems broken
 
-### Debug ignore rules
+Suppose a generated file at `build/output.txt` appears in
+status even though `.gitignore` contains `build/`. Inspect
+whether Git already tracks it and which rule would match:
 
 ```bash
-git check-ignore -v .env
-git ls-files -ci --exclude-standard
-git rm --cached .env
+git status --short -- build/output.txt
+git ls-files -- build/output.txt
+git check-ignore -v --no-index -- build/output.txt
 ```
 
-What it does: finds the ignore rule, lists tracked files that match ignore patterns, and removes a tracked file from the index while keeping the local copy.
+If `ls-files` prints the path, Git tracks it. Ignore rules
+normally apply to **untracked** paths, so adding `build/`
+to `.gitignore` does not remove a tracked file. The
+`--no-index` flag asks `check-ignore` to show the matching
+rule even for a tracked path. If no rule matches, that command
+may print nothing and exit nonzero. Inspect the rule before
+changing tracking; the first question is whether this file
+should remain versioned.[^git-ls-files][^git-check-ignore]
 
-### Inspect conflicts
+This example is about a generated file, not a credential.
+If a secret was committed, removing it from current tracking
+does not erase it from existing commits; rotate the secret and
+follow the repository's incident process.
+
+## An operation stopped on a conflict
 
 ```bash
+git status
 git diff --name-only --diff-filter=U
-git ls-files -u
-git mergetool
 ```
 
-What it does: lists unresolved conflict files, shows low-level conflict stages, and opens the configured merge tool.
+`status` names the in-progress operation and suggests its
+next command. The filtered diff lists paths still marked
+unmerged. Inspect the conflicted files and decide what the
+combined content should be before staging a resolution.
+Do not run `merge --abort`, `rebase --abort`, or a reset
+merely because the conflict feels surprising: first confirm
+which operation you would abandon and whether you have
+other edits to preserve.[^git-status][^git-diff]
 
-### Check recorded resolutions
+For recovery choices after inspection, use
+[Undo and recovery](../troubleshooting/undo-and-recovery.md).
 
-```bash
-git rerere status
-```
+## Git reports object errors
 
-What it does: shows paths where Git may reuse recorded conflict resolutions. Enable rerere intentionally with `git config rerere.enabled true`.
-
-## Credentials, line endings, and hooks
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Diagnose credential helper | `git config --show-origin --get-all credential.helper` | Git repeatedly asks for credentials or uses the wrong helper. |
-| Clear bad HTTPS credential | `git credential reject` | A saved password or token is wrong. |
-| Check line-ending config | `git config --show-origin --get-regexp core.autocrlf` | Files appear fully changed due to line endings. |
-| Renormalize files after attributes change | `git add --renormalize .` | After changing `.gitattributes` line-ending rules. |
-| Test hook execution | `git hook run --ignore-missing <hook-name>` | A hook may be affecting commits, merges, or pushes. |
-| Bypass local commit hooks once | `git commit --no-verify` | Only when a local hook is broken and team process allows it. |
-
-### Diagnose credentials
-
-```bash
-git config --show-origin --get-all credential.helper
-git credential reject
-```
-
-What it does: shows configured credential helpers and can remove a bad saved credential. Do not paste tokens into command history.
-
-### Fix line-ending noise
-
-```bash
-git config --show-origin --get-regexp core.autocrlf
-git add --renormalize .
-```
-
-What it does: shows line-ending configuration and reapplies normalization rules to tracked files. Review the diff carefully before committing.
-
-### Check hook behavior
-
-```bash
-git hook run --ignore-missing pre-commit
-git commit --no-verify -m "Emergency docs fix"
-```
-
-What it does: tests a hook if it exists. `--no-verify` bypasses local commit hooks once; use it only when the team process allows bypassing.
-
-## Repository health and performance
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Verify repository objects | `git fsck` | You suspect repository corruption or missing objects. |
-| Measure object storage | `git count-objects -vH` | Repository feels large or slow. |
-| Run maintenance | `git maintenance run` | Repository has many objects or operations are slow. |
-| Garbage collect objects | `git gc` | After large history operations or when Git recommends it. |
-| Generate a bug report bundle | `git bugreport` | Reporting a Git issue upstream or to platform support. |
-| Generate diagnostics archive | `git diagnose` | Support asks for detailed repository diagnostics. |
-
-### Check repository health
+When Git says an object is missing or corrupt, avoid
+cleanup commands until you understand the damage. In a
+local repository where an integrity scan is appropriate:
 
 ```bash
 git fsck --full
-git count-objects -vH
 ```
 
-What it does: verifies object connectivity and shows storage statistics for loose objects and packs.
+This checks connectivity and validity of objects; it may
+take time in a large repository. A failing result is
+evidence to preserve the repository and compare it with
+a known-good clone or backup. A successful result does
+not diagnose every slow command, credential failure, or
+remote service problem.[^git-fsck]
 
-### Run maintenance
+## Check your understanding
 
-```bash
-git maintenance run
-git gc
-```
+1. Why does `git fetch origin` help compare a rejected
+   push without merging into your branch?
+2. Why can a tracked file still appear even when its path
+   matches `.gitignore`?
+3. Which command tells you what operation is in progress
+   before you consider an abort?
+4. What does a failing `git fsck --full` establish, and
+   what does a passing result leave unanswered?
 
-What it does: runs optimization tasks and packs repository data. Prefer `git maintenance run` for routine use.
+## Deeper study
 
-### Generate diagnostics
+- [Git status](https://git-scm.com/docs/git-status),
+  [branch](https://git-scm.com/docs/git-branch), and
+  [remote](https://git-scm.com/docs/git-remote)
+  for the local target and tracking model.
+- [Git fetch](https://git-scm.com/docs/git-fetch)
+  and [log](https://git-scm.com/docs/git-log)
+  for comparing local and remote commits.
+- [Git check-ignore](https://git-scm.com/docs/git-check-ignore)
+  and [ls-files](https://git-scm.com/docs/git-ls-files)
+  for ignore-rule versus tracked-file behavior.
+- [Git fsck](https://git-scm.com/docs/git-fsck)
+  for object integrity checks.
 
-```bash
-git bugreport
-git diagnose
-```
+[Back to Git commands](index.md)
 
-What it does: creates diagnostic output for support or upstream Git bug reports. Review files before sharing them.
-
-## Common troubleshooting sequence
-
-1. Run `git status --short --branch`.
-2. Check branch tracking with `git branch -vv`.
-3. Fetch with `git fetch --all --prune`.
-4. Inspect differences with `git log`, `git diff`, or conflict-specific commands.
-5. Choose a safe fix from [Solve Git issues](solve-issues.md).
-
-## Related links
-
-- [Git FAQ](https://git-scm.com/docs/gitfaq)
-- [git status documentation](https://git-scm.com/docs/git-status)
-- [git fsck documentation](https://git-scm.com/docs/git-fsck)
-- [Back to Git commands](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+[^git-status]: [Git - git-status](https://git-scm.com/docs/git-status).
+[^git-branch]: [Git - git-branch](https://git-scm.com/docs/git-branch).
+[^git-remote]: [Git - git-remote](https://git-scm.com/docs/git-remote).
+[^git-fetch]: [Git - git-fetch](https://git-scm.com/docs/git-fetch).
+[^git-log]: [Git - git-log](https://git-scm.com/docs/git-log).
+[^git-check-ignore]: [Git - git-check-ignore](https://git-scm.com/docs/git-check-ignore).
+[^git-ls-files]: [Git - git-ls-files](https://git-scm.com/docs/git-ls-files).
+[^git-diff]: [Git - git-diff](https://git-scm.com/docs/git-diff).
+[^git-fsck]: [Git - git-fsck](https://git-scm.com/docs/git-fsck).

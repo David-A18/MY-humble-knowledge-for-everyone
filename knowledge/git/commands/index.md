@@ -6,12 +6,12 @@ Command references and practical workflows for working with Git repositories saf
 
 | Article | Purpose |
 | --- | --- |
-| [Daily commands](daily-commands.md) | Everyday inspection, staging, committing, branching, remote sync, stash, and log commands. |
-| [Common use cases](common-use-cases.md) | Scenario-based workflows for starting repositories, feature branches, releases, remotes, stashes, and worktrees. |
-| [Solve Git issues](solve-issues.md) | Safe commands for undoing mistakes, restoring files, recovering commits, and aborting in-progress operations. |
-| [Troubleshooting commands](troubleshooting-commands.md) | Diagnostic commands for conflicts, remotes, credentials, ignored files, line endings, hooks, corruption, and slow repositories. |
-| [Advanced commands](advanced-commands.md) | Professional commands for rebasing, bisecting, patch workflows, worktrees, submodules, repository maintenance, and selected plumbing. |
-| [Complete command catalog](complete-command-catalog.md) | Categorized catalog of Git porcelain, ancillary, low-level, server, email, migration, interface, protocol, and helper commands. |
+| [Daily commands](daily-commands.md) | Practice one safe local loop: inspect a change, stage a file, review the snapshot, and commit. |
+| [Common use cases](common-use-cases.md) | Take one change from an updated base branch to a reviewable remote branch, with routes for other tasks. |
+| [Solve Git issues](solve-issues.md) | Identify where a mistake lives and choose the smallest recovery route before changing files or history. |
+| [Troubleshooting commands](troubleshooting-commands.md) | Diagnose branch or remote confusion, ignore rules, conflicts, and possible object damage before choosing a fix. |
+| [Inspect an older revision in a worktree](advanced-commands.md) | Use a second checkout without disturbing unfinished edits, then choose other history or repository commands by their effect. |
+| [Find the right Git command](complete-command-catalog.md) | Choose a command by the state it affects, inspect first, and follow the official manual for exact options. |
 
 ## Official documentation
 

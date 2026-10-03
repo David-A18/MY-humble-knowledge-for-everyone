@@ -1,323 +1,195 @@
 ---
-type: "Explanation"
-title: "Terraform vs Crossplane"
-description: "Use this page to decide when Terraform is enough, when Crossplane adds a better operating model, and which problems Crossplane solves that Terraform does not solve naturally."
-tags: [kubernetes, crossplane, terraform-vs-crossplane]
+type: Explanation
+title: When to use Terraform or Crossplane
+description: Choose a review-and-apply workflow, a continuously reconciled platform API, or a clear combination of both.
+tags: [kubernetes, crossplane, terraform, infrastructure, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: terraform-plan
+    resource: https://developer.hashicorp.com/terraform/cli/commands/plan
+    title: HashiCorp - terraform plan command
+  - id: terraform-state
+    resource: https://developer.hashicorp.com/terraform/language/state
+    title: HashiCorp - Terraform state
+  - id: terraform-modules
+    resource: https://developer.hashicorp.com/terraform/language/modules
+    title: HashiCorp - Modules overview
+  - id: crossplane-xrds
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-xrs
+    resource: https://docs.crossplane.io/latest/composition/composite-resources/
+    title: Crossplane - Composite Resources
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
 ---
 
-# Terraform vs Crossplane
+# When to use Terraform or Crossplane
 
-## Purpose
+## The choice in one minute
 
-Use this page to decide when Terraform is enough, when Crossplane adds a better operating model, and which problems Crossplane solves that Terraform does not solve naturally.
+Choose **Terraform** when the important step is to preview a
+specific infrastructure change, review it, and apply it as a
+deliberate run. Choose **Crossplane** when a platform team wants
+users to request infrastructure through Kubernetes APIs and
+controllers to keep working toward the declared state. Many
+platforms use both, with separate ownership.
+[^terraform-plan][^crossplane-xrs][^crossplane-managed]
 
-The short version: Terraform is excellent for provisioning infrastructure through a deliberate `plan` and `apply` workflow. Crossplane is useful when infrastructure should behave like a continuously reconciled Kubernetes API that developers can consume through self-service resources.
+Think of the distinction as a scheduled inspection and an
+on-duty caretaker. A Terraform run compares configuration
+with the world, proposes changes, and can apply them. A
+Crossplane controller keeps observing its Kubernetes request
+and reconciles the resources it manages. The analogy has
+limits: Terraform can run frequently in automation, and
+Crossplane changes still need review, policy, and operational
+care.
 
-If the main confusion is "what is the Crossplane equivalent of a Terraform module call?", start with [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md).
+If the terms XRD, Composition, and XR are new, read
+[How to request a Crossplane platform API](xrd-composition-and-xr-calls.md)
+before comparing workflows.
 
-## Bottom line
+## Follow one invented network request
 
-| Question | Prefer Terraform | Prefer Crossplane |
-| --- | --- | --- |
-| Do you need an explicit preview before every change? | Yes. `terraform plan` is one of Terraform's biggest strengths. | Crossplane does not provide the same native plan/apply approval model. |
-| Do you need continuous drift correction? | Terraform can detect drift during refresh, plan, or apply. | Crossplane controllers continuously observe and reconcile declared state. |
-| Do developers need a small internal platform API? | Terraform modules can standardize implementation, but users still interact with Terraform workflows. | XRDs and Compositions expose a Kubernetes API such as `PlatformNetwork` or `AppDatabase`. |
-| Is Kubernetes the platform center? | Terraform can manage Kubernetes and cloud resources, but it remains outside the cluster control loop. | Crossplane uses Kubernetes API, RBAC, namespaces, status, events, and GitOps patterns directly. |
-| Do you need broad provider coverage beyond Kubernetes-centered platforms? | Terraform is usually stronger. | Crossplane depends on available provider packages and provider maturity. |
-| Do you need one-off bootstrap or occasional infrastructure changes? | Terraform is usually simpler. | Crossplane adds a management cluster and controller operations. |
-
-## Different jobs
-
-Terraform answers this question:
-
-> Given this configuration and current state, what changes should we make during this run?
-
-Crossplane answers this question:
-
-> Given these Kubernetes resources, what should controllers continuously do until external systems match the declared state?
-
-That difference matters more than syntax. Terraform configuration is evaluated during an execution. Crossplane resources are stored in the Kubernetes API and watched by controllers.
-
-## Workflow comparison
+Imagine a payments team needs a private network. The platform
+team has a design for address ranges, subnets, and
+routes. The following paths illustrate different ways to
+operate that design; no network or cluster was created for
+this article.
 
 ```mermaid
-flowchart LR
-    subgraph Terraform["Terraform workflow"]
-        TFCode["HCL configuration and modules"] --> TFPlan["terraform plan"]
-        TFPlan --> TFReview["Human or CI review"]
-        TFReview --> TFApply["terraform apply"]
-        TFApply --> TFState["Terraform state backend"]
-        TFApply --> AWS1["AWS APIs"]
-    end
-
-    subgraph Crossplane["Crossplane workflow"]
-        XR["Developer creates XR"] --> API["Kubernetes API server"]
-        API --> XP["Crossplane composition engine"]
-        XP --> MR["Managed resources"]
-        MR --> Provider["AWS provider controller"]
-        Provider --> AWS2["AWS APIs"]
-        Provider --> Status["Status, conditions, events"]
-        Status --> API
-    end
+flowchart TB
+  request["Payments team needs<br/>a private network"]
+  request --> tfCode["Terraform path<br/>module inputs in code"]
+  tfCode --> plan["Plan<br/>preview proposed changes"]
+  plan --> review["Review and apply"]
+  review --> tfCloud["Cloud network"]
+  request --> xr["Crossplane path<br/>PlatformNetwork XR"]
+  xr --> kube["Kubernetes API"]
+  kube --> compose["Composition and<br/>provider controllers"]
+  compose --> xpCloud["Cloud network"]
+  xpCloud --> observe["Observe and reconcile<br/>while request exists"]
 ```
 
-Terraform is run-based. Crossplane is controller-based. Terraform stops after the apply. Crossplane keeps reconciling while the objects exist.
+Text alternative: the Terraform path puts the network request
+in configuration, previews it with a plan, then applies it
+after review. The Crossplane path puts one `PlatformNetwork`
+request in the Kubernetes API. A Composition and provider
+controllers create and observe its managed resources over
+time. Both paths still depend on cloud permissions, an
+accurate design, and a test of whether the payments
+application can use the network.
 
-## What Crossplane brings that Terraform does not solve naturally
-
-### Continuous reconciliation
-
-Terraform does not keep a process running for every resource after `apply`. It stores mappings in state and checks reality again during refresh, plan, or apply. That is strong for controlled change windows, but it is not an always-on controller.
-
-Crossplane providers watch managed resources and keep reconciling. If a value in `spec.forProvider` is the source of truth, Crossplane can restore external drift back to the declared value.
-
-This helps when:
-
-- AWS resources must stay aligned with platform policy after creation.
-- Manual console changes should be corrected automatically.
-- Teams want readiness and sync status without rerunning a pipeline.
-- GitOps should continuously drive both Kubernetes workloads and AWS infrastructure.
-
-Trade-off: always-on reconciliation is powerful, but it means the Crossplane control plane is now production infrastructure. It must be operated, monitored, upgraded, backed up, and protected.
-
-### Kubernetes-native platform APIs
-
-Terraform modules are reusable configuration packages. They are called by Terraform during a run.
-
-Crossplane XRDs define new Kubernetes API types. Developers create instances of those APIs as ordinary Kubernetes resources. A platform team can expose a resource like this:
-
-```yaml
-apiVersion: platform.example.org/v1alpha1
-kind: PlatformNetwork
-metadata:
-  name: payments-network
-  namespace: payments
-spec:
-  region: eu-west-1
-  cidrBlock: 10.40.0.0/16
-  environment: prod
-  privateSubnetA:
-    availabilityZone: eu-west-1a
-    cidrBlock: 10.40.1.0/24
-  privateSubnetB:
-    availabilityZone: eu-west-1b
-    cidrBlock: 10.40.2.0/24
-```
-
-What it does: gives a developer a small network API. The developer does not need to know every AWS EC2 managed-resource field, route table association, VPC endpoint object, tag rule, or provider reference.
-
-This solves a platform problem Terraform modules do not solve by themselves: the user-facing interface becomes a live API in the cluster, not only a reusable HCL package consumed by a Terraform runner.
-
-### Self-service with Kubernetes RBAC and namespaces
-
-Terraform access is usually controlled through repository permissions, CI permissions, HCP Terraform workspaces, state backend permissions, cloud IAM, or wrapper portals.
-
-Crossplane can use Kubernetes controls directly:
-
-- A developer can be allowed to create `PlatformNetwork` in the `payments` namespace.
-- The same developer can be denied access to raw AWS `VPC`, `Subnet`, or `RouteTable` managed resources.
-- Platform teams can provide different `ProviderConfig` objects per namespace or environment.
-- Admission policy can validate platform API requests before controllers act.
-- Status and events are visible through normal Kubernetes commands.
-
-Terraform can be wrapped to provide self-service, but that wrapper is external to Terraform. Crossplane makes the self-service object itself part of Kubernetes.
-
-### Productized infrastructure APIs instead of shared implementation
-
-A Terraform module primarily standardizes implementation. Consumers still need Terraform variables, Terraform state, Terraform execution permissions, and some knowledge of module behavior.
-
-An XRD plus Composition lets the platform team define an API product:
-
-| Layer | Terraform module model | Crossplane platform API model |
+| Question | Terraform path | Crossplane path |
 | --- | --- | --- |
-| Interface | Module variables and outputs. | XRD schema. |
-| Implementation | HCL resources inside the module. | Composition pipeline and composed resources. |
-| Call | `module` block in a Terraform root module. | XR such as `PlatformNetwork`. |
-| Runtime | Terraform process. | Crossplane and provider controllers. |
-| Access control | Git, CI, workspace, state, and cloud IAM controls. | Kubernetes RBAC, namespaces, admission, provider credentials, and cloud IAM controls. |
-| Status | Plan/apply output and state. | Kubernetes status, conditions, events, and managed-resource status. |
+| What is the request? | A root configuration calls a network module with inputs. | An XR gives a platform API its inputs. |
+| Where is the reusable interface? | Module variables and outputs.[^terraform-modules] | XRD schema; Composition implements it.[^crossplane-xrds][^crossplane-compositions] |
+| What checks a change first? | A `terraform plan` previews proposed actions for review.[^terraform-plan] | Git review, admission policy, and composition rendering can check different parts; an XR does not provide Terraform's plan workflow by itself.[^crossplane-compositions] |
+| What tracks resources? | Terraform state maps configuration to remote objects.[^terraform-state] | Kubernetes objects, references, conditions, and provider observation.[^crossplane-xrs][^crossplane-managed] |
+| When can drift be corrected? | A later refresh, plan, and apply can detect and correct changes. | A controller can observe and reconcile managed fields while it runs.[^terraform-plan][^crossplane-managed] |
 
-This matters when infrastructure is consumed frequently by many application teams. The platform team can evolve implementation without asking every consumer to understand AWS resource details.
+A plan previews proposed actions; it cannot guarantee that
+the apply or the application outcome will succeed. An XR
+becoming ready reports controller readiness; it does not
+complete a test of the application's route through the
+network.[^terraform-plan][^crossplane-xrs]
 
-### App and infrastructure composition in one control plane
+## Choose the operating model
 
-Terraform can deploy Kubernetes objects and cloud infrastructure, but it is still an external execution tool. Crossplane can compose:
-
-- AWS resources such as S3 buckets, VPCs, IAM roles, RDS instances, or EKS add-ons.
-- Kubernetes resources such as Deployments, Services, Secrets, ConfigMaps, or custom resources.
-- Higher-level platform APIs that tie application runtime and cloud dependencies together.
-
-In Crossplane v2, namespaced XRs and namespaced managed resources make this model more natural for tenant and team boundaries.
-
-This helps when an app team should request one object such as `ApplicationEnvironment` and receive the app namespace, IAM role, bucket, database, network attachment, connection details, and status through Kubernetes.
-
-### Operational visibility through Kubernetes primitives
-
-Terraform gives strong apply-time feedback. After the run, teams usually inspect state, CI logs, cloud consoles, monitoring tools, or HCP Terraform.
-
-Crossplane exposes controller-style operational signals:
-
-```bash
-kubectl get platformnetworks -n payments
-kubectl describe platformnetwork payments-network -n payments
-crossplane beta trace platformnetwork.platform.example.org/payments-network -n payments
-kubectl get events -n payments
-```
-
-What it does: shows the request, composed resources, readiness, sync state, events, and failure points from the same API surface used for Kubernetes workloads.
-
-This is valuable for platform operations because the resource tree is live, queryable, and can be integrated with Kubernetes-native monitoring and GitOps tooling.
-
-### Drift correction as a normal behavior
-
-Terraform can detect drift when a plan refreshes state. That makes drift visible before an approved apply, which is a good governance model.
-
-Crossplane can treat drift correction as part of normal reconciliation. For managed resource fields under `spec.forProvider`, Crossplane's model is that declared state should win. For fields that should not be continuously enforced, Crossplane has options such as `initProvider` and `managementPolicies`, depending on provider support.
-
-This solves a different problem:
-
-- Terraform is good when drift should be reviewed before correction.
-- Crossplane is good when drift should usually be corrected automatically.
-
-## What Terraform still does better
-
-Crossplane does not replace Terraform everywhere.
-
-| Terraform strength | Why it still matters |
-| --- | --- |
-| Explicit plans | Many organizations need human-readable previews before changes. |
-| Mature module ecosystem | Terraform modules are widely available, tested, and understood. |
-| Broad provider coverage | Terraform has a very broad provider registry and mature non-Kubernetes workflows. |
-| One-off provisioning | A CLI run or CI job is simpler than operating a Crossplane management cluster. |
-| Bootstrap workflows | Creating the first VPC, EKS cluster, IAM baseline, or control-plane host often fits Terraform well. |
-| State refactoring tools | Terraform has mature workflows for moving, importing, and refactoring state. |
-| Adoption path | Teams can start with Terraform without making Kubernetes the platform control plane. |
-
-Use Terraform when you want controlled execution. Use Crossplane when you want a platform API that keeps operating.
-
-## XRDs vs Terraform modules
-
-An XRD is not the same thing as a Terraform module.
-
-| Concept | Terraform module | Crossplane XRD |
+| Situation | Starting choice | Reason |
 | --- | --- | --- |
-| What it defines | Reusable Terraform configuration. | A Kubernetes API schema. |
-| What users create | A `module` block in HCL. | A Kubernetes custom resource, usually an XR. |
-| When it runs | During `terraform plan` and `terraform apply`. | Continuously while controllers reconcile the XR. |
-| Where state lives | Terraform state. | Kubernetes resources, status, external names, finalizers, and provider controller state. |
-| How implementation is attached | Module source and version. | Composition selected by the XR or default XRD behavior. |
+| A small team makes occasional infrastructure changes and wants a visible approval step. | Terraform. | A plan and apply run fit that change process. |
+| A platform team serves many standardized requests to teams using Kubernetes and GitOps. | Crossplane. | XRDs and XRs expose request types in the Kubernetes API, with ongoing status and reconciliation. |
+| The first management cluster and its base network do not yet exist. | Terraform or another bootstrap tool. | Crossplane needs a running Kubernetes control plane before its controllers can serve requests. |
+| Base cloud resources use a controlled pipeline, while application teams request repeatable services daily. | Both, with distinct owners. | Each tool serves the part of the workflow it fits. |
 
-The closest Crossplane equivalent to a Terraform module is not only an XRD. It is the XRD plus Composition pair:
+These are starting points. Also check provider support,
+operational skills, recovery, security controls, and how
+often requests change. Crossplane brings a control plane
+that the team must operate; Terraform needs a reliable
+run and state workflow. A convenient platform API does
+not remove those responsibilities.
+[^terraform-state][^crossplane-managed]
 
-- XRD defines the interface.
-- Composition defines the implementation.
-- XR is the user call.
-- Managed resources are the concrete AWS resources created by providers.
+## Keep ownership clear when using both
 
-## AWS example: VPC module vs Crossplane API
+For the invented network, Terraform could own the base
+account, management cluster, and its initial network.
+Crossplane could own separate application networks
+requested as XRs. Each external resource and managed
+field needs one active owner.
 
-### Terraform module call
+If Terraform and Crossplane both try to set the same
+network field, a later Terraform apply and ongoing
+Crossplane reconciliation can work against each other.
+Write down the ownership boundary before migration.
+Verify that the old tool has stopped managing a field
+before the new one starts. Provider-specific import and
+observation behavior require separate testing.
+[^terraform-plan][^crossplane-managed]
 
-```hcl
-module "network" {
-  source = "git::ssh://git@example.com/platform/terraform-aws-vpc.git?ref=v1.4.0"
+## What to inspect after a change
 
-  name             = "payments"
-  region           = "eu-west-1"
-  cidr_block       = "10.40.0.0/16"
-  private_subnets  = ["10.40.1.0/24", "10.40.2.0/24"]
-  availability_zones = ["eu-west-1a", "eu-west-1b"]
-  enable_s3_endpoint = true
-}
-```
+For Terraform, review the **current** plan and apply
+result, then verify the cloud network and an actual
+payments application path. A previous speculative plan
+can become stale if the world changes before apply.
+[^terraform-plan]
 
-What it does: passes inputs to a reusable Terraform VPC module. Terraform plans the graph, applies changes, and records resource mappings in state.
+For Crossplane, inspect the XR's `Synced` and `Ready`
+conditions, the selected Composition, the composed
+managed resources, their provider conditions, and
+finally the payments application path. A healthy
+request object and a working application are separate
+observations.[^crossplane-xrs][^crossplane-managed]
 
-### Crossplane XR call
+Read [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
+for reconciliation and drift. Read the
+[AWS VPC platform API](aws-vpc-platform-api.md) for a
+more detailed network design.
 
-```yaml
-apiVersion: platform.example.org/v1alpha1
-kind: PlatformNetwork
-metadata:
-  name: payments-network
-  namespace: payments
-spec:
-  region: eu-west-1
-  cidrBlock: 10.40.0.0/16
-  environment: prod
-  privateSubnetA:
-    availabilityZone: eu-west-1a
-    cidrBlock: 10.40.1.0/24
-  privateSubnetB:
-    availabilityZone: eu-west-1b
-    cidrBlock: 10.40.2.0/24
-```
+## Check your understanding
 
-What it does: creates a live Kubernetes object. Crossplane chooses the Composition, creates composed AWS managed resources, reconciles them through AWS provider controllers, and reports status back to the XR.
+1. A team must approve each network change after seeing
+   proposed actions. Which workflow provides that
+   preview directly?
+2. Developers already submit Kubernetes manifests and
+   need a small `PlatformNetwork` request. Which API
+   pieces would the platform team publish?
+3. Why can both a Terraform apply and a Crossplane XR
+   show success while the payments app still cannot
+   reach its dependency?
+4. If both tools are installed, what must be decided
+   before either manages the same cloud network?
 
-For the full Crossplane version of this example, read [AWS VPC platform API](aws-vpc-platform-api.md).
+## Explore further
 
-## Decision guide
-
-Choose Terraform when:
-
-- The team needs explicit `plan` approval before every change.
-- Infrastructure changes are infrequent and controlled by platform or SRE teams.
-- The platform does not center on Kubernetes.
-- Provider coverage or module maturity is the main requirement.
-- You are bootstrapping the management cluster, base cloud account, VPC, or IAM foundation.
-
-Choose Crossplane when:
-
-- Developers should request infrastructure through Kubernetes APIs.
-- A platform team wants to publish stable internal APIs such as `PlatformNetwork`, `AppBucket`, or `PlatformDatabase`.
-- Infrastructure should be continuously reconciled after creation.
-- Kubernetes RBAC, namespaces, admission control, events, and status are part of the operating model.
-- GitOps should manage both application manifests and infrastructure requests.
-- Repeated infrastructure patterns should feel like platform products, not shared implementation details.
-
-Use both when:
-
-- Terraform creates the base AWS accounts, networking, EKS cluster, and Crossplane installation.
-- Crossplane runs inside the management cluster and handles standardized developer-facing infrastructure.
-- Ownership boundaries are explicit so both tools never manage the same field of the same external resource.
-
-## Common failure mode
-
-Do not put Terraform and Crossplane in charge of the same live AWS resource fields.
-
-Bad ownership pattern:
-
-```text
-Terraform manages aws_vpc.payments.cidr_block
-Crossplane manages VPC payments-vpc spec.forProvider.cidrBlock
-```
-
-That creates a control conflict. Terraform may plan one change while Crossplane reconciles another. Pick one owner per resource or per field. During migration, use import and observe-only patterns carefully, then move ownership deliberately.
-
-## Practical rule
-
-If the main problem is "how do we provision this infrastructure safely with review," start with Terraform.
-
-If the main problem is "how do we give many teams a stable API that keeps infrastructure healthy after creation," Crossplane brings something Terraform does not provide by itself.
-
-## Related links
-
-- [Crossplane](index.md)
-- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
-- [Crossplane component model](component-model.md)
-- [Crossplane compositions](compositions.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
-- [AWS VPC platform API](aws-vpc-platform-api.md)
-- [Crossplane managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
-- [Crossplane XRDs](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
-- [Crossplane Compositions](https://docs.crossplane.io/latest/composition/compositions/)
-- [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
-- [Terraform modules](https://developer.hashicorp.com/terraform/language/modules)
+- [Terraform plan](https://developer.hashicorp.com/terraform/cli/commands/plan)
+  explains preview and apply boundaries.[^terraform-plan]
 - [Terraform state](https://developer.hashicorp.com/terraform/language/state)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+  explains how resources are tracked.[^terraform-state]
+- [Terraform modules](https://developer.hashicorp.com/terraform/language/modules)
+  explains reusable configuration.[^terraform-modules]
+- [Crossplane XRDs](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
+  and [XRs](https://docs.crossplane.io/latest/composition/composite-resources/)
+  explain the platform API.[^crossplane-xrds][^crossplane-xrs]
+- [Crossplane Compositions](https://docs.crossplane.io/latest/composition/compositions/)
+  and [managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
+  explain implementation and reconciliation.
+  [^crossplane-compositions][^crossplane-managed]
+- [Back to Crossplane](index.md).
+
+[^terraform-plan]: [HashiCorp, terraform plan command](https://developer.hashicorp.com/terraform/cli/commands/plan), source record `terraform-plan`.
+[^terraform-state]: [HashiCorp, Terraform state](https://developer.hashicorp.com/terraform/language/state), source record `terraform-state`.
+[^terraform-modules]: [HashiCorp, Modules overview](https://developer.hashicorp.com/terraform/language/modules), source record `terraform-modules`.
+[^crossplane-xrds]: [Crossplane, Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), source record `crossplane-xrds`.
+[^crossplane-xrs]: [Crossplane, Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/), source record `crossplane-xrs`.
+[^crossplane-compositions]: [Crossplane, Compositions](https://docs.crossplane.io/latest/composition/compositions/), source record `crossplane-compositions`.
+[^crossplane-managed]: [Crossplane, Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/), source record `crossplane-managed`.

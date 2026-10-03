@@ -1,91 +1,131 @@
 ---
 type: "Explanation"
 title: "Kafka fundamentals"
-description: "Use this page to understand the core Kafka mental model before designing producers, consumers, or AWS streaming architectures."
+description: "Follow one event from a producer into a Kafka topic and out to independent consumer groups, with ordering and retention limits."
 tags: [databases, kafka]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: kafka-intro
+    resource: https://kafka.apache.org/intro/
+    title: Apache Kafka - Introduction
+  - id: kafka-design
+    resource: https://kafka.apache.org/41/design/design/
+    title: Apache Kafka 4.1 - Design
+  - id: kafka-topic-configs
+    resource: https://kafka.apache.org/41/configuration/topic-configs/
+    title: Apache Kafka 4.1 - Topic Configs
 ---
 
 # Kafka fundamentals
 
-## Purpose
+## The idea in plain language
 
-Use this page to understand the core Kafka mental model before designing producers, consumers, or AWS streaming architectures.
+**Apache Kafka is a system for publishing, storing, and reading streams of
+events.** An *event* is a record that something happened, such as "order
+42 was paid." A **producer** writes an event; a **consumer** reads it.
+Kafka stores events in named **topics** so several consumers can react to
+the same event without the producer sending a separate copy to each
+one.[^kafka-intro]
 
-## What Kafka does
+Think of a shared notice board. A writer posts a numbered notice, and
+several teams keep their own place in the sequence. The analogy has limits:
+Kafka has multiple ordered partitions rather than one global notice list;
+old notices can expire or be compacted; and seeing a notice does not prove
+that a team completed the work it triggered.
 
-Apache Kafka stores streams of records in durable partitioned logs. Producers append records to topics, brokers replicate and serve those records, and consumers read them independently using offsets.
+## The parts of one path
 
-Kafka is useful when several systems need to react to the same facts at different speeds without the producer knowing every consumer.
-
-## Core concepts
-
-| Concept | Meaning | Why it matters |
+| Part | Simple meaning | Question it answers |
 | --- | --- | --- |
-| Record | One event with a key, value, timestamp, and metadata. | It is the unit producers write and consumers read. |
-| Topic | Named append-only log split into partitions. | It organizes related events and retention policy. |
-| Partition | Ordered shard of a topic. | It controls ordering, parallelism, and broker distribution. |
-| Broker | Kafka server that stores partitions and serves clients. | More brokers can increase capacity and resilience. |
-| Producer | Client that writes records to topics. | Key choice controls which partition receives a record. |
-| Consumer group | Consumers sharing work for a topic. | Each partition is consumed by one group member at a time. |
-| Offset | Position of a record in a partition. | Consumers commit offsets to track progress. |
+| Producer | Client that writes an event. | Who published this fact? |
+| Topic | Named stream of related events. | Where do readers find it? |
+| Partition | One ordered slice of a topic. | Which events have a shared order? |
+| Broker | Kafka server that stores and serves partitions. | Where is a slice held? |
+| Consumer group | Readers that divide a topic's partitions among themselves. | Which application is reading independently? |
+| Offset | A position within one partition. | How far has this reader progressed? |
 
-## Component model
+A topic may have several partitions on brokers. Events are appended to a
+partition; order is defined **inside that partition**, not across an entire
+multi-partition topic. Within a traditional consumer group, one member
+reads a given partition at a time. A different group can read that same
+partition independently.[^kafka-intro][^kafka-design]
 
-```text
-producer
-  -> topic
-  -> partition leader on broker
-  -> follower replicas
-  -> consumer group
-  -> offset commits
+```mermaid
+flowchart LR
+  producer["Orders producer"] -->|"key: order-42"| partition["orders.events<br/>partition 1: ordered events"]
+  partition --> billing["Billing group<br/>own position"]
+  partition --> analytics["Analytics group<br/>own position"]
+  broker["Kafka broker"] -. "stores and serves" .-> partition
 ```
 
-Each component affects a different design concern: producer settings affect durability, partitions affect ordering and parallelism, brokers affect availability, and consumers affect processing guarantees.
+Text alternative: an orders producer sends an event with key `order-42`
+to one partition of `orders.events`. A broker stores that partition.
+Billing and analytics are separate consumer groups, each with its own
+reading position. The diagram explains why billing reading an event does
+not prevent analytics from reading it too. The partition number and group
+names are illustrative.
 
-## Message flow
+## Follow an illustrative event
 
-1. A producer serializes an event and sends it to a topic.
-2. Kafka chooses a partition, often from the record key.
-3. The partition leader appends the record to the log.
-4. Followers replicate the record.
-5. Consumers fetch records and commit offsets after processing.
+Suppose an online shop publishes `OrderPaid` for `order-42`. This is an
+invented example, not a Kafka run. The producer sends a key such as
+`order-42` and a value containing the fact that the order was paid. With
+the usual key-based partition choice, events for the same key go to the
+same partition while that partitioning scheme remains in place.[^kafka-intro]
 
-### Event example
+1. Kafka appends the event to its chosen partition and gives it an offset
+   within that partition.
+2. The billing group reads it and may update a billing view. The analytics
+   group can read the same stored event for a different purpose.
+3. Each group tracks its own position. Reading an event does **not** delete
+   it from the topic.[^kafka-intro][^kafka-design]
 
-```json
-{
-  "eventId": "7e858f8f-9337-44d1-91fb-9038d56653a6",
-  "eventType": "OrderCreated",
-  "eventVersion": 1,
-  "occurredAt": "2026-07-18T09:30:00Z",
-  "data": {
-    "orderId": "ORD-7842",
-    "customerId": "CUST-52",
-    "total": 149.99
-  }
-}
-```
+An offset is a position, not evidence that a side effect succeeded. A
+consumer can fail after reading and before or after recording progress;
+the result depends on its processing and offset-commit design. A reader
+may need to handle a repeated event safely. See [delivery guarantees and
+failure handling](delivery-guarantees-and-failure-handling.md) before
+assuming exactly-once effects.
 
-What it does: records a fact that happened. Consumers such as payment, inventory, notification, and analytics can process it independently.
+## Three limits beginners should remember
 
-## Design reminders
+| Misunderstanding | More accurate model |
+| --- | --- |
+| "The whole topic is in one order." | Each partition is ordered; there is no single order across partitions. |
+| "The event disappears when one app reads it." | Groups read independently; retention or compaction controls how long data stays. |
+| "More brokers mean no data can be lost." | Replication and producer/consumer settings affect durability; inspect the configured path. |
 
-- Ordering is guaranteed inside one partition, not across all partitions in a topic.
-- More partitions can increase parallelism, but they add operational overhead.
-- Consumer lag means consumers are behind the latest produced offset.
-- Retention allows replay, but it is not a substitute for a permanent database.
+Kafka can retain events after they are read, which permits another group or
+the same group to read an earlier part again. That ability has a boundary:
+topic retention can remove old segments, and compacted topics keep a
+different history. A replay plan must check what events still exist before
+resetting a position.[^kafka-intro][^kafka-topic-configs]
 
-## Related links
+## Check your understanding
 
-- [Apache Kafka documentation](https://kafka.apache.org/documentation/)
-- [Topic and event design](topic-and-event-design.md)
-- [Consumer groups, lag, and replay](consumer-groups-lag-and-replay.md)
-- [Delivery guarantees and failure handling](delivery-guarantees-and-failure-handling.md)
-- [Kafka operations](operations.md)
-- [Back to Kafka index](index.md)
-- [Back to databases index](../index.md)
-- [Back to root index](../../../README.md)
+- Why can billing and analytics both read `OrderPaid` without the producer
+  sending two separate events?
+- Where is ordering guaranteed when a topic has multiple partitions?
+- Why does an offset not prove that an external payment or database update
+  succeeded?
+
+## Official documentation for deeper study
+
+- [Apache Kafka introduction](https://kafka.apache.org/intro/) explains
+  events, topics, partitions, producers, and consumers.
+- [Kafka 4.1 design](https://kafka.apache.org/41/design/design/) explains
+  consumer-group assignment, offsets, and processing guarantees.
+- [Kafka 4.1 topic configuration](https://kafka.apache.org/41/configuration/topic-configs/)
+  documents retention and compaction settings.
+
+Next, read [topic and event design](topic-and-event-design.md) for key and
+contract choices, [consumer groups, lag, and
+replay](consumer-groups-lag-and-replay.md) for reader progress, or return
+to the [Kafka index](index.md).
+
+[^kafka-intro]: [Apache Kafka: Introduction](https://kafka.apache.org/intro/).
+[^kafka-design]: [Apache Kafka 4.1: Design](https://kafka.apache.org/41/design/design/).
+[^kafka-topic-configs]: [Apache Kafka 4.1: Topic Configs](https://kafka.apache.org/41/configuration/topic-configs/).
