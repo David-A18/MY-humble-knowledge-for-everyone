@@ -1575,12 +1575,25 @@ readiness, and an application-level outcome.
 | --- | --- | --- | --- |
 | [How to request a Crossplane platform API](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md) | Bounded order-form analogy, invented PlatformNetwork request, diagram and text alternative, selection explanation, Terraform comparison with limits, layered evidence table, understanding checks. | Current official Crossplane XRD, XR, and Composition documentation plus HashiCorp module overview checked. Mermaid rendered and inspected. No XRD, Composition, function, provider, network, cloud account, application check, reader task, or Opus review occurred. | Independent Crossplane and Opus review; disposable XR-to-provider exercise; novice request-object task; freshness decision. |
 
+### Wave 94 (2026-10-03)
+
+The Terraform/Crossplane comparison now follows one invented
+payments-network need through two operating paths. It keeps the
+decision near the top, shows what each workflow previews or
+observes, and gives a clear example of using both with
+separate resource ownership. Repeated feature lists and
+unrun network manifests were removed.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [When to use Terraform or Crossplane](knowledge/kubernetes/crossplane/terraform-vs-crossplane.md) | Bounded inspection-versus-caretaker analogy, two-path diagram and text alternative, invented network decision table, ownership boundary, post-change observations, understanding checks. | Current official HashiCorp plan, state, and modules guidance plus Crossplane XRD, XR, Composition, and managed-resource documentation checked. Mermaid rendered and inspected. No Terraform run, cluster, cloud network, application check, reader task, or Opus review occurred. | Independent Terraform/Crossplane and Opus review; disposable comparison of plan/apply and XR reconciliation; novice operating-model choice task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 93
-together: one hundred twenty-two concepts, none of them independently reviewed after
-their teaching passes. The remaining 43 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 94
+together: one hundred twenty-three concepts, none of them independently reviewed after
+their teaching passes. The remaining 42 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1597,14 +1610,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 32 | 13 |
+| Kubernetes | 45 | 33 | 12 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **122** | **43** |
+| **Total** | **165** | **123** | **42** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

@@ -3028,20 +3028,30 @@
       "type": "Reference"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to decide when Terraform is enough, when Crossplane adds a better operating model, and which problems Crossplane solves that Terraform does not solve naturally.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Choose a review-and-apply workflow, a continuously reconciled platform API, or a clear combination of both.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/terraform-vs-crossplane.md",
-      "source_ids": [],
+      "source_ids": [
+        "terraform-plan",
+        "terraform-state",
+        "terraform-modules",
+        "crossplane-xrds",
+        "crossplane-xrs",
+        "crossplane-compositions",
+        "crossplane-managed"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "terraform-vs-crossplane"
+        "terraform",
+        "infrastructure",
+        "beginner"
       ],
-      "title": "Terraform vs Crossplane",
+      "title": "When to use Terraform or Crossplane",
       "type": "Explanation"
     },
     {

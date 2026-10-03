@@ -152,7 +152,7 @@ configuration during a plan/apply workflow and records state.
 Crossplane controllers repeatedly observe Kubernetes objects
 and work toward the desired state. An XR is a persistent API
 object, not a one-time function invocation. Read
-[Terraform vs Crossplane](terraform-vs-crossplane.md) for
+[When to use Terraform or Crossplane](terraform-vs-crossplane.md) for
 the wider comparison.
 
 ## Follow evidence through the layers

@@ -96,7 +96,7 @@ What it does: lets a platform team hide encryption, public-access blocking, logg
 
 ## Crossplane versus Terraform
 
-For the focused decision guide, read [Terraform vs Crossplane](terraform-vs-crossplane.md).
+For the focused decision guide, read [When to use Terraform or Crossplane](terraform-vs-crossplane.md).
 
 | Area | Terraform | Crossplane |
 | --- | --- | --- |
@@ -157,7 +157,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [How a Crossplane Composition fulfills one application request](compositions.md) | Follow an invented WebApplication from XRD validation through function output, composed Deployment and Service, revision choice, and user-path check. |
 | [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
-| [Terraform vs Crossplane](terraform-vs-crossplane.md) | Compare run-based Terraform workflows with Crossplane reconciliation and platform APIs, including what Crossplane solves that Terraform does not solve naturally. |
+| [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
 | [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
 | [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
@@ -177,7 +177,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [How a Crossplane Composition fulfills one application request](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
-- [Terraform vs Crossplane](terraform-vs-crossplane.md)
+- [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Professional operating model](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)
