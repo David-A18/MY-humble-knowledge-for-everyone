@@ -135,7 +135,7 @@ the referenced documentation.[^apisix-config-troubleshoot]
 | Request matched but the backend is unavailable | Service selector, EndpointSlice readiness, and Pod evidence; use the [Kubernetes Service debug guide](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/).[^k8s-debug-service] |
 
 For a broader gateway request model, read
-[APISIX architecture and deployment](../applications-and-tools/apisix-architecture-and-deployment.md).
+[How the APISIX gateway and controller fit together](../applications-and-tools/apisix-architecture-and-deployment.md).
 For policy failures, read
 [APISIX security, traffic, and observability](../applications-and-tools/apisix-security-traffic-and-observability.md).
 Change the reviewed routing source only after the first

@@ -1466,12 +1466,25 @@ assumption that every request must pass through kube-proxy.
 | --- | --- | --- | --- |
 | [What Apache APISIX does for an API](knowledge/kubernetes/applications-and-tools/apache-apisix.md) | Lobby analogy with limits, invented lesson request, request and configuration diagrams with text alternatives, route/plugin/upstream/application ownership table, Kubernetes Service versus APISIX Service distinction, version-aware Gateway API link, understanding checks. | Current official APISIX route, plugin, controller, Kubernetes resource, and Gateway API documentation checked. Both Mermaid diagrams rendered and inspected. No gateway, route, backend, request, or Opus review occurred. | Independent APISIX and Opus review; disposable gateway and controller request exercise; novice route-versus-backend task; freshness decision. |
 
+### Wave 86 (2026-10-03)
+
+The APISIX architecture page now separates Kubernetes route declarations,
+the controller-to-gateway configuration path, the live request path, and
+the gateway's configuration-storage mode. It removes an untested EKS
+Service manifest and port-forward recipe, keeping AWS implementation
+details on the existing EKS guide. Gateway API status and listener-port
+limits are explained as evidence rather than proof of user success.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How the APISIX gateway and controller fit together](knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md) | Two-path diagram and text alternative, invented lesson route, Gateway API object responsibilities and condition limits, documented traditional/decoupled/standalone mode comparison, failure-boundary table, understanding checks. | Current official APISIX deployment-mode, controller architecture, install, Gateway API, and resource documentation plus Gateway API implementer guidance checked. Mermaid rendered and inspected. No cluster, APISIX mode, listener, backend, request, or Opus review occurred. | Independent APISIX/Gateway API and Opus review; disposable route/status and mode-restart exercise; novice controller-versus-gateway task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 85
-together: one hundred fourteen concepts, none of them independently reviewed after
-their teaching passes. The remaining 51 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 86
+together: one hundred fifteen concepts, none of them independently reviewed after
+their teaching passes. The remaining 50 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1488,14 +1501,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 24 | 21 |
+| Kubernetes | 45 | 25 | 20 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **114** | **51** |
+| **Total** | **165** | **115** | **50** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

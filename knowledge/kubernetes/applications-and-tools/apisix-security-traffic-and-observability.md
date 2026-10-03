@@ -149,7 +149,7 @@ What it does: separates reconciliation errors from data-plane request handling.
 - Official documentation: [APISIX plugins](https://apisix.apache.org/docs/apisix/terminology/plugin/)
 - Official documentation: [APISIX OpenID Connect plugin](https://apisix.apache.org/docs/apisix/plugins/openid-connect/)
 - Official documentation: [APISIX Prometheus plugin](https://apisix.apache.org/docs/apisix/plugins/prometheus/)
-- [APISIX architecture and deployment](apisix-architecture-and-deployment.md)
+- [How the APISIX gateway and controller fit together](apisix-architecture-and-deployment.md)
 - [Trace an APISIX 404](../troubleshooting/apisix.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)

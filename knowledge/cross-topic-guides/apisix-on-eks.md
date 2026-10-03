@@ -170,7 +170,7 @@ open an arbitrary data-plane port.[^apisix-gateway-api]
 - [EKS Network Load Balancers](https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html)
   and [NLB listeners](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)
   for AWS entry and TLS choices.
-- [APISIX architecture and deployment](../kubernetes/applications-and-tools/apisix-architecture-and-deployment.md)
+- [How the APISIX gateway and controller fit together](../kubernetes/applications-and-tools/apisix-architecture-and-deployment.md)
   and [trace an APISIX 404](../kubernetes/troubleshooting/apisix.md)
   for deeper Kubernetes-specific guidance.
 

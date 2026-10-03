@@ -2191,19 +2191,30 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to understand how Apache APISIX, the APISIX Ingress Controller, Gateway API, and Kubernetes Services fit together before choosing a deployment mode.",
+      "audience": "Beginning Kubernetes platform learner",
+      "description": "Separate the live request path, Kubernetes route translation, and APISIX configuration storage before choosing a deployment mode.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md",
-      "source_ids": [],
+      "source_ids": [
+        "apisix-deployment-modes",
+        "apisix-controller-architecture",
+        "apisix-controller-install",
+        "apisix-gateway-api",
+        "apisix-resources",
+        "gateway-api-implementation"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools"
+        "apisix",
+        "gateway-api",
+        "ingress",
+        "deployment",
+        "beginner"
       ],
-      "title": "APISIX architecture and deployment",
+      "title": "How the APISIX gateway and controller fit together",
       "type": "Explanation"
     },
     {
