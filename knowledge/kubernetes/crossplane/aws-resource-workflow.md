@@ -619,7 +619,7 @@ GitOps owns whether manifests are present in the cluster. Crossplane owns whethe
 - [Professional operating model](professional-operating-model.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
-- [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
+- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md)

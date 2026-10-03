@@ -153,7 +153,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [How Crossplane's components turn a request into a resource](component-model.md) | Follow an invented bucket request from XRD and XR through Composition, managed resource, provider, and external API; then place advanced components around that path. |
 | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) | Follow desired state, provider observation, drift, import, pause, and deletion for one invented bucket. |
 | [How a Crossplane provider reaches an external API](providers-and-authentication.md) | Separate provider package health, provider configuration, Pod credentials, and external authorization for one invented bucket. |
-| [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
+| [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md) | Compare direct provider-specific requests with a small XR and Composition backed by the same provider. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
 | [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
@@ -173,7 +173,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [How Crossplane's components turn a request into a resource](component-model.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
-- [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
+- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)

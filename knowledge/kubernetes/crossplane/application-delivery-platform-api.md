@@ -332,7 +332,7 @@ and AWS ECR if the repository does not become ready.
 
 ## Related links
 
-- [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
+- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md)

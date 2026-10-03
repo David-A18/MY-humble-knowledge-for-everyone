@@ -1535,12 +1535,26 @@ unsupported review and freshness claims.
 | --- | --- | --- | --- |
 | [How a Crossplane provider reaches an external API](knowledge/kubernetes/crossplane/providers-and-authentication.md) | Bounded courier analogy, invented reports-bucket call, four-gate diagram and text alternative, package-versus-authorization table, conditional EKS identity comparison, first-missing-boundary table, understanding checks. | Current official Crossplane Provider, managed-resource, and activation guidance plus Amazon EKS Pod Identity and IRSA documentation checked. Mermaid rendered and inspected. No provider, EKS cluster, Pod identity, credential, bucket, AWS call, reader task, or Opus review occurred. | Independent Crossplane/AWS security and Opus review; disposable provider identity and allow/deny exercise; novice package-versus-credential task; freshness decision. |
 
+### Wave 91 (2026-10-03)
+
+The direct-MR versus platform-API page now answers one design
+question instead of repeating the component glossary. An invented
+image repository follows both routes to the same provider controller.
+It separates what the resource author chooses from what a platform
+team can standardize, then explains the cost of versioning and
+reviewing the abstraction. Unexecuted provider installation and MR
+manifests were removed; focused pages retain the operational paths.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [When to use a managed resource or a Crossplane platform API](knowledge/kubernetes/crossplane/providers-compositions-and-managed-resources.md) | Bounded ingredients-versus-meal analogy, invented image-repository request, converging-route diagram and text alternative, choice table, change scenario, bypass boundary, next-page routes, understanding checks. | Current official Crossplane overview, managed-resource, XRD, Composition, and Configuration documentation checked. Mermaid rendered and inspected. No provider, repository, Composition, request, reader task, or Opus review occurred. | Independent Crossplane/platform security and Opus review; disposable direct-MR-versus-XR exercise with provider access controls; novice choice task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 90
-together: one hundred nineteen concepts, none of them independently reviewed after
-their teaching passes. The remaining 46 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 91
+together: one hundred twenty concepts, none of them independently reviewed after
+their teaching passes. The remaining 45 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1557,14 +1571,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 29 | 16 |
+| Kubernetes | 45 | 30 | 15 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **119** | **46** |
+| **Total** | **165** | **120** | **45** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

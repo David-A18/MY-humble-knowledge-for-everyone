@@ -2976,19 +2976,29 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to distinguish the Crossplane building blocks that are often confused:",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Compare a direct provider-specific request with a small platform API backed by a Composition, using one invented image repository.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/providers-compositions-and-managed-resources.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-overview",
+        "crossplane-managed",
+        "crossplane-xrds",
+        "crossplane-compositions",
+        "crossplane-configurations"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "crossplane"
+        "crossplane",
+        "managed-resources",
+        "compositions",
+        "platform-api",
+        "beginner"
       ],
-      "title": "Crossplane providers, managed resources, and compositions",
+      "title": "When to use a managed resource or a Crossplane platform API",
       "type": "Explanation"
     },
     {
