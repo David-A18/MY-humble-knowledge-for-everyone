@@ -149,7 +149,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 | Article | Purpose |
 | --- | --- |
-| [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
+| [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md) | See what the platform team defines, what one XR asks for, and which checks establish delivery. |
 | [How Crossplane's components turn a request into a resource](component-model.md) | Follow an invented bucket request from XRD and XR through Composition, managed resource, provider, and external API; then place advanced components around that path. |
 | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) | Follow desired state, provider observation, drift, import, pause, and deletion for one invented bucket. |
 | [How a Crossplane provider reaches an external API](providers-and-authentication.md) | Separate provider package health, provider configuration, Pod credentials, and external authorization for one invented bucket. |
@@ -169,7 +169,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 ## Related links
 
-- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
+- [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md)
 - [How Crossplane's components turn a request into a resource](component-model.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)

@@ -1562,12 +1562,25 @@ removed, while official procedure and revision references remain.
 | --- | --- | --- | --- |
 | [How a Crossplane Composition fulfills one application request](knowledge/kubernetes/crossplane/compositions.md) | Bounded form-and-recipe analogy, invented WebApplication input/output table, XR-to-resource diagram and text alternative, pipeline questions, revision scenario, layered validation table, understanding checks. | Current official Crossplane XRD, Composition, CompositionRevision, and CLI documentation plus Kubernetes Deployment and Service documentation checked. Mermaid rendered and inspected. No Crossplane CLI render, cluster, Deployment, Service, user request, reader task, or Opus review occurred. | Independent Crossplane/Kubernetes and Opus review; disposable local render and cluster exercise; novice schema-versus-implementation task; freshness decision. |
 
+### Wave 93 (2026-10-03)
+
+The XRD/XR page now answers the caller's question first: create an XR.
+One invented network request shows the API definition, implementation,
+request, composed resources, provider, and external API. The old long,
+unrun configuration examples were replaced by a small illustrative XR
+and selection fragment. The page separates admission, reconciliation,
+readiness, and an application-level outcome.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How to request a Crossplane platform API](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md) | Bounded order-form analogy, invented PlatformNetwork request, diagram and text alternative, selection explanation, Terraform comparison with limits, layered evidence table, understanding checks. | Current official Crossplane XRD, XR, and Composition documentation plus HashiCorp module overview checked. Mermaid rendered and inspected. No XRD, Composition, function, provider, network, cloud account, application check, reader task, or Opus review occurred. | Independent Crossplane and Opus review; disposable XR-to-provider exercise; novice request-object task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 92
-together: one hundred twenty-one concepts, none of them independently reviewed after
-their teaching passes. The remaining 44 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 93
+together: one hundred twenty-two concepts, none of them independently reviewed after
+their teaching passes. The remaining 43 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1584,14 +1597,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 31 | 14 |
+| Kubernetes | 45 | 32 | 13 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **121** | **44** |
+| **Total** | **165** | **122** | **43** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

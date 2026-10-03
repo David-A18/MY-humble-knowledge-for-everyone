@@ -158,7 +158,7 @@ universal Crossplane recipe.
 | --- | --- |
 | Learn what the provider controls and how it authenticates | [How a Crossplane provider reaches an external API](providers-and-authentication.md) |
 | Understand desired state, observed state, and deletion | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) |
-| Design the API fields and implementation | [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) |
+| Design the API fields and implementation | [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md) |
 | Trace a request into AWS | [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md) |
 | Compare this operating model with Terraform | [Terraform vs Crossplane](terraform-vs-crossplane.md) |
 

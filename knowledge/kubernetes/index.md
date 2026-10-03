@@ -31,7 +31,7 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 
 | Topic | Start here | Follow-up |
 | --- | --- | --- |
-| First Crossplane request | [How Crossplane's components turn a request into a resource](crossplane/component-model.md) | [XRDs, Compositions, and XR calls](crossplane/xrd-composition-and-xr-calls.md), [Compositions](crossplane/compositions.md), [Terraform vs Crossplane](crossplane/terraform-vs-crossplane.md), [AWS VPC platform API](crossplane/aws-vpc-platform-api.md). |
+| First Crossplane request | [How Crossplane's components turn a request into a resource](crossplane/component-model.md) | [How to request a Crossplane platform API](crossplane/xrd-composition-and-xr-calls.md), [Compositions](crossplane/compositions.md), [Terraform vs Crossplane](crossplane/terraform-vs-crossplane.md), [AWS VPC platform API](crossplane/aws-vpc-platform-api.md). |
 
 ## AWS and EKS workflows
 

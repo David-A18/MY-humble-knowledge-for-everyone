@@ -152,7 +152,7 @@ CompositeResourceDefinition (XRD) that defines the schema for a custom API,
 and Crossplane creates a matching Kubernetes CustomResourceDefinition from
 it.[^crossplane-xrd] Crossplane's own controllers then supply the behaviour.
 See the [Crossplane component model](../crossplane/component-model.md) and
-[XRDs, Compositions, and XR calls](../crossplane/xrd-composition-and-xr-calls.md)
+[How to request a Crossplane platform API](../crossplane/xrd-composition-and-xr-calls.md)
 for how that is built.
 
 ## An analogy: a new form at a records office

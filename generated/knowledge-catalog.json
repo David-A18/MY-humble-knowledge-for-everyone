@@ -3062,20 +3062,28 @@
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand the Crossplane platform API model from first principles: what an XRD is, what a Composition is, what an XR is, and what the Crossplane equivalent of a Terraform module call is.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Understand what an XRD defines, what a Composition implements, and why creating an XR is the user's request.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-xrds",
+        "crossplane-xrs",
+        "crossplane-compositions",
+        "terraform-modules"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "xrd-composition-and-xr-calls"
+        "xrd",
+        "xr",
+        "composition",
+        "beginner"
       ],
-      "title": "Crossplane XRDs, Compositions, and XR calls",
+      "title": "How to request a Crossplane platform API",
       "type": "Explanation"
     },
     {
