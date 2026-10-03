@@ -2951,23 +2951,28 @@
       "type": "Explanation"
     },
     {
-      "audience": "Platform engineers designing Crossplane provider authentication",
-      "description": "Use this page to understand Crossplane provider packages, provider configs, authentication choices, package health, and schema validation.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Separate the installed provider, the configuration a managed resource selects, the provider Pod's credentials, and the external API's permissions.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/providers-and-authentication.md",
       "source_ids": [
         "crossplane-providers",
-        "crossplane-managed-resources"
+        "crossplane-managed",
+        "crossplane-activation",
+        "eks-pod-identity",
+        "eks-irsa"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "providers-and-authentication"
+        "providers",
+        "authentication",
+        "beginner"
       ],
-      "title": "Crossplane providers and authentication",
+      "title": "How a Crossplane provider reaches an external API",
       "type": "Explanation"
     },
     {

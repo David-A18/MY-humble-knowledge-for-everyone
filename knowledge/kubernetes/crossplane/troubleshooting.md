@@ -280,7 +280,7 @@ What it does: stops Crossplane core. Provider controllers may still be running, 
 - [Crossplane](index.md)
 - [Crossplane compositions](compositions.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
-- [Providers and authentication](providers-and-authentication.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)
 - [Crossplane troubleshooting documentation](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/)

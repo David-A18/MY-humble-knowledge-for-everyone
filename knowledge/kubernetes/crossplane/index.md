@@ -152,7 +152,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
 | [How Crossplane's components turn a request into a resource](component-model.md) | Follow an invented bucket request from XRD and XR through Composition, managed resource, provider, and external API; then place advanced components around that path. |
 | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) | Follow desired state, provider observation, drift, import, pause, and deletion for one invented bucket. |
-| [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
+| [How a Crossplane provider reaches an external API](providers-and-authentication.md) | Separate provider package health, provider configuration, Pod credentials, and external authorization for one invented bucket. |
 | [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
 | [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
@@ -172,7 +172,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
 - [How Crossplane's components turn a request into a resource](component-model.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
-- [Providers and authentication](providers-and-authentication.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)

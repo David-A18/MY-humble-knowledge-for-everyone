@@ -202,7 +202,7 @@ What it does: defines a small namespaced platform API and prevents unsupported r
 - [Deployment patterns and references](deployment-patterns-and-references.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Crossplane compositions](compositions.md)
-- [Providers and authentication](providers-and-authentication.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)
 - [Back to Kubernetes index](../index.md)

@@ -334,7 +334,7 @@ and AWS ECR if the repository does not become ready.
 
 - [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
-- [Providers and authentication](providers-and-authentication.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md)
 - [Helm](../applications-and-tools/helm.md)
 - [Crossplane composition documentation](https://docs.crossplane.io/latest/composition/compositions/)

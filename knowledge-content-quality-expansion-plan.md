@@ -1521,12 +1521,26 @@ the official version-specific procedures.
 | --- | --- | --- | --- |
 | [How a Crossplane managed resource changes over time](knowledge/kubernetes/crossplane/managed-resources-and-lifecycle.md) | Bounded thermostat analogy, invented reports-bucket sequence, reconciliation diagram and text alternative, desired-versus-observed field map, status limits, import and deletion choices, failure-boundary table, understanding checks. | Current official Crossplane managed-resource, import, and Usage guidance plus Kubernetes finalizer documentation checked. Mermaid rendered and inspected. No cluster, provider, bucket, import, deletion, reader task, or Opus review occurred. | Independent Crossplane/provider and Opus review; disposable drift/import/pause/delete exercise with provider-specific policies; novice desired-versus-observed task; freshness decision. |
 
+### Wave 90 (2026-10-03)
+
+The Crossplane provider page now follows one invented bucket API call
+through package health, provider configuration, the controller Pod's
+credential source, and external authorization. It separates the
+provider's identity from the application's identity and makes EKS Pod
+Identity and IRSA conditional on the actual provider runtime. It
+removes the static credential recipe, a pinned package example, and
+unsupported review and freshness claims.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a Crossplane provider reaches an external API](knowledge/kubernetes/crossplane/providers-and-authentication.md) | Bounded courier analogy, invented reports-bucket call, four-gate diagram and text alternative, package-versus-authorization table, conditional EKS identity comparison, first-missing-boundary table, understanding checks. | Current official Crossplane Provider, managed-resource, and activation guidance plus Amazon EKS Pod Identity and IRSA documentation checked. Mermaid rendered and inspected. No provider, EKS cluster, Pod identity, credential, bucket, AWS call, reader task, or Opus review occurred. | Independent Crossplane/AWS security and Opus review; disposable provider identity and allow/deny exercise; novice package-versus-credential task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 89
-together: one hundred eighteen concepts, none of them independently reviewed after
-their teaching passes. The remaining 47 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 90
+together: one hundred nineteen concepts, none of them independently reviewed after
+their teaching passes. The remaining 46 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1543,14 +1557,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 28 | 17 |
+| Kubernetes | 45 | 29 | 16 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **118** | **47** |
+| **Total** | **165** | **119** | **46** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

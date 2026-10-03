@@ -253,7 +253,7 @@ from one request.
 ## Related links
 
 - [Application delivery platform API](application-delivery-platform-api.md)
-- [Providers and authentication](providers-and-authentication.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [Crossplane compositions](compositions.md)
 - [Crossplane component model](component-model.md)

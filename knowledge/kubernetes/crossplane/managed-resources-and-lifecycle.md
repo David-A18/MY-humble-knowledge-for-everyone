@@ -150,7 +150,7 @@ still exists.[^crossplane-managed][^kubernetes-finalizers]
 
 | If you need to... | Read |
 | --- | --- |
-| Understand provider packages and identities | [Providers and authentication](providers-and-authentication.md) |
+| Understand provider packages and identities | [How a Crossplane provider reaches an external API](providers-and-authentication.md) |
 | Follow an XR into several managed resources | [Compositions](compositions.md) |
 | Diagnose a failed provider reconciliation | [Crossplane troubleshooting](troubleshooting.md) |
 | Practice in an authorized sandbox | [Local AWS S3 lab](local-aws-s3-lab.md) |
