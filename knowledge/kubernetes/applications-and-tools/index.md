@@ -16,7 +16,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 | Need | Read |
 | --- | --- |
-| Understand what APISIX is and what it does. | [Apache APISIX](apache-apisix.md) |
+| Follow one request through a gateway route, plugin, and upstream. | [What Apache APISIX does for an API](apache-apisix.md) |
 | Understand APISIX components and request flow. | [APISIX architecture and deployment](apisix-architecture-and-deployment.md) |
 | Configure auth, rate limits, traffic release, metrics, logs, and traces. | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) |
 | Follow an external request to a Service and choose between Ingress, Gateway API, and implementation-specific routes. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
@@ -63,7 +63,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 | Article | Purpose |
 | --- | --- |
-| [Apache APISIX](apache-apisix.md) | Understand APISIX as a Kubernetes API gateway. |
+| [What Apache APISIX does for an API](apache-apisix.md) | Understand routes, plugins, upstreams, and the separate Kubernetes configuration path. |
 | [APISIX architecture and deployment](apisix-architecture-and-deployment.md) | Understand APISIX data-plane, controller, Gateway API, and EKS exposure patterns. |
 | [APISIX security, traffic, and observability](apisix-security-traffic-and-observability.md) | Place authentication, rate limits, release policy, and telemetry in APISIX safely. |
 | [Gateway API and Ingress](gateway-api-and-ingress.md) | Understand the request path, controller requirement, Gateway API ownership, and route choice. |

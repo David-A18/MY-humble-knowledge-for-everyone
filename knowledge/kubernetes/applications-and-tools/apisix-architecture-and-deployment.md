@@ -192,7 +192,7 @@ What it does: separates APISIX route behavior from DNS and cloud load balancer b
 - Official documentation: [APISIX deployment modes](https://apisix.apache.org/docs/apisix/deployment-modes/)
 - Official documentation: [APISIX Ingress Controller deployment architecture](https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/)
 - Official documentation: [APISIX Gateway API support](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/)
-- [Apache APISIX](apache-apisix.md)
+- [What Apache APISIX does for an API](apache-apisix.md)
 - [Gateway API and Ingress](gateway-api-and-ingress.md)
 - [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md)
 - [Back to Kubernetes applications and tools](index.md)

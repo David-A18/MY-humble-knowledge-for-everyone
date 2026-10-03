@@ -2166,20 +2166,28 @@
       "type": "Glossary"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand Apache APISIX as an API gateway for Kubernetes and EKS environments.",
+      "audience": "Beginning API and Kubernetes learner",
+      "description": "Follow one HTTP request through APISIX to understand routes, optional plugins, upstreams, and the separate Kubernetes configuration path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/apache-apisix.md",
-      "source_ids": [],
+      "source_ids": [
+        "apisix-route",
+        "apisix-plugin",
+        "apisix-controller",
+        "apisix-resources",
+        "apisix-gateway-api"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "apache-apisix"
+        "apisix",
+        "api-gateway",
+        "routing",
+        "beginner"
       ],
-      "title": "Apache APISIX",
+      "title": "What Apache APISIX does for an API",
       "type": "Explanation"
     },
     {

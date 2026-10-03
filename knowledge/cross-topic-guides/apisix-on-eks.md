@@ -48,7 +48,7 @@ Ingress Controller before they affect the gateway. Keeping those paths
 separate makes it easier to explain a failure and decide which component
 owns a fix.[^apisix-ingress-start][^apisix-deployment-architecture]
 
-Read [Apache APISIX](../kubernetes/applications-and-tools/apache-apisix.md)
+Read [What Apache APISIX does for an API](../kubernetes/applications-and-tools/apache-apisix.md)
 first if routes, upstreams, and plugins are new terms. This page focuses
 on how they meet AWS networking and EKS workloads.
 

@@ -1454,12 +1454,24 @@ workload access, and secret delivery.
 | --- | --- | --- | --- |
 | [GitOps security and multi-tenancy](knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md) | Delivery-desk analogy with limits, four-gate diagram and text alternative, invented payments/catalog boundary, Argo CD and Flux control explanations, secret and workload-access boundaries, understanding checks, official routes. Removed incomplete security YAML and untested incident mutations. | Current official GitHub branch protection, Argo CD Projects and declarative setup, Flux tenancy/Kustomization/HelmRelease/secrets, and Kubernetes RBAC documentation checked. Mermaid rendered and inspected. No cluster, denied request, or Opus review occurred. | Independent GitOps/Kubernetes security and Opus review; disposable allowed/denied tenant exercise including a HelmRelease; novice identity-boundary task; freshness decision. |
 
+### Wave 85 (2026-10-03)
+
+The APISIX introduction now follows a single invented lesson request
+through route matching, an optional configured API-key plugin, an upstream,
+and application logic. A second diagram separates live request traffic
+from the Kubernetes controller's configuration updates and corrects the
+assumption that every request must pass through kube-proxy.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [What Apache APISIX does for an API](knowledge/kubernetes/applications-and-tools/apache-apisix.md) | Lobby analogy with limits, invented lesson request, request and configuration diagrams with text alternatives, route/plugin/upstream/application ownership table, Kubernetes Service versus APISIX Service distinction, version-aware Gateway API link, understanding checks. | Current official APISIX route, plugin, controller, Kubernetes resource, and Gateway API documentation checked. Both Mermaid diagrams rendered and inspected. No gateway, route, backend, request, or Opus review occurred. | Independent APISIX and Opus review; disposable gateway and controller request exercise; novice route-versus-backend task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 84
-together: one hundred thirteen concepts, none of them independently reviewed after
-their teaching passes. The remaining 52 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 85
+together: one hundred fourteen concepts, none of them independently reviewed after
+their teaching passes. The remaining 51 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1476,14 +1488,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 23 | 22 |
+| Kubernetes | 45 | 24 | 21 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **113** | **52** |
+| **Total** | **165** | **114** | **51** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

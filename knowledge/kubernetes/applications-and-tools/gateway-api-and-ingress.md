@@ -118,7 +118,7 @@ from outside the cluster before calling the site reachable.
 - Use an implementation-specific custom resource for a feature that the
   supported shared API cannot express, and document that dependency.
 
-For a concrete implementation, [Apache APISIX](apache-apisix.md) explains how
+For a concrete implementation, [What Apache APISIX does for an API](apache-apisix.md) explains how
 its controller and gateway divide the work. For the distinction between a
 Service and a Pod, read [Kubernetes fundamentals](../fundamentals/kubernetes-fundamentals.md).
 
@@ -141,7 +141,7 @@ Service and a Pod, read [Kubernetes fundamentals](../fundamentals/kubernetes-fun
 
 ## Related links
 
-- [Apache APISIX](apache-apisix.md)
+- [What Apache APISIX does for an API](apache-apisix.md)
 - [Kubernetes fundamentals](../fundamentals/kubernetes-fundamentals.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)

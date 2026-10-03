@@ -21,7 +21,7 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | Topic | Start here | Follow-up |
 | --- | --- | --- |
 | kind local clusters | [How kind custom clusters fit together](applications-and-tools/kind-custom-clusters.md) | [How images reach a kind Pod](applications-and-tools/kind-images-and-local-registries.md), then [diagnose a local image pull](troubleshooting/kind.md) if a Pod cannot start. |
-| APISIX | [Apache APISIX](applications-and-tools/apache-apisix.md) | [Architecture and deployment](applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
+| APISIX | [What Apache APISIX does for an API](applications-and-tools/apache-apisix.md) | [Architecture and deployment](applications-and-tools/apisix-architecture-and-deployment.md), [security and observability](applications-and-tools/apisix-security-traffic-and-observability.md), [APISIX on EKS](../cross-topic-guides/apisix-on-eks.md). |
 | Flux | [Flux](applications-and-tools/flux.md) | [How Flux applies a HelmRelease from Git](applications-and-tools/flux-reconciliation-and-helm.md), [GitOps security and multi-tenancy](applications-and-tools/gitops-security-and-multitenancy.md), [GitOps on EKS](../cross-topic-guides/gitops-on-eks.md). |
 | GitOps comparison | [Argo CD vs. Flux](applications-and-tools/argo-cd-vs-flux.md) | Start from [GitOps](applications-and-tools/gitops.md), then compare documented defaults, interfaces, and ownership boundaries. |
 | K9s | [Inspect a failing Pod with K9s](applications-and-tools/k9s.md) | Use a terminal UI to read Pod evidence and choose a troubleshooting path. |
