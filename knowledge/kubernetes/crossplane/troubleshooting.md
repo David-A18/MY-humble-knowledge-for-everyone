@@ -279,7 +279,7 @@ What it does: stops Crossplane core. Provider controllers may still be running, 
 
 - [Crossplane](index.md)
 - [Crossplane compositions](compositions.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)

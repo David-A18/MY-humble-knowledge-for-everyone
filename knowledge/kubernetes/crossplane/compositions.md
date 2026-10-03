@@ -312,7 +312,7 @@ GitOps promotion
 - [Deployment patterns and references](deployment-patterns-and-references.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [Production, GitOps, and operations](production-gitops-and-operations.md)
 - [Crossplane references](references.md)
 - [Crossplane composition documentation](https://docs.crossplane.io/latest/composition/compositions/)

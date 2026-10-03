@@ -174,7 +174,7 @@ Provider records external identity, conditions, and observed status
 
 An MR does not become ready just because `kubectl apply` succeeded. Read its
 `status.conditions`, events, provider logs, and external service state. See
-[Managed resources and lifecycle](managed-resources-and-lifecycle.md) for
+[How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) for
 import, drift, references, management policies, finalizers, and safe deletion.
 
 ## What a Composition is
@@ -254,7 +254,7 @@ from one request.
 
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Providers and authentication](providers-and-authentication.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [Crossplane compositions](compositions.md)
 - [Crossplane component model](component-model.md)
 - [Crossplane providers documentation](https://docs.crossplane.io/latest/packages/providers/)

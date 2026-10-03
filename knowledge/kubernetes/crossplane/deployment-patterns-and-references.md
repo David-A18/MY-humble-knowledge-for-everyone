@@ -611,7 +611,7 @@ What it does: validates and applies the platform API, then inspects XR status, m
 - [Crossplane](index.md)
 - [Crossplane compositions](compositions.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Professional operating model](professional-operating-model.md)
 - [Crossplane references](references.md)

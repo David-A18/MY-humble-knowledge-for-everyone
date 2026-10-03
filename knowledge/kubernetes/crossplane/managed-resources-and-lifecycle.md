@@ -1,264 +1,181 @@
 ---
-type: "Explanation"
-title: "Crossplane managed resources and lifecycle"
-description: "Use this page to understand direct managed resources, reconciliation fields, references, import behavior, pause controls, and deletion safety in Crossplane."
-tags: [kubernetes, crossplane, managed-resources-and-lifecycle]
+type: Explanation
+title: How a Crossplane managed resource changes over time
+description: Follow a managed resource from desired state to provider observation, drift correction, import, pause, and deletion.
+tags: [kubernetes, crossplane, managed-resources, lifecycle, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: crossplane-import
+    resource: https://docs.crossplane.io/latest/guides/import-existing-resources/
+    title: Crossplane - Import Existing Resources
+  - id: crossplane-usages
+    resource: https://docs.crossplane.io/latest/managed-resources/usages/
+    title: Crossplane - Usages
+  - id: kubernetes-finalizers
+    resource: https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/
+    title: Kubernetes - Finalizers
 ---
 
-# Crossplane managed resources and lifecycle
+# How a Crossplane managed resource changes over time
 
-## Purpose
+## The idea in one minute
 
-Use this page to understand direct managed resources, reconciliation fields, references, import behavior, pause controls, and deletion safety in Crossplane.
+A **managed resource** (MR) is a Kubernetes object representing one
+external object, such as a cloud bucket. Its provider defines the API
+fields and runs the controller that communicates with the external
+service. The Kubernetes object and the external object are related, but
+they are not the same thing.[^crossplane-managed]
 
-Managed resources are the provider-defined Kubernetes APIs that represent external resources. An AWS S3 `Bucket`, an AWS EC2 `Instance`, a Google Cloud GKE `Cluster`, or another provider resource becomes a Kubernetes object with desired state, observed state, conditions, and lifecycle metadata.
+Think of a thermostat, with limits to the analogy. You set a target,
+the controller reads the current state, and it acts when they differ.
+Crossplane cannot force an external service to comply instantly:
+credentials, provider support, immutable fields, and service errors
+can stop or delay a change. The example below is invented. No cluster,
+provider, bucket, or deletion was run for this page.
 
-## Managed resource shape
+Read [How Crossplane's components turn a request into a resource](component-model.md)
+first if you need to place an MR in the wider Crossplane request path.
 
-Most managed resources follow this pattern:
+## Follow one bucket through its lifecycle
 
-```yaml
-apiVersion: s3.aws.m.upbound.io/v1beta1
-kind: Bucket
-metadata:
-  name: platform-lab-bucket
-  namespace: default
-spec:
-  forProvider:
-    region: eu-west-1
-    tags:
-      Environment: lab
-      ManagedBy: crossplane
-  providerConfigRef:
-    name: default
-    kind: ClusterProviderConfig
-  managementPolicies:
-    - "*"
+Suppose a platform team creates a provider-defined Bucket MR for a
+reports application. The provider's exact API group and bucket fields
+depend on its installed version; this is a conceptual sequence, not a
+manifest to apply.
+
+```mermaid
+flowchart LR
+  desire["Bucket MR<br/>desired fields in spec"] --> controller["Provider controller<br/>compares and acts"]
+  controller --> external["External service<br/>real bucket"]
+  external -->|"provider reports"| observed["MR status<br/>observed fields and conditions"]
+  change["Outside edit<br/>to an owned field"] --> external
+  observed --> later["Next reconciliation<br/>compares again"]
 ```
 
-What it does: declares a provider-owned resource with desired settings under `spec.forProvider`, an explicit provider config reference, and full management permissions.
+Text alternative: Kubernetes stores the Bucket MR's desired
+configuration. A provider controller reads it, uses provider
+configuration to connect to the external service, and creates or
+observes the real bucket. It writes observed fields, conditions, and
+the external identifier back to the MR. If someone changes an
+enforced field outside Crossplane, a later reconciliation can restore
+the declared value when the provider supports that update.
 
-| Field | Use | Notes |
+| Stage | What the team can see | What it does **not** prove |
 | --- | --- | --- |
-| `apiVersion` and `kind` | Select the provider API endpoint. | Verify against the installed provider version. |
-| `metadata.name` | Kubernetes object name. | May differ from the real external name. |
-| `metadata.namespace` | Tenant or environment boundary for namespaced APIs. | Crossplane v2 favors namespaced managed resources. |
-| `spec.forProvider` | Desired external configuration. | Crossplane normally reconciles drift back to these values. |
-| `spec.initProvider` | Creation-time values. | Later changes are not continuously enforced. |
-| `providerConfigRef` | Provider authentication and connection choice. | Avoid relying on implicit defaults in production. |
-| `managementPolicies` | Allowed actions. | Provider support can vary. |
-| `status.atProvider` | Observed external state. | Do not edit status. |
-| `status.conditions` | Readiness and reconciliation status. | First place to inspect failures. |
+| Kubernetes accepts the MR | The object exists with a desired `spec`. | The provider has called the external API or made a bucket. |
+| Provider reconciles | `Synced` condition and messages report the last reconciliation outcome. | The external object is ready or the application can use it. |
+| Provider observes readiness | `Ready`, `status.atProvider`, and the external name can describe the provider's observation. | The application's identity has bucket access or its real workflow works. |
+| Desired field changes | The controller tries to apply a supported `spec.forProvider` change. | An immutable setting will be replaced automatically; Crossplane documents that it does **not** delete and recreate an MR because an immutable field changed.[^crossplane-managed] |
 
-## Reconciliation flow
+The two useful questions are **what did we ask for?** and **what did
+the provider observe?** The first lives mainly in `spec`; the
+second lives in status, conditions, and external evidence. An
+application-level check is a third, separate question.
+[^crossplane-managed]
 
-```text
-kubectl apply -f resource.yaml
-        |
-Kubernetes stores the managed resource
-        |
-Provider controller observes the resource
-        |
-Provider authenticates through ProviderConfig
-        |
-Provider observes, creates, updates, or deletes the external resource
-        |
-Provider writes status, conditions, and external-name data
-```
+## Read the fields by their job
 
-`kubectl apply` returning successfully only means Kubernetes accepted the object. It does not mean the external resource is ready.
-
-### Watch readiness
-
-```bash
-kubectl get buckets.s3.aws.m.upbound.io -n default -w
-```
-
-What it does: watches the managed-resource summary columns until the provider reports readiness.
-
-Expected output resembles:
-
-```text
-NAME                  SYNCED   READY   EXTERNAL-NAME
-platform-lab-bucket   True     True    platform-lab-bucket
-```
-
-### Inspect full status
-
-```bash
-kubectl get bucket.s3.aws.m.upbound.io platform-lab-bucket \
-  -n default \
-  -o yaml
-```
-
-What it does: shows `status.atProvider`, `status.conditions`, external-name annotations, creation annotations, finalizers, and the exact stored spec.
-
-## Desired and observed state
-
-| Location | Meaning | Reader habit |
-| --- | --- | --- |
-| `spec.forProvider` | Settings Crossplane should enforce. | Treat as desired state. |
-| `spec.initProvider` | Settings used during create, then ignored for ongoing enforcement. | Use for fields an autoscaler or external system should later own. |
-| `status.atProvider` | Real observed provider state. | Read it; do not patch it. |
-| `status.conditions` | Structured readiness and sync state. | Read `type`, `status`, `reason`, and `message`. |
-
-> [!IMPORTANT]
-> Provider schemas define which fields exist, which are required, and which are immutable. Always verify with the installed provider, not an old blog post or video.
-
-### Discover installed schema
-
-```bash
-kubectl api-resources | grep -i bucket
-kubectl explain bucket.s3.aws.m.upbound.io.spec.forProvider
-```
-
-What it does: confirms the resource kind and shows the provider schema currently installed in the cluster.
-
-## References between managed resources
-
-Provider resources often need identifiers from other resources. Prefer Kubernetes-native references when they are available.
-
-| Reference style | Example | When to use it |
-| --- | --- | --- |
-| External identifier | `vpcId: vpc-0123456789abcdef0` | Importing or linking to a resource not represented as a Kubernetes object. |
-| Name reference | `vpcIdRef.name: platform-vpc` | Linking to another managed resource by Kubernetes name. |
-| Selector | `vpcIdSelector.matchLabels` | Selecting by labels when names differ by environment. |
-| Controller reference | `matchControllerRef: true` | Linking resources composed by the same XR. |
-
-### Reference by name
-
-```yaml
-apiVersion: ec2.aws.m.upbound.io/v1beta1
-kind: Subnet
-metadata:
-  name: app-private-a
-  namespace: platform
-spec:
-  forProvider:
-    region: eu-west-1
-    cidrBlock: 10.0.1.0/24
-    vpcIdRef:
-      name: platform-vpc
-```
-
-What it does: asks the provider to resolve the real VPC ID from the managed resource named `platform-vpc`.
-
-## External names and import
-
-Crossplane maps the Kubernetes object to the real provider object with:
-
-```yaml
-metadata:
-  annotations:
-    crossplane.io/external-name: real-provider-identifier
-```
-
-Examples include S3 bucket names, VPC IDs, database identifiers, ARNs, or provider-specific IDs.
-
-### Observe an existing resource
-
-```yaml
-apiVersion: s3.aws.m.upbound.io/v1beta1
-kind: Bucket
-metadata:
-  name: existing-logs-bucket
-  namespace: platform
-  annotations:
-    crossplane.io/external-name: existing-company-logs
-spec:
-  managementPolicies:
-    - Observe
-  forProvider:
-    region: eu-west-1
-  providerConfigRef:
-    name: default
-    kind: ClusterProviderConfig
-```
-
-What it does: lets Crossplane observe an existing external bucket without creating, updating, or deleting it.
-
-> [!WARNING]
-> Import and observe-only behavior depends on provider support and exact schema. Test in a sandbox before using it for production resources.
-
-## Management policies
-
-`managementPolicies` define which actions the provider may take.
-
-| Policy | Meaning |
+| Field or marker | Meaning in the bucket example |
 | --- | --- |
-| `*` | Full provider-supported control. |
-| `Observe` | Observe the external resource. |
-| `Create` | Create the external resource if missing. |
-| `Update` | Update provider-owned fields. |
-| `Delete` | Delete the external resource when the managed resource is deleted. |
-| `LateInitialize` | Populate unspecified spec fields from provider defaults. |
+| `apiVersion` and `kind` | Select the installed provider's Bucket API. Discover the actual group, kind, version, and fields in the target cluster.[^crossplane-managed] |
+| `spec.forProvider` | Desired external settings the provider normally keeps enforcing, subject to its supported actions and immutable fields.[^crossplane-managed] |
+| `spec.initProvider` | Optional creation-time settings that are not enforced after creation. This and management policies are beta features in the current Crossplane documentation.[^crossplane-managed] |
+| `spec.providerConfigRef` | Selects the provider configuration used for external access. A default may be used if omitted, so check the effective identity and target.[^crossplane-managed] |
+| `spec.managementPolicies` | Restricts actions such as `Observe`, `Create`, `Update`, `Delete`, and `LateInitialize`. The provider decides which policies it supports.[^crossplane-managed] |
+| `status.atProvider` and conditions | Provider-reported observations and reconciliation/readiness signals. Read the reason and message when a condition is false.[^crossplane-managed] |
+| `crossplane.io/external-name` | The identifier the provider uses to find the external object. It may differ from the Kubernetes object name.[^crossplane-managed] |
 
-### Prevent Crossplane from deleting an external resource
+For example, if the MR requests a tag `Purpose: reports` in
+`spec.forProvider` and someone edits that tag in the cloud console,
+an update-capable provider can put it back on reconciliation. If the
+bucket's region is immutable, changing that field in Kubernetes does
+not automatically replace the bucket. Confirm the installed
+provider's behavior before making such a change.[^crossplane-managed]
 
-```yaml
-managementPolicies:
-  - Observe
-  - Create
-  - Update
-  - LateInitialize
-```
+References to another MR can use an external identifier, a Kubernetes
+name reference, or a label selector where the provider exposes those
+fields. A reference helps supply an external ID; it does not change
+which controller owns either resource.[^crossplane-managed]
 
-What it does: allows observation, creation, updates, and late initialization, but omits deletion permission.
+## Observe first when adopting an existing object
 
-> [!IMPORTANT]
-> Providers decide which management policies they support. Confirm behavior with `kubectl explain`, provider documentation, and a sandbox test.
+An already existing external resource needs a deliberate identity
+match. Crossplane's import guide starts with the correct
+`crossplane.io/external-name` and an `Observe` management policy.
+In that mode Crossplane reads the object without changing or deleting
+it. After inspecting its observed fields, a team can decide whether
+to grant `Create`, `Update`, or `Delete` actions. That transition
+changes ownership risk and should be reviewed against the provider's
+actual support.[^crossplane-import]
 
-## Pause and manual reconciliation
+Do not infer import success from a matching name alone. Confirm the
+provider account, region, resource identity, and the resulting
+`status.atProvider` before granting active control. The official
+[import guide](https://docs.crossplane.io/latest/guides/import-existing-resources/)
+has the version-specific procedure.[^crossplane-import]
 
-### Pause one resource
+## Pause and deletion are different decisions
 
-```bash
-kubectl annotate bucket.s3.aws.m.upbound.io platform-lab-bucket \
-  -n default \
-  crossplane.io/paused="true" \
-  --overwrite
-```
+The `crossplane.io/paused: "true"` annotation stops reconciliation
+for a managed resource. It also prevents normal deletion while that
+pause remains. Removing the annotation resumes reconciliation; a
+changing `crossplane.io/reconcile-requested-at` token can request
+another run. Neither action changes the desired settings by itself.
+[^crossplane-managed]
 
-What it does: pauses reconciliation for a single managed resource.
+Deleting the Kubernetes MR is a separate lifecycle event. With
+external `Delete` permission, the provider begins deleting the
+external object, and a finalizer keeps the Kubernetes object until
+cleanup completes. Without `Delete` in a supported
+`managementPolicies` configuration, the external object is left
+behind. A paused resource or unavailable provider can leave the
+Kubernetes object waiting. Do not remove a finalizer merely to clear
+the display: that can break the link to an external resource that
+still exists.[^crossplane-managed][^kubernetes-finalizers]
 
-### Request reconciliation
+| If deletion waits... | Inspect before changing anything |
+| --- | --- |
+| Provider cannot reach the external API | Provider pod, selected ProviderConfig, credentials, endpoint, and MR condition message. |
+| External service rejects deletion | Its dependency, protection, or permission error and the real object's state. |
+| Resource is paused | The pause annotation and why it was set.[^crossplane-managed] |
+| Another managed resource depends on it | Crossplane `Usage` relationships and the intended deletion order.[^crossplane-usages] |
 
-```bash
-kubectl annotate bucket.s3.aws.m.upbound.io platform-lab-bucket \
-  -n default \
-  crossplane.io/reconcile-requested-at="$(date +%s)" \
-  --overwrite
-```
+## Choose a focused next step
 
-What it does: asks the provider to reconcile the resource soon, which is useful after a manual drift test.
+| If you need to... | Read |
+| --- | --- |
+| Understand provider packages and identities | [Providers and authentication](providers-and-authentication.md) |
+| Follow an XR into several managed resources | [Compositions](compositions.md) |
+| Diagnose a failed provider reconciliation | [Crossplane troubleshooting](troubleshooting.md) |
+| Practice in an authorized sandbox | [Local AWS S3 lab](local-aws-s3-lab.md) |
 
-## Deletion and finalizers
+## Check your understanding
 
-When a managed resource is deleted, Kubernetes marks it for deletion and waits for Crossplane finalizers. The provider must delete or detach the external resource before the Kubernetes object can disappear.
+1. Why does a successful Kubernetes API response not prove that the
+   external bucket exists?
+2. What is the difference between a desired field in
+   `spec.forProvider` and an observation in `status.atProvider`?
+3. Why start with `Observe` when adopting an existing resource?
+4. What must you know before deleting an MR or removing its finalizer?
 
-Common deletion blockers:
+## Explore further
 
-- External resource is not empty.
-- AWS deletion protection is enabled.
-- Dependencies are still attached.
-- Provider lacks delete permissions.
-- ProviderConfig or credentials were removed too early.
-- Provider pod is unhealthy.
+- [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
+  documents desired and observed fields, policies, annotations,
+  conditions, and finalizers.[^crossplane-managed]
+- [Import Existing Resources](https://docs.crossplane.io/latest/guides/import-existing-resources/)
+  walks through observe-only adoption.[^crossplane-import]
+- [Usages](https://docs.crossplane.io/latest/managed-resources/usages/)
+  explains dependency protection.[^crossplane-usages]
+- [Back to Crossplane](index.md).
 
-> [!WARNING]
-> Do not remove Crossplane finalizers just to clear a stuck object. First decide whether orphaning the external resource is acceptable and document the recovery path.
-
-## Related links
-
-- [Crossplane](index.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
-- [Providers and authentication](providers-and-authentication.md)
-- [Crossplane troubleshooting](troubleshooting.md)
-- [Crossplane references](references.md)
-- [Managed resources documentation](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^crossplane-managed]: [Crossplane, Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/), source record `crossplane-managed`.
+[^crossplane-import]: [Crossplane, Import Existing Resources](https://docs.crossplane.io/latest/guides/import-existing-resources/), source record `crossplane-import`.
+[^crossplane-usages]: [Crossplane, Usages](https://docs.crossplane.io/latest/managed-resources/usages/), source record `crossplane-usages`.
+[^kubernetes-finalizers]: [Kubernetes, Finalizers](https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/), source record `kubernetes-finalizers`.

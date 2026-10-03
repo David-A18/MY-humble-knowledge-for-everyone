@@ -1507,12 +1507,26 @@ available through the focused guides and official documentation.
 | --- | --- | --- | --- |
 | [How Crossplane's components turn a request into a resource](knowledge/kubernetes/crossplane/component-model.md) | Bounded request-desk analogy, invented TeamBucket request, diagram and text alternative, role table, four failure boundaries, advanced-component map, next-question routes, understanding checks. | Current official Crossplane overview, XRD, XR, Composition, Provider, Function, Managed Resource, activation-policy, and Configuration documentation checked. Mermaid rendered and inspected. No cluster, provider, bucket, account, request, reader task, or Opus review occurred. | Independent Crossplane and Opus review; disposable XR-to-MR-to-provider exercise; beginner component-boundary task; freshness decision. |
 
+### Wave 89 (2026-10-03)
+
+The managed-resource page now follows one invented bucket from a stored
+request through provider observation and later reconciliation. It
+separates desired fields, observed fields, and application use;
+explains why immutable fields are not silently replaced; and treats
+observe-only import, pause, and deletion as distinct lifecycle choices.
+The older unexecuted manifests and mutations were removed in favor of
+the official version-specific procedures.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a Crossplane managed resource changes over time](knowledge/kubernetes/crossplane/managed-resources-and-lifecycle.md) | Bounded thermostat analogy, invented reports-bucket sequence, reconciliation diagram and text alternative, desired-versus-observed field map, status limits, import and deletion choices, failure-boundary table, understanding checks. | Current official Crossplane managed-resource, import, and Usage guidance plus Kubernetes finalizer documentation checked. Mermaid rendered and inspected. No cluster, provider, bucket, import, deletion, reader task, or Opus review occurred. | Independent Crossplane/provider and Opus review; disposable drift/import/pause/delete exercise with provider-specific policies; novice desired-versus-observed task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 88
-together: one hundred seventeen concepts, none of them independently reviewed after
-their teaching passes. The remaining 48 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 89
+together: one hundred eighteen concepts, none of them independently reviewed after
+their teaching passes. The remaining 47 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1529,14 +1543,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 27 | 18 |
+| Kubernetes | 45 | 28 | 17 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **117** | **48** |
+| **Total** | **165** | **118** | **47** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

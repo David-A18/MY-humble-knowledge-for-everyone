@@ -143,7 +143,7 @@ These names appear as a platform grows:
 | Managed-resource API availability | A `ManagedResourceDefinition` describes a provider API; a `ManagedResourceActivationPolicy` can activate selected APIs. These v2 controls are version-sensitive; activation policies are alpha.[^crossplane-activation] | [Official activation-policy guide](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/). |
 | Provider access | `ProviderConfig` or `ClusterProviderConfig`, where supported by that provider, selects credentials and an external target for MRs. The provider controller uses them. | [Providers and authentication](providers-and-authentication.md). |
 | Composition changes | `CompositionRevision` lets an XR stay with a selected version or adopt newer Composition logic according to policy. `EnvironmentConfig` can supply shared inputs to a function pipeline. | [Compositions](compositions.md). |
-| Dependency and maintenance | `Usage` can protect a resource needed by another. Crossplane v2 `Operation`, `CronOperation`, and `WatchOperation` run task-oriented function pipelines rather than continuously reconciling an XR; Operations are alpha. | [Managed resources and lifecycle](managed-resources-and-lifecycle.md), [official Operations guide](https://docs.crossplane.io/latest/operations/operation/). |
+| Dependency and maintenance | `Usage` can protect a resource needed by another. Crossplane v2 `Operation`, `CronOperation`, and `WatchOperation` run task-oriented function pipelines rather than continuously reconciling an XR; Operations are alpha. | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md), [official Operations guide](https://docs.crossplane.io/latest/operations/operation/). |
 
 Exact API groups, fields, and supported scopes depend on installed
 Crossplane and provider versions. Use the cluster's API discovery and
@@ -157,7 +157,7 @@ universal Crossplane recipe.
 | If you need to... | Read |
 | --- | --- |
 | Learn what the provider controls and how it authenticates | [Providers and authentication](providers-and-authentication.md) |
-| Understand desired state, observed state, and deletion | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) |
+| Understand desired state, observed state, and deletion | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) |
 | Design the API fields and implementation | [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) |
 | Trace a request into AWS | [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md) |
 | Compare this operating model with Terraform | [Terraform vs Crossplane](terraform-vs-crossplane.md) |

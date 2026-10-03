@@ -250,7 +250,7 @@ What it does: asks the Kubernetes API server to validate the manifest against in
 
 - [Crossplane](index.md)
 - [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Crossplane references](references.md)

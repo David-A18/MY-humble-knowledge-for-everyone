@@ -2894,20 +2894,27 @@
       "type": "Tutorial"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand direct managed resources, reconciliation fields, references, import behavior, pause controls, and deletion safety in Crossplane.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow a managed resource from desired state to provider observation, drift correction, import, pause, and deletion.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/managed-resources-and-lifecycle.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-managed",
+        "crossplane-import",
+        "crossplane-usages",
+        "kubernetes-finalizers"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "managed-resources-and-lifecycle"
+        "managed-resources",
+        "lifecycle",
+        "beginner"
       ],
-      "title": "Crossplane managed resources and lifecycle",
+      "title": "How a Crossplane managed resource changes over time",
       "type": "Explanation"
     },
     {
