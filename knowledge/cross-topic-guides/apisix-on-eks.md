@@ -125,7 +125,7 @@ consumer, or other supported scope. A gateway installation alone does
 not add authentication or rate limiting to the lesson API. Keep the
 backend's business authorization in the application, and prevent a
 direct route to the backend from bypassing required gateway policy.
-See [APISIX security, traffic, and observability](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md)
+See [How APISIX policies shape one request](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md)
 for those decisions.[^apisix-plugin]
 
 ## Diagnose the first broken handoff

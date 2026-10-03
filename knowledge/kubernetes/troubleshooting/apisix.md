@@ -137,7 +137,7 @@ the referenced documentation.[^apisix-config-troubleshoot]
 For a broader gateway request model, read
 [How the APISIX gateway and controller fit together](../applications-and-tools/apisix-architecture-and-deployment.md).
 For policy failures, read
-[APISIX security, traffic, and observability](../applications-and-tools/apisix-security-traffic-and-observability.md).
+[How APISIX policies shape one request](../applications-and-tools/apisix-security-traffic-and-observability.md).
 Change the reviewed routing source only after the first
 failed handoff is supported by evidence, then repeat the
 same user request to verify the result.

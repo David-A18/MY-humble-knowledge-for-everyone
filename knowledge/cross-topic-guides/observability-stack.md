@@ -241,7 +241,7 @@ Where the analogy stops being accurate:
 - Working from a symptom to a cause: [Kubernetes troubleshooting](../kubernetes/troubleshooting/index.md)
   and [CrashLoopBackOff](../kubernetes/troubleshooting/crashloopbackoff.md).
 - Day-to-day checks on AWS: [EKS operations](eks-operations.md).
-- One component's signals in practice: [APISIX security, traffic, and observability](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md).
+- One component's signals in practice: [How APISIX policies shape one request](../kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md).
 
 ## Official documentation for deeper study
 

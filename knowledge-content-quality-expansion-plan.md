@@ -1479,12 +1479,25 @@ limits are explained as evidence rather than proof of user success.
 | --- | --- | --- | --- |
 | [How the APISIX gateway and controller fit together](knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md) | Two-path diagram and text alternative, invented lesson route, Gateway API object responsibilities and condition limits, documented traditional/decoupled/standalone mode comparison, failure-boundary table, understanding checks. | Current official APISIX deployment-mode, controller architecture, install, Gateway API, and resource documentation plus Gateway API implementer guidance checked. Mermaid rendered and inspected. No cluster, APISIX mode, listener, backend, request, or Opus review occurred. | Independent APISIX/Gateway API and Opus review; disposable route/status and mode-restart exercise; novice controller-versus-gateway task; freshness decision. |
 
+### Wave 87 (2026-10-03)
+
+The APISIX policy page now follows one invented lesson request through
+optional authentication, a quota, a release split, and gateway signals.
+It separates client authentication from lesson-level authorization,
+explains where a rate counter lives, and replaces an untested rate-limit
+snippet with the documented default behavior. Its diagram describes
+possible outcomes rather than claiming a fixed plugin execution order.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How APISIX policies shape one request](knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md) | Invented lesson request, branch diagram and text alternative, four policy questions, local-versus-shared quota scope, canary and telemetry limits, failure table, understanding checks. | Current official APISIX plugin, key-auth, openid-connect, limit-count, traffic-split, request-id, prometheus, and opentelemetry documentation checked. Mermaid rendered and inspected. No gateway, backend, quota, identity provider, canary, telemetry collector, reader task, or Opus review occurred. | Independent APISIX/security and Opus review; disposable request exercise across multiple gateway replicas and telemetry paths; novice policy-scope task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 86
-together: one hundred fifteen concepts, none of them independently reviewed after
-their teaching passes. The remaining 50 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 87
+together: one hundred sixteen concepts, none of them independently reviewed after
+their teaching passes. The remaining 49 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1501,14 +1514,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 25 | 20 |
+| Kubernetes | 45 | 26 | 19 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **115** | **50** |
+| **Total** | **165** | **116** | **49** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

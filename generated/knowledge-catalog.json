@@ -2218,19 +2218,33 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to place the right policy in Apache APISIX without turning the gateway into hidden business logic.",
+      "audience": "Beginning API and platform learner",
+      "description": "Understand what configured authentication, rate limits, traffic splits, and telemetry can decide at the gateway, and what remains the application's job.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md",
-      "source_ids": [],
+      "source_ids": [
+        "apisix-plugin",
+        "apisix-key-auth",
+        "apisix-openid-connect",
+        "apisix-limit-count",
+        "apisix-traffic-split",
+        "apisix-request-id",
+        "apisix-prometheus",
+        "apisix-opentelemetry"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools"
+        "apisix",
+        "api-gateway",
+        "authentication",
+        "rate-limiting",
+        "observability",
+        "beginner"
       ],
-      "title": "APISIX security, traffic, and observability",
+      "title": "How APISIX policies shape one request",
       "type": "Explanation"
     },
     {

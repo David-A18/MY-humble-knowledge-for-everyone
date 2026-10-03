@@ -133,7 +133,7 @@ APISIX adds a component to operate. The team still needs to decide where
 TLS terminates, which configuration API the controller uses, who can
 change routes and credentials, and how to verify a request through the
 whole path. Continue to [how the gateway and controller fit together](apisix-architecture-and-deployment.md)
-for those boundaries and to [security, traffic, and observability](apisix-security-traffic-and-observability.md)
+for those boundaries and to [request policies](apisix-security-traffic-and-observability.md)
 for plugin placement.
 
 ## Check your understanding
