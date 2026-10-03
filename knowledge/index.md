@@ -22,7 +22,7 @@ repository. Its Markdown pages are the source material for the reading site.
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
 | Learn Terraform safely | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |
-| Design a Crossplane platform API | [Crossplane component model](kubernetes/crossplane/component-model.md) | Understand providers, managed resources, XRDs, compositions, and XRs. |
+| Design a Crossplane platform API | [How Crossplane's components turn a request into a resource](kubernetes/crossplane/component-model.md) | Follow one simple request through XRD, XR, Composition, managed resource, and provider. |
 | Plan backup or migration work | [Velero](migrations/velero/index.md) | Choose backup, restore, migration, and disaster-recovery guidance. |
 
 ## Reading and trust signals

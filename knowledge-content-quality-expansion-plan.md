@@ -1492,12 +1492,27 @@ possible outcomes rather than claiming a fixed plugin execution order.
 | --- | --- | --- | --- |
 | [How APISIX policies shape one request](knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md) | Invented lesson request, branch diagram and text alternative, four policy questions, local-versus-shared quota scope, canary and telemetry limits, failure table, understanding checks. | Current official APISIX plugin, key-auth, openid-connect, limit-count, traffic-split, request-id, prometheus, and opentelemetry documentation checked. Mermaid rendered and inspected. No gateway, backend, quota, identity provider, canary, telemetry collector, reader task, or Opus review occurred. | Independent APISIX/security and Opus review; disposable request exercise across multiple gateway replicas and telemetry paths; novice policy-scope task; freshness decision. |
 
+### Wave 88 (2026-10-03)
+
+The Crossplane component page now follows one invented bucket request
+instead of beginning with a catalogue of manifests and advanced objects.
+It separates the platform API definition, individual request,
+composition pipeline, managed resource, and external provider call.
+It then places package revisions, activation, provider identity,
+composition revision, and operations around that main path. The older
+unexecuted manifests were removed; version-specific procedures remain
+available through the focused guides and official documentation.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How Crossplane's components turn a request into a resource](knowledge/kubernetes/crossplane/component-model.md) | Bounded request-desk analogy, invented TeamBucket request, diagram and text alternative, role table, four failure boundaries, advanced-component map, next-question routes, understanding checks. | Current official Crossplane overview, XRD, XR, Composition, Provider, Function, Managed Resource, activation-policy, and Configuration documentation checked. Mermaid rendered and inspected. No cluster, provider, bucket, account, request, reader task, or Opus review occurred. | Independent Crossplane and Opus review; disposable XR-to-MR-to-provider exercise; beginner component-boundary task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 87
-together: one hundred sixteen concepts, none of them independently reviewed after
-their teaching passes. The remaining 49 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 88
+together: one hundred seventeen concepts, none of them independently reviewed after
+their teaching passes. The remaining 48 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1514,14 +1529,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 26 | 19 |
+| Kubernetes | 45 | 27 | 18 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **116** | **49** |
+| **Total** | **165** | **117** | **48** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

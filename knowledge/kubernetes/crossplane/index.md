@@ -150,7 +150,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | Article | Purpose |
 | --- | --- |
 | [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
-| [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
+| [How Crossplane's components turn a request into a resource](component-model.md) | Follow an invented bucket request from XRD and XR through Composition, managed resource, provider, and external API; then place advanced components around that path. |
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
@@ -170,7 +170,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 ## Related links
 
 - [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
-- [Component model](component-model.md)
+- [How Crossplane's components turn a request into a resource](component-model.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)

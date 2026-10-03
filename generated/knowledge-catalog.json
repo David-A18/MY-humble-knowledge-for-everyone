@@ -2812,20 +2812,31 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand every Crossplane-specific component that appears in a professional control plane: XRDs, XRs, Compositions, Functions, Configuration packages, providers, managed resources, activation policies, operations, environment data, usages, and package runtime controls.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow one platform request through an XRD, XR, Composition, managed resource, and provider, then place the other Crossplane components around that path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/component-model.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-overview",
+        "crossplane-xrds",
+        "crossplane-xrs",
+        "crossplane-compositions",
+        "crossplane-providers",
+        "crossplane-managed",
+        "crossplane-activation",
+        "crossplane-functions",
+        "crossplane-configurations"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "component-model"
+        "component-model",
+        "beginner"
       ],
-      "title": "Crossplane component model",
+      "title": "How Crossplane's components turn a request into a resource",
       "type": "Explanation"
     },
     {
