@@ -1441,12 +1441,25 @@ separate chart-source path explains where the package comes from.
 | --- | --- | --- | --- |
 | [How Flux applies a HelmRelease from Git](knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Request-and-installer analogy with limits, two-path diagram and text alternative, invented Git/chart example, minimal manifests, source-to-reconciler status table, explicit health-check and pruning implications, focused official source routes. | Current official Flux Kustomization, HelmRelease, Helm-repository, Helm guide, and troubleshooting documentation checked. Mermaid rendered and inspected. No Flux or Helm binary, chart fetch, cluster run, or Opus review occurred. | Independent Flux/Helm and Opus review; disposable chart/release exercise including fetch and health-check failures; novice controller-handoff task; freshness decision. |
 
+### Wave 84 (2026-10-03)
+
+The GitOps security page now explains which human and machine identities
+matter at each boundary. It removes an incomplete Flux manifest that could
+have implied `targetNamespace` and `serviceAccountName` alone created a
+tested tenant boundary. The invented two-team example distinguishes Argo CD
+project policy, Flux impersonation in both controller stages, Kubernetes
+workload access, and secret delivery.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [GitOps security and multi-tenancy](knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md) | Delivery-desk analogy with limits, four-gate diagram and text alternative, invented payments/catalog boundary, Argo CD and Flux control explanations, secret and workload-access boundaries, understanding checks, official routes. Removed incomplete security YAML and untested incident mutations. | Current official GitHub branch protection, Argo CD Projects and declarative setup, Flux tenancy/Kustomization/HelmRelease/secrets, and Kubernetes RBAC documentation checked. Mermaid rendered and inspected. No cluster, denied request, or Opus review occurred. | Independent GitOps/Kubernetes security and Opus review; disposable allowed/denied tenant exercise including a HelmRelease; novice identity-boundary task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 83
-together: one hundred twelve concepts, none of them independently reviewed after
-their teaching passes. The remaining 53 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 84
+together: one hundred thirteen concepts, none of them independently reviewed after
+their teaching passes. The remaining 52 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1463,14 +1476,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 22 | 23 |
+| Kubernetes | 45 | 23 | 22 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **112** | **53** |
+| **Total** | **165** | **113** | **52** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

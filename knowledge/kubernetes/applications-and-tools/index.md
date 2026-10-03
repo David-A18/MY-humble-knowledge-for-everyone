@@ -31,7 +31,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Compare Argo CD and Flux on documented differences and defaults, or split ownership between them. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
 | Understand the Flux chain from source to artifact to reconciler, and what `Ready` proves. | [Flux](flux.md) |
 | Follow a HelmRelease declaration from Git to an installed chart. | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) |
-| Scope controller permissions, tenancy, and secrets. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
+| Follow Git writers, GitOps policy, apply identity, and Kubernetes permissions before trusting a tenant boundary. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
 | Operate GitOps on Amazon EKS. | [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md) |
 
 ## Quick path: Helm
@@ -71,7 +71,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare application model, components, interfaces, sync defaults, and multi-cluster boundaries from each project's documentation. |
 | [Flux](flux.md) | Understand which Flux controller fetches, which reconciles, and which capabilities are optional. |
 | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) | Understand the two controller handoffs and what their status reports prove. |
-| [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Scope GitOps controller permissions, secrets, and ownership boundaries. |
+| [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Understand Argo CD projects, Flux apply identities, workload access, and secret handling. |
 | [How Helm turns a chart into a release](helm.md) | Understand chart inputs, release revisions, preview limits, and the Crossplane controller boundary. |
 | [Tooling clusters](tooling-clusters.md) | Decide when to use a dedicated platform tooling cluster. |
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |

@@ -2327,17 +2327,31 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to keep GitOps controllers powerful enough to reconcile clusters without giving every team uncontrolled cluster-wide deployment authority.",
+      "audience": "Beginning platform and application teams",
+      "description": "Understand how repository writers, GitOps policies, controller identities, and Kubernetes permissions together limit what a team can deploy.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md",
-      "source_ids": [],
+      "source_ids": [
+        "github-protected-branches",
+        "argo-projects",
+        "argo-declarative",
+        "flux-multitenancy",
+        "flux-kustomization",
+        "flux-helmrelease",
+        "flux-secrets",
+        "kubernetes-rbac"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools"
+        "gitops",
+        "security",
+        "multitenancy",
+        "flux",
+        "argo-cd",
+        "beginner"
       ],
       "title": "GitOps security and multi-tenancy",
       "type": "Explanation"
