@@ -1640,13 +1640,26 @@ three identities, readiness signals, and deletion decisions.
 | --- | --- | --- | --- |
 | [How one platform request reaches a running application](knowledge/kubernetes/crossplane/application-delivery-platform-api.md) | Bounded shelf analogy, staged request table, handoff diagram and text alternative, identity and readiness maps, lifecycle decisions, understanding checks. | Opus 5.5 read-only review of the prior page identified image-order, readiness, identity, and deletion issues. Current official Crossplane Composition, function, XR, managed-resource, AWS ECR, EKS, and Kubernetes documentation checked. Mermaid rendered and inspected. No provider, ECR repository, image push, cluster, rollout, user request, or reader task occurred. | Independent Crossplane, Kubernetes, AWS, and platform-security review; disposable repository-to-image-to-rollout and deletion exercises; novice handoff task; freshness decision. |
 
+### Wave 99 (2026-10-04)
+
+The Crossplane deployment-patterns reference now uses one invented VPC
+and two subnets to answer how to repeat resources and connect dependencies.
+It separates a multi-document YAML file, fixed Composition, and function
+loop, and explains provider references, temporary unresolved states,
+stable identity, and the risk of removing desired resources. Long unrun
+manifests and duplicate Terraform comparisons were removed.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Choose how Crossplane repeats and connects resources](knowledge/kubernetes/crossplane/deployment-patterns-and-references.md) | Bounded form-folder analogy, one network request, repetition choice table, dependency diagram and text alternative, reference method and observation tables, understanding checks. | Opus 5.5 read-only review of the prior page found invalid standalone controller selector, ambiguous loops, and unrun examples; corrections checked against current official Crossplane managed-resource, Composition, XRD, function, and CLI documentation. Mermaid rendered and inspected. No Composition render, provider, AWS network, cluster, or reader task occurred. | Independent Crossplane/AWS review; disposable fixed-versus-loop and reference-resolution exercises; novice choice task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 98
-together: one hundred twenty-seven concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 99
+together: one hundred twenty-eight concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 38 have not yet been authored or
+The remaining 37 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1663,14 +1676,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 37 | 8 |
+| Kubernetes | 45 | 38 | 7 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **127** | **38** |
+| **Total** | **165** | **128** | **37** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

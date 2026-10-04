@@ -156,7 +156,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md) | Compare direct provider-specific requests with a small XR and Composition backed by the same provider. |
 | [How a Crossplane Composition fulfills one application request](compositions.md) | Follow an invented WebApplication from XRD validation through function output, composed Deployment and Service, revision choice, and user-path check. |
 | [How one platform request reaches a running application](application-delivery-platform-api.md) | Follow repository creation, image publication, Kubernetes rollout, and application checks as separate handoffs. |
-| [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
+| [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md) | Choose explicit objects, fixed templates, or a function loop, then connect dependent resources by provider reference. |
 | [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
 | [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
 | [How a team operates a Crossplane platform API](professional-operating-model.md) | Follow an invented storage request through team ownership, change review, access boundaries, and outcome checks. |
@@ -176,7 +176,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
 - [How a Crossplane Composition fulfills one application request](compositions.md)
 - [How one platform request reaches a running application](application-delivery-platform-api.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
+- [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
 - [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [How a team operates a Crossplane platform API](professional-operating-model.md)

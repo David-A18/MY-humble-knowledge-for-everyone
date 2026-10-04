@@ -616,6 +616,6 @@ What it does: deletes the XR. Crossplane then deletes or orphans the composed AW
 - [Upbound AWS EC2 provider resources](https://marketplace.upbound.io/providers/upbound/provider-aws-ec2/v2.6.1?tab=managedResources)
 - [Crossplane component model](component-model.md)
 - [Crossplane compositions](compositions.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
+- [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
 - [Back to Crossplane index](index.md)
 - [Back to root index](../../../README.md)

@@ -2882,19 +2882,29 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand how to deploy multiple related resources with Crossplane, how to model Terraform-style count and foreach, and how resources reference each other when one resource needs values from another.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Choose between separate managed resources, a fixed Composition, and a function loop; then connect dependent resources without guessing cloud IDs.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/deployment-patterns-and-references.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-managed",
+        "crossplane-compositions",
+        "crossplane-xrd",
+        "crossplane-patch-transform",
+        "crossplane-cli",
+        "crossplane-go-template",
+        "crossplane-config"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "crossplane"
+        "crossplane",
+        "composition",
+        "beginner"
       ],
-      "title": "Crossplane deployment patterns and references",
+      "title": "Choose how Crossplane repeats and connects resources",
       "type": "Reference"
     },
     {
