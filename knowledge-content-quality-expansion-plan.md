@@ -1822,13 +1822,24 @@ failure, with read-only checks before any repair is considered.
 | --- | --- | --- | --- |
 | [Find why a Velero restore has no application data](knowledge/migrations/velero/troubleshooting-and-operations.md) | Parcel analogy with its limit, backup-to-application diagram and text alternative, method-specific evidence table, read-only command sequence, and questions that distinguish object and data recovery. | Opus 5.5 read-only reviews of the prior and revised page identified PVC-state conflation, unsafe blind repairs, Pending and Bound nuances, and mover/FSB evidence gaps; the revised page addresses them. Current Velero v1.18 troubleshooting, restore, FSB, CSI, and data-movement docs checked. Diagram rendered and inspected. No Velero cluster, incident, restore, or reader task was tested. | Independent Velero/storage review; disposable restore cases for missing object, missing data, Pending and Bound PVC; novice diagnosis task; freshness decision. |
 
+### Wave 113 (2026-10-05)
+
+The Velero use-case page now helps a beginner choose a recovery pattern
+instead of inviting them to run untested production cutover commands.
+It identifies what Velero carries, what GitOps and other service owners
+must provide, and the evidence needed before traffic moves.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Choose where Velero fits in a recovery plan](knowledge/migrations/velero/real-use-cases-and-runbooks.md) | Moving-plan analogy and its limit, invented notes-app scenario, layer diagram and text alternative, six use-case choices, RPO/RTO terms, and plan-readiness questions. | Opus 5.5 read-only reviews of the prior and revised page found unsafe unscoped restores, stopped-Pod FSB, source-bucket, GitOps ownership, data-before-workload ordering, and cross-cloud storage mapping assumptions; the revised page addresses them. Current Velero v1.18 migration, FSB, restore, data-movement, and how-it-works docs and Argo CD automated-sync docs checked. Diagram rendered and inspected. No cluster, cutover, restore, or reader task was tested. | Independent Velero/GitOps review; controlled scenario and novice route-choice task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 112
-together: one hundred forty-one concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 113
+together: one hundred forty-two concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 24 have not yet been authored or
+The remaining 23 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1846,13 +1857,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 7 | 2 |
+| Migrations | 9 | 8 | 1 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **141** | **24** |
+| **Total** | **165** | **142** | **23** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

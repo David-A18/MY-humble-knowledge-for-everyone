@@ -3488,20 +3488,29 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to map Velero capabilities to realistic Kubernetes operations.",
+      "audience": "Learners planning Kubernetes recovery or migration",
+      "description": "Match common recovery and migration situations to Velero's object and volume paths, and identify the work other systems must own.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/real-use-cases-and-runbooks.md",
-      "source_ids": [],
+      "source_ids": [
+        "velero-how-it-works",
+        "velero-migration",
+        "velero-restore",
+        "velero-fsb",
+        "velero-data-movement",
+        "argocd-auto-sync"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
         "velero",
-        "real-use-cases-and-runbooks"
+        "recovery",
+        "gitops",
+        "beginner"
       ],
-      "title": "Velero real use cases and runbooks",
+      "title": "Choose where Velero fits in a recovery plan",
       "type": "Explanation"
     },
     {

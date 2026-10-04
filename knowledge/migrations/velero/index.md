@@ -13,7 +13,7 @@ Velero is a Kubernetes backup, restore, disaster recovery, and cluster migration
 | Back up one disposable ConfigMap and verify a namespace-mapped restore. | [Back up and restore one ConfigMap with Velero](backup-restore-workflows.md) |
 | Trigger Velero backup and migration tasks from GitHub Actions. | [Possible integrations](possible-integrations.md) |
 | See what a second cluster can restore and what its team must prepare separately. | [How a Velero backup reaches another cluster](cluster-migration-and-disaster-recovery.md) |
-| Map Velero to real operating scenarios, including GitOps and cross-cloud migrations. | [Real use cases and runbooks](real-use-cases-and-runbooks.md) |
+| Choose which recovery and migration situations fit Velero and which need separate owners. | [Choose where Velero fits in a recovery plan](real-use-cases-and-runbooks.md) |
 | Trace a restore with missing application data through its backup, volume path, target PVC, and workload check. | [Find why a Velero restore has no application data](troubleshooting-and-operations.md) |
 
 ## What Velero protects
