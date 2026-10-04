@@ -1744,13 +1744,27 @@ explicit. Cloud-specific access remains in the EKS guide.
 | --- | --- | --- | --- |
 | [How a tooling cluster connects to workload clusters](knowledge/kubernetes/applications-and-tools/tooling-cluster-architecture.md) | Dispatch-desk analogy, invented two-target diagram and text alternative, five-boundary table, central-push versus local-pull choice, conditional failure matrix, recovery questions. | Opus 5.5 read-only review of the prior pages guided the split; current Argo CD, Flux, and Kubernetes RBAC documentation checked. Diagram rendered and inspected. No GitOps controller, target API, telemetry, outage, recovery, or reader task was tested. | Independent GitOps/platform-security review; access and outage exercise; novice path tracing; freshness decision. |
 
+### Wave 107 (2026-10-04)
+
+The glossary now opens core words that its more advanced entries use:
+cluster, container, controller, desired state, node, namespace, Pod,
+repository, and more. It links existing deeper routes, separates
+Crossplane terms from ordinary meanings, and corrects a few definitions
+whose wording was specific to this repository's policy rather than the
+general term. Its one-sentence definition format follows the Glossary
+contract; the linked pages carry examples and diagrams.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Glossary](knowledge/glossary.md) | Added prerequisite terms and direct links, scoped overloaded words, corrected prompt, Crossplane config, CI/CD, and retrieval definitions, and made the starting links land on explanations. | Opus 5.5 reviewed the previous glossary read-only. Crossplane v2 ProviderConfig and EnvironmentConfig details checked against official docs; linked local concepts and OKF Glossary contract checked. No novice term-finding test or independent technical review occurred. | Novice find-a-term task; independent glossary and Crossplane version review; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 106
-together: one hundred thirty-five concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 107
+together: one hundred thirty-six concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 30 have not yet been authored or
+The remaining 29 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1758,7 +1772,7 @@ demonstration, so most teaching elements do not apply there.
 
 | Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
 | --- | --- | --- | --- |
-| Bundle root (Start here, glossary) | 2 | 1 | 1 |
+| Bundle root (Start here, glossary) | 2 | 2 | 0 |
 | AI, including the embedded OKF example | 20 | 8 | 12 |
 | Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
@@ -1774,7 +1788,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **135** | **30** |
+| **Total** | **165** | **136** | **29** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
