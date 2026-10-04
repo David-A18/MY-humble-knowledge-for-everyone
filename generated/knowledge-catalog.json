@@ -3531,20 +3531,28 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to diagnose Velero backup, restore, storage, snapshot, node-agent, and data movement issues.",
+      "audience": "Operators investigating a Velero restore",
+      "description": "Trace a missing or unusable restored PVC through the backup, volume copy, target storage, and application check without changing resources.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/troubleshooting-and-operations.md",
-      "source_ids": [],
+      "source_ids": [
+        "velero-troubleshooting",
+        "velero-restore",
+        "velero-fsb",
+        "velero-data-movement",
+        "velero-csi"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
         "velero",
-        "troubleshooting-and-operations"
+        "troubleshooting",
+        "restore",
+        "beginner"
       ],
-      "title": "Velero troubleshooting and operations",
+      "title": "Find why a Velero restore has no application data",
       "type": "Troubleshooting Guide"
     },
     {

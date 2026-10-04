@@ -1811,13 +1811,24 @@ add-on, and Helm creation examples were removed from this Explanation.
 | --- | --- | --- | --- |
 | [How Velero on EKS uses S3 and EBS](knowledge/migrations/velero/aws-s3-ebs-installation.md) | Two-worker analogy, invented photo-app diagram and text alternative, component/identity tables, native-versus-CSI comparison, and evidence ladder. | Opus 5.5 read-only review of the prior page identified misleading IAM, CSI/native, version, and untested command paths. Current Velero v1.18 install, CSI, data mover, FSB, and locations docs; canonical AWS plugin compatibility table; EKS EBS driver, snapshot-controller, and Pod Identity docs checked. Diagram rendered and inspected. No EKS cluster, S3 bucket, IAM binding, Velero installation, EBS snapshot, restore, or reader task occurred. | Independent AWS/Velero review; authorized disposable EKS install with both object and selected EBS restore evidence; novice identity-path task; freshness decision. |
 
+### Wave 112 (2026-10-05)
+
+The Velero troubleshooting page now follows one concrete symptom: a restore
+finishes, but the application cannot read its old data. It separates absent
+objects, missing volume bytes, a Pending or Bound PVC, and an application
+failure, with read-only checks before any repair is considered.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Find why a Velero restore has no application data](knowledge/migrations/velero/troubleshooting-and-operations.md) | Parcel analogy with its limit, backup-to-application diagram and text alternative, method-specific evidence table, read-only command sequence, and questions that distinguish object and data recovery. | Opus 5.5 read-only reviews of the prior and revised page identified PVC-state conflation, unsafe blind repairs, Pending and Bound nuances, and mover/FSB evidence gaps; the revised page addresses them. Current Velero v1.18 troubleshooting, restore, FSB, CSI, and data-movement docs checked. Diagram rendered and inspected. No Velero cluster, incident, restore, or reader task was tested. | Independent Velero/storage review; disposable restore cases for missing object, missing data, Pending and Bound PVC; novice diagnosis task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 111
-together: one hundred forty concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 112
+together: one hundred forty-one concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 25 have not yet been authored or
+The remaining 24 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1835,13 +1846,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 6 | 3 |
+| Migrations | 9 | 7 | 2 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **140** | **25** |
+| **Total** | **165** | **141** | **24** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
