@@ -1798,13 +1798,26 @@ the destination.
 | --- | --- | --- | --- |
 | [How a Velero backup reaches another cluster](knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md) | Library-move analogy, invented notes-app diagram and text alternative, item-location and target-prerequisite tables, planned-versus-disaster comparison, evidence sequence and cutover questions. | Opus 5.5 read-only review of the prior page identified two-writer, shared-prefix, CRD, volume-portability, and rollback risks. Current Velero v1.18 migration, disaster, how-it-works, restore, and location docs checked. Diagram rendered and inspected. No source/destination cluster, volume backup, restore, outage, cutover, or reader task was tested. | Independent Velero/security review; authorized two-cluster drill with data checksum and side-effect isolation; novice handoff task; freshness decision. |
 
+### Wave 111 (2026-10-05)
+
+The EKS Velero page now teaches the S3 archive and two different EBS
+snapshot control paths before an operator chooses an install method.
+It separates Velero's AWS identity from the EBS CSI driver's identity,
+names the extra work needed to copy volume bytes into S3, and lists
+evidence for both object and volume recovery. Unrun bucket, IAM,
+add-on, and Helm creation examples were removed from this Explanation.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How Velero on EKS uses S3 and EBS](knowledge/migrations/velero/aws-s3-ebs-installation.md) | Two-worker analogy, invented photo-app diagram and text alternative, component/identity tables, native-versus-CSI comparison, and evidence ladder. | Opus 5.5 read-only review of the prior page identified misleading IAM, CSI/native, version, and untested command paths. Current Velero v1.18 install, CSI, data mover, FSB, and locations docs; canonical AWS plugin compatibility table; EKS EBS driver, snapshot-controller, and Pod Identity docs checked. Diagram rendered and inspected. No EKS cluster, S3 bucket, IAM binding, Velero installation, EBS snapshot, restore, or reader task occurred. | Independent AWS/Velero review; authorized disposable EKS install with both object and selected EBS restore evidence; novice identity-path task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 110
-together: one hundred thirty-nine concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 111
+together: one hundred forty concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 26 have not yet been authored or
+The remaining 25 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1822,13 +1835,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 5 | 4 |
+| Migrations | 9 | 6 | 3 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **139** | **26** |
+| **Total** | **165** | **140** | **25** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

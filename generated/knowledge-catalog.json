@@ -3351,23 +3351,33 @@
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Platform engineers installing Velero on EKS",
-      "description": "Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots.",
+      "audience": "Beginning EKS platform and application teams",
+      "description": "Follow the backup archive, EBS snapshot, and AWS identity paths before choosing an installation method.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/aws-s3-ebs-installation.md",
       "source_ids": [
         "velero-aws-plugin",
-        "eks-ebs-csi"
+        "velero-install",
+        "velero-csi",
+        "velero-data-movement",
+        "velero-fsb",
+        "velero-locations",
+        "eks-ebs-csi",
+        "eks-snapshot-controller",
+        "eks-pod-identity"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
         "velero",
-        "aws-s3-ebs-installation"
+        "aws",
+        "eks",
+        "backup",
+        "beginner"
       ],
-      "title": "Velero AWS S3 and EBS installation",
+      "title": "How Velero on EKS uses S3 and EBS",
       "type": "Explanation"
     },
     {
