@@ -1588,12 +1588,38 @@ unrun network manifests were removed.
 | --- | --- | --- | --- |
 | [When to use Terraform or Crossplane](knowledge/kubernetes/crossplane/terraform-vs-crossplane.md) | Bounded inspection-versus-caretaker analogy, two-path diagram and text alternative, invented network decision table, ownership boundary, post-change observations, understanding checks. | Current official HashiCorp plan, state, and modules guidance plus Crossplane XRD, XR, Composition, and managed-resource documentation checked. Mermaid rendered and inspected. No Terraform run, cluster, cloud network, application check, reader task, or Opus review occurred. | Independent Terraform/Crossplane and Opus review; disposable comparison of plan/apply and XR reconciliation; novice operating-model choice task; freshness decision. |
 
+### Wave 95 (2026-10-03)
+
+The Crossplane operating-model page now follows one invented
+SecureBucket request and distinguishes application, platform,
+GitOps, controller, and provider responsibilities. It separates
+request changes from implementation changes, and connects
+pre-rollout review with live and application-level checks.
+It presents this as a possible team pattern rather than
+a universal professional rule.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a team operates a Crossplane platform API](knowledge/kubernetes/crossplane/professional-operating-model.md) | Bounded service-counter analogy, role map, request path diagram and text alternative, change-type comparison, access boundary, delivery layers, understanding checks. | Current official Crossplane XRD, XR, Composition, CompositionRevision, Provider, CLI, and Argo CD guidance plus Kubernetes RBAC documentation checked. Opus 5.5 read-only review on 2026-10-04 identified status-flow and scope issues; corrections were checked against official docs and diagrams rerendered. No cluster, bucket, provider identity, GitOps sync, cloud API call, application check, or reader task occurred. | Independent platform-security review; disposable request and implementation-change exercise; novice ownership task; freshness decision. |
+
+### Wave 96 (2026-10-03)
+
+The GitOps/operations page now follows an invented SecureBucket
+retention change through the GitOps and Crossplane loops. It
+distinguishes sync, XR and managed-resource readiness, and an
+application outcome. It also maps implementation promotion,
+operating signals, and external identity needed for recovery.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How GitOps and Crossplane keep a platform request running](knowledge/kubernetes/crossplane/production-gitops-and-operations.md) | Bounded two-delivery-round analogy, change-path diagram and text alternative, layered signal table, failure handoff, promotion and recovery explanations, understanding checks. | Current official Crossplane Argo CD, XR, Composition, CompositionRevision, managed-resource, provider, metrics, and upgrade documentation checked. Opus 5.5 read-only review on 2026-10-04 identified status and diagram errors; corrections were checked against official docs and diagrams rerendered. No GitOps sync, cluster, provider upgrade, bucket, backup restore, application operation, or reader task occurred. | Independent GitOps/Crossplane review; disposable sync-to-cloud and recovery exercises; novice two-loop diagnosis task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 94
-together: one hundred twenty-three concepts, none of them independently reviewed after
-their teaching passes. The remaining 42 have not yet been authored or
+concepts. The "authored to the standard" column covers waves 1 to 96
+together: one hundred twenty-five concepts, none of them independently reviewed after
+their teaching passes. The remaining 40 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1610,14 +1636,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 33 | 12 |
+| Kubernetes | 45 | 35 | 10 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **123** | **42** |
+| **Total** | **165** | **125** | **40** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

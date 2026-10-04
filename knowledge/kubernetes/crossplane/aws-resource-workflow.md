@@ -616,7 +616,7 @@ GitOps owns whether manifests are present in the cluster. Crossplane owns whethe
 
 - [Crossplane](index.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
-- [Professional operating model](professional-operating-model.md)
+- [How a team operates a Crossplane platform API](professional-operating-model.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)

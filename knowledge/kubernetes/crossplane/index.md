@@ -159,11 +159,11 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
 | [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
 | [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
-| [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
+| [How a team operates a Crossplane platform API](professional-operating-model.md) | Follow an invented storage request through team ownership, change review, access boundaries, and outcome checks. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
 | [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
-| [Production, GitOps, and operations](production-gitops-and-operations.md) | Run Crossplane with GitOps, package promotion, observability, backups, upgrades, and operational workflows. |
+| [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md) | Follow an invented storage change through GitOps and Crossplane reconciliation, promotion, monitoring, and recovery. |
 | [Troubleshooting](troubleshooting.md) | Diagnose providers, compositions, managed resources, auth failures, leaked resources, and deletion issues. |
 | [References](references.md) | Official and supporting references used for the Crossplane section. |
 
@@ -179,11 +179,11 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [Deployment patterns and references](deployment-patterns-and-references.md)
 - [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
-- [Professional operating model](professional-operating-model.md)
+- [How a team operates a Crossplane platform API](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Local AWS S3 lab](local-aws-s3-lab.md)
 - [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
-- [Production, GitOps, and operations](production-gitops-and-operations.md)
+- [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Crossplane troubleshooting](troubleshooting.md)
 - [Crossplane references](references.md)

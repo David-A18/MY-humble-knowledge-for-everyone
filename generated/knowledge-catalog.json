@@ -2927,36 +2927,61 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to run Crossplane as a critical control plane with GitOps, package promotion, observability, backup, upgrade, and operational workflow practices.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow one approved change through two reconciliation loops and learn what to monitor, promote, and recover.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/production-gitops-and-operations.md",
-      "source_ids": [],
-      "stale_after": null,
-      "status": "draft",
-      "tags": [
-        "kubernetes",
-        "crossplane"
+      "source_ids": [
+        "crossplane-argo",
+        "crossplane-xrs",
+        "crossplane-compositions",
+        "crossplane-managed",
+        "crossplane-revisions",
+        "crossplane-providers",
+        "crossplane-metrics",
+        "crossplane-upgrade"
       ],
-      "title": "Crossplane production, GitOps, and operations",
-      "type": "Explanation"
-    },
-    {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand how professional platform teams actually work with Crossplane: what they give developers, what they keep private, how they review changes, and how Crossplane fits with GitOps, Terraform, AWS identity, policy, and observability.",
-      "maintainer": "unassigned",
-      "maturity": "draft",
-      "path": "knowledge/kubernetes/crossplane/professional-operating-model.md",
-      "source_ids": [],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "professional-operating-model"
+        "gitops",
+        "operations",
+        "reconciliation",
+        "beginner"
       ],
-      "title": "Crossplane professional operating model",
+      "title": "How GitOps and Crossplane keep a platform request running",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow one invented storage request through team ownership, Git review, controller work, and outcome checks.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/crossplane/professional-operating-model.md",
+      "source_ids": [
+        "crossplane-xrds",
+        "crossplane-xrs",
+        "crossplane-compositions",
+        "crossplane-revisions",
+        "crossplane-providers",
+        "crossplane-argo",
+        "crossplane-cli",
+        "kubernetes-rbac"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "platform-team",
+        "gitops",
+        "operations",
+        "beginner"
+      ],
+      "title": "How a team operates a Crossplane platform API",
       "type": "Explanation"
     },
     {

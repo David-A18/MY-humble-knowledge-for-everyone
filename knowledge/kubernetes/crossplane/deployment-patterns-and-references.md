@@ -613,7 +613,7 @@ What it does: validates and applies the platform API, then inspects XR status, m
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 - [AWS resource workflow](aws-resource-workflow.md)
-- [Professional operating model](professional-operating-model.md)
+- [How a team operates a Crossplane platform API](professional-operating-model.md)
 - [Crossplane references](references.md)
 - [Managed resources documentation](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
 - [Function Patch and Transform](https://docs.crossplane.io/latest/guides/function-patch-and-transform/)
