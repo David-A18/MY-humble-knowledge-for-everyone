@@ -148,9 +148,8 @@ These names appear as a platform grows:
 Exact API groups, fields, and supported scopes depend on installed
 Crossplane and provider versions. Use the cluster's API discovery and
 the matching official versioned documentation before applying a
-manifest. No execution evidence was recorded for the previous list of
-example manifests, and it could imply one provider family's fields were a
-universal Crossplane recipe.
+manifest. Provider-specific fields should be checked against the
+installed API before being used in a real request.
 
 ## Choose the next page by your question
 

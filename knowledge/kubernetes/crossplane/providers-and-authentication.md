@@ -99,11 +99,9 @@ installed provider revision, its API discovery, and activation state
 before troubleshooting AWS credentials.[^crossplane-activation]
 
 The exact package image, API group, kind, and fields depend on the
-provider family and installed version. The former example on this
-page pinned one AWS S3 image and implied that its
-`ProviderConfig` schema applied generally. Use that provider's
+provider family and installed version. Use that provider's
 official package documentation and the target cluster's API
-discovery instead of copying a version from an explanation.
+discovery before copying an example into a real cluster.
 
 ## Which identity makes the call?
 
@@ -112,9 +110,12 @@ MR. The installed provider defines the configuration's schema and
 credential options. In the AWS provider example documented by
 Crossplane, a namespaced `ProviderConfig` applies to MRs in that
 namespace, while a `ClusterProviderConfig` can be referenced from
-multiple namespaces. A wider scope should be paired with Kubernetes
-RBAC and admission rules that control who can create MRs or select
-that configuration.[^crossplane-managed]
+multiple namespaces. The managed resource's
+`spec.providerConfigRef` names the selected configuration
+and its kind; inspect both values when tracing an account.
+A wider scope should be paired with Kubernetes RBAC and
+admission rules that control who can create MRs or select
+that configuration.[^crossplane-providers]
 
 Provider configuration and the Pod's identity work together. For
 example, a provider may read a Kubernetes Secret, or its runtime
@@ -158,7 +159,7 @@ For the two EKS credential mechanisms, read
 | AWS bucket exists, application fails. | Is the application using a separate identity or wrong bucket endpoint? | Application request path and its own authorization result. |
 
 To inspect without changing state, start with the
-[Crossplane troubleshooting](troubleshooting.md) guide. A
+[Find the first failing Crossplane handoff](troubleshooting.md) guide. A
 server-side dry run can validate a manifest against an installed
 Kubernetes schema, but it does not exercise the provider Pod or
 authorize an external API call.

@@ -184,7 +184,7 @@ Trace the first failed handoff instead of repeating the request:
    actually have its *own* required access? Provider identity and
    application identity are separate.
 
-See [Crossplane troubleshooting](../kubernetes/crossplane/troubleshooting.md)
+See [Find the first failing Crossplane handoff](../kubernetes/crossplane/troubleshooting.md)
 for the operational commands. A failed provider can leave a
 Kubernetes request present while the external AWS resource is
 absent or stale; a healthy provider status alone is not an

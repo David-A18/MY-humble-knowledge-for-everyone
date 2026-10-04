@@ -1,288 +1,256 @@
 ---
-type: "Troubleshooting Guide"
-title: "Crossplane troubleshooting"
-description: "Diagnose Crossplane provider, composition, managed-resource, authentication, deletion, and runtime failures."
-tags: [kubernetes, crossplane, troubleshooting]
+type: Troubleshooting Guide
+title: Find the first failing Crossplane handoff
+description: Diagnose an absent, unready, paused, or deleting Crossplane resource by reading scope, conditions, and the next controller boundary.
+tags: [kubernetes, crossplane, troubleshooting, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-troubleshoot
+    resource: https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/
+    title: Crossplane - Troubleshoot Crossplane
+  - id: crossplane-xrd
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-xr
+    resource: https://docs.crossplane.io/latest/composition/composite-resources/
+    title: Crossplane - Composite Resources
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: crossplane-activation
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/
+    title: Crossplane - Managed Resource Activation Policies
+  - id: crossplane-provider
+    resource: https://docs.crossplane.io/latest/packages/providers/
+    title: Crossplane - Providers
+  - id: crossplane-usages
+    resource: https://docs.crossplane.io/latest/managed-resources/usages/
+    title: Crossplane - Usages
+  - id: crossplane-cli
+    resource: https://docs.crossplane.io/cli/latest/command-reference/
+    title: Crossplane CLI - Command Reference
 ---
 
-# Crossplane troubleshooting
+# Find the first failing Crossplane handoff
 
-## Purpose
+## Start with the object, not a guessed fix
 
-Diagnose Crossplane provider, composition, managed-resource, authentication, deletion, and runtime failures.
+A Crossplane request travels through several handoffs:
+Kubernetes accepts an API object, Crossplane selects a
+Composition if it is an XR, a provider observes a managed
+resource, and an external API may create or change the
+real resource. A later application check asks whether
+the result is useful.[^crossplane-xr][^crossplane-managed]
 
-## First checks
+Think of a parcel crossing tracking stations. The last
+successful scan narrows where to look next. The analogy
+has a limit: a condition records what a controller last
+observed; it is not a continuous guarantee of the
+external system or the application's experience.
 
-| Symptom | Check | Likely cause |
+Find **which object exists**, its **scope**, and its
+**Reason** and **Message** before changing anything.
+This guide uses Crossplane v2 namespaced examples.
+Legacy cluster-scoped APIs and provider families can
+use different groups and fields.[^crossplane-xrd]
+
+## One invented stuck deletion
+
+Suppose the reports team requested deletion of a
+managed Bucket, but the Kubernetes object remains.
+In this *invented* example, it is in namespace
+`reports`, has a deletion timestamp, carries
+`crossplane.io/paused: "true"`, and reports
+`Synced=False` with reason `ReconcilePaused`.
+No cluster, bucket, or deletion was inspected here.
+
+The first read-only checks would be:
+
+```bash
+kubectl get buckets.s3.aws.m.upbound.io -n reports
+kubectl describe buckets.s3.aws.m.upbound.io reports-archive -n reports
+```
+
+The exact fully qualified API group must match the
+installed provider. The `.m.` in this AWS provider
+family distinguishes its namespaced managed-resource
+API from a legacy cluster-scoped API; do not infer
+scope from a kind name such as `Bucket` alone.
+Check API discovery if the command has no match.
+[^crossplane-activation][^crossplane-provider]
+
+Here, the pause and deletion timestamp explain why
+the Kubernetes object is waiting. Pausing a managed
+resource stops its provider reconciliation, including
+the work needed to finish deletion. An old `Ready=True`
+condition would describe the last observation before
+the pause, not prove the bucket is still healthy.
+The team must decide whether the external bucket
+should be deleted or intentionally retained before
+changing the pause or finalizer.
+[^crossplane-managed]
+
+## Follow the first missing handoff
+
+```mermaid
+flowchart TB
+  symptom["A Crossplane request<br/>looks wrong"] --> exists{"Was the object<br/>accepted by Kubernetes?"}
+  exists -->|"No"| api["Check API group, version,<br/>scope, package and activation"]
+  exists -->|"Yes"| paused{"Paused or<br/>deleting?"}
+  paused -->|"Yes"| lifecycle["Inspect annotation, timestamp,<br/>finalizer and external identity"]
+  paused -->|"No"| synced{"Synced=False?"}
+  synced -->|"Yes"| reconcile["Read Reason and Message;<br/>find XR or MR controller"]
+  synced -->|"No"| ready{"Ready=False?"}
+  ready -->|"Yes"| waiting["Read readiness reason;<br/>check dependencies and time"]
+  ready -->|"No"| outcome["Check the real<br/>application outcome"]
+```
+
+Text alternative: if Kubernetes rejected the object, check
+the API type and installed packages first. If the object
+exists, inspect pause and deletion state. Next, read
+`Synced` to find reconciliation errors and `Ready` to
+find availability or waiting states. If both look healthy,
+check the application's actual use of the resource.
+[^crossplane-troubleshoot][^crossplane-xr][^crossplane-managed]
+
+| Observation | First question | Where to go |
 | --- | --- | --- |
-| Resource is not ready | Conditions on the composite and managed resources. | External API error, auth failure, or invalid spec. |
-| Provider cannot connect | ProviderConfig and provider logs. | Credentials, network, or role permissions. |
-| Composition does not render | Composition, function, and claim events. | Schema mismatch or patch error. |
-| Deletion hangs | Finalizers and provider health. | Controller cannot delete external resource. |
-| Resource kind is unknown | Installed APIs and provider revisions. | Provider not healthy, API version changed, or resource not activated. |
-| Drift is not corrected | Managed-resource spec, management policies, and provider support. | Field not owned, policy excludes update, or provider does not reconcile that field. |
-
-## Start with status and events
-
-```bash
-kubectl describe <resource-kind> <name> -n <namespace>
-kubectl get events -n <namespace> --sort-by=.lastTimestamp
-```
-
-What it does: shows conditions, provider messages, warning events, failed references, auth errors, and dependency failures.
-
-Read:
-
-- `status.conditions`
-- `Reason`
-- `Message`
-- `LastTransitionTime`
-- event timestamps
-- external-name annotations
-- finalizers
-
-## Managed resource diagnostics
-
-```bash
-kubectl get managed -A
-kubectl get <resource-kind> <name> -n <namespace> -o yaml
-kubectl describe <resource-kind> <name> -n <namespace>
-```
-
-What it does: lists managed resources and inspects the exact spec, status, annotations, conditions, and finalizers for one resource.
-
-## Provider installation issues
-
-```bash
-kubectl get providers.pkg.crossplane.io
-kubectl get providerrevisions.pkg.crossplane.io
-kubectl describe provider.pkg.crossplane.io <provider-name>
-kubectl describe providerrevision.pkg.crossplane.io <revision-name>
-```
-
-What it does: checks provider package installation, active revisions, dependency resolution, package pull errors, health, and API activation.
-
-Look for:
-
-- Package pull failures.
-- Registry authentication failures.
-- Dependency resolution errors.
-- Incompatible package versions.
-- Unhealthy provider deployments.
-- Missing or inactive managed-resource definitions.
-
-## Provider logs
-
-```bash
-kubectl get pods -n crossplane-system
-kubectl logs -n crossplane-system \
-  -l pkg.crossplane.io/provider=<provider-name> \
-  --tail=200
-```
-
-What it does: inspects provider controller logs.
-
-Default provider logs may be terse. Events and conditions are often faster than logs for first diagnosis.
-
-## Crossplane core logs
-
-```bash
-kubectl logs -n crossplane-system \
-  -l app=crossplane \
-  --tail=200
-```
-
-What it does: inspects Crossplane core logs for package management, composition, XRD, XR, function, and operation issues.
-
-## Authentication failures
-
-Common symptoms include:
-
-```text
-AccessDenied
-InvalidClientTokenId
-ExpiredToken
-NoCredentialProviders
-AssumeRoleWithWebIdentity
-```
-
-Check:
-
-```bash
-kubectl get providerconfig -A
-kubectl get clusterproviderconfig
-kubectl describe providerconfig <name> -n <namespace>
-kubectl describe clusterproviderconfig <name>
-```
-
-What it does: confirms provider configs exist and reference the expected credential source.
-
-For EKS Pod Identity or IRSA, also check:
-
-- Provider pod ServiceAccount.
-- Pod Identity association or IRSA annotation.
-- IAM trust policy.
-- EKS OIDC provider when using IRSA.
-- Provider pod environment variables and projected tokens.
-- CloudTrail assume-role events.
-
-## Wrong API version or kind
-
-Symptoms:
-
-```text
-no matches for kind
-the server could not find the requested resource
-```
-
-Check:
-
-```bash
-kubectl api-resources | grep -i bucket
-kubectl get crds | grep -i s3
-kubectl explain bucket.s3.aws.m.upbound.io
-kubectl get providerrevisions.pkg.crossplane.io
-```
-
-What it does: confirms whether the API exists, whether the provider installed it, and whether the manifest uses the current group and version.
-
-If a Crossplane CLI command fails with a missing resource message, update the CLI and confirm it supports your installed Crossplane version.
-
-## `Ready=False` or `Synced=False`
-
-```bash
-kubectl describe <resource-kind> <name> -n <namespace>
-```
-
-What it does: shows the detailed condition reason and message behind the short `kubectl get` output.
-
-Common causes:
-
-- External API validation failure.
-- Missing dependency.
-- Missing ProviderConfig.
-- IAM denial.
-- Quota or rate limit.
-- Immutable field change.
-- External resource already exists.
-- Region or account mismatch.
-
-## Composition failures
-
-```bash
-kubectl describe <xr-kind> <xr-name> -n <namespace>
-kubectl get compositions.apiextensions.crossplane.io
-kubectl get compositionrevisions.apiextensions.crossplane.io
-kubectl get functions.pkg.crossplane.io
-```
-
-What it does: checks XR events, composition selection, revisions, and function health.
-
-Render locally:
-
-```bash
-crossplane composition render \
-  xr.yaml \
-  composition.yaml \
-  functions.yaml
-```
-
-What it does: runs the function pipeline locally so patching, transform, and generated-resource errors are visible before applying to the cluster.
-
-## Reference resolution failures
-
-Example reference:
-
-```yaml
-bucketRef:
-  name: my-bucket
-```
-
-Check:
-
-- The referenced resource exists.
-- The reference is in the same namespace when required.
-- Namespaced and cluster-scoped resources are not mixed accidentally.
-- Labels match when using selectors.
-- The referenced resource is ready.
-- The provider supports the reference field.
-
-## Stuck deletion
-
-```bash
-kubectl get <resource-kind> <name> -n <namespace> -o yaml
-kubectl get events -n <namespace> --sort-by=.lastTimestamp
-```
-
-What it does: shows deletion timestamp, finalizers, recent failures, and provider status.
-
-Common causes:
-
-- External resource is not empty.
-- Deletion protection is enabled.
-- Dependency resources still exist.
-- Provider lacks delete permission.
-- Provider is unhealthy.
-- ProviderConfig was deleted before the resource.
-- External API is unavailable.
-
-> [!WARNING]
-> Do not remove a finalizer until you understand whether the external resource should be orphaned, manually deleted, or recovered into Crossplane control.
-
-## Potential leaked resource
-
-Providers may protect against duplicate resources when create results are ambiguous. If you see a message like:
-
-```text
-cannot determine creation result
-```
-
-Do this:
-
-1. Inspect creation annotations such as `crossplane.io/external-create-pending`.
-2. Search the external provider for resources created around that timestamp.
-3. Confirm whether a real external resource exists.
-4. Decide whether to import, delete, or retry.
-5. Clear annotations only after the external state is understood.
-
-## Pause during incident response
-
-Pause one resource:
-
-```bash
-kubectl annotate <resource-kind> <name> \
-  -n <namespace> \
-  crossplane.io/paused="true" \
-  --overwrite
-```
-
-What it does: stops reconciliation for one resource.
-
-Pause Crossplane core:
-
-```bash
-kubectl scale deployment/crossplane \
-  -n crossplane-system \
-  --replicas=0
-```
-
-What it does: stops Crossplane core. Provider controllers may still be running, so pause providers separately if needed.
-
-> [!IMPORTANT]
-> Pausing can leave incomplete operations and stale drift. Record why reconciliation was paused and what must be checked before resuming.
-
-## Related links
-
-- [Crossplane](index.md)
-- [Crossplane compositions](compositions.md)
-- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
-- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
-- [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
-- [Crossplane references](references.md)
-- [Crossplane troubleshooting documentation](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+| `no matches for kind` | Does the requested group/version exist and have the right scope? | Provider or XRD installation, API discovery, and managed-resource activation.[^crossplane-activation] |
+| XR `Synced=False` | Did Composition selection or a function step fail? | XR Reason, Message, events, selected Composition, and function health.[^crossplane-xr] |
+| Managed resource `Synced=False` | Did the provider fail to reconcile? | Managed-resource Reason/Message, ProviderConfig, provider health, and external API error.[^crossplane-managed][^crossplane-provider] |
+| `Synced=True`, `Ready=False` | Is the resource still creating or waiting for a dependency? | Read the Ready Reason and elapsed time before treating it as an error.[^crossplane-managed] |
+| `Ready=True`, application fails | Can the application access and use the external resource? | Application identity, endpoint, network path, and expected behavior. |
+
+For an XR, `Synced=True` means Crossplane
+reconciled the XR successfully; `Ready=True`
+means its Composition function pipeline reports
+composed resources ready. For a managed resource,
+`Synced=True` means the provider's last reconcile
+succeeded; `Ready=True` means the provider reports
+the external resource available. The Reason and
+Message explain the current state more precisely
+than either short column alone.
+[^crossplane-xr][^crossplane-managed]
+
+A schema-invalid manifest is normally rejected
+by the Kubernetes API before it can have Crossplane
+conditions. An accepted object can still fail later
+because the cloud API rejects a setting or permission.
+Some providers report asynchronous operation failures
+in an additional condition, so inspect all conditions.
+[^crossplane-managed]
+
+## Trace the right controller
+
+If the problem starts at an **XR**, inspect its selected
+Composition and resource references. The current
+Crossplane CLI documents `crossplane resource trace`
+for viewing the related resource tree. Its output and
+flags depend on the installed CLI version. Continue
+to the first unhealthy composed resource.
+[^crossplane-cli][^crossplane-xr]
+
+If the failure is in a **managed resource**, the
+provider controller owns the external API call.
+Read its events and conditions first, then its
+selected ProviderConfig, controller Pod identity,
+and provider logs. A namespaced ProviderConfig and
+a ClusterProviderConfig have different reach; the
+selected kind matters. See [How a Crossplane provider reaches an external API](providers-and-authentication.md).
+[^crossplane-provider]
+
+Core logs help with Crossplane package, XRD, and
+XR reconciliation. Function pods have their own
+logs for function execution. Provider pods are
+the right place for provider API failures.
+Crossplane's troubleshooting guide recommends
+conditions and events before logs because
+default logs can be terse.[^crossplane-troubleshoot]
+
+## Distinguish two deletion problems
+
+**The delete request was refused:** a Usage
+dependency or admission rule may block deletion
+before a deletion timestamp appears. Inspect the
+API error and the protective object; a finalizer
+is not yet the explanation.[^crossplane-usages]
+
+**The object is terminating:** inspect the
+deletion timestamp, finalizers, pause state,
+provider health, and external dependencies.
+The provider may need to delete the external
+resource before removing the finalizer. Removing
+a finalizer manually can leave an external
+resource running without its Kubernetes record.
+[^crossplane-managed]
+
+If an event says `cannot determine creation result`,
+the provider may have created an external resource
+but lost the response or external identity. Inspect
+the creation annotations and the external system
+before retrying. Do not clear a pending annotation,
+change `crossplane.io/external-name`, or force
+deletion without a provider-specific recovery
+decision; a duplicate or orphaned resource may
+result.[^crossplane-managed]
+
+Pausing only an XR does not necessarily pause
+already composed managed resources. Verify each
+controller boundary before using a pause during
+an incident. A paused managed resource cannot
+finish deletion until reconciliation resumes.
+[^crossplane-xr][^crossplane-managed]
+
+## Verify after the fix
+
+After an approved correction, read the same XR or
+managed resource again. Confirm that its Reason
+and Message changed as expected, its relevant
+composed or external resource reached the intended
+state, and a representative application operation
+works. A green condition alone does not establish
+the user outcome.
+
+No commands on this page were run against a
+cluster. The example is invented and the commands
+are read-only; adapt group, version, kind, scope,
+and namespace to the installed Crossplane and
+provider versions.
+
+## Check your understanding
+
+1. The API server rejects a Bucket manifest with
+   "no matches for kind." Which checks come before
+   investigating cloud permissions?
+2. A managed resource has `Synced=True` and
+   `Ready=False` with reason `Creating`. What does
+   that tell you, and what must you inspect next?
+3. A paused managed resource has a deletion timestamp.
+   Why might removing its finalizer create a second
+   problem?
+
+## Explore further
+
+- [Crossplane Troubleshoot Crossplane](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/)
+  explains conditions, events, and logs.[^crossplane-troubleshoot]
+- [Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/)
+  and [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
+  document their different conditions.[^crossplane-xr][^crossplane-managed]
+- [Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/)
+  explains v2 API activation.[^crossplane-activation]
+- [Crossplane CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/)
+  documents resource tracing.[^crossplane-cli]
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md).
+- [Back to Crossplane](index.md).
+
+[^crossplane-troubleshoot]: [Crossplane, Troubleshoot Crossplane](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/), source record `crossplane-troubleshoot`.
+[^crossplane-xrd]: [Crossplane, Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), source record `crossplane-xrd`.
+[^crossplane-xr]: [Crossplane, Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/), source record `crossplane-xr`.
+[^crossplane-managed]: [Crossplane, Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/), source record `crossplane-managed`.
+[^crossplane-activation]: [Crossplane, Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/), source record `crossplane-activation`.
+[^crossplane-provider]: [Crossplane, Providers](https://docs.crossplane.io/latest/packages/providers/), source record `crossplane-provider`.
+[^crossplane-usages]: [Crossplane, Usages](https://docs.crossplane.io/latest/managed-resources/usages/), source record `crossplane-usages`.
+[^crossplane-cli]: [Crossplane CLI, Command Reference](https://docs.crossplane.io/cli/latest/command-reference/), source record `crossplane-cli`.

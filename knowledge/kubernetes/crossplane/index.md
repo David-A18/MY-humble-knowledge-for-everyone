@@ -164,7 +164,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
 | [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
 | [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md) | Follow an invented storage change through GitOps and Crossplane reconciliation, promotion, monitoring, and recovery. |
-| [Troubleshooting](troubleshooting.md) | Diagnose providers, compositions, managed resources, auth failures, leaked resources, and deletion issues. |
+| [Find the first failing Crossplane handoff](troubleshooting.md) | Follow one stuck deletion, distinguish conditions, and locate the first failed controller boundary. |
 | [References](references.md) | Official and supporting references used for the Crossplane section. |
 
 ## Related links
@@ -185,7 +185,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
 - [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
-- [Crossplane troubleshooting](troubleshooting.md)
+- [Find the first failing Crossplane handoff](troubleshooting.md)
 - [Crossplane references](references.md)
 - [Crossplane v2 overview](https://docs.crossplane.io/latest/whats-new/)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)

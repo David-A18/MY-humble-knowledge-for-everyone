@@ -1614,12 +1614,26 @@ operating signals, and external identity needed for recovery.
 | --- | --- | --- | --- |
 | [How GitOps and Crossplane keep a platform request running](knowledge/kubernetes/crossplane/production-gitops-and-operations.md) | Bounded two-delivery-round analogy, change-path diagram and text alternative, layered signal table, failure handoff, promotion and recovery explanations, understanding checks. | Current official Crossplane Argo CD, XR, Composition, CompositionRevision, managed-resource, provider, metrics, and upgrade documentation checked. Opus 5.5 read-only review on 2026-10-04 identified status and diagram errors; corrections were checked against official docs and diagrams rerendered. No GitOps sync, cluster, provider upgrade, bucket, backup restore, application operation, or reader task occurred. | Independent GitOps/Crossplane review; disposable sync-to-cloud and recovery exercises; novice two-loop diagnosis task; freshness decision. |
 
+### Wave 97 (2026-10-04)
+
+The Crossplane troubleshooting guide now starts with an invented
+paused Bucket deletion and follows the first missing handoff.
+It distinguishes API rejection, XR and managed-resource
+conditions, pause and deletion state, provider identity,
+ambiguous creation, and application outcomes. Unrun
+mutating pause and finalizer recipes were removed.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Find the first failing Crossplane handoff](knowledge/kubernetes/crossplane/troubleshooting.md) | Bounded parcel-tracking analogy, invented paused Bucket example, decision diagram and text alternative, condition table, controller-log routing, deletion and ambiguous-create boundaries, understanding checks. | Opus 5.5 read-only review of the prior page and neighboring guides. Current official Crossplane troubleshooting, XRD, XR, managed-resource, activation, provider, Usage, and CLI documentation checked. Mermaid rendered and inspected. No cluster, bucket, provider, deletion, application check, or reader task occurred. | Independent Crossplane/provider security review; disposable paused-deletion, missing-kind, and provider-denial exercises; novice first-failure task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
-Counts come from the generated catalog on 2026-10-03, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 96
-together: one hundred twenty-five concepts, none of them independently reviewed after
-their teaching passes. The remaining 40 have not yet been authored or
+Counts come from the generated catalog on 2026-10-04, which records 165
+concepts. The "authored to the standard" column covers waves 1 to 97
+together: one hundred twenty-six concepts. Selected waves received Opus review,
+but none completed the full independent domain-review and reader-task gates.
+The remaining 39 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1636,14 +1650,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 35 | 10 |
+| Kubernetes | 45 | 36 | 9 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **125** | **40** |
+| **Total** | **165** | **126** | **39** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

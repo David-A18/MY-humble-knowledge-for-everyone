@@ -3080,20 +3080,30 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose Crossplane provider, composition, managed-resource, authentication, deletion, and runtime failures.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Diagnose an absent, unready, paused, or deleting Crossplane resource by reading scope, conditions, and the next controller boundary.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/troubleshooting.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-troubleshoot",
+        "crossplane-xrd",
+        "crossplane-xr",
+        "crossplane-managed",
+        "crossplane-activation",
+        "crossplane-provider",
+        "crossplane-usages",
+        "crossplane-cli"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "troubleshooting"
+        "troubleshooting",
+        "beginner"
       ],
-      "title": "Crossplane troubleshooting",
+      "title": "Find the first failing Crossplane handoff",
       "type": "Troubleshooting Guide"
     },
     {
