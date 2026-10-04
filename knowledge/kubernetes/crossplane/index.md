@@ -165,7 +165,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
 | [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md) | Follow an invented storage change through GitOps and Crossplane reconciliation, promotion, monitoring, and recovery. |
 | [Find the first failing Crossplane handoff](troubleshooting.md) | Follow one stuck deletion, distinguish conditions, and locate the first failed controller boundary. |
-| [References](references.md) | Official and supporting references used for the Crossplane section. |
+| [Find the right Crossplane source for your question](references.md) | Choose an official source for API design, provider schemas, identity, or troubleshooting. |
 
 ## Related links
 
@@ -186,7 +186,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Find the first failing Crossplane handoff](troubleshooting.md)
-- [Crossplane references](references.md)
+- [Find the right Crossplane source for your question](references.md)
 - [Crossplane v2 overview](https://docs.crossplane.io/latest/whats-new/)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
 - [Back to Kubernetes index](../index.md)

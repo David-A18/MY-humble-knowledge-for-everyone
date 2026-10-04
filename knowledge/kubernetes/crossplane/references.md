@@ -1,125 +1,122 @@
 ---
-type: "Reference"
-title: "Crossplane references"
-description: "Use this page as the reference list for the Crossplane section. Prefer these official sources when verifying examples, provider schemas, authentication behavior, operations, and production guidance."
-tags: [kubernetes, crossplane, references]
+type: Reference
+title: Find the right Crossplane source for your question
+description: Choose the official Crossplane, provider, or AWS documentation that answers a specific API, deployment, identity, or troubleshooting question.
+tags: [kubernetes, crossplane, references, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-docs
+    resource: https://docs.crossplane.io/latest/
+    title: Crossplane - Documentation
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-cli
+    resource: https://docs.crossplane.io/cli/latest/command-reference/
+    title: Crossplane CLI - Command Reference
+  - id: crossplane-troubleshoot
+    resource: https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/
+    title: Crossplane - Troubleshoot Crossplane
+  - id: upbound-marketplace
+    resource: https://marketplace.upbound.io/
+    title: Upbound - Marketplace
+  - id: aws-eks-identity
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html
+    title: AWS - IAM roles for EKS workloads
 ---
 
-# Crossplane references
+# Find the right Crossplane source for your question
 
-## Purpose
+## Start with the question
 
-Use this page as the reference list for the Crossplane section. Prefer these official sources when verifying examples, provider schemas, authentication behavior, operations, and production guidance.
+A reference page is a map, not another deployment recipe. If a
+`SecureBucket` request exists but no bucket appears, first ask
+whether the problem is in the XR, the composed managed resource,
+the provider, or AWS. Then open the source for that boundary.
+The [first-failure guide](troubleshooting.md) explains how to
+find it.
 
-## Crossplane official documentation
+| Your question | Start with | What to confirm |
+| --- | --- | --- |
+| What changed in v2? | [What's new in Crossplane v2](https://docs.crossplane.io/latest/whats-new/) | Whether the example uses namespaced v2 or legacy cluster-scoped APIs. |
+| How do I install Crossplane? | [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/) | Supported Kubernetes and Helm versions, chart options, and ready Pods. |
+| Which API defines the request? | [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/) | XRD group, scope, schema, and served versions. |
+| How does a request choose an implementation? | [Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/) and [Compositions](https://docs.crossplane.io/latest/composition/compositions/) | Selected Composition, function pipeline, composed-resource references, and conditions. |
+| How does one AWS object map to Kubernetes? | [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/) | `forProvider`, `atProvider`, external name, references, conditions, and management policies. |
+| Which provider API and field actually exist? | [Providers](https://docs.crossplane.io/latest/packages/providers/), [Managed Resource Definitions](https://docs.crossplane.io/latest/managed-resources/managed-resource-definitions/), and the [Upbound Marketplace](https://marketplace.upbound.io/) for Upbound packages | Installed package version, active CRD, group, kind, scope, and provider field schema. |
+| Why is a provider kind missing? | [Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/) and [disabling unused managed resources](https://docs.crossplane.io/latest/guides/disabling-unused-managed-resources/) | Installed MRDs, activation policy, and whether a default broad policy is still active. |
+| How do I preview desired composed objects? | [Compositions: test a composition](https://docs.crossplane.io/latest/composition/compositions/#test-a-composition) and [CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/) | Exact CLI syntax, function inputs, and Docker or development runtime. |
+| Where do I begin troubleshooting? | [Troubleshoot Crossplane](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/) | Object scope, conditions, Reason, Message, events, and the responsible controller. |
 
-| Reference | Use it for |
+The current documentation uses `latest`, which can move as
+Crossplane releases change. Record the **installed package and
+CLI versions** before copying a command or manifest. The provider
+package and activated Kubernetes CRD are the final authority for a
+field in your cluster; a marketplace example for another version
+is a starting point.[^crossplane-managed][^crossplane-cli]
+
+## Choose a source for common design work
+
+| Design question | Official source | What it teaches |
+| --- | --- | --- |
+| How do fixed templates and patches work? | [Function Patch and Transform](https://docs.crossplane.io/latest/guides/function-patch-and-transform/) | Patch direction, transforms, and readiness checks. |
+| How do I create a variable number of resources? | [Crossplane Compositions](https://docs.crossplane.io/latest/composition/compositions/) and the [Go templating function README](https://github.com/crossplane-contrib/function-go-templating) | Function pipelines, desired state, list iteration, and composed-resource identity. |
+| How do I package a platform API? | [Configurations](https://docs.crossplane.io/latest/packages/configurations/) | Package dependencies, installation, and revisions. |
+| How do I manage a change to a Composition? | [Composition revisions](https://docs.crossplane.io/latest/composition/composition-revisions/) | Revision creation and XR update policy. |
+| How do I stop deletion while a dependent resource exists? | [Usages](https://docs.crossplane.io/latest/managed-resources/usages/) | Dependency-based deletion protection and ordering. |
+| How do I bring in an existing AWS resource? | [Import existing resources](https://docs.crossplane.io/latest/guides/import-existing-resources/) | Observe-first import and external identity. |
+| How do I run Crossplane through GitOps? | [Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/) | Sync ordering, health assessment, and tracking considerations. |
+| How do I upgrade safely? | [Upgrade Crossplane](https://docs.crossplane.io/latest/guides/upgrade-crossplane/) | Version-specific upgrade procedure and compatibility checks. |
+
+A function can generate a desired Kubernetes object without
+proving that an external API will accept it. `crossplane composition
+render` previews desired output; a live managed resource and its
+provider conditions show a later stage. Keep the checks separate.
+[^crossplane-compositions][^crossplane-managed]
+
+## Follow the provider and AWS boundary
+
+A provider package adds APIs and a controller. Its
+`ProviderConfig` selects authentication settings for a
+managed resource. The controller's runtime identity must be
+allowed to perform the AWS action. The AWS object can still
+be rejected for naming, Region, quota, or service-policy
+reasons.[^crossplane-managed]
+
+| Question | Source |
 | --- | --- |
-| [Crossplane documentation](https://docs.crossplane.io/latest/) | Current Crossplane documentation entry point. |
-| [What is new in Crossplane v2](https://docs.crossplane.io/latest/whats-new/) | Namespaced resources, v2 behavior, and upgrade context. |
-| [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/) | Helm installation and prerequisites. |
-| [Get started with control plane projects](https://docs.crossplane.io/latest/get-started/get-started-with-control-plane-projects/) | Crossplane project workflow for reusable APIs and package-oriented platform development. |
-| [Get started with managed resources](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/) | First managed-resource workflow. |
-| [Managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/) | Managed-resource fields, conditions, annotations, references, finalizers, provider configs, and management policies. |
-| [Managed Resource Definitions](https://docs.crossplane.io/latest/managed-resources/managed-resource-definitions/) | Provider resource API activation model introduced in Crossplane v2. |
-| [Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/) | Selectively activating provider resource APIs. |
-| [Usages](https://docs.crossplane.io/latest/managed-resources/usages/) | Deletion protection and deletion ordering for resources that depend on each other. |
-| [Disabling unused managed resources](https://docs.crossplane.io/latest/guides/disabling-unused-managed-resources/) | Safe-start and activation-policy workflow. |
-| [Providers](https://docs.crossplane.io/latest/packages/providers/) | Provider package installation, revisions, health, runtime configuration, and provider config types. |
-| [Functions](https://docs.crossplane.io/latest/packages/functions/) | Function package installation and composition-function role. |
-| [Configurations](https://docs.crossplane.io/latest/packages/configurations/) | Configuration package installation, revisions, dependencies, and packaging workflow. |
-| [Image Configs](https://docs.crossplane.io/latest/packages/image-configs/) | Central package image pull, verification, runtime, and rewrite behavior. |
-| [Compositions](https://docs.crossplane.io/latest/composition/compositions/) | Composition model and composed-resource behavior. |
-| [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/) | XRD schema, API group, names, scope, and versions. |
-| [Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/) | XR creation, composition selection, revision policy, pause, poll interval, and labels. |
-| [Composition revisions](https://docs.crossplane.io/latest/composition/composition-revisions/) | How composition changes are versioned and rolled out. |
-| [Environment Configs](https://docs.crossplane.io/latest/composition/environment-configs/) | Cluster-scoped composition data and XR-specific in-memory environments. |
-| [Function Patch and Transform](https://docs.crossplane.io/latest/guides/function-patch-and-transform/) | Patch-and-transform function input schema and examples. |
-| [Go templating function](https://github.com/crossplane-contrib/function-go-templating) | Composition function for Go templates, including `range` loops and generated composed resources. |
-| [KCL function](https://github.com/crossplane-contrib/function-kcl) | Composition function for KCL-based logic, loops, and dynamic resource generation. |
-| [Crossplane CLI command reference](https://docs.crossplane.io/cli/latest/command-reference/) | `crossplane composition render`, project, dependency, and package commands. |
-| [Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/) | GitOps integration, tracking, sync waves, health, and exclusions. |
-| [Metrics](https://docs.crossplane.io/latest/guides/metrics/) | Prometheus-style metrics for Crossplane core, providers, and Upjet providers. |
-| [Operations](https://docs.crossplane.io/latest/operations/operation/) | Run-to-completion function pipelines for maintenance and operational tasks. |
-| [Cron Operations](https://docs.crossplane.io/latest/operations/cronoperation/) | Scheduled operation pipelines. |
-| [Watch Operations](https://docs.crossplane.io/latest/operations/watchoperation/) | Reactive operation pipelines triggered by watched Kubernetes resource changes. |
-| [Troubleshoot Crossplane](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/) | Official diagnostic workflow. |
-| [Import existing resources](https://docs.crossplane.io/latest/guides/import-existing-resources/) | Bringing existing external resources under Crossplane observation or management. |
-| [Change logs](https://docs.crossplane.io/latest/guides/change-logs/) | Provider change-log feature and audit support. |
-| [Upgrade Crossplane](https://docs.crossplane.io/latest/guides/upgrade-crossplane/) | Upgrade planning and supported procedures. |
+| Which AWS S3 managed-resource kinds does my chosen package offer? | [Upbound AWS S3 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-s3), then the installed CRDs. |
+| How does the provider authenticate? | [Upbound provider authentication](https://docs.upbound.io/manuals/packages/providers/authentication/) and the chosen provider package documentation. |
+| Should EKS use Pod Identity or IRSA for the provider Pod? | [AWS EKS workload IAM overview](https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html), [Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html), and [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html). Check provider runtime compatibility. |
+| Does AWS allow the requested bucket name? | [AWS S3 bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html). |
+| Did the provider call AWS? | [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html), alongside provider conditions and logs. |
 
-## Upbound and provider references
+A successful call made from a developer laptop uses that laptop's
+AWS identity. It does not establish which identity the provider
+Pod uses. Read the [provider identity explanation](providers-and-authentication.md)
+before diagnosing an authorization failure.
 
-| Reference | Use it for |
-| --- | --- |
-| [Upbound documentation](https://docs.upbound.io/) | Upbound platform and package documentation. |
-| [Provider authentication](https://docs.upbound.io/manuals/packages/providers/authentication/) | Upbound OIDC, provider config examples, and provider authentication models. |
-| [AWS access-key authentication](https://docs.upbound.io/manuals/packages/providers/aws-auth/aws-access-keys/) | Static access-key configuration for labs or specific controlled cases. |
-| [AWS IRSA authentication](https://docs.upbound.io/manuals/packages/providers/aws-auth/aws-irsa/) | IRSA setup for EKS-hosted Crossplane providers. |
-| [Upbound Marketplace](https://marketplace.upbound.io/) | Current provider, function, configuration package, and resource schema discovery. |
-| [Upbound AWS S3 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-s3) | S3 provider package, versions, and resource schemas. |
-| [Upbound AWS EC2 provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ec2) | EC2, VPC, subnet, routing, security group, and networking provider resources. |
-| [Upbound AWS ECR provider](https://marketplace.upbound.io/providers/upbound/provider-aws-ecr) | ECR provider package availability, managed-resource schemas, provenance, and release information. |
-| [Upbound AWS provider family](https://marketplace.upbound.io/providers/upbound/provider-family-aws) | Shared AWS provider family and authentication APIs. |
-| [Upjet repository](https://github.com/crossplane/upjet) | Provider-generation framework and implementation context. |
-| [provider-upjet-aws authentication](https://github.com/crossplane-contrib/provider-upjet-aws/blob/main/AUTHENTICATION.md) | Provider AWS authentication behavior and supported credential sources. |
+## Use this repository's teaching routes
 
-## AWS references
-
-| Reference | Use it for |
-| --- | --- |
-| [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html) | AWS-recommended EKS-native workload identity model, setup steps, benefits, and limitations. |
-| [IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) | IRSA behavior, OIDC provider requirements, and service-account role mapping. |
-| [EKS workload IAM overview](https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html) | Choosing workload identity mechanisms for Pods. |
-| [EKS Pod Identity Agent](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-agent-setup.html) | Pod Identity Agent installation and requirements. |
-| [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) | Auditing provider assume-role and resource API calls. |
-| [AWS Organizations service control policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) | Defense-in-depth guardrails outside Crossplane. |
-| [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html) | Independent configuration recording and compliance checks. |
-| [Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html) | ECR concepts, private repositories, and OCI artifact support. |
-| [Amazon ECR repository policies](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html) | Repository policies, IAM policies, and registry authentication requirements. |
-| [Amazon ECR lifecycle policies](https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html) | Retention rules, previews, expiration behavior, and lifecycle safety. |
-| [Push a Helm chart to Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/push-oci-artifact.html) | ECR OCI Helm chart packaging, login, push, and verification workflow. |
-
-## Helm references
-
-| Reference | Use it for |
-| --- | --- |
-| [Helm documentation](https://helm.sh/docs/intro/using_helm/) | Chart, release, repository, install, upgrade, rollback, and inspection commands. |
-| [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/) | Official Crossplane Helm repository, chart installation, and prerequisites. |
-
-## Terraform references
-
-| Reference | Use it for |
-| --- | --- |
-| [Terraform documentation](https://developer.hashicorp.com/terraform/docs) | Terraform model, CLI, language, providers, collaboration, and adoption guidance. |
-| [Terraform modules](https://developer.hashicorp.com/terraform/language/modules) | Module purpose, root modules, child modules, reusable configuration, and module calls. |
-| [Terraform state](https://developer.hashicorp.com/terraform/language/state) | State purpose, object bindings, refresh behavior, and remote backend guidance. |
-
-## Professional practice signals
-
-These sources are useful for understanding how teams combine Crossplane with platform engineering and GitOps. Verify commands and APIs against official docs before copying examples.
-
-| Reference | Use it for |
-| --- | --- |
-| [Platform engineering with Crossplane and Argo CD](https://platformengineering.org/blog/platform-engineering-with-crossplane-and-argocd) | Practice-oriented discussion of GitOps plus Crossplane workflows. |
-| [Upbound GitOps with Flux and Crossplane](https://www.upbound.io/blog/gitopsify-infrastructure-xp) | GitOps infrastructure pattern with Crossplane and Flux. |
-| [Crossplane provider security practices](https://blog.crossplane.io/enhancing-security-practices-with-crossplane-providers/) | Security model, provider credentials, and identity considerations. |
-
-## Repository source notes
-
-| Reference | Use it for |
-| --- | --- |
-| [Crossplane complete study guide source](../../../sources/processed/crossplane-complete-study-guide.md) | Original processed source notes for Crossplane, Upbound, Upjet, AWS labs, GitOps, security, and troubleshooting. |
-
-## Related links
-
-- [Crossplane](index.md)
-- [Crossplane component model](component-model.md)
-- [How a team operates a Crossplane platform API](professional-operating-model.md)
 - [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+  follows the request from Kubernetes to AWS and an application check.
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
+  explains drift, pause, import, and deletion.
+- [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
+  explains fixed templates, loops, and references.
+- [Local AWS S3 lab](local-aws-s3-lab.md) contains the hands-on
+  sandbox path. Check its draft status and evidence before running it.
+
+The original [processed source notes](../../../sources/processed/crossplane-complete-study-guide.md)
+record earlier research. Use the official sources above for current
+API and operational claims.
+
+[^crossplane-managed]: Crossplane, [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/).
+[^crossplane-cli]: Crossplane CLI, [Command Reference](https://docs.crossplane.io/cli/latest/command-reference/).
+[^crossplane-compositions]: Crossplane, [Compositions](https://docs.crossplane.io/latest/composition/compositions/).

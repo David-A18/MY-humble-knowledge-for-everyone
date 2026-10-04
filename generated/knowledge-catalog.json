@@ -3084,20 +3084,29 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page as the reference list for the Crossplane section. Prefer these official sources when verifying examples, provider schemas, authentication behavior, operations, and production guidance.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Choose the official Crossplane, provider, or AWS documentation that answers a specific API, deployment, identity, or troubleshooting question.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/references.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-docs",
+        "crossplane-managed",
+        "crossplane-compositions",
+        "crossplane-cli",
+        "crossplane-troubleshoot",
+        "upbound-marketplace",
+        "aws-eks-identity"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "references"
+        "references",
+        "beginner"
       ],
-      "title": "Crossplane references",
+      "title": "Find the right Crossplane source for your question",
       "type": "Reference"
     },
     {

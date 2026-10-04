@@ -1680,13 +1680,26 @@ cannot enforce access controls.
 | --- | --- | --- | --- |
 | [How an AWS resource request moves through Crossplane](knowledge/kubernetes/crossplane/aws-resource-workflow.md) | Bounded work-order analogy, invented SecureBucket request, direct-versus-XR convergence diagram and text alternative, setup and evidence tables, lifecycle boundaries, understanding checks. | Opus 5.5 read-only review of the prior workflow found inactive-policy, unsafe adoption, incomplete Composition, and lab-duplication problems. Current official Crossplane installation, provider, managed-resource, XRD, XR, Composition, activation, and AWS S3 naming documentation checked. Mermaid rendered and inspected. No cluster, provider, AWS bucket, application check, deletion, or reader task occurred. | Independent Crossplane/AWS review; disposable direct-versus-XR and lifecycle exercise; novice handoff task; freshness decision. |
 
+### Wave 102 (2026-10-04)
+
+The Crossplane reference page now routes a reader's concrete question
+to an official Crossplane, provider, or AWS source. It distinguishes
+current documentation from the installed CRD and package version,
+explains the provider identity boundary, and separates local rendering
+from live AWS evidence. A long undifferentiated list of secondary
+and tangential links was removed.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Find the right Crossplane source for your question](knowledge/kubernetes/crossplane/references.md) | Question-to-source tables for first-failure, design, provider, identity, and AWS boundaries; concise example of an accepted XR with no bucket; local teaching routes. | Current official Crossplane installation, v2, XRD, XR, Composition, managed-resource, activation, CLI, and troubleshooting documentation plus Upbound provider and AWS EKS sources checked. Local and external links validated by repository checks. No installed provider schema, cluster, AWS call, or novice source-finding task occurred. | Independent Crossplane reference audit; novice find-the-source task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 101
-together: one hundred thirty concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 102
+together: one hundred thirty-one concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 35 have not yet been authored or
+The remaining 34 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1703,14 +1716,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 40 | 5 |
+| Kubernetes | 45 | 41 | 4 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **130** | **35** |
+| **Total** | **165** | **131** | **34** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
