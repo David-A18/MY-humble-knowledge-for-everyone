@@ -110,7 +110,7 @@ before diagnosing an authorization failure.
   explains drift, pause, import, and deletion.
 - [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
   explains fixed templates, loops, and references.
-- [Local AWS S3 lab](local-aws-s3-lab.md) contains the hands-on
+- [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md) contains the hands-on
   sandbox path. Check its draft status and evidence before running it.
 
 The original [processed source notes](../../../sources/processed/crossplane-complete-study-guide.md)

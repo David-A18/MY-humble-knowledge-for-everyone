@@ -2805,21 +2805,26 @@
       "type": "Explanation"
     },
     {
-      "audience": "Maintainers validating Crossplane AWS authentication guidance",
-      "description": "Record an authorized sandbox execution of the [Crossplane local AWS S3 lab](local-aws-s3-lab.md) without committing credentials, account-sensitive output, or private infrastructure details.",
+      "audience": "Maintainers validating the Crossplane S3 tutorial",
+      "description": "Capture the actual identity, versions, managed-resource conditions, AWS result, and cleanup outcome of one authorized S3 lab run.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-managed",
+        "aws-head-bucket"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "aws-s3-lab-validation-template"
+        "aws",
+        "s3",
+        "validation"
       ],
-      "title": "Crossplane AWS S3 lab validation template",
-      "type": "Explanation"
+      "title": "Record evidence from a Crossplane S3 sandbox lab",
+      "type": "How-to Guide"
     },
     {
       "audience": "Beginning platform and infrastructure learner",
@@ -2930,24 +2935,36 @@
       "type": "Reference"
     },
     {
-      "audience": "Platform engineers practicing Crossplane with AWS in a sandbox",
-      "description": "Use this hands-on lab to install Crossplane in a local Kubernetes cluster, install an AWS S3 provider, create a real S3 bucket, observe reconciliation, test drift correction, and clean up safely.",
+      "audience": "Beginning platform learner with an authorized AWS sandbox",
+      "description": "In a disposable sandbox, install Crossplane and an AWS S3 provider, create one managed bucket, check both control planes, and confirm deletion.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/local-aws-s3-lab.md",
       "source_ids": [
         "crossplane-install",
-        "upbound-provider-aws-s3",
-        "aws-sts-credentials"
+        "crossplane-chart-index",
+        "crossplane-activation",
+        "crossplane-managed-start",
+        "crossplane-managed",
+        "crossplane-providers",
+        "upbound-s3",
+        "aws-sts",
+        "aws-s3-names",
+        "aws-head-bucket",
+        "aws-delete-bucket",
+        "aws-s3-public"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "local-aws-s3-lab"
+        "aws",
+        "s3",
+        "tutorial",
+        "beginner"
       ],
-      "title": "Crossplane local AWS S3 lab",
+      "title": "Create and remove one S3 bucket with Crossplane",
       "type": "Tutorial"
     },
     {

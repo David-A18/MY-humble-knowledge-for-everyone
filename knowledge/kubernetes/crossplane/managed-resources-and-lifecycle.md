@@ -153,7 +153,7 @@ still exists.[^crossplane-managed][^kubernetes-finalizers]
 | Understand provider packages and identities | [How a Crossplane provider reaches an external API](providers-and-authentication.md) |
 | Follow an XR into several managed resources | [Compositions](compositions.md) |
 | Diagnose a failed provider reconciliation | [Find the first failing Crossplane handoff](troubleshooting.md) |
-| Practice in an authorized sandbox | [Local AWS S3 lab](local-aws-s3-lab.md) |
+| Practice in an authorized sandbox | [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md) |
 
 ## Check your understanding
 

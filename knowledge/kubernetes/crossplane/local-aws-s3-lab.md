@@ -1,98 +1,173 @@
 ---
-type: "Tutorial"
-title: "Crossplane local AWS S3 lab"
-description: "Use this hands-on lab to install Crossplane in a local Kubernetes cluster, install an AWS S3 provider, create a real S3 bucket, observe reconciliation, test drift correction, and clean up safely."
-tags: [kubernetes, crossplane, local-aws-s3-lab]
+type: Tutorial
+title: Create and remove one S3 bucket with Crossplane
+description: In a disposable sandbox, install Crossplane and an AWS S3 provider, create one managed bucket, check both control planes, and confirm deletion.
+tags: [kubernetes, crossplane, aws, s3, tutorial, beginner]
 status: draft
 maturity: draft
-audience: "Platform engineers practicing Crossplane with AWS in a sandbox"
+audience: Beginning platform learner with an authorized AWS sandbox
 maintainer: unassigned
 sources:
   - id: crossplane-install
     resource: https://docs.crossplane.io/latest/get-started/install/
-    title: Install Crossplane
-  - id: upbound-provider-aws-s3
-    resource: https://marketplace.upbound.io/providers/upbound/provider-aws-s3
-    title: Upbound AWS S3 provider
-  - id: aws-sts-credentials
+    title: Crossplane - Install Crossplane
+  - id: crossplane-chart-index
+    resource: https://charts.crossplane.io/stable/index.yaml
+    title: Crossplane - Stable Helm chart index
+  - id: crossplane-activation
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/
+    title: Crossplane - Managed Resource Activation Policies
+  - id: crossplane-managed-start
+    resource: https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/
+    title: Crossplane - Get Started With Managed Resources
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: crossplane-providers
+    resource: https://docs.crossplane.io/latest/packages/providers/
+    title: Crossplane - Providers
+  - id: upbound-s3
+    resource: https://marketplace.upbound.io/providers/upbound/provider-aws-s3/v2.6.1?tab=managedResources
+    title: Upbound - AWS S3 Provider v2.6.1
+  - id: aws-sts
     resource: https://docs.aws.amazon.com/STS/latest/APIReference/API_Credentials.html
-    title: AWS STS credentials
-stale_after: 2026-12-19
+    title: AWS - STS Credentials
+  - id: aws-s3-names
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
+    title: AWS - General purpose bucket naming rules
+  - id: aws-head-bucket
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html
+    title: AWS - HeadBucket
+  - id: aws-delete-bucket
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/delete-bucket.html
+    title: AWS - Deleting a general purpose bucket
+  - id: aws-s3-public
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
+    title: AWS - Blocking public access to S3 storage
 ---
 
-# Crossplane local AWS S3 lab
+# Create and remove one S3 bucket with Crossplane
 
-## Purpose
+## What you will learn
 
-Use this hands-on lab to install Crossplane in a local Kubernetes cluster, install an AWS S3 provider, create a real S3 bucket, observe reconciliation, test drift correction, and clean up safely.
+You will ask Kubernetes for one S3 bucket, watch the provider
+reconcile that request, confirm the bucket in AWS, then remove
+it. The exercise uses a local `kind` cluster and a disposable AWS
+account. It creates a **real bucket**. This page is a draft
+procedure checked against source documentation; it has **not**
+been run against a cluster or AWS account in this review.
+The [validation record](aws-s3-lab-validation-template.md) is
+where an authorized run can be documented.
 
-This lab is intentionally provider-specific. For production AWS architecture, use [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md).
+Think of the Kubernetes managed resource as a work order and the
+provider as the worker who calls AWS. `kubectl apply` proves the
+work order was accepted. The provider's `Ready` condition and
+a read from S3 are later checks. The analogy does not guarantee
+that every application can access the bucket.
+[^crossplane-managed-start][^crossplane-managed]
 
-Status: Draft
-Audience: Platform engineers practicing Crossplane with AWS in a sandbox
-Page type: Hands-on lab
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Crossplane v2.4 documentation; Upbound AWS S3 provider package shown as v2.6.1; AWS STS temporary credentials
-Validation evidence: Source reviewed against official Crossplane provider and managed-resource documentation; AWS credential handling corrected from the official STS model
-Known limitations: Not executed against a live kind cluster, Crossplane controller, or AWS sandbox during this review
-Next review: After a successful sandbox AWS execution or by 2026-12-19
-
-## Prerequisites
-
-- A sandbox AWS account.
-- AWS CLI authenticated to the sandbox account.
-- `kubectl`, Helm 3, Docker, and `kind`.
-- A budget or cost guardrail for the sandbox account.
-- No production data and no production credentials.
-
-> [!WARNING]
-> This lab creates real AWS resources. Use a sandbox account, least-privilege temporary credentials, and a unique bucket name. Do not commit credentials or generated manifests containing secrets.
-
-## Verify AWS identity
-
-```bash
-aws sts get-caller-identity
-export AWS_REGION=eu-west-1
+```mermaid
+flowchart TB
+  request["Bucket managed<br/>resource"] --> api["Kubernetes API"]
+  api --> provider["AWS S3 provider"]
+  provider --> aws["AWS S3 bucket"]
+  provider --> observed["Managed-resource<br/>conditions"]
+  aws --> verify["Compare observed<br/>and external state"]
+  observed --> verify
 ```
 
-What it does: confirms which AWS account the lab will use and sets the target region.
+Text alternative: Kubernetes stores the Bucket managed resource.
+The AWS provider reads it and calls S3. The provider records
+conditions, and the learner separately checks the external bucket.
+[^crossplane-managed-start]
 
-## Create a local cluster
+## Before you begin
+
+You need `docker` with a working daemon, `kind`, `kubectl`,
+Helm 3, the AWS CLI, and `openssl`. Use an AWS sandbox where you
+may create and delete a general-purpose S3 bucket. Obtain
+temporary credentials for an approved sandbox role through your
+normal process. Keep the role's permissions scoped to the
+exercise and ensure it can observe, create, update, and delete
+the bucket. The exact provider IAM actions depend on the
+provider version and are outside this tutorial.
+[^crossplane-install][^crossplane-managed][^aws-sts]
+
+Use a fresh shell without `AWS_ACCESS_KEY_ID`,
+`AWS_SECRET_ACCESS_KEY`, or `AWS_SESSION_TOKEN` already set;
+otherwise those environment variables can override the credential
+file used below. Keep the credential file **outside the
+repository**. Do not commit it or paste its values into a
+validation record. Check how long the temporary session will
+last before starting.[^aws-sts]
+
+This tutorial uses the verified published Crossplane chart
+`2.4.2` and Upbound AWS S3 provider `v2.6.1`.
+The provider marketplace lists namespaced
+`Bucket` in `s3.aws.m.upbound.io/v1beta1`.
+Check the installed CRD as well before applying the bucket.
+The two package versions have not been tested together here.
+[^upbound-s3][^crossplane-chart-index]
+
+## 1. Check the identity the provider will use
+
+Create a temporary file outside Git and fill it with
+**temporary** AWS credentials supplied by your sandbox.
+Do not copy the placeholder values as real credentials:
+
+```bash
+export LAB_AWS_REGION=eu-west-1
+export LAB_CREDS_FILE="$(mktemp /tmp/crossplane-aws-creds.XXXXXX)"
+chmod 600 "$LAB_CREDS_FILE"
+```
+
+The file must have this shape:
+
+```ini
+[default]
+aws_access_key_id = YOUR_TEMPORARY_ACCESS_KEY
+aws_secret_access_key = YOUR_TEMPORARY_SECRET_KEY
+aws_session_token = YOUR_TEMPORARY_SESSION_TOKEN
+```
+
+Point the AWS CLI at **that same file**, then check its identity:
+
+```bash
+export AWS_SHARED_CREDENTIALS_FILE="$LAB_CREDS_FILE"
+export AWS_PROFILE=default
+aws sts get-caller-identity
+```
+
+The account and role in the response must be the intended
+sandbox identity. If the command fails, stop and correct the
+credentials before creating a cluster. Temporary STS credentials
+need all three values, including the session token.
+[^aws-sts]
+
+## 2. Start the control plane
 
 ```bash
 kind create cluster --name crossplane-lab
-kubectl cluster-info
-kubectl get nodes
-```
-
-What it does: creates a local Kubernetes cluster for Crossplane and confirms that `kubectl` can reach it.
-
-## Install Crossplane
-
-```bash
+kubectl config current-context
 helm repo add crossplane-stable https://charts.crossplane.io/stable
 helm repo update
-
-helm install crossplane \
+helm install crossplane crossplane-stable/crossplane \
+  --version 2.4.2 \
   --namespace crossplane-system \
   --create-namespace \
-  crossplane-stable/crossplane
+  --wait --timeout 5m
 ```
 
-What it does: installs Crossplane core into the `crossplane-system` namespace.
+The context should be `kind-crossplane-lab` and Crossplane
+Pods should become ready. If Helm times out, inspect the Pods
+in `crossplane-system` before continuing. Crossplane needs
+a working Kubernetes cluster before it can manage AWS.
+[^crossplane-install]
 
-### Wait for readiness
+## 3. Install the AWS S3 provider
 
-```bash
-kubectl get pods -n crossplane-system -w
-```
-
-What it does: waits for the Crossplane pods to become ready.
-
-## Install the AWS S3 provider
-
-Create `provider-aws-s3.yaml`:
+Save this as `lab-provider.yaml` in a disposable working
+directory:
 
 ```yaml
 apiVersion: pkg.crossplane.io/v1
@@ -101,62 +176,44 @@ metadata:
   name: provider-aws-s3
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-s3:v2.6.1
-  packagePullPolicy: IfNotPresent
-  revisionActivationPolicy: Automatic
-  revisionHistoryLimit: 1
 ```
 
-Apply it:
+Apply it, then wait for a healthy provider:
 
 ```bash
-kubectl apply -f provider-aws-s3.yaml
-kubectl get providers.pkg.crossplane.io -w
+kubectl apply -f lab-provider.yaml
+kubectl wait providers.pkg.crossplane.io/provider-aws-s3 \
+  --for=condition=Healthy --timeout=5m
+kubectl get providers.pkg.crossplane.io
+kubectl get crd buckets.s3.aws.m.upbound.io
 ```
 
-What it does: installs the S3 provider and watches for `INSTALLED=True` and `HEALTHY=True`.
+The package may also install an AWS family provider, which
+supplies shared AWS configuration APIs. Confirm all provider
+packages are healthy before the next step. The Bucket CRD must
+exist. If it does not, inspect the ProviderRevision, installed
+ManagedResourceDefinitions, and activation policies; the v2
+chart's default policy normally activates all MRDs.
+[^crossplane-providers][^upbound-s3][^crossplane-activation]
 
-> [!IMPORTANT]
-> Provider versions and schemas change independently from Crossplane core. Verify the current provider package and resource schema before reusing this lab later.
+## 4. Give the provider its sandbox credentials
 
-## Create temporary AWS credentials
-
-Create `aws-credentials.ini`:
-
-```ini
-[default]
-aws_access_key_id = REPLACE_WITH_TEMPORARY_LAB_KEY
-aws_secret_access_key = REPLACE_WITH_TEMPORARY_LAB_SECRET
-aws_session_token = REPLACE_WITH_TEMPORARY_LAB_SESSION_TOKEN
-```
-
-Protect the file:
-
-```bash
-chmod 600 aws-credentials.ini
-```
-
-Create the Kubernetes Secret:
+Create the Secret in the provider's control-plane namespace,
+using the file whose identity you checked:
 
 ```bash
 kubectl create secret generic aws-secret \
-  --namespace=crossplane-system \
-  --from-file=creds=./aws-credentials.ini
+  --namespace crossplane-system \
+  --from-file=creds="$LAB_CREDS_FILE"
 ```
 
-What it does: stores temporary lab credentials in Kubernetes for the provider. AWS STS credentials require the access key, secret access key, and session token. Long-lived IAM access keys do not have a session token, but they are a weaker fit for this lab and should be avoided.
-
-> [!IMPORTANT]
-> Temporary credentials expire. If the provider starts reporting AWS authentication failures after earlier success, refresh the STS credentials, recreate `aws-credentials.ini`, recreate the Secret, and restart or wait for the provider to reload credentials. Do not commit `aws-credentials.ini` or print its values in logs.
-
-## Configure the provider
-
-Create `provider-config.yaml`:
+Save this as `lab-provider-config.yaml`:
 
 ```yaml
 apiVersion: aws.m.upbound.io/v1beta1
 kind: ClusterProviderConfig
 metadata:
-  name: default
+  name: lab-aws
 spec:
   credentials:
     source: Secret
@@ -166,229 +223,171 @@ spec:
       key: creds
 ```
 
-Apply it:
-
 ```bash
-kubectl apply -f provider-config.yaml
+kubectl apply -f lab-provider-config.yaml
 ```
 
-What it does: tells the AWS provider where to find credentials.
+The `ClusterProviderConfig` tells the provider where to load
+the credentials. Its cluster scope means a managed resource
+in another namespace could select it if allowed to create
+that resource. Use only the disposable cluster for this lab.
+[^crossplane-managed]
 
-## Create a unique bucket
+## 5. Request one new bucket
 
-Generate a unique name:
+Generate a random *candidate* name. It avoids embedding an
+AWS account ID but does not mathematically guarantee
+availability. If AWS reports a collision, choose a new name.
+Never point this lab at an existing bucket.
+[^aws-s3-names][^crossplane-managed]
 
 ```bash
-export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
-export BUCKET_NAME="xp-lab-${AWS_ACCOUNT_ID}-$(date +%s)"
-echo "$BUCKET_NAME"
+export LAB_BUCKET_NAME="xp-lab-$(openssl rand -hex 12)"
+printf '%s\n' "$LAB_BUCKET_NAME"
 ```
 
-What it does: creates a globally unique S3 bucket name.
+Before applying, check that the candidate is not already
+reachable by this identity:
 
-Create `bucket.yaml`:
+```bash
+aws s3api head-bucket --bucket "$LAB_BUCKET_NAME" \
+  --region "$LAB_AWS_REGION"
+```
 
-```yaml
+For a new name, AWS should return `404`. A `403`, a
+successful response, an expired token, or a network error is
+**not** proof that the name is free; stop and investigate or
+choose another candidate.[^aws-s3-names][^aws-head-bucket]
+
+Create the manifest with the exact name you just checked:
+
+```bash
+cat > lab-bucket.yaml <<EOF
 apiVersion: s3.aws.m.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: REPLACE_WITH_BUCKET_NAME
+  name: $LAB_BUCKET_NAME
   namespace: default
-  labels:
-    app.kubernetes.io/managed-by: crossplane
-    platform.example.com/environment: lab
 spec:
   forProvider:
-    region: eu-west-1
+    region: $LAB_AWS_REGION
     tags:
-      Environment: lab
-      ManagedBy: crossplane
-      Project: crossplane-learning
+      Purpose: crossplane-learning
   providerConfigRef:
-    name: default
+    name: lab-aws
     kind: ClusterProviderConfig
-  managementPolicies:
-    - "*"
+EOF
+kubectl apply --dry-run=server -f lab-bucket.yaml
+kubectl apply -f lab-bucket.yaml
 ```
 
-Replace `REPLACE_WITH_BUCKET_NAME` with the generated bucket name.
+The server dry run checks the installed Kubernetes schema.
+The apply stores desired state; the provider then makes the
+AWS call. The generated candidate, Region, and selected
+ProviderConfig must match the values you intend to use.
+[^crossplane-managed]
 
-Validate and apply:
+## 6. Check both control planes
 
 ```bash
-kubectl apply --dry-run=server -f bucket.yaml
-kubectl apply -f bucket.yaml
+kubectl wait "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" \
+  -n default --for=condition=Synced=True --timeout=5m
+kubectl wait "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" \
+  -n default --for=condition=Ready=True --timeout=5m
+kubectl describe "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" -n default
+aws s3api head-bucket --bucket "$LAB_BUCKET_NAME" \
+  --region "$LAB_AWS_REGION"
+aws s3api get-bucket-tagging --bucket "$LAB_BUCKET_NAME" \
+  --region "$LAB_AWS_REGION"
 ```
 
-What it does: validates the manifest against installed provider schemas, then creates the managed resource.
+The managed resource should show `Synced=True` and
+`Ready=True`, with an external name. The AWS CLI should
+find the bucket and its `Purpose` tag using the same
+credentials supplied to the provider. If a wait times out,
+read the managed resource's Reason and Message, provider
+package health, and events before changing anything.
+[^crossplane-managed]
 
-## Observe reconciliation
+New S3 buckets already block public access by default.
+Seeing four `true` values from
+`get-public-access-block` would **not** prove Crossplane
+created a separate `BucketPublicAccessBlock` resource.
+This lab does not create one.[^aws-s3-public]
+
+## 7. Remove the bucket and verify the result
+
+This lab never uploads objects. If objects were added,
+pause here and decide how they should be retained or
+removed; a nonempty or versioned bucket needs separate
+cleanup. Do not remove Crossplane finalizers to make
+deletion appear successful.[^crossplane-managed][^aws-delete-bucket]
 
 ```bash
-kubectl get buckets.s3.aws.m.upbound.io -n default -w
+kubectl delete -f lab-bucket.yaml
+kubectl wait "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" \
+  -n default --for=delete --timeout=5m
+aws s3api head-bucket --bucket "$LAB_BUCKET_NAME" \
+  --region "$LAB_AWS_REGION"
 ```
 
-What it does: watches Crossplane synchronize the Kubernetes object with AWS.
+The final AWS call should fail with **404 Not Found**.
+A `403`, expired token, or network failure is inconclusive.
+If the Kubernetes delete waits, inspect the managed
+resource's conditions, finalizer, provider health, and
+AWS bucket contents. Restore a valid provider credential
+if its temporary session expired. Do not remove the
+provider or cluster while external deletion is unresolved.
+[^crossplane-managed][^aws-head-bucket]
 
-Inspect details:
+Only after confirming the AWS result, remove the lab
+objects and local cluster:
 
 ```bash
-kubectl describe bucket.s3.aws.m.upbound.io "$BUCKET_NAME" -n default
-kubectl get bucket.s3.aws.m.upbound.io "$BUCKET_NAME" -n default -o yaml
-```
-
-What it does: shows conditions, provider messages, status, external name, and events.
-
-Verify in AWS:
-
-```bash
-aws s3api head-bucket --bucket "$BUCKET_NAME"
-aws s3api get-bucket-tagging --bucket "$BUCKET_NAME"
-```
-
-What it does: confirms the external bucket exists and has the expected tags.
-
-## Add public-access blocking
-
-Create `bucket-public-access.yaml`:
-
-```yaml
-apiVersion: s3.aws.m.upbound.io/v1beta1
-kind: BucketPublicAccessBlock
-metadata:
-  name: REPLACE_WITH_BUCKET_NAME-public-access
-  namespace: default
-spec:
-  forProvider:
-    region: eu-west-1
-    bucketRef:
-      name: REPLACE_WITH_BUCKET_NAME
-    blockPublicAcls: true
-    blockPublicPolicy: true
-    ignorePublicAcls: true
-    restrictPublicBuckets: true
-  providerConfigRef:
-    name: default
-    kind: ClusterProviderConfig
-  managementPolicies:
-    - "*"
-```
-
-Validate and apply:
-
-```bash
-kubectl apply --dry-run=server -f bucket-public-access.yaml
-kubectl apply -f bucket-public-access.yaml
-```
-
-What it does: creates a separate S3 managed resource that blocks public access for the bucket.
-
-Verify:
-
-```bash
-aws s3api get-public-access-block --bucket "$BUCKET_NAME"
-```
-
-What it does: confirms the public-access block is present in AWS.
-
-## Test drift correction
-
-Manually change tags in AWS:
-
-```bash
-aws s3api put-bucket-tagging \
-  --bucket "$BUCKET_NAME" \
-  --tagging 'TagSet=[{Key=ManagedBy,Value=manual-change},{Key=Environment,Value=lab}]'
-```
-
-Request reconciliation:
-
-```bash
-kubectl annotate bucket.s3.aws.m.upbound.io "$BUCKET_NAME" \
-  -n default \
-  crossplane.io/reconcile-requested-at="$(date +%s)" \
-  --overwrite
-```
-
-Check tags:
-
-```bash
-aws s3api get-bucket-tagging --bucket "$BUCKET_NAME"
-```
-
-What it does: proves which fields the provider observes and reconciles for the installed provider version.
-
-> [!NOTE]
-> Do not assume every cloud-computed or optional provider field is continuously overwritten. Confirm behavior with status, events, provider logs, and the external API.
-
-## Inspect provider logs
-
-```bash
-kubectl logs -n crossplane-system \
-  -l pkg.crossplane.io/provider=provider-aws-s3 \
-  --tail=200
-```
-
-What it does: shows recent provider controller logs for debugging.
-
-Events are often more useful:
-
-```bash
-kubectl get events -A --sort-by=.lastTimestamp
-```
-
-What it does: shows recent Kubernetes events across namespaces.
-
-## Clean up safely
-
-Delete dependent resources first:
-
-```bash
-kubectl delete -f bucket-public-access.yaml
-```
-
-Delete the bucket managed resource:
-
-```bash
-kubectl delete -f bucket.yaml
-```
-
-Watch until it disappears:
-
-```bash
-kubectl get buckets.s3.aws.m.upbound.io -n default -w
-```
-
-Confirm the AWS bucket is gone:
-
-```bash
-aws s3api head-bucket --bucket "$BUCKET_NAME"
-```
-
-What it does: should fail after successful deletion because the bucket no longer exists.
-
-Delete the local cluster:
-
-```bash
+kubectl delete -f lab-provider-config.yaml
+kubectl delete secret aws-secret -n crossplane-system
 kind delete cluster --name crossplane-lab
+rm -f "$LAB_CREDS_FILE"
 ```
 
-Remove the credential file:
+Record the actual versions, conditions, AWS identity
+(account and role only, without secrets), bucket name
+in a private record if needed, and the exact post-delete
+AWS result in the [validation template](aws-s3-lab-validation-template.md).
+Do not claim a successful run from a completed checklist
+alone.
 
-```bash
-shred -u aws-credentials.ini 2>/dev/null || rm -f aws-credentials.ini
-```
+## Check your understanding
 
-> [!WARNING]
-> Do not delete the management cluster before Crossplane has deleted the external resources unless you intentionally want to orphan them.
+- Why does the provider need its own checked AWS identity
+  even when the AWS CLI already works on your laptop?
+- Which observation establishes that Kubernetes accepted
+  the Bucket, and which observations establish AWS state?
+- Why would four public-access values set to `true` be
+  weak evidence about what Crossplane configured?
+- Why must the provider keep running until the AWS-side
+  deletion is confirmed?
 
-## Related links
+## Go further
 
-- [Crossplane](index.md)
+- [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
+  maps the direct managed-resource and XR paths.
 - [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
-- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
-- [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
-- [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
+  explains drift, pause, import, and deletion.
 - [Crossplane managed-resource tutorial](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+  provides an official beginner exercise.
+- [Upbound AWS S3 provider v2.6.1](https://marketplace.upbound.io/providers/upbound/provider-aws-s3/v2.6.1?tab=managedResources)
+  lists the provider APIs used here.
+
+[^crossplane-install]: Crossplane, [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/).
+[^crossplane-chart-index]: Crossplane, [Stable Helm chart index](https://charts.crossplane.io/stable/index.yaml).
+[^crossplane-activation]: Crossplane, [Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/).
+[^crossplane-managed-start]: Crossplane, [Get Started With Managed Resources](https://docs.crossplane.io/latest/get-started/get-started-with-managed-resources/).
+[^crossplane-managed]: Crossplane, [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/).
+[^crossplane-providers]: Crossplane, [Providers](https://docs.crossplane.io/latest/packages/providers/).
+[^upbound-s3]: Upbound, [AWS S3 Provider v2.6.1](https://marketplace.upbound.io/providers/upbound/provider-aws-s3/v2.6.1?tab=managedResources).
+[^aws-sts]: AWS, [STS Credentials](https://docs.aws.amazon.com/STS/latest/APIReference/API_Credentials.html).
+[^aws-s3-names]: AWS, [General purpose bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
+[^aws-head-bucket]: AWS, [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html).
+[^aws-delete-bucket]: AWS, [Deleting a general purpose bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/delete-bucket.html).
+[^aws-s3-public]: AWS, [Blocking public access to S3 storage](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html).

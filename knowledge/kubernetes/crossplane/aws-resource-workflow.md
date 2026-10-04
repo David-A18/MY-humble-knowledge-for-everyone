@@ -191,7 +191,7 @@ follows that operating loop.[^crossplane-xr][^crossplane-managed]
 
 ## Go further
 
-- [Local AWS S3 lab](local-aws-s3-lab.md) is the separate
+- [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md) is the separate
   hands-on route for a disposable environment.
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
   explains package, ProviderConfig, runtime identity, and AWS

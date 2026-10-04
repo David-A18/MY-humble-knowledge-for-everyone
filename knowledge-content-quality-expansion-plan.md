@@ -1693,13 +1693,40 @@ and tangential links was removed.
 | --- | --- | --- | --- |
 | [Find the right Crossplane source for your question](knowledge/kubernetes/crossplane/references.md) | Question-to-source tables for first-failure, design, provider, identity, and AWS boundaries; concise example of an accepted XR with no bucket; local teaching routes. | Current official Crossplane installation, v2, XRD, XR, Composition, managed-resource, activation, CLI, and troubleshooting documentation plus Upbound provider and AWS EKS sources checked. Local and external links validated by repository checks. No installed provider schema, cluster, AWS call, or novice source-finding task occurred. | Independent Crossplane reference audit; novice find-the-source task; freshness decision. |
 
+### Wave 103 (2026-10-04)
+
+The local AWS S3 lab now teaches one bounded bucket lifecycle: check the
+provider credential identity, install the control plane and a pinned
+provider, use a random candidate name, observe both Kubernetes and AWS,
+and confirm a valid-identity 404 before removing the cluster. It no
+longer treats AWS's default public-access blocks as proof of a
+Crossplane-managed block or asks readers to mutate live tags for drift.
+The lab remains draft because no Docker daemon, kind, kubectl, Helm,
+AWS CLI, or authorized AWS sandbox run was available in this review.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Create and remove one S3 bucket with Crossplane](knowledge/kubernetes/crossplane/local-aws-s3-lab.md) | One-bucket work-order model and diagram with text alternative, prerequisites, identity precheck, explicit success and cleanup gates, source-linked commands, understanding checks. | Opus 5.5 read-only review found identity mismatch, default public-access false proof, name/adoption, wait, and cleanup risks. Current Crossplane install, provider, managed-resource, activation, Upbound v2.6.1 schema, AWS STS, S3 naming, HeadBucket, deletion, and public-access docs checked. Chart 2.4.2 confirmed in the stable index; twelve shell blocks parsed with `bash -n`. Diagram rendered and inspected. No live cluster, provider, AWS bucket, deletion, or reader task occurred. | Authorized sandbox execution with evidence record; independent Crossplane/AWS review; novice lab task; freshness decision. |
+
+### Wave 104 (2026-10-04)
+
+The companion validation guide now records actual pass criteria for the
+same-file AWS identity, installed versions, CRD, Bucket conditions,
+external result, and deletion. It removes old public-access and drift
+checkpoints that no longer belong to the lab and requires `partial`
+or `inconclusive` where evidence is missing.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Record evidence from a Crossplane S3 sandbox lab](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) | One bounded evidence-recording task, pass criteria per handoff, failure fields, explicit outcome choices, and source-linked status limits. | Opus 5.5 read-only review of the old template identified blank pass labels, credential-identity confusion, and default-public-access false proof. Current Crossplane managed-resource and AWS HeadBucket docs checked. No authorized run or real record exists. | Complete with a real authorized sandbox run; independent evidence review; first maintainer usability task. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 102
-together: one hundred thirty-one concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 104
+together: one hundred thirty-three concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 34 have not yet been authored or
+The remaining 32 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1716,14 +1743,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 41 | 4 |
+| Kubernetes | 45 | 43 | 2 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **131** | **34** |
+| **Total** | **165** | **133** | **32** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

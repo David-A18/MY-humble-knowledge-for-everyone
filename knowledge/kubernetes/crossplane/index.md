@@ -161,8 +161,8 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) | Follow a `PlatformNetwork` XR through VPC, subnet, routing, optional endpoint, and deletion decisions. |
 | [How a team operates a Crossplane platform API](professional-operating-model.md) | Follow an invented storage request through team ownership, change review, access boundaries, and outcome checks. |
 | [How an AWS resource request moves through Crossplane](aws-resource-workflow.md) | Follow one invented bucket request from API acceptance through provider reconciliation, AWS state, application use, and deletion. |
-| [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
-| [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
+| [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md) | Practice one authorized sandbox request, confirm provider and AWS state, and verify deletion before removing the cluster. |
+| [Record evidence from a Crossplane S3 sandbox lab](aws-s3-lab-validation-template.md) | Capture actual identity, version, condition, AWS, and cleanup evidence from an authorized lab run. |
 | [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md) | Follow an invented storage change through GitOps and Crossplane reconciliation, promotion, monitoring, and recovery. |
 | [Find the first failing Crossplane handoff](troubleshooting.md) | Follow one stuck deletion, distinguish conditions, and locate the first failed controller boundary. |
 | [Find the right Crossplane source for your question](references.md) | Choose an official source for API design, provider schemas, identity, or troubleshooting. |
@@ -181,8 +181,8 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md)
 - [How a team operates a Crossplane platform API](professional-operating-model.md)
 - [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
-- [Local AWS S3 lab](local-aws-s3-lab.md)
-- [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
+- [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md)
+- [Record evidence from a Crossplane S3 sandbox lab](aws-s3-lab-validation-template.md)
 - [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
 - [Find the first failing Crossplane handoff](troubleshooting.md)
