@@ -3371,23 +3371,26 @@
       "type": "Explanation"
     },
     {
-      "audience": "Operators running Velero backup, schedule, and restore workflows",
-      "description": "Use this page for the day-to-day Velero commands that create backups, schedules, restores, namespace mappings, and inspection output.",
+      "audience": "Operators learning Velero in a disposable Kubernetes environment",
+      "description": "Use one disposable Kubernetes object to see Velero's backup, inspection, namespace-mapped restore, and cleanup path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/backup-restore-workflows.md",
       "source_ids": [
         "velero-backup-reference",
-        "velero-restore-reference"
+        "velero-restore-reference",
+        "velero-how"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
         "velero",
-        "backup-restore-workflows"
+        "backup",
+        "restore",
+        "beginner"
       ],
-      "title": "Velero backup and restore workflows",
+      "title": "Back up and restore one ConfigMap with Velero",
       "type": "How-to Guide"
     },
     {

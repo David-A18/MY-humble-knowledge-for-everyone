@@ -1771,13 +1771,26 @@ page names exact evidence needed before trusting an off-backend copy.
 | --- | --- | --- | --- |
 | [Where a Velero backup keeps objects and volume data](knowledge/migrations/velero/storage-and-volume-backups.md) | Workshop analogy, invented notes app, volume-path diagram and text alternative, four-method comparison, destination-first choice, FSB and data-mover prerequisites, understanding checks. | Opus 5.5 read-only review of the previous page found misleading data-mover, FSB, and snapshot assumptions. Current Velero v1.18 how-it-works, CSI, data movement, FSB, and volume-policy docs plus Kubernetes snapshot docs checked. Diagram rendered and inspected. No cluster, volume, backup, snapshot, upload, restore, or reader test occurred. | Independent storage/Velero review; test each chosen method with a disposable workload and destination; novice method-choice task; freshness decision. |
 
+### Wave 109 (2026-10-04)
+
+The Velero workflow page now has one safe learning outcome: copy a
+disposable ConfigMap through object backup into a second empty
+namespace and read the result. It removes production-named, unrun
+backup and restore examples, broad cluster filters, hooks, schedules,
+resource modifiers, and PVC implications from a beginner How-to.
+Those are separate, more advanced tasks with their own official docs.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Back up and restore one ConfigMap with Velero](knowledge/migrations/velero/backup-restore-workflows.md) | One-note archive analogy, object path diagram and text alternative, guarded preflight, narrow object backup, mapped restore, value check, and conditional cleanup. | Opus 5.5 read-only review of the prior command catalog identified live-production and PVC-data risks; Velero v1.18 backup, restore, and how-it-works docs checked. Shell blocks parsed with `bash -n`; diagram rendered and inspected. No live Velero server, backup location, Kubernetes cluster, backup, restore, or reader task was available. | Run in disposable cluster with real backup storage and record output; independent Velero review; novice task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 108
-together: one hundred thirty-seven concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 109
+together: one hundred thirty-eight concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 28 have not yet been authored or
+The remaining 27 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1795,13 +1808,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 3 | 6 |
+| Migrations | 9 | 4 | 5 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **137** | **28** |
+| **Total** | **165** | **138** | **27** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
