@@ -158,7 +158,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [How one platform request reaches a running application](application-delivery-platform-api.md) | Follow repository creation, image publication, Kubernetes rollout, and application checks as separate handoffs. |
 | [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md) | Choose explicit objects, fixed templates, or a function loop, then connect dependent resources by provider reference. |
 | [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
-| [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
+| [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) | Follow a `PlatformNetwork` XR through VPC, subnet, routing, optional endpoint, and deletion decisions. |
 | [How a team operates a Crossplane platform API](professional-operating-model.md) | Follow an invented storage request through team ownership, change review, access boundaries, and outcome checks. |
 | [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
@@ -178,7 +178,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [How one platform request reaches a running application](application-delivery-platform-api.md)
 - [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
 - [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
-- [AWS VPC platform API](aws-vpc-platform-api.md)
+- [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md)
 - [How a team operates a Crossplane platform API](professional-operating-model.md)
 - [AWS resource workflow](aws-resource-workflow.md)
 - [Local AWS S3 lab](local-aws-s3-lab.md)

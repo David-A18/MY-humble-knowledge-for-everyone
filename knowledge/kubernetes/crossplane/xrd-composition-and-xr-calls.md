@@ -178,7 +178,7 @@ For the function handoff, read
 [How a Crossplane Composition fulfills one application request](compositions.md).
 For the provider handoff, read
 [How a Crossplane provider reaches an external API](providers-and-authentication.md).
-The [AWS VPC platform API](aws-vpc-platform-api.md) explores
+The [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) explores
 a more detailed network design.
 
 ## Check your understanding

@@ -143,7 +143,7 @@ does not supply a working file set or claim that the old
 WebApplication YAML rendered successfully.[^crossplane-cli]
 
 For a provider-backed example, use
-[AWS VPC platform API](aws-vpc-platform-api.md). For how the
+[How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md). For how the
 resulting managed resources evolve, use
 [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md).
 

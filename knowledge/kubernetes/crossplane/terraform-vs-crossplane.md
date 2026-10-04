@@ -152,7 +152,7 @@ observations.[^crossplane-xrs][^crossplane-managed]
 
 Read [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
 for reconciliation and drift. Read the
-[AWS VPC platform API](aws-vpc-platform-api.md) for a
+[How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) for a
 more detailed network design.
 
 ## Check your understanding

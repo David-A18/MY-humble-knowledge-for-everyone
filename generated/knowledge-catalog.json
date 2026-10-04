@@ -2811,20 +2811,31 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Show how one Crossplane XR can request multiple deployable AWS networking resources: a VPC, private subnets, a network ACL, ACL rules, a route table, route table associations, and VPC endpoints.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow an invented PlatformNetwork request through VPC, subnets, routes, and optional endpoints, with clear connectivity and deletion limits.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/aws-vpc-platform-api.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-xrd",
+        "crossplane-xr",
+        "crossplane-compositions",
+        "crossplane-managed",
+        "aws-vpc-subnet-routes",
+        "aws-vpc-acl",
+        "aws-vpc-s3-endpoint",
+        "aws-vpc-ddb-endpoint"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "aws-vpc-platform-api"
+        "aws",
+        "networking",
+        "beginner"
       ],
-      "title": "AWS VPC platform API with Crossplane",
+      "title": "How one Crossplane request becomes an AWS network",
       "type": "Explanation"
     },
     {

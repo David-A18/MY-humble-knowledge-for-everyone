@@ -1653,13 +1653,26 @@ manifests and duplicate Terraform comparisons were removed.
 | --- | --- | --- | --- |
 | [Choose how Crossplane repeats and connects resources](knowledge/kubernetes/crossplane/deployment-patterns-and-references.md) | Bounded form-folder analogy, one network request, repetition choice table, dependency diagram and text alternative, reference method and observation tables, understanding checks. | Opus 5.5 read-only review of the prior page found invalid standalone controller selector, ambiguous loops, and unrun examples; corrections checked against current official Crossplane managed-resource, Composition, XRD, function, and CLI documentation. Mermaid rendered and inspected. No Composition render, provider, AWS network, cluster, or reader task occurred. | Independent Crossplane/AWS review; disposable fixed-versus-loop and reference-resolution exercises; novice choice task; freshness decision. |
 
+### Wave 100 (2026-10-04)
+
+The AWS VPC platform API page now explains a proposed network request as
+an asynchronous path through VPC, subnets, routing, and optional endpoints.
+It removes a large untested Composition and a false consumer-facing
+`deletionPolicy: Orphan` guarantee for v2 namespaced managed resources.
+The page separates API acceptance, provider reconciliation, and actual
+connectivity, and names the decisions that require a disposable AWS test.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How one Crossplane request becomes an AWS network](knowledge/kubernetes/crossplane/aws-vpc-platform-api.md) | Bounded order/work-order analogy, illustrative PlatformNetwork request, resource-purpose table, dependency diagram and text alternative, delivery signals, deletion decision, understanding checks. | Opus 5.5 read-only review of a neighboring page flagged the old deletion-policy field and likely provider-schema issues. Current official Crossplane XRD, XR, Composition, managed-resource and AWS subnet routing, network ACL, S3 and DynamoDB gateway-endpoint documentation checked. Mermaid rendered and inspected. No XRD, provider, cluster, AWS network, connectivity check, deletion, or reader task occurred. | Independent AWS networking and Crossplane/provider review; disposable network and retention exercise; novice request-to-connectivity task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 99
-together: one hundred twenty-eight concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 100
+together: one hundred twenty-nine concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 37 have not yet been authored or
+The remaining 36 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1676,14 +1689,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 38 | 7 |
+| Kubernetes | 45 | 39 | 6 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **128** | **37** |
+| **Total** | **165** | **129** | **36** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

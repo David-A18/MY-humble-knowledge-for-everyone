@@ -215,8 +215,8 @@ requires observing the real network and its intended use; XR
 
 - [How a Crossplane Composition fulfills one application request](compositions.md)
   explains the function pipeline and its readiness signals.
-- [AWS VPC platform API](aws-vpc-platform-api.md) covers a larger
-  network product.
+- [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) shows a network product and its
+  connectivity and deletion limits.
 - [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
   compares reviewed plan/apply and continuous reconciliation.
 - [Crossplane managed-resource references](https://docs.crossplane.io/latest/managed-resources/managed-resources/#referencing-other-resources)

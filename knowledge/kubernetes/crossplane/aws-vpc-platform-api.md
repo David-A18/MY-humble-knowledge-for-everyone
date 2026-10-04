@@ -1,621 +1,231 @@
 ---
-type: "Explanation"
-title: "AWS VPC platform API with Crossplane"
-description: "Show how one Crossplane XR can request multiple deployable AWS networking resources: a VPC, private subnets, a network ACL, ACL rules, a route table, route table associations, and VPC endpoints."
-tags: [kubernetes, crossplane, aws-vpc-platform-api]
+type: Explanation
+title: How one Crossplane request becomes an AWS network
+description: Follow an invented PlatformNetwork request through VPC, subnets, routes, and optional endpoints, with clear connectivity and deletion limits.
+tags: [kubernetes, crossplane, aws, networking, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-xrd
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-xr
+    resource: https://docs.crossplane.io/latest/composition/composite-resources/
+    title: Crossplane - Composite Resources
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: aws-vpc-subnet-routes
+    resource: https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html
+    title: AWS - Subnet route tables
+  - id: aws-vpc-acl
+    resource: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+    title: AWS - Network ACLs
+  - id: aws-vpc-s3-endpoint
+    resource: https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html
+    title: AWS - Gateway endpoints for Amazon S3
+  - id: aws-vpc-ddb-endpoint
+    resource: https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html
+    title: AWS - Gateway endpoints for Amazon DynamoDB
 ---
 
-# AWS VPC platform API with Crossplane
+# How one Crossplane request becomes an AWS network
 
-## Purpose
+## One request, several AWS resources
 
-Show how one Crossplane XR can request multiple deployable AWS networking resources: a VPC, private subnets, a network ACL, ACL rules, a route table, route table associations, and VPC endpoints.
+Imagine that a payments team needs a VPC in `eu-west-1` with two
+subnets in different Availability Zones. The team would rather
+request a `PlatformNetwork` than submit AWS provider resources one
+by one. A platform team can define that API with an XRD and implement
+it with a Composition. The example on this page is *invented*; no
+cluster or AWS account was used to validate a deployment.
+[^crossplane-xrd][^crossplane-compositions]
 
-> [!WARNING]
-> This example can create billable AWS resources. Use a sandbox account and verify provider schemas, IAM permissions, naming, quotas, endpoint service availability, and deletion policy before using it.
+Think of the XR as an order for a network, the Composition as the
+platform's assembly instructions, and managed resources as the
+individual work orders sent to AWS. The analogy has a limit:
+Crossplane controllers reconcile asynchronously. A stored order
+does not mean the network already exists or passes traffic.
+[^crossplane-xr][^crossplane-managed]
 
-## What this example creates
-
-The user applies one `PlatformNetwork` XR. Crossplane uses the matching Composition to create these AWS managed resources:
-
-| Composed resource | AWS purpose |
-| --- | --- |
-| `VPC` | Main network boundary. |
-| `Subnet` x2 | Private subnets in two availability zones. |
-| `NetworkACL` | Stateless network ACL for the VPC. |
-| `NetworkACLRule` x2 | Allow internal ingress and outbound egress. |
-| `RouteTable` | Route table associated with the private subnets. |
-| `RouteTableAssociation` x2 | Associates each subnet with the route table. |
-| `VPCEndpoint` x2 | Gateway endpoints for S3 and DynamoDB. |
-| `VPCEndpointRouteTableAssociation` x2 | Associates the gateway endpoints with the route table. |
-
-## Install the AWS EC2 provider
-
-```yaml
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: upbound-provider-aws-ec2
-spec:
-  package: xpkg.upbound.io/upbound/provider-aws-ec2:v2.6.1
-```
-
-Apply it:
-
-```bash
-kubectl apply -f provider-aws-ec2.yaml
-kubectl get providers
-```
-
-What it does: installs the AWS EC2 provider package, which includes namespaced managed resources such as `VPC`, `Subnet`, `NetworkACL`, `RouteTable`, and `VPCEndpoint`.
-
-## Define the PlatformNetwork XRD
-
-```yaml
-apiVersion: apiextensions.crossplane.io/v2
-kind: CompositeResourceDefinition
-metadata:
-  name: platformnetworks.platform.example.org
-spec:
-  group: platform.example.org
-  scope: Namespaced
-  names:
-    kind: PlatformNetwork
-    plural: platformnetworks
-  versions:
-  - name: v1alpha1
-    served: true
-    referenceable: true
-    schema:
-      openAPIV3Schema:
-        type: object
-        properties:
-          spec:
-            type: object
-            properties:
-              region:
-                type: string
-                enum:
-                - eu-west-1
-                - eu-central-1
-                - us-east-1
-              cidrBlock:
-                type: string
-              environment:
-                type: string
-                enum:
-                - dev
-                - staging
-                - prod
-              privateSubnetA:
-                type: object
-                properties:
-                  availabilityZone:
-                    type: string
-                  cidrBlock:
-                    type: string
-                required:
-                - availabilityZone
-                - cidrBlock
-              privateSubnetB:
-                type: object
-                properties:
-                  availabilityZone:
-                    type: string
-                  cidrBlock:
-                    type: string
-                required:
-                - availabilityZone
-                - cidrBlock
-              deletionPolicy:
-                type: string
-                enum:
-                - Delete
-                - Orphan
-                default: Delete
-            required:
-            - region
-            - cidrBlock
-            - environment
-            - privateSubnetA
-            - privateSubnetB
-```
-
-What it does: defines the API contract. Users can request a network without knowing the low-level AWS provider fields for each composed resource.
-
-## Define the AWS network Composition
-
-```yaml
-apiVersion: apiextensions.crossplane.io/v1
-kind: Composition
-metadata:
-  name: platformnetwork-aws-private
-  labels:
-    provider: aws
-    service: ec2
-    network: private
-spec:
-  compositeTypeRef:
-    apiVersion: platform.example.org/v1alpha1
-    kind: PlatformNetwork
-  mode: Pipeline
-  pipeline:
-  - step: patch-and-transform
-    functionRef:
-      name: function-patch-and-transform
-    input:
-      apiVersion: pt.fn.crossplane.io/v1beta1
-      kind: Resources
-      resources:
-      - name: vpc
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: VPC
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              cidrBlock: 10.0.0.0/16
-              enableDnsSupport: true
-              enableDnsHostnames: true
-              tags:
-                managed-by: crossplane
-                platform-api: platformnetwork
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.cidrBlock
-          toFieldPath: spec.forProvider.cidrBlock
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: private-subnet-a
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: Subnet
-          metadata:
-            labels:
-              network.platform.example.org/subnet: private-a
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              availabilityZone: eu-west-1a
-              cidrBlock: 10.0.1.0/24
-              mapPublicIpOnLaunch: false
-              vpcIdSelector:
-                matchControllerRef: true
-              tags:
-                tier: private
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.privateSubnetA.availabilityZone
-          toFieldPath: spec.forProvider.availabilityZone
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.privateSubnetA.cidrBlock
-          toFieldPath: spec.forProvider.cidrBlock
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: private-subnet-b
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: Subnet
-          metadata:
-            labels:
-              network.platform.example.org/subnet: private-b
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              availabilityZone: eu-west-1b
-              cidrBlock: 10.0.2.0/24
-              mapPublicIpOnLaunch: false
-              vpcIdSelector:
-                matchControllerRef: true
-              tags:
-                tier: private
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.privateSubnetB.availabilityZone
-          toFieldPath: spec.forProvider.availabilityZone
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.privateSubnetB.cidrBlock
-          toFieldPath: spec.forProvider.cidrBlock
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: network-acl
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: NetworkACL
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              vpcIdSelector:
-                matchControllerRef: true
-              subnetIdSelector:
-                matchControllerRef: true
-              tags:
-                managed-by: crossplane
-                tier: private
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: network-acl-ingress
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: NetworkACLRule
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              networkAclIdSelector:
-                matchControllerRef: true
-              egress: false
-              protocol: "-1"
-              ruleAction: allow
-              ruleNumber: 100
-              cidrBlock: 10.0.0.0/16
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.cidrBlock
-          toFieldPath: spec.forProvider.cidrBlock
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: network-acl-egress
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: NetworkACLRule
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              networkAclIdSelector:
-                matchControllerRef: true
-              egress: true
-              protocol: "-1"
-              ruleAction: allow
-              ruleNumber: 100
-              cidrBlock: 0.0.0.0/0
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: private-route-table
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: RouteTable
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              vpcIdSelector:
-                matchControllerRef: true
-              tags:
-                tier: private
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: private-route-table-association-a
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: RouteTableAssociation
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              routeTableIdSelector:
-                matchControllerRef: true
-              subnetIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  network.platform.example.org/subnet: private-a
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: private-route-table-association-b
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: RouteTableAssociation
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              routeTableIdSelector:
-                matchControllerRef: true
-              subnetIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  network.platform.example.org/subnet: private-b
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: s3-endpoint
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: VPCEndpoint
-          metadata:
-            labels:
-              network.platform.example.org/endpoint: s3
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              vpcEndpointType: Gateway
-              serviceName: com.amazonaws.eu-west-1.s3
-              vpcIdSelector:
-                matchControllerRef: true
-              tags:
-                service: s3
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.serviceName
-          transforms:
-          - type: string
-            string:
-              type: Format
-              fmt: com.amazonaws.%s.s3
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: dynamodb-endpoint
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: VPCEndpoint
-          metadata:
-            labels:
-              network.platform.example.org/endpoint: dynamodb
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              vpcEndpointType: Gateway
-              serviceName: com.amazonaws.eu-west-1.dynamodb
-              vpcIdSelector:
-                matchControllerRef: true
-              tags:
-                service: dynamodb
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.serviceName
-          transforms:
-          - type: string
-            string:
-              type: Format
-              fmt: com.amazonaws.%s.dynamodb
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.tags.environment
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: s3-endpoint-route-table-association
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: VPCEndpointRouteTableAssociation
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              routeTableIdSelector:
-                matchControllerRef: true
-              vpcEndpointIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  network.platform.example.org/endpoint: s3
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-      - name: dynamodb-endpoint-route-table-association
-        base:
-          apiVersion: ec2.aws.m.upbound.io/v1beta1
-          kind: VPCEndpointRouteTableAssociation
-          spec:
-            deletionPolicy: Delete
-            providerConfigRef:
-              name: default
-              kind: ClusterProviderConfig
-            forProvider:
-              region: eu-west-1
-              routeTableIdSelector:
-                matchControllerRef: true
-              vpcEndpointIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  network.platform.example.org/endpoint: dynamodb
-        patches:
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.region
-          toFieldPath: spec.forProvider.region
-        - type: FromCompositeFieldPath
-          fromFieldPath: spec.deletionPolicy
-          toFieldPath: spec.deletionPolicy
-```
-
-What it does: creates a fixed two-AZ private network pattern from one XR. The `matchControllerRef` selectors bind composed resources that belong to the same XR, so subnets can find the composed VPC and associations can find the composed route table.
-
-> [!IMPORTANT]
-> Provider field names can change between AWS provider versions. Before using this in a real cluster, check the installed CRDs with commands such as `kubectl explain vpc.spec.forProvider`, `kubectl explain networkacl.spec.forProvider`, and `kubectl explain vpcendpoint.spec.forProvider`.
-
-## Call the API with a PlatformNetwork XR
+An illustrative consumer request could look like this:
 
 ```yaml
 apiVersion: platform.example.org/v1alpha1
 kind: PlatformNetwork
 metadata:
-  namespace: payments
   name: payments-network
+  namespace: payments
 spec:
   region: eu-west-1
-  cidrBlock: 10.40.0.0/16
-  environment: prod
-  privateSubnetA:
-    availabilityZone: eu-west-1a
-    cidrBlock: 10.40.1.0/24
-  privateSubnetB:
-    availabilityZone: eu-west-1b
-    cidrBlock: 10.40.2.0/24
-  deletionPolicy: Orphan
-  crossplane:
-    compositionRef:
-      name: platformnetwork-aws-private
+  vpcCidr: 10.40.0.0/16
+  subnets:
+    - name: private-a
+      availabilityZone: eu-west-1a
+      cidrBlock: 10.40.1.0/24
+    - name: private-b
+      availabilityZone: eu-west-1b
+      cidrBlock: 10.40.2.0/24
 ```
 
-Apply it:
+These fields are a proposed API contract, not installed CRDs. The
+platform must validate the supported Regions and Availability Zones,
+the CIDR ranges and overlaps, subnet names, and who may create or
+change the request. The Composition must choose the AWS account and
+provider identity under platform control.[^crossplane-xrd]
+[^crossplane-managed]
 
-```bash
-kubectl apply -f platformnetwork-payments.yaml
-kubectl get platformnetworks -n payments
-crossplane beta trace platformnetwork.platform.example.org/payments-network -n payments
+## Follow the pieces
+
+| Piece | Why it exists in this example | Dependency or limit |
+| --- | --- | --- |
+| VPC managed resource | Requests the AWS VPC and its address range. | AWS returns the VPC ID after creation. |
+| Two Subnet managed resources | Request address ranges in separate Availability Zones. | Each must reference that VPC ID; their ranges must fit inside the VPC without overlap. |
+| Route table and associations | Give the two subnets an explicit routing policy. | AWS subnets otherwise use the VPC's main route table. A table's routes determine reachability. |
+| Optional S3 or DynamoDB gateway endpoint | Let selected subnet route tables carry traffic for that AWS service through a gateway endpoint. | Associate the right route tables and still check IAM, endpoint policy, and service access. |
+| Optional custom network ACL | Add subnet-level allow and deny rules when required. | A custom ACL needs correct rules in both directions because ACLs are stateless. |
+
+A private-sounding subnet name or `mapPublicIpOnLaunch: false`
+does not by itself define every route and access path. The route
+table controls where traffic is sent. Security groups, network
+ACLs, endpoint policies, identity permissions, DNS, and the
+application's own configuration can still affect whether a request
+works.[^aws-vpc-subnet-routes][^aws-vpc-acl]
+[^aws-vpc-s3-endpoint]
+
+```mermaid
+flowchart TB
+  team["Payments team<br/>requests PlatformNetwork"] --> xr["PlatformNetwork XR"]
+  xr --> composition["Composition produces<br/>desired resources"]
+  composition --> vpc["VPC managed resource"]
+  composition --> subnets["Two Subnet<br/>managed resources"]
+  composition --> routing["Route table and<br/>associations"]
+  composition --> endpoint["Optional gateway<br/>endpoint"]
+  vpc --> aws["AWS VPC ID"]
+  aws --> subnets
+  subnets --> routing
+  routing --> endpoint
+  routing -->|"Without endpoint"| check["Check actual<br/>network path"]
+  endpoint --> check
 ```
 
-What it does: creates one XR that represents the whole AWS networking stack. Crossplane composes all dependent resources and reports status through the `PlatformNetwork`.
+Text alternative: the payments team creates one XR. Its Composition
+produces a VPC, two Subnets, and routing resources, with an optional
+gateway endpoint. The provider observes the AWS VPC ID; the Subnets
+reference it. The route table associates with the Subnets, and a
+gateway endpoint may associate with that route table. A final
+connectivity check tests the intended path.[^crossplane-compositions]
+[^crossplane-managed][^aws-vpc-subnet-routes]
 
-## Inspect the composed AWS resources
+Provider reference fields, such as `vpcIdRef` or
+`vpcIdSelector`, can connect a Subnet managed resource to the
+VPC managed resource. A selector using
+`matchControllerRef: true` can narrow a match to resources
+composed by the same XR. When there are two Subnets, a later
+resource that needs just one must add a unique label or direct
+name reference. Provider API groups and field names depend on
+the installed package; check its CRDs before implementing this
+pattern.[^crossplane-managed]
 
-```bash
-kubectl get vpcs,subnets,networkacls,networkaclrules,routetables,routetableassociations,vpcendpoints -n payments
-kubectl describe platformnetwork payments-network -n payments
-crossplane beta trace platformnetwork.platform.example.org/payments-network -n payments
-```
+## Read the right success signal
 
-What it does: verifies that the XR created a resource tree and shows which composed AWS resources are not ready if the stack is still reconciling.
+A new network is delivered in stages:
 
-## How this differs from a Terraform VPC module
+1. **API accepted:** Kubernetes stores the XR and its schema-valid
+   fields. This says nothing about AWS creation.[^crossplane-xrd]
+2. **Composition reconciled:** Crossplane selects the intended
+   Composition and produces the desired managed resources.
+   Inspect XR conditions and the resource tree.[^crossplane-xr]
+3. **Provider reconciled:** The AWS provider creates or observes
+   each external resource and reports managed-resource conditions.
+   A Subnet may wait for the VPC ID; check whether the wait
+   resolves instead of assuming the YAML has an execution order.
+   [^crossplane-managed]
+4. **Network works:** Test a real, authorized path from the
+   intended workload to its destination. A gateway endpoint
+   existing does not prove DNS, route selection, IAM, or endpoint
+   policy permits that request.[^aws-vpc-s3-endpoint]
+   [^aws-vpc-ddb-endpoint]
 
-With Terraform, the caller would pass variables into a VPC module, review `terraform plan`, and run `terraform apply`. Terraform stores the resource mapping in state.
+A gateway endpoint can add a route to associated route tables
+for its service. It does not provide general internet access.
+Similarly, a custom network ACL with only an inbound allow rule
+can block replies because it evaluates inbound and outbound
+traffic separately.[^aws-vpc-s3-endpoint][^aws-vpc-acl]
 
-With Crossplane:
+## Decide deletion before offering the API
 
-- The XRD defines the network API.
-- The XR is the persisted network request.
-- The Composition is the implementation.
-- AWS resources are Kubernetes managed resources.
-- Crossplane keeps reconciling after the first apply.
+The previous version of this page showed a consumer
+`deletionPolicy: Orphan` field patched into Crossplane v2
+namespaced managed resources. The current Crossplane managed-resource
+documentation uses `spec.managementPolicies` to control whether
+the provider may delete an external resource. The provider determines
+support for these policies. Do not promise an `Orphan` outcome
+from an unverified field.[^crossplane-managed]
 
-This is useful when platform teams want Kubernetes-native self-service instead of exposing raw Terraform module internals to every application team.
+A platform can choose a tested retention policy for each managed
+resource. For example, removing `Delete` from a supported
+managed resource's `managementPolicies` means Crossplane should
+leave its external resource when that managed resource is deleted.
+Retaining a VPC while deleting Subnets, route tables, or endpoints
+is a different outcome from retaining the whole network. Decide
+which resources are retained together, who takes over their AWS
+ownership, and how the team will recover or remove them later.
+Test deletion in a disposable account before giving consumers
+a retention option.[^crossplane-managed]
 
-## Cleanup
+## What an implementation must still prove
 
-```bash
-kubectl delete platformnetwork payments-network -n payments
-```
+This explanation supplies no deployable XRD, Composition, IAM policy,
+provider package, or cleanup command. Before publication, a
+platform team should:
 
-What it does: deletes the XR. Crossplane then deletes or orphans the composed AWS resources according to the `deletionPolicy` patched into each managed resource.
+- Pin compatible Crossplane, provider, and function versions and
+  inspect the installed CRDs for the exact resource fields,
+  including any ACL-to-subnet association and endpoint-to-route-table
+  fields.[^crossplane-compositions][^crossplane-managed]
+- Render the proposed Composition to inspect the desired resource
+  set, then test it against a disposable control plane and AWS
+  account. Rendering does not prove provider credentials, AWS
+  acceptance, or connectivity.[^crossplane-compositions]
+- Verify that a change or deletion of the XR produces the intended
+  AWS outcome for **every** composed resource. Record the observed
+  result before offering an operational guarantee.
+  [^crossplane-managed]
 
-## Related links
+## Check your understanding
 
-- [Crossplane XRDs](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)
-- [Crossplane composite resources](https://docs.crossplane.io/latest/composition/composite-resources/)
-- [Crossplane Compositions](https://docs.crossplane.io/latest/composition/compositions/)
-- [Function Patch and Transform](https://docs.crossplane.io/latest/guides/function-patch-and-transform/)
-- [Crossplane providers](https://docs.crossplane.io/latest/packages/providers/)
-- [Upbound AWS EC2 provider resources](https://marketplace.upbound.io/providers/upbound/provider-aws-ec2/v2.6.1?tab=managedResources)
-- [Crossplane component model](component-model.md)
-- [Crossplane compositions](compositions.md)
+- Why can a Subnet managed resource wait even though Kubernetes
+  accepted the `PlatformNetwork` XR?
+- What does a route table association add to a Subnet?
+- Why might an S3 gateway endpoint exist while an application
+  request to S3 still fails?
+- If the VPC is retained but the Subnets are deleted, what
+  should the platform tell the payments team?
+
+## Go further
+
 - [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
-- [Back to Crossplane index](index.md)
-- [Back to root index](../../../README.md)
+  explains fixed templates, loops, and provider references.
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
+  explains reconciliation and deletion boundaries.
+- [AWS subnet route tables](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html)
+  explains route-table associations.
+- [AWS network ACLs](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
+  explains stateless subnet rules.
+- [Crossplane managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
+  documents references and management policies.
+
+[^crossplane-xrd]: Crossplane, [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/).
+[^crossplane-xr]: Crossplane, [Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/).
+[^crossplane-compositions]: Crossplane, [Compositions](https://docs.crossplane.io/latest/composition/compositions/).
+[^crossplane-managed]: Crossplane, [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/).
+[^aws-vpc-subnet-routes]: AWS, [Subnet route tables](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html).
+[^aws-vpc-acl]: AWS, [Network ACLs](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html).
+[^aws-vpc-s3-endpoint]: AWS, [Gateway endpoints for Amazon S3](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html).
+[^aws-vpc-ddb-endpoint]: AWS, [Gateway endpoints for Amazon DynamoDB](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html).
