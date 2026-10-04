@@ -1720,13 +1720,37 @@ or `inconclusive` where evidence is missing.
 | --- | --- | --- | --- |
 | [Record evidence from a Crossplane S3 sandbox lab](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) | One bounded evidence-recording task, pass criteria per handoff, failure fields, explicit outcome choices, and source-linked status limits. | Opus 5.5 read-only review of the old template identified blank pass labels, credential-identity confusion, and default-public-access false proof. Current Crossplane managed-resource and AWS HeadBucket docs checked. No authorized run or real record exists. | Complete with a real authorized sandbox run; independent evidence review; first maintainer usability task. |
 
+### Wave 105 (2026-10-04)
+
+The tooling-cluster decision page now starts from one shared GitOps
+service and compares local, central, hybrid, and externally managed
+placements. It separates local admission and secret reconciliation
+from services that can be shared, and asks what a third cluster changes
+for ownership, access, and recovery.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [When a tooling cluster helps](knowledge/kubernetes/applications-and-tools/tooling-clusters.md) | Shared-workshop analogy, invented two-cluster choice, placement table, per-function boundaries, three decision questions, understanding checks. | Opus 5.5 read-only review of the prior two pages identified push-only assumptions, duplicated outcomes, unsafe default CI co-location, and false outage certainty. Current Argo CD, Flux, Kubernetes RBAC/policy, and External Secrets Operator docs checked. No cluster layout, access, outage, or reader task was tested. | Independent platform-security review; novice placement choice; access and outage exercise; freshness decision. |
+
+### Wave 106 (2026-10-04)
+
+The tooling-cluster architecture page now traces central-push
+management separately from user and optional telemetry paths. It
+names local-pull reconciliation as an alternative and makes target
+identity, network, RBAC, outage, and independent recovery evidence
+explicit. Cloud-specific access remains in the EKS guide.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a tooling cluster connects to workload clusters](knowledge/kubernetes/applications-and-tools/tooling-cluster-architecture.md) | Dispatch-desk analogy, invented two-target diagram and text alternative, five-boundary table, central-push versus local-pull choice, conditional failure matrix, recovery questions. | Opus 5.5 read-only review of the prior pages guided the split; current Argo CD, Flux, and Kubernetes RBAC documentation checked. Diagram rendered and inspected. No GitOps controller, target API, telemetry, outage, recovery, or reader task was tested. | Independent GitOps/platform-security review; access and outage exercise; novice path tracing; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 104
-together: one hundred thirty-three concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 106
+together: one hundred thirty-five concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 32 have not yet been authored or
+The remaining 30 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1743,14 +1767,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 43 | 2 |
+| Kubernetes | 45 | 45 | 0 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **133** | **32** |
+| **Total** | **165** | **135** | **30** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

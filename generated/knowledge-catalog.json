@@ -2513,37 +2513,55 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this guide to design a Kubernetes tooling cluster that hosts platform tools without accidentally creating a fragile, over-privileged control point.",
+      "audience": "Beginning platform and application teams",
+      "description": "Trace a shared GitOps controller's source, target API access, user traffic, telemetry, and recovery boundaries.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/tooling-cluster-architecture.md",
-      "source_ids": [],
+      "source_ids": [
+        "argo-clusters",
+        "argo-declarative",
+        "argo-disaster-recovery",
+        "flux-remote",
+        "flux-multitenancy",
+        "flux-bootstrap",
+        "kubernetes-rbac"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "tooling-cluster-architecture"
+        "platform-engineering",
+        "tooling-cluster-architecture",
+        "gitops",
+        "beginner"
       ],
-      "title": "Tooling cluster architecture",
+      "title": "How a tooling cluster connects to workload clusters",
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to decide when a dedicated Kubernetes tooling cluster is useful.",
+      "audience": "Beginning platform and application teams",
+      "description": "Choose where to run shared Kubernetes platform tools by following their users, permissions, and failure dependencies.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/tooling-clusters.md",
-      "source_ids": [],
+      "source_ids": [
+        "argo-clusters",
+        "flux-remote",
+        "kubernetes-rbac",
+        "kubernetes-network-policy",
+        "kubernetes-policy",
+        "external-secrets"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
-        "applications-and-tools",
-        "tooling-clusters"
+        "platform-engineering",
+        "tooling-clusters",
+        "beginner"
       ],
-      "title": "Tooling clusters",
+      "title": "When a tooling cluster helps",
       "type": "Explanation"
     },
     {

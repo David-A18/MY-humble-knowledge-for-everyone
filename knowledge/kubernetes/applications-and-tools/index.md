@@ -73,8 +73,8 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) | Understand the two controller handoffs and what their status reports prove. |
 | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) | Understand Argo CD projects, Flux apply identities, workload access, and secret handling. |
 | [How Helm turns a chart into a release](helm.md) | Understand chart inputs, release revisions, preview limits, and the Crossplane controller boundary. |
-| [Tooling clusters](tooling-clusters.md) | Decide when to use a dedicated platform tooling cluster. |
-| [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
+| [When a tooling cluster helps](tooling-clusters.md) | Choose between local, shared, and hybrid tooling by tracing responsibility, authority, and failure dependencies. |
+| [How a tooling cluster connects to workload clusters](tooling-cluster-architecture.md) | Trace source, target API, telemetry, user, and recovery paths for a shared controller. |
 | [How kind custom clusters fit together](kind-custom-clusters.md) | Explain node roles, context, node images, and the full host-port-to-Pod path. |
 | [How images reach a kind Pod](kind-images-and-local-registries.md) | Choose between loading an image into kind nodes and pulling from a configured registry. |
 | [Inspect a failing Pod with K9s](k9s.md) | Select a target and read one Pod's status, events, and logs before choosing a troubleshooting route. |
