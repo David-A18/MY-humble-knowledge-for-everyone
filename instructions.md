@@ -84,6 +84,10 @@ maintainer: unassigned
 ```
 
 `maintainer` must be `unassigned`, `human:<handle>`, or `team:<name>`.
+The validator accepts `status: draft`, `stable`, or `deprecated`.
+The validator accepts `maturity: initial-outline`, `draft`,
+`maintained`, or `deprecated`. Use `initial-outline` for a new
+skeleton; move to another value only when the page itself justifies it.
 Use `status: stable` only when a page has current, recorded review evidence,
 official `sources`, and `stale_after`. Keep draft content discoverable, but do
 not present it as fully trusted guidance.
@@ -91,6 +95,28 @@ Do not add `generated`, `verified`, `sources`, or `stale_after` during a move or
 mechanical edit. Add them when the stated evidence actually exists. Cite sources
 for important technical claims with keyed Markdown footnotes linked to
 `sources[].id`.
+The copyable templates mark values to replace with `REPLACE_WITH_`.
+The OKF validator rejects that marker in concept frontmatter. Search
+the newly copied page for markers in its body and for example URLs
+before publication; no placeholder is evidence of a real source or run.
+
+When evidence exists, the metadata shapes are:
+
+```yaml
+sources:
+  - id: REPLACE_WITH_KEBAB_CASE_SOURCE_ID
+    resource: https://REPLACE_WITH_SPECIFIC_OFFICIAL_PAGE
+    title: REPLACE_WITH_SOURCE_TITLE
+verified:
+  - by: REPLACE_WITH_REAL_ACTOR
+    at: null # replace with the real ISO date or omit verified
+stale_after: null # replace with a decided ISO deadline or omit
+```
+
+Add only the fields supported by the actual work. `verified` names the
+actor and time; it does not describe the environment, commands, or
+result. Put that evidence in the page body or a linked record instead
+of implying the metadata alone proves an execution or review.
 
 ## Indexes, logs, and links
 

@@ -1866,13 +1866,37 @@ decision-state labels, a correction to the ingestion-register wording,
 historical wording for the superseded site clause, and alignment of the
 maintenance queue with ADR-0005's post-launch reader-testing decision.
 
+### Wave 116 (2026-10-05)
+
+The contributor templates now separate instructions from the text to
+copy. Each copyable skeleton starts with the intended concept type and
+unclaimed draft metadata. The template index gives a short path for
+placing a new topic, updating its parent index, and validating the
+bundle. The authoring instructions name accepted maturity values. The
+OKF validator now rejects template markers in concept frontmatter;
+contributors still search the body for unfilled examples before publication.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Knowledge article template](knowledge/templates/knowledge-article-template.md) | Removed the fake default source, aligned Explanation example and visual order, clarified type choice and source-ID use. | Opus 5.5 read-only review of prior templates identified placeholder-source risk; current authoring rules and validator values checked. No contributor copy trial occurred. | New-contributor trial for both skeletons and review of source-footnote placement. |
+| [Tutorial template](knowledge/templates/practical-example-template.md) | Added a copyable Tutorial with plain opening, bounded disposable exercise, observable result, recovery, cleanup, understanding checks, and next link. | Opus 5.5 read-only review of prior template identified missing teaching and unrun-evidence labels. No tutorial commands were executed. | Novice contributor and learner trial. |
+| [Troubleshooting guide template](knowledge/templates/troubleshooting-template.md) | Added a copyable symptom-first guide with read-only diagnostics, cause-confirmation results, stop signals, guarded recovery, and real-outcome verification. | Opus 5.5 read-only review of prior template identified missing result interpretation and escalation structure. No incident or recovery command was tested. | Contributor trial with a real documented symptom. |
+| [Command reference template](knowledge/templates/command-reference-template.md) | Added a copyable Reference with version scope, state-change column, command inputs, expected signal, failure route, and official source placeholder. | Opus 5.5 read-only review of prior template identified how-to/reference confusion and missing side-effect mapping. No command was run. | Contributor trial with a versioned command family. |
+| [Architecture decision record template](knowledge/templates/architecture-decision-record-template.md) | Added a copyable Decision Record with distinct decision state, plain-language summary, alternatives, consequences, and explicit reconsideration trigger. | Opus 5.5 read-only review of prior template identified fake ADR catalog title, missing trigger, and pressure to invent an owner. No decision was made through the new template. | Contributor trial on a real proposed decision. |
+
+Opus 5.5 reviewed the revised templates twice. Its follow-up findings
+led to complete frontmatter in each copyable block, quoted YAML titles,
+explicit risk and recovery slots, and the frontmatter placeholder gate.
+All six skeleton blocks were extracted and parsed as the intended OKF
+types; no contributor trial or real task execution was inferred.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 115
-together: one hundred forty-eight concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 116
+together: one hundred fifty-three concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 17 have not yet been authored or
+The remaining 12 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1894,9 +1918,9 @@ demonstration, so most teaching elements do not apply there.
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
-| Templates | 5 | 0 | 5 |
+| Templates | 5 | 5 | 0 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **148** | **17** |
+| **Total** | **165** | **153** | **12** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

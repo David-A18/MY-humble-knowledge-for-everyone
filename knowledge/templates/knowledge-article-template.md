@@ -5,7 +5,7 @@ description: Start either a teaching-oriented explanation or a task-oriented how
 tags: [templates, knowledge-article]
 status: draft
 maturity: draft
-audience: Engineering learners and practitioners
+audience: Knowledge-base contributors
 maintainer: unassigned
 ---
 
@@ -25,104 +25,94 @@ If a draft needs both, write two pages and link them to each other. The
 teaching sequence and what each page type should leave out are defined in
 [Teach for understanding](../../instructions.md#teach-for-understanding).
 
-## Shared frontmatter
+## Metadata and evidence
 
-Both skeletons start with this frontmatter. Add `sources` when you cite real
-official pages. Do not add `verified`, `generated`, or `stale_after` until the
-review, generation, or freshness decision has actually happened.
-
-```yaml
----
-type: Explanation
-title: Clear human-readable title
-description: One sentence suitable for a search result or index entry.
-tags: [topic, subtopic]
-status: draft
-maturity: initial-outline
-audience: Who this page is written for
-maintainer: unassigned
-sources:
-  - id: product-topic-page
-    resource: https://example.com/official/specific-page
-    title: Official page title
----
-```
-
-What it does: declares the required OKF profile fields and one source record.
-The `id` is the key you reuse in footnotes. Replace the placeholder URL with
-the specific official page that supports the claim, or remove `sources` if the
-page cites nothing yet.
+Each block below includes its own complete frontmatter. Copy **only
+one block** and replace all `REPLACE_WITH_` values. Add `sources` only
+after you open a real official page that supports a claim; give it a
+stable `id` and cite the same ID in a footnote. Do not add `verified`,
+`generated`, or `stale_after` until the work behind each field really
+happened.
 
 ## Explanation skeleton
 
 Use every section unless the note under it says it is optional. Keep commands
 out; link to a how-to guide instead.
+If you remove the optional Visual section, remove its text alternative too.
 
 ````markdown
-# Title
+---
+type: Explanation
+title: "REPLACE_WITH_CLEAR_TITLE"
+description: "REPLACE_WITH_ONE_SENTENCE_READER_OUTCOME"
+tags: [REPLACE_WITH_TOPIC]
+status: draft
+maturity: initial-outline
+audience: REPLACE_WITH_READER_AUDIENCE
+maintainer: unassigned
+---
+
+# REPLACE_WITH_CLEAR_TITLE
 
 ## Purpose
 
-What the reader will understand after this page, and what the page does not
-cover.
+REPLACE_WITH_READER_OUTCOME_AND_SCOPE
 
 ## What it is
 
-One or two plain sentences. Define each term before relying on it.
+REPLACE_WITH_ONE_OR_TWO_SENTENCE_DEFINITION
+
+## Terms used
+
+REPLACE_WITH_NEEDED_TERMS_OR_REMOVE_SECTION
 
 ## Why it matters
 
-The problem this solves, and what goes wrong when people misunderstand it.
+REPLACE_WITH_PROBLEM_AND_COST_OF_MISUNDERSTANDING
 
 ## The mental model
 
-The parts, how they relate, and what moves between them. A small table of
-parts works well. Simplify by leaving detail out, never by stating something
-false. Cite material claims.[^product-topic-page]
+REPLACE_WITH_ACCURATE_PARTS_RELATIONSHIPS_AND_REAL_SOURCE_FOOTNOTES
 
 ## An analogy
 
-An original analogy in a few bullets.
+REPLACE_WITH_ORIGINAL_ANALOGY
 
 Where the analogy stops being accurate:
 
-- One break per bullet. Use each break to teach a true fact.
-
-## Visual
-
-Optional. Include a small Mermaid diagram only if it shows a flow, ownership
-chain, or lifecycle that prose makes hard to see.
-
-Text alternative: name the actors, the direction of flow, and the decision the
-diagram helps the reader make.
+- REPLACE_WITH_ANALOGY_LIMIT_AND_TRUE_FACT.
 
 ## Example
 
-One bounded example with realistic names, a clear start and end, and what
-changes at each step. Say whether it is illustrative or was actually run. Do
-not imply a test that did not happen.
+REPLACE_WITH_BOUNDED_EXAMPLE_AND_ILLUSTRATIVE_OR_EXECUTED_LABEL
+
+## Visual
+
+REPLACE_WITH_SMALL_TEACHING_DIAGRAM_OR_REMOVE_SECTION
+
+Text alternative: REPLACE_WITH_ACTORS_FLOW_AND_READER_DECISION.
 
 ## Common misconceptions
 
-Optional. Short "people assume X; in fact Y" bullets.
+REPLACE_WITH_CONCRETE_MISCONCEPTION_OR_REMOVE_SECTION
 
 ## Check your understanding
 
-- Two to four questions the reader should now be able to answer.
+- REPLACE_WITH_TWO_TO_FOUR_QUESTIONS.
 
 ## Next steps
 
-- Link the how-to, tutorial, or troubleshooting page that applies this model.
+- REPLACE_WITH_RELATED_TASK_OR_DIAGNOSIS_LINK.
 
 ## Official documentation for deeper study
 
-- What this link is for: [Specific official page](https://example.com/official/specific-page).
+- REPLACE_WITH_WHAT_THIS_SOURCE_ANSWERS: [Specific official page](https://REPLACE_WITH_OFFICIAL_SOURCE).
 
 ## Related links
 
 - [Back to the parent index](index.md)
 
-[^product-topic-page]: [Official page title](https://example.com/official/specific-page), source record `product-topic-page`.
+REPLACE_WITH_KEYED_FOOTNOTES_FOR_REAL_SOURCES_OR_REMOVE_LINE
 ````
 
 ## How-to Guide skeleton
@@ -131,52 +121,67 @@ Keep conceptual background to a sentence or two and link to the matching
 Explanation. Do not add an analogy.
 
 ````markdown
-# Title
+---
+type: How-to Guide
+title: "REPLACE_WITH_CLEAR_TITLE"
+description: "REPLACE_WITH_ONE_SENTENCE_TASK_OUTCOME"
+tags: [REPLACE_WITH_TOPIC]
+status: draft
+maturity: initial-outline
+audience: REPLACE_WITH_READER_AUDIENCE
+maintainer: unassigned
+---
+
+# REPLACE_WITH_CLEAR_TITLE
 
 ## Purpose
 
-The single task the reader will complete, and the situation in which this is
-the right guide.
+REPLACE_WITH_SINGLE_TASK_EXPECTED_OUTCOME_AND_USE_CONDITION
 
 ## Before you start
 
-- Prerequisites: tools, versions, access, and permissions.
-- Context to confirm: working directory, account, cluster, or environment.
-- Background: link the Explanation that teaches the model this task relies on.
+- Prerequisites: REPLACE_WITH_CHECKED_TOOLS_VERSIONS_ACCESS_AND_PERMISSIONS.
+- Context to confirm: REPLACE_WITH_WORKING_DIRECTORY_ACCOUNT_OR_CLUSTER.
+- Stop if: REPLACE_WITH_UNSAFE_CONDITION.
+- Background: [Matching Explanation](REPLACE_WITH_EXPLANATION_LINK.md).
+
+REPLACE_WITH_ILLUSTRATIVE_OR_EXECUTED_LABEL_AND_EVIDENCE_NOTE
 
 ## Steps
 
-Give dependency-ordered steps. Put a warning **before** any destructive,
-expensive, credential-sensitive, or production-impacting action.
+REPLACE_WITH_DEPENDENCY_ORDERED_STEPS
 
-### 1. Name the step by its outcome
+### 1. REPLACE_WITH_STEP_OUTCOME
+
+> [!WARNING]
+> REPLACE_WITH_RISK_WARNING_OR_REMOVE_CALLOUT
 
 ```bash
-tool command --flag value
+REPLACE_WITH_SAFE_COMMAND
 ```
 
-What it does: what the command reads, changes, or validates.
+What it does: REPLACE_WITH_READ_CHANGE_OR_VALIDATION.
 
-Expected result: the observable success condition.
+Expected result: REPLACE_WITH_OBSERVABLE_SUCCESS_CONDITION.
 
-If it fails: the first safe diagnostic, and when to stop.
+If it fails: REPLACE_WITH_SAFE_DIAGNOSTIC_AND_STOP_CONDITION.
 
 ## Verify the result
 
-How the reader confirms the task is complete, using a read-only check.
+REPLACE_WITH_READ_ONLY_VERIFICATION
 
 ## Recover or roll back
 
-How to undo the change or return to a safe state, and what cannot be undone.
+REPLACE_WITH_ROLLBACK_AND_IRREVERSIBLE_LIMIT
 
 ## Clean up
 
-Optional. Remove anything the task created that should not remain.
+REPLACE_WITH_CLEANUP_AND_CHECK_OR_REMOVE_SECTION
 
 ## Related links
 
-- [Matching explanation](explanation-page.md)
-- [Official reference for the commands used](https://example.com/official/specific-page)
+- [Matching explanation](REPLACE_WITH_EXPLANATION_LINK.md)
+- [Official reference for the commands used](https://REPLACE_WITH_OFFICIAL_SOURCE)
 - [Back to the parent index](index.md)
 ````
 
@@ -186,7 +191,17 @@ Optional. Remove anything the task created that should not remain.
   footnotes that match `sources[].id`.
 - Record `stale_after` when the page is reviewed, not when it is drafted.
 - Add a `verified` record only for a real review or execution event.
-- Keep `status: draft` until the page has current evidence and an owner.
+- Keep `status: draft` until the page has real review evidence, current
+  official sources, and a decided freshness deadline.
+
+## Before you publish
+
+Replace every `REPLACE_WITH_` marker and instruction prompt, including
+link targets. Check that terms are defined before use, warnings appear
+before risky commands, and examples are labelled illustrative unless
+actually run. List the page in its parent `index.md`, rebuild the
+catalog, and run the [required
+checks](../../AGENTS.md#validation-and-publication).
 
 ## Related links
 

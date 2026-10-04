@@ -1,49 +1,101 @@
 ---
 type: Template
-title: "ADR-0000: Decision title"
-description: Record a durable decision, the context that led to it, alternatives, consequences, ownership, and review trigger.
+title: Architecture decision record template
+description: Copy a decision record that separates decision state from document maturity and preserves rationale, consequences, and a reconsideration trigger.
 tags: [templates, decision-record]
 status: draft
 maturity: draft
-audience: Engineering learners and practitioners
+audience: Knowledge-base contributors
 maintainer: unassigned
 ---
 
-# ADR-0000: Decision title
+# Architecture decision record template
 
-> [!IMPORTANT]
-> Replace the frontmatter and set the **decision state** below. The OKF `status` describes document maturity; the decision state records whether the decision is proposed, accepted, superseded, or deprecated.
+A Decision Record explains **why a choice was made**, what it changes,
+and when it should be revisited. Its decision state is separate from the
+OKF `status` of the page: an accepted decision can still be a draft
+article awaiting review.
+
+## Before you copy
+
+Copy only the fenced skeleton into a new lowercase kebab-case file.
+Replace every `REPLACE_WITH_` value.
+Use one decision per record. Set the body decision state to `Proposed`,
+`Accepted`, `Accepted with part superseded`, `Superseded by ADR-NNNN`,
+or `Deprecated`; link the replacing record when any part is superseded.
+Name the new file `adr-REPLACE_WITH_NUMBER-short-decision-name.md`.
+Use a real decision
+date if known, and leave it
+out rather than guess. Leave `maintainer: unassigned` until a person or
+team agrees to own the record.
+
+## Copyable Decision Record skeleton
+
+````markdown
+---
+type: Decision Record
+title: "ADR-REPLACE_WITH_NUMBER: REPLACE_WITH_DECISION_TITLE"
+description: "REPLACE_WITH_ONE_SENTENCE_CHOICE_AND_REASON"
+tags: [decision-records, REPLACE_WITH_TOPIC]
+status: draft
+maturity: initial-outline
+audience: REPLACE_WITH_READER_AUDIENCE
+maintainer: unassigned
+---
+
+# ADR-REPLACE_WITH_NUMBER: REPLACE_WITH_DECISION_TITLE
 
 ## Decision state
 
-Proposed
+REPLACE_WITH_DECISION_STATE_AND_KNOWN_DATE_IF_ANY
+
+## In plain terms
+
+REPLACE_WITH_ONE_SENTENCE_PLAIN_SUMMARY
 
 ## Context
 
-Describe the problem, constraints, evidence, and decision drivers.
+REPLACE_WITH_PROBLEM_CONSTRAINTS_EVIDENCE_AND_AFFECTED_READERS
 
 ## Decision
 
-State the decision clearly and name the owner responsible for its review.
+REPLACE_WITH_CHOICE_SCOPE_AND_RESULT_WITHOUT_INVENTED_REVIEWER
 
 ## Options considered
 
-| Option | Benefits | Costs and risks |
+| Option | Benefit | Cost or risk |
 | --- | --- | --- |
-| Option A | Benefit | Trade-off |
+| REPLACE_WITH_OPTION_A | REPLACE_WITH_BENEFIT_A | REPLACE_WITH_TRADEOFF_A |
+| REPLACE_WITH_OPTION_B | REPLACE_WITH_BENEFIT_B | REPLACE_WITH_TRADEOFF_B |
 
 ## Consequences
 
-- Expected outcome.
-- Accepted trade-off.
-- Follow-up action and review trigger.
+- REPLACE_WITH_EXPECTED_IMPROVEMENT.
+- REPLACE_WITH_ACCEPTED_COST.
+- REPLACE_WITH_FOLLOWUP_AND_AGREED_OWNER_OR_UNASSIGNED.
 
-## Evidence and review
+## Reconsider when
 
-Add official sources, experiments, or reader evidence to frontmatter when they informed the decision. Record a review deadline when the decision depends on changing technology or measured user behavior.
+REPLACE_WITH_OBSERVABLE_RECONSIDERATION_TRIGGER
+
+## Evidence and limitations
+
+REPLACE_WITH_REAL_EVIDENCE_AND_UNTESTED_LIMITS
 
 ## Related links
 
-- [Writing instructions](../../instructions.md)
-- [Back to templates index](index.md)
+- [Parent decision index](index.md)
+- [Replacing decision](REPLACE_WITH_REPLACING_ADR_LINK.md) or remove
+  this line if the decision remains active.
 - [Back to knowledge index](../index.md)
+````
+
+## Before you publish
+
+Replace every placeholder. Link the record from its parent `index.md`,
+rebuild the catalog, and run the [required
+checks](../../AGENTS.md#validation-and-publication). If a new decision
+supersedes an old one, update **both** records and the index. Preserve
+the old rationale as history; do not make it look like current policy.
+
+[Back to templates index](index.md) | [Back to knowledge index](../index.md)

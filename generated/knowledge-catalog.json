@@ -3747,8 +3747,8 @@
       "type": "Learning Path"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Record a durable decision, the context that led to it, alternatives, consequences, ownership, and review trigger.",
+      "audience": "Knowledge-base contributors",
+      "description": "Copy a decision record that separates decision state from document maturity and preserves rationale, consequences, and a reconsideration trigger.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/templates/architecture-decision-record-template.md",
@@ -3759,12 +3759,12 @@
         "templates",
         "decision-record"
       ],
-      "title": "ADR-0000: Decision title",
+      "title": "Architecture decision record template",
       "type": "Template"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Start a safe, scannable command reference with context checks, expected results, and recovery guidance.",
+      "audience": "Knowledge-base contributors",
+      "description": "Copy a scoped command lookup with version, context, side effects, expected results, and official command sources.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/templates/command-reference-template.md",
@@ -3779,7 +3779,7 @@
       "type": "Template"
     },
     {
-      "audience": "Engineering learners and practitioners",
+      "audience": "Knowledge-base contributors",
       "description": "Start either a teaching-oriented explanation or a task-oriented how-to guide from a separate skeleton, with complete OKF metadata, evidence, and navigation.",
       "maintainer": "unassigned",
       "maturity": "draft",
@@ -3795,8 +3795,8 @@
       "type": "Template"
     },
     {
-      "audience": "Beginning platform engineer",
-      "description": "Start a bounded, reproducible learning tutorial with prerequisites, validation, recovery, and cleanup.",
+      "audience": "Knowledge-base contributors",
+      "description": "Copy a bounded learning exercise with a clear starting point, observable result, safe recovery, and next lesson.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/templates/practical-example-template.md",
@@ -3811,8 +3811,8 @@
       "type": "Template"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Start a symptom-led troubleshooting guide with safe diagnostics, recovery, and prevention.",
+      "audience": "Knowledge-base contributors",
+      "description": "Copy a symptom-led guide that separates safe evidence gathering, likely causes, recovery, and escalation.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/templates/troubleshooting-template.md",

@@ -1,72 +1,114 @@
 ---
 type: Template
 title: Tutorial template
-description: Start a bounded, reproducible learning tutorial with prerequisites, validation, recovery, and cleanup.
+description: Copy a bounded learning exercise with a clear starting point, observable result, safe recovery, and next lesson.
 tags: [templates, tutorial]
 status: draft
 maturity: draft
-audience: Beginning platform engineer
+audience: Knowledge-base contributors
 maintainer: unassigned
 ---
 
 # Tutorial template
 
-> [!IMPORTANT]
-> Replace the frontmatter and placeholders. A tutorial teaches one bounded experience from a known starting point to a verified result.
+A Tutorial helps a beginner **learn by doing one bounded exercise**. It
+is not a production runbook or a list of every command a tool offers.
+Pick a disposable environment and one result the learner can see.
 
-## Goal
+## Before you copy
 
-Describe the concrete result the reader will produce and what they will understand afterwards.
+- Choose the parent topic in the [knowledge index](../index.md). Check
+  what the reader already needs to know and link its Explanation.
+- Copy only the fenced skeleton below into a new lowercase kebab-case
+  file. Replace every `REPLACE_WITH_` value. Change the parent-index
+  link to the real parent.
+- Keep `status: draft` unless real review evidence, official sources,
+  and a freshness deadline support `stable`.
+- If you did not run the exercise end to end, label it **Illustrative,
+  not executed** and leave out `verified`. If you did run it, record
+  the environment, steps, and observed result in the page; `verified`
+  metadata alone cannot hold that detail.
 
-## Prerequisites
+## Copyable Tutorial skeleton
 
-- Tool versions and installation links.
-- Permissions, accounts, local resources, and cost boundaries.
-- A disposable environment when commands can modify state.
+````markdown
+---
+type: Tutorial
+title: "REPLACE_WITH_TUTORIAL_TITLE"
+description: "REPLACE_WITH_ONE_SENTENCE_READER_OUTCOME"
+tags: [REPLACE_WITH_TOPIC]
+status: draft
+maturity: initial-outline
+audience: REPLACE_WITH_LEARNER_AUDIENCE
+maintainer: unassigned
+---
 
-## Files
+# REPLACE_WITH_TUTORIAL_TITLE
 
-| File | Purpose |
-| --- | --- |
-| `example.file` | Explain why it exists. |
+## What you will learn
 
-## Steps
+REPLACE_WITH_PLAIN_DEFINITION_PURPOSE_AND_VISIBLE_RESULT
 
-1. Prepare the environment and confirm the target context.
-2. Apply the configuration or command.
-3. Observe the intended result.
-4. Introduce one safe, useful diagnostic or failure condition when it teaches the goal.
-5. Recover and confirm the result again.
+## Before you start
 
-## Validation
+- Knowledge: REPLACE_WITH_PREREQUISITE_EXPLANATION_LINK.
+- Tools and versions: REPLACE_WITH_CHECKED_PREREQUISITES.
+- Place to work: REPLACE_WITH_DISPOSABLE_ENVIRONMENT.
+- Access and cost: REPLACE_WITH_PERMISSIONS_LIMITS_AND_STOP_CONDITION.
 
-```bash
-tool validate --target example
-```
+REPLACE_WITH_ILLUSTRATIVE_OR_EXECUTED_LABEL_AND_EVIDENCE_NOTE
 
-What it does: confirms the exercise reached the intended state.
+## 1. Confirm the starting point
 
-Expected result: state the visible condition that proves success.
+REPLACE_WITH_READ_ONLY_CONTEXT_CHECK_AND_EXPECTED_RESULT
 
-## Cleanup
+## 2. Create the small example
 
 > [!WARNING]
-> Put this warning before commands that delete resources, incur cost, or affect shared infrastructure.
+> REPLACE_WITH_RISK_WARNING_OR_REMOVE_CALLOUT
 
 ```bash
-tool delete --target example
+REPLACE_WITH_EXERCISE_COMMAND
 ```
 
-What it does: removes resources created by the exercise and prevents ongoing cost or state drift.
+What it does: REPLACE_WITH_STATE_CHANGE.
 
-Expected result: state how the reader proves cleanup is complete.
+Expected result: REPLACE_WITH_OBSERVABLE_SIGNAL.
 
-## Evidence and freshness
+If it fails: REPLACE_WITH_SAFE_CHECK_AND_STOP_CONDITION.
 
-Record actual local or sandbox execution in `verified`; do not claim execution that did not happen.
+## 3. Inspect the result
 
-## Related links
+REPLACE_WITH_READ_ONLY_VERIFICATION_AND_FAILURE_SIGNAL
 
-- [Writing instructions](../../instructions.md)
-- [Back to templates index](index.md)
-- [Back to knowledge index](../index.md)
+## 4. Recover or reset
+
+REPLACE_WITH_RECOVERY_STEPS_AND_IRREVERSIBLE_LIMIT
+
+## Clean up
+
+REPLACE_WITH_CLEANUP_WARNING_STEPS_AND_VERIFICATION
+
+## Check your understanding
+
+1. REPLACE_WITH_WHY_QUESTION
+2. REPLACE_WITH_VERIFICATION_QUESTION
+
+## Go deeper
+
+- [Next lesson or practice task](REPLACE_WITH_NEXT_LEARNING_LINK.md)
+- [Matching explanation](REPLACE_WITH_EXPLANATION_LINK.md)
+- [Specific official documentation](https://REPLACE_WITH_OFFICIAL_SOURCE)
+- [Back to parent index](index.md)
+````
+
+## Before you publish
+
+Check that every placeholder is gone, the commands were verified or
+clearly labelled illustrative, and the exercise has a recovery path.
+List the new page in its parent `index.md`, rebuild the catalog, and run
+the [required checks](../../AGENTS.md#validation-and-publication).
+Record `sources`, `verified`, and `stale_after` only when the evidence
+behind each field exists.
+
+[Back to templates index](index.md) | [Back to knowledge index](../index.md)
