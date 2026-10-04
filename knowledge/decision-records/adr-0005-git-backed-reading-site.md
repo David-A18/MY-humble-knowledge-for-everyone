@@ -17,7 +17,7 @@ Accepted. Supersedes the wait-for-reader-testing decision in [ADR-0003](adr-0003
 
 ## Context
 
-The repository provides an OKF v0.2 bundle, validated relative links, a derived concept catalog, and reader-task fixtures. The owner now wants a public, linked reading site in a separate repository. Independent reader sessions have not yet been recorded; this decision reflects owner direction rather than claimed reader evidence.
+The repository provides an OKF v0.2 bundle, validated relative links, a derived concept catalog, and a reader-test protocol. The owner wants a public, linked reading site in a separate repository. Independent reader sessions had not been recorded when this decision was made; it reflects owner direction rather than claimed reader evidence.
 
 ## Decision
 
@@ -39,6 +39,25 @@ Each source update is proposed as a pinned-commit pull request in the website re
 - A moved source path changes its website route and requires a redirect.
 - The existing catalog remains derived and covers concepts; website indexes are resolved from the bundle's `index.md` files.
 - Site launch has a host-selection gate. Reader tests run after launch and may change navigation priorities, without being represented as prelaunch evidence.
+
+## What this means for a reader and maintainer
+
+Imagine a contributor improves one concept in `knowledge/` and merges
+it to the source `main` branch. Under this design, a site release keeps
+showing its previous, reviewable version until a website update pins
+the new full commit SHA and passes the site build. That pin tells a
+reader exactly which source revision produced the page. It also lets
+a maintainer rebuild that release from the same source and dependencies.
+
+The website build is designed to read the generated catalog for concept discovery and the
+bundle's `index.md` files for topic routes. Search files are built from
+the rendered static pages. Both catalog and search output are derived
+from Markdown; neither is an independent place to edit knowledge.
+
+Reconsider the site design after the first reader-task sessions if
+people cannot find or understand pages, or if a host cannot meet the
+documented accessibility and release checks. Record observed problems
+and a new decision before changing the canonical-source boundary.
 
 ## Related links
 

@@ -43,7 +43,7 @@ Use the [external evidence request checklist](external-evidence-request.md) to i
 
 ## Reader-task testing queue
 
-KB-14 provides the process for actual reader testing. Reader sessions are optional follow-up evidence; when they happen, record results without unnecessary personal data.
+KB-14 provides the process for actual reader testing. Under [ADR-0005](knowledge/decision-records/adr-0005-git-backed-reading-site.md), run reader sessions after the first public site release; earlier exploratory sessions may also help. Record results without unnecessary personal data.
 
 ### Participant criteria
 
@@ -82,8 +82,8 @@ Record only the fields needed for documentation improvement:
 ## Optional validation follow-ups
 
 - KB-04 can be strengthened with authorized AWS and Crossplane sandbox execution, but the source-reviewed documentation correction is complete for the knowledge-base scope. Track optional runtime evidence in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1), with the latest validated baseline noted in [issue comment #5749445645](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1#issuecomment-5749445645). Use the [external evidence request checklist](external-evidence-request.md) before the run, then use the [AWS S3 lab validation template](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
-- KB-14 can be strengthened with actual reader participation, but the testing process and maintenance scaffold are complete for the knowledge-base scope. Track optional reader evidence in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2), with the latest validated baseline noted in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761). Use the external evidence request checklist before recruiting readers, then use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
-- KB-15 is recorded in [ADR-0003](knowledge/decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question if reader evidence or maintainer feedback shows a measured need.
+- KB-14's testing process and maintenance scaffold are complete. The post-launch reader sessions committed by ADR-0005 remain to be run. Track the resulting evidence in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2), with the latest validated baseline noted in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761). Use the external evidence request checklist before recruiting readers, then use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
+- KB-15's earlier site deferral is preserved in [ADR-0003](knowledge/decision-records/adr-0003-searchable-site-decision.md). [ADR-0005](knowledge/decision-records/adr-0005-git-backed-reading-site.md) supersedes that timing choice and keeps canonical Markdown as the source for a separate reading site.
 
 ## Related links
 

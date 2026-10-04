@@ -2,9 +2,14 @@
 
 Architecture Decision Records document important repository and engineering decisions.
 
+For the current content and website relationship, read
+[ADR-0004](adr-0004-machine-readable-discovery.md) and
+[ADR-0005](adr-0005-git-backed-reading-site.md) first. An ADR's
+decision state below is separate from the page's OKF maturity label.
+
 ## Records
 
-| ADR | Status | Decision |
+| ADR | Decision state | Decision |
 | --- | --- | --- |
 | [ADR-0001](ADR-0001-knowledge-base-structure.md) | Accepted | Use a navigable multi-directory knowledge base structure. |
 | [ADR-0002](ADR-0002-source-ingestion-and-topic-taxonomy.md) | Accepted | Use a source ingestion workflow and expanded topic taxonomy. |
@@ -17,3 +22,4 @@ Architecture Decision Records document important repository and engineering deci
 Use the [ADR template](../templates/architecture-decision-record-template.md) for future decisions.
 
 [Back to root index](../../README.md)
+| [Back to knowledge index](../index.md)

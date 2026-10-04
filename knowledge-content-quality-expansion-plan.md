@@ -1845,13 +1845,34 @@ application recovery evidence explicit.
 | --- | --- | --- | --- |
 | [How automation asks Velero to back up or restore](knowledge/migrations/velero/possible-integrations.md) | Library-request analogy with its limit, GitHub-to-Velero diagram and text alternative, identity and request tables, invented rehearsal path, and boundary-first failure routing. | Opus 5.5 read-only reviews of the prior and revised page identified shell and output injection, untrusted role/cluster selection, excessive RBAC, broad restore scope, mismatched approval and execution, missing OIDC environment binding, and false green-job confidence; the revised page addresses them. Current Velero v1.18 how-it-works, restore, migration, and troubleshooting docs, GitHub OIDC and environment docs, and EKS access-entry and authentication-mode docs checked. Diagram rendered and inspected. No workflow, IAM role, EKS cluster, backup, restore, or reader task was tested. | Independent GitHub/AWS/Velero security review; authorized disposable workflow with fixed cluster identity and scoped permissions; novice request-path task; freshness decision. |
 
+### Wave 115 (2026-10-05)
+
+The five decision records now distinguish their historical choices from
+the current OKF and website rules. Each gives a beginner the reason for
+the choice, what still applies, and a condition for reconsideration.
+The earlier website deferral remains visible as history without being
+presented as current policy.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [ADR-0001: Knowledge base structure](knowledge/decision-records/ADR-0001-knowledge-base-structure.md) | Explains why focused pages and topic indexes help, then dates the `README.md` to `index.md` OKF change and names a reader-task reconsideration trigger. | Current authoring rules, root index, and 2026-09-20 bundle log checked; Opus 5.5 reviewed the prior records. No reader task was run. | Independent governance review and reader navigation task. |
+| [ADR-0002: Source ingestion and topic taxonomy](knowledge/decision-records/ADR-0002-source-ingestion-and-topic-taxonomy.md) | Separates raw notes from curated knowledge, clarifies today's route names and ingestion register, and names when taxonomy needs review. | Source ingestion instructions, register route, and current knowledge index checked; Opus 5.5 reviewed the prior records. No ingestion was run. | Independent source-ingestion review and contributor route-choice task. |
+| [ADR-0003: Earlier searchable-site deferral](knowledge/decision-records/adr-0003-searchable-site-decision.md) | Explains why the site was once deferred and makes clear that ADR-0005 superseded the timing decision before reader-session evidence existed. | ADR-0005 and the repository improvement-plan history checked; Opus 5.5 reviewed the prior records. No reader session was claimed. | Independent historical review; no new action under this superseded choice. |
+| [ADR-0004: Canonical Markdown and discovery](knowledge/decision-records/adr-0004-machine-readable-discovery.md) | Keeps catalog and validation rules active, marks the site-deferral clause historical, and shows how metadata, indexes, catalog, and search relate. | Current OKF instructions, website plan, catalog generator, and listed official documentation checked; Opus 5.5 reviewed the prior records. No retrieval-service measurement was run. | Independent catalog/website contract review and retrieval task; freshness decision by recorded deadline. |
+| [ADR-0005: Git-backed reading site](knowledge/decision-records/adr-0005-git-backed-reading-site.md) | Uses one concept-update example to explain pinned source revisions, derived catalog/search, and post-launch reconsideration through reader tasks. | Website source-side plan and current repository contract checked; Opus 5.5 reviewed the prior records. No public reader task or host validation was claimed. | Independent website-contract review and observed post-launch reader tasks. |
+
+Opus 5.5 also reviewed the revised records. Its findings led to explicit
+decision-state labels, a correction to the ingestion-register wording,
+historical wording for the superseded site clause, and alignment of the
+maintenance queue with ADR-0005's post-launch reader-testing decision.
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 114
-together: one hundred forty-three concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 115
+together: one hundred forty-eight concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 22 have not yet been authored or
+The remaining 17 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1864,7 +1885,7 @@ demonstration, so most teaching elements do not apply there.
 | Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
-| Decision records | 5 | 0 | 5 |
+| Decision records | 5 | 5 | 0 |
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
@@ -1875,7 +1896,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **143** | **22** |
+| **Total** | **165** | **148** | **17** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

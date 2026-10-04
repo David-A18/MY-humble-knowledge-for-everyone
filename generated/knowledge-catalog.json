@@ -1583,7 +1583,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "The repository is intended to grow over time across Git, GitHub Actions, Terraform, Kubernetes, AWS, FinOps, architecture, troubleshooting, and best practices. A single large document would become difficult to navigate, review, and maintain.",
+      "description": "Keep growing knowledge in focused topic pages with an index for each directory; the index filename later changed to index.md under OKF.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/decision-records/ADR-0001-knowledge-base-structure.md",
@@ -1598,7 +1598,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "The knowledge base needs a clear place for raw Markdown notes before they are converted into curated documentation. It also needs explicit routes for topics that are expected to grow beyond the initial Git, Terraform, Kubernetes, and AWS sections.",
+      "description": "Stage raw source notes outside the curated knowledge bundle, then classify and link each reviewed article into a growing topic taxonomy.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/decision-records/ADR-0002-source-ingestion-and-topic-taxonomy.md",
@@ -1613,7 +1613,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "The knowledge base is currently published as a Git repository with Markdown indexes, focused articles, local validation scripts, and an explicit maintenance review queue. The improvement plan asks whether a searchable static reading site would be worthwhile after reader-task testing produces findability evidence.",
+      "description": "Historical decision to defer a reading site pending reader tests; ADR-0005 superseded it when the owner chose to launch first.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/decision-records/adr-0003-searchable-site-decision.md",
