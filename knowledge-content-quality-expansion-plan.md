@@ -1833,13 +1833,25 @@ must provide, and the evidence needed before traffic moves.
 | --- | --- | --- | --- |
 | [Choose where Velero fits in a recovery plan](knowledge/migrations/velero/real-use-cases-and-runbooks.md) | Moving-plan analogy and its limit, invented notes-app scenario, layer diagram and text alternative, six use-case choices, RPO/RTO terms, and plan-readiness questions. | Opus 5.5 read-only reviews of the prior and revised page found unsafe unscoped restores, stopped-Pod FSB, source-bucket, GitOps ownership, data-before-workload ordering, and cross-cloud storage mapping assumptions; the revised page addresses them. Current Velero v1.18 migration, FSB, restore, data-movement, and how-it-works docs and Argo CD automated-sync docs checked. Diagram rendered and inspected. No cluster, cutover, restore, or reader task was tested. | Independent Velero/GitOps review; controlled scenario and novice route-choice task; freshness decision. |
 
+### Wave 114 (2026-10-05)
+
+The Velero automation page now teaches the request path and its trust
+boundaries instead of offering an untested production workflow and IAM
+policy. It separates the runner's AWS and Kubernetes access from the
+Velero server's storage permissions, and makes plan approval and
+application recovery evidence explicit.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How automation asks Velero to back up or restore](knowledge/migrations/velero/possible-integrations.md) | Library-request analogy with its limit, GitHub-to-Velero diagram and text alternative, identity and request tables, invented rehearsal path, and boundary-first failure routing. | Opus 5.5 read-only reviews of the prior and revised page identified shell and output injection, untrusted role/cluster selection, excessive RBAC, broad restore scope, mismatched approval and execution, missing OIDC environment binding, and false green-job confidence; the revised page addresses them. Current Velero v1.18 how-it-works, restore, migration, and troubleshooting docs, GitHub OIDC and environment docs, and EKS access-entry and authentication-mode docs checked. Diagram rendered and inspected. No workflow, IAM role, EKS cluster, backup, restore, or reader task was tested. | Independent GitHub/AWS/Velero security review; authorized disposable workflow with fixed cluster identity and scoped permissions; novice request-path task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 113
-together: one hundred forty-two concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 114
+together: one hundred forty-three concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 23 have not yet been authored or
+The remaining 22 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1857,13 +1869,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 8 | 1 |
+| Migrations | 9 | 9 | 0 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **142** | **23** |
+| **Total** | **165** | **143** | **22** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

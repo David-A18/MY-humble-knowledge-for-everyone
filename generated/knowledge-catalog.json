@@ -3471,20 +3471,32 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand how Velero can be triggered from automation systems such as GitHub Actions, what the pipeline can safely do, and what configuration must already exist in AWS, EKS, Kubernetes, and Velero.",
+      "audience": "Learners designing Kubernetes backup automation",
+      "description": "Follow the GitHub Actions to EKS to Velero request path and the separate permissions and evidence needed for safe automation.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/possible-integrations.md",
-      "source_ids": [],
+      "source_ids": [
+        "velero-how-it-works",
+        "velero-restore",
+        "velero-migration",
+        "velero-troubleshooting",
+        "github-oidc-aws",
+        "github-environments",
+        "eks-access",
+        "eks-auth-mode"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
         "velero",
-        "possible-integrations"
+        "github-actions",
+        "eks",
+        "automation",
+        "beginner"
       ],
-      "title": "Velero possible integrations",
+      "title": "How automation asks Velero to back up or restore",
       "type": "Explanation"
     },
     {
