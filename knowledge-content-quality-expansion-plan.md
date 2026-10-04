@@ -1784,13 +1784,27 @@ Those are separate, more advanced tasks with their own official docs.
 | --- | --- | --- | --- |
 | [Back up and restore one ConfigMap with Velero](knowledge/migrations/velero/backup-restore-workflows.md) | One-note archive analogy, object path diagram and text alternative, guarded preflight, narrow object backup, mapped restore, value check, and conditional cleanup. | Opus 5.5 read-only review of the prior command catalog identified live-production and PVC-data risks; Velero v1.18 backup, restore, and how-it-works docs checked. Shell blocks parsed with `bash -n`; diagram rendered and inspected. No live Velero server, backup location, Kubernetes cluster, backup, restore, or reader task was available. | Run in disposable cluster with real backup storage and record output; independent Velero review; novice task; freshness decision. |
 
+### Wave 110 (2026-10-05)
+
+The Velero cross-cluster explanation now separates the Kubernetes
+object archive, volume-data path, destination prerequisites, and
+application cutover. An invented notes app shows what Velero can
+carry and what must be rebuilt or checked. It removes unrun
+source/destination commands, production namespace restores, and the
+unsafe suggestion to make a shared source backup prefix writable from
+the destination.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a Velero backup reaches another cluster](knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md) | Library-move analogy, invented notes-app diagram and text alternative, item-location and target-prerequisite tables, planned-versus-disaster comparison, evidence sequence and cutover questions. | Opus 5.5 read-only review of the prior page identified two-writer, shared-prefix, CRD, volume-portability, and rollback risks. Current Velero v1.18 migration, disaster, how-it-works, restore, and location docs checked. Diagram rendered and inspected. No source/destination cluster, volume backup, restore, outage, cutover, or reader task was tested. | Independent Velero/security review; authorized two-cluster drill with data checksum and side-effect isolation; novice handoff task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 109
-together: one hundred thirty-eight concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 110
+together: one hundred thirty-nine concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 27 have not yet been authored or
+The remaining 26 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1808,13 +1822,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 4 | 5 |
+| Migrations | 9 | 5 | 4 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **138** | **27** |
+| **Total** | **165** | **139** | **26** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

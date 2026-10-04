@@ -1,292 +1,205 @@
 ---
-type: "Explanation"
-title: "Velero cluster migration and disaster recovery"
-description: "Use this page to plan Velero-based Kubernetes cluster migration, disaster recovery, and cross-cluster restores."
-tags: [migrations, velero]
+type: Explanation
+title: How a Velero backup reaches another cluster
+description: Trace which Kubernetes objects and volume data a second cluster can restore, and which migration steps remain outside Velero.
+tags: [migrations, velero, disaster-recovery, beginner]
 status: draft
 maturity: draft
-audience: "Platform engineers planning Kubernetes migration or disaster recovery with Velero"
+audience: Platform and application teams learning cluster recovery
 maintainer: unassigned
 sources:
   - id: velero-migration
     resource: https://velero.io/docs/v1.18/migration-case/
-    title: Velero cluster migration
+    title: Velero v1.18 - Cluster Migration
   - id: velero-disaster-recovery
     resource: https://velero.io/docs/v1.18/disaster-case/
-    title: Velero disaster recovery
-stale_after: 2026-12-19
+    title: Velero v1.18 - Disaster Recovery
+  - id: velero-how
+    resource: https://velero.io/docs/v1.18/how-velero-works/
+    title: Velero v1.18 - How Velero Works
+  - id: velero-restore
+    resource: https://velero.io/docs/v1.18/restore-reference/
+    title: Velero v1.18 - Restore Reference
+  - id: velero-locations
+    resource: https://velero.io/docs/v1.18/locations/
+    title: Velero v1.18 - Backup and Snapshot Locations
 ---
 
-# Velero cluster migration and disaster recovery
+# How a Velero backup reaches another cluster
 
-## Purpose
+## The idea in one minute
 
-Use this page to plan Velero-based Kubernetes cluster migration, disaster recovery, and cross-cluster restores.
+Velero can help move selected Kubernetes objects and, when configured,
+volume data from a source cluster to a destination cluster. The source
+writes a backup archive to object storage. Velero on the destination
+can discover that archive from the same backup storage location and
+restore eligible objects. Volume data has a separate path: a provider
+or CSI snapshot might stay in its storage system, while File System
+Backup or CSI data movement can copy bytes to a Velero repository in
+object storage.[^velero-migration][^velero-how]
 
-Status: Draft
-Audience: Platform engineers planning Kubernetes migration or disaster recovery with Velero
-Page type: Migration and disaster-recovery guide
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Velero v1.18 documentation and current backup, restore, and file-system backup references
-Validation evidence: Source reviewed against official Velero migration, backup sync, restore, object-storage, and file-system backup documentation
-Known limitations: Not validated with source and destination clusters, shared backup storage, provider snapshots, or a full application restore drill during this review
-Next review: After a successful cross-cluster restore drill or by 2026-12-19
+Think of moving a small library. The catalog lists the books and
+shelves; the books themselves still need to arrive. A new building
+also needs doors, staff, and an address before visitors can use it.
+The analogy stops at data consistency: an application might keep
+writing while a backup is taken, so its restored data must be checked
+under that application's own rules.
 
-## Contents
+This page explains the handoffs for **one** migration or recovery.
+For a safe first Velero operation, use the [disposable ConfigMap
+exercise](backup-restore-workflows.md). For volume methods, use
+[where Velero keeps volume data](storage-and-volume-backups.md).
+The layouts below are illustrative. No two-cluster restore or cutover
+was run in this review.
 
-- [Migration model](#migration-model)
-- [Before migration](#before-migration)
-- [Source and destination setup](#source-and-destination-setup)
-- [Same-provider cluster migration](#same-provider-cluster-migration)
-- [Disaster recovery with read-only backup storage](#disaster-recovery-with-read-only-backup-storage)
-- [Cross-provider and cross-region migration](#cross-provider-and-cross-region-migration)
-- [API version planning](#api-version-planning)
-- [Validation and rollback boundaries](#validation-and-rollback-boundaries)
+## Follow an invented notes app
 
-## Migration model
+Suppose `notes` runs in cluster A with a Deployment, Service, and PVC
+holding note files. The team wants to recover it in cluster B. The
+backup was intentionally configured to include both the Kubernetes
+objects and **File System Backup** of the mounted volume; this is an
+assumption for the example, not a result observed here.
 
-Velero migration is based on shared backup storage. The source cluster writes backups into an object storage bucket and prefix. The destination cluster runs Velero with access to the same backup storage location. Velero syncs backup metadata from object storage into the destination cluster so restore operations can use backups created elsewhere.
-
-The important distinction is:
-
-- Kubernetes resources move through Velero backup archives in object storage.
-- Provider snapshots usually remain in the provider storage system.
-- File System Backup and CSI data movement place volume data in an object-storage-backed repository.
-- Application-consistent databases, queues, and external services need their own migration path.
-
-## Before migration
-
-| Check | Why it matters |
-| --- | --- |
-| Kubernetes version compatibility | Velero does not support restoring into a lower Kubernetes version than the source. |
-| API group versions | Removed or changed APIs can block restores of old resources or CRDs. |
-| CRDs and operators | Custom resources often need their CRDs and controllers installed before restore. |
-| Storage driver names | CSI snapshot restores need compatible driver names on source and destination. |
-| Region and provider boundaries | AWS and Azure snapshot plugins do not handle all cross-region or cross-provider data moves. |
-| Secrets and endpoints | Restored Secrets, URLs, certificates, and external service references may need environment changes. |
-
-> [!WARNING]
-> Do not treat a cluster migration as complete until workloads start, PVC data is verified, ingress and DNS are tested, and application owners confirm expected behavior.
-
-## Source and destination setup
-
-Prepare the source cluster:
-
-1. Confirm Velero can write to backup storage.
-2. Confirm volume backup method per workload.
-3. Capture CRDs, StorageClasses, ingress classes, workload identities, and external dependencies.
-4. Run a test backup and inspect warnings before the cutover window.
-
-```bash
-kubectl config use-context source-cluster
-velero backup-location get
-velero snapshot-location get
-kubectl get crd,storageclass,ingressclass
-kubectl get pvc,pv -A
+```mermaid
+flowchart LR
+  source["Cluster A<br/>objects and mounted PVC"] --> veleroA["Velero backup"]
+  veleroA --> archive["Shared object storage<br/>object archive"]
+  veleroA --> files["Shared object storage<br/>volume repository"]
+  archive --> sync["Cluster B Velero<br/>backup sync"]
+  files --> restore["Restore objects<br/>and volume bytes"]
+  sync --> restore
+  ready["Cluster B prerequisites<br/>APIs, storage, access"] --> restore
+  restore --> app["Notes app<br/>verify expected notes"]
+  app --> traffic["Decide traffic cutover"]
 ```
 
-What it does: verifies backup storage and inventories APIs and storage dependencies that must exist or be mapped on the destination.
+Text alternative: Velero in cluster A stores selected Kubernetes
+objects in an archive and, under the example's File System Backup
+configuration, copies mounted volume files to a repository. Velero in
+cluster B discovers the archive through shared object storage. After
+cluster B has compatible APIs, storage, and access, it restores the
+objects and volume data. The team opens the app, checks notes, then
+decides when user traffic should move.
 
-Prepare the destination cluster:
+If the backup had used only an EBS or CSI snapshot, the volume bytes
+would not be in the object archive or the File System Backup
+repository. Cluster B would also need access to a compatible snapshot
+in the storage backend. Matching Kubernetes object definitions and
+a completed `Backup` are not proof that the data is portable.
+[^velero-locations]
 
-1. Install platform dependencies before application restore: CRDs, operators, CSI drivers, snapshot controller, ingress, DNS, certificates, policy, and secret tooling.
-2. Install Velero with access to the backup storage.
-3. Set the backup location read-only until the destination is intentionally allowed to create backups.
-4. Confirm Velero syncs backup metadata from object storage.
+| Part of `notes` | Where it is in this example | What cluster B must check |
+| --- | --- | --- |
+| Deployment, Service, and PVC definitions | In the object archive. | APIs exist, images pull, and restored objects have the intended configuration. |
+| A Secret, if included by the backup filter | In the object archive with its backed-up value. | Credentials and endpoints are suitable for B; a copied Secret may still reach A's production services. |
+| Files on the mounted PVC | In the FSB repository **only if its backup completed**. | Node-agent and target storage can restore them; an expected file or checksum matches. |
+| StorageClass, CSI driver, and cluster operators | Destination platform dependencies, which this namespace example does not establish. | Install or map compatible components under their own owner before restoring the app. |
+| External database, DNS, and user traffic | Outside this Velero backup. | Use separate migration and cutover decisions. |
 
-```bash
-kubectl config use-context destination-cluster
-velero backup-location get
-velero backup get
-kubectl get crd,storageclass,ingressclass
-kubectl get daemonset node-agent -n velero
-```
+## What the destination must have
 
-What it does: verifies the destination can see backups and has the APIs, storage, and node-agent needed for restore.
+| Needed before restore | Why it matters | Evidence to seek |
+| --- | --- | --- |
+| Access to the correct bucket and prefix | Velero syncs backup records from object storage; a similarly named but different location will show a different set. | Destination sees the exact source backup name and can inspect its metadata. |
+| Compatible Velero and storage integration | The destination must be able to read the archive and use the selected volume path. | BackupStorageLocation is available; required provider or data-mover components are healthy. |
+| Served Kubernetes APIs and required controllers | A restored custom resource needs its API version on the target, and its controller to do useful work. | Required CRDs and operators are installed at compatible versions before app restore. |
+| A usable volume-data path | A PVC object alone does not recover the old files. | Snapshot access or repository data plus a tested restore into target storage. |
+| Application dependencies | Velero cannot recreate every external database, cloud IAM role, DNS record, secret provider, or endpoint. | Owner checks each dependency and a real user path. |
 
-## Backup sync check
+Velero v1.18 says it does not support restoring into a Kubernetes
+cluster with a **lower version** than the source. The target must also
+serve the backed-up API group/version for each resource; an API that
+was removed or renamed can stop its restore even when the target is
+newer. Compatibility is per resource and must be checked rather than
+inferred from cluster version alone.[^velero-migration][^velero-how]
 
-Velero treats object storage as the source of truth for completed backups. A destination cluster can discover source backups when it points to the same bucket and prefix, or to a copied backup storage layout.
+A destination `BackupStorageLocation` can use `ReadOnly` access mode
+during recovery. That mode prevents Velero from creating or deleting
+backups at that location while it restores. It does not replace
+provider-level storage permissions, retention controls, or a separate
+immutable copy. The source and destination should not both write to
+one prefix without an intentional ownership plan. Configure the
+destination's shared source location as read-only **from the start**.
+If B later needs to create its own backups, give it a separate writable
+bucket or prefix rather than turning the shared source location back
+to read-write.[^velero-migration]
+[^velero-disaster-recovery]
 
-```bash
-velero backup get
-velero backup describe <source-backup-name> --details
-```
+## Separate migration from disaster recovery
 
-What it does: confirms the destination Velero instance has synced backup metadata and can inspect a source-created backup.
+| Question | Planned migration | Disaster recovery |
+| --- | --- | --- |
+| Is cluster A still usable? | Usually yes; rehearse cluster B while A serves users. | Maybe not; depend on backups and access prepared earlier. |
+| How fresh must data be? | Choose a final backup or application-level replication and define a write-freeze or changeover point. | Use the latest *usable* recovery point and measure actual data loss. |
+| When does traffic move? | After cluster B and the application pass checks. | After enough service is restored and the incident owner approves. |
+| Can traffic move back? | Only if source data remains valid or target writes can be reconciled safely. | A route change alone cannot undo writes made on B. |
 
-> [!IMPORTANT]
-> If `velero backup get` is empty on the destination, do not start restoring. Check bucket, prefix, provider plugin, credentials, network path, and backup storage access mode first.
+The exact cutover plan is application-specific. Restored Jobs,
+CronJobs, Secrets, and workloads can start acting on real external
+systems before DNS changes. A test restore in another namespace is
+not automatically isolated. Keep side effects, source and destination
+GitOps controllers, and external credentials in the migration plan.
+This is an architectural implication of restoring runnable objects,
+not a claim that Velero controls their behavior.
 
-## Same-provider cluster migration
+Before cutover, confirm that the source backup will not expire during
+the migration window. Stop or account for source writes after the
+chosen recovery point; otherwise they will not appear on B. Once B
+accepts writes, a route change back to A does not copy those changes
+back. Define a data reconciliation or reverse-migration plan before
+calling that route change a rollback.[^velero-how]
 
-### Back up on the source cluster
+## Read the evidence in order
 
-```bash
-kubectl config use-context source-cluster
-velero backup create source-app-prod --include-namespaces app-prod --wait
-velero backup describe source-app-prod --details
-```
+1. **Source:** Was the intended backup completed without important
+   warnings? Which objects and volume method were actually included?
+2. **Transport:** Does cluster B see the correct backup from the
+   expected bucket and prefix? Backup sync can discover a source
+   backup, but it does not itself check target compatibility.
+   [^velero-how]
+3. **Restore:** Which objects were created, skipped, or failed? Velero
+   normally leaves an existing target object unchanged. Inspect volume
+   restore status separately.[^velero-restore]
+4. **Application:** Do a representative read and write, check known
+   data, background work, and the user-facing route. Record the
+   newest recovered item and elapsed recovery time.
+5. **Cutover:** Decide which cluster may accept writes. If B has
+   accepted new writes, routing back to A can lose or conflict with
+   them unless an application-specific reconciliation path exists.
 
-What it does: creates and verifies a source namespace backup before switching to the destination cluster.
+A successful drill supports a recovery claim only for the tested
+versions, data path, target, and application checks. It does not
+promise the same outcome for another storage backend or workload.
 
-### Restore on the destination cluster
+## Check your understanding
 
-```bash
-kubectl config use-context destination-cluster
-velero backup get
-velero restore create app-prod-migration \
-  --from-backup source-app-prod \
-  --namespace-mappings app-prod:app-prod \
-  --wait
-```
+1. Why can cluster B see a `Backup` record but fail to restore the
+   notes app's files?
+2. What must exist in B before a backed-up custom resource can be
+   useful?
+3. Why is a read-only backup location helpful, and what does it not
+   protect?
+4. Why can switching DNS back to A lose data after B has taken writes?
 
-What it does: confirms the destination sees synced backups and restores the selected backup into the destination cluster.
-
-### Restore in dependency order
-
-For complex clusters, avoid one large restore until the order is proven. A safer sequence is:
-
-1. CRDs and operator namespaces.
-2. Shared platform namespaces.
-3. Secrets or external secret bindings.
-4. PVC data and workload namespaces.
-5. Ingress, DNS, and traffic.
-
-```bash
-velero restore create app-prod-crds \
-  --from-backup source-app-prod \
-  --include-cluster-resources=true \
-  --include-resources customresourcedefinitions \
-  --wait
-
-velero restore create app-prod-workloads \
-  --from-backup source-app-prod \
-  --include-namespaces app-prod \
-  --wait
-```
-
-What it does: shows the idea of restoring API definitions before workload resources. Adjust the split to match how the source backup was created and how the destination platform is managed.
-
-## Disaster recovery with read-only backup storage
-
-During disaster recovery, set the backup storage location to read-only before restoring. This helps prevent the recovery cluster from creating or deleting backup objects during the restore process.
-
-```bash
-kubectl patch backupstoragelocation default \
-  --namespace velero \
-  --type merge \
-  --patch '{"spec":{"accessMode":"ReadOnly"}}'
-```
-
-What it does: changes the default backup storage location to read-only mode.
-
-After recovery validation, restore read-write mode only when this cluster should resume creating backups:
-
-```bash
-kubectl patch backupstoragelocation default \
-  --namespace velero \
-  --type merge \
-  --patch '{"spec":{"accessMode":"ReadWrite"}}'
-```
-
-What it does: allows Velero to write new backups to the storage location again.
-
-### BackupStorageLocation read-only YAML
-
-```yaml
-apiVersion: velero.io/v1
-kind: BackupStorageLocation
-metadata:
-  name: default
-  namespace: velero
-spec:
-  provider: aws
-  objectStorage:
-    bucket: my-velero-backups
-    prefix: clusters/prod-eks
-  config:
-    region: eu-west-1
-  accessMode: ReadOnly
-```
-
-What it does: declares a backup location that can be used for restore discovery without letting the recovery cluster write or delete backup data.
-
-## Cross-provider and cross-region migration
-
-Provider snapshots are usually tied to a provider, region, account, storage system, or CSI driver. If you need to move volume data across those boundaries, use one of these approaches:
-
-| Requirement | Recommended path |
-| --- | --- |
-| Cross-provider volume data migration | File System Backup or application-native export/import. |
-| Cross-region migration with unsupported snapshot copy | File System Backup or provider-native snapshot copy plus restore testing. |
-| Database migration with low data loss | Database replication, logical dump, or native backup plus Velero for Kubernetes resources. |
-| Stateless workload migration | Velero Kubernetes object backup, GitOps redeploy, or both. |
-
-> [!IMPORTANT]
-> For cross-provider migrations, Velero can help move manifests and file-level volume contents, but it cannot make every cloud snapshot portable.
-
-### Cross-provider backup pattern
-
-```bash
-velero backup create app-prod-portable \
-  --include-namespaces app-prod \
-  --default-volumes-to-fs-backup \
-  --snapshot-volumes=false \
-  --wait
-```
-
-What it does: avoids provider snapshots and uses File System Backup for eligible mounted pod volumes so PVC file data can be restored on a different provider.
-
-> [!WARNING]
-> This pattern is not a database consistency guarantee. Stop writes, use database-native backup, or replicate data before using a file-level backup as a migration input.
-
-## API version planning
-
-When source and destination clusters differ, check removed Kubernetes APIs before backup and restore.
-
-```bash
-kubectl api-resources
-kubectl get crd
-velero backup describe <backup-name> --details
-```
-
-What it does: inventories available resource APIs and checks what Velero captured.
-
-## Validation and rollback boundaries
-
-Validate migration at three levels:
-
-| Level | Checks |
-| --- | --- |
-| Velero operation | `velero backup describe`, `velero restore describe`, logs, warnings, and errors. |
-| Kubernetes platform | Pods ready, PVCs bound, Services and Ingress created, CRDs served, operators healthy. |
-| Application data | Owner-approved checks such as row counts, file counts, object counts, queue lag, login, writes, and background jobs. |
-
-```bash
-velero restore get
-velero restore describe <restore-name> --details
-kubectl get pods,pvc,ingress -n app-prod
-kubectl get events -n app-prod --sort-by=.lastTimestamp
-```
-
-What it does: checks restore status and common Kubernetes signals before application owners perform domain-specific validation.
-
-Rollback is only dependable when the source remains usable and the data direction is clear:
-
-- Keep the source cluster and original data source available until acceptance.
-- Lower DNS TTL before cutover, not during rollback.
-- Define when target writes make rollback unsafe.
-- Keep Argo CD or deployment automation from reconciling both source and destination unexpectedly.
-- Capture any target-side changes made during validation.
-
-## Related links
+## Official documentation for deeper study
 
 - [Velero cluster migration](https://velero.io/docs/v1.18/migration-case/)
+  for backup sync and source/destination storage setup. Its install
+  commands use older example image versions; check the installed
+  release and provider compatibility before following them.
+- [How Velero works](https://velero.io/docs/v1.18/how-velero-works/)
+  for object-storage sync, backed-up API versions, and restore behavior.
 - [Velero disaster recovery](https://velero.io/docs/v1.18/disaster-case/)
-- [Velero API group versions](https://velero.io/docs/v1.18/enable-api-group-versions-feature/)
-- [Real use cases and runbooks](real-use-cases-and-runbooks.md)
-- [Back to Velero index](index.md)
-- [Back to migrations index](../index.md)
-- [Back to root index](../../../README.md)
+  for the read-only backup-location step.
+- [Backup and snapshot locations](https://velero.io/docs/v1.18/locations/)
+  for the separate archive and provider-snapshot locations.
+- [Restore reference](https://velero.io/docs/v1.18/restore-reference/)
+  for existing resources, namespace mapping, and volume restore limits.
+
+[Back to Velero index](index.md)
+
+[^velero-migration]: [Velero v1.18 - Cluster Migration](https://velero.io/docs/v1.18/migration-case/).
+[^velero-disaster-recovery]: [Velero v1.18 - Disaster Recovery](https://velero.io/docs/v1.18/disaster-case/).
+[^velero-how]: [Velero v1.18 - How Velero Works](https://velero.io/docs/v1.18/how-velero-works/).
+[^velero-restore]: [Velero v1.18 - Restore Reference](https://velero.io/docs/v1.18/restore-reference/).
+[^velero-locations]: [Velero v1.18 - Backup and Snapshot Locations](https://velero.io/docs/v1.18/locations/).

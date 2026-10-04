@@ -3394,22 +3394,27 @@
       "type": "How-to Guide"
     },
     {
-      "audience": "Platform engineers planning Kubernetes migration or disaster recovery with Velero",
-      "description": "Use this page to plan Velero-based Kubernetes cluster migration, disaster recovery, and cross-cluster restores.",
+      "audience": "Platform and application teams learning cluster recovery",
+      "description": "Trace which Kubernetes objects and volume data a second cluster can restore, and which migration steps remain outside Velero.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md",
       "source_ids": [
         "velero-migration",
-        "velero-disaster-recovery"
+        "velero-disaster-recovery",
+        "velero-how",
+        "velero-restore",
+        "velero-locations"
       ],
-      "stale_after": "2026-12-19",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
-        "velero"
+        "velero",
+        "disaster-recovery",
+        "beginner"
       ],
-      "title": "Velero cluster migration and disaster recovery",
+      "title": "How a Velero backup reaches another cluster",
       "type": "Explanation"
     },
     {
