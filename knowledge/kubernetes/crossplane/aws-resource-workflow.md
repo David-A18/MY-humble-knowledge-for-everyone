@@ -621,7 +621,7 @@ GitOps owns whether manifests are present in the cluster. Crossplane owns whethe
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
 - [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
-- [Application delivery platform API](application-delivery-platform-api.md)
+- [How one platform request reaches a running application](application-delivery-platform-api.md)
 - [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md)
 - [Helm](../applications-and-tools/helm.md)
 - [Find the first failing Crossplane handoff](troubleshooting.md)

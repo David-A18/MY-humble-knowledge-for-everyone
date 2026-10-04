@@ -150,7 +150,7 @@ successfully pushing an image. Check each handoff separately.
 | Understand provider identity and API access | [How a Crossplane provider reaches an external API](providers-and-authentication.md) |
 | Understand MR drift, import, and deletion | [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) |
 | Design the XRD and Composition | [Compositions](compositions.md) |
-| See an application delivery design | [Application delivery platform API](application-delivery-platform-api.md) |
+| See an application delivery design | [How one platform request reaches a running application](application-delivery-platform-api.md) |
 
 ## Check your understanding
 

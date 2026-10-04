@@ -1627,13 +1627,26 @@ mutating pause and finalizer recipes were removed.
 | --- | --- | --- | --- |
 | [Find the first failing Crossplane handoff](knowledge/kubernetes/crossplane/troubleshooting.md) | Bounded parcel-tracking analogy, invented paused Bucket example, decision diagram and text alternative, condition table, controller-log routing, deletion and ambiguous-create boundaries, understanding checks. | Opus 5.5 read-only review of the prior page and neighboring guides. Current official Crossplane troubleshooting, XRD, XR, managed-resource, activation, provider, Usage, and CLI documentation checked. Mermaid rendered and inspected. No cluster, bucket, provider, deletion, application check, or reader task occurred. | Independent Crossplane/provider security review; disposable paused-deletion, missing-kind, and provider-denial exercises; novice first-failure task; freshness decision. |
 
+### Wave 98 (2026-10-04)
+
+The application-delivery example now follows an invented request from
+an empty ECR repository through CI image publication, a digest-based
+release, Kubernetes rollout, and a user-path check. The previous
+unrun XRD and Composition examples implied that an image already
+existed in the repository they created. The new page separates the
+three identities, readiness signals, and deletion decisions.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How one platform request reaches a running application](knowledge/kubernetes/crossplane/application-delivery-platform-api.md) | Bounded shelf analogy, staged request table, handoff diagram and text alternative, identity and readiness maps, lifecycle decisions, understanding checks. | Opus 5.5 read-only review of the prior page identified image-order, readiness, identity, and deletion issues. Current official Crossplane Composition, function, XR, managed-resource, AWS ECR, EKS, and Kubernetes documentation checked. Mermaid rendered and inspected. No provider, ECR repository, image push, cluster, rollout, user request, or reader task occurred. | Independent Crossplane, Kubernetes, AWS, and platform-security review; disposable repository-to-image-to-rollout and deletion exercises; novice handoff task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 97
-together: one hundred twenty-six concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 98
+together: one hundred twenty-seven concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 39 have not yet been authored or
+The remaining 38 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1650,14 +1663,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 36 | 9 |
+| Kubernetes | 45 | 37 | 8 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **126** | **39** |
+| **Total** | **165** | **127** | **38** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
