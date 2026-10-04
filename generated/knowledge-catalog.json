@@ -2777,20 +2777,31 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this workflow to understand every component and interaction from installing Crossplane to deploying, observing, updating, and deleting AWS resources.",
+      "audience": "Beginning platform and infrastructure learner",
+      "description": "Follow one invented S3 request from Kubernetes API to AWS provider, observation, change, and deletion, with the checks needed at each handoff.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/crossplane/aws-resource-workflow.md",
-      "source_ids": [],
+      "source_ids": [
+        "crossplane-install",
+        "crossplane-providers",
+        "crossplane-managed",
+        "crossplane-xrd",
+        "crossplane-xr",
+        "crossplane-compositions",
+        "crossplane-activation",
+        "aws-s3-names"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "crossplane",
-        "aws-resource-workflow"
+        "aws",
+        "s3",
+        "beginner"
       ],
-      "title": "Crossplane AWS resource workflow",
+      "title": "How an AWS resource request moves through Crossplane",
       "type": "Explanation"
     },
     {

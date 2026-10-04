@@ -120,6 +120,6 @@ These sources are useful for understanding how teams combine Crossplane with pla
 - [Crossplane](index.md)
 - [Crossplane component model](component-model.md)
 - [How a team operates a Crossplane platform API](professional-operating-model.md)
-- [AWS resource workflow](aws-resource-workflow.md)
+- [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
 - [Back to Kubernetes index](../index.md)
 - [Back to root index](../../../README.md)

@@ -160,7 +160,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
 | [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) | Follow a `PlatformNetwork` XR through VPC, subnet, routing, optional endpoint, and deletion decisions. |
 | [How a team operates a Crossplane platform API](professional-operating-model.md) | Follow an invented storage request through team ownership, change review, access boundaries, and outcome checks. |
-| [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
+| [How an AWS resource request moves through Crossplane](aws-resource-workflow.md) | Follow one invented bucket request from API acceptance through provider reconciliation, AWS state, application use, and deletion. |
 | [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
 | [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
 | [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md) | Follow an invented storage change through GitOps and Crossplane reconciliation, promotion, monitoring, and recovery. |
@@ -180,7 +180,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
 - [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md)
 - [How a team operates a Crossplane platform API](professional-operating-model.md)
-- [AWS resource workflow](aws-resource-workflow.md)
+- [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
 - [Local AWS S3 lab](local-aws-s3-lab.md)
 - [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
 - [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)

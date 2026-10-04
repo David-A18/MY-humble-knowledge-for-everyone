@@ -45,9 +45,10 @@ and the AWS object are related, but they are not the same object.
 This guide explains the AWS-specific boundaries. Start with
 [Crossplane foundations](../kubernetes/crossplane/index.md) if
 *provider*, *managed resource*, and *composition* are new terms.
-Use the [AWS resource workflow](../kubernetes/crossplane/aws-resource-workflow.md)
-when you are ready to install and test a provider. This page does
-not contain an install procedure.
+Use [How an AWS resource request moves through Crossplane](../kubernetes/crossplane/aws-resource-workflow.md)
+to follow the full handoff. For a hands-on install and provider test,
+use the [local AWS S3 lab](../kubernetes/crossplane/local-aws-s3-lab.md).
+This page does not contain an install procedure.
 
 Think of a library request desk: a reader asks for a book, and a
 librarian obtains it and records what is on the shelf. A platform
@@ -212,8 +213,8 @@ application test.
 - [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html)
   and [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)
   for workload credential paths.
-- [Crossplane AWS resource workflow](../kubernetes/crossplane/aws-resource-workflow.md)
-  for a bounded installation and resource exercise.
+- [How an AWS resource request moves through Crossplane](../kubernetes/crossplane/aws-resource-workflow.md)
+  for the request-to-AWS handoffs.
 
 [Back to cross-topic guides](index.md)
 

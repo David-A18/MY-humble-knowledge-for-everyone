@@ -1,446 +1,103 @@
 ---
-type: "Explanation"
-title: "Crossplane AWS resource workflow"
-description: "Use this workflow to understand every component and interaction from installing Crossplane to deploying, observing, updating, and deleting AWS resources."
-tags: [kubernetes, crossplane, aws-resource-workflow]
+type: Explanation
+title: How an AWS resource request moves through Crossplane
+description: Follow one invented S3 request from Kubernetes API to AWS provider, observation, change, and deletion, with the checks needed at each handoff.
+tags: [kubernetes, crossplane, aws, s3, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-install
+    resource: https://docs.crossplane.io/latest/get-started/install/
+    title: Crossplane - Install Crossplane
+  - id: crossplane-providers
+    resource: https://docs.crossplane.io/latest/packages/providers/
+    title: Crossplane - Providers
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: crossplane-xrd
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-xr
+    resource: https://docs.crossplane.io/latest/composition/composite-resources/
+    title: Crossplane - Composite Resources
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-activation
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/
+    title: Crossplane - Managed Resource Activation Policies
+  - id: aws-s3-names
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
+    title: AWS - General purpose bucket naming rules
 ---
 
-# Crossplane AWS resource workflow
+# How an AWS resource request moves through Crossplane
 
-## Purpose
+## Follow one request
 
-Use this workflow to understand every component and interaction from installing Crossplane to deploying, observing, updating, and deleting AWS resources.
+Imagine that a payments team needs a private S3 bucket for artifacts.
+A platform offers a `SecureBucket` API. The team creates one
+namespaced request; Crossplane produces a `Bucket` managed resource;
+an AWS provider calls S3 and records what it observes. This is an
+*invented journey*, not a report of a bucket created or tested here.
+[^crossplane-xrd][^crossplane-xr][^crossplane-managed]
 
-This page shows two routes:
+Think of the Kubernetes request as a work order, the Composition as
+the instructions for filling it, and the provider as the worker who
+talks to AWS. The analogy stops at the receipt: a Kubernetes API
+acceptance or green GitOps sync does not prove AWS accepted the order
+or that the application can use the bucket.
+[^crossplane-compositions][^crossplane-managed]
 
-- Direct managed-resource workflow: useful for learning and low-level platform implementation.
-- Platform API workflow: the professional pattern for developer self-service.
+```mermaid
+flowchart TB
+  team["Payments team<br/>requests SecureBucket"] --> api["Kubernetes API<br/>stores XR"]
+  api --> core["Crossplane selects<br/>Composition"]
+  core --> mr["Bucket managed<br/>resource"]
+  direct["Platform operator<br/>creates Bucket directly"] --> mr
+  mr --> provider["AWS provider reads<br/>ProviderConfig"]
+  provider --> s3["S3 bucket exists<br/>or AWS rejects call"]
+  s3 --> status["Provider updates MR<br/>conditions and status"]
+  status --> check["Team checks bucket<br/>access and behavior"]
+```
 
-## Components and tools
+Text alternative: the payments team submits a `SecureBucket` XR to
+Kubernetes. Crossplane uses its Composition to produce a Bucket
+managed resource. A platform operator could also create the Bucket
+managed resource directly. Either way, the AWS provider selects a
+ProviderConfig, calls S3, and writes observed conditions and status.
+The team then checks that its application can use the bucket.
+[^crossplane-compositions][^crossplane-managed]
 
-| Component or tool | Used for | Interaction with Crossplane |
+## What must exist first?
+
+| Layer | Who prepares it | What it enables |
 | --- | --- | --- |
-| AWS account | Hosts external resources such as S3, VPC, RDS, and EKS. | Provider controllers call AWS APIs using configured credentials. |
-| EKS or `kind` | Runs the Kubernetes API and Crossplane pods. | Crossplane must run inside a Kubernetes cluster. |
-| Helm | Installs Crossplane core. | Creates Crossplane deployments, CRDs, and package controllers. |
-| `kubectl` | Applies and inspects Kubernetes objects. | Sends desired state to Kubernetes; it does not call AWS directly. |
-| Crossplane core | Manages packages, XRDs, XRs, Compositions, Functions, and Operations. | Watches Crossplane API objects and coordinates composition pipelines. |
-| Provider package | Installs AWS APIs and controllers. | Adds managed-resource APIs and runs provider pods. |
-| ProviderConfig | Tells providers how to authenticate. | Provider pods read it before calling AWS. |
-| Managed resource | Kubernetes object representing one AWS resource. | Provider reconciles it to an external AWS object. |
-| XRD | Defines a custom platform API. | Kubernetes serves the API after Crossplane installs it. |
-| Composition | Implements an XR with composed resources. | Crossplane runs function pipelines to produce managed resources. |
-| Function | Generates, patches, or transforms desired resources. | Called by Crossplane during composition or operation execution. |
-| Argo CD or Flux | GitOps delivery. | Applies Crossplane manifests from Git and reports sync state. |
-| AWS IAM | Controls AWS blast radius. | Provider credentials need enough permissions to reconcile but not broad admin. |
-| CloudTrail and metrics | Audit and operations. | Confirm AWS API calls and controller health. |
-
-## Workflow overview
-
-```text
-1. Bootstrap Kubernetes
-2. Install Crossplane
-3. Install AWS provider packages
-4. Configure provider identity
-5. Validate installed APIs
-6. Deploy direct managed resources or platform APIs
-7. Observe status and AWS state
-8. Manage updates, drift, import, and deletion
-9. Promote through GitOps
-```
-
-## Step 1: bootstrap Kubernetes
-
-For a local lab:
-
-```bash
-kind create cluster --name crossplane-lab
-kubectl cluster-info
-kubectl get nodes
-```
-
-What it does: creates a local Kubernetes cluster for learning.
-
-For production AWS:
-
-```bash
-eksctl create cluster \
-  --name platform-management \
-  --region eu-west-1 \
-  --nodes 3
-```
-
-What it does: creates an EKS management cluster. In real organizations this is often managed by Terraform, AWS CDK, CloudFormation, or landing-zone tooling.
-
-Interaction: Crossplane does not create this first cluster because Crossplane needs Kubernetes before it can run.
-
-## Step 2: install Crossplane
-
-```bash
-helm repo add crossplane-stable https://charts.crossplane.io/stable
-helm repo update
-
-helm install crossplane \
-  --namespace crossplane-system \
-  --create-namespace \
-  crossplane-stable/crossplane
-```
-
-What it does: installs Crossplane core into `crossplane-system`.
-
-Check readiness:
-
-```bash
-kubectl get pods -n crossplane-system
-kubectl get crds | grep crossplane
-```
-
-Interaction: Crossplane adds package, composition, function, managed-resource, and operation APIs to the cluster.
-
-## Step 3: install AWS provider packages
-
-Create `provider-aws-s3.yaml`:
-
-```yaml
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-aws-s3
-spec:
-  package: xpkg.upbound.io/upbound/provider-aws-s3:v2.6.1
-  packagePullPolicy: IfNotPresent
-  revisionActivationPolicy: Automatic
-  revisionHistoryLimit: 1
-```
-
-Apply:
-
-```bash
-kubectl apply -f provider-aws-s3.yaml
-kubectl get providers.pkg.crossplane.io -w
-kubectl get providerrevisions.pkg.crossplane.io
-```
-
-What it does: installs the S3 provider package and starts provider controller pods.
-
-Interaction:
-
-1. Kubernetes stores the `Provider` object.
-2. Crossplane package manager pulls the provider OCI package.
-3. Crossplane creates provider revisions and runtime resources.
-4. The provider adds S3 managed-resource APIs.
-5. The provider pod starts watching S3 managed resources.
-
-## Step 4: optionally limit the provider API surface
-
-Large providers can expose many resource types. Use activation policies when supported by the provider and Crossplane version.
-
-List installed ManagedResourceDefinitions first:
-
-```bash
-kubectl get mrds | grep -i s3
-```
-
-What it does: shows the exact MRD names to use in the activation policy for the provider package installed in your cluster.
-
-```yaml
-apiVersion: apiextensions.crossplane.io/v1alpha1
-kind: ManagedResourceActivationPolicy
-metadata:
-  name: activate-s3-bucket-types
-spec:
-  activate:
-    - buckets.s3.aws.m.upbound.io
-    - bucketpublicaccessblocks.s3.aws.m.upbound.io
-```
-
-What it does: activates only selected managed-resource definitions instead of every API shipped by the provider.
-
-Interaction: Crossplane keeps unused managed-resource definitions inactive, reducing API surface and cluster overhead.
-
-> [!NOTE]
-> Managed Resource Activation Policies are alpha in Crossplane v2.0+ and require provider support for safe start. Replace the example names with the exact MRD names from `kubectl get mrds`.
-
-## Step 5: configure AWS identity
-
-### Temporary local credentials
-
-Create `aws-credentials.ini` for a sandbox-only lab:
-
-```ini
-[default]
-aws_access_key_id = REPLACE_WITH_TEMPORARY_LAB_KEY
-aws_secret_access_key = REPLACE_WITH_TEMPORARY_LAB_SECRET
-aws_session_token = REPLACE_WITH_TEMPORARY_LAB_SESSION_TOKEN
-```
-
-Create the Secret:
-
-```bash
-kubectl create secret generic aws-secret \
-  --namespace=crossplane-system \
-  --from-file=creds=./aws-credentials.ini
-```
-
-What it does: gives the provider a credential file through a Kubernetes Secret. For AWS STS temporary credentials, the session token is required alongside the access key and secret access key.
-
-> [!WARNING]
-> File-backed AWS credentials are for temporary labs only. Use EKS Pod Identity, IRSA, or another workload identity pattern for production, and recreate the Secret when temporary credentials expire.
-
-### ProviderConfig declaration
-
-Create `provider-config.yaml`:
-
-```yaml
-apiVersion: aws.m.upbound.io/v1beta1
-kind: ClusterProviderConfig
-metadata:
-  name: default
-spec:
-  credentials:
-    source: Secret
-    secretRef:
-      namespace: crossplane-system
-      name: aws-secret
-      key: creds
-```
-
-Apply:
-
-```bash
-kubectl apply -f provider-config.yaml
-```
-
-What it does: creates a cluster-wide AWS provider config named `default`.
-
-Interaction: When the provider reconciles an S3 managed resource, it follows `providerConfigRef`, loads credentials from this config, then calls AWS.
-
-### Production EKS identity
-
-For EKS, prefer EKS Pod Identity when the provider image and AWS SDK path support it. IRSA remains appropriate when your controls or compatibility require it.
-
-EKS Pod Identity interaction:
-
-```text
-Provider pod ServiceAccount
-        |
-EKS Pod Identity association
-        |
-EKS Auth and Pod Identity Agent
-        |
-Temporary IAM role credentials
-        |
-AWS APIs
-```
-
-IRSA interaction:
-
-```text
-Provider pod ServiceAccount annotation
-        |
-Projected service account OIDC token
-        |
-AWS STS AssumeRoleWithWebIdentity
-        |
-Temporary IAM role credentials
-        |
-AWS APIs
-```
-
-## Step 6: validate installed APIs
-
-```bash
-kubectl api-resources | grep -i s3
-kubectl explain bucket.s3.aws.m.upbound.io.spec.forProvider
-kubectl explain bucketpublicaccessblock.s3.aws.m.upbound.io.spec.forProvider
-```
-
-What it does: confirms the provider installed the expected resource kinds and shows the schema supported by this cluster.
-
-Interaction: Kubernetes API discovery reflects the APIs added by provider installation.
-
-## Step 7: deploy a direct AWS managed resource
-
-Create `bucket.yaml`:
-
-```yaml
-apiVersion: s3.aws.m.upbound.io/v1beta1
-kind: Bucket
-metadata:
-  name: xp-lab-123456789012-001
-  namespace: default
-  labels:
-    app.kubernetes.io/managed-by: crossplane
-    platform.example.com/environment: lab
-  annotations:
-    crossplane.io/external-name: xp-lab-123456789012-001
-spec:
-  forProvider:
-    region: eu-west-1
-    tags:
-      Environment: lab
-      ManagedBy: crossplane
-      Owner: platform-team
-  providerConfigRef:
-    name: default
-    kind: ClusterProviderConfig
-  managementPolicies:
-    - "*"
-```
-
-Validate and apply:
-
-```bash
-kubectl apply --dry-run=server -f bucket.yaml
-kubectl apply -f bucket.yaml
-```
-
-What it does: creates the Kubernetes-side S3 bucket managed resource.
-
-Interaction:
-
-1. Kubernetes accepts the object.
-2. S3 provider sees a new `Bucket`.
-3. Provider reads the `ClusterProviderConfig`.
-4. Provider calls AWS S3 to observe whether the bucket exists.
-5. Provider creates or adopts the external bucket according to external-name and policy behavior.
-6. Provider writes `status.conditions`, `status.atProvider`, and events.
-
-## Step 8: add a dependent managed resource
-
-Create `bucket-public-access.yaml`:
-
-```yaml
-apiVersion: s3.aws.m.upbound.io/v1beta1
-kind: BucketPublicAccessBlock
-metadata:
-  name: xp-lab-123456789012-001-public-access
-  namespace: default
-spec:
-  forProvider:
-    region: eu-west-1
-    bucketRef:
-      name: xp-lab-123456789012-001
-    blockPublicAcls: true
-    blockPublicPolicy: true
-    ignorePublicAcls: true
-    restrictPublicBuckets: true
-  providerConfigRef:
-    name: default
-    kind: ClusterProviderConfig
-  managementPolicies:
-    - "*"
-```
-
-Apply:
-
-```bash
-kubectl apply --dry-run=server -f bucket-public-access.yaml
-kubectl apply -f bucket-public-access.yaml
-```
-
-What it does: adds public-access blocking to the S3 bucket.
-
-Interaction: `bucketRef.name` lets the provider resolve the bucket resource rather than hard-coding the bucket identifier everywhere.
-
-## Step 9: observe status and AWS state
-
-```bash
-kubectl get buckets.s3.aws.m.upbound.io -n default
-kubectl describe bucket.s3.aws.m.upbound.io xp-lab-123456789012-001 -n default
-kubectl get events -n default --sort-by=.lastTimestamp
-```
-
-What it does: reads Kubernetes-side readiness, provider messages, and warning events.
-
-Verify AWS:
-
-```bash
-aws s3api head-bucket --bucket xp-lab-123456789012-001
-aws s3api get-bucket-tagging --bucket xp-lab-123456789012-001
-aws s3api get-public-access-block --bucket xp-lab-123456789012-001
-```
-
-What it does: confirms the external AWS resources match the desired state.
-
-## Step 10: manage updates
-
-Edit `bucket.yaml`:
-
-```yaml
-spec:
-  forProvider:
-    region: eu-west-1
-    tags:
-      Environment: lab
-      ManagedBy: crossplane
-      Owner: platform-team
-      CostCenter: platform-learning
-```
-
-Apply:
-
-```bash
-kubectl apply -f bucket.yaml
-```
-
-What it does: changes desired tags in Kubernetes.
-
-Interaction: The provider notices the spec change, updates the external AWS resource if the field is supported and mutable, then updates status.
-
-## Step 11: test drift correction
-
-Change AWS manually:
-
-```bash
-aws s3api put-bucket-tagging \
-  --bucket xp-lab-123456789012-001 \
-  --tagging 'TagSet=[{Key=ManagedBy,Value=manual},{Key=Environment,Value=lab}]'
-```
-
-Request reconciliation:
-
-```bash
-kubectl annotate bucket.s3.aws.m.upbound.io xp-lab-123456789012-001 \
-  -n default \
-  crossplane.io/reconcile-requested-at="$(date +%s)" \
-  --overwrite
-```
-
-What it does: creates drift, then asks the provider to reconcile.
-
-Interaction: The provider observes the external resource, compares it to desired state, and updates fields it owns and supports.
-
-## Step 12: pause reconciliation during maintenance
-
-```bash
-kubectl annotate bucket.s3.aws.m.upbound.io xp-lab-123456789012-001 \
-  -n default \
-  crossplane.io/paused="true" \
-  --overwrite
-```
-
-What it does: pauses reconciliation for a single managed resource.
-
-Resume:
-
-```bash
-kubectl annotate bucket.s3.aws.m.upbound.io xp-lab-123456789012-001 \
-  -n default \
-  crossplane.io/paused-
-```
-
-What it does: removes the pause annotation so the provider can reconcile again.
-
-## Step 13: expose a professional platform API
-
-Direct managed resources are useful, but professional self-service normally starts with an XR.
-
-Developer request:
+| Kubernetes cluster | Cluster or platform team | A running API server and Pods for Crossplane. Crossplane itself needs this first cluster.[^crossplane-install] |
+| Crossplane core | Platform team | Package installation, XRDs, XRs, and Composition reconciliation.[^crossplane-install] |
+| AWS provider package and active API | Platform team | The provider controller and `Bucket` managed-resource kind. An installed package and an activated kind are separate checks.[^crossplane-providers][^crossplane-activation] |
+| Provider identity and ProviderConfig | Platform and security teams | A deliberate AWS identity, account scope, and authentication path for the provider.[^crossplane-managed] |
+| `SecureBucket` XRD and Composition | Platform team | A small consumer API and the implementation that produces its resources.[^crossplane-xrd][^crossplane-compositions] |
+
+The platform may publish the XRD and Composition as a versioned
+Configuration package. The payments team should need permission
+to create the XR, while the platform controls provider installation,
+Composition changes, and the AWS identity. Namespace access alone
+does not limit what that identity may do in AWS.
+[^crossplane-compositions][^crossplane-managed]
+
+For a direct managed-resource exercise, the XRD and Composition are
+unnecessary. That route helps a learner see the provider boundary
+but exposes provider-specific fields to the request author.
+[When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
+compares the two routes.
+
+## Trace the first creation
+
+The consumer might submit this *illustrative* request:
 
 ```yaml
 apiVersion: platform.example.com/v1alpha1
@@ -450,181 +107,109 @@ metadata:
   namespace: payments
 spec:
   region: eu-west-1
-  retentionDays: 90
 ```
 
-What it does: asks for a storage product. The developer does not need to know S3 managed-resource schemas.
+The example assumes a matching XRD, Composition, provider package,
+and provider configuration. It is not a standalone deployable
+manifest. The word `Secure` does not enforce privacy: the
+Composition must create and verify the required access controls.
+A real S3 bucket name must satisfy AWS naming rules and be
+available under the selected S3 naming scheme; a namespaced XR
+name alone does not reserve an S3 name.[^crossplane-xrd][^aws-s3-names]
 
-Platform XRD:
+| Handoff | What a learner would inspect | What that evidence means |
+| --- | --- | --- |
+| Kubernetes accepts the XR | XR exists; schema and namespace are correct. | The request shape was accepted, before any AWS result.[^crossplane-xrd] |
+| Crossplane composes | XR `Synced`, selected Composition, and composed-resource references. | The function pipeline produced the intended Bucket object, or its condition explains a failure.[^crossplane-xr] |
+| Provider reconciles | Bucket managed resource `Synced`, `Ready`, Reason, Message, and selected ProviderConfig. | The provider's last observation of its AWS work, including authentication or API errors.[^crossplane-managed] |
+| AWS has the resource | Read-only inspection in the intended account and Region, with the recorded external name. | The bucket exists where expected; verify its actual controls separately.[^crossplane-managed] |
+| Application uses it | A representative authorized upload or read through the real application path. | The tested use works with its identity and configuration. |
 
-```yaml
-apiVersion: apiextensions.crossplane.io/v2
-kind: CompositeResourceDefinition
-metadata:
-  name: securebuckets.platform.example.com
-spec:
-  scope: Namespaced
-  group: platform.example.com
-  names:
-    kind: SecureBucket
-    plural: securebuckets
-  versions:
-    - name: v1alpha1
-      served: true
-      referenceable: true
-      schema:
-        openAPIV3Schema:
-          type: object
-          properties:
-            spec:
-              type: object
-              properties:
-                region:
-                  type: string
-                  enum:
-                    - eu-west-1
-                    - eu-central-1
-                retentionDays:
-                  type: integer
-                  minimum: 30
-                  maximum: 365
-              required:
-                - region
-                - retentionDays
-```
+`kubectl` talks to Kubernetes; the provider controller talks to
+AWS. A ProviderConfig tells the provider which authentication
+source to use. For a local lab this might be temporary credentials
+in a Kubernetes Secret. An EKS production setup can use an
+appropriate workload identity after checking that the provider
+runtime and AWS SDK support the chosen path. The provider's AWS
+permissions still need to match the resources it must reconcile.
+[^crossplane-managed]
 
-What it does: declares the user-facing API contract.
+## What happens after creation?
 
-Composition shape:
+Changing a supported `spec.forProvider` field on a managed
+resource changes desired state. The provider observes and
+reconciles that field, subject to its API and
+`managementPolicies`. A change outside Crossplane can be
+corrected on a later reconcile when Crossplane owns the field.
+A successful Kubernetes apply is not proof that AWS accepted
+the update; read the managed-resource conditions and the
+external result.[^crossplane-managed]
 
-```yaml
-apiVersion: apiextensions.crossplane.io/v1
-kind: Composition
-metadata:
-  name: securebucket-s3
-spec:
-  compositeTypeRef:
-    apiVersion: platform.example.com/v1alpha1
-    kind: SecureBucket
-  mode: Pipeline
-  pipeline:
-    - step: render-secure-bucket
-      functionRef:
-        name: function-patch-and-transform
-      input:
-        apiVersion: pt.fn.crossplane.io/v1beta1
-        kind: Resources
-        resources:
-          - name: bucket
-            base:
-              apiVersion: s3.aws.m.upbound.io/v1beta1
-              kind: Bucket
-              spec:
-                forProvider:
-                  region: eu-west-1
-                  tags:
-                    ManagedBy: crossplane
-                    Product: secure-bucket
-                providerConfigRef:
-                  name: default
-                  kind: ClusterProviderConfig
-            patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: metadata.name
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.namespace
-                toFieldPath: metadata.namespace
-              - type: FromCompositeFieldPath
-                fromFieldPath: spec.region
-                toFieldPath: spec.forProvider.region
-```
+A `crossplane.io/paused: "true"` annotation stops a managed
+resource's reconciliation. It also stops the work needed to
+finish deletion, so a paused object can remain with a deletion
+timestamp. Use pause only with a clear operating reason and
+resume plan.[^crossplane-managed]
 
-What it does: shows the declaration pattern for a Composition. Production compositions usually also generate public-access blocks, encryption, versioning, lifecycle rules, logging, and required tags.
+When a managed resource is deleted, the provider may delete its
+AWS resource if its management policy includes `Delete`.
+The provider's finalizer keeps the Kubernetes object until
+cleanup is complete or a problem is resolved. An S3 bucket
+that still has data or a provider identity without delete
+permission needs investigation; removing the finalizer can
+leave an unmanaged AWS resource. Decide the data-retention
+and ownership outcome before deleting the XR or its composed
+resources.[^crossplane-managed]
 
-Render before rollout:
+For a `SecureBucket`, deletion can involve more than the
+Bucket itself: public-access controls, policies, or other
+composed resources may have separate lifecycles. A platform
+API should define and test those lifecycles as one product.
+[^crossplane-compositions]
 
-```bash
-crossplane composition render \
-  securebucket-xr.yaml \
-  securebucket-composition.yaml \
-  functions.yaml \
-  --xrd securebucket-xrd.yaml
-```
+## Where GitOps fits
 
-What it does: runs the function pipeline locally and shows generated resources before the cluster reconciles them.
+A GitOps controller can apply the provider, XRD, Composition,
+and XR manifests from reviewed Git commits. It reports whether
+those manifests reached the Kubernetes API. Crossplane and its
+provider then reconcile the objects and AWS resources. Read
+the GitOps sync signal, XR conditions, managed-resource
+conditions, and application outcome as separate observations.
+[How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
+follows that operating loop.[^crossplane-xr][^crossplane-managed]
 
-## Step 14: manage deletion
+## Check your understanding
 
-Delete dependent resources first when working directly:
+- If `kubectl apply` succeeded but the bucket is absent in AWS,
+  which two Crossplane objects would you inspect first?
+- If the provider reports `Ready=True`, why should the
+  application team still try its own authorized access path?
+- Which identity calls AWS, and where does it find its
+  authentication configuration?
+- What should the platform decide before deleting a bucket
+  that may contain application data?
 
-```bash
-kubectl delete -f bucket-public-access.yaml
-kubectl delete -f bucket.yaml
-```
+## Go further
 
-What it does: asks Crossplane to delete the managed resources and the external AWS resources.
-
-Watch:
-
-```bash
-kubectl get buckets.s3.aws.m.upbound.io -n default -w
-kubectl get events -n default --sort-by=.lastTimestamp
-```
-
-Interaction:
-
-1. Kubernetes marks the resource for deletion.
-2. Finalizer keeps the Kubernetes object present.
-3. Provider deletes or detaches the external AWS resource.
-4. Provider removes the finalizer.
-5. Kubernetes removes the object.
-
-> [!WARNING]
-> If deletion hangs, inspect finalizers, provider logs, AWS dependencies, and IAM delete permissions before removing finalizers.
-
-## Step 15: operate through GitOps
-
-Recommended GitOps order:
-
-1. Crossplane core.
-2. Providers and Functions.
-3. ProviderConfigs and runtime configs.
-4. XRDs.
-5. Compositions.
-6. XRs or direct managed resources.
-
-Interaction:
-
-```text
-Pull request
-    |
-CI validation and composition render
-    |
-Argo CD or Flux sync
-    |
-Kubernetes API desired state
-    |
-Crossplane reconciliation
-    |
-AWS resources and status feedback
-```
-
-GitOps owns whether manifests are present in the cluster. Crossplane owns whether external resources match those manifests.
-
-## Related links
-
-- [Crossplane](index.md)
-- [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
-- [How a team operates a Crossplane platform API](professional-operating-model.md)
-- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
+- [Local AWS S3 lab](local-aws-s3-lab.md) is the separate
+  hands-on route for a disposable environment.
 - [How a Crossplane provider reaches an external API](providers-and-authentication.md)
-- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
-- [Crossplane compositions](compositions.md)
-- [How one platform request reaches a running application](application-delivery-platform-api.md)
-- [Amazon ECR](../../cloud/aws/compute/amazon-ecr.md)
-- [Helm](../applications-and-tools/helm.md)
+  explains package, ProviderConfig, runtime identity, and AWS
+  authorization.
 - [Find the first failing Crossplane handoff](troubleshooting.md)
-- [Crossplane references](references.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+  helps locate a failed stage.
+- [Crossplane installation](https://docs.crossplane.io/latest/get-started/install/)
+  gives current setup instructions.
+- [Crossplane managed resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/)
+  documents lifecycle and conditions.
+- [AWS S3 bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html)
+  covers external-name constraints.
+
+[^crossplane-install]: Crossplane, [Install Crossplane](https://docs.crossplane.io/latest/get-started/install/).
+[^crossplane-providers]: Crossplane, [Providers](https://docs.crossplane.io/latest/packages/providers/).
+[^crossplane-managed]: Crossplane, [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/).
+[^crossplane-xrd]: Crossplane, [Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/).
+[^crossplane-xr]: Crossplane, [Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/).
+[^crossplane-compositions]: Crossplane, [Compositions](https://docs.crossplane.io/latest/composition/compositions/).
+[^crossplane-activation]: Crossplane, [Managed Resource Activation Policies](https://docs.crossplane.io/latest/managed-resources/managed-resource-activation-policies/).
+[^aws-s3-names]: AWS, [General purpose bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).

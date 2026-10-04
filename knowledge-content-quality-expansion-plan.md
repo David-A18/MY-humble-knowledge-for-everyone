@@ -1666,13 +1666,27 @@ connectivity, and names the decisions that require a disposable AWS test.
 | --- | --- | --- | --- |
 | [How one Crossplane request becomes an AWS network](knowledge/kubernetes/crossplane/aws-vpc-platform-api.md) | Bounded order/work-order analogy, illustrative PlatformNetwork request, resource-purpose table, dependency diagram and text alternative, delivery signals, deletion decision, understanding checks. | Opus 5.5 read-only review of a neighboring page flagged the old deletion-policy field and likely provider-schema issues. Current official Crossplane XRD, XR, Composition, managed-resource and AWS subnet routing, network ACL, S3 and DynamoDB gateway-endpoint documentation checked. Mermaid rendered and inspected. No XRD, provider, cluster, AWS network, connectivity check, deletion, or reader task occurred. | Independent AWS networking and Crossplane/provider review; disposable network and retention exercise; novice request-to-connectivity task; freshness decision. |
 
+### Wave 101 (2026-10-04)
+
+The AWS resource workflow now follows one invented S3 request through
+Kubernetes acceptance, Composition, managed-resource reconciliation,
+AWS observation, application use, change, and deletion. The prior page
+repeated an unrun lab and included cloud-creating, drift-writing,
+pausing, and cleanup commands. The revised explanation routes execution
+to the dedicated lab and clarifies that a `SecureBucket` name alone
+cannot enforce access controls.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How an AWS resource request moves through Crossplane](knowledge/kubernetes/crossplane/aws-resource-workflow.md) | Bounded work-order analogy, invented SecureBucket request, direct-versus-XR convergence diagram and text alternative, setup and evidence tables, lifecycle boundaries, understanding checks. | Opus 5.5 read-only review of the prior workflow found inactive-policy, unsafe adoption, incomplete Composition, and lab-duplication problems. Current official Crossplane installation, provider, managed-resource, XRD, XR, Composition, activation, and AWS S3 naming documentation checked. Mermaid rendered and inspected. No cluster, provider, AWS bucket, application check, deletion, or reader task occurred. | Independent Crossplane/AWS review; disposable direct-versus-XR and lifecycle exercise; novice handoff task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 100
-together: one hundred twenty-nine concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 101
+together: one hundred thirty concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 36 have not yet been authored or
+The remaining 35 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1689,14 +1703,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 39 | 6 |
+| Kubernetes | 45 | 40 | 5 |
 | Migrations | 9 | 2 | 7 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **129** | **36** |
+| **Total** | **165** | **130** | **35** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
