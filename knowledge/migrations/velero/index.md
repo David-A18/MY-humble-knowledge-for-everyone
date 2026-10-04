@@ -8,7 +8,7 @@ Velero is a Kubernetes backup, restore, disaster recovery, and cluster migration
 | --- | --- |
 | Learn the difference between backed-up Kubernetes objects and protected application data. | [Fundamentals](fundamentals.md) |
 | Understand the moving parts, CRDs, controllers, and object storage sync. | [Components and architecture](components-and-architecture.md) |
-| Choose a persistent volume backup method and configure storage paths. | [Storage and volume backups](storage-and-volume-backups.md) |
+| Find where object and volume copies live, then choose a restoreable data-protection path. | [Where a Velero backup keeps objects and volume data](storage-and-volume-backups.md) |
 | Install on EKS with S3, EBS snapshots, CSI support, IAM, and node-agent. | [AWS S3 and EBS installation](aws-s3-ebs-installation.md) |
 | Run backups, schedules, restores, filters, hooks, and restore mappings. | [Backup and restore workflows](backup-restore-workflows.md) |
 | Trigger Velero backup and migration tasks from GitHub Actions. | [Possible integrations](possible-integrations.md) |

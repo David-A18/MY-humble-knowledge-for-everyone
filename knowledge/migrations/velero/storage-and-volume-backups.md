@@ -1,293 +1,200 @@
 ---
-type: "Explanation"
-title: "Velero storage and volume backups"
-description: "Use this page to choose how Velero should store backup artifacts and protect Kubernetes persistent volume data."
-tags: [migrations, velero, storage-and-volume-backups]
+type: Explanation
+title: Where a Velero backup keeps objects and volume data
+description: Choose a Velero volume protection method by tracing where the copy lives, what a restore requires, and how to test it.
+tags: [migrations, velero, storage, backup, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and application teams
+maintainer: unassigned
+sources:
+  - id: velero-how
+    resource: https://velero.io/docs/v1.18/how-velero-works/
+    title: Velero v1.18 - How Velero Works
+  - id: velero-csi
+    resource: https://velero.io/docs/v1.18/csi/
+    title: Velero v1.18 - CSI Snapshot Support
+  - id: velero-data-movement
+    resource: https://velero.io/docs/v1.18/csi-snapshot-data-movement/
+    title: Velero v1.18 - CSI Snapshot Data Movement
+  - id: velero-fsb
+    resource: https://velero.io/docs/v1.18/file-system-backup/
+    title: Velero v1.18 - File System Backup
+  - id: velero-resource-policy
+    resource: https://velero.io/docs/v1.18/resource-filtering/
+    title: Velero v1.18 - Resource Filtering and Volume Policies
+  - id: kubernetes-snapshot
+    resource: https://kubernetes.io/docs/concepts/storage/volume-snapshots/
+    title: Kubernetes - Volume Snapshots
 ---
 
-# Velero storage and volume backups
+# Where a Velero backup keeps objects and volume data
 
-## Purpose
+## The idea in one minute
 
-Use this page to choose how Velero should store backup artifacts and protect Kubernetes persistent volume data.
+A Velero backup has **two different things to protect**. Kubernetes
+objects describe what to run: a Deployment, Service, or PersistentVolumeClaim
+(PVC). A persistent volume holds data the application wrote. Velero
+stores its backup of selected Kubernetes objects in object storage.
+Volume data might stay as a snapshot in a storage system, or it might
+be copied to a backup repository in object storage. The chosen method
+determines what the restore will need.[^velero-how][^velero-csi]
 
-## Contents
+Think of moving a workshop. Its inventory says which machines belong
+there; copies of unfinished work are separate. An inventory alone
+cannot bring back the work. The analogy stops at consistency: a copy
+of changing files might not represent one valid application moment.
 
-- [Backup storage](#backup-storage)
-- [BackupStorageLocation example](#backupstoragelocation-example)
-- [Volume backup methods](#volume-backup-methods)
-- [Decision flow](#decision-flow)
-- [AWS S3 and EBS behavior](#aws-s3-and-ebs-behavior)
-- [CSI snapshot requirements](#csi-snapshot-requirements)
-- [CSI snapshot data movement](#csi-snapshot-data-movement)
-- [File System Backup with Kopia](#file-system-backup-with-kopia)
-- [Resource policies for volume decisions](#resource-policies-for-volume-decisions)
-- [Decision guide](#decision-guide)
+Read [Velero fundamentals](fundamentals.md) first if Backup, PVC, and
+restore are unfamiliar. This page compares methods; it is not a
+ready-to-run backup procedure. The [workflow guide](backup-restore-workflows.md)
+covers operations after you choose a method.
 
-## Backup storage
+## One invented workload, four possible copies
 
-Velero requires object storage for backup metadata, Kubernetes resource archives, restore logs, warnings, errors, and repository data used by File System Backup or data movement.
+Suppose a `notes` application runs in Kubernetes and writes notes to a
+PVC. The team wants to recover the application after a cluster loss.
+The example is invented; no cluster, volume, snapshot, backup, or
+restore was created or tested for this page.
 
-| Storage type | Use it for | Notes |
-| --- | --- | --- |
-| AWS S3 | Standard Velero backup storage on AWS. | Use the AWS plugin and least-privilege IAM. |
-| S3-compatible object storage | On-premises or non-AWS object storage. | Test compatibility because S3-compatible providers differ in API behavior. |
-| Provider-native object storage plugins | Azure, Google Cloud, and other providers. | Prefer the provider plugin when one is maintained and supported. |
-
-> [!IMPORTANT]
-> S3-compatible does not mean fully AWS S3 compatible. Validate upload, download, restore, lifecycle, encryption, retention, and repository maintenance before using a provider for production backups.
-
-## BackupStorageLocation example
-
-```yaml
-apiVersion: velero.io/v1
-kind: BackupStorageLocation
-metadata:
-  name: default
-  namespace: velero
-spec:
-  provider: aws
-  objectStorage:
-    bucket: my-velero-backups
-    prefix: clusters/prod-eks
-  config:
-    region: eu-west-1
-  accessMode: ReadWrite
+```mermaid
+flowchart LR
+  objects["Deployment, Service, PVC<br/>Kubernetes objects"] --> velero["Velero backup"]
+  volume["Notes on a persistent volume"] --> velero
+  velero --> archive["Object storage<br/>object archive"]
+  velero --> native["Storage snapshot<br/>native or CSI"]
+  velero --> copied["Object storage<br/>volume-data repository"]
+  archive --> restore["Restore into a compatible cluster"]
+  native --> restore
+  copied --> restore
+  restore --> check["Open notes and check expected data"]
 ```
 
-What it does: tells Velero where to write backup metadata, Kubernetes resource archives, logs, and repository data. The `prefix` keeps one cluster's backups separate from other clusters that may share the bucket.
+Text alternative: Velero saves selected Kubernetes object definitions
+to an object archive. Volume data takes another path: a provider or CSI
+snapshot remains in a storage system, or a file/data mover copies bytes
+to an object-storage repository. A restore needs the archive and the
+chosen volume path, then a real application data check.
 
-> [!WARNING]
-> Do not reuse one writable bucket prefix across unrelated clusters unless the ownership and retention model is intentional. Shared prefixes can make backup discovery, deletion, and disaster recovery confusing.
+The diagram shows alternatives, not three simultaneous volume backups.
+If the PVC's data was never protected, restoring its PVC definition
+will not recreate the missing notes. A completed backup is not yet
+evidence that a restored application works.[^velero-how]
 
-## Volume backup methods
+## Compare the volume paths
 
-| Method | How it works | Best fit | Trade-off |
+| Method | Where the volume data goes | What the restore needs | Main limit |
 | --- | --- | --- | --- |
-| AWS EBS snapshots | AWS plugin creates EBS snapshots during backup and EBS volumes during restore. | EKS workloads using EBS in the same AWS region/provider boundary. | Fast and storage-native, but less portable across regions or providers. |
-| CSI snapshots | Velero creates Kubernetes `VolumeSnapshot` resources through CSI snapshot APIs. | CSI-backed PVCs with a supported snapshot controller and driver. | Requires compatible CSI driver names and snapshot classes. |
-| CSI snapshot data movement | Velero snapshots a CSI volume, then moves snapshot data into object storage. | More portable volume backups where snapshot data should leave the storage backend. | Requires node-agent and extra PVC/pod resources. |
-| File System Backup | Node-agent reads mounted pod volumes and stores file data using Kopia. | Volumes without snapshot support, EFS/NFS-style storage, or cross-provider moves. | More portable but may be less point-in-time consistent and more resource intensive. |
+| Provider-native snapshot, such as an AWS EBS snapshot | Snapshot in the provider's storage system. | Access to that snapshot through a compatible provider integration. | The backup archive in object storage does **not** contain the volume bytes; migration across provider, account, or region needs a separate supported path. |
+| CSI snapshot | Snapshot in the CSI driver's storage backend. | Compatible snapshot APIs and driver on the destination, plus access to the underlying snapshot. | A matching driver name alone does not make a remote snapshot accessible or durable.[^velero-csi] |
+| CSI snapshot data movement | A CSI snapshot supplies a source; a data mover copies its contents into a Velero repository in object storage. | Backup repository, suitable target storage, and data-mover restore path. | Extra staging volumes, Pods, time, network, and object-storage capacity.[^velero-data-movement] |
+| File System Backup (FSB) | Velero's node-agent reads a mounted Pod volume and writes files to a backup repository in object storage. | Backup repository, node-agent restore path, and a compatible application target. | Reads a live file system; application-consistent recovery may require hooks or an application-native backup.[^velero-fsb] |
 
-## Decision flow
+**CSI** is the Container Storage Interface, which lets a storage
+driver implement Kubernetes volume operations. A `VolumeSnapshot`
+requests a snapshot of a PVC; `VolumeSnapshotContent` represents the
+bound storage snapshot; `VolumeSnapshotClass` identifies driver and
+snapshot behavior. Having these API objects installed does not prove
+that the particular driver can take and restore a snapshot for this
+PVC.[^kubernetes-snapshot]
 
-| Question | If yes | If no |
-| --- | --- | --- |
-| Is the workload stateless? | Back up Kubernetes resources or rely on GitOps/IaC. | Continue to data questions. |
-| Is the data a database or transactional system? | Use database-native backup or replication, then Velero for Kubernetes objects. | Continue to volume method selection. |
-| Is the restore in the same provider, account, region, and compatible storage backend? | Provider or CSI snapshots may be fastest. | Prefer File System Backup, CSI data movement, or application-level migration. |
-| Does the CSI driver support snapshots and exist on source and destination? | CSI snapshots may work; test restore. | Use File System Backup or application-native migration. |
-| Does the snapshot data need to leave the storage backend? | Use CSI snapshot data movement or File System Backup. | Native snapshots can be acceptable. |
-| Is the volume an NFS/EFS/AzureFile-style file share? | File System Backup is usually the Velero path. | Use the storage driver's supported snapshot or backup method. |
+CSI data movement and FSB both put volume bytes into a Velero backup
+repository, but they read from different sources. Data movement reads
+a volume made from a CSI snapshot; FSB reads a running Pod's mounted
+volume. Velero uses `DataUpload` and `DataDownload` resources to track
+its built-in data-movement work.[^velero-data-movement][^velero-fsb]
+
+**Data movement is an explicit choice, not the automatic result of a
+CSI snapshot.** The Velero v1.18 guide requires the server's
+`EnableCSI` feature, a node-agent for the built-in mover, and a backup that requests
+movement, such as with `--snapshot-move-data`. Check for completed
+`DataUpload` work and accessible repository data before saying the
+snapshot was copied off the storage backend. FSB also needs node-agent
+and a Pod with the volume mounted; it cannot read an unmounted PVC
+directly and does not back up `hostPath` volumes.[^velero-data-movement]
+[^velero-fsb]
+
+## Make the decision from the restore target
+
+For the invented notes app, ask these in order:
+
+1. **Does this workload need the PVC's contents?** If the contents are
+   disposable, object definitions and an independent source such as
+   Git may be enough. If they are valuable, name the data recovery path.
+2. **Where must it restore?** For recovery inside a compatible storage
+   boundary with the original snapshot accessible, a native or CSI
+   snapshot may be suitable. For a different provider or region, verify
+   an actual snapshot-copy process or use a method that copies volume
+   bytes to object storage. Never infer portability just from a
+   completed Velero `Backup`.[^velero-csi][^velero-data-movement]
+3. **Can the app tolerate a live-volume copy?** A busy database may
+   need a database-native backup, quiescing, or another documented
+   consistency method. Neither a file copy nor an ordinary snapshot
+   alone proves transaction-level recovery.[^velero-fsb]
+4. **Can you test the destination?** Restore into a compatible target,
+   inspect Velero and volume status, then open the application and
+   read a known note. Record the elapsed time and the newest data
+   actually recovered; those are evidence for a recovery plan.
 
 > [!IMPORTANT]
-> Choose a volume backup method per workload, not per cluster. A cluster may safely use snapshots for one application, File System Backup for another, and database-native replication for a third.
+> Choose per workload, not by a single cluster-wide slogan. A team
+> might use snapshots for one PVC, FSB for another, and a database-native
+> backup for a database. The decisive question is whether the required
+> data can be restored and used at the intended destination.
 
-## AWS S3 and EBS behavior
+## Where configuration fits
 
-The Velero AWS plugin provides two important integrations:
+A `BackupStorageLocation` points Velero at object storage for backup
+artifacts. It does not, by itself, select a volume-copy method or turn
+an EBS snapshot into S3 object data. For provider-native snapshots,
+a `VolumeSnapshotLocation` can carry provider-specific settings; CSI
+snapshots instead use the Kubernetes snapshot API and an appropriate
+`VolumeSnapshotClass`.[^velero-how][^velero-csi]
 
-- An object store plugin that writes Kubernetes backup artifacts to AWS S3.
-- A volume snapshotter plugin that creates snapshots from EBS volumes during backup and creates volumes from those snapshots during restore.
+Velero volume policies can select `snapshot`, `fs-backup`, or `skip`
+for volumes that match documented conditions. Order matters: the
+first matching volume policy wins, and those policies take priority
+over older FSB annotations and default volume settings. The `snapshot`
+action can lead to different snapshot paths according to the backup's
+configuration, so do not read that word as proof of object-storage
+data movement.[^velero-resource-policy]
 
-For modern EKS clusters, CSI snapshot workflows also require:
+Before relying on any method, check that the backup reports the
+expected volumes, that the underlying snapshot or repository data
+exists and remains accessible, and that a test restore produces the
+application result you care about. A backup and a restore can both
+finish without proving the application data is correct.
 
-- An EBS CSI driver with snapshot support.
-- The CSI snapshot controller and snapshot CRDs.
-- A `VolumeSnapshotClass` that matches the EBS CSI driver.
+## Check your understanding
 
-## VolumeSnapshotLocation example
+1. If Velero stored the PVC definition in S3 but used an EBS snapshot,
+   where are the notes' volume bytes?
+2. Why can a CSI snapshot with a matching driver name still fail to
+   restore in a different cluster?
+3. Which method reads a mounted live volume, and what consistency
+   question would you ask about it?
+4. What observation would prove more than a completed backup status?
 
-```yaml
-apiVersion: velero.io/v1
-kind: VolumeSnapshotLocation
-metadata:
-  name: default
-  namespace: velero
-spec:
-  provider: aws
-  config:
-    region: eu-west-1
-```
+## Official documentation for deeper study
 
-What it does: tells Velero where provider-native snapshots should be created for providers that use `VolumeSnapshotLocation`.
+- [How Velero works](https://velero.io/docs/v1.18/how-velero-works/)
+  for the object archive and storage-location roles.
+- [CSI snapshot support](https://velero.io/docs/v1.18/csi/)
+  and [Kubernetes volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/)
+  for the storage-driver boundary.
+- [CSI snapshot data movement](https://velero.io/docs/v1.18/csi-snapshot-data-movement/)
+  and [File System Backup](https://velero.io/docs/v1.18/file-system-backup/)
+  for the two object-storage volume-data paths.
+- [Volume policies](https://velero.io/docs/v1.18/resource-filtering/)
+  for exact selection and precedence rules.
 
-## CSI snapshot requirements
+Next, use [AWS S3 and EBS installation](aws-s3-ebs-installation.md)
+for an AWS-specific setup or [backup and restore workflows](backup-restore-workflows.md)
+for task steps. Return to the [Velero index](index.md).
 
-Kubernetes volume snapshots use three API objects:
-
-| Object | Meaning |
-| --- | --- |
-| `VolumeSnapshot` | A user's request for a point-in-time snapshot of a PVC. |
-| `VolumeSnapshotContent` | The bound snapshot object representing the real storage snapshot. |
-| `VolumeSnapshotClass` | Snapshot behavior and driver settings, similar to `StorageClass` for volumes. |
-
-### Check snapshot support
-
-```bash
-kubectl get volumesnapshotclass
-kubectl get crd volumesnapshots.snapshot.storage.k8s.io
-kubectl get pods -n kube-system | grep -E "snapshot|ebs-csi"
-```
-
-What it does: checks whether snapshot classes, snapshot CRDs, and likely EBS snapshot components are present.
-
-### EBS VolumeSnapshotClass example
-
-```yaml
-apiVersion: snapshot.storage.k8s.io/v1
-kind: VolumeSnapshotClass
-metadata:
-  name: ebs-csi-velero
-  labels:
-    velero.io/csi-volumesnapshot-class: "true"
-driver: ebs.csi.aws.com
-deletionPolicy: Delete
-```
-
-What it does: creates a Kubernetes snapshot class Velero can select for EBS CSI-backed PVCs. The driver must match the source PVC's CSI driver.
-
-## CSI snapshot data movement
-
-CSI snapshot data movement is useful when the CSI snapshot API can create a point-in-time source, but the data must be copied into Velero backup storage instead of staying only in the storage backend.
-
-The object flow is:
-
-1. Velero starts a backup for PVCs that use a compatible CSI driver.
-2. The CSI plugin creates snapshot objects.
-3. Velero creates `DataUpload` objects for volume data that should move to backup storage.
-4. Node-agent and data mover pods copy data into a backup repository.
-5. During restore, Velero creates `DataDownload` objects and data mover pods copy data back into restored volumes.
-
-### Inspect data movement
-
-```bash
-kubectl get datauploads,datadownloads -n velero
-kubectl describe dataupload <name> -n velero
-kubectl describe datadownload <name> -n velero
-```
-
-What it does: shows upload and download lifecycle, node placement, data mover progress, and failure details.
-
-> [!NOTE]
-> Data movement improves portability but consumes extra object storage, node CPU, network bandwidth, temporary pods, and PVC staging resources. Test throughput before relying on it for large cutover windows.
-
-## File System Backup with Kopia
-
-File System Backup uses Velero node-agent to read mounted pod volumes from node filesystems and store file data in object storage through a backup repository. Velero v1.18 documents Kopia as the active path and notes that restic is in deprecation.
-
-Use File System Backup when:
-
-- The volume type does not support snapshots.
-- You need to migrate volume contents across cloud providers.
-- You use NFS, EFS, AzureFile, local volumes, or another volume type without provider snapshots.
-
-Avoid relying only on File System Backup when:
-
-- You need strict point-in-time consistency for a busy database.
-- The volume contains very large files that are expensive to scan for deduplication.
-- The node-agent cannot safely run with the required host filesystem access.
-
-> [!WARNING]
-> File System Backup reads live mounted file systems. For databases and write-heavy applications, use application quiesce hooks, database-native backup, or storage snapshots where consistency matters.
-
-### Opt-in File System Backup example
-
-```bash
-kubectl -n app-prod annotate pod/app-0 \
-  backup.velero.io/backup-volumes=data
-
-velero backup create app-prod-files \
-  --include-namespaces app-prod \
-  --snapshot-volumes=false \
-  --wait
-```
-
-What it does: marks the `data` pod volume for File System Backup and creates a backup that avoids provider snapshots.
-
-### Opt-out File System Backup example
-
-```bash
-velero backup create app-prod-all-pod-volumes \
-  --include-namespaces app-prod \
-  --default-volumes-to-fs-backup \
-  --snapshot-volumes=false \
-  --wait
-```
-
-What it does: tells Velero to use File System Backup for eligible pod volumes in the selected namespace without requiring per-pod annotations.
-
-### Inspect backup repositories
-
-```bash
-kubectl get backuprepositories -n velero
-kubectl describe backuprepository <repository-name> -n velero
-```
-
-What it does: shows Kopia repository readiness for namespaces that use File System Backup or data movement.
-
-## Resource policies for volume decisions
-
-Resource policies let one backup choose different volume actions by condition. Use them when a namespace mixes snapshot-friendly CSI volumes, NFS volumes, and volumes that should be skipped.
-
-```yaml
-version: v1
-volumePolicies:
-- conditions:
-    csi:
-      driver: ebs.csi.aws.com
-  action:
-    type: snapshot
-- conditions:
-    nfs: {}
-  action:
-    type: fs-backup
-- conditions:
-    volumeTypes:
-    - emptyDir
-    - configmap
-    - secret
-  action:
-    type: skip
-```
-
-What it does: snapshots EBS CSI volumes, uses File System Backup for NFS volumes, and skips temporary or generated volume types.
-
-```bash
-kubectl create configmap app-prod-volume-policy \
-  --from-file=resource-policies.yaml \
-  -n velero
-
-velero backup create app-prod-policy-backup \
-  --include-namespaces app-prod \
-  --resource-policies-configmap app-prod-volume-policy \
-  --wait
-```
-
-What it does: stores the policy in the Velero namespace and references it from a backup.
-
-## Decision guide
-
-| Situation | Prefer |
-| --- | --- |
-| Same EKS cluster or same-region EKS recovery with EBS PVCs | EBS or CSI snapshots. |
-| Cross-cluster migration with the same CSI driver and storage backend | CSI snapshots, then test restore on the destination. |
-| Cross-provider or cross-region volume migration | File System Backup or CSI snapshot data movement. |
-| Stateless workloads only | Kubernetes object backup may be enough. |
-| Database with strict recovery needs | Database-native backup plus Velero for manifests and surrounding resources. |
-
-## Related links
-
-- [Velero File System Backup](https://velero.io/docs/v1.18/file-system-backup/)
-- [Velero CSI support](https://velero.io/docs/v1.18/csi/)
-- [Velero CSI snapshot data mover](https://velero.io/docs/v1.18/csi-snapshot-data-movement/)
-- [Velero resource filtering](https://velero.io/docs/v1.18/resource-filtering/)
-- [Kubernetes volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/)
-- [AWS S3 and EBS installation](aws-s3-ebs-installation.md)
-- [Back to Velero index](index.md)
-- [Back to migrations index](../index.md)
-- [Back to root index](../../../README.md)
+[^velero-how]: [Velero v1.18 - How Velero Works](https://velero.io/docs/v1.18/how-velero-works/).
+[^velero-csi]: [Velero v1.18 - CSI Snapshot Support](https://velero.io/docs/v1.18/csi/).
+[^velero-data-movement]: [Velero v1.18 - CSI Snapshot Data Movement](https://velero.io/docs/v1.18/csi-snapshot-data-movement/).
+[^velero-fsb]: [Velero v1.18 - File System Backup](https://velero.io/docs/v1.18/file-system-backup/).
+[^velero-resource-policy]: [Velero v1.18 - Resource Filtering and Volume Policies](https://velero.io/docs/v1.18/resource-filtering/).
+[^kubernetes-snapshot]: [Kubernetes - Volume Snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/).

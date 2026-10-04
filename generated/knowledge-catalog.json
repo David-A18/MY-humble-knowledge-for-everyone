@@ -3487,20 +3487,29 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to choose how Velero should store backup artifacts and protect Kubernetes persistent volume data.",
+      "audience": "Beginning platform and application teams",
+      "description": "Choose a Velero volume protection method by tracing where the copy lives, what a restore requires, and how to test it.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/migrations/velero/storage-and-volume-backups.md",
-      "source_ids": [],
+      "source_ids": [
+        "velero-how",
+        "velero-csi",
+        "velero-data-movement",
+        "velero-fsb",
+        "velero-resource-policy",
+        "kubernetes-snapshot"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "migrations",
         "velero",
-        "storage-and-volume-backups"
+        "storage",
+        "backup",
+        "beginner"
       ],
-      "title": "Velero storage and volume backups",
+      "title": "Where a Velero backup keeps objects and volume data",
       "type": "Explanation"
     },
     {

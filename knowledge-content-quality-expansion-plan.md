@@ -1758,13 +1758,26 @@ contract; the linked pages carry examples and diagrams.
 | --- | --- | --- | --- |
 | [Glossary](knowledge/glossary.md) | Added prerequisite terms and direct links, scoped overloaded words, corrected prompt, Crossplane config, CI/CD, and retrieval definitions, and made the starting links land on explanations. | Opus 5.5 reviewed the previous glossary read-only. Crossplane v2 ProviderConfig and EnvironmentConfig details checked against official docs; linked local concepts and OKF Glossary contract checked. No novice term-finding test or independent technical review occurred. | Novice find-a-term task; independent glossary and Crossplane version review; freshness decision. |
 
+### Wave 108 (2026-10-04)
+
+The Velero volume page now explains where each copy actually lives.
+It follows one invented notes app through object archive, native or
+CSI snapshot, CSI snapshot data movement, and File System Backup, and
+asks readers to choose from the intended restore destination. Untested
+creation commands and manifests moved out of this Explanation; the
+page names exact evidence needed before trusting an off-backend copy.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Where a Velero backup keeps objects and volume data](knowledge/migrations/velero/storage-and-volume-backups.md) | Workshop analogy, invented notes app, volume-path diagram and text alternative, four-method comparison, destination-first choice, FSB and data-mover prerequisites, understanding checks. | Opus 5.5 read-only review of the previous page found misleading data-mover, FSB, and snapshot assumptions. Current Velero v1.18 how-it-works, CSI, data movement, FSB, and volume-policy docs plus Kubernetes snapshot docs checked. Diagram rendered and inspected. No cluster, volume, backup, snapshot, upload, restore, or reader test occurred. | Independent storage/Velero review; test each chosen method with a disposable workload and destination; novice method-choice task; freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
 Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 107
-together: one hundred thirty-six concepts. Selected waves received Opus review,
+concepts. The "authored to the standard" column covers waves 1 to 108
+together: one hundred thirty-seven concepts. Selected waves received Opus review,
 but none completed the full independent domain-review and reader-task gates.
-The remaining 29 have not yet been authored or
+The remaining 28 have not yet been authored or
 assessed against the teaching standard.
 
 The embedded OKF example under AI tooling uses reserved types for format
@@ -1782,13 +1795,13 @@ demonstration, so most teaching elements do not apply there.
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
 | Kubernetes | 45 | 45 | 0 |
-| Migrations | 9 | 2 | 7 |
+| Migrations | 9 | 3 | 6 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 0 | 5 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **136** | **29** |
+| **Total** | **165** | **137** | **28** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
