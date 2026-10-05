@@ -91,10 +91,10 @@ healthy revision means the package is ready to work, not that it can
 call every external API or create every possible resource.
 [^crossplane-providers]
 
-Providers may offer many managed-resource types. In Crossplane v2,
+Providers may offer many managed-resource types. In Crossplane v2.4,
 managed-resource definitions and activation policies can control
 which types become active. Activation policies are alpha in the
-current documentation. If the Bucket kind is absent, inspect the
+v2.4 documentation. If the Bucket kind is absent, inspect the
 installed provider revision, its API discovery, and activation state
 before troubleshooting AWS credentials.[^crossplane-activation]
 
@@ -113,13 +113,24 @@ namespace, while a `ClusterProviderConfig` can be referenced from
 multiple namespaces. The managed resource's
 `spec.providerConfigRef` names the selected configuration
 and its kind; inspect both values when tracing an account.
+If a managed resource omits this reference, the documented AWS provider
+defaults to a `ClusterProviderConfig` named `default`; inspect the stored
+resource instead of assuming it uses the configuration you intended.
 A wider scope should be paired with Kubernetes RBAC and
 admission rules that control who can create MRs or select
-that configuration.[^crossplane-providers]
+that configuration.[^crossplane-managed]
 
 Provider configuration and the Pod's identity work together. For
-example, a provider may read a Kubernetes Secret, or its runtime
-may use workload identity to obtain temporary cloud credentials.
+example, the provider-specific `spec.credentials.source` in a
+`ProviderConfig` can tell the provider to read a Kubernetes Secret.
+Another supported source may use the provider Pod's workload identity
+to obtain temporary cloud credentials; merely attaching a role to the
+Pod does not override a configuration that selects `Secret`. Confirm
+which sources the installed provider version supports.[^crossplane-providers]
+Crossplane normally creates the provider runtime's service account.
+A `DeploymentRuntimeConfig` can customize it or select an existing
+service account; check the Pod's actual service account before
+configuring IRSA or EKS Pod Identity.[^crossplane-providers]
 The trust and permission policy at the external service still
 decides what those credentials can do. The reports application's
 own workload identity is a **different identity** from the
@@ -153,6 +164,7 @@ For the two EKS credential mechanisms, read
 | Observation | First question | Next evidence |
 | --- | --- | --- |
 | Bucket API kind is unknown. | Did the provider install and activate that exact managed-resource API? | Provider revision, discovered API resources, and activation state.[^crossplane-providers][^crossplane-activation] |
+| ProviderConfig kind is unknown. | Did the AWS family provider install its configuration API? | Family Provider health, package dependency, and discovered config API.[^crossplane-providers] |
 | Bucket MR exists, provider Pod is unhealthy. | Did the package runtime start? | Provider and Pod conditions, events, and package revision. |
 | Provider reports missing credentials. | Which ProviderConfig and credential path did this MR select? | MR reference, provider config, service account, and Pod credential setup.[^crossplane-managed] |
 | AWS denies the call. | Which role, account, resource, and action did AWS evaluate? | Provider condition/message and relevant AWS audit evidence. |

@@ -2984,8 +2984,12 @@
         "aws-sts",
         "aws-s3-names",
         "aws-head-bucket",
+        "aws-list-buckets",
+        "aws-cli-config",
         "aws-delete-bucket",
-        "aws-s3-public"
+        "aws-s3-public",
+        "kubectl-delete",
+        "kubectl-wait"
       ],
       "stale_after": null,
       "status": "draft",

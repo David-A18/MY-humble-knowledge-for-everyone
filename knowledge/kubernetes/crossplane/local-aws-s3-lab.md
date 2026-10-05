@@ -38,12 +38,24 @@ sources:
   - id: aws-head-bucket
     resource: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html
     title: AWS - HeadBucket
+  - id: aws-list-buckets
+    resource: https://docs.aws.amazon.com/cli/latest/reference/s3api/list-buckets.html
+    title: AWS CLI - list-buckets
+  - id: aws-cli-config
+    resource: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html
+    title: AWS CLI - Configuration precedence
   - id: aws-delete-bucket
     resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/delete-bucket.html
     title: AWS - Deleting a general purpose bucket
   - id: aws-s3-public
     resource: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
     title: AWS - Blocking public access to S3 storage
+  - id: kubectl-delete
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+    title: Kubernetes - kubectl delete
+  - id: kubectl-wait
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/
+    title: Kubernetes - kubectl wait
 ---
 
 # Create and remove one S3 bucket with Crossplane
@@ -84,22 +96,28 @@ conditions, and the learner separately checks the external bucket.
 ## Before you begin
 
 You need `docker` with a working daemon, `kind`, `kubectl`,
-Helm 3, the AWS CLI, and `openssl`. Use an AWS sandbox where you
+Helm 3, the AWS CLI, and `openssl`. Keep all steps in one shell so the
+temporary variables below remain available. Use an AWS sandbox where you
 may create and delete a general-purpose S3 bucket. Obtain
 temporary credentials for an approved sandbox role through your
 normal process. Keep the role's permissions scoped to the
-exercise and ensure it can observe, create, update, and delete
-the bucket. The exact provider IAM actions depend on the
-provider version and are outside this tutorial.
+exercise and ensure it can observe, create, tag, and delete
+the bucket. The CLI verification also needs permission to read bucket
+tags; the optional account-owned bucket list needs `s3:ListAllMyBuckets`.
+The provider may need more read actions than `s3:CreateBucket` and
+`s3:DeleteBucket` to reconcile its Bucket type. Have the sandbox owner
+approve permissions for the exact provider version; if the MR reports
+`AccessDenied`, stop and inspect the denied action rather than widening
+permissions by guesswork. This guide does not supply an untested IAM policy.
 [^crossplane-install][^crossplane-managed][^aws-sts]
 
-Use a fresh shell without `AWS_ACCESS_KEY_ID`,
-`AWS_SECRET_ACCESS_KEY`, or `AWS_SESSION_TOKEN` already set;
-otherwise those environment variables can override the credential
-file used below. Keep the credential file **outside the
-repository**. Do not commit it or paste its values into a
+Use a fresh shell. The setup below clears AWS key, role, web-identity,
+and endpoint overrides before selecting the temporary file. These settings
+or a local AWS config profile can make the CLI use a different identity from
+the Secret below. Keep the credential file **outside the repository**. Do
+not commit it or paste its values into a
 validation record. Check how long the temporary session will
-last before starting.[^aws-sts]
+last before starting.[^aws-sts][^aws-cli-config]
 
 This tutorial uses the verified published Crossplane chart
 `2.4.2` and Upbound AWS S3 provider `v2.6.1`.
@@ -116,9 +134,14 @@ Create a temporary file outside Git and fill it with
 Do not copy the placeholder values as real credentials:
 
 ```bash
+unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN \
+  AWS_ROLE_ARN AWS_WEB_IDENTITY_TOKEN_FILE AWS_DEFAULT_PROFILE \
+  AWS_ENDPOINT_URL AWS_ENDPOINT_URL_S3 AWS_ENDPOINT_URL_STS
 export LAB_AWS_REGION=eu-west-1
 export LAB_CREDS_FILE="$(mktemp /tmp/crossplane-aws-creds.XXXXXX)"
 chmod 600 "$LAB_CREDS_FILE"
+LAB_DIR="$(mktemp -d /tmp/crossplane-lab.XXXXXX)"
+cd "$LAB_DIR"
 ```
 
 The file must have this shape:
@@ -130,18 +153,24 @@ aws_secret_access_key = YOUR_TEMPORARY_SECRET_KEY
 aws_session_token = YOUR_TEMPORARY_SESSION_TOKEN
 ```
 
-Point the AWS CLI at **that same file**, then check its identity:
+Point the AWS CLI at **that same file** and bypass any local config profile,
+then check its identity:[^aws-cli-config]
 
 ```bash
 export AWS_SHARED_CREDENTIALS_FILE="$LAB_CREDS_FILE"
+export AWS_CONFIG_FILE=/dev/null
 export AWS_PROFILE=default
-aws sts get-caller-identity
+aws sts get-caller-identity --region "$LAB_AWS_REGION"
+LAB_ACCOUNT_ID="$(aws sts get-caller-identity \
+  --region "$LAB_AWS_REGION" --query Account --output text)"
+: "${LAB_ACCOUNT_ID:?}"
+printf 'Sandbox account: %s\n' "$LAB_ACCOUNT_ID"
 ```
 
 The account and role in the response must be the intended
 sandbox identity. If the command fails, stop and correct the
-credentials before creating a cluster. Temporary STS credentials
-need all three values, including the session token.
+credentials before creating a cluster; do not use an empty account ID.
+Temporary STS credentials need all three values, including the session token.
 [^aws-sts]
 
 ## 2. Start the control plane
@@ -149,6 +178,12 @@ need all three values, including the session token.
 ```bash
 kind create cluster --name crossplane-lab
 kubectl config current-context
+test "$(kubectl config current-context)" = kind-crossplane-lab
+```
+
+Stop if the context check fails. Then install Crossplane:
+
+```bash
 helm repo add crossplane-stable https://charts.crossplane.io/stable
 helm repo update
 helm install crossplane crossplane-stable/crossplane \
@@ -158,8 +193,7 @@ helm install crossplane crossplane-stable/crossplane \
   --wait --timeout 5m
 ```
 
-The context should be `kind-crossplane-lab` and Crossplane
-Pods should become ready. If Helm times out, inspect the Pods
+Crossplane Pods should become ready. If Helm times out, inspect the Pods
 in `crossplane-system` before continuing. Crossplane needs
 a working Kubernetes cluster before it can manage AWS.
 [^crossplane-install]
@@ -185,16 +219,24 @@ kubectl apply -f lab-provider.yaml
 kubectl wait providers.pkg.crossplane.io/provider-aws-s3 \
   --for=condition=Healthy --timeout=5m
 kubectl get providers.pkg.crossplane.io
-kubectl get crd buckets.s3.aws.m.upbound.io
+kubectl wait --for=create --timeout=5m \
+  crd/buckets.s3.aws.m.upbound.io \
+  crd/clusterproviderconfigs.aws.m.upbound.io
+kubectl wait --for=condition=Established --timeout=2m \
+  crd/buckets.s3.aws.m.upbound.io \
+  crd/clusterproviderconfigs.aws.m.upbound.io
 ```
 
-The package may also install an AWS family provider, which
-supplies shared AWS configuration APIs. Confirm all provider
-packages are healthy before the next step. The Bucket CRD must
-exist. If it does not, inspect the ProviderRevision, installed
-ManagedResourceDefinitions, and activation policies; the v2
-chart's default policy normally activates all MRDs.
-[^crossplane-providers][^upbound-s3][^crossplane-activation]
+The package installs an AWS family provider dependency, which
+supplies the `ClusterProviderConfig` API. Confirm that both packages
+show `HEALTHY=True` before continuing. Both CRDs must be established.
+The create wait handles the delay before a dependency creates its CRD.
+If either wait times out, inspect the ProviderRevisions, installed
+ManagedResourceDefinitions, and activation policies; wait for the
+family provider and retry the CRD check before applying the provider
+configuration. The v2 chart's default policy normally activates
+all MRDs.
+[^crossplane-providers][^upbound-s3][^crossplane-activation][^kubectl-wait]
 
 ## 4. Give the provider its sandbox credentials
 
@@ -244,14 +286,19 @@ Never point this lab at an existing bucket.
 ```bash
 export LAB_BUCKET_NAME="xp-lab-$(openssl rand -hex 12)"
 printf '%s\n' "$LAB_BUCKET_NAME"
+: "${LAB_BUCKET_NAME:?}" "${LAB_CREDS_FILE:?}" \
+  "${LAB_AWS_REGION:?}" "${LAB_ACCOUNT_ID:?}"
 ```
 
 Before applying, check that the candidate is not already
-reachable by this identity:
+reachable by this identity. The expected `404 Not Found` is printed as an
+AWS CLI error and exits nonzero; it is only a candidate check, not a
+guarantee that the name will remain available.[^aws-head-bucket]
 
 ```bash
 aws s3api head-bucket --bucket "$LAB_BUCKET_NAME" \
-  --region "$LAB_AWS_REGION"
+  --region "$LAB_AWS_REGION" \
+  --expected-bucket-owner "$LAB_ACCOUNT_ID"
 ```
 
 For a new name, AWS should return `404`. A `403`, a
@@ -278,6 +325,12 @@ spec:
     kind: ClusterProviderConfig
 EOF
 kubectl apply --dry-run=server -f lab-bucket.yaml
+```
+
+Stop if the server dry run fails or the manifest does not show the intended
+bucket name, Region, and provider configuration. Then submit it:
+
+```bash
 kubectl apply -f lab-bucket.yaml
 ```
 
@@ -295,16 +348,32 @@ kubectl wait "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" \
 kubectl wait "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" \
   -n default --for=condition=Ready=True --timeout=5m
 kubectl describe "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" -n default
+LAB_EXTERNAL_NAME="$(kubectl get \
+  "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" -n default \
+  -o jsonpath='{.metadata.annotations.crossplane\.io/external-name}')"
+printf 'External name: %s\n' "$LAB_EXTERNAL_NAME"
+test "$LAB_EXTERNAL_NAME" = "$LAB_BUCKET_NAME"
+```
+
+Stop if either wait times out or the external name differs from the candidate
+you checked. Then
+confirm the bucket and tag in the intended AWS account:
+
+```bash
 aws s3api head-bucket --bucket "$LAB_BUCKET_NAME" \
-  --region "$LAB_AWS_REGION"
+  --region "$LAB_AWS_REGION" \
+  --expected-bucket-owner "$LAB_ACCOUNT_ID"
 aws s3api get-bucket-tagging --bucket "$LAB_BUCKET_NAME" \
-  --region "$LAB_AWS_REGION"
+  --region "$LAB_AWS_REGION" \
+  --expected-bucket-owner "$LAB_ACCOUNT_ID"
 ```
 
 The managed resource should show `Synced=True` and
 `Ready=True`, with an external name. The AWS CLI should
-find the bucket and its `Purpose` tag using the same
-credentials supplied to the provider. If a wait times out,
+find the bucket and its `Purpose` tag in the expected account using
+the same credential file supplied to the provider. This checks the
+observable result; the CLI identity alone does not prove which identity
+the provider Pod actually used. If a wait times out,
 read the managed resource's Reason and Message, provider
 package health, and events before changing anything.
 [^crossplane-managed]
@@ -324,21 +393,54 @@ cleanup. Do not remove Crossplane finalizers to make
 deletion appear successful.[^crossplane-managed][^aws-delete-bucket]
 
 ```bash
-kubectl delete -f lab-bucket.yaml
+kubectl delete --wait=false -f lab-bucket.yaml
 kubectl wait "buckets.s3.aws.m.upbound.io/$LAB_BUCKET_NAME" \
   -n default --for=delete --timeout=5m
 aws s3api head-bucket --bucket "$LAB_BUCKET_NAME" \
-  --region "$LAB_AWS_REGION"
+  --region "$LAB_AWS_REGION" \
+  --expected-bucket-owner "$LAB_ACCOUNT_ID"
 ```
 
-The final AWS call should fail with **404 Not Found**.
-A `403`, expired token, or network failure is inconclusive.
+Continue only if the Kubernetes deletion wait succeeds. The final AWS call
+should report **404 Not Found** as a nonzero CLI result.
+That supports deletion, but `HeadBucket` cannot explain every error from
+its status alone. If your sandbox role has `s3:ListAllMyBuckets`, also
+check the account-owned bucket list and confirm the exact name is absent:
+
+```bash
+aws s3api list-buckets --region "$LAB_AWS_REGION" \
+  --query "Buckets[?Name=='${LAB_BUCKET_NAME}'].Name" --output json
+```
+
+The expected result is `[]`. A `403`, expired token, network failure, or
+a result containing the bucket name means deletion is not yet confirmed.
+If you cannot list owned buckets, get an authorized AWS-side deletion check before
+tearing down the cluster.[^aws-head-bucket][^aws-list-buckets]
+
 If the Kubernetes delete waits, inspect the managed
 resource's conditions, finalizer, provider health, and
-AWS bucket contents. Restore a valid provider credential
-if its temporary session expired. Do not remove the
+AWS bucket contents. If temporary credentials expired, obtain a new approved
+session, replace the file contents without printing them, confirm the
+new caller identity:
+
+```bash
+aws sts get-caller-identity --region "$LAB_AWS_REGION"
+test "$(aws sts get-caller-identity --region "$LAB_AWS_REGION" \
+  --query Account --output text)" = "$LAB_ACCOUNT_ID"
+```
+
+The new account and role must still be approved for this sandbox. Stop if
+they differ. Then replace the existing Secret:
+
+```bash
+kubectl create secret generic aws-secret -n crossplane-system \
+  --from-file=creds="$LAB_CREDS_FILE" --dry-run=client -o yaml | \
+  kubectl replace -f -
+```
+
+Inspect the MR condition and retry the timed deletion wait. Do not remove the
 provider or cluster while external deletion is unresolved.
-[^crossplane-managed][^aws-head-bucket]
+[^crossplane-managed][^aws-head-bucket][^kubectl-delete]
 
 Only after confirming the AWS result, remove the lab
 objects and local cluster:
@@ -348,6 +450,11 @@ kubectl delete -f lab-provider-config.yaml
 kubectl delete secret aws-secret -n crossplane-system
 kind delete cluster --name crossplane-lab
 rm -f "$LAB_CREDS_FILE"
+cd /tmp
+rm -f "$LAB_DIR/lab-provider.yaml" \
+  "$LAB_DIR/lab-provider-config.yaml" "$LAB_DIR/lab-bucket.yaml"
+rmdir "$LAB_DIR"
+unset AWS_SHARED_CREDENTIALS_FILE AWS_CONFIG_FILE AWS_PROFILE
 ```
 
 Record the actual versions, conditions, AWS identity
@@ -389,5 +496,9 @@ alone.
 [^aws-sts]: AWS, [STS Credentials](https://docs.aws.amazon.com/STS/latest/APIReference/API_Credentials.html).
 [^aws-s3-names]: AWS, [General purpose bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
 [^aws-head-bucket]: AWS, [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html).
+[^aws-list-buckets]: AWS CLI, [list-buckets](https://docs.aws.amazon.com/cli/latest/reference/s3api/list-buckets.html).
+[^aws-cli-config]: AWS CLI, [Configuring settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 [^aws-delete-bucket]: AWS, [Deleting a general purpose bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/delete-bucket.html).
 [^aws-s3-public]: AWS, [Blocking public access to S3 storage](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html).
+[^kubectl-delete]: Kubernetes, [kubectl delete](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/).
+[^kubectl-wait]: Kubernetes, [kubectl wait](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/).

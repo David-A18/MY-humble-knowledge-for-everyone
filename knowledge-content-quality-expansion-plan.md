@@ -2026,6 +2026,26 @@ documentation was checked independently. No Kafka
 broker, external database, crash or rebalance sequence, or novice reader
 trial was run. The page remains `draft`.
 
+### Focused review round 5 (2026-10-05)
+
+Claude Opus 5.5 reviewed [the Crossplane AWS S3
+lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md) and [provider
+authentication](knowledge/kubernetes/crossplane/providers-and-authentication.md)
+for executable and identity-boundary problems. The lab now checks its local
+cluster context, isolates the AWS CLI's credential path, waits for the S3 and
+family-provider APIs, compares the managed resource's external name and the
+expected AWS owner, and makes deletion wait with a timeout. It also gives a
+Secret replacement path for expired temporary credentials and requires
+AWS-side deletion evidence before removing the provider. The explanation
+now shows how the provider configuration selects a credential source and why
+an attached Pod role does not override `source: Secret`.
+
+Current Crossplane v2.4, Kubernetes `kubectl`, Upbound package, and AWS STS,
+S3, and CLI references were checked independently. All Bash examples parsed
+with `bash -n`. No kind, kubectl, Helm, AWS CLI, provider, S3 bucket, or
+reader task was run in this workspace; both pages remain `draft` pending an
+authorized sandbox exercise and novice review.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
