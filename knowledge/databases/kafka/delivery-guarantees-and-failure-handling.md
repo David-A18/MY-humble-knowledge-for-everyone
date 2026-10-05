@@ -23,6 +23,9 @@ sources:
   - id: kafka-consumer-api
     resource: https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html
     title: Apache Kafka 4.1 - KafkaConsumer API
+  - id: kafka-consumer-configs
+    resource: https://kafka.apache.org/41/configuration/consumer-configs/
+    title: Apache Kafka 4.1 - Consumer Configs
   - id: debezium-outbox
     resource: https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html
     title: Debezium - Outbox Event Router
@@ -64,15 +67,15 @@ flowchart LR
   log --> consumer["Fulfillment consumer"]
   consumer -- "1. create shipment" --> db["External shipment database"]
   consumer -- "2. commit position" --> offset["Kafka group offset"]
-  db -. "crash may happen here" .-> offset
+  db -. "effect done, offset not yet committed" .-> gap["Restart or rebalance:<br/>repeat step 1"]
 ```
 
 Text alternative: the producer publishes `evt-17` to a Kafka partition. The
 fulfillment consumer reads it, creates a shipment in an external database,
 then commits its Kafka group position. The dotted line marks the interval
-after the database effect but before the offset commit; a crash there can
-cause the event to be read again. Kafka does not make that database write
-and offset commit one transaction.[^kafka-design]
+after the database effect but before the offset commit; a restart or group
+rebalance can cause the event to be read again. Kafka does not make that
+database write and offset commit one transaction.[^kafka-design]
 
 Think of an offset as a bookmark in a numbered work queue. If you mark the
 page *before* doing the job, a crash can skip the job. If you do the job
@@ -80,20 +83,26 @@ page *before* doing the job, a crash can skip the job. If you do the job
 stops at Kafka's partitions, retained records, group reassignments, and
 producer transactions; the bookmark is not evidence of a shipment.
 
-| Order of actions | Crash window | Business risk |
+| Order of actions | Failure window | Business risk |
 | --- | --- | --- |
-| Commit offset, then create shipment | After commit, before shipment. | Restart may skip a shipment that never happened. |
-| Create shipment, then commit offset | After shipment, before commit. | Restart can read `evt-17` again and request a duplicate shipment. |
+| Commit offset, then create shipment | After commit, before shipment. | A restart or rebalance may skip a shipment that never happened. |
+| Create shipment, then commit offset | After shipment, before commit. | A restart or group rebalance can read `evt-17` again and request a duplicate shipment. |
 | Make shipment creation repeat-safe, then commit | The event may still replay. | Repeating it finds the existing result instead of making another shipment, if the deduplication rule and write are correctly coordinated. |
 
 The consumer's **current position** advances as it polls, while its
 **committed position** is what it resumes from after a failure. The Kafka
-client supports automatic or application-controlled offset commits, so the
-processing order must match the chosen client and error
-path.[^kafka-consumer-api]
+Java consumer enables automatic commits by default. With automatic commits,
+finish all work from one `poll()` before the next `poll()` or `close()`; handing
+records to another worker while polling again can commit progress before that
+work finishes. With manual commits, commit the **next** offset to read after
+successful processing, not the offset of the record just processed. Match the
+commit strategy to the client and its error path.[^kafka-consumer-api][^kafka-consumer-configs]
 
 For the invented one-shipment-per-order rule, a unique `orderId` in the
-shipment database can reject a second shipment request. Another design
+shipment database can reject a second shipment request. If that rejection
+means the same order already has the intended shipment, treat it as an
+already-completed result and commit progress; blindly retrying or sending
+it to a dead-letter topic would misclassify success. Another design
 records `eventId` as processed in the **same database transaction** as the
 business change. A processed-ID record written separately *before* the
 shipment would simply create another loss window. If the effect is an
@@ -109,7 +118,17 @@ The producer can retry a send whose result is uncertain. In Kafka 4.1,
 another copy of the same record when its required settings are satisfied.
 Idempotence is enabled by default unless conflicting settings disable it.
 The durability of `acks=all` also depends on the topic's replication and
-minimum in-sync replica settings.[^kafka-producer-configs][^kafka-topic-configs]
+minimum in-sync replica settings. The topic default for
+`min.insync.replicas` is 1; an `acks=all` write can succeed with only the
+leader still in sync. A typical durable configuration uses replication factor
+3 and minimum in-sync replicas 2, accepting that writes fail when too few
+replicas remain.[^kafka-producer-configs][^kafka-topic-configs]
+
+In the Java producer, `send()` is asynchronous. Check each send's result
+through its callback or future and handle failures; a failed or unchecked
+result is not proof that the event was published. Allow pending sends to
+finish during orderly shutdown with `flush()` or `close()`, while still
+checking their outcomes.[^kafka-producer-api]
 
 That protection does **not** recognize a new application-level send of the
 same business event, and the producer API limits its idempotence guarantee
@@ -133,6 +152,13 @@ pattern**, not a Kafka broker guarantee. A separate retry topic can also
 change when records are processed relative to later events, so document
 whether per-key order matters before choosing it.
 
+If a failed record is sent to a retry or dead-letter topic, commit its source
+offset only after the new write is acknowledged. A failure between that write
+and the offset commit can put the record there twice, so that path also needs
+repeat-safe handling. Long blocking retries inside the poll loop may exceed
+`max.poll.interval.ms`; the consumer then leaves its group and another member
+can process its uncommitted records.[^kafka-consumer-api]
+
 Do not treat a dead-letter topic as successful processing. It needs an
 owner, a repair or replay path, retention, and access controls suitable for
 the original payload. Otherwise the queue can hide a failed business
@@ -144,7 +170,8 @@ for signals that separate broker progress from the user outcome.
 Kafka transactions can put output records and consumed offsets in one
 Kafka transaction for a read-process-write flow between Kafka topics;
 consumers that should hide aborted transactions use `read_committed`
-isolation. Kafka's design documentation says an external destination needs
+isolation rather than the default `read_uncommitted`. Kafka's design
+documentation says an external destination needs
 cooperation with that destination for an equivalent end-to-end
 outcome.[^kafka-design] For `evt-17`, the shipping database is outside the Kafka
 transaction. Call the result **repeat-safe shipping** only after testing
@@ -168,6 +195,8 @@ the database or provider rule across retries and crashes.
   documents acknowledgements, retries, and idempotence conditions.
 - [KafkaConsumer API](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html)
   documents current and committed positions.
+- [Kafka 4.1 consumer configurations](https://kafka.apache.org/41/configuration/consumer-configs/)
+  documents automatic commits and isolation defaults.
 - [Debezium Outbox Event Router](https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html)
   documents one implementation of the outbox pattern.
 
@@ -178,9 +207,11 @@ or return to the [Kafka index](index.md).
 
 The earlier version recorded a source review on 2026-09-19 and a static
 syntax check of a Python example. That example is no longer on this page.
-This rewrite was checked against the cited upstream documentation, but no
-Kafka broker, external shipment database, crash sequence, or reader test
-was run. The existing `stale_after` date is a review trigger, not proof that
+The current claims were checked against the cited Apache Kafka pages. A
+follow-up Opus 5.5 read-only review found no remaining material issue but did
+not fetch those sources or run a broker. No external shipment database, crash
+or rebalance sequence, or reader test was run. The existing `stale_after`
+date is a review trigger, not proof that
 the current explanation is verified. The page remains `draft`.
 
 [^kafka-design]: [Apache Kafka 4.1: Design](https://kafka.apache.org/41/design/design/).
@@ -188,4 +219,5 @@ the current explanation is verified. The page remains `draft`.
 [^kafka-topic-configs]: [Apache Kafka 4.1: Topic Configs](https://kafka.apache.org/41/configuration/topic-configs/).
 [^kafka-producer-api]: [Apache Kafka 4.1: KafkaProducer API](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html).
 [^kafka-consumer-api]: [Apache Kafka 4.1: KafkaConsumer API](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html).
+[^kafka-consumer-configs]: [Apache Kafka 4.1: Consumer Configs](https://kafka.apache.org/41/configuration/consumer-configs/).
 [^debezium-outbox]: [Debezium: Outbox Event Router](https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html).

@@ -1371,6 +1371,7 @@
         "kafka-topic-configs",
         "kafka-producer-api",
         "kafka-consumer-api",
+        "kafka-consumer-configs",
         "debezium-outbox"
       ],
       "stale_after": "2026-12-19",

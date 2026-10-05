@@ -2011,6 +2011,21 @@ state diagram was rendered and visually inspected. The Terraform CLI is not
 installed in this workspace, so no new Terraform execution is claimed; both
 pages remain `draft` pending runtime and reader evidence.
 
+### Focused review round 4 (2026-10-05)
+
+Claude Opus 5.5 reviewed [Kafka delivery guarantees and failure
+handling](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md)
+twice for beginner and failure-path accuracy. The guide now explains how a
+rebalance can replay an event without a process crash, when automatic commits
+can skip unfinished work, why a manual commit uses the next offset, and how
+producer results, replica settings, and dead-letter handoffs affect the
+outcome. The failure-window diagram was adjusted so the database does not
+appear to send an offset commit; the revised diagram was rendered and
+inspected. Apache Kafka 4.1 design, producer, consumer, and topic-configuration
+documentation was checked independently. No Kafka
+broker, external database, crash or rebalance sequence, or novice reader
+trial was run. The page remains `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
