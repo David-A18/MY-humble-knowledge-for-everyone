@@ -1996,6 +1996,21 @@ The same round corrected a moved AWS Redshift proof-of-concept reference
 after the external-link CI found its old locale URL returning 404. The
 canonical AWS page was opened and checked before changing the link.
 
+### Focused review round 3 (2026-10-05)
+
+Claude Opus 5.5 reviewed [Terraform core workflow](knowledge/terraform/commands/core-workflow.md)
+and [Terraform state management](knowledge/terraform/fundamentals/state-management.md)
+for beginner and operational risk. The workflow now checks Terraform version
+and provider identity, keeps saved plans out of Git, teaches the plan marks,
+and explains that a plan can evaluate provider and data-source code. The state
+page now shows the nested `lifecycle { destroy = false }` syntax for a
+`removed` block, distinguishes local state from backend metadata, and explains
+ephemeral and write-only values without treating `sensitive` as state
+encryption. Current HashiCorp and AWS primary references were checked. The
+state diagram was rendered and visually inspected. The Terraform CLI is not
+installed in this workspace, so no new Terraform execution is claimed; both
+pages remain `draft` pending runtime and reader evidence.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

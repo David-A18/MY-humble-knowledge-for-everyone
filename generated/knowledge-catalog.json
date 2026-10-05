@@ -3856,7 +3856,13 @@
         "terraform-plan",
         "terraform-show",
         "terraform-apply",
-        "terraform-dependency-lock"
+        "terraform-dependency-lock",
+        "terraform-plan-tutorial",
+        "aws-caller-identity",
+        "terraform-external-data-source",
+        "terraform-aws-provider",
+        "terraform-s3-backend",
+        "terraform-aws-caller-identity"
       ],
       "stale_after": null,
       "status": "draft",
@@ -3908,7 +3914,10 @@
         "terraform-plan",
         "terraform-moved-blocks",
         "terraform-removed-blocks",
-        "terraform-state-cli"
+        "terraform-state-cli",
+        "terraform-local-backend",
+        "terraform-workspaces",
+        "terraform-state-cli-tutorial"
       ],
       "stale_after": null,
       "status": "draft",

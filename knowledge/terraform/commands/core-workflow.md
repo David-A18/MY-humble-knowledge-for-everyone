@@ -32,6 +32,24 @@ sources:
   - id: terraform-dependency-lock
     resource: https://developer.hashicorp.com/terraform/language/files/dependency-lock
     title: Terraform dependency lock file
+  - id: terraform-plan-tutorial
+    resource: https://developer.hashicorp.com/terraform/tutorials/cli/plan
+    title: HashiCorp tutorial - Create a Terraform plan
+  - id: aws-caller-identity
+    resource: https://docs.aws.amazon.com/cli/latest/reference/sts/get-caller-identity.html
+    title: AWS CLI - get-caller-identity
+  - id: terraform-external-data-source
+    resource: https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external
+    title: HashiCorp external provider - external data source
+  - id: terraform-aws-provider
+    resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+    title: HashiCorp AWS provider documentation
+  - id: terraform-s3-backend
+    resource: https://developer.hashicorp.com/terraform/language/backend/s3
+    title: Terraform S3 backend
+  - id: terraform-aws-caller-identity
+    resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity
+    title: AWS provider - caller identity data source
 ---
 
 # Review and apply a Terraform change
@@ -62,13 +80,41 @@ change. Identify the exact backend, Terraform workspace, cloud account
 or project, provider credentials, and any approval gate. A successful
 plan against the wrong target is still the wrong change.
 
+Check the provider identity using that provider's documented command,
+then compare the result with the project's expected account or project.
+For AWS, `aws sts get-caller-identity` shows the account and principal
+used by the **AWS CLI only**. Inspect the Terraform AWS provider's
+`profile`, `assume_role`, aliases, and region, plus the backend's own
+credential settings; they can differ from the CLI and from each other.
+If the project includes an `aws_caller_identity` data source, check its
+account in the plan if it is resolved for the provider configuration
+used by the target resource. Otherwise follow the project's
+provider-specific identity check before approval; a CLI result alone
+is insufficient.
+`terraform workspace show` checks the Terraform workspace, **not** the
+cloud account.[^aws-caller-identity][^terraform-aws-provider]
+[^terraform-s3-backend][^terraform-aws-caller-identity]
+[^terraform-workspace-show]
+
 Keep local state and saved plan files out of Git and restricted to people
 allowed to inspect the infrastructure. A saved plan can contain sensitive
 values even if terminal output hides them.[^terraform-plan]
+Before planning, check that the root module's `.gitignore` excludes local
+working data and saved plans:
+
+```gitignore
+.terraform/
+*.tfstate*
+*.tfplan
+```
+
+Do not ignore `.terraform.lock.hcl`; review and commit that provider lock
+file with the configuration. Review variable files and crash logs separately
+because they may also contain secrets.[^terraform-dependency-lock]
 
 | Stage | Expected evidence before moving on |
 | --- | --- |
-| Check target | You can name the root module, backend, workspace, and provider account or project. |
+| Check target | You can name the root module, backend, workspace, provider account or project, and Terraform version. |
 | Format and initialize | The files are formatted; initialization completed without an unexpected backend change. |
 | Validate | Terraform reports valid configuration; this does not prove cloud permissions or the target. |
 | Plan and review | Every create, update, replacement, and destroy is explained. |
@@ -85,8 +131,16 @@ run this guide. The local tutorial was run separately with
 First check format without changing files:
 
 ```bash
+terraform version
 terraform fmt -recursive -check
 ```
+
+Compare the installed version with the root module's `required_version`
+constraint. If planning and applying happen in different environments,
+use the same Terraform version, configuration revision, and reviewed
+provider lock file in both. A saved plan captures the configuration and
+provider selections that produced it; an unrelated checkout or provider
+upgrade is not the reviewed plan.[^terraform-plan-tutorial]
 
 Exit status `0` means the scanned configuration is formatted. If it
 lists files, run `terraform fmt -recursive`, review the file diff, and
@@ -112,7 +166,10 @@ Review any change to `.terraform.lock.hcl` before continuing. This
 file records selected provider versions and checksums; keep the
 reviewed file under version control with the configuration.
 A lock-file change is a dependency change, not merely formatting.
-[^terraform-lock]
+Use `git status --short -- .terraform.lock.hcl` first. If the file is
+tracked, inspect `git diff -- .terraform.lock.hcl`; if it is newly
+created, open and review the whole file because ordinary `git diff`
+will not show an untracked file.[^terraform-dependency-lock]
 
 ## 2. Validate the configuration
 
@@ -132,25 +189,56 @@ backend, the documented validation pattern is
 That check still needs the modules and providers required for
 validation; it is not a substitute for a backend-connected plan.
 [^terraform-init][^terraform-validate]
+For untrusted pull requests, run even this validation in an isolated
+runner without cloud credentials or other secrets: initialization fetches
+modules and provider plugins, and validation may invoke those plugins.
+This is a security implication of running dependencies chosen by the
+pull request.[^terraform-init][^terraform-validate]
 
 ## 3. Save and inspect the plan
 
 ```bash
-terraform plan -out=tfplan
-terraform show tfplan
+terraform plan -out=change.tfplan
+terraform show change.tfplan
+git status --short
 ```
 
 Terraform reads the current managed objects where possible, compares
 them with configuration and state, and saves the proposed actions in
-`tfplan`. `terraform show` displays that saved plan for review.
-Planning itself does not perform the proposed changes.[^terraform-plan]
+`change.tfplan`. `terraform show` displays that saved plan for review.
+`git status` helps catch a plan file that the ignore rule missed. Planning
+does not perform the proposed infrastructure changes, but it runs provider
+code and may evaluate data sources. The external data source can even run
+a local program, so do not run credentialed plans on untrusted pull-request
+changes.[^terraform-plan][^terraform-external-data-source]
 [^terraform-show]
+
+| Plan mark | Meaning |
+| --- | --- |
+| `+` | Create an object. |
+| `~` | Change an object in place. |
+| `-` | Destroy an object. |
+| `-/+` or `+/-` | Replace an object, destroying first or creating first. |
+
+Also review data-source reads, moves, imports, removals from state, and
+output changes when they appear.[^terraform-plan]
+
+This **abbreviated illustrative excerpt** is not output from a live AWS run:
+
+```text
+# aws_autoscaling_group.web will be updated in-place
+~ desired_capacity = 2 -> 3
+Plan: 0 to add, 1 to change, 0 to destroy.
+```
+
+The summary count alone does not tell you whether raising this group's
+capacity is safe. Confirm the resource address, old and new values,
+intended account, cost and service effect, and any linked changes.
 
 For the illustrative staging capacity change, expect only the
 particular service resources and output changes that the team
-intended. Do not approve by relying on a total such as "one to
-change." Read the resource addresses, symbols, changed attributes,
-replacement reasons, and any destroy actions.
+intended. Read every affected address, changed attribute, replacement
+reason, and destroy action.
 
 > [!WARNING]
 > Stop if the plan targets the wrong account or workspace, proposes
@@ -158,7 +246,7 @@ replacement reasons, and any destroy actions.
 > than expected. Investigate configuration, state, provider inputs,
 > and the remote objects before applying.
 
-Treat `tfplan` and its displayed details as sensitive. Keep the file
+Treat `change.tfplan` and its displayed details as sensitive. Keep the file
 out of Git, restrict any CI artifact, and remove it according to the
 project's retention policy. The plan file includes configuration,
 input values, plan options, and potentially cleartext sensitive
@@ -169,7 +257,7 @@ values.[^terraform-plan]
 Only after the required human or automated approval gate has passed:
 
 ```bash
-terraform apply tfplan
+terraform apply change.tfplan
 ```
 
 Passing a saved plan is itself approval to Terraform: it does **not**
@@ -187,7 +275,12 @@ Expected result: Terraform reports the resource actions it completed
 and updates state through the configured backend. An apply error may
 leave some actions completed; do not blindly rerun or manually edit
 state. Inspect the reported operations and the next plan with the
-project's recovery procedure.
+project's recovery procedure.[^terraform-apply]
+
+If Terraform reports that a saved plan is stale because the state changed
+after planning, make and review a new plan. Do the same if the intended
+target changed. Even a saved plan is not proof that no one changed a
+remote object after it was created.[^terraform-plan]
 
 ## 5. Check Terraform and the service
 
@@ -219,7 +312,7 @@ application failure.
 ## Check your understanding
 
 1. Why is `terraform validate` not enough to approve a change?
-2. What does `terraform apply tfplan` do with the approval prompt?
+2. What does `terraform apply change.tfplan` do with the approval prompt?
 3. Why might a plain `terraform apply` differ from a plan you saw earlier?
 4. What would prove that a service works for users after Terraform
    reports a successful apply?
@@ -245,4 +338,10 @@ application failure.
 [^terraform-plan]: [terraform plan command](https://developer.hashicorp.com/terraform/cli/commands/plan).
 [^terraform-show]: [terraform show command](https://developer.hashicorp.com/terraform/cli/commands/show).
 [^terraform-apply]: [terraform apply command](https://developer.hashicorp.com/terraform/cli/commands/apply).
-[^terraform-lock]: [Terraform dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock).
+[^terraform-dependency-lock]: [Terraform dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock), source record `terraform-dependency-lock`.
+[^terraform-plan-tutorial]: [HashiCorp tutorial - Create a Terraform plan](https://developer.hashicorp.com/terraform/tutorials/cli/plan), source record `terraform-plan-tutorial`.
+[^aws-caller-identity]: [AWS CLI - get-caller-identity](https://docs.aws.amazon.com/cli/latest/reference/sts/get-caller-identity.html), source record `aws-caller-identity`.
+[^terraform-external-data-source]: [HashiCorp external provider - external data source](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external), source record `terraform-external-data-source`.
+[^terraform-aws-provider]: [HashiCorp AWS provider documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), source record `terraform-aws-provider`.
+[^terraform-s3-backend]: [Terraform S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3), source record `terraform-s3-backend`.
+[^terraform-aws-caller-identity]: [AWS provider - caller identity data source](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity), source record `terraform-aws-caller-identity`.
