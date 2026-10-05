@@ -11,18 +11,27 @@ sources:
   - id: kind-quick-start
     resource: https://kind.sigs.k8s.io/docs/user/quick-start/
     title: kind - Quick Start
+  - id: nginx-image
+    resource: https://hub.docker.com/_/nginx
+    title: Docker Hub - nginx Official Image
   - id: kubernetes-deployment
     resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
     title: Kubernetes - Deployments
   - id: kubernetes-service
     resource: https://kubernetes.io/docs/concepts/services-networking/service/
     title: Kubernetes - Service
+  - id: kubernetes-endpointslices
+    resource: https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/
+    title: Kubernetes - EndpointSlices
   - id: kubernetes-port-forward
-    resource: https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
-    title: Kubernetes - Use Port Forwarding to Access Applications in a Cluster
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/
+    title: Kubernetes - kubectl port-forward
   - id: kubernetes-patch
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/
     title: Kubernetes - kubectl patch
+  - id: kubernetes-wait
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/
+    title: Kubernetes - kubectl wait
   - id: git-restore
     resource: https://git-scm.com/docs/git-restore
     title: Git - git-restore
@@ -46,7 +55,9 @@ By the end, you should be able to explain how a Deployment creates
 Pods, how a Service finds ready Pods, and why a failed rollout does
 not necessarily stop the older version.
 
-This path intentionally stays local. You do not need AWS, EKS, Crossplane, or a paid account.
+This path runs the cluster locally. You do not need AWS, EKS, Crossplane,
+or a paid account. The first run needs access to public image registries
+for the kind node image and `nginx:1.27-alpine`.
 
 ## Route through the exercise
 
@@ -85,7 +96,8 @@ This path intentionally stays local. You do not need AWS, EKS, Crossplane, or a 
 Install Docker, `kind`, `kubectl`, Git, and optionally `curl`
 from their official documentation before starting. This route uses
 Docker as the local container runtime. Make sure its daemon is
-running. `kind` creates Kubernetes nodes as containers on that
+running and that image downloads can reach their registries. `kind`
+creates Kubernetes nodes as containers on that
 runtime.[^kind-quick-start]
 
 Run `kind get clusters` first. If `kb-local` already exists, stop
@@ -93,8 +105,9 @@ or choose a different name throughout the exercise. The commands
 below assume that `kb-local` belongs only to this exercise.
 
 ```bash
-kind create cluster --name kb-local
+kind create cluster --name kb-local --wait 5m
 kubectl cluster-info --context kind-kb-local
+kubectl --context kind-kb-local wait --for=condition=Ready node --all --timeout=120s
 kubectl --context kind-kb-local get nodes
 ```
 
@@ -103,14 +116,38 @@ confirms `kubectl` can reach that named cluster. All later
 `kubectl` commands specify the same context so a change to your
 default context does not silently target another cluster.
 
-Expected condition: one control-plane node is `Ready`.
+The first wait lets kind finish bootstrapping its control plane; the second
+waits for the Node's `Ready` condition. Expected condition: one
+control-plane node is `Ready`. If either wait times out, inspect the
+cluster before deploying instead of treating `NotReady` as success.
+[^kind-quick-start][^kubernetes-wait]
 
 ## Copy the exercise files
 
-From the repository root, create a small working copy:
+You need the example files on your computer. If you are reading online and
+do not already have a clone, run these commands in a directory where
+`knowledge-source` does not exist:
 
 ```bash
-mkdir -p /tmp/kb-local-path
+git clone https://github.com/David-A18/MY-humble-knowledge-for-everyone.git knowledge-source
+cd knowledge-source
+```
+
+If you already have a clone, go to its root instead. Before continuing,
+check that `/tmp/kb-local-path` does not already contain someone else's
+files or an earlier exercise. If it does, stop and choose another path,
+replacing `/tmp/kb-local-path` consistently in the commands below.
+From the repository root, make the destination first:
+
+```bash
+mkdir /tmp/kb-local-path
+```
+
+Only continue if `mkdir` succeeds. It reports an error when that path
+already exists, so this step cannot silently reuse an old Git copy.
+Now copy the files and commit them in the temporary directory:
+
+```bash
 cp knowledge/kubernetes/examples/local-deployment-learning-path/*.yaml /tmp/kb-local-path/
 cd /tmp/kb-local-path
 git init
@@ -152,10 +189,17 @@ What it does: selects a Pod behind the Service and forwards local
 port `8080` to it. In another terminal, open
 `http://127.0.0.1:8080` or use `curl http://127.0.0.1:8080`.
 
-A successful response shows that this local forwarding session
+A successful response shows the nginx default page, including
+`Welcome to nginx!`, and that this local forwarding session
 reached a selected Pod. It does not test an external load balancer
-or prove every replica responds. Stop the port-forward with `Ctrl+C`
+or send traffic through the Service's virtual IP. It also does not
+prove every replica responds. Stop the port-forward with `Ctrl+C`
 after testing.[^kubernetes-port-forward]
+
+If local port `8080` is in use, use another free port such as
+`18080:80` in the port-forward command and `18080` in the browser or
+`curl` URL. Make the same substitution in the later failed-rollout
+check. A local port-bind error is not an application failure.
 
 ## Break the workload on purpose
 
@@ -173,7 +217,8 @@ nonexistent tag so new Pods should fail to pull it. The rollout
 status command should time out or report failure. If the image
 unexpectedly exists or was cached, stop and inspect the actual
 image and Pod events instead of assuming this lesson reproduced
-an image-pull failure.
+an image-pull failure. A nonzero exit from this one status command is
+the expected signal to continue with diagnosis, not a reason to skip it.
 
 ## Diagnose the failure
 
@@ -182,16 +227,46 @@ kubectl --context kind-kb-local get pods -n kb-learning -o wide
 kubectl --context kind-kb-local describe deployment/kb-web -n kb-learning
 kubectl --context kind-kb-local get events -n kb-learning --sort-by=.lastTimestamp
 kubectl --context kind-kb-local describe pod -n kb-learning -l app.kubernetes.io/name=kb-web
+kubectl --context kind-kb-local get endpointslices -n kb-learning \
+  -l kubernetes.io/service-name=kb-web -o yaml
 ```
 
 What it does: shows Pod state, Deployment conditions, recent events,
-and image-pull messages. Look for `ImagePullBackOff`, `ErrImagePull`,
+image-pull messages, and the Service's endpoint records. Look for
+`ImagePullBackOff`, `ErrImagePull`,
 or a message that the tag cannot be found. The default RollingUpdate
 strategy has 25% `maxUnavailable` (rounded down) and 25%
 `maxSurge` (rounded up). With two replicas, that permits one
 extra new Pod and zero unavailable Pods, so the older ready
 Pods should remain while the new Pod fails. This is not a guarantee
 against an unrelated node or application failure.[^kubernetes-deployment]
+
+For this two-replica example, expect two older Pods with `1/1` ready
+containers and one new Pod with `0/1` and an image-pull error. Pod
+names and event timing will vary. If an old Pod is not ready, inspect
+that separate problem rather than attributing everything to the bad tag.
+In the EndpointSlice output, compare `endpoints[].addresses` with the
+Pod IPs from `get pods -o wide`. The older Pods should have
+`conditions.ready: true`; the new Pod may appear with `ready: false`
+because its label matches even though it cannot serve. EndpointSlice
+readiness shows which Pods are eligible for normal Service traffic;
+it does not prove that a user request succeeded.[^kubernetes-endpointslices]
+
+To check whether one selected Pod still answers during the failed
+rollout, run this in one
+terminal:
+
+```bash
+kubectl --context kind-kb-local port-forward service/kb-web 8080:80 -n kb-learning
+```
+
+Open `http://127.0.0.1:8080` or run `curl http://127.0.0.1:8080`
+in another terminal.
+If the default page still loads, at least one selected Pod is
+answering. Port-forward selects a Pod using the Service's selector;
+it does not test routing through the Service's virtual IP or prove
+every old replica answers. Stop the
+port-forward with `Ctrl+C` before continuing.
 
 Record a short note:
 
@@ -208,13 +283,16 @@ Fix:
 kubectl --context kind-kb-local rollout undo deployment/kb-web -n kb-learning
 kubectl --context kind-kb-local rollout status deployment/kb-web -n kb-learning
 kubectl --context kind-kb-local get pods -n kb-learning
+kubectl --context kind-kb-local get endpointslices -n kb-learning \
+  -l kubernetes.io/service-name=kb-web -o yaml
 ```
 
 What it does: rolls back to the previous Deployment revision and waits for healthy Pods again.
 
 Expected condition: the Deployment becomes available and the
-new bad-image Pods disappear. Repeat the port-forward and HTTP
-request if you want evidence of the user-visible path; rollout
+new bad-image Pods disappear. Check that the current Pods appear as
+ready EndpointSlice endpoints. Repeat the port-forward and HTTP request
+if you want evidence that one selected Pod answers again; rollout
 status alone does not prove it.
 
 ## Practice Git recovery
@@ -250,12 +328,15 @@ What it does: removes the exercise resources and then removes the local cluster.
 
 Expected condition: the namespace lookup reports `NotFound`, and
 `kind get clusters` no longer lists `kb-local`.
+The temporary Git copy at `/tmp/kb-local-path` remains for practice;
+review its contents before removing it or repeating the exercise.
 
 ## Understanding checks
 
 - Which label connects the Service to the Pods?
 - Which command showed the image-pull failure first?
-- Why did the old Pods keep serving while the new rollout failed?
+- Why did the old Pods remain ready Service endpoints while the new
+  rollout failed?
 - What is the difference between `git restore --staged deployment.yaml` and `git restore deployment.yaml`?
 - Which cleanup command removed the cluster itself?
 
@@ -263,10 +344,14 @@ Expected condition: the namespace lookup reports `NotFound`, and
 
 - [kind quick start](https://kind.sigs.k8s.io/docs/user/quick-start/)
   for cluster creation and cleanup.
+- [nginx official image](https://hub.docker.com/_/nginx)
+  for the image used by the example Deployment.
 - [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
   and [Services](https://kubernetes.io/docs/concepts/services-networking/service/)
   for rollout and routing behavior.
-- [kubectl port-forward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)
+- [EndpointSlices](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/)
+  for endpoint addresses and readiness during the rollout.
+- [kubectl port-forward](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/)
   and [kubectl patch](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/)
   for the two local access and change commands.
 - [Git restore](https://git-scm.com/docs/git-restore)
@@ -286,6 +371,8 @@ Expected condition: the namespace lookup reports `NotFound`, and
 [^kind-quick-start]: [kind - Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/).
 [^kubernetes-deployment]: [Kubernetes - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 [^kubernetes-service]: [Kubernetes - Service](https://kubernetes.io/docs/concepts/services-networking/service/).
-[^kubernetes-port-forward]: [Kubernetes - Port Forwarding](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/).
+[^kubernetes-endpointslices]: [Kubernetes - EndpointSlices](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/).
+[^kubernetes-port-forward]: [Kubernetes - kubectl port-forward](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/).
 [^kubernetes-patch]: [Kubernetes - kubectl patch](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/).
+[^kubernetes-wait]: [Kubernetes - kubectl wait](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/).
 [^git-restore]: [Git - git-restore](https://git-scm.com/docs/git-restore).

@@ -2078,6 +2078,28 @@ checked independently. The exact installed Velero CLI, live cluster behavior,
 AWS permissions, two-cluster restore, and novice reader tasks were not tested.
 All three guides remain `draft`.
 
+### Focused review round 8 (2026-10-06)
+
+Claude Opus 5.5 read the Start here to Kubernetes fundamentals to local
+deployment route as one beginner journey. The route now tells a reader how
+to obtain the example files, distinguishes a local cluster from the first
+image downloads, waits for the Node to be ready, names the expected nginx
+page, and checks one selected Pod while the deliberate image rollout is
+stuck. The port-forward check is explicitly scoped: it bypasses the
+Service's virtual IP and does not prove every replica responds. A second
+Opus read-only pass found the route still inferred Service behavior from
+that Pod check, so it now asks readers to compare EndpointSlice readiness
+with Pod IPs before and after recovery. The working-copy step refuses an
+already occupied path, and a local port collision has a clear alternative.
+It also makes the prior cluster run's evidence boundary explicit: the
+current patch-file failure step has not been rerun in a cluster.
+
+The kind, Kubernetes, and official nginx image documentation was checked
+independently, and the example YAML was read for name and selector agreement.
+The local Docker daemon is unavailable here, and `kind` and `kubectl` are
+not installed, so this revision has no new cluster run or novice reader
+test. The route remains `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

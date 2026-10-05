@@ -1280,10 +1280,13 @@
       "path": "knowledge/cross-topic-guides/local-deployment-learning-path.md",
       "source_ids": [
         "kind-quick-start",
+        "nginx-image",
         "kubernetes-deployment",
         "kubernetes-service",
+        "kubernetes-endpointslices",
         "kubernetes-port-forward",
         "kubernetes-patch",
+        "kubernetes-wait",
         "git-restore"
       ],
       "stale_after": null,

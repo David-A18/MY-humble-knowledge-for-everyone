@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-06
+
+- **Local beginner route review**: Clarified how a reader gets the repository's example files, which image downloads the local lab needs, what Node readiness and the nginx response should show, and how to check one selected Pod during the deliberate failed rollout. EndpointSlice inspection now shows which Pod IPs are ready Service endpoints; port-forward remains a separate selected-Pod check. The working-copy step rejects an occupied path, and a local port collision has an alternative. The Start here page distinguishes the earlier executed exercise from the current unrun patch-file revision. Claude Opus 5.5 reviewed the route twice read-only; kind, Kubernetes, and Docker image sources were checked. No new cluster or reader test was run, so the route remains `draft`.
+
 ## 2026-10-03
 
 - **Teaching-hub ninety-second wave**: Reworked Crossplane Compositions into an explanation of one invented WebApplication XR: XRD schema, selected function pipeline, desired Deployment and Service, Kubernetes reconciliation, and the separate application request. A diagram and evidence ladder distinguish schema acceptance, local render, live controller status, and user outcome. Removed an unrun multi-resource YAML recipe and pinned function package example. Current Crossplane and Kubernetes primary documentation was checked; the diagram rendered and was inspected. No render, cluster, Deployment, Service, user request, reader task, independent review, or Opus review occurred; the page remains `draft`.

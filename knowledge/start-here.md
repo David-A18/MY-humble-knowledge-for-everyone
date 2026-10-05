@@ -15,9 +15,9 @@ Status: Draft
 Audience: Curious learners and beginning engineers
 Page type: Learning Path
 Maintainer: Unassigned
-Earlier route review: 2026-09-19 (before the expanded topic choices)
+Local route reading review: 2026-10-06 (Claude Opus 5.5 read-only review and primary-source check; no new cluster or reader trial)
 Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
-Validation evidence: The earlier local platform route was source reviewed and statically checked; its Kubernetes exercise was executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; its Terraform exercise was locally executed with Terraform v1.13.1. These results do not validate the newly broadened topic choices.
+Validation evidence: The earlier local platform route was source reviewed and statically checked; its Kubernetes exercise was executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; its Terraform exercise was locally executed with Terraform v1.13.1. The current Kubernetes exercise has a revised failure step that has not been rerun. These results do not validate the newly broadened topic choices.
 Known limitations: The broader entry route and new or rewritten explanations have not been independently reader-tested. Many listed areas remain partial; the local platform route is the only complete beginner exercise sequence documented here.
 Next review: After KB-14 reader testing or by 2026-12-19
 
@@ -63,7 +63,7 @@ For a complete local practice sequence, use the route below.
 
 ## Complete local platform route
 
-This path stays on your machine. It teaches a loop used in real work: make a
+This path runs its cluster on your machine. It teaches a loop used in real work: make a
 Git change, deploy a small workload, break it on purpose, diagnose the
 symptom, recover, and clean up. It is one option within the wider library.
 
@@ -71,12 +71,18 @@ symptom, recover, and clean up. It is one option within the wider library.
 
 - A terminal and a text editor.
 - Git installed.
+- A local clone of this public repository for the example files; the local
+  deployment guide shows how to make one if you are reading online.
 - Docker installed and running.
 - `kind` and `kubectl` installed for the Kubernetes exercise.
 - Terraform installed for the Terraform exercise.
+- Network access to download the kind node and `nginx:1.27-alpine` images on
+  the first local cluster run.
 - Enough local resources for one small Kubernetes cluster: at least 2 CPUs and 4 GB of free memory is a practical starting point.
 
-No cloud account is required for the first exercises.
+Install the tools as you reach their steps: Docker, `kind`, and `kubectl`
+are needed for step 4; Terraform is needed for step 5. No cloud account
+is required for these exercises.
 
 ## Local learning steps
 
