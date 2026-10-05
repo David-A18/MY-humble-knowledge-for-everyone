@@ -2149,7 +2149,8 @@
         "git-reset",
         "git-reflog",
         "git-clean",
-        "git-switch",
+        "git-branch",
+        "git-ls-tree",
         "pro-git-undoing-things"
       ],
       "stale_after": null,

@@ -1975,6 +1975,23 @@ documentation; both Mermaid diagrams were rendered and inspected. This is a
 source and diagram review, not a live AWS execution, independent expert
 sign-off, or novice reader task. Both concepts remain `draft`.
 
+### Focused review round 2 (2026-10-05)
+
+Claude Opus 5.5 reviewed [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md)
+for beginner safety. The review found that combined restore can delete a
+newly added file, short status can hide an in-progress operation, and the
+recovery-branch sequence could continue after a failed branch creation.
+The guide now makes those stops visible, checks staged and unstaged state,
+uses a branch-only reflog recovery, and explains how a local revert reaches
+the team. [Solve Git issues](knowledge/git/commands/solve-issues.md) and
+[Git fundamentals](knowledge/git/git-fundamentals.md) now point to the
+corresponding safe procedures. Git 2.53.0 exercises in a disposable local
+repository confirmed staged/unstaged restore, new-file deletion, tracked-file
+recovery, soft reset with a preserved commit, and directory-scoped clean.
+Official Git command references were checked. This is local command evidence,
+not a novice reader trial or proof for every Git edge case; these pages
+remain `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

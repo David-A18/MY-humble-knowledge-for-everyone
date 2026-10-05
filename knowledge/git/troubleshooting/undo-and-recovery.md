@@ -29,9 +29,12 @@ sources:
   - id: git-clean
     resource: https://git-scm.com/docs/git-clean
     title: git clean documentation
-  - id: git-switch
-    resource: https://git-scm.com/docs/git-switch
-    title: git switch documentation
+  - id: git-branch
+    resource: https://git-scm.com/docs/git-branch
+    title: git branch documentation
+  - id: git-ls-tree
+    resource: https://git-scm.com/docs/git-ls-tree
+    title: git ls-tree documentation
   - id: pro-git-undoing-things
     resource: https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things
     title: Pro Git - Undoing Things
@@ -50,6 +53,8 @@ if these four places are unfamiliar.
 From the repository you mean to repair, inspect before changing anything:
 
 ```bash
+git --version
+git status
 git status --short --branch
 git diff
 git diff --staged
@@ -61,6 +66,12 @@ shows tracked working-tree edits that are not staged; the staged diff
 shows what the next commit would contain. The log helps locate recent
 commits. An untracked file appears in status but not in either ordinary
 diff.[^git-status][^git-diff]
+
+Use Git 2.23 or later for the `git restore` commands below. **Stop here**
+if the full `git status` says a merge, rebase, cherry-pick, or revert is
+in progress. Follow that operation's own continue or abort procedure
+before an unrelated reset or restore. The short status alone may not show
+the operation message.[^git-status]
 
 | What you see | Where the mistake is | Start with |
 | --- | --- | --- |
@@ -77,7 +88,9 @@ collaborators' local histories diverge.[^git-reset][^git-revert]
 
 ```mermaid
 flowchart TD
-  inspect["Inspect status, diffs, and recent commits"] --> place{"Where is the mistake?"}
+  inspect["Inspect full status, diffs, and recent commits"] --> progress{"Operation in progress?"}
+  progress -- "yes" --> operation["Stop; finish or abort that operation"]
+  progress -- "no" --> place{"Where is the mistake?"}
   place -- "working tree or index" --> file["Use path-scoped restore"]
   place -- "commit" --> shared{"Other people may use this history?"}
   shared -- "yes or unsure" --> revert["Make a revert commit"]
@@ -86,8 +99,10 @@ flowchart TD
   place -- "untracked paths" --> clean["Preview clean before deletion"]
 ```
 
-Text alternative: inspection leads to a location decision. File and
-index mistakes use a path-scoped restore. A shared or uncertain commit
+Text alternative: inspect full status first. If a merge, rebase,
+cherry-pick, or revert is in progress, stop and resolve that operation.
+Otherwise, identify where the mistake lives. File and index mistakes use
+a path-scoped restore. A shared or uncertain commit
 uses revert; a private commit can be saved under a branch before reset.
 A missing tip uses reflog and a recovery branch. Untracked paths require
 a deletion preview. The diagram helps you avoid using a history command
@@ -96,10 +111,20 @@ for a file-state mistake.
 ## If a file was staged by mistake
 
 Use this when you want to keep the file content but remove it from
-the next commit:
+the next commit. First compare the staged and unstaged versions:
+
+```bash
+git diff --staged -- path/to/file
+git diff -- path/to/file
+```
+
+If both diffs show changes, the staged version may exist only in the
+index. Unstaging replaces that version there; save it separately if you
+need it. When you are ready:
 
 ```bash
 git restore --staged -- path/to/file
+git status --short -- path/to/file
 git diff --staged -- path/to/file
 git diff -- path/to/file
 ```
@@ -107,15 +132,17 @@ git diff -- path/to/file
 The first command copies the version from `HEAD` into the index for
 that path; it leaves the working-tree file alone. The staged diff
 should no longer show the path, while the working-tree diff still
-shows the edit. A newly added file becomes untracked again.
+shows the edit for an existing tracked file. A newly added file becomes
+untracked (`??` in status) and will **not** appear in ordinary `git diff`.
 [^git-restore]
 
 ## If only the unstaged edit is wrong
 
 > [!WARNING]
 > The next command discards **unstaged tracked edits** for the named path.
-> Read `git diff -- path/to/file` first. Git may not be able to recover
-> edits that were never committed.[^git-restore][^pro-git-undoing-things]
+> Read `git diff -- path/to/file` first. Git may have no copy of edits
+> that were never staged or committed; assume this loss is permanent.
+> [^git-restore][^pro-git-undoing-things]
 
 ```bash
 git diff -- path/to/file
@@ -129,9 +156,8 @@ should be empty for that path.[^git-restore]
 
 ### One concrete file example
 
-This example was reproduced in a disposable local repository. Suppose
-`notes.md` began as `published`. You changed it to `draft A` and staged
-that version. Then you changed the same file again to `draft B` by
+Suppose `notes.md` began as `published`. You changed it to `draft A` and
+staged that version. Then you changed the same file again to `draft B` by
 mistake. Before recovery, the two diffs mean different things:
 
 | Inspection | What it shows |
@@ -144,11 +170,27 @@ edit. The working-tree file returns to `draft A`, and the staged
 `draft A` remains ready for review. This is why "restore the file"
 does not always mean "make it match the last commit."
 
+This sequence was checked on 2026-10-05 in a disposable local repository
+with Git 2.53.0. After working-tree restore, the file and index both held
+`draft A`, and the unstaged diff was empty.
+
 If **both** the staged and unstaged versions are unwanted, inspect both
-diffs first. Then restore the path in both places from `HEAD`:
+diffs first. Check whether the path exists in `HEAD` before restoring it:
 
 > [!WARNING]
-> This discards both staged and unstaged edits for the selected path.
+> This discards both staged and unstaged content for the selected path. If
+> the file was newly added and does not exist in `HEAD`, this command
+> removes the **whole file from disk**. An empty `git ls-tree` result for
+> that path is a stop signal unless deletion is exactly what you intend.
+> [^git-restore][^git-ls-tree]
+
+```bash
+git diff --staged -- path/to/file
+git diff -- path/to/file
+git ls-tree HEAD -- path/to/file
+```
+
+Only after confirming the source and the intended loss:
 
 ```bash
 git restore --source=HEAD --staged --worktree -- path/to/file
@@ -156,6 +198,23 @@ git restore --source=HEAD --staged --worktree -- path/to/file
 
 Check that both `git diff -- path/to/file` and
 `git diff --staged -- path/to/file` are empty afterward.
+[^git-restore]
+
+## If a tracked file was deleted by mistake
+
+Inspect whether the deletion is in the working tree, the index, or both:
+
+```bash
+git status --short -- path/to/file
+git diff -- path/to/file
+git diff --staged -- path/to/file
+```
+
+If the deletion is **only unstaged**, and the index holds the version you
+want, `git restore --worktree -- path/to/file` brings it back from the
+index. If the deletion is staged, inspect what was in `HEAD` and protect
+any replacement content before restoring both places from `HEAD`. Do not
+use the combined command above until you know which version it will copy.
 [^git-restore]
 
 ## If a bad commit has been shared
@@ -166,14 +225,23 @@ Use the exact commit ID after checking the log and the diff. Git
 requires a clean working tree for this ordinary revert flow.
 [^git-revert]
 
+Confirm the intended branch and its current remote state using your
+team's workflow. A revert made on the wrong branch does not repair the
+shared branch. Run this on a branch where your team permits the change:
+
 ```bash
+git status
 git show --stat abc1234
 git revert abc1234
-git log --oneline --max-count=3
+git show --stat HEAD
+git status
 ```
 
 `abc1234` is an illustrative commit ID; replace it with the one you
-verified. The final log should show a new revert commit. If revert
+verified. `git revert` may open an editor for its commit message. The
+last `git show` should describe a new revert commit with the expected
+inverse changes. It exists only in your local repository until it is
+shared through the team's normal push or pull-request process. If revert
 reports a conflict, follow its conflict instructions and use
 `git revert --continue` after resolving and staging, or
 `git revert --abort` to abandon that in-progress revert. A merge
@@ -184,12 +252,25 @@ reference rather than applying this ordinary-commit example to it.
 ## If the commit is private and its content should stay
 
 Use this only when the commit has **not** been shared or used as a base
-by anyone else. Save its current tip first:
+by anyone else. Check the log and upstream status; an ahead count alone
+does not prove that no one else has the commit. This example requires
+`HEAD` to have a parent. Save its current tip first, using a branch name
+that does not already exist:
 
 ```bash
+git status
+git log --oneline --decorate --max-count=3
 git branch recovery/before-reset
+git show --no-patch --oneline recovery/before-reset
+```
+
+**Stop if branch creation failed or the recovery branch does not name the
+current tip.** Only then run:
+
+```bash
 git reset --soft HEAD~1
 git status --short --branch
+git diff --staged
 ```
 
 `--soft` moves the current branch back one commit but keeps the index
@@ -213,15 +294,16 @@ it is a recovery clue, not a remote backup and not permanent storage.
 ```bash
 git reflog --date=local
 git show --stat abc1234
-git switch -c recovery/lost-work abc1234
+git branch recovery/lost-work abc1234
 ```
 
 Replace `abc1234` with the ID you identified in the reflog. Inspect it
-with `git show` before creating a new branch at that commit. The new
-branch gives the commit a normal reference again. If the ID is absent,
+with `git show` before creating a new branch at that commit. Choose a
+branch name that does not exist. This names the commit without changing
+your checked-out files. If the ID is absent,
 check `git reflog show <branch>` for the affected local branch. A
 different clone may not have that reflog entry.[^git-reflog]
-[^git-switch]
+[^git-branch]
 
 ## If untracked files should be deleted
 
@@ -242,12 +324,15 @@ the disposable files you intended:
 
 ```bash
 git clean -f -- build/
+git status --short --untracked-files=all -- build/
 ```
 
 `-n` is a dry run and `-f` allows deletion. The path limits the
-operation to `build/`, including its matched untracked contents. Ignored
-files need separate `-X` or `-x` choices; do not add either flag just because
-the first preview shows nothing.[^git-status][^git-clean]
+operation to `build/`, including its matched untracked contents. The final
+status should no longer list those paths. Build output is often ignored,
+in which case the preview can be empty; ignored files need separate `-X`
+or `-x` choices. Do not add either flag just because the first preview
+shows nothing.[^git-status][^git-clean]
 
 ## Stop and get a focused procedure when
 
@@ -288,5 +373,6 @@ the first preview shows nothing.[^git-status][^git-clean]
 [^git-reset]: [git reset documentation](https://git-scm.com/docs/git-reset).
 [^git-reflog]: [git reflog documentation](https://git-scm.com/docs/git-reflog).
 [^git-clean]: [git clean documentation](https://git-scm.com/docs/git-clean).
-[^git-switch]: [git switch documentation](https://git-scm.com/docs/git-switch).
+[^git-branch]: [git branch documentation](https://git-scm.com/docs/git-branch).
+[^git-ls-tree]: [git ls-tree documentation](https://git-scm.com/docs/git-ls-tree).
 [^pro-git-undoing-things]: [Pro Git: Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things).

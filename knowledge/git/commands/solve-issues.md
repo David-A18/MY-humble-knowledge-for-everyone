@@ -44,6 +44,7 @@ pulled. These locations behave differently. Start with
 Run these read-only checks in the affected repository:
 
 ```bash
+git status
 git status --short --branch
 git diff
 git diff --staged
@@ -67,11 +68,11 @@ as shared history.
 | --- | --- | --- |
 | A file is staged but should stay edited | `git diff --staged` shows it. | Unstage only that path with `git restore --staged -- <path>`; the working-tree edit stays. |
 | An unstaged tracked edit should be discarded | `git diff -- <path>` shows the exact unwanted lines. | Follow the single-file restore procedure in [Undo and recovery](../troubleshooting/undo-and-recovery.md). |
-| A file was deleted from the working tree | `git status` marks a tracked path deleted. | Restore that path after deciding whether its staged version or `HEAD` is the right source. |
-| An unwanted file was never tracked | `git status` shows `??`. | Inspect the path, then preview any cleanup with `git clean -fdn`; do not delete from a broad preview blindly. |
-| The last commit is wrong but private | The commit is only local and no one depends on it. | Back up the branch; then choose amend or a content-preserving reset in [Undo and recovery](../troubleshooting/undo-and-recovery.md). |
-| A pushed commit is wrong | Others may have the commit. | Prefer a new `git revert <commit>` commit after checking whether it will conflict. |
-| A commit seems lost after reset, amend, or rebase | The commit is absent from normal log output. | Inspect the local `git reflog` and create a recovery branch at the right commit. |
+| A file was deleted from the working tree | `git status` marks a tracked path deleted. | Use the [tracked-file recovery checks](../troubleshooting/undo-and-recovery.md#if-a-tracked-file-was-deleted-by-mistake) to distinguish an unstaged from a staged deletion. |
+| An unwanted file was never tracked | `git status` shows `??`. | Inspect that path, then use the [directory-scoped clean preview](../troubleshooting/undo-and-recovery.md#if-untracked-files-should-be-deleted). |
+| The last commit is wrong but private | The commit is only local and no one depends on it. | Back up the branch, then consider a [content-preserving reset](../troubleshooting/undo-and-recovery.md#if-the-commit-is-private-and-its-content-should-stay). |
+| A pushed commit is wrong | Others may have the commit. | Follow the [shared-commit revert procedure](../troubleshooting/undo-and-recovery.md#if-a-bad-commit-has-been-shared), and be ready to resolve or abort a conflict. |
+| A commit seems lost after reset, amend, or rebase | The commit is absent from normal log output. | Follow the [reflog recovery procedure](../troubleshooting/undo-and-recovery.md#if-a-branch-tip-or-commit-seems-lost) to name the right commit. |
 | Git reports an operation in progress | `git status` names the operation and conflicted paths. | Follow that operation's continue or abort instructions; first decide whether to keep the conflict resolutions you made. |
 
 Unstaging is usually reversible because it leaves your file

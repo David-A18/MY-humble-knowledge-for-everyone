@@ -185,7 +185,9 @@ about to cross, and who will be affected when I do?
 
 This is an illustrative sequence, not recorded command output. Start with a
 clean repository on branch `main`, where the committed file `greeting.txt`
-contains `Hello`. The remote `origin` has the same `main` commit.
+contains `Hello`. The remote `origin` has the same `main` commit. Assume
+this is a personal practice remote that allows a direct push; team
+repositories may require a branch and pull request instead.
 
 1. You edit `greeting.txt` to `Hello, world`.
 2. You run `git add greeting.txt`.
@@ -268,7 +270,7 @@ how to tell which case you are in and which command to choose.
 
 - Practise safe inspection and recovery in [Git undo and
   recovery](troubleshooting/undo-and-recovery.md); start with its [first
-  checks](troubleshooting/undo-and-recovery.md#first-checks).
+  checks](troubleshooting/undo-and-recovery.md#first-find-out-where-the-mistake-lives).
 - Look up everyday commands in [Git daily commands](commands/daily-commands.md).
 - See branching and remote workflows in [common Git use
   cases](commands/common-use-cases.md).
