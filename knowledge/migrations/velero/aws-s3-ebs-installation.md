@@ -108,7 +108,7 @@ These are alternatives, not three proofs from one backup.
 | `VolumeSnapshotLocation` | Supply region and other provider settings for Velero's **provider-native** snapshot path. | It is not the selection mechanism for Kubernetes CSI snapshots.[^velero-locations] |
 | CSI snapshot controller | Reconcile Kubernetes `VolumeSnapshot` API objects. | The add-on itself does not supply EBS IAM permissions.[^eks-snapshot-controller] |
 | EBS CSI driver and `VolumeSnapshotClass` | Create and restore CSI snapshots for supported EBS volumes. | A class name alone does not prove that a snapshot was created or is usable.[^eks-ebs-csi] |
-| Velero node-agent, if selected | Run File System Backup or Velero's built-in CSI data mover. | Merely installing it does not enable or complete a copy to S3. |
+| Velero node-agent, if selected | Run File System Backup or Velero's built-in CSI data mover. | Merely installing it does not enable or complete a copy to S3; the transfer Pods also need usable repository access. |
 
 The node-agent's two paths are documented separately: [File System
 Backup](https://velero.io/docs/v1.18/file-system-backup/) reads a mounted
@@ -127,6 +127,7 @@ run.[^velero-aws-plugin]
 | Path | AWS caller to identify | Permission category to verify |
 | --- | --- | --- |
 | Object archive in S3 | Velero server's workload identity. | S3 access to the intended bucket and prefix, including read, write, and backup deletion according to retention policy. |
+| FSB or CSI data-mover repository in S3 | Node-agent and data-mover Pods; inspect their actual service accounts and credential path. | Access to the repository prefix and any required KMS permissions; a successful object archive alone does not verify this path. |
 | Provider-native EBS snapshot | Velero server through the AWS snapshotter plugin. | EC2 snapshot and volume APIs, plus KMS access if the workflow needs an encrypted snapshot or volume. |
 | CSI EBS snapshot | EBS CSI driver controller's workload identity. | Its own EC2 and any required KMS permissions. The snapshot controller add-on does not replace this identity.[^eks-ebs-csi][^eks-snapshot-controller] |
 
@@ -148,9 +149,14 @@ S3 backup archive.
 ## Choose the EBS snapshot path deliberately
 
 For a CSI-backed PVC, the **CSI path** needs a snapshot-capable EBS
-CSI driver, the CSI snapshot controller and its CRDs, a suitable
-`VolumeSnapshotClass`, and Velero's documented CSI feature enabled
-for v1.18. The EKS snapshot controller can be an EKS managed add-on;
+CSI driver, the CSI snapshot controller and its CRDs, and Velero's
+`EnableCSI` feature flag. It also needs a `VolumeSnapshotClass` for
+the matching driver that Velero can select: the v1.18 documentation
+describes a default-class annotation, Velero's
+`velero.io/csi-volumesnapshot-class: "true"` label, and per-backup or
+per-PVC selection. Check which method your installation uses rather
+than assuming that any class will be picked.[^velero-csi]
+The EKS snapshot controller can be an EKS managed add-on;
 AWS also documents a self-managed alternative.[^velero-csi]
 [^eks-snapshot-controller]
 

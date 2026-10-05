@@ -2062,6 +2062,22 @@ Current Amazon EKS, ECR, and Kubernetes primary documentation was checked
 independently. No AWS account, cluster, image, rollout, rollback, or reader
 task was exercised. The page remains `draft`.
 
+### Focused review round 7 (2026-10-05)
+
+Claude Opus 5.5 reviewed the three Velero priority guides as a read-only
+beginner exercise. The ConfigMap tutorial now selects only its labeled note,
+since Kubernetes can create another ConfigMap in each namespace. It makes the
+default writable backup location explicit, distinguishes an absent target note
+from a literally empty namespace, and checks eventual cleanup. The EKS guide
+now identifies the repository transfer Pods as another credential path and
+names the CSI feature and snapshot-class selection rules. The migration guide
+needed no material correction in this round.
+
+Velero v1.18, the AWS plugin, and Kubernetes primary documentation were
+checked independently. The exact installed Velero CLI, live cluster behavior,
+AWS permissions, two-cluster restore, and novice reader tasks were not tested.
+All three guides remain `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

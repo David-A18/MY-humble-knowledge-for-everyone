@@ -17,6 +17,12 @@ sources:
   - id: velero-how
     resource: https://velero.io/docs/v1.18/how-velero-works/
     title: Velero v1.18 - How Velero Works
+  - id: velero-locations
+    resource: https://velero.io/docs/v1.18/locations/
+    title: Velero v1.18 - Backup and Snapshot Locations
+  - id: k8s-service-accounts
+    resource: https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+    title: Kubernetes - Managing Service Accounts
 ---
 
 # Back up and restore one ConfigMap with Velero
@@ -24,8 +30,8 @@ sources:
 ## What you will do
 
 Create one disposable ConfigMap, back it up, restore it into another
-empty namespace, and read its value. This small exercise proves that
-Velero can select, store, and recreate **that Kubernetes object** in
+namespace without that note, and read its value. This small exercise
+proves that Velero can select, store, and recreate **that Kubernetes object** in
 this environment. It does **not** test a persistent volume, a database,
 an application, a schedule, or disaster recovery.[^velero-backup]
 [^velero-restore]
@@ -78,9 +84,12 @@ velero restore get
 
 The namespace check should report **NotFound for both names**. A
 permission or connection error is not evidence that a name is free.
-The backup location should be available and writable before you
-create a backup. Review the context and location rather than assuming
-that the CLI targets the cluster you intended.[^velero-backup]
+The intended backup location should show `Available`, `ReadWrite`, and
+`DEFAULT` as `true`; without `--storage-location`, Velero uses the
+default location. If another location is intended, add
+`--storage-location <name>` to the backup command after confirming its
+bucket and prefix. Review the context and location rather than assuming
+that the CLI targets the cluster you intended.[^velero-locations]
 
 ## 1. Create the small source
 
@@ -89,14 +98,18 @@ kubectl create namespace kb-velero-source
 kubectl create namespace kb-velero-target
 kubectl -n kb-velero-source create configmap kb-velero-note \
   --from-literal=message='This note came from the source namespace.'
+kubectl -n kb-velero-source label configmap kb-velero-note \
+  kb-velero-exercise=note
 kubectl -n kb-velero-source get configmap kb-velero-note \
   -o jsonpath='{.data.message}'
 ```
 
 The final output should be `This note came from the source namespace.`
 Both namespaces must contain only resources you are willing to remove
-at the end of this exercise. A ConfigMap stores configuration data,
-not a persistent volume.
+at the end of this exercise. Kubernetes commonly creates a
+`kube-root-ca.crt` ConfigMap in each namespace, so the label selects
+only our note for backup.[^k8s-service-accounts] A ConfigMap stores
+configuration data, not a persistent volume.
 
 ## 2. Back up the ConfigMap
 
@@ -104,15 +117,16 @@ not a persistent volume.
 velero backup create kb-velero-note-backup \
   --include-namespaces kb-velero-source \
   --include-resources configmaps \
+  --selector kb-velero-exercise=note \
   --snapshot-volumes=false \
   --wait
 velero backup describe kb-velero-note-backup --details
 velero backup logs kb-velero-note-backup
 ```
 
-The namespace and resource filters limit this backup to ConfigMaps in
-the source namespace. The volume-snapshot flag makes the object-only
-scope explicit. Check that the backup reports `Completed`, that the
+The namespace, resource, and label filters limit this backup to the
+labeled ConfigMap in the source namespace. The volume-snapshot flag
+makes the object-only scope explicit. Check that the backup reports `Completed`, that the
 expected ConfigMap was included, and that warnings or errors do not
 undermine the result. `--wait` only waits for a terminal outcome; it
 is not an application recovery check.[^velero-backup]
@@ -136,9 +150,9 @@ kubectl -n kb-velero-target get configmap kb-velero-note \
 
 The last line should print the same note. This checks the restored
 object rather than trusting the Restore status alone. Velero normally
-skips an object that already exists in the destination, so the empty
-target namespace matters. If the ConfigMap was already there, a
-matching value would not prove Velero restored it.[^velero-restore]
+skips an object that already exists in the destination, so the target
+must not already contain `kb-velero-note`. If the note was already
+there, a matching value would not prove Velero restored it.[^velero-restore]
 
 If the Restore is partial or failed, the object is absent, or the value
 is different, leave the two namespaces and Velero records in place for
@@ -157,10 +171,18 @@ kubectl config current-context
 kubectl delete namespace kb-velero-source kb-velero-target
 velero restore delete kb-velero-note-restore
 velero backup delete kb-velero-note-backup
+velero restore get
+velero backup get
+kubectl get namespaces kb-velero-source kb-velero-target
 ```
 
-Deleting the backup removes this test recovery point. Deleting a
-namespace removes every resource now inside it, so skip cleanup if
+Check each Velero delete prompt's exact name before confirming it.
+Deletion can finish after a command returns; use the final three
+checks to confirm the exercise's records and namespaces are gone.
+`kubectl get namespaces` should report `NotFound` for both names.
+Deleting the backup removes its stored data and this test recovery
+point, while deleting a Restore record does not undo restored objects.
+Deleting a namespace removes every resource now inside it, so skip cleanup if
 another person or process has since put resources there. If a command
 fails, inspect the remaining objects rather than assuming cleanup
 finished.
@@ -184,3 +206,5 @@ finished.
 
 [^velero-backup]: [Velero v1.18 - Backup Reference](https://velero.io/docs/v1.18/backup-reference/).
 [^velero-restore]: [Velero v1.18 - Restore Reference](https://velero.io/docs/v1.18/restore-reference/).
+[^velero-locations]: [Velero v1.18 - Backup and Snapshot Locations](https://velero.io/docs/v1.18/locations/).
+[^k8s-service-accounts]: [Kubernetes - Managing Service Accounts](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/).

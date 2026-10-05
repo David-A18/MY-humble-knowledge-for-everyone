@@ -3413,7 +3413,9 @@
       "source_ids": [
         "velero-backup-reference",
         "velero-restore-reference",
-        "velero-how"
+        "velero-how",
+        "velero-locations",
+        "k8s-service-accounts"
       ],
       "stale_after": null,
       "status": "draft",
