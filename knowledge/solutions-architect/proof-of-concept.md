@@ -15,7 +15,7 @@ sources:
     resource: https://learn.microsoft.com/en-us/azure/well-architected/architect-role/collaboration
     title: Microsoft Azure Well-Architected, use a proof of concept
   - id: aws-poc
-    resource: https://docs.aws.amazon.com/en_en/redshift/latest/dg/proof-of-concept-playbook.html
+    resource: https://docs.aws.amazon.com/redshift/latest/dg/proof-of-concept-playbook.html
     title: Amazon Redshift proof-of-concept playbook
 ---
 
@@ -109,7 +109,7 @@ support rather than relying on the label alone.
   shows how scope, criteria, and findings support a larger decision.[^google-poc]
 - [Microsoft's architecture collaboration guidance](https://learn.microsoft.com/en-us/azure/well-architected/architect-role/collaboration)
   explains the production-code boundary.[^microsoft-poc]
-- [AWS's Redshift PoC playbook](https://docs.aws.amazon.com/en_en/redshift/latest/dg/proof-of-concept-playbook.html)
+- [AWS's Redshift PoC playbook](https://docs.aws.amazon.com/redshift/latest/dg/proof-of-concept-playbook.html)
   gives a product-specific example of selecting data and success targets.[^aws-poc]
 - [Evaluation and quality](../ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
   goes deeper on measuring retrieval.
@@ -117,4 +117,4 @@ support rather than relying on the label alone.
 
 [^google-poc]: [Google Cloud, validate a migration plan](https://docs.cloud.google.com/architecture/migration-to-google-cloud-best-practices), source record `google-poc`.
 [^microsoft-poc]: [Microsoft Azure Well-Architected, architect collaboration](https://learn.microsoft.com/en-us/azure/well-architected/architect-role/collaboration), source record `microsoft-poc`.
-[^aws-poc]: [AWS, conduct a proof of concept for Amazon Redshift](https://docs.aws.amazon.com/en_en/redshift/latest/dg/proof-of-concept-playbook.html), source record `aws-poc`.
+[^aws-poc]: [AWS, conduct a proof of concept for Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/proof-of-concept-playbook.html), source record `aws-poc`.

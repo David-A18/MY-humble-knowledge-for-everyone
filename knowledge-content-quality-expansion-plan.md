@@ -1992,6 +1992,10 @@ Official Git command references were checked. This is local command evidence,
 not a novice reader trial or proof for every Git edge case; these pages
 remain `draft`.
 
+The same round corrected a moved AWS Redshift proof-of-concept reference
+after the external-link CI found its old locale URL returning 404. The
+canonical AWS page was opened and checked before changing the link.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
