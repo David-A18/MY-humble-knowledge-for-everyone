@@ -249,6 +249,8 @@ commands.
 
 ## Next steps
 
+- Trace variables, locals, a resource, and an output in [How values move
+  through Terraform configuration](../language/how-values-move-through-terraform.md).
 - Practise the model without a cloud account in the [local state lifecycle
   tutorial](../examples/local-state-lifecycle/local-state-lifecycle.md).
 - Learn the command sequence and plan-review signals in the [core Terraform
@@ -270,6 +272,7 @@ commands.
 
 ## Related links
 
+- [How values move through Terraform configuration](../language/how-values-move-through-terraform.md)
 - [Core Terraform workflow](../commands/core-workflow.md)
 - [Terraform state management](state-management.md)
 - [Terraform local state lifecycle](../examples/local-state-lifecycle/local-state-lifecycle.md)

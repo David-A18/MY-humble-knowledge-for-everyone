@@ -44,8 +44,10 @@ first if configuration, resource, state, plan, and apply are new
 terms. This page is a hands-on path, not an explanation of all
 Terraform providers or backends.
 
-The core Terraform command sequence was rerun on 2026-10-06
-with Terraform v1.13.1 in a disposable local directory. The
+The Terraform commands in steps 2–5 were rerun on 2026-10-06
+with Terraform v1.13.1 in a disposable local directory initialized
+with a Git commit. The online clone and optional final directory
+removal were not part of that run. The
 downloaded CLI archive passed its published SHA-256 check.
 The run created one resource, updated one in place, and
 destroyed one; the final state listed no resources. A plain
@@ -96,11 +98,14 @@ git clone https://github.com/David-A18/MY-humble-knowledge-for-everyone.git know
 cd knowledge-source
 ```
 
-The [supporting `main.tf`](main.tf) defines a variable
-`release_version`, a `terraform_data.release` resource,
-and an output named `release_summary`. Its `input` map
+The [supporting `main.tf`](main.tf) defines two input variables
+(`environment` and `release_version`), a local value `app_name`,
+a `terraform_data.release` resource, and a root output
+`release_summary`. Its `input` object
 stores illustrative application release details in local
-state.[^terraform-data]
+state.[^terraform-data] If these block names are unfamiliar, read
+[How values move through Terraform configuration](../../language/how-values-move-through-terraform.md)
+before starting the commands.
 
 The exercise uses the default local backend. Terraform stores
 its state as a local file here; in a shared infrastructure

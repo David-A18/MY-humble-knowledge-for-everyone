@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 165,
+  "concept_count": 166,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -3970,6 +3970,36 @@
         "beginner"
       ],
       "title": "Terraform fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Trace input variables, local values, a resource, and an output through one no-cloud Terraform example.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/language/how-values-move-through-terraform.md",
+      "source_ids": [
+        "terraform-syntax",
+        "terraform-files",
+        "terraform-variables",
+        "terraform-locals",
+        "terraform-references",
+        "terraform-data",
+        "terraform-outputs",
+        "terraform-types",
+        "terraform-sensitive-data"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "language",
+        "variables",
+        "locals",
+        "outputs",
+        "beginner"
+      ],
+      "title": "How values move through Terraform configuration",
       "type": "Explanation"
     }
   ]

@@ -15,9 +15,9 @@ Status: Draft
 Audience: Curious learners and beginning engineers
 Page type: Learning Path
 Maintainer: Unassigned
-Local route reading review: 2026-10-06 (Claude Opus 5.5 read-only review and primary-source check; no new cluster or reader trial)
+Local route reading review: 2026-10-06 (Claude Opus 5.5 read-only reviews, including the new Terraform language step; primary sources checked separately; no new cluster or reader trial)
 Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
-Validation evidence: The earlier local platform route was source reviewed and statically checked; its Kubernetes exercise was executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; its Terraform exercise was locally executed with Terraform v1.13.1. The current Kubernetes exercise has a revised failure step that has not been rerun. These results do not validate the newly broadened topic choices.
+Validation evidence: The earlier local platform route was source reviewed and statically checked; its Kubernetes exercise was executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; its Terraform exercise was rerun locally with Terraform v1.13.1 on 2026-10-06. The current Kubernetes exercise has a revised failure step that has not been rerun. These results do not validate the newly broadened topic choices.
 Known limitations: The broader entry route and new or rewritten explanations have not been independently reader-tested. Many listed areas remain partial; the local platform route is the only complete beginner exercise sequence documented here.
 Next review: After KB-14 reader testing or by 2026-12-19
 
@@ -75,7 +75,7 @@ symptom, recover, and clean up. It is one option within the wider library.
   deployment guide shows how to make one if you are reading online.
 - Docker installed and running.
 - `kind` and `kubectl` installed for the Kubernetes exercise.
-- Terraform installed for the Terraform exercise.
+- Terraform 1.4.0 or newer installed for the Terraform exercise.
 - Network access to download the kind node and `nginx:1.27-alpine` images on
   the first local cluster run.
 - Enough local resources for one small Kubernetes cluster: at least 2 CPUs and 4 GB of free memory is a practical starting point.
@@ -92,7 +92,8 @@ is required for these exercises.
 | 2 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose a safe restore, unstage, revert, or reset path. |
 | 3 | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Learn desired state, reconciliation, and how Deployments, ReplicaSets, Pods, labels, and Services connect. |
 | 4 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
-| 5 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
+| 5 | [How values move through Terraform configuration](terraform/language/how-values-move-through-terraform.md) | Trace an input variable and a local value into a resource, then follow its result to a root output. |
+| 6 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
 
 If plan, apply, and state are new to you, read [Terraform
 fundamentals](terraform/fundamentals/terraform-fundamentals.md) before step 5.
@@ -107,6 +108,10 @@ After the local deployment path, you should be able to answer:
 - How does a Service choose which Pods receive traffic?
 - What changed when the workload failed, and which command showed the reason?
 - Which cleanup command proves the local Kubernetes resources are gone?
+- Why does `var.release_version` feed the Terraform resource, while
+  `release_summary` reads a result from it?
+- Why can a Terraform plan propose changing back to a default after a
+  previous plan used a one-command variable override?
 
 ## After the local route
 

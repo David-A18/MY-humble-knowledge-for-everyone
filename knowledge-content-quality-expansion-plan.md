@@ -1925,11 +1925,22 @@ search-result access and revision gaps, and the MCP source-page mismatch;
 these were corrected against the official sources. The sample checker
 is a teaching guard, not a successful runtime attestation.
 
+### Wave 118 (2026-10-06)
+
+The Terraform language section now starts with a beginner explanation of
+how one value moves from a caller or default through an input variable,
+local value, resource, and root output. It uses the same no-cloud file as
+the local state tutorial, so the explanation leads directly to an exercise.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How values move through Terraform configuration](knowledge/terraform/language/how-values-move-through-terraform.md) | Plain-language definition, bounded `main.tf` walkthrough, limited order-card analogy, reference-flow diagram and text alternative, plan-time unknowns, output-name disambiguation, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only design and revised-page reviews; the second pass corrected state-versus-override wording, evidence scope, module-output language, and the diagram's missing input. Current HashiCorp language, variable, local, resource, reference, output, type, and sensitive-data documentation was checked. The supporting `main.tf` was executed in the separate local-state tutorial run, and the diagram rendered and was inspected; no reader used this new explanation. | Independent domain review of the new page, novice value-tracing task, and review of the remaining language topics. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 165 concepts, all marked `draft`. Every
+The generated catalog records 166 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 117. This accounting does **not** mean that every explanation
+waves 1 to 118. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -1954,10 +1965,10 @@ demonstration, so most teaching elements do not apply there.
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
-| Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **165** | **0** |
+| Terraform | 5 | 5 | 0 |
+| **Total** | **166** | **166** | **0** |
 
-All four Terraform and all 17 Git concepts have now received an initial
+All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
 before stronger trust claims.
 
