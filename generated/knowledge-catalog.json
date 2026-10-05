@@ -1028,12 +1028,17 @@
       "source_ids": [
         "eks-update-kubeconfig",
         "eks-k8s-access",
+        "eks-cluster-endpoint",
         "eks-ecr-images",
         "eks-service-accounts",
         "k8s-deployments",
         "k8s-pod-lifecycle",
+        "k8s-probes",
+        "k8s-images",
         "k8s-services",
-        "k8s-rollout-status"
+        "k8s-endpoint-slices",
+        "k8s-rollout-status",
+        "k8s-rollout-undo"
       ],
       "stale_after": null,
       "status": "draft",

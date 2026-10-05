@@ -2046,6 +2046,22 @@ with `bash -n`. No kind, kubectl, Helm, AWS CLI, provider, S3 bucket, or
 reader task was run in this workspace; both pages remain `draft` pending an
 authorized sandbox exercise and novice review.
 
+### Focused review round 6 (2026-10-05)
+
+Claude Opus 5.5 reviewed [Deploying to
+EKS](knowledge/cross-topic-guides/deploying-to-eks.md) twice for a beginner's
+release and rollback decisions. The page now separates the Service selector
+from endpoint readiness, explains private API endpoint reachability, ties
+the intended image to the Deployment and running Pods, distinguishes a
+Deployment rollout number from a source revision, and asks which build
+answered each sampled user request. The rollback section records the earlier
+image digest and source revision and explains that a Deployment undo cannot
+restore changed ConfigMaps, Secrets, routing, data, or external effects.
+
+Current Amazon EKS, ECR, and Kubernetes primary documentation was checked
+independently. No AWS account, cluster, image, rollout, rollback, or reader
+task was exercised. The page remains `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

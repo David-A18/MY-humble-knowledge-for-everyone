@@ -14,6 +14,9 @@ sources:
   - id: eks-k8s-access
     resource: https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html
     title: Amazon EKS - Grant IAM users and roles access to Kubernetes APIs
+  - id: eks-cluster-endpoint
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
+    title: Amazon EKS - Cluster API server endpoint
   - id: eks-ecr-images
     resource: https://docs.aws.amazon.com/AmazonECR/latest/userguide/ECR_on_EKS.html
     title: Amazon ECR - Using Amazon ECR Images with Amazon EKS
@@ -26,12 +29,24 @@ sources:
   - id: k8s-pod-lifecycle
     resource: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
     title: Kubernetes - Pod Lifecycle
+  - id: k8s-probes
+    resource: https://kubernetes.io/docs/concepts/workloads/pods/probes/
+    title: Kubernetes - Liveness, Readiness, and Startup Probes
+  - id: k8s-images
+    resource: https://kubernetes.io/docs/concepts/containers/images/
+    title: Kubernetes - Images
   - id: k8s-services
     resource: https://kubernetes.io/docs/concepts/services-networking/service/
     title: Kubernetes - Service
+  - id: k8s-endpoint-slices
+    resource: https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/
+    title: Kubernetes - EndpointSlices
   - id: k8s-rollout-status
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_status/
     title: Kubernetes - kubectl rollout status
+  - id: k8s-rollout-undo
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_undo/
+    title: Kubernetes - kubectl rollout undo
 ---
 
 # Deploying to EKS
@@ -65,11 +80,14 @@ cluster, Pod, or user request was accessed or tested.
    and a kubeconfig entry for a named EKS cluster. EKS uses an AWS token
    for `kubectl` authentication; cluster authorization is a separate
    decision. AWS permission to describe a cluster does not by itself
-   grant permission to update a Kubernetes Deployment.
-   [^eks-kubeconfig][^eks-k8s-access]
+   grant permission to update a Kubernetes Deployment. A private-only API
+   endpoint also requires the job to run from the VPC or a connected network
+   that resolves the endpoint and is allowed through the cluster security
+   group.
+   [^eks-kubeconfig][^eks-k8s-access][^eks-cluster-endpoint]
 2. **Name the intended image.** The Deployment's Pod template points to
    a published photo API image. A digest gives the rollout an immutable
-   image reference. If it lives in private Amazon ECR, image-pull
+   image reference. If the image lives in private Amazon ECR, image-pull
    permissions belong to the node role or Fargate pod execution role,
    according to the compute path. This is distinct from the photo API
    Pod's IAM permission to call S3 at runtime.[^eks-ecr-images]
@@ -77,13 +95,17 @@ cluster, Pod, or user request was accessed or tested.
 3. **Let Kubernetes roll out.** Applying the desired Deployment changes
    its Pod template. The Deployment controller creates a new ReplicaSet
    and replaces Pods according to its strategy. Pods must be scheduled,
-   pull the image, start, and become Ready before they can carry Service
-   traffic.[^k8s-deployments][^k8s-pod-lifecycle]
-4. **Check a user request.** The Service selects Ready application
-   endpoints, but external routing and the photo API's response still
+   pull the image, start, and become Ready before they normally carry Service
+   traffic. Without a useful readiness probe, Ready may say little about
+   whether the photo API can serve its real requests.
+   [^k8s-deployments][^k8s-pod-lifecycle][^k8s-probes]
+4. **Check a user request.** The Service selects Pods by label; endpoint
+   readiness normally determines which matching Pods receive traffic.
+   External routing and the photo API's response still
    need their own checks. A completed rollout establishes Kubernetes
    availability under the Deployment's settings; it does not prove a
-   photo upload or download works.[^k8s-services][^k8s-deployments]
+   photo upload or download works.[^k8s-services][^k8s-endpoint-slices]
+   [^k8s-deployments]
 
 ```mermaid
 flowchart LR
@@ -98,7 +120,8 @@ flowchart LR
 
 Text alternative: the release job authenticates to the EKS Kubernetes
 API and changes a Deployment. Kubernetes creates new Pods, which need
-access to the published image. Ready Pods become Service endpoints.
+access to the published image. The Service's selector finds matching Pods,
+and endpoint readiness normally controls which receive traffic.
 A user request also needs the chosen external entry to route to that
 Service, then the application must answer correctly. The diagram does
 not prescribe an Ingress, Gateway, or load-balancer implementation.
@@ -107,9 +130,9 @@ not prescribe an Ingress, Gateway, or load-balancer implementation.
 
 | Observation | First boundary to inspect | What it does not establish |
 | --- | --- | --- |
-| The release job cannot connect or is forbidden. | AWS caller, cluster name and region, kubeconfig context, endpoint reachability, then EKS access entry or Kubernetes RBAC. | A valid kubeconfig is not proof of write authorization. |
+| The release job cannot connect or is forbidden. | AWS caller, cluster name and region, kubeconfig context, endpoint reachability, then the cluster's IAM mapping (access entry or legacy `aws-auth`) and its access policy or Kubernetes RBAC. | A valid kubeconfig is not proof of write authorization. |
 | New Pods report an image-pull error. | Image reference, registry reachability, and the pull identity for the compute path. | The photo API's S3 role is not normally the image-pull identity. |
-| Pods start but are not Ready. | Container logs, events, startup/readiness probes, and dependencies. | A running container is not yet a Service endpoint. |
+| Pods start but are not Ready. | Container logs, events, startup/readiness probes, and dependencies. | A running container does not normally receive Service traffic until its endpoint is Ready. |
 | Rollout finishes but the photo route fails. | Service selection, external routing, target health, and the application response. | Rollout completion is not an end-to-end request test. |
 
 An EKS Pod that calls S3 may use IRSA or EKS Pod Identity through its
@@ -122,24 +145,38 @@ for deployer access.[^eks-service-accounts]
 
 Before changing a real cluster, record the account, region, cluster,
 namespace, workload owner, image reference, expected user behavior, and
-the earlier working revision. Review the change through the team's
+the earlier working image digest and the source revision that declared it
+(such as a Git commit or Helm release). Review the change through the team's
 normal manifest, Helm, Kustomize, or GitOps path. A direct `kubectl set
 image` outside that path may be overwritten by a controller or leave
 Git out of sync; use the declared owner of the workload.
 
-After the change, compare the **intended revision** with the Deployment
-and its new Pods. `kubectl rollout status` watches the latest rollout by
-default; if another rollout starts during the watch, it follows that
-newer one unless a revision is specified. Then test the actual user
-route and watch errors. A green status for the wrong revision is not
-release evidence.[^k8s-rollout-status]
+After the change, compare the reviewed image reference with the Deployment's
+Pod template and confirm the new Pods use that template. If it is a mutable
+tag, inspect the Pods' resolved image IDs before assuming they pulled the
+same artifact you reviewed.[^k8s-images] A Deployment's revision number is a
+cluster rollout counter, not a Git commit.[^k8s-deployments] `kubectl rollout
+status` watches the latest rollout by default; if another rollout starts,
+it follows the newer one. With `--revision=N`, it stops instead of silently
+following that newer revision. Then test the actual user route, check for
+errors, and establish which build answered each sampled request. For example,
+the invented photo API could include a `build-24` response marker. An edge
+cache might still serve an older response, so a successful request without
+version evidence does not prove the new release served it. See
+[CDN caching and origin protection](../cloud/edge/cdn-caching-and-origin-protection.md)
+for that separate boundary.[^k8s-rollout-status]
 
 If the new version fails, restore the prior desired image through the
 same ownership path and verify that the previous user behavior returns.
-Kubernetes can roll back a Deployment when a prior ReplicaSet is
-retained, but this does not roll back data migrations or external side
-effects. See [GitOps on EKS](gitops-on-eks.md) if a GitOps controller
-owns the objects.[^k8s-deployments]
+Confirm that the earlier digest is still available in the registry; a
+mutable tag may now point to the new image.[^k8s-images]
+
+A live `kubectl rollout undo` can restore a previous Deployment Pod template
+when its ReplicaSet is retained, but an owning GitOps or release controller
+may immediately reapply the newer desired state. It does not restore
+referenced ConfigMap or Secret values, routing objects, data migrations,
+or external side effects. See [GitOps on EKS](gitops-on-eks.md) if a GitOps
+controller owns the objects.[^k8s-deployments][^k8s-rollout-undo]
 
 ## Check your understanding
 
@@ -147,8 +184,8 @@ owns the objects.[^k8s-deployments]
    be forbidden from editing a Deployment?
 2. If an ECR image cannot be pulled, which identity path should you
    check before changing the photo API Pod's S3 permissions?
-3. What does a completed Deployment rollout establish, and which photo
-   request must still be tested?
+3. What does a completed Deployment rollout establish, and how would you
+   confirm that the intended photo API build answered the user request?
 4. Why might a manual image change be short-lived in a GitOps-managed
    cluster?
 
@@ -161,6 +198,7 @@ owns the objects.[^k8s-deployments]
   for pull permissions on nodes and Fargate.
 - [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/),
   [Pod lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/),
+  [readiness probes](https://kubernetes.io/docs/concepts/workloads/pods/probes/),
   and [Services](https://kubernetes.io/docs/concepts/services-networking/service/)
   for rollout, readiness, and routing behavior.
 - [Review and apply a Kubernetes manifest change](../kubernetes/commands/common-commands.md)
@@ -171,9 +209,14 @@ owns the objects.[^k8s-deployments]
 
 [^eks-kubeconfig]: [Amazon EKS - Connect kubectl](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html).
 [^eks-k8s-access]: [Amazon EKS - Kubernetes API access](https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html).
+[^eks-cluster-endpoint]: [Amazon EKS - Cluster API server endpoint](https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html).
 [^eks-ecr-images]: [Amazon ECR - ECR images with EKS](https://docs.aws.amazon.com/AmazonECR/latest/userguide/ECR_on_EKS.html).
 [^eks-service-accounts]: [Amazon EKS - Workload AWS permissions](https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html).
 [^k8s-deployments]: [Kubernetes - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 [^k8s-pod-lifecycle]: [Kubernetes - Pod lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/).
+[^k8s-probes]: [Kubernetes - Liveness, Readiness, and Startup Probes](https://kubernetes.io/docs/concepts/workloads/pods/probes/).
+[^k8s-images]: [Kubernetes - Images](https://kubernetes.io/docs/concepts/containers/images/).
 [^k8s-services]: [Kubernetes - Service](https://kubernetes.io/docs/concepts/services-networking/service/).
+[^k8s-endpoint-slices]: [Kubernetes - EndpointSlices](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/).
 [^k8s-rollout-status]: [Kubernetes - kubectl rollout status](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_status/).
+[^k8s-rollout-undo]: [Kubernetes - kubectl rollout undo](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_undo/).
