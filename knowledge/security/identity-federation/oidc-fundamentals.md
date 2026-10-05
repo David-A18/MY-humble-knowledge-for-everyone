@@ -20,6 +20,12 @@ sources:
   - id: github-actions-oidc-aws
     resource: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws
     title: GitHub Docs - Configuring OpenID Connect in Amazon Web Services
+  - id: github-actions-oidc-reference
+    resource: https://docs.github.com/en/actions/reference/security/oidc
+    title: GitHub Docs - OpenID Connect reference
+  - id: github-actions-secure-use
+    resource: https://docs.github.com/en/actions/reference/security/secure-use
+    title: GitHub Docs - Secure use reference
   - id: aws-sts-assume-role-with-web-identity
     resource: https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html
     title: AWS STS API Reference - AssumeRoleWithWebIdentity
@@ -103,7 +109,7 @@ The claims you must be able to read:
 | Claim | Meaning | What the receiver does with it |
 | --- | --- | --- |
 | `iss` (issuer) | Identifier of whoever issued the token, as an `https` URL.[^openid-connect-discovery] | Must exactly match the issuer the receiver expects. |
-| `sub` (subject) | Identifier of the subject, unique within the issuer and never reassigned.[^openid-connect-core] | Identifies who the token is about. Meaningful only together with `iss`. |
+| `sub` (subject) | Identifier of the subject. OIDC Core requires issuer-local uniqueness and no reassignment for end users.[^openid-connect-core] | Identifies who the token is about. Meaningful only together with `iss`; check workload-provider formats separately. |
 | `aud` (audience) | Who the token is intended for. In OIDC sign-in it must contain the relying party's client identifier.[^openid-connect-core] | Must include the receiver. A token meant for someone else is rejected. |
 | `exp` (expiry) | The time on or after which the token must not be accepted.[^openid-connect-core] | Reject expired tokens. |
 | `iat` (issued at) | When the token was issued.[^openid-connect-core] | Helps judge the token's age. |
@@ -125,7 +131,7 @@ flowchart LR
   issuer["Issuer (OpenID Provider)<br/>authenticates the subject"]
   keys["Published public keys<br/>discovery document and JWKS"]
   token["Signed token<br/>claims: iss, sub, aud, exp"]
-  receiver["Receiver<br/>checks signature, iss, aud, exp"]
+  receiver["Receiver<br/>checks signature, claims, and flow rules"]
   policy["Receiver's own rules<br/>authorization decision"]
   issuer -- "signs and issues" --> token
   issuer -- "publishes" --> keys
@@ -138,9 +144,9 @@ Text alternative: the issuer authenticates the subject, then signs and issues
 a token containing the claims `iss`, `sub`, `aud`, and `exp`. The issuer also
 publishes its public keys through its discovery document and JWKS. The token
 is presented to a receiver, which fetches the published keys and checks the
-signature, issuer, audience, and expiry. Only if every check passes does the
-receiver move on to its own rules to make an authorization decision. The
-issuer takes no part in that last step.
+signature, issuer, audience, expiry, and applicable flow rules. Only if
+all required checks pass does the receiver move on to its own authorization
+decision. The issuer takes no part in that last step.
 
 This shape is common to both uses of OIDC on this page. What changes is who
 the subject is, who the receiver is, and what the receiver hands back.
@@ -214,26 +220,37 @@ without a stored AWS secret.
 | --- | --- | --- |
 | `iss` | `https://token.actions.githubusercontent.com` | Must be the provider registered in AWS.[^github-actions-oidc-aws] |
 | `aud` | `sts.amazonaws.com` | The audience GitHub's documentation gives for the official AWS credentials action.[^github-actions-oidc-aws] |
-| `sub` | `repo:octo-org/octo-repo:ref:refs/heads/main` | Says which repository and branch the job ran from. |
+| `sub` | `repo:octo-org/octo-repo:ref:refs/heads/main` | Says which repository and branch the job ran from.[^github-actions-oidc-reference] |
 
 This `sub` is an illustrative **older-format** value. GitHub's current
 [OIDC reference](https://docs.github.com/en/actions/reference/security/oidc)
 also documents immutable owner and repository IDs in subjects for newer,
 opted-in, renamed, or transferred repositories. The actual subject must
 match the repository and workflow context before it is used in an AWS
-trust policy.
+trust policy. A job that names an environment uses an `environment:`
+subject instead of this `ref:` shape; a pull-request job without an
+environment has a `pull_request` shape.[^github-actions-oidc-reference]
+The older name-based format could identify a different repository after a
+name was recycled; the immutable-ID format addresses that risk where GitHub
+supports it. A name-based trust condition does not match an immutable-ID
+subject, or vice versa.[^github-actions-oidc-reference]
 
 What to notice:
 
 - **The trust decision has several parts, and `sub` is the one that names
-  your workload.** The role's trust policy should require the trusted issuer,
-  the expected audience, and a subject condition together. The issuer is the
+  your workload.** The role's trust policy should name the trusted issuer's
+  provider ARN and require audience and subject conditions. The issuer is the
   same for every repository that uses the platform, so issuer and audience
   alone do not single out your repository. GitHub's documentation relays AWS
   IAM's recommendation to evaluate the `sub` condition key in the trust policy
   of any role that trusts GitHub's provider, because doing so limits which
   workflows can assume the role.[^github-actions-oidc-aws] No single condition
   is the whole boundary.
+- **GitHub controls also define who can become that subject.** A person
+  able to change a workflow or push to its trusted branch may be able to
+  run a matching job. Protect the branch and any deployment environment,
+  review who may edit workflow files, and grant `id-token: write` only to
+  jobs that need the token.[^github-actions-oidc-aws][^github-actions-oidc-reference][^github-actions-secure-use]
 - **Assuming the role and using it are separate controls.** The trust policy
   decides who may assume the role. The role's IAM permissions decide which
   operations the resulting credentials allow. Both need to be narrow.
@@ -261,11 +278,11 @@ Think of an ID token as a conference badge:
 
 Where the analogy stops being accurate:
 
-- **Anyone can read a signed token.** ID tokens must be signed, and encryption
-  is optional.[^openid-connect-core] Unless a token is also encrypted, its
-  payload is encoded, not hidden. The signature prevents tampering; it does
-  not keep the contents secret.
-  Tokens must not be logged, pasted into tickets, or shared.
+- **Anyone can read an unencrypted token.** In the flows this page describes,
+  ID tokens are signed, while encryption is optional.[^openid-connect-core]
+  Unless a token is also encrypted, its payload is encoded, not hidden. The
+  signature prevents tampering; it does not keep the contents secret. Tokens
+  must not be logged, pasted into tickets, or shared.
 - **A genuine badge for another event must be refused.** A token with a valid
   signature but the wrong audience was not issued for this receiver and must
   be rejected.
@@ -283,15 +300,20 @@ Where the analogy stops being accurate:
 ## Common misconceptions
 
 - **"The token decoded, so it is valid."** Decoding proves nothing. Trust
-  begins only after the signature, issuer, audience, and expiry checks pass.
+  begins only after signature, issuer, audience, expiry, and applicable
+  flow-specific checks pass. See [OIDC token validation](oidc-token-validation.md).
 - **"OIDC handles permissions."** It establishes identity. Permissions come
   from the receiver's own policy.
 - **"An ID token can be sent to any API as a bearer token."** Its audience is
-  the relying party. APIs are called with access tokens issued for them.
+  the relying party in a sign-in flow. APIs are called with access tokens
+  issued for them. The separate workload example sends a GitHub OIDC token
+  to STS because that issuer, audience, and exchange are explicitly
+  supported by AWS; it is not permission to reuse a sign-in ID token at
+  an arbitrary API.[^github-actions-oidc-aws][^aws-sts-assume-role-with-web-identity]
 - **"Trusting the issuer is enough for CI federation."** The issuer is shared
-  by every repository on the platform. The trust policy needs the issuer, the
-  audience, and a subject condition together, and the role's permissions
-  should still be limited to what the job needs.
+  by every repository on the platform. In AWS, the trust policy names the
+  issuer's provider ARN and requires audience and subject conditions; the
+  role's permissions should still be limited to what the job needs.[^github-actions-oidc-aws]
 - **"Workload federation is OIDC sign-in without the browser."** It reuses the
   token and key mechanisms, but its rules come from the platforms involved.
 
@@ -342,4 +364,6 @@ Where the analogy stops being accurate:
 [^openid-connect-discovery]: [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html), source record `openid-connect-discovery`.
 [^github-actions-oidc]: [GitHub Docs - OpenID Connect](https://docs.github.com/en/actions/concepts/security/openid-connect), source record `github-actions-oidc`.
 [^github-actions-oidc-aws]: [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws), source record `github-actions-oidc-aws`.
+[^github-actions-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-actions-oidc-reference`.
+[^github-actions-secure-use]: [GitHub Docs - Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use), source record `github-actions-secure-use`.
 [^aws-sts-assume-role-with-web-identity]: [AWS STS API Reference - AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html), source record `aws-sts-assume-role-with-web-identity`.

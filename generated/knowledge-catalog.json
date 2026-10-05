@@ -772,7 +772,10 @@
       "source_ids": [
         "aws-create-oidc-provider",
         "aws-oidc-role",
-        "aws-sts-web-identity"
+        "aws-sts-web-identity",
+        "github-aws-oidc",
+        "github-actions-oidc-reference",
+        "github-actions-secure-use"
       ],
       "stale_after": null,
       "status": "draft",
@@ -3686,6 +3689,8 @@
         "openid-connect-discovery",
         "github-actions-oidc",
         "github-actions-oidc-aws",
+        "github-actions-oidc-reference",
+        "github-actions-secure-use",
         "aws-sts-assume-role-with-web-identity"
       ],
       "stale_after": null,

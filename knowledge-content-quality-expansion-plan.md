@@ -1961,6 +1961,20 @@ All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
 before stronger trust claims.
 
+### Focused review round 1 (2026-10-05)
+
+Claude Opus 5.5 reviewed [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md)
+and [IAM OIDC provider and STS web identity](knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md)
+for security-sensitive ambiguity. The review identified overly broad GitHub
+`sub` trust patterns, missing GitHub-side controls, unclear issuer and audience
+checks, and citation gaps. The pages now distinguish name-based and immutable
+GitHub subjects, branch/tag/pull-request/environment contexts, AWS's minimum
+`sub` guard from a narrow role policy, and trust policy from role permissions.
+Claims were checked against current OpenID Connect, GitHub, and AWS primary
+documentation; both Mermaid diagrams were rendered and inspected. This is a
+source and diagram review, not a live AWS execution, independent expert
+sign-off, or novice reader task. Both concepts remain `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

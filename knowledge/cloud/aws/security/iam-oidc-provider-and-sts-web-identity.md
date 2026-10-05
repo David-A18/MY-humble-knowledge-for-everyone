@@ -17,6 +17,15 @@ sources:
   - id: aws-sts-web-identity
     resource: https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html
     title: AWS STS API Reference - AssumeRoleWithWebIdentity
+  - id: github-aws-oidc
+    resource: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws
+    title: GitHub Docs - Configuring OpenID Connect in Amazon Web Services
+  - id: github-actions-oidc-reference
+    resource: https://docs.github.com/en/actions/reference/security/oidc
+    title: GitHub Docs - OpenID Connect reference
+  - id: github-actions-secure-use
+    resource: https://docs.github.com/en/actions/reference/security/secure-use
+    title: GitHub Docs - Secure use reference
 ---
 
 # IAM OIDC provider and STS web identity
@@ -29,17 +38,17 @@ rotate, and recover if exposed. With **web identity federation**, the
 workload presents a signed token from an identity provider that AWS trusts.
 AWS Security Token Service (STS) checks the token against an IAM role's
 trust policy and can return temporary credentials for that role. The
-workload uses those credentials, not its OIDC token, to call AWS APIs.
+workload uses those credentials, not its OIDC token, to call AWS APIs.[^aws-sts-web-identity]
 See [OIDC fundamentals](../../../security/identity-federation/oidc-fundamentals.md)
-for the issuer, audience, subject, and expiry claims.[^aws-sts-web-identity]
+for the issuer, audience, subject, and expiry claims.
 
 ## The four pieces
 
 | Piece | Plain-language job |
 | --- | --- |
 | External OIDC provider | Issues a signed token that describes the workload. |
-| IAM OIDC provider | Registers an external issuer and audience with the AWS account.[^aws-create-oidc-provider] |
-| Role trust policy | Decides which tokens from that issuer may assume one IAM role.[^aws-oidc-role] |
+| IAM OIDC provider | Registers an external issuer and allowed client IDs or audiences with the AWS account.[^aws-create-oidc-provider] |
+| Role trust policy | Decides which tokens from that issuer may assume one IAM role, including audience and subject conditions for GitHub.[^aws-oidc-role] |
 | Role permissions policy | Limits the AWS actions and resources available after the role is assumed.[^aws-oidc-role] |
 
 STS is the exchange point. `AssumeRoleWithWebIdentity` accepts the web
@@ -53,7 +62,7 @@ the role allows.[^aws-sts-web-identity]
 flowchart LR
   issuer["External issuer<br/>signed OIDC token"]
   provider["IAM OIDC provider<br/>expected issuer and audience"]
-  trust["IAM role trust policy<br/>allowed subject"]
+  trust["IAM role trust policy<br/>allowed audience and subject"]
   sts["AWS STS<br/>token exchange"]
   role["Temporary role credentials<br/>IAM permissions"]
   issuer -- "token presented to" --> sts
@@ -62,11 +71,12 @@ flowchart LR
   sts -- "if accepted, returns" --> role
 ```
 
-Text alternative: an external issuer signs a token. AWS compares it with
-the IAM OIDC provider registration and the role trust policy, including
-the expected issuer, audience, and subject conditions. If the request is
-accepted, STS exchanges the token for temporary role credentials. Those
-credentials carry the role's permissions when used for AWS API calls.
+Text alternative: an external issuer signs a token. AWS validates the
+OIDC token against the registered provider and role trust policy,
+including the expected issuer and audience and any subject conditions the
+trust policy defines. If it is accepted, STS exchanges the token for temporary
+role credentials. Those credentials carry the role's permissions when used
+for AWS API calls.
 
 Think of provider registration as recognizing a badge office, the trust
 policy as the guest list for one door, and the role permissions as the
@@ -89,19 +99,31 @@ upload was created for this example.[^aws-oidc-role][^aws-sts-web-identity]
 For GitHub specifically, a trust policy needs a narrow
 `token.actions.githubusercontent.com:sub` condition. AWS checks for that
 condition when a GitHub OIDC role trust policy is created or updated.
-A non-empty, non-wildcard condition is a minimum guard, not a guarantee
-that the scope is narrow enough. Match the actual repository, branch, tag,
-or environment context. GitHub's subject format can also include immutable
-owner and repository IDs; see [AWS OIDC federation for GitHub
+A value that is not solely a wildcard passes this minimum guard, but
+`StringLike` with `repo:org/repo:*` still allows every branch, tag,
+pull-request context, and environment in that repository. For a role meant
+for one deployment context, compare the **actual** token subject with a
+specific `StringEquals` condition and also check
+`token.actions.githubusercontent.com:aud` against the intended audience.
+The subject may be branch-, tag-, pull-request-, or environment-shaped and
+may include immutable owner and repository IDs. A condition built for a
+name-based subject will not match a token using immutable IDs, or vice versa.
+See [AWS OIDC federation for GitHub
 Actions](../../../git/github-actions/aws-oidc-federation.md) before
-writing a GitHub-specific condition.[^aws-oidc-role]
+writing the condition.[^aws-oidc-role][^github-aws-oidc][^github-actions-oidc-reference]
+
+The AWS condition is only one side of this boundary. A person who can
+change the trusted workflow or run it in the matching context may be able
+to request the role. Restrict who can change workflows or push to trusted
+branches, protect deployment environments, and give `id-token: write`
+only to jobs that need the exchange.[^github-aws-oidc][^github-actions-secure-use]
 
 ## Troubleshoot at the right boundary
 
 | Symptom | First question |
 | --- | --- |
 | AWS does not recognize the token's issuer or audience | Does the IAM OIDC provider registration match the token issuer and intended audience? |
-| STS denies the role assumption | Does the role's trust policy admit this provider and the token's exact subject? |
+| STS denies the role assumption | Does the role's trust policy admit this provider and the token's actual audience and subject, including an environment or immutable-ID format? |
 | STS succeeds but an AWS API denies the operation | Does the role's effective permissions policy allow that action on that resource? |
 
 Do not broaden a trust condition simply to clear an error. Confirm the
@@ -135,3 +157,6 @@ action succeeded or that the trust policy is appropriately narrow.
 [^aws-create-oidc-provider]: [AWS IAM - Create an OpenID Connect identity provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html), source record `aws-create-oidc-provider`.
 [^aws-oidc-role]: [AWS IAM - Create a role for OpenID Connect federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html), source record `aws-oidc-role`.
 [^aws-sts-web-identity]: [AWS STS API Reference - AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html), source record `aws-sts-web-identity`.
+[^github-aws-oidc]: [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws), source record `github-aws-oidc`.
+[^github-actions-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-actions-oidc-reference`.
+[^github-actions-secure-use]: [GitHub Docs - Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use), source record `github-actions-secure-use`.
