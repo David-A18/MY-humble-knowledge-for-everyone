@@ -1,34 +1,37 @@
 ---
 type: "Attester Reference"
 title: "Prometheus receipt shape"
-description: "This reference points to [prometheus-receipt-shape.py](prometheus-receipt-shape.py), a small deterministic example attester."
+description: "Explains why a synthetic receipt-shape check cannot attest a real Prometheus execution."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 resource: prometheus-receipt-shape.py
-generated: { by: process:example-renderer, at: 2026-08-08T11:09:00Z }
-verified:
-  - { by: human:kb-reviewer, at: 2026-08-08T11:19:00Z }
-stale_after: 2026-10-08
 ---
 
 # Prometheus receipt shape
 
-This reference points to [prometheus-receipt-shape.py](prometheus-receipt-shape.py), a small deterministic example attester.
+The [Python example](prometheus-receipt-shape.py) checks whether a synthetic
+receipt resembles the expected query record. It is **not** a production
+attester. It deliberately returns `ok: false` even for a plausible receipt,
+because shape alone cannot prove that the query ran.
 
 The attester checks:
 
-- Required receipt keys exist.
-- `parameters` is an object.
-- `result_hash` starts with `sha256:`.
-- The query contains the expected restart metric name.
+- Required receipt keys and the exact three parameters exist.
+- Namespace, Pod prefix, and window fit narrow input patterns.
+- The query matches the illustrative computation after those values are bound.
+- The timestamp has a time-zone offset and the hash has a SHA-256-shaped value.
 
-It does not prove the metric source is correct, authenticate the datasource, or authorize access. Production attesters need stronger checks.
+It cannot authenticate the datasource, recompute a hash from an actual
+Prometheus result, or know who created the receipt. A caller could fabricate
+every field, so the `ok` attestation verdict remains false. A real system
+would need a trusted executor and result evidence that the attester can
+independently check.
 
 ## Related links
 
-- [Pod restart rate](../../concepts/pod-restart-rate.md)
+- [Pod restarts in a time window](../../concepts/pod-restart-rate.md)
 - [Prometheus executor](../executors/run-prometheus-query.md)
 - [Back to attester references](index.md)

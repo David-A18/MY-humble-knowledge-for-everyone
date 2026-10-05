@@ -34,6 +34,11 @@ concepts with a freshness deadline is unchanged at 26.
 Later on 2026-09-30, the programming terminology split added two focused
 concepts, bringing the catalog to 165 concepts: 155 `draft` and 10 `stable`.
 
+Update 2026-10-05: after correcting unsupported trust claims in the
+embedded OKF example, the catalog still has 165 concepts, now all `draft`.
+The initial pass covers every concept; draft status remains until review
+evidence justifies a change.
+
 The repository already provides the foundations this plan will use:
 
 - OKF metadata, directory indexes, local-link validation, and a generated
@@ -1890,22 +1895,52 @@ explicit risk and recovery slots, and the frontmatter placeholder gate.
 All six skeleton blocks were extracted and parsed as the intended OKF
 types; no contributor trial or real task execution was inferred.
 
+### Wave 117 (2026-10-05)
+
+The last two AI guides now start with beginner models before product or
+format details. The embedded OKF example is explicitly a draft teaching
+subtree: invented generator, reviewer, usage, and freshness fields were
+removed from its live frontmatter, and source references say what they
+can and cannot establish. The synthetic Prometheus checker now validates
+query-record shape while refusing to attest an untrusted execution.
+
+| Concept | Teaching or accuracy pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Create AI tools for Claude and Codex](knowledge/ai/ai-tooling/create-ai-tools-for-claude-and-codex.md) | Explains the model-host-tool loop with one knowledge lookup, a diagram and text alternative, a surface chooser, access boundaries, and a paper exercise; removes broken runnable snippets. | Opus 5.5 reviewed the prior and revised guide; current Claude and OpenAI tool, skill, and project-guidance pages checked. No API or MCP tool was run. | Independent product/security review and novice tool-choice task. |
+| [OKF v0.2](knowledge/ai/ai-tooling/knowledge-bases/okf-v0.2.md) | Adds a library model, bundle diagram, local-profile distinction, full concept-ID example, and correct nested receipt field; pins the specification. | Opus 5.5 reviewed the prior and revised guide; pinned OKF v0.2 specification checked. No separate bundle validation or reader task occurred. | Independent OKF review and novice format-reading task. |
+| [Why this example has a separate guide](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md) | Explains the example's scope and its real concept ID without implying a second version root or a reserved README. | Repository paths and OKF reserved-file rule checked. No reader task occurred. | Novice orientation task. |
+| [Pod restarts in a time window](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/pod-restart-rate.md) | Repairs title and description; explains PromQL `increase`, validated prefix and window inputs, a query-to-receipt diagram, and why a synthetic receipt is not a measurement. | Opus 5.5 reviewed the prior and revised sample; kube-state-metrics Pod metrics and Prometheus `increase` docs checked. No Prometheus query ran. | Independent PromQL review and authorized synthetic-to-real attestation design. |
+| [Retrieval budget example](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/retrieval-budget.md) | Defines a search-and-fetch budget with a library analogy, bounded Pod question, golden-question explanation, and MCP scope. | Opus 5.5 reviewed the prior and revised sample; MCP tools specification checked. No retrieval test or reader task occurred. | Measure a golden question with the actual search system. |
+| [Source schema extraction example](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/source-schema-extraction.md) | Separates exact parser-owned facts from learner explanation and labels the invented API and renderer as examples. | OpenAPI v3.2.0 and JSON Schema 2020-12 official sources checked. No renderer or parser ran. | Run against a real versioned API description. |
+| [Prometheus receipt-shape reference](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters/prometheus-receipt-shape.md) | States that the checker refuses real attestation and names the missing executor and result trust chain. | Opus 5.5 reviewed the prior and revised checker; one plausible and one invalid synthetic receipt were inspected locally. No trusted execution occurred. | Independent attestation/security review and real executor design. |
+| [Prometheus executor reference](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors/run-prometheus-query.md) | Replaces a receipt that contradicted its checker with a clearly invented, internally consistent one. | JSON example parsed and shape-checked locally; `attest()` returned false. No Prometheus connection or digest measurement occurred. | Trusted executor, verifiable result, and end-to-end run. |
+| [JSON Schema source reference](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/json-schema-2020-12.md) | Explains what the standard defines and why a particular API schema is still needed. | Official Draft 2020-12 page opened. No API schema was parsed. | Validate an actual API schema. |
+| [kube-state-metrics source reference](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/kube-state-metrics.md) | Points to the pinned Pod metric list and separates metric definition from cluster observation. | Official Pod metrics page and pinned revision checked. No cluster metric was queried. | Confirm availability in a real cluster. |
+| [MCP source reference](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/mcp-2026-07-28.md) | Points to the actual versioned tools page and separates protocol capabilities from retrieval policy. | Official 2026-07-28 tools page opened. No MCP server ran. | Test against a real client and server. |
+| [OpenAPI source reference](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/openapi-3-2.md) | Separates the format standard from an individual API's description. | Official OpenAPI v3.2.0 specification opened. No API description was parsed. | Validate an actual API document. |
+
+Opus 5.5 gave read-only reviews before and after the edits. Its revised
+review found the prefix mismatch, misleading log wording, index labels,
+search-result access and revision gaps, and the MCP source-page mismatch;
+these were corrected against the official sources. The sample checker
+is a teaching guard, not a successful runtime attestation.
+
 ### Not yet reviewed against the teaching standard
 
-Counts come from the generated catalog on 2026-10-04, which records 165
-concepts. The "authored to the standard" column covers waves 1 to 116
-together: one hundred fifty-three concepts. Selected waves received Opus review,
-but none completed the full independent domain-review and reader-task gates.
-The remaining 12 have not yet been authored or
-assessed against the teaching standard.
+The generated catalog records 165 concepts, all marked `draft`. Every
+catalog concept now has an initial teaching or format-integrity pass in
+waves 1 to 117. This accounting does **not** mean that every explanation
+has passed independent technical review, novice reader tasks, or live
+operational tests. Selected waves received Opus review, but none completed
+the full independent domain-review and reader-task gates.
 
 The embedded OKF example under AI tooling uses reserved types for format
 demonstration, so most teaching elements do not apply there.
 
-| Area | Concepts in catalog | Authored to the standard | Not yet reviewed |
+| Area | Concepts in catalog | Initial pass recorded | Awaiting first pass |
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 2 | 0 |
-| AI, including the embedded OKF example | 20 | 8 | 12 |
+| AI, including the embedded OKF example | 20 | 20 | 0 |
 | Cloud | 21 | 21 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -1920,7 +1955,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 4 | 4 | 0 |
-| **Total** | **165** | **153** | **12** |
+| **Total** | **165** | **165** | **0** |
 
 All four Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
@@ -1928,27 +1963,20 @@ before stronger trust claims.
 
 ### Candidates for the next wave
 
-- Try the revised knowledge article template on the next new Explanation and
-  How-to Guide, and record what a contributor found unclear.
-- Align the practical example, troubleshooting, and command reference
-  templates with the type-specific expectations.
-- Link glossary entries for working tree, index, reconciliation, and state to
-  the new explanations.
-- The sibling pages the wave 2 rewrites now link to and partly overlap:
-  Kafka fundamentals, MongoDB data modeling, OIDC token validation, CDN
-  caching and origin protection, and stateful workloads.
-- The sibling pages the wave 4 rewrites now link to and partly overlap: Flux
-  reconciliation and Helm releases, GitOps security and multi-tenancy, and
-  tooling clusters.
-- The network and storage procedures adjacent to wave 5: APISIX architecture,
-  Velero storage and volume backups, and the missing beginner Service concept.
-- The cross-topic guides now need independent technical review and
-  reader-task testing after their initial teaching passes.
-- A dedicated observability section, if reader demand supports it; the
-  observability explanation currently links to troubleshooting pages because
-  no such section exists.
-- The local deployment learning path's "Concepts before commands" section.
-- Terraform language basics, variables, and outputs as focused explanations.
+- Run independent technical and security review of the priority operational
+  guides, especially OIDC, cloud permissions, restore, and executable tasks;
+  record findings and correct pages before claiming stable status.
+- Recruit novice readers for the existing task protocol. Observe whether
+  they can find a topic, explain its model, choose a safe next step, and
+  locate the official source; record confusion and revise the pages.
+- Try the contributor templates on a new Explanation, How-to Guide, and
+  Reference with a real contributor. Record where copying or placement is
+  unclear and revise the scalable topic-entry workflow.
+- Test a real search and fetch path against the golden retrieval cases,
+  including source revisions and access-filtered results.
+- Use observed reader demand to choose the next topics, including a
+  dedicated observability section, a beginner Service concept, and focused
+  Terraform language pages if those gaps block learning.
 
 ## Expansion phases
 

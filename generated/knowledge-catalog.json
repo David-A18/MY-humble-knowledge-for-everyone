@@ -5,11 +5,18 @@
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This guide explains how to design custom AI tools for Claude, Claude Code, Codex, and OpenAI workflows. It focuses on practical choices: function tools, MCP servers, skills, Markdown instructions, and platform-specific configuration.",
+      "description": "Choose between an application function, an MCP server, and agent instructions by following one simple knowledge lookup.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/create-ai-tools-for-claude-and-codex.md",
-      "source_ids": [],
+      "source_ids": [
+        "claude-tool-use",
+        "claude-skills",
+        "claude-memory",
+        "openai-functions",
+        "openai-skills",
+        "codex-agents"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -42,34 +49,35 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "sum by (pod) (",
+      "description": "An illustrative PromQL computation for estimated container restart increases by Pod.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/pod-restart-rate.md",
       "source_ids": [
-        "kube-state-metrics"
+        "kube-state-metrics",
+        "prometheus-increase"
       ],
-      "stale_after": "2026-10-08",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
         "knowledge-bases"
       ],
-      "title": "Computation",
+      "title": "Pod restarts in a time window",
       "type": "Attested Computation"
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Retrieval should return enough evidence to answer the question, not every potentially related document. A small read-only serving layer can expose search and fetch capabilities while hiding whether the implementation uses lexical search, semantic reranking, or another derived index.[^mcp-2026-07-28]",
+      "description": "A simple guide to limiting how many documents an assistant fetches while still finding enough evidence.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/retrieval-budget.md",
       "source_ids": [
         "mcp-2026-07-28"
       ],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
@@ -80,16 +88,16 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use deterministic parsers for machine-readable facts. HTTP API operations should come from OpenAPI descriptions, and JSON shape constraints should come from JSON Schema where those producers exist.[^openapi-3-2][^json-schema-2020-12]",
+      "description": "Shows why software should parse API schemas before an assistant explains them.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/source-schema-extraction.md",
       "source_ids": [
         "openapi-3-2",
         "json-schema-2020-12"
       ],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
@@ -100,29 +108,29 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This file exists because the repository convention expects Markdown directories to include README.md. In OKF v0.2, README.md is not reserved, so this file is a normal concept document with frontmatter and concept ID README.",
+      "description": "Explains how to read the small OKF example inside the larger knowledge bundle.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md",
       "source_ids": [],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
         "knowledge-bases"
       ],
-      "title": "OKF example bundle README",
+      "title": "Why this example has a separate guide",
       "type": "Explanation"
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This reference points to [prometheus-receipt-shape.py](prometheus-receipt-shape.py), a small deterministic example attester.",
+      "description": "Explains why a synthetic receipt-shape check cannot attest a real Prometheus execution.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters/prometheus-receipt-shape.md",
       "source_ids": [],
-      "stale_after": "2026-10-08",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "ai",
@@ -139,7 +147,7 @@
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors/run-prometheus-query.md",
       "source_ids": [],
-      "stale_after": "2026-10-08",
+      "stale_after": null,
       "status": "draft",
       "tags": [
         "ai",
@@ -153,11 +161,11 @@
       "audience": "Engineering learners and practitioners",
       "description": "Use this source when a knowledge concept needs deterministic JSON validation rules or schema metadata.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/json-schema-2020-12.md",
       "source_ids": [],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
@@ -168,30 +176,30 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Use this source when a knowledge concept references Kubernetes object state metrics exposed for Prometheus-style querying.",
+      "description": "Locate the official Pod metric name and labels before writing a PromQL example.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/kube-state-metrics.md",
       "source_ids": [],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
         "knowledge-bases"
       ],
-      "title": "kube-state-metrics project",
+      "title": "kube-state-metrics Pod metrics",
       "type": "Source Reference"
     },
     {
       "audience": "Engineering learners and practitioners",
       "description": "Use this source when a knowledge concept needs to describe an agent-facing serving adapter or MCP capability surface.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/mcp-2026-07-28.md",
       "source_ids": [],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
@@ -204,11 +212,11 @@
       "audience": "Engineering learners and practitioners",
       "description": "Use this source when a knowledge concept needs exact HTTP API structure, such as paths, operations, parameters, request bodies, responses, examples, and security schemes.",
       "maintainer": "unassigned",
-      "maturity": "maintained",
+      "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/openapi-3-2.md",
       "source_ids": [],
-      "stale_after": "2026-11-08",
-      "status": "stable",
+      "stale_after": null,
+      "status": "draft",
       "tags": [
         "ai",
         "ai-tooling",
@@ -252,11 +260,13 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "This article audits Open Knowledge Format v0.2 as a specification for portable, Git-friendly knowledge bundles that humans and agents can read, traverse, cite, and validate.",
+      "description": "Explains how OKF v0.2 packages readable Markdown, source links, and honest trust metadata.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/ai/ai-tooling/knowledge-bases/okf-v0.2.md",
-      "source_ids": [],
+      "source_ids": [
+        "okf-spec"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
