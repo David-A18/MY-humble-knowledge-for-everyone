@@ -2,6 +2,7 @@
 
 ## 2026-10-06
 
+- **Terraform local-state route review**: Clarified the saved-plan sequence, output changes, one-command variable override, ignored files, stale-plan recovery, and state backup after destroy. Added and inspected a diagram of the plan/apply/state loop. Claude Opus 5.5 reviewed the route read-only; a fresh disposable Terraform v1.13.1 run and HashiCorp primary documentation confirmed the command and output behavior. No cloud resource or novice reader trial was involved; the page remains `draft`.
 - **Local beginner route review**: Clarified how a reader gets the repository's example files, which image downloads the local lab needs, what Node readiness and the nginx response should show, and how to check one selected Pod during the deliberate failed rollout. EndpointSlice inspection now shows which Pod IPs are ready Service endpoints; port-forward remains a separate selected-Pod check. The working-copy step rejects an occupied path, and a local port collision has an alternative. The Start here page distinguishes the earlier executed exercise from the current unrun patch-file revision. Claude Opus 5.5 reviewed the route twice read-only; kind, Kubernetes, and Docker image sources were checked. No new cluster or reader test was run, so the route remains `draft`.
 
 ## 2026-10-03

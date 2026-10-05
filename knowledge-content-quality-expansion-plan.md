@@ -2100,6 +2100,25 @@ The local Docker daemon is unavailable here, and `kind` and `kubectl` are
 not installed, so this revision has no new cluster run or novice reader
 test. The route remains `draft`.
 
+### Focused review round 9 (2026-10-06)
+
+Claude Opus 5.5 reviewed the Terraform local-state tutorial and its
+support files read-only. The tutorial now shows the plan/apply/state
+sequence visually, names expected resource and output changes, and
+explains that the `-var` override in a saved plan does not change the
+configuration default. It tells beginners how to recognize ignored
+state and plan files, what a stale saved plan means, and why local
+state and backup files remain after resource destruction.
+
+The core command sequence was rerun in a disposable directory using
+Terraform v1.13.1 from an archive that passed HashiCorp's published
+SHA-256 check. Create, in-place update, plain plan back to the default,
+destroy, final empty resource list, and the stale-plan refusal were
+observed. HashiCorp command and `terraform_data` references were checked
+independently. The new Mermaid timeline rendered and was inspected.
+No cloud provider or novice reader was involved; the tutorial remains
+`draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
