@@ -1936,11 +1936,23 @@ the local state tutorial, so the explanation leads directly to an exercise.
 | --- | --- | --- | --- |
 | [How values move through Terraform configuration](knowledge/terraform/language/how-values-move-through-terraform.md) | Plain-language definition, bounded `main.tf` walkthrough, limited order-card analogy, reference-flow diagram and text alternative, plan-time unknowns, output-name disambiguation, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only design and revised-page reviews; the second pass corrected state-versus-override wording, evidence scope, module-output language, and the diagram's missing input. Current HashiCorp language, variable, local, resource, reference, output, type, and sensitive-data documentation was checked. The supporting `main.tf` was executed in the separate local-state tutorial run, and the diagram rendered and was inspected; no reader used this new explanation. | Independent domain review of the new page, novice value-tracing task, and review of the remaining language topics. |
 
+### Wave 119 (2026-10-06)
+
+The beginner Kubernetes route now separates Service label selection from
+endpoint readiness and the request path. It uses the local `kb-web` files so
+readers can connect the explanation to the exercise. The route also corrects
+tool step numbers, shows the actual Service selector in command output, and
+limits the conclusion from port-forward to one selected Pod.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a Kubernetes Service selects Pods](knowledge/kubernetes/core-objects/how-a-service-selects-pods.md) | Defines the selector, EndpointSlice, readiness, DNS, ClusterIP, and port roles; traces the existing two-replica example; uses a limited dispatch analogy, a selection-versus-traffic diagram and text alternative, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only design and revised-page reviews. Current Kubernetes Service, EndpointSlice, readiness, DNS, proxy, Deployment, and port-forward documentation was checked. The diagram rendered and was inspected; no current cluster run or novice reader task occurred. | Independent domain review, a cluster-backed Service request and failed-rollout check, and novice label-to-endpoint task. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 166 concepts, all marked `draft`. Every
+The generated catalog records 167 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 118. This accounting does **not** mean that every explanation
+waves 1 to 119. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -1959,14 +1971,14 @@ demonstration, so most teaching elements do not apply there.
 | DevOps | 2 | 2 | 0 |
 | FinOps | 1 | 1 | 0 |
 | Git | 17 | 17 | 0 |
-| Kubernetes | 45 | 45 | 0 |
+| Kubernetes | 46 | 46 | 0 |
 | Migrations | 9 | 9 | 0 |
 | Programming languages | 3 | 3 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **166** | **166** | **0** |
+| **Total** | **167** | **167** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
@@ -2144,8 +2156,8 @@ No cloud provider or novice reader was involved; the tutorial remains
 - Test a real search and fetch path against the golden retrieval cases,
   including source revisions and access-filtered results.
 - Use observed reader demand to choose the next topics, including a
-  dedicated observability section, a beginner Service concept, and focused
-  Terraform language pages if those gaps block learning.
+  dedicated observability section and focused Terraform language pages
+  if those gaps block learning.
 
 ## Expansion phases
 

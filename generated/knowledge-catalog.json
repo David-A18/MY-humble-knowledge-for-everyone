@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 166,
+  "concept_count": 167,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1287,6 +1287,7 @@
         "kubernetes-port-forward",
         "kubernetes-patch",
         "kubernetes-wait",
+        "kubernetes-describe",
         "git-restore"
       ],
       "stale_after": null,
@@ -2760,6 +2761,33 @@
         "custom-resources-and-crds"
       ],
       "title": "Custom resources and CRDs",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Follow a Service selector, Pod readiness, EndpointSlices, and cluster traffic through one local web example.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/core-objects/how-a-service-selects-pods.md",
+      "source_ids": [
+        "kubernetes-service",
+        "kubernetes-endpointslices",
+        "kubernetes-probes",
+        "kubernetes-dns",
+        "kubernetes-virtual-ips",
+        "kubernetes-port-forward",
+        "kubernetes-deployments"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "service",
+        "pods",
+        "endpointslices",
+        "beginner"
+      ],
+      "title": "How a Kubernetes Service selects Pods",
       "type": "Explanation"
     },
     {

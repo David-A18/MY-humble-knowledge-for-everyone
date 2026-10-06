@@ -36,10 +36,18 @@ cases:
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
     required_source_ids: [kubernetes-concepts]
+  - id: kubernetes-service-ready-endpoints
+    question: How does a Kubernetes Service choose Pods, and why might a matching Pod not receive normal traffic?
+    expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
+    required_source_ids: [kubernetes-service, kubernetes-endpointslices]
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
     required_source_ids: [terraform-data, terraform-state]
+  - id: terraform-values-through-configuration
+    question: How do a Terraform input variable and local value reach a resource and then a root output?
+    expected_paths: [knowledge/terraform/language/how-values-move-through-terraform.md]
+    required_source_ids: [terraform-variables, terraform-outputs]
   - id: crossplane-provider-authentication
     question: How do Crossplane providers authenticate to external APIs?
     expected_paths: [knowledge/kubernetes/crossplane/providers-and-authentication.md]

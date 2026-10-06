@@ -15,7 +15,7 @@ Status: Draft
 Audience: Curious learners and beginning engineers
 Page type: Learning Path
 Maintainer: Unassigned
-Local route reading review: 2026-10-06 (Claude Opus 5.5 read-only reviews, including the new Terraform language step; primary sources checked separately; no new cluster or reader trial)
+Local route reading review: 2026-10-06 (Claude Opus 5.5 read-only reviews, including the new Terraform language and Kubernetes Service steps; primary sources checked separately; no new cluster or reader trial)
 Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
 Validation evidence: The earlier local platform route was source reviewed and statically checked; its Kubernetes exercise was executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; its Terraform exercise was rerun locally with Terraform v1.13.1 on 2026-10-06. The current Kubernetes exercise has a revised failure step that has not been rerun. These results do not validate the newly broadened topic choices.
 Known limitations: The broader entry route and new or rewritten explanations have not been independently reader-tested. Many listed areas remain partial; the local platform route is the only complete beginner exercise sequence documented here.
@@ -39,6 +39,7 @@ work.
 | --- | --- | --- |
 | How a change moves through Git | [Git fundamentals](git/git-fundamentals.md) | Working tree, index, commit, branch, and remote are different places or pointers. |
 | How Kubernetes keeps an application running | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Desired state, controllers, Pods, and Services each have a role. |
+| How a Kubernetes Service finds Pods | [How a Kubernetes Service selects Pods](kubernetes/core-objects/how-a-service-selects-pods.md) | Labels choose candidates; readiness and EndpointSlices shape normal traffic. |
 | How Terraform decides what to change | [Terraform fundamentals](terraform/fundamentals/terraform-fundamentals.md) | Configuration, state, plan, and apply form a connected loop. |
 | Why teams choose different databases | [Relational vs. document databases](databases/relational-vs-document-databases.md) | Relationships and document boundaries affect modeling choices. |
 | How an outside web request reaches a service | [Gateway API and Ingress](kubernetes/applications-and-tools/gateway-api-and-ingress.md) | A route describes traffic; an implementation serves it. |
@@ -81,7 +82,7 @@ symptom, recover, and clean up. It is one option within the wider library.
 - Enough local resources for one small Kubernetes cluster: at least 2 CPUs and 4 GB of free memory is a practical starting point.
 
 Install the tools as you reach their steps: Docker, `kind`, and `kubectl`
-are needed for step 4; Terraform is needed for step 5. No cloud account
+are needed for step 5; Terraform is needed for steps 6 and 7. No cloud account
 is required for these exercises.
 
 ## Local learning steps
@@ -91,16 +92,17 @@ is required for these exercises.
 | 1 | [Git fundamentals](git/git-fundamentals.md) | Picture how a change moves from the working tree to the index, into a commit, and to a remote; see how branches and `HEAD` point at commits; tell a local commit from a push. |
 | 2 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose a safe restore, unstage, revert, or reset path. |
 | 3 | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Learn desired state, reconciliation, and how Deployments, ReplicaSets, Pods, labels, and Services connect. |
-| 4 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
-| 5 | [How values move through Terraform configuration](terraform/language/how-values-move-through-terraform.md) | Trace an input variable and a local value into a resource, then follow its result to a root output. |
-| 6 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
+| 4 | [How a Kubernetes Service selects Pods](kubernetes/core-objects/how-a-service-selects-pods.md) | Separate label matching, endpoint readiness, ClusterIP routing, and port-forward. |
+| 5 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
+| 6 | [How values move through Terraform configuration](terraform/language/how-values-move-through-terraform.md) | Trace an input variable and a local value into a resource, then follow its result to a root output. |
+| 7 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
 
 If plan, apply, and state are new to you, read [Terraform
-fundamentals](terraform/fundamentals/terraform-fundamentals.md) before step 5.
+fundamentals](terraform/fundamentals/terraform-fundamentals.md) before step 6.
 
 ## Local route understanding checks
 
-After the local deployment path, you should be able to answer:
+After the full local route, you should be able to answer:
 
 - What is the difference between `HEAD`, the Git index, and the working tree?
 - What is the difference between committing a change and pushing it?

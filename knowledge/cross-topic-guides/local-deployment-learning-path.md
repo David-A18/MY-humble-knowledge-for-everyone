@@ -32,6 +32,9 @@ sources:
   - id: kubernetes-wait
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/
     title: Kubernetes - kubectl wait
+  - id: kubernetes-describe
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+    title: Kubernetes - kubectl describe
   - id: git-restore
     resource: https://git-scm.com/docs/git-restore
     title: Git - git-restore
@@ -51,9 +54,9 @@ cover cloud load balancers, IAM, persistent storage, or production ingress.
 
 Create a local Kubernetes cluster, deploy a small web workload, break
 it with a bad image tag, diagnose the failure, recover, and clean up.
-By the end, you should be able to explain how a Deployment creates
-Pods, how a Service finds ready Pods, and why a failed rollout does
-not necessarily stop the older version.
+By the end, you should be able to explain how a Deployment creates Pods,
+how a Service selects Pods and which can normally receive traffic, and why
+a failed rollout does not necessarily stop the older version.
 
 This path runs the cluster locally. You do not need AWS, EKS, Crossplane,
 or a paid account. The first run needs access to public image registries
@@ -74,7 +77,7 @@ for the kind node image and `nginx:1.27-alpine`.
 
 | File | Purpose |
 | --- | --- |
-| [namespace.yaml](../kubernetes/examples/local-deployment-learning-path/namespace.yaml) | Creates an isolated namespace for the exercise. |
+| [namespace.yaml](../kubernetes/examples/local-deployment-learning-path/namespace.yaml) | Creates a named namespace for the exercise; the namespace does not by itself isolate network traffic. |
 | [deployment.yaml](../kubernetes/examples/local-deployment-learning-path/deployment.yaml) | Runs a small two-replica web Deployment. |
 | [service.yaml](../kubernetes/examples/local-deployment-learning-path/service.yaml) | Exposes the Pods inside the cluster with a stable Service. |
 | [failing-image-patch.yaml](../kubernetes/examples/local-deployment-learning-path/failing-image-patch.yaml) | A strategic merge patch that changes only the web container image. |
@@ -87,7 +90,7 @@ for the kind node image and `nginx:1.27-alpine`.
 | Pod | The smallest runnable workload unit. The Deployment creates Pods for you. |
 | Deployment | Desired state for replicated Pods and rolling updates. |
 | ReplicaSet | Controller object created by the Deployment to keep the desired number of Pods. |
-| Service | A stable cluster endpoint that selects Pods by label; ready endpoints receive normal Service traffic. |
+| [Service](../kubernetes/core-objects/how-a-service-selects-pods.md) | A stable in-cluster name and virtual IP whose selector matches Pods by label; normally ready endpoints receive Service traffic. |
 | Label | Key-value metadata used by the Service selector and troubleshooting commands. |
 | Reconciliation | Kubernetes repeatedly compares actual state with desired state and tries to close the gap. |
 
@@ -169,15 +172,16 @@ kubectl --context kind-kb-local apply -f service.yaml
 kubectl --context kind-kb-local rollout status deployment/kb-web -n kb-learning
 kubectl --context kind-kb-local get pods -n kb-learning --show-labels
 kubectl --context kind-kb-local get svc kb-web -n kb-learning
+kubectl --context kind-kb-local describe svc kb-web -n kb-learning
 ```
 
 What it does: creates the namespace, Deployment, and Service, then waits until the Deployment is available.
 
-Expected condition: two Pods are `Running` and `Ready`, and the
-Service selector is `app.kubernetes.io/name=kb-web`. The Deployment
+Expected condition: two Pods are `Running` and `Ready`. The Service
+description shows `Selector: app.kubernetes.io/name=kb-web`. The Deployment
 creates and replaces Pods; the Service's selector gives clients a
 stable way to find them even when Pod names change.[^kubernetes-deployment]
-[^kubernetes-service]
+[^kubernetes-service][^kubernetes-describe]
 
 ## Inspect the running app
 
@@ -262,11 +266,24 @@ kubectl --context kind-kb-local port-forward service/kb-web 8080:80 -n kb-learni
 
 Open `http://127.0.0.1:8080` or run `curl http://127.0.0.1:8080`
 in another terminal.
-If the default page still loads, at least one selected Pod is
-answering. Port-forward selects a Pod using the Service's selector;
+If the default page still loads, the selected Pod answered.
+Port-forward selects a Pod using the Service's selector;
 it does not test routing through the Service's virtual IP or prove
 every old replica answers. Stop the
 port-forward with `Ctrl+C` before continuing.
+If this port-forward fails, read its error and inspect Pod status before
+concluding that in-cluster Service routing is broken. `kubectl port-forward`
+does not identify the selected Pod in its normal success output. To check a
+specific older ready Pod, use its name from `get pods -o wide` in the earlier
+step and replace `<ready-pod-name>` below; stop any earlier forwarding session
+first so local port `8080` is free:
+
+```bash
+kubectl --context kind-kb-local port-forward "pod/<ready-pod-name>" 8080:80 -n kb-learning
+```
+
+That still checks one Pod through a tunnel. The EndpointSlice readiness
+check above is separate evidence about normal Service traffic.
 
 Record a short note:
 
@@ -335,8 +352,8 @@ review its contents before removing it or repeating the exercise.
 
 - Which label connects the Service to the Pods?
 - Which command showed the image-pull failure first?
-- Why did the old Pods remain ready Service endpoints while the new
-  rollout failed?
+- Why should the older Pods remain ready Service endpoints while the new
+  rollout fails, and what did you observe?
 - What is the difference between `git restore --staged deployment.yaml` and `git restore deployment.yaml`?
 - Which cleanup command removed the cluster itself?
 
@@ -354,6 +371,8 @@ review its contents before removing it or repeating the exercise.
 - [kubectl port-forward](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/)
   and [kubectl patch](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/)
   for the two local access and change commands.
+- [kubectl describe](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/)
+  for reading the Service selector and Pod events.
 - [Git restore](https://git-scm.com/docs/git-restore)
   for staged versus working-tree recovery.
 
@@ -361,6 +380,7 @@ review its contents before removing it or repeating the exercise.
 
 - [Start here](../start-here.md)
 - [Kubernetes fundamentals](../kubernetes/fundamentals/index.md)
+- [How a Kubernetes Service selects Pods](../kubernetes/core-objects/how-a-service-selects-pods.md)
 - [kind custom clusters](../kubernetes/applications-and-tools/kind-custom-clusters.md)
 - [Kubernetes common solutions](../kubernetes/troubleshooting/common-solutions.md)
 - [Git undo and recovery](../git/troubleshooting/undo-and-recovery.md)
@@ -375,4 +395,5 @@ review its contents before removing it or repeating the exercise.
 [^kubernetes-port-forward]: [Kubernetes - kubectl port-forward](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/).
 [^kubernetes-patch]: [Kubernetes - kubectl patch](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/).
 [^kubernetes-wait]: [Kubernetes - kubectl wait](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/).
+[^kubernetes-describe]: [Kubernetes - kubectl describe](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/).
 [^git-restore]: [Git - git-restore](https://git-scm.com/docs/git-restore).

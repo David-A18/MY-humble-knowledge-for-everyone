@@ -105,10 +105,11 @@ Two consequences are worth remembering:
 | Service | A stable name in front of a changing set of Pods. The default kind also gets a stable virtual IP address inside the cluster. | Selects Pods by label so that traffic reaches the ready ones.[^kubernetes-services] |
 
 The key idea is that most connections are made **by label matching, not by
-name**. A Deployment does not hold a list of its Pod names, and a Service does
-not either. Each one repeatedly asks, "which Pods currently carry these
-labels?" The Kubernetes documentation calls the label selector the core
-grouping primitive.[^kubernetes-labels]
+name**. The Deployment and Service objects do not hold lists of their Pod
+names. Controllers use their selectors to find matching Pods; the Service's
+EndpointSlices record the current backend addresses and readiness. The
+Kubernetes documentation calls the label selector the core grouping
+primitive.[^kubernetes-labels][^kubernetes-endpointslices]
 
 ## An analogy: a café with a standing staffing order
 
@@ -139,9 +140,10 @@ Where the analogy stops being accurate:
   stable virtual IP address. A headless Service has no such address; its DNS
   name returns the Pod addresses directly.[^kubernetes-services] This page
   uses the default type throughout.
-- **The counter trusts badges completely.** A Service sends traffic to any
-  ready Pod whose labels match its selector, including an unrelated Pod that
-  happens to carry the same labels. Choose labels carefully.
+- **The counter trusts badges completely.** A Service can send traffic to any
+  normally eligible Pod in the same Namespace whose labels match its
+  selector, including an unrelated Pod that happens to carry the same labels.
+  Choose labels carefully.[^kubernetes-services]
 - **Namespaces are not separate buildings.** Pods in different namespaces can
   still run on the same machines. A namespace scopes names and gives you a
   place to attach policies; real isolation depends on additional features such
@@ -212,9 +214,10 @@ Someone deletes one of the two `kb-web` Pods by mistake.
 - The ReplicaSet controller no longer counts the deleted Pod. It finds one
   matching Pod where two are wanted, so it creates a new Pod. The new Pod has a
   different name and IP address.
-- The EndpointSlice controller removes the deleted Pod from the Service's
-  EndpointSlices and adds the new one. The new Pod becomes eligible for traffic
-  when it is ready.[^kubernetes-endpointslices]
+- After the deleted Pod finishes terminating, the EndpointSlice controller
+  removes its address from the Service's EndpointSlices and adds the new one.
+  The new Pod becomes eligible for normal traffic when it is ready.
+  [^kubernetes-endpointslices]
 - Clients were using the Service name all along, so they did not need to learn
   the new Pod's address.[^kubernetes-services]
 
@@ -235,8 +238,9 @@ You change the Deployment's Pod template to use a new image version.
 - With the default rolling-update strategy, the Deployment creates a new
   ReplicaSet for the new template, then gradually scales the new one up and the
   old one down.[^kubernetes-deployments]
-- During that rollout, old and new Pods can both carry the Service's label, so
-  both can receive traffic for a short time. Applications should tolerate this.
+- During that rollout, old and new Pods can both carry the Service's label.
+  Once ready, both can receive traffic for a short time. Applications should
+  tolerate this.
 - The old ReplicaSet is kept, scaled to zero, as revision history up to a
   configurable limit. That history is what makes a rollback
   possible.[^kubernetes-deployments]
@@ -271,6 +275,8 @@ roll it back.
 
 ## Next steps
 
+- Trace the traffic relationship in [How a Kubernetes Service selects
+  Pods](../core-objects/how-a-service-selects-pods.md).
 - Apply this model in the [local deployment learning
   path](../../cross-topic-guides/local-deployment-learning-path.md).
 - Learn safe inspection commands in [kubectl
@@ -292,6 +298,7 @@ roll it back.
 
 ## Related links
 
+- [How a Kubernetes Service selects Pods](../core-objects/how-a-service-selects-pods.md)
 - [Local deployment learning path](../../cross-topic-guides/local-deployment-learning-path.md)
 - [Kubernetes commands](../commands/index.md)
 - [Kubernetes core objects](../core-objects/index.md)
