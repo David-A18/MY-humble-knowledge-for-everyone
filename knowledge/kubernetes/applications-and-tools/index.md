@@ -19,7 +19,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Follow one request through a gateway route, plugin, and upstream. | [What Apache APISIX does for an API](apache-apisix.md) |
 | Separate gateway traffic, controller translation, and APISIX configuration storage. | [How the APISIX gateway and controller fit together](apisix-architecture-and-deployment.md) |
 | Understand what configured auth, limits, traffic splits, and telemetry decide for one request. | [How APISIX policies shape one request](apisix-security-traffic-and-observability.md) |
-| Follow an external request to a Service and choose between Ingress, Gateway API, and implementation-specific routes. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
+| Follow an external request through a gateway to a Service backend and choose a supported routing API. | [Gateway API and Ingress](gateway-api-and-ingress.md) |
 | Run APISIX on Amazon EKS. | [APISIX on EKS](../../cross-topic-guides/apisix-on-eks.md) |
 | Find where a 404 arises along an APISIX request path. | [Trace an APISIX 404](../troubleshooting/apisix.md) |
 

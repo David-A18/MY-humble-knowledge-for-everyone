@@ -519,12 +519,13 @@ test retrieval ranking or answer quality.
 ### Wave 5 (2026-09-30)
 
 Two existing Kubernetes explanations were rewritten around a single reader
-decision each. Both stay `draft` and have no independent review, reader test,
-running-cluster result, assigned maintainer, or new freshness record.
+decision each. Both stay `draft` and have no reader test, running-cluster
+result, assigned maintainer, or new freshness record. The Gateway API page
+received a later Opus review in [focused review round 11](#focused-review-round-11-2026-10-06).
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Gateway API and Ingress](knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md) | Rewritten to explain the external request path, object roles, route ownership, and choice of API. | Keyed citations to Kubernetes and Gateway API documentation; the two-team request path is illustrative. Acceptance of a route is explicitly separated from external reachability. | Independent technical review; implementation-specific feature check; reader test; freshness decision. |
+| [Gateway API and Ingress](knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md) | Explains the external request path, listener attachment, backend references, TLS boundary, and choice of API. | Opus 5.5 read-only review and current Kubernetes/Gateway API documentation check; the two-team example is illustrative. The diagram rendered and was inspected. | Implementation-specific feature and public-request check; reader test; freshness decision. |
 | [Stateful workloads](knowledge/kubernetes/core-objects/stateful-workloads.md) | Rewritten to explain Pod identity, separate storage claims, placement, and two deletion policies. | Keyed citations to Kubernetes storage and controller documentation; the three-Pod failure is illustrative, with no cluster run or restore test. | Independent technical review; storage-driver behavior check; reader test; freshness decision. |
 
 The current Kubernetes documentation was consulted on 2026-09-30. These
@@ -2158,6 +2159,26 @@ Current PostgreSQL and MongoDB primary documentation was checked independently,
 and one retrieval case was added. No database workload or novice reader trial
 was run. The page remains `draft` and still needs observed reader feedback and
 an independent technical review beyond this Opus pass.
+
+### Focused review round 11 (2026-10-06)
+
+Claude Opus 5.5 read the Gateway API and Ingress page alongside the new
+Service-selection guide. The revision now separates the external request
+path from Gateway API configuration relationships. It does not assume every
+implementation traverses a Service ClusterIP: the Kubernetes documentation
+permits a Service IP or backing EndpointSlices. The two-team example states
+the listener's same-namespace attachment default and distinguishes
+`allowedRoutes` from `ReferenceGrant` for a cross-namespace Service or
+certificate Secret. It also explains listener TLS versus backend TLS,
+separates `Accepted` from `ResolvedRefs`, and distinguishes the retired
+Ingress NGINX controller from the still-supported Ingress API.
+
+Current Kubernetes and Gateway API primary documentation was checked,
+including the March 2026 retirement confirmation. The Mermaid diagram
+rendered and was inspected, and a retrieval case was added. No gateway
+implementation, public endpoint, or novice reader task was run. The page
+remains `draft` pending implementation-specific feature checks, an external
+request test, and reader feedback.
 
 ### Candidates for the next wave
 

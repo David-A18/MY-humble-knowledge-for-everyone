@@ -86,3 +86,7 @@ cases:
     question: Should I store an order and its line items in relational tables or one document, and how do transactions and product queries affect the choice?
     expected_paths: [knowledge/databases/relational-vs-document-databases.md]
     required_source_ids: [postgresql-transactions, mongodb-atomicity, mongodb-multikey-embedded]
+  - id: gateway-route-attachment-vs-backend-reference
+    question: Why can an HTTPRoute fail to attach to a Gateway in another namespace, or attach but fail to use a Service in another namespace?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md]
+    required_source_ids: [gateway-api-overview, gateway-api-referencegrant]

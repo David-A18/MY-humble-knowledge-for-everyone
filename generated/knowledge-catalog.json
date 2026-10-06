@@ -2375,7 +2375,12 @@
         "kubernetes-gateway",
         "gateway-api-overview",
         "gateway-api-httproute",
-        "kubernetes-service"
+        "kubernetes-service",
+        "gateway-api-referencegrant",
+        "gateway-api-troubleshooting",
+        "gateway-api-tls",
+        "gateway-api-getting-started",
+        "ingress-nginx-retirement"
       ],
       "stale_after": null,
       "status": "draft",
