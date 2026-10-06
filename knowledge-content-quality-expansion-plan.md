@@ -2142,6 +2142,23 @@ independently. The new Mermaid timeline rendered and was inspected.
 No cloud provider or novice reader was involved; the tutorial remains
 `draft`.
 
+### Focused review round 10 (2026-10-06)
+
+Claude Opus 5.5 independently reviewed the first-visit relational versus
+document database comparison. The revision now distinguishes indexed searches
+of document arrays from full scans, compares PostgreSQL statement and
+transaction atomicity with MongoDB single-document and multi-document
+atomicity, and separates embedded from referenced reads. It no longer treats
+copied product names as inherent to a document model when the example stores
+only `sku`. Key terms appear before the comparison table, and the example
+warns that readable JSON money and date values are not production BSON types.
+The databases index routes a new reader through this comparison first.
+
+Current PostgreSQL and MongoDB primary documentation was checked independently,
+and one retrieval case was added. No database workload or novice reader trial
+was run. The page remains `draft` and still needs observed reader feedback and
+an independent technical review beyond this Opus pass.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

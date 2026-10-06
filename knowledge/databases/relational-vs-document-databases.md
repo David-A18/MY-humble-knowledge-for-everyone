@@ -35,6 +35,18 @@ sources:
   - id: mongodb-transactions
     resource: https://www.mongodb.com/docs/manual/core/transactions/
     title: MongoDB manual - Transactions
+  - id: mongodb-atomicity
+    resource: https://www.mongodb.com/docs/manual/core/write-operations-atomicity/
+    title: MongoDB manual - Atomicity and Transactions
+  - id: mongodb-multikey-embedded
+    resource: https://www.mongodb.com/docs/manual/core/indexes/index-types/index-multikey/create-multikey-index-embedded/
+    title: MongoDB manual - Create an Index on an Embedded Field in an Array
+  - id: mongodb-limits
+    resource: https://www.mongodb.com/docs/manual/reference/limits/
+    title: MongoDB manual - Limits and Thresholds
+  - id: mongodb-bson-types
+    resource: https://www.mongodb.com/docs/manual/reference/bson-types/
+    title: MongoDB manual - BSON Types
 ---
 
 # Relational vs. document databases
@@ -64,28 +76,34 @@ records.[^mongodb-data-modeling]
 
 ## Why it matters
 
-The data model decides which questions are cheap to ask and which mistakes the
-database can stop for you. Choosing by habit or fashion tends to produce one of
-two problems: a relational schema that needs many joins to rebuild one screen,
-or a document that copies the same fact into thousands of places.
+The data model affects how an application answers questions and which mistakes
+the database can stop for you. Choosing by habit or fashion can lead to data
+split across tables when it is almost always read together, or to a document
+that copies the same shared fact into many places.
 
 Neither model is faster or more modern in general. Each makes a different set
 of reads and writes simple.
 
 ## The mental model
 
+A **schema** describes the expected fields and their types. A **collection**
+is a group of MongoDB documents, roughly like a table as a place to keep
+records. A **join** combines related records from separate tables or
+collections. A **primary key** uniquely identifies a relational row. A
+**foreign key** holds a key from another table, allowing the database to
+reject a non-null reference to a missing row.[^postgresql-constraints]
+
+An **all-or-nothing** change is also called *atomic*: either the complete
+change takes effect or none of it does. That promise has a different default
+scope in the two examples below.
+
 | Question | Relational | Document |
 | --- | --- | --- |
 | What is the unit of storage? | A row in a table. | A document in a collection. |
-| How is related data connected? | Separate tables linked by keys. A foreign key makes the database reject a row that points at something missing.[^postgresql-constraints] | Usually embedded inside the parent document. It can also be stored separately and referenced by a key value.[^mongodb-data-modeling] |
-| How do you read related data? | A join query pairs rows from several tables.[^postgresql-joins] | One read returns the document with everything embedded in it.[^mongodb-embedding] |
+| How is related data connected? | Separate tables linked by keys. A foreign key makes the database reject a row that points at something missing.[^postgresql-constraints] | Often embedded inside the parent document. It can also be stored separately and referenced by a key value.[^mongodb-data-modeling] |
+| How do you read related data? | A join query pairs rows from several tables.[^postgresql-joins] | If embedded, one read returns the document and its parts. If referenced, another query or a `$lookup` join is needed.[^mongodb-embedding][^mongodb-lookup] |
 | Who fixes the shape? | The table definition fixes columns and types for every row. | By default, documents in one collection can differ; validation rules can be added where a fixed shape is needed.[^mongodb-data-modeling] |
-| What is the natural unit of an all-or-nothing change? | A transaction, which bundles several steps into one all-or-nothing operation.[^postgresql-transactions] Within one database, those steps can touch rows in different tables. | A single document. Changes spanning several documents use a multi-document transaction.[^mongodb-transactions] |
-
-Two terms are worth defining. A **primary key** is the column or columns whose
-value uniquely identifies a row. A **foreign key** is a column whose values
-must match a key in another table; this is how the database maintains
-referential integrity between related tables.[^postgresql-constraints]
+| What is the natural unit of an all-or-nothing change? | Each statement runs in a transaction, even if it changes many rows. An explicit transaction can group several statements across tables.[^postgresql-transactions] | Each single-document write is atomic. A write affecting multiple documents is not atomic as a whole unless it runs in a multi-document transaction.[^mongodb-atomicity] |
 
 ## One order, two shapes
 
@@ -114,6 +132,7 @@ Table `order_items`:
 | ORD-7842 | BOOK-1 | 1 | 29.99 |
 | ORD-7842 | PEN-4 | 3 | 1.50 |
 
+`orders.order_id` is the primary key of `orders`.
 `order_items.order_id` is a foreign key to `orders.order_id`. The database
 refuses a line item for an order that does not exist. To show the order page,
 the application runs a join that pairs the one `orders` row with its two
@@ -136,6 +155,11 @@ The order is one document. The line items live inside it.
 }
 ```
 
+The JSON is a readable sketch, not production BSON types. In real MongoDB
+data, a BSON Date represents `createdAt`; money needing exact decimal
+precision can use Decimal128 rather than a floating-point number.[^mongodb-bson-types]
+The relational example would likewise use suitable date and money types.
+
 What it shows: an illustrative document in which the order and its line items
 are read and written together. To show the order page, the application reads
 one document. Adding a line item and changing the status in the same update is
@@ -146,9 +170,9 @@ one atomic write to one document.[^mongodb-embedding]
 | Task | Relational shape | Document shape |
 | --- | --- | --- |
 | Show one order with its items | A join across two tables. | One document read. |
-| Find total units sold of `BOOK-1` across all orders | A direct query on `order_items`. | A query that reaches into the `items` list of every order. Possible, but it is not the shape the data is stored in. |
+| Find total units sold of `BOOK-1` across all orders | Query and total matching rows in `order_items`. | Filter orders by `items.sku`, then total matching item quantities. An index on that array field can find matching orders; the total still needs to examine their matching items.[^mongodb-multikey-embedded] |
 | Guarantee every line item belongs to a real order | Enforced by the foreign key. | True by construction while items are embedded. |
-| Rename a product everywhere | Change one row, if the name is kept only in a `products` table. | If the name was copied into each order, every copy needs updating. |
+| Show the current product name, if the order page needs it | Look up the name by `sku` in a separate `products` table; that table is not shown above. | Reference a separate product document for the current name, or copy the name into orders. Copies can make reads simpler but must be updated when the name changes. Neither choice is required by the document model. |
 
 One detail applies to both models: the price a customer paid is a historical
 fact about the order. It is normally copied onto the line item in either
@@ -201,9 +225,9 @@ Where the analogy stops being accurate:
 - **Folders are not free-form.** A document collection can have validation
   rules, and the application still depends on documents having a predictable
   shape.[^mongodb-data-modeling]
-- **A folder has a size limit and can go stale.** A MongoDB document must stay
-  under 16 mebibytes, so a list that grows without bound does not belong
-  inside it.[^mongodb-embedding] Copies of shared facts stapled into many
+- **A folder has a size limit and can go stale.** A MongoDB document can be
+  at most 16 mebibytes, so a list that grows without bound does not belong
+  inside it.[^mongodb-limits] Copies of shared facts stapled into many
   folders must all be updated when the fact changes.
 - **Paper has no indexes.** Both kinds of database depend on indexes to find
   records quickly. The analogy says nothing about performance.
@@ -218,7 +242,7 @@ Ask this first:
 | What you observe about the workload | Lean towards | Why |
 | --- | --- | --- |
 | A record and its parts are nearly always read and written as one unit, and the parts are bounded in number. | Document | One read and one atomic write match the unit of work.[^mongodb-embedding] |
-| The same entities are queried from many directions, such as by product, by customer, and by date. | Relational | Separate tables can be joined in any combination without restructuring.[^postgresql-joins] |
+| New questions often combine several kinds of separately stored entities, such as orders, customers, and products. | Relational | Tables that store each shared fact once can be joined in new combinations without changing where the facts are stored; useful indexes may still be needed.[^postgresql-joins] |
 | Many facts are shared between records, and you want each kept in one place. | Relational | A shared fact can live in one referenced row, and a foreign key ensures the referenced row exists.[^postgresql-constraints] This protects only the facts you choose not to copy. |
 | Changes routinely span several independent records and must be all-or-nothing. | Relational, or a document model with deliberate use of transactions | MongoDB supports multi-document transactions, but its documentation notes that they cost more than single-document writes and should not replace good schema design.[^mongodb-transactions] |
 | Records of the same kind differ in their fields, and the set of fields is still changing. | Document, with validation on the fields that matter | Documents in a collection may differ by default, and rules can be added selectively.[^mongodb-data-modeling] |
@@ -232,8 +256,9 @@ self-contained ones.
 - **"MongoDB has no joins."** It has `$lookup`.[^mongodb-lookup] The design
   guidance is to need joins less often, not that they are impossible.
 - **"MongoDB has no transactions."** Single-document writes are atomic, and
-  multi-document transactions are supported on replica sets and sharded
-  clusters.[^mongodb-transactions]
+  multi-document transactions are supported on replica sets (a group of
+  MongoDB servers that maintain copies) and sharded clusters (data split
+  across server groups).[^mongodb-transactions]
 - **"Relational databases cannot store JSON."** PostgreSQL stores and indexes
   it.[^postgresql-json-types]
 - **"Document databases have no schema."** The schema moves from the table
@@ -256,6 +281,9 @@ self-contained ones.
 - Choose document shapes in [MongoDB data modeling](mongodb/data-modeling.md).
 - Add guardrails with [schema validation and
   indexing](mongodb/schema-validation-and-indexing.md).
+- Explore the relational side with the [PostgreSQL introductory
+  tutorial](https://www.postgresql.org/docs/current/tutorial.html) while
+  dedicated PostgreSQL pages are still planned.
 
 ## Official documentation for deeper study
 
@@ -268,6 +296,10 @@ self-contained ones.
 - When and how to embed: [MongoDB - Embedded Data](https://www.mongodb.com/docs/manual/data-modeling/embedding/).
 - Joining collections: [MongoDB - `$lookup`](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/).
 - Multi-document changes: [MongoDB - Transactions](https://www.mongodb.com/docs/manual/core/transactions/).
+- The scope of an atomic write: [MongoDB - Atomicity and Transactions](https://www.mongodb.com/docs/manual/core/write-operations-atomicity/).
+- Querying an array field with an index: [MongoDB - Index on an Embedded Field in an Array](https://www.mongodb.com/docs/manual/core/indexes/index-types/index-multikey/create-multikey-index-embedded/).
+- Document size limits: [MongoDB - Limits and Thresholds](https://www.mongodb.com/docs/manual/reference/limits/).
+- BSON Date and Decimal128 types: [MongoDB - BSON Types](https://www.mongodb.com/docs/manual/reference/bson-types/).
 
 ## Related links
 
@@ -285,3 +317,7 @@ self-contained ones.
 [^mongodb-embedding]: [MongoDB manual - Embedded Data](https://www.mongodb.com/docs/manual/data-modeling/embedding/), source record `mongodb-embedding`.
 [^mongodb-lookup]: [MongoDB manual - $lookup aggregation stage](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/), source record `mongodb-lookup`.
 [^mongodb-transactions]: [MongoDB manual - Transactions](https://www.mongodb.com/docs/manual/core/transactions/), source record `mongodb-transactions`.
+[^mongodb-atomicity]: [MongoDB manual - Atomicity and Transactions](https://www.mongodb.com/docs/manual/core/write-operations-atomicity/), source record `mongodb-atomicity`.
+[^mongodb-multikey-embedded]: [MongoDB manual - Create an Index on an Embedded Field in an Array](https://www.mongodb.com/docs/manual/core/indexes/index-types/index-multikey/create-multikey-index-embedded/), source record `mongodb-multikey-embedded`.
+[^mongodb-limits]: [MongoDB manual - Limits and Thresholds](https://www.mongodb.com/docs/manual/reference/limits/), source record `mongodb-limits`.
+[^mongodb-bson-types]: [MongoDB manual - BSON Types](https://www.mongodb.com/docs/manual/reference/bson-types/), source record `mongodb-bson-types`.

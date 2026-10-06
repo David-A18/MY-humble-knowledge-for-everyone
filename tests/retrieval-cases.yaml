@@ -82,3 +82,7 @@ cases:
     question: How do I establish cloud cost ownership and a shared-cost allocation policy?
     expected_paths: [knowledge/finops/cost-allocation-basics.md]
     required_source_ids: [finops-allocation]
+  - id: relational-or-document-order-model
+    question: Should I store an order and its line items in relational tables or one document, and how do transactions and product queries affect the choice?
+    expected_paths: [knowledge/databases/relational-vs-document-databases.md]
+    required_source_ids: [postgresql-transactions, mongodb-atomicity, mongodb-multikey-embedded]

@@ -1594,7 +1594,11 @@
         "mongodb-data-modeling",
         "mongodb-embedding",
         "mongodb-lookup",
-        "mongodb-transactions"
+        "mongodb-transactions",
+        "mongodb-atomicity",
+        "mongodb-multikey-embedded",
+        "mongodb-limits",
+        "mongodb-bson-types"
       ],
       "stale_after": null,
       "status": "draft",
