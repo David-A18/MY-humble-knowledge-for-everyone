@@ -90,3 +90,7 @@ cases:
     question: Why can an HTTPRoute fail to attach to a Gateway in another namespace, or attach but fail to use a Service in another namespace?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md]
     required_source_ids: [gateway-api-overview, gateway-api-referencegrant]
+  - id: finops-shared-cost-decision-coverage
+    question: If a shared cloud bill is centrally funded, does it count as direct cost allocation, and how should I measure unresolved shared cost?
+    expected_paths: [knowledge/finops/cost-allocation-basics.md]
+    required_source_ids: [finops-allocation, finops-cost-allocation-guide]

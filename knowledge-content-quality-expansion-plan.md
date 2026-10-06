@@ -541,7 +541,7 @@ that this rewrite was independently reviewed.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Cost allocation basics](knowledge/finops/cost-allocation-basics.md) | Added a direct, shared, and unallocated cost model, an illustrative reconciled report, expected outcome, and checks. | Keyed FinOps Framework citation and existing structured source records; the 100-unit report is invented and no provider report was run. | Independent FinOps and finance review; a real provider report check; reader test; freshness decision for the rewrite. |
+| [Cost allocation basics](knowledge/finops/cost-allocation-basics.md) | Teaches a first allocation policy with precedence, five nonoverlapping report buckets, calculated coverage measures, and a decision-tree diagram. | Opus 5.5 read-only review; current FinOps Framework, FOCUS, and AWS primary sources checked. The 100-unit report is invented; the diagram rendered and was inspected. | Independent finance review; a real provider report check; reader test; freshness decision. |
 | [AWS cost allocation tags](knowledge/cloud/aws/finops/cost-allocation-tags.md) | Rewritten to separate resource tagging from billing activation, explain reporting delays and historical backfill, and bound tag coverage. | Keyed citations to AWS Billing and FinOps documentation; the EC2 scenario is illustrative, with no account access or billing action. | Independent AWS billing review; a real report check; reader test; freshness decision. |
 
 The AWS and FinOps pages were consulted on 2026-09-30. In particular, AWS
@@ -2179,6 +2179,26 @@ rendered and was inspected, and a retrieval case was added. No gateway
 implementation, public endpoint, or novice reader task was run. The page
 remains `draft` pending implementation-specific feature checks, an external
 request test, and reader feedback.
+
+### Focused review round 12 (2026-10-06)
+
+Claude Opus 5.5 reviewed the first-visit cost allocation guide and its AWS
+tagging companion. Its original 100-unit example reported 90% decision
+coverage without a matching metric, while its shared-cost rule measure could
+never reveal a missing rule. The revised example separates direct cost mapped
+by account and by resource metadata, centrally funded shared cost, shared
+cost awaiting a rule, and cost with no consuming owner. It computes direct,
+decision, unallocated, and shared-rule measures from those exact buckets.
+Resource-tag compliance now uses eligible taggable cost, with excluded cost
+shown separately.
+
+The guide now sets report scope and cost basis before classifying lines,
+records mapping precedence and policy effective dates, and explains why
+retagging cannot create historical values that never existed. Current FinOps
+Framework, FOCUS, and AWS primary sources were checked. The decision-tree
+diagram rendered and was inspected, and a retrieval case was added. No real
+provider bill, finance review, or novice reader task occurred. The page
+remains `draft`.
 
 ### Candidates for the next wave
 

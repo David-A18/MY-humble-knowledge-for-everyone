@@ -1746,7 +1746,10 @@
       "path": "knowledge/finops/cost-allocation-basics.md",
       "source_ids": [
         "finops-allocation",
-        "finops-cost-allocation-guide"
+        "finops-cost-allocation-guide",
+        "focus-billed-cost",
+        "focus-effective-cost",
+        "aws-cost-tag-backfill"
       ],
       "stale_after": "2026-12-20",
       "status": "draft",
