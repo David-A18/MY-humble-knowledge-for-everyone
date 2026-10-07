@@ -100,6 +100,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Corrected the first-visit Terraform value flow and Kubernetes Service
+  explanation, including plan versus apply state timing and the distinction
+  between port-forward and normal Service routing.
 - Clarified Git, Kubernetes, and Terraform fundamentals with source-backed
   corrections to remote-tracking branches, Pod replacement and endpoints,
   provider refresh, and secrets in Terraform state.

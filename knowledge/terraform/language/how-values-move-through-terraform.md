@@ -35,6 +35,12 @@ sources:
   - id: terraform-sensitive-data
     resource: https://developer.hashicorp.com/terraform/language/manage-sensitive-data
     title: Manage sensitive data in Terraform
+  - id: terraform-plan
+    resource: https://developer.hashicorp.com/terraform/cli/commands/plan
+    title: Terraform plan command
+  - id: terraform-apply
+    resource: https://developer.hashicorp.com/terraform/cli/commands/apply
+    title: Terraform apply command
 ---
 
 # How values move through Terraform configuration
@@ -57,10 +63,11 @@ run the example; this page is a reading guide, not a command procedure.
 ## Why this matters
 
 If you cannot trace a value, a plan can look like a surprise. You might think
-changing a variable's default changed an existing resource, or mistake a
-resource's `output` attribute for a separate resource. Reading the references
-shows what the configuration requests and which result may be unavailable
-until apply.
+editing a variable's default already changed an existing resource before any
+plan and apply, or that a one-time `-var` choice became the new default. You
+might also mistake a resource's `output` attribute for a separate resource.
+Reading the references shows what the configuration requests and which result
+may be unavailable until apply.
 
 ## Follow one file
 
@@ -163,10 +170,10 @@ and it prints a summary (**root output**).
 The analogy stops at three important points:
 
 - A `-var` choice for one plan does not rewrite the input default in
-  `main.tf`. State still records the value the resource stored. If the saved
-  override plan put `"1.1.0"` in state, a later plain plan compares that
-  stored value with the unchanged `"1.0.0"` default and proposes changing
-  it back.[^terraform-variables]
+  `main.tf`. Planning alone does not change state. **After you apply** the
+  plan made with that override, state records `"1.1.0"`; a later plain plan
+  compares that stored value with the unchanged `"1.0.0"` default and
+  proposes changing it back.[^terraform-variables][^terraform-plan][^terraform-apply]
 - The cards are not filled from top to bottom. Terraform follows expression
   references, regardless of block order.[^terraform-references]
 - This `terraform_data` example only stores a value in state; no workshop,
@@ -176,13 +183,15 @@ The analogy stops at three important points:
 ## Values known now and values known after apply
 
 The defaults `"learning"` and `"1.0.0"` and the literal local value are
-available when this example is planned. The `terraform_data` resource's
-`output` attribute is computed from its `input`.[^terraform-data]
-In the [tutorial's recorded run](../examples/local-state-lifecycle/local-state-lifecycle.md)
-on 2026-10-06 with Terraform v1.13.1, the create and update plans showed
-`release_summary` as `(known after apply)`; after apply, it held the three
-values. This placeholder means Terraform did not yet know that result, not
-that the configuration has no output.[^terraform-references]
+available when this example is planned. Even with known inputs, the
+`terraform_data` resource computes its `output` attribute during apply. A
+plan that creates the resource or changes its input can therefore show that
+attribute, and the root `release_summary` that reads it, as `(known after
+apply)`. The placeholder means the result is not yet known in that plan, not
+that the configuration has no output. The [local state lifecycle
+tutorial](../examples/local-state-lifecycle/local-state-lifecycle.md) shows
+when the plan is reviewed and when apply records the result.[^terraform-data]
+[^terraform-references]
 
 `type = string` is a type constraint, not a claim that every non-string input
 will be rejected: Terraform can convert compatible values. The `default`
@@ -232,6 +241,9 @@ this teaching example or assume an output is a safe place to publish them.
   and [output values](https://developer.hashicorp.com/terraform/language/values/outputs).
 - For expression syntax and plan-time unknowns, read [references to
   values](https://developer.hashicorp.com/terraform/language/expressions/references).
+- For when a proposal becomes a recorded change, read the [plan](https://developer.hashicorp.com/terraform/cli/commands/plan)
+  and [apply](https://developer.hashicorp.com/terraform/cli/commands/apply)
+  command references.
 - For a change against real infrastructure, continue to [review and apply a
   Terraform change](../commands/core-workflow.md) only when you have a
   project-specific provider, backend, identity check, and verification plan.
@@ -245,3 +257,5 @@ this teaching example or assume an output is a safe place to publish them.
 [^terraform-outputs]: [Terraform output values](https://developer.hashicorp.com/terraform/language/values/outputs), source record `terraform-outputs`.
 [^terraform-types]: [Terraform type constraints](https://developer.hashicorp.com/terraform/language/expressions/type-constraints), source record `terraform-types`.
 [^terraform-sensitive-data]: [Manage sensitive data in Terraform](https://developer.hashicorp.com/terraform/language/manage-sensitive-data), source record `terraform-sensitive-data`.
+[^terraform-plan]: [Terraform plan command](https://developer.hashicorp.com/terraform/cli/commands/plan), source record `terraform-plan`.
+[^terraform-apply]: [Terraform apply command](https://developer.hashicorp.com/terraform/cli/commands/apply), source record `terraform-apply`.

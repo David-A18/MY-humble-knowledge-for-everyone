@@ -52,6 +52,10 @@ cases:
     question: How does a Kubernetes Service choose Pods, and why might a matching Pod not receive normal traffic?
     expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
     required_source_ids: [kubernetes-service, kubernetes-endpointslices]
+  - id: kubernetes-port-forward-versus-service-route
+    question: If kubectl port-forward to a Service works, does that prove a client Pod can reach its ClusterIP through normal Service routing?
+    expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
+    required_source_ids: [kubernetes-port-forward, kubernetes-virtual-ips]
   - id: kubernetes-replacement-endpoints
     question: When a Deployment Pod is deleted, does its Service endpoint disappear only after termination, and must the new Pod wait for that removal?
     expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
@@ -64,6 +68,10 @@ cases:
     question: Can Terraform state contain secrets even if there are no passwords in my configuration, and does a plan detect changes made outside Terraform?
     expected_paths: [knowledge/terraform/fundamentals/terraform-fundamentals.md]
     required_source_ids: [terraform-sensitive-data, terraform-plan]
+  - id: terraform-variable-override-state-timing
+    question: Does a saved Terraform plan with a variable override change state immediately, and why might a later plan propose the default again?
+    expected_paths: [knowledge/terraform/language/how-values-move-through-terraform.md]
+    required_source_ids: [terraform-variables, terraform-plan, terraform-apply]
   - id: terraform-values-through-configuration
     question: How do a Terraform input variable and local value reach a resource and then a root output?
     expected_paths: [knowledge/terraform/language/how-values-move-through-terraform.md]

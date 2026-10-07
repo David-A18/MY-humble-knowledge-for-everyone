@@ -111,9 +111,10 @@ Kubernetes creates EndpointSlices for this Service because it has a selector.
 They record matching Pod IPs and conditions such as `ready`. An unready Pod
 with an assigned IP can still appear there with `ready: false`; seeing an
 address in a slice does not mean normal Service proxying will use it. During
-termination, the `serving` and `terminating` conditions add nuance, and a
-proxy can sometimes use a serving, terminating endpoint if no other endpoints
-are available. This local example uses the ordinary readiness path.
+termination, the `serving` and `terminating` conditions add nuance. Service
+proxies normally ignore terminating endpoints, but may use one that can still
+respond (`serving`) if all available endpoints are terminating. This local
+example has older ready Pods, so it uses the ordinary readiness path.
 [^kubernetes-endpointslices][^kubernetes-virtual-ips]
 
 ## Visual: selection and traffic are different paths
@@ -136,8 +137,8 @@ EndpointSlice controller; Pod readiness is recorded with each available
 address. A client Pod resolves the Service name to its ClusterIP and connects
 on port `80`. Cluster proxying normally uses ready endpoints from the
 EndpointSlices to choose a Pod at target port `80`. A laptop using `kubectl
-port-forward` instead opens a separate tunnel to one selected Pod; that path
-does not check the ClusterIP routing rules. Use the two paths to decide what
+port-forward` instead opens a separate tunnel to one selected Pod; it does
+not use the ClusterIP or Service proxy rules. Use the two paths to decide what
 a successful local test actually proves.
 
 The diagram is a model, not a packet trace or a recorded cluster run. The

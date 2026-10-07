@@ -2301,6 +2301,28 @@ the official condition definitions. No live Terraform or Kubernetes run,
 measured retrieval test, or novice reader task occurred. These existing pages
 remain `draft`, and the teaching-wave inventory count is unchanged.
 
+### Focused review round 17 (2026-10-07)
+
+Reviewed the next two pages in the local beginner route: Terraform value flow
+and Kubernetes Service selection. Claude Opus 5.5 found a material error in
+the Terraform analogy: a saved variable-override plan was said to put a value
+in state, although only apply records that result. The page now distinguishes
+editing a default, planning with an override, applying the saved plan, and
+planning again. It also explains why the `terraform_data.output` attribute
+may be unknown during a plan despite known inputs. A claim about the exact
+output of a prior local run was removed because the retained run record did
+not support that detail.
+
+The Kubernetes Service page now states the terminating-endpoint exception
+using the official EndpointSlice condition wording and says plainly that
+port-forward reaches one selected Pod without using the ClusterIP or Service
+proxy route. HashiCorp and Kubernetes primary documentation was checked. A
+second read-only Opus review found no remaining material issue; its small
+standalone-wording suggestion was incorporated. Two retrieval cases record
+the plan/state timing and port-forward questions. No new Terraform run,
+Kubernetes cluster run, measured retrieval test, or novice reader task
+occurred; both pages remain `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
