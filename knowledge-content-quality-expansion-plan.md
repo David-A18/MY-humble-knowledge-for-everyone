@@ -2323,6 +2323,27 @@ the plan/state timing and port-forward questions. No new Terraform run,
 Kubernetes cluster run, measured retrieval test, or novice reader task
 occurred; both pages remain `draft`.
 
+### Focused review round 18 (2026-10-07)
+
+Revisited the shared glossary after the first-visit Git, Kubernetes,
+Terraform, and AI concept revisions. Claude Opus 5.5 found definitions that
+taught an outdated Terraform plan model, implied every Pod container shares
+storage, and described a Git branch as a line of commits. The Service entry
+also pointed to the broad fundamentals page instead of the dedicated
+selection explanation. Those entries now match the linked concept pages and
+current Git, Kubernetes, and HashiCorp primary references.
+
+Added concise terms that the beginner pages already use but the glossary
+did not define, including plan and apply, HEAD and remote-tracking branches,
+Service selection and readiness, and AI training, inference, model, token,
+assistant, and workflow. The starting table now separates continuous
+Kubernetes reconciliation from Terraform's run-based planning. A second
+read-only Opus review caught an object/controller mix-up for ReplicaSet, an
+ambiguous Service name, weak routes for existing terms, and table ordering;
+these were corrected. No new technical concept was added outside the glossary,
+and the teaching-wave inventory is unchanged. This was an editorial and source
+review; no novice term-finding session occurred. The glossary remains `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

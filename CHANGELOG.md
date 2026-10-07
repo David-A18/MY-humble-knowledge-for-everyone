@@ -100,6 +100,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Expanded the glossary with first-visit Git, Kubernetes, Terraform, and AI
+  terms and aligned shared definitions with their current explanations.
 - Corrected the first-visit Terraform value flow and Kubernetes Service
   explanation, including plan versus apply state timing and the distinction
   between port-forward and normal Service routing.
