@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-07
+
+- **AI retrieval beginner explanation review**: Separated candidate retrieval from reranking, added exact-path lookup for punctuation-sensitive identifiers, and explained how to diagnose a missing page before increasing search or context budgets. The search-to-fetch diagram filters by reader access before ranking cutoffs and rechecks at fetch; the example hit keeps the real draft page's freshness condition beside its advice. The text distinguishes a pinned corpus commit from upstream producer revisions and labels page-level source IDs as leads rather than claim-level proof. Evaluation now checks candidates before final ranking, and hit@3 is a proposed check for optional AI retrieval rather than a measured release threshold. Claude Opus 5.5 reviewed the page twice read-only; SQLite, Elasticsearch, and Azure primary documentation was checked, and the revised diagram rendered and was inspected. A static retrieval case was added. No live search, private corpus, ranking test, or novice reader task ran; the page remains `draft`.
+
 ## 2026-10-06
 
 - **Cost allocation beginner policy review**: Rebuilt the invented 100-unit report into direct by account, direct by metadata, shared with a rule, shared awaiting a rule, and unknown-owner buckets. Direct, decision, unallocated, and shared-rule measures now agree with the example; tag compliance has its own eligible-cost denominator. Added policy precedence, cost basis, effective dates, shared-rule ownership, and the limit of retroactive tagging. A decision-tree diagram rendered and was inspected. Claude Opus 5.5 reviewed the page read-only; FinOps Framework, FOCUS, and AWS primary sources were checked. No provider bill, finance review, or novice reader task ran; the page remains `draft`.

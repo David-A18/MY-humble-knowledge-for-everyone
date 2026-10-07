@@ -572,7 +572,7 @@ how a budget can be evaluated. It remains a draft.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Retrieval and context efficiency](knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Rewritten with a plain model, library analogy, search-to-fetch diagram, illustrative result, method choices, and measurement questions. | Keyed SQLite and Elasticsearch documentation for full-text matching and BM25. The example is explicitly invented and uses the real target page's `draft` status; no retrieval service or ranking evaluation ran. | Independent technical review; a measured search evaluation; reader test; freshness decision. |
+| [Retrieval and context efficiency](knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Rewritten with a plain model, library analogy, search-to-fetch diagram, illustrative result, method choices, and measurement questions. Later review clarified candidate retrieval versus reranking, permission filtering, corpus revision, and evidence budgets. | Keyed SQLite, Elasticsearch, and Azure documentation; the invented example uses the real target page's `draft` status, excerpt, and page source IDs. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. No retrieval service or ranking evaluation ran. | A measured search evaluation; reader test; freshness decision. |
 
 The SQLite and Elasticsearch documentation was consulted on 2026-09-30.
 The example no longer implies that the draft provenance page was stable or
@@ -2199,6 +2199,24 @@ Framework, FOCUS, and AWS primary sources were checked. The decision-tree
 diagram rendered and was inspected, and a retrieval case was added. No real
 provider bill, finance review, or novice reader task occurred. The page
 remains `draft`.
+
+### Focused review round 13 (2026-10-07)
+
+Claude Opus 5.5 found a misleading suggestion in the AI retrieval guide: a
+reranker cannot find a page missing from the candidate list. The revision
+separates candidate retrieval, reranking, and exact identifier lookup. It
+also filters access before ranking cutoffs, rechecks access at fetch,
+distinguishes corpus from upstream producer revisions, and keeps the
+condition with an illustrative table-row excerpt. Budget advice now asks
+where evidence was lost before increasing a limit; its evaluation checklist
+records candidates before final ranking. A retrieval case captures the
+candidate-versus-reranker question. A second Opus review caught the excerpt
+and measurement gaps before publication.
+
+SQLite, Elasticsearch, and Azure primary documentation were checked. The
+revised diagram rendered and was inspected. No search service, permissioned
+corpus, ranking measurement, or novice reader test ran; the page remains
+`draft`.
 
 ### Candidates for the next wave
 

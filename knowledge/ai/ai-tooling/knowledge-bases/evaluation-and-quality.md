@@ -218,10 +218,10 @@ concepts.
 That is a static integrity check. It does not run a search engine, produce
 a ranking, compute hit@k or MRR, generate an answer, or record a human
 reader's result. The [retrieval guide](retrieval-and-context-efficiency.md)
-names placing the expected concept within the first three results as a
-planning target; that target has not been measured and is not a claim that
-it is met. The cases are ready to become the question set for the loop
-above when a retrieval layer exists.
+proposes hit@3 as a planning check for an optional AI retrieval layer. No
+release threshold has been set, and no result has been measured. The cases
+are ready to become the question set for the loop above when a retrieval
+layer exists.
 
 ## Common misconceptions
 

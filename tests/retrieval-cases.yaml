@@ -94,3 +94,7 @@ cases:
     question: If a shared cloud bill is centrally funded, does it count as direct cost allocation, and how should I measure unresolved shared cost?
     expected_paths: [knowledge/finops/cost-allocation-basics.md]
     required_source_ids: [finops-allocation, finops-cost-allocation-guide]
+  - id: retrieval-candidates-versus-reranking
+    question: Can a reranker find a relevant knowledge page that the first search never returned, and how should I diagnose that miss?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md]
+    required_source_ids: [sqlite-fts5]
