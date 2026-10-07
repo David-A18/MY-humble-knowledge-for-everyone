@@ -8,6 +8,10 @@ cases:
     question: As a beginner, what happens to my change between editing a file, staging it, committing it, and pushing it in Git?
     expected_paths: [knowledge/git/git-fundamentals.md]
     required_source_ids: [pro-git-reset-demystified]
+  - id: git-origin-main-last-known-position
+    question: Does Git saying my branch is up to date with origin/main prove that nobody has pushed to the remote since my last fetch?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-remote-branches]
   - id: cloud-provider-versus-customer
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
@@ -48,10 +52,18 @@ cases:
     question: How does a Kubernetes Service choose Pods, and why might a matching Pod not receive normal traffic?
     expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
     required_source_ids: [kubernetes-service, kubernetes-endpointslices]
+  - id: kubernetes-replacement-endpoints
+    question: When a Deployment Pod is deleted, does its Service endpoint disappear only after termination, and must the new Pod wait for that removal?
+    expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-endpointslices, kubernetes-statefulsets]
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
     required_source_ids: [terraform-data, terraform-state]
+  - id: terraform-provider-returned-secrets-in-state
+    question: Can Terraform state contain secrets even if there are no passwords in my configuration, and does a plan detect changes made outside Terraform?
+    expected_paths: [knowledge/terraform/fundamentals/terraform-fundamentals.md]
+    required_source_ids: [terraform-sensitive-data, terraform-plan]
   - id: terraform-values-through-configuration
     question: How do a Terraform input variable and local value reach a resource and then a root output?
     expected_paths: [knowledge/terraform/language/how-values-move-through-terraform.md]

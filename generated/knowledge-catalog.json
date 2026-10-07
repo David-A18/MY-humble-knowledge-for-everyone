@@ -1981,8 +1981,10 @@
         "pro-git-recording-changes",
         "pro-git-branches",
         "pro-git-remotes",
+        "pro-git-remote-branches",
         "git-glossary",
-        "git-repository-layout"
+        "git-repository-layout",
+        "git-reflog"
       ],
       "stale_after": null,
       "status": "draft",
@@ -3363,7 +3365,8 @@
         "kubernetes-labels",
         "kubernetes-services",
         "kubernetes-endpointslices",
-        "kubernetes-taints-tolerations"
+        "kubernetes-taints-tolerations",
+        "kubernetes-statefulsets"
       ],
       "stale_after": "2026-12-19",
       "status": "draft",

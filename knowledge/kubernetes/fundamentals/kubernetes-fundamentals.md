@@ -38,6 +38,9 @@ sources:
   - id: kubernetes-taints-tolerations
     resource: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
     title: Kubernetes taints and tolerations
+  - id: kubernetes-statefulsets
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+    title: Kubernetes StatefulSets
 stale_after: 2026-12-19
 ---
 
@@ -97,7 +100,7 @@ Two consequences are worth remembering:
 | --- | --- | --- |
 | Cluster | The whole system: a control plane that stores and enforces desired state, plus worker machines (nodes) that run workloads. | Everything below lives inside one cluster. |
 | Namespace | A named area inside a cluster that scopes object names. | Two objects can share a name if they are in different namespaces.[^kubernetes-namespaces] |
-| Pod | The smallest unit Kubernetes runs: one or more containers that share networking and storage. | Usually created for you by a controller, not by hand.[^kubernetes-pods] |
+| Pod | The smallest unit Kubernetes runs: one or more containers that share networking and any volumes declared for them. | Usually created for you by a controller, not by hand.[^kubernetes-pods] |
 | ReplicaSet | A controller object that keeps a stated number of identical Pods running. | Created and managed by a Deployment. |
 | Deployment | Desired state for an application: which Pod template to run and how many copies. | Manages ReplicaSets, which manage Pods, and handles gradual updates.[^kubernetes-deployments] |
 | Label | A key-value tag on an object, such as `app.kubernetes.io/name: kb-web`. | Many objects can share a label; labels are not unique names. |
@@ -129,10 +132,11 @@ Imagine a café run on standing orders:
 
 Where the analogy stops being accurate:
 
-- **Pods are replaced, not nursed back to health.** Kubernetes can restart a
-  crashed container inside an existing Pod, but once a Pod itself is gone, a
-  controller creates a new Pod with a new name and, typically, a new IP
-  address. No Pod is ever "the same barista returning".[^kubernetes-pods]
+- **A replacement is a new Pod object.** Kubernetes can restart a crashed
+  container inside an existing Pod. If a Deployment-managed Pod is deleted,
+  its ReplicaSet creates a new Pod with a new name and usually a new IP.
+  StatefulSets are different: a replacement Pod is a new object but reuses its
+  stable name and associated storage.[^kubernetes-pods][^kubernetes-statefulsets]
 - **There is no single manager.** Separate controllers each watch one kind of
   object. The Deployment controller manages ReplicaSets; the ReplicaSet
   controller manages Pods.[^kubernetes-controllers]
@@ -213,10 +217,16 @@ Someone deletes one of the two `kb-web` Pods by mistake.
 
 - The ReplicaSet controller no longer counts the deleted Pod. It finds one
   matching Pod where two are wanted, so it creates a new Pod. The new Pod has a
-  different name and IP address.
-- After the deleted Pod finishes terminating, the EndpointSlice controller
-  removes its address from the Service's EndpointSlices and adds the new one.
-  The new Pod becomes eligible for normal traffic when it is ready.
+  different name and usually a different IP address.
+- When deletion begins, the old endpoint can remain listed while it is
+  terminating. It is marked `terminating` and normally stops receiving new
+  Service traffic. If all available endpoints are terminating, a Service proxy
+  may still send traffic to one whose `serving` condition says it can respond.
+  The old endpoint is removed after the Pod is gone.
+  [^kubernetes-endpointslices]
+- The new Pod's endpoint can appear before the old one disappears. It is
+  normally ineligible for Service traffic until it is ready. The two
+  EndpointSlice updates do not have to occur in a fixed order.
   [^kubernetes-endpointslices]
 - Clients were using the Service name all along, so they did not need to learn
   the new Pod's address.[^kubernetes-services]
@@ -294,6 +304,7 @@ roll it back.
 - Stable access and Service types: [Service](https://kubernetes.io/docs/concepts/services-networking/service/).
 - Endpoint readiness and traffic eligibility: [EndpointSlices](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/).
 - How Pods are evicted from unhealthy nodes: [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
+- Stable Pod identity for a different controller: [StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).
 - Other workload types, such as Jobs and StatefulSets: [Workloads](https://kubernetes.io/docs/concepts/workloads/).
 
 ## Related links
@@ -315,3 +326,4 @@ roll it back.
 [^kubernetes-services]: [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/), source record `kubernetes-services`.
 [^kubernetes-endpointslices]: [Kubernetes EndpointSlices](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/), source record `kubernetes-endpointslices`.
 [^kubernetes-taints-tolerations]: [Kubernetes taints and tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/), source record `kubernetes-taints-tolerations`.
+[^kubernetes-statefulsets]: [Kubernetes StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/), source record `kubernetes-statefulsets`.

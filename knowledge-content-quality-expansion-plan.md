@@ -2280,6 +2280,27 @@ documentation were checked. Both revised diagrams rendered and were
 visually inspected. No new website build, sync run, public deployment, or
 novice reader task occurred; the concept remains `draft`.
 
+### Focused review round 16 (2026-10-07)
+
+Reviewed the first-visit Git, Kubernetes, and Terraform fundamentals pages with
+Claude Opus 5.5 before and after revision. The first review found six teaching
+risks: Terraform state can contain provider-returned secrets even when no
+secret appears in configuration; normal planning refreshes managed objects;
+StatefulSet replacement Pods retain a stable name; EndpointSlice changes have
+no fixed replacement order; a Git branch is a pointer to reachable commits;
+and `origin/main` is a local, potentially stale remote-tracking branch. The
+pages now explain these limits with revised examples, text alternatives, and
+diagrams. Three new retrieval cases cover the source-backed questions.
+
+HashiCorp Terraform, Kubernetes, and Git primary documentation were checked
+for the corrections. The Git and Terraform diagrams were rendered and
+visually inspected; the unchanged Kubernetes diagram was inspected too. The
+second Opus review found no high-impact issue; its remaining beginner wording
+suggestions were addressed, with Kubernetes endpoint wording kept aligned to
+the official condition definitions. No live Terraform or Kubernetes run,
+measured retrieval test, or novice reader task occurred. These existing pages
+remain `draft`, and the teaching-wave inventory count is unchanged.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

@@ -23,12 +23,18 @@ sources:
   - id: pro-git-remotes
     resource: https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes
     title: Pro Git - Working with Remotes
+  - id: pro-git-remote-branches
+    resource: https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches
+    title: Pro Git - Remote Branches
   - id: git-glossary
     resource: https://git-scm.com/docs/gitglossary
     title: Git glossary
   - id: git-repository-layout
     resource: https://git-scm.com/docs/gitrepository-layout
     title: Git repository layout
+  - id: git-reflog
+    resource: https://git-scm.com/docs/git-reflog
+    title: Git reflog reference
 ---
 
 # Git fundamentals
@@ -42,7 +48,8 @@ meaning instead of feeling like spells.
 
 After reading it, you should be able to say which version of a file is in your
 working tree, in the index, and in your latest commit, which commit your branch
-points at, and whether the remote repository has that commit yet.
+points at, and what your last contact with the remote showed. That local record
+can be stale if someone else has pushed since then.
 
 ## What Git is
 
@@ -74,7 +81,7 @@ The same model decides how safe an undo is. A change that exists only on your
 machine can usually be reshaped freely. A change that has been pushed to a
 shared branch is part of other people's history and needs a gentler undo.
 
-## The mental model: three holders, two pointers, one other repository
+## The mental model: three holders, three pointers, one other repository
 
 Git's parts do three different jobs. Keeping the jobs apart is most of the
 mental model.
@@ -92,13 +99,14 @@ The Pro Git book calls these Git's "three trees": the working directory, the
 index, and `HEAD`, meaning the snapshot of the last commit on your current
 branch.[^pro-git-reset-demystified]
 
-**Two things are pointers. They hold no file contents; they only say which
+**Three things are pointers. They hold no file contents; they only say which
 commit is meant.**
 
 | Pointer | Simple definition | How it moves |
 | --- | --- | --- |
 | Branch | A lightweight, movable label that points at one commit. | When you commit, the current branch moves forward to the new commit. |
 | `HEAD` | Git's marker for "where you are now". It normally points at the current branch. | It changes when you switch branches. |
+| Remote-tracking branch, such as `origin/main` | Your local bookmark of where a branch on the remote was when Git last contacted it. It is not a live view of the server. | Git updates it when you fetch and through relevant remote communication.[^pro-git-remote-branches] |
 
 A commit stores a pointer to a full project snapshot plus pointers to its
 parent commits, and a branch is simply a movable pointer to one
@@ -133,6 +141,8 @@ Imagine you are shipping parts from a workshop:
 - The **shared depot** is the remote: a separate shelf with its own boxes and
   its own sticky notes. Your colleagues see a box only after you deliver it
   there.
+- Your **last note from the depot** is a remote-tracking branch such as
+  `origin/main`. It can be out of date until you contact the depot again.
 
 The analogy is useful for one idea: preparing, saving, and sharing are three
 separate actions. It breaks down in several places, and each break teaches
@@ -150,9 +160,10 @@ something true about Git:
 - **The depot can refuse a delivery.** If someone else delivered newer boxes to
   the same branch first, the remote rejects your push until you fetch their
   work and combine it with yours.[^pro-git-remotes]
-- **Sealed boxes are not truly permanent on your shelf.** Local commits can be
-  rewritten or hidden by some commands, which is why recovery tools such as the
-  reflog exist.
+- **Sealed boxes are not truly permanent on your shelf.** A commit no branch
+  can reach may remain recoverable through the reflog for a time, but old
+  reflog entries expire and unreachable objects can later be removed.
+  [^git-reflog]
 
 ## Visual: how a change moves
 
@@ -162,21 +173,26 @@ flowchart LR
     wt["Working tree<br/>files you edit"]
     idx["Index<br/>proposed next commit"]
     head["Commits<br/>current branch points at the latest"]
+    rt["origin/main<br/>local last-known remote tip"]
   end
   remote["Remote repository<br/>shared with others"]
   wt -- "git add" --> idx
   idx -- "git commit" --> head
   head -- "git push" --> remote
-  remote -- "git fetch, then merge or rebase" --> head
+  remote -- "git fetch" --> rt
+  rt -- "merge or rebase if wanted" --> head
 ```
 
 Text alternative: inside your machine, a change starts in the working tree.
 `git add` copies it into the index. `git commit` turns the index into a new
 commit, and the current branch moves to point at it. Everything so far is
-local. Only `git push` sends commits to the remote repository, and changes from
-the remote arrive back through `git fetch` followed by a merge or rebase. The
-diagram shows the three holders and the remote; branches and `HEAD` are
-pointers to commits, so they are not drawn as boxes.
+local. Only `git push` sends commits to the remote repository. `git fetch`
+brings remote commits into this repository and updates the local
+remote-tracking branch `origin/main`. A later merge or rebase can bring those
+commits into your current branch. Fetch alone does not move that branch or
+edit your working files. The diagram shows the three holders, the last-known
+remote pointer, and the remote repository. `HEAD` points at the current branch
+and is not drawn separately.
 
 Use the diagram to answer one question before any command: which arrow am I
 about to cross, and who will be affected when I do?
@@ -218,6 +234,13 @@ What to notice:
 - Step 5 succeeds only if you have write access and nobody else has pushed new
   commits to the remote `main` in the meantime.[^pro-git-remotes]
 
+The "`main` on the remote" column describes the real remote for this invented
+sequence. On your machine, `origin/main` is only the last-known position. It
+stays at the starting commit while you make the local edit and commit. A push
+or fetch can update that bookmark, but another person's later push can make
+it stale again. Even an "up to date with `origin/main`" status message does
+not check the server live.[^pro-git-remote-branches]
+
 ## Local commit versus remote push
 
 `git commit` changes only your repository. It is fast, works offline, and is
@@ -227,9 +250,10 @@ invisible to everyone else. Think of it as a save point for yourself.
 to include them. After that, other people can fetch them and build on them.
 
 Two related commands work in the opposite direction. `git fetch` downloads new
-commits from the remote without changing your working tree or your current
-branch. `git pull` fetches and then integrates the remote branch into your
-current branch in one step.[^pro-git-remotes]
+commits and updates remote-tracking branches such as `origin/main` without
+changing your working tree or current branch. `git pull` fetches and then
+integrates the remote branch into your current branch in one step.
+[^pro-git-remotes][^pro-git-remote-branches]
 
 This difference drives the safest way to undo a mistake:
 
@@ -249,9 +273,11 @@ how to tell which case you are in and which command to choose.
   the file's contents at that moment. Later edits need another `git add`.
 - **"A branch is a copy of the project."** A branch is a label pointing at one
   commit. Creating a branch does not copy any files.[^pro-git-branches]
-- **"My change is on the branch."** Changes are in commits. The branch only
-  points at the latest one, which is why moving a branch does not by itself
-  delete a commit.
+- **"Moving a branch deletes its old commits."** A branch points at one commit
+  and makes that commit and its parents reachable. Moving the pointer does not
+  immediately delete old commits, but unreachable ones are only recoverable
+  for a limited time through local recovery records.
+  [^pro-git-branches][^git-reflog]
 - **"Fetching changes my files."** Fetch only downloads. Merging or rebasing is
   a separate step.[^pro-git-remotes]
 
@@ -293,6 +319,9 @@ how to tell which case you are in and which command to choose.
   repository layout](https://git-scm.com/docs/gitrepository-layout).
 - Remotes, fetch, pull, and push: [Pro Git - Working with
   Remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes).
+- Your local record of remote branches: [Pro Git - Remote
+  Branches](https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches).
+- Temporary recovery records for moved branch tips: [Git reflog](https://git-scm.com/docs/git-reflog).
 - Every command's options: [Git reference documentation](https://git-scm.com/docs).
 
 ## Related links
@@ -308,5 +337,7 @@ how to tell which case you are in and which command to choose.
 [^pro-git-recording-changes]: [Pro Git - Recording Changes to the Repository](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository), source record `pro-git-recording-changes`.
 [^pro-git-branches]: [Pro Git - Branches in a Nutshell](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell), source record `pro-git-branches`.
 [^pro-git-remotes]: [Pro Git - Working with Remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes), source record `pro-git-remotes`.
+[^pro-git-remote-branches]: [Pro Git - Remote Branches](https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches), source record `pro-git-remote-branches`.
 [^git-glossary]: [Git glossary](https://git-scm.com/docs/gitglossary), source record `git-glossary`.
 [^git-repository-layout]: [Git repository layout](https://git-scm.com/docs/gitrepository-layout), source record `git-repository-layout`.
+[^git-reflog]: [Git reflog reference](https://git-scm.com/docs/git-reflog), source record `git-reflog`.

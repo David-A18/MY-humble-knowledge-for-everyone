@@ -100,6 +100,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified Git, Kubernetes, and Terraform fundamentals with source-backed
+  corrections to remote-tracking branches, Pod replacement and endpoints,
+  provider refresh, and secrets in Terraform state.
 - Expanded the stable Git undo-and-recovery guide with official Git source
   records, safer decision paths, expected results, untracked cleanup guidance,
   reflog recovery, and updated maintenance evidence.

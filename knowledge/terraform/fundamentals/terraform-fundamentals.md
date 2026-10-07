@@ -79,14 +79,15 @@ helps only if someone reads it.
 | Configuration | `.tf` files that declare what you want. | The desired result, kept under version control. |
 | Provider | A plugin that knows how to talk to one platform's API, such as a cloud, a SaaS product, or another service. | Supplies the resource types you can use. Installed when the working directory is initialized.[^terraform-providers] |
 | Resource | One declared infrastructure object, identified by an address such as `terraform_data.release`. | The unit Terraform creates, changes, replaces, or destroys.[^terraform-resources] |
-| State | Terraform's record of which real object belongs to each resource address, plus metadata. | Lets Terraform tell "already exists" from "needs creating".[^terraform-state-purpose] |
+| State | Terraform's record of which real object belongs to each resource address, plus recorded attributes and metadata. | Lets Terraform find and inspect objects it already manages.[^terraform-state-purpose] |
 | Plan | A proposed list of create, update, replace, and destroy actions. | Your review point. Planning does not change real infrastructure.[^terraform-plan] |
-| Apply | The step that carries out the planned actions through the providers. | Changes real objects and then updates state.[^terraform-cli-run] |
+| Apply | The step that carries out the planned actions through the providers. | Changes real objects and records the results in state.[^terraform-cli-run] |
 
-When Terraform plans, it reads the current condition of objects it already
-manages, compares your configuration with its recorded state, and proposes the
-actions that would make the real objects match the
-configuration.[^terraform-plan]
+By default, Terraform uses state to find the real objects it manages, asks
+their providers for current attributes, then compares that refreshed view with
+your configuration. A change made outside Terraform can therefore appear in
+the plan. The `-refresh=false` option skips that normal check and can hide
+drift.[^terraform-plan]
 
 ## An analogy: a renovation contractor
 
@@ -107,9 +108,13 @@ Where the analogy stops being accurate:
   mean to remove the radiator?" Terraform treats a resource block you deleted
   from configuration as a request to destroy that object, and it will say so in
   the plan.
-- **The ledger can contain secrets.** State is a plain-text file that can hold
-  secret values from your configuration. It is closer to a key cabinet than a
-  notebook.[^terraform-sensitive-data]
+- **The ledger can contain secrets.** Local state is a plain-text file that can hold
+  secret values from your configuration **or** from attributes a provider
+  returns. It is closer to a key cabinet than a notebook.
+  [^terraform-sensitive-data]
+- **The contractor re-inspects the room before the quote.** A normal plan
+  checks managed objects again. The saved ledger identifies them, but it is
+  not assumed to describe their current condition.[^terraform-plan]
 - **Some changes cannot be done in place.** Depending on the provider and the
   attribute, a change can require replacing the whole object, which means
   destroying one and creating another.
@@ -122,26 +127,27 @@ Where the analogy stops being accurate:
 ```mermaid
 flowchart LR
   cfg["Configuration<br/>what you want"] --> plan
-  st["State<br/>what Terraform last recorded"] --> plan
-  prov["Provider<br/>reads current real objects"] --> plan
+  st["Existing state<br/>object identities and recorded attributes"] --> prov["Provider reads<br/>current real objects"]
+  prov --> plan
   plan["Plan<br/>proposed actions, no changes yet"] --> review{"Does the plan<br/>match your intent?"}
-  review -- "no: stop and fix" --> cfg
+  review -- "no" --> fix["Stop, inspect inputs, then plan again"]
   review -- "yes: approve" --> apply["Apply<br/>provider calls the platform API"]
   apply --> real["Real infrastructure changes"]
-  apply --> st
+  apply --> newstate["Updated state<br/>used in the next plan"]
 ```
 
-Text alternative: three inputs feed the plan: your configuration, the state
-Terraform recorded last time, and the provider's reading of the real objects.
-The plan lists proposed actions without changing anything. You then decide
+Text alternative: state identifies the managed objects, and the provider reads
+their current attributes. Terraform compares that refreshed view with your
+configuration to build a plan. The plan lists proposed actions without changing
+managed infrastructure. You then decide
 whether the plan matches your intent. If it does not, you stop and fix the
 configuration or the context. If it does, apply asks the provider to call the
 platform's API, the real infrastructure changes, and Terraform updates its
 state to record the result.
 
 Use the diagram to locate a surprise: an unexpected action in a plan comes from
-one of the three inputs, so check the configuration change, the state, and the
-selected account or environment before approving.
+the configuration, the state mapping, or what the provider found. Check all
+three and the selected account or environment before approving.
 
 ## Example: a resource that only lives in state
 
@@ -187,9 +193,9 @@ create, keep, modify, or delete real infrastructure.
 | --- | --- | --- |
 | Main job | Proposes changes. | Carries out changes. |
 | Changes real infrastructure | No.[^terraform-plan] | Yes, through the providers. |
-| Saves new state | No. It reads current objects but does not save a new state. | Yes, after it acts. |
+| Saves new state | No. It reads current objects but does not save a new state. | Yes, recording completed actions; a failed run may leave partial state. |
 | Asks for approval | Not applicable. | Yes, when it creates its own plan, unless told to skip approval.[^terraform-cli-run] |
-| Safe to repeat | Yes, while you understand the selected account or environment. | Only when you have read what it will do. |
+| Safe to repeat | It does not apply managed-resource changes, but it reads provider APIs and can reveal sensitive plan data. | Only when you have read what it will do. |
 
 Why inspect the plan before applying:
 
@@ -214,10 +220,13 @@ instance.[^terraform-state-purpose] If state is lost, edited by hand, or shared
 carelessly, Terraform may try to create duplicates or lose track of objects it
 manages.
 
-Second, state is stored as plain text and can include secret values from your
-configuration. Marking a value as `sensitive` hides it from command output, but
-the value is still written to state and saved plan files. Anyone who can read
-those files can read the value.[^terraform-sensitive-data]
+Second, state can contain secret values even when no secret is written in a
+`.tf` file. Terraform can record attributes returned by a provider, such as a
+generated database password or connection string. Local state is a plain-text
+file; a remote backend may encrypt storage, but readers with state access can
+still expose its sensitive contents. Marking a value as `sensitive` hides it
+from normal command output, but does not by itself remove it from state or
+saved plans.[^terraform-sensitive-data]
 
 For that reason, keep state and saved plans out of Git, restrict who can read
 them, and use a protected shared backend for team work.[^terraform-state]
@@ -240,7 +249,7 @@ commands.
 
 ## Check your understanding
 
-- Which three inputs does Terraform compare when it builds a plan?
+- Which three things can explain an unexpected action in a plan?
 - In the `terraform_data` example, why does the first plan propose a create
   while the second proposes no changes?
 - Why can a plan that passed `terraform validate` still be dangerous?
