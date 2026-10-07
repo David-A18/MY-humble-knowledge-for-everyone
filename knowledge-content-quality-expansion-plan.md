@@ -1281,7 +1281,7 @@ than implying that those services already run.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Reference architecture](knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md) | Distinguishes upstream product authority, curated Markdown authority, and rebuildable outputs; shows the reading and change paths; provides a Terraform-state example and new-topic rule. | Official OKF, Git, Astro, Pagefind, MCP, and HashiCorp documentation checked. Two Mermaid diagrams rendered and visually inspected. No Opus review occurred. | Independent architecture and Opus review; novice reader task; actual website and reconciliation behavior check; freshness decision. |
+| [Reference architecture](knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md) | Distinguishes upstream product authority, curated Markdown authority, and rebuildable outputs; shows the reading and change paths; provides a Terraform-state reader journey and new-topic rule. Later review made the separate website pin, Pagefind-from-HTML order, and two review gates explicit. | Official OKF, Git, Astro, Pagefind, MCP, and HashiCorp documentation checked. Claude Opus 5.5 reviewed the page twice read-only; Codex inspected the sibling website project's lock, scripts, and deployment status directly. Both revised diagrams rendered and were inspected. | Novice reader task; actual website and reconciliation behavior check; public deployment check; freshness decision. |
 
 ### Wave 70 (2026-10-02)
 
@@ -2237,6 +2237,28 @@ Opus reviewed the revised page and found no remaining high-severity issue;
 the output-link and identity-passing follow-ups were incorporated. No live
 private corpus, assistant, attack test, or novice reader task ran. The page
 remains `draft`.
+
+### Focused review round 15 (2026-10-07)
+
+Claude Opus 5.5 found that the reference architecture diagram drew the
+search index as coming directly from the knowledge Git commit. Pagefind
+actually indexes rendered HTML after the static build. The revised reading
+path now shows the separate website pin, source snapshot validation, HTML,
+Pagefind, and the combined static artifact. Optional AI retrieval has its
+own path. A Terraform-state question traces one real article through the
+same stages without claiming a measured search ranking.
+
+The change path now separates knowledge review and merge from the website
+pin update, build checks, and review. It makes public release conditional
+and explains that the dispatch is only a wake-up signal. The section index
+labels its larger pipeline as the target design, and the website planning
+README and rollout acknowledge the local scaffold while public repository
+and hosting choices remain open. The local website files were inspected
+directly because Claude Code's read-only review could not access the
+sibling project. OKF, Git, Astro, Pagefind, MCP, and HashiCorp primary
+documentation were checked. Both revised diagrams rendered and were
+visually inspected. No new website build, sync run, public deployment, or
+novice reader task occurred; the concept remains `draft`.
 
 ### Candidates for the next wave
 

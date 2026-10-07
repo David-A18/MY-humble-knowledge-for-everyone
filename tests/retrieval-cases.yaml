@@ -102,3 +102,7 @@ cases:
     question: If a retrieved public page tells an AI assistant to reveal a private note, what stops the assistant from fetching or exposing it?
     expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md]
     required_source_ids: [owasp-prompt-injection, azure-document-access]
+  - id: website-source-versus-derived-search
+    question: Does Pagefind search come directly from the knowledge Git files, and which repository owns corrections to article text?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md]
+    required_source_ids: [pagefind-docs, okf-spec]

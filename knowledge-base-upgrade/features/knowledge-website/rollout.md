@@ -4,11 +4,11 @@
 
 Review the [requirements](requirements.md), [architecture](architecture.md), [content contract](content-contract.md), and [ADR-0005](../../../knowledge/decision-records/adr-0005-git-backed-reading-site.md) on `develop`. Run the repository's required checks, wait for CI, and merge to `main` after they pass. Preserve unrelated working-tree changes.
 
-## 2. Create the website repository
+## 2. Publish the website project as a repository
 
-The owner creates a public GitHub repository and supplies its URL. Scaffold it with `README.md`, `docs/README.md`, `docs/deployment.md`, `docs/operations.md`, source, tests, `content-lock.json`, `redirects.json`, and Actions workflows. Link its README to this specification at the pinned source commit. License site code separately from the CC BY 4.0 knowledge content.
+The separate website project has been scaffolded locally. The owner creates a public GitHub repository and supplies its URL, then publishes the reviewed project. Before publishing, confirm it contains `README.md`, `docs/README.md`, `docs/deployment.md`, `docs/operations.md`, source, tests, `content-lock.json`, `redirects.json`, and Actions workflows. Link its README to this specification at the pinned source commit. License site code separately from the CC BY 4.0 knowledge content.
 
-Start `content-lock.json` at the current validated source `main` SHA. Implement source checkout, OKF/catalog checks, route and link conversion, Markdown rendering, navigation, trust display, Pagefind, and redirect stubs. Keep source Markdown out of website Git history.
+Before publication, confirm `content-lock.json` pins a validated source `main` SHA and the build checks that snapshot. Verify source checkout, OKF/catalog checks, route and link conversion, Markdown rendering, navigation, trust display, Pagefind, and redirect stubs. Keep source Markdown out of website Git history.
 
 ## 3. Validate the site locally and in CI
 

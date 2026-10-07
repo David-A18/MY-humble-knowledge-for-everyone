@@ -4,7 +4,9 @@
 
 This section is an engineering reference for building, operating, serving, securing, evaluating, and maintaining knowledge bases for AI agents and LLM systems.
 
-The reference architecture is:
+The fuller target architecture is below. The [reference architecture
+guide](reference-architecture.md) starts with the simpler reader path;
+it does not claim that every layer here is running.
 
 ```text
 authoritative producers
@@ -19,7 +21,7 @@ authoritative producers
   -> agents and humans
 ```
 
-The maintenance loop is separate:
+The target maintenance loop is separate:
 
 ```text
 producer changes
@@ -38,7 +40,7 @@ producer changes
 
 | Principle | Engineering rule |
 | --- | --- |
-| Git is the knowledge source of truth | Indexes, embeddings, graph indexes, caches, and retrieval artifacts are disposable and rebuildable from Git. |
+| Git records what this knowledge base says | Indexes, embeddings, graph indexes, caches, and retrieval artifacts are disposable and rebuildable from the curated Markdown revision. Official sources remain the authority for product behavior. |
 | Facts are deterministic | Parse machine-readable producers with code; do not ask an LLM to invent exact facts. |
 | Meaning may be reasoned | Use agents for explanation, relationships, decision guidance, troubleshooting, and summarization. |
 | Every write is reviewable | The serving path is read-only; maintenance produces patches or PRs behind a separate boundary. |
@@ -76,7 +78,7 @@ producer changes
 | OpenAPI, AsyncAPI, JSON Schema, Terraform, Kubernetes manifests, SQL schemas | Authoritative machine-readable system descriptions. |
 | Deterministic renderers | Convert source facts into machine-owned knowledge regions. |
 | OKF | Portable curated knowledge representation and package. |
-| Git | Versioned knowledge source of truth for the derived corpus. |
+| Git | Versioned record of the curated knowledge corpus. |
 | RDF, JSON-LD, SKOS, OWL, PROV, SHACL | Optional richer semantic, provenance, taxonomy, ontology, and validation layer. |
 | Search, BM25, embeddings, vector indexes, graph indexes | Derived retrieval mechanisms. |
 | MCP | Optional agent-facing access protocol for read-only search and fetch operations. |
