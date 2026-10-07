@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified EKS incident diagnosis for available Deployments with empty Services, operator access failures, image-pull identity, workload IAM, and Auto Mode component ownership.
 - Clarified the Git command map's index model, runnable staged-status example, and command effects; improved the Git topic routes and added retrieval cases.
 - Clarified the knowledge article to website release path, the MCP host and server roles, and OpenAPI's JSON Schema relationship in three beginner explanations; added targeted retrieval cases.
 - Corrected the search proof-of-concept decision example, security group defaults across AWS and Terraform, and bootstrapping meanings; added source records and retrieval cases for those beginner questions.

@@ -1124,7 +1124,11 @@
         "eks-pod-id-association",
         "eks-irsa-pod-config",
         "k8s-debug-pods",
-        "k8s-debug-services"
+        "k8s-debug-services",
+        "eks-troubleshooting",
+        "eks-pod-id-configure",
+        "eks-pod-id-agent",
+        "eks-ecr-images"
       ],
       "stale_after": null,
       "status": "draft",

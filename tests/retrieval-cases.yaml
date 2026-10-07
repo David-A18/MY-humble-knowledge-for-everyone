@@ -84,6 +84,10 @@ cases:
     question: How do I update kubeconfig and validate permissions before deploying to EKS?
     expected_paths: [knowledge/cross-topic-guides/deploying-to-eks.md]
     required_source_ids: [eks-update-kubeconfig]
+  - id: eks-available-deployment-empty-service
+    question: If an EKS Deployment is available but users cannot reach the app, how do I check Service selectors, endpoints, and the user route before changing IAM or nodes?
+    expected_paths: [knowledge/cross-topic-guides/eks-operations.md]
+    required_source_ids: [k8s-debug-services, eks-access-entries]
   - id: kafka-duplicate-effects
     question: When can at-least-once Kafka processing cause duplicate side effects?
     expected_paths: [knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md]

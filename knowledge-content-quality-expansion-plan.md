@@ -1067,7 +1067,7 @@ Kubernetes, Pod-identity, and user-path evidence.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [EKS operations](knowledge/cross-topic-guides/eks-operations.md) | Rewritten with a limited library analogy, invented lesson-API incident, boundary diagram, evidence table, and understanding checks. Corrected the Pod Identity annotation claim. | Keyed current Amazon EKS and Kubernetes documentation. No account, cluster, Pod, credential, service, user request, or reader test ran. Claude Code was at its weekly subscription limit, so no Opus review occurred. | Independent EKS security and Opus review; controlled incident checks; reader test; freshness decision. |
+| [EKS operations](knowledge/cross-topic-guides/eks-operations.md) | Rewritten with a limited library analogy, invented lesson-API incident, boundary diagram, evidence table, and understanding checks. A later focused review added an explicit Service-selector mismatch, access-error decisions, image-pull ownership, and Auto Mode caveats. | Current Amazon EKS, Amazon ECR, and Kubernetes documentation checked; Claude Opus 5.5 reviewed the focused revision read-only. No account, cluster, Pod, credential, service, user request, or reader test ran. | Independent EKS security review; controlled incident checks; reader test; freshness decision. |
 
 ### Wave 50 (2026-10-02)
 
@@ -2411,6 +2411,27 @@ Two static retrieval cases record the status and branch-operation questions.
 No novice reader trial, independent Git domain review, remote history
 operation, or full command-by-command runtime check occurred. The page
 remains `draft`; the teaching-wave inventory count is unchanged.
+
+### Focused review round 22 (2026-10-07)
+
+Reviewed the EKS operations page with Claude Opus 5.5. Its initial review
+identified a misleading access model and a troubleshooting branch that did
+not fit an available Deployment. The revised invented incident checks the
+target context and rollout revision, then shows how a Service selector
+mismatch produces no lesson-API endpoints. The access section now separates
+AWS token failures, Kubernetes `Unauthorized`, and `Forbidden` without
+suggesting a broad permission grant. Other changes clarify image-pull versus
+workload IAM, scheduling events before node changes, Pod Identity evidence,
+the Pod Identity Agent and EKS Auth path, managed add-ons versus Auto Mode
+capabilities, and lag in EKS health issues. Opus's second read-only pass
+identified the missing agent check; that check and smaller wording issues
+were corrected against AWS documentation.
+
+AWS EKS, Amazon ECR, and Kubernetes primary documentation was checked for
+the changed claims. One static retrieval case records the available
+Deployment and empty-Service question. No account, cluster, Pod, network,
+request, or novice reader trial was run. Independent EKS security review
+and controlled incident exercises remain open; the page is still `draft`.
 
 ### Candidates for the next wave
 
