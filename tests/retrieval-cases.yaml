@@ -98,3 +98,7 @@ cases:
     question: Can a reranker find a relevant knowledge page that the first search never returned, and how should I diagnose that miss?
     expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md]
     required_source_ids: [sqlite-fts5]
+  - id: hostile-page-private-note-boundary
+    question: If a retrieved public page tells an AI assistant to reveal a private note, what stops the assistant from fetching or exposing it?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md]
+    required_source_ids: [owasp-prompt-injection, azure-document-access]

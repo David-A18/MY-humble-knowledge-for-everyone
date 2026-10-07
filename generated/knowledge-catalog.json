@@ -353,6 +353,7 @@
         "owasp-prompt-injection",
         "azure-document-access",
         "mcp-tools",
+        "mcp-security",
         "nist-ai-rmf"
       ],
       "stale_after": null,

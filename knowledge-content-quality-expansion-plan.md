@@ -1292,7 +1292,7 @@ access at search and fetch time and to a separate review path for edits.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Security and governance](knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md) | Three trust boundaries, bounded public/private retrieval example, diagram and text alternative, risk-to-evidence table, official deeper study. | Current OWASP prompt-injection, Azure AI Search document access, MCP tools, and NIST AI RMF guidance checked. Mermaid rendered and visually inspected. No attack test or Opus review occurred. | Independent security and Opus review; novice reader task; adversarial retrieval test if a private corpus is introduced; freshness decision. |
+| [Security and governance](knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md) | Three trust boundaries, bounded public/private retrieval example, diagram and text alternative, risk-to-evidence table, official deeper study. Later review made the end reader's access, service credential, output leak path, and separate edit authority explicit. | OWASP, Azure AI Search, MCP tools and security guidance, and NIST AI RMF checked. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. No attack or private-corpus test ran. | Independent implementation-level security review; novice reader task; adversarial retrieval test if a private corpus is introduced; freshness decision. |
 
 ### Wave 71 (2026-10-02)
 
@@ -2217,6 +2217,26 @@ SQLite, Elasticsearch, and Azure primary documentation were checked. The
 revised diagram rendered and was inspected. No search service, permissioned
 corpus, ranking measurement, or novice reader test ran; the page remains
 `draft`.
+
+### Focused review round 14 (2026-10-07)
+
+Claude Opus 5.5 found that the AI security guide did not say whose
+permissions search and fetch must enforce. Its support-assistant example
+could therefore be read as permission to use a broader service credential
+for a public reader. The revision now uses the authenticated reader's
+access at search and fetch, filters before ranking, explains that the model
+may still follow hostile text, and puts approval and merge authority on a
+separate path. It adds a case for an authorized reader whose data could
+leave through an unwanted tool call or loaded outbound link. The test table
+checks results, side channels, cache behavior, revocation, tool calls, and
+outbound content. A retrieval case records the core question.
+
+OWASP, Azure AI Search, MCP tools and security guidance, and NIST primary
+documentation were checked. The revised diagram rendered and was inspected.
+Opus reviewed the revised page and found no remaining high-severity issue;
+the output-link and identity-passing follow-ups were incorporated. No live
+private corpus, assistant, attack test, or novice reader task ran. The page
+remains `draft`.
 
 ### Candidates for the next wave
 
