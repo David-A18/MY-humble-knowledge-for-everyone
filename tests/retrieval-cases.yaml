@@ -134,3 +134,15 @@ cases:
     question: Does Pagefind search come directly from the knowledge Git files, and which repository owns corrections to article text?
     expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md]
     required_source_ids: [pagefind-docs, okf-spec]
+  - id: poc-predeclared-search-decision
+    question: How do I define a proof-of-concept success rule for knowledge-site search before testing, including a question with no answer?
+    expected_paths: [knowledge/solutions-architect/proof-of-concept.md]
+    required_source_ids: [google-poc, aws-poc]
+  - id: security-group-defaults-and-terraform
+    question: Why does a VPC default security group allow members to reach each other, and why might a new Terraform-managed group lack outbound access?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [aws-default-sg, terraform-aws-sg]
+  - id: bootstrap-meaning-by-context
+    question: Does bootstrapping a compiler or running cdk bootstrap mean adding the Bootstrap web toolkit or creating a Terraform state backend?
+    expected_paths: [knowledge/programming-languages/bootstrap-and-bootstrapping.md]
+    required_source_ids: [bootstrap-introduction, rust-compiler-bootstrap, aws-cdk-bootstrap]

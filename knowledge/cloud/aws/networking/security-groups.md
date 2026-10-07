@@ -17,6 +17,12 @@ sources:
   - id: aws-vpc-security
     resource: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html
     title: Amazon VPC - Internetwork traffic privacy
+  - id: aws-default-sg
+    resource: https://docs.aws.amazon.com/vpc/latest/userguide/default-security-group.html
+    title: Amazon VPC - Default security groups
+  - id: terraform-aws-sg
+    resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+    title: Terraform AWS provider - Security group resource
 ---
 
 # Security groups
@@ -72,10 +78,14 @@ references across VPCs.[^aws-sg-rules]
 | Association | Is this group attached to the resource receiving or sending traffic? |
 
 Multiple groups associated with one resource contribute their allow rules
-together. A newly created group has no inbound allow rules, while its
-initial outbound rule allows all outbound traffic until changed. Never
-assume those initial rules still exist on a group that someone has
-modified.[^aws-sg-rules]
+together. A non-default group created directly in AWS starts with no inbound
+allow rules and an outbound allow-all rule. The VPC's **default** group is
+different: it initially allows inbound traffic from other resources in that
+same group.[^aws-sg-rules][^aws-default-sg] When Terraform's AWS provider
+creates `aws_security_group`, it removes AWS's initial outbound allow-all
+rule. Outbound traffic then depends on the egress rules you explicitly define,
+inline or as separate rule resources.[^terraform-aws-sg] Inspect the group's
+actual rules instead of assuming a creation default still applies.
 
 The fact that a packet passes a security group says only that this network
 control allowed it. A subnet network ACL, route, host firewall, or
@@ -90,7 +100,8 @@ question before changing a rule:
 
 1. Confirm the actual resource and its associated security groups.
 2. Check the destination group's inbound rule for the new request and the
-   source group's outbound rule if outbound access is restricted.
+   source group's outbound rules; a Terraform-created group may have no egress
+   rule at all.
 3. If a rule references a group, confirm the source resource is associated
    with that group and the reference is valid for the VPC relationship.
 4. If those checks match, inspect routes, network ACLs, the destination
@@ -115,6 +126,11 @@ actually needs.[^aws-sg]
   explains resource association and connection tracking.
 - [Security group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html)
   explains directions, defaults, combined rules, and group references.
+- [Default security groups](https://docs.aws.amazon.com/vpc/latest/userguide/default-security-group.html)
+  shows the VPC default group's self-referencing inbound rule.
+- [Terraform AWS provider security group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)
+  explains why a Terraform-created group's outbound rules can differ from
+  AWS's creation default.
 - [Amazon VPC security](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html)
   shows where network ACLs and Flow Logs fit in the wider path.
 
@@ -125,3 +141,5 @@ index](index.md).
 [^aws-sg]: [Amazon VPC: Security groups](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html).
 [^aws-sg-rules]: [Amazon VPC: Security group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html).
 [^aws-vpc-security]: [Amazon VPC: Internetwork traffic privacy](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html).
+[^aws-default-sg]: [Amazon VPC: Default security groups](https://docs.aws.amazon.com/vpc/latest/userguide/default-security-group.html), source record `aws-default-sg`.
+[^terraform-aws-sg]: [Terraform AWS provider: Security group resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group), source record `terraform-aws-sg`.

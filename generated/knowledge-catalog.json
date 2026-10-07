@@ -761,7 +761,9 @@
       "source_ids": [
         "aws-sg",
         "aws-sg-rules",
-        "aws-vpc-security"
+        "aws-vpc-security",
+        "aws-default-sg",
+        "terraform-aws-sg"
       ],
       "stale_after": null,
       "status": "draft",
@@ -3713,7 +3715,9 @@
       "path": "knowledge/programming-languages/bootstrap-and-bootstrapping.md",
       "source_ids": [
         "bootstrap-introduction",
-        "terraform-backend"
+        "terraform-s3-backend",
+        "rust-compiler-bootstrap",
+        "aws-cdk-bootstrap"
       ],
       "stale_after": null,
       "status": "draft",

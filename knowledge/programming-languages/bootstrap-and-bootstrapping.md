@@ -11,28 +11,38 @@ sources:
   - id: bootstrap-introduction
     resource: https://getbootstrap.com/docs/5.3/getting-started/introduction/
     title: Bootstrap - Get started
-  - id: terraform-backend
-    resource: https://developer.hashicorp.com/terraform/language/backend
-    title: Terraform - Backend configuration
+  - id: terraform-s3-backend
+    resource: https://developer.hashicorp.com/terraform/language/backend/s3
+    title: Terraform - S3 backend
+  - id: rust-compiler-bootstrap
+    resource: https://rustc-dev-guide.rust-lang.org/building/bootstrapping/what-bootstrapping-does.html
+    title: Rust Compiler Development Guide - What bootstrapping does
+  - id: aws-cdk-bootstrap
+    resource: https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
+    title: AWS CDK - Bootstrapping
 ---
 
 # Bootstrap and bootstrapping
 
 ## Purpose
 
-The same word appears in two different engineering conversations. Use this
-page to tell them apart before following instructions or debugging a problem.
+The same word appears in several engineering conversations. Use this page to
+identify what is being prepared before following instructions or debugging a
+problem.
 
-| Phrase you hear | Usually means | Read next |
+| Phrase you hear | Meaning in this context | Read next |
 | --- | --- | --- |
 | "Add Bootstrap to this page" | Use the **Bootstrap** frontend toolkit: its CSS classes and optional JavaScript components style and operate a web page.[^bootstrap-introduction] | [Bootstrap frontend toolkit](bootstrap-frontend-toolkit.md) |
 | "Bootstrap this project" | Prepare the minimum files, dependencies, or configuration needed before normal work can start. | [Bootstrapping a system](bootstrapping-a-system.md) |
-| "Bootstrap the infrastructure" | Create foundations, such as a state backend, that later automation depends on.[^terraform-backend] | [Bootstrapping a system](bootstrapping-a-system.md) |
+| "Bootstrap the infrastructure" | Prepare a prerequisite such as an S3 bucket before Terraform can use that bucket as its state backend.[^terraform-s3-backend] | [Bootstrapping a system](bootstrapping-a-system.md) |
+| "Bootstrap the compiler" | Build a new compiler using an earlier compiler, then use the new one in later build stages.[^rust-compiler-bootstrap] | [Rust compiler bootstrapping](https://rustc-dev-guide.rust-lang.org/building/bootstrapping/what-bootstrapping-does.html) |
+| "Run `cdk bootstrap`" | Prepare an AWS environment with resources that later AWS CDK deployments need.[^aws-cdk-bootstrap] | [AWS CDK bootstrapping](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html) |
 
 The capital **B** often helps when people write about the toolkit, but spoken
 language has no capitalization. Look at the surrounding task: a CSS class in
 HTML points to the toolkit; a missing dependency or first-run setup points to
-the general process.
+the general process. A compiler build or named CDK command points to its own
+documented version of that process.
 
 ## A small example
 
@@ -50,20 +60,24 @@ modes.
 ## Check your understanding
 
 - What would you ask before acting on "bootstrap the app"?
-- Does adding Bootstrap CSS install a project's dependencies or initialize
-  its database?
+- Does adding Bootstrap CSS classes to a page install the project's other
+  dependencies or initialize its database?
 
 ## Official documentation for deeper study
 
 - [Bootstrap getting started](https://getbootstrap.com/docs/5.3/getting-started/introduction/) defines the frontend toolkit and its first page.
-- [Terraform backend configuration](https://developer.hashicorp.com/terraform/language/backend) shows one kind of setup dependency behind infrastructure bootstrapping.
+- [Terraform S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3) assumes its state bucket already exists.
+- [Rust compiler bootstrapping](https://rustc-dev-guide.rust-lang.org/building/bootstrapping/what-bootstrapping-does.html) shows a staged compiler build.
+- [AWS CDK bootstrapping](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html) shows the resources CDK prepares before deployment.
 
 ## Related links
 
 - [Bootstrap frontend toolkit](bootstrap-frontend-toolkit.md)
 - [Bootstrapping a system](bootstrapping-a-system.md)
 - [Back to programming languages](index.md)
-- [Back to root index](../../README.md)
+- [Back to the knowledge base index](../index.md)
 
 [^bootstrap-introduction]: [Bootstrap - Get started](https://getbootstrap.com/docs/5.3/getting-started/introduction/), source record `bootstrap-introduction`.
-[^terraform-backend]: [Terraform - Backend configuration](https://developer.hashicorp.com/terraform/language/backend), source record `terraform-backend`.
+[^terraform-s3-backend]: [Terraform - S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3), source record `terraform-s3-backend`.
+[^rust-compiler-bootstrap]: [Rust Compiler Development Guide - What bootstrapping does](https://rustc-dev-guide.rust-lang.org/building/bootstrapping/what-bootstrapping-does.html), source record `rust-compiler-bootstrap`.
+[^aws-cdk-bootstrap]: [AWS CDK - Bootstrapping](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html), source record `aws-cdk-bootstrap`.

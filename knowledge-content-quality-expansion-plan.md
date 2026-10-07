@@ -2344,6 +2344,26 @@ these were corrected. No new technical concept was added outside the glossary,
 and the teaching-wave inventory is unchanged. This was an editorial and source
 review; no novice term-finding session occurred. The glossary remains `draft`.
 
+### Focused review round 19 (2026-10-07)
+
+Triaged four short Explanation pages from the broader page inventory with
+Claude Opus 5.5. The stateful-versus-stateless explanation was sound in this
+review; three other pages needed precise corrections. The proof-of-concept
+example now declares a decision rule before its invented search results and
+tests a no-answer query separately from ten answerable queries. The security
+group explanation now distinguishes AWS-created non-default groups, the VPC
+default group, and Terraform AWS provider egress behavior. The bootstrapping
+disambiguation now covers compiler and AWS CDK contexts and cites the specific
+Terraform S3 backend documentation.
+
+Claude Opus 5.5 reviewed the revised pages read-only and its follow-up
+findings were incorporated. Current Google Cloud, Microsoft, AWS, HashiCorp,
+Rust, and Bootstrap primary references were checked for the relevant claims.
+Three retrieval cases record the changed questions. No PoC search experiment,
+AWS or Terraform deployment, compiler build, measured retrieval run, or novice
+reader task occurred. These pages remain `draft`, and the teaching-wave
+inventory count is unchanged.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

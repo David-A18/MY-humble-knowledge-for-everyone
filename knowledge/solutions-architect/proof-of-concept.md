@@ -64,17 +64,19 @@ find the right article, including when they use beginner wording.
 | Part | Illustrative PoC choice |
 | --- | --- |
 | Decision | Should this search approach go into the next site design? |
-| Testable question | Can it return the expected article in the first five results for ten representative reader questions? |
-| Small test | Index a fixed snapshot of articles and run those ten questions, including a query with no good answer. |
-| Evidence | Record the snapshot revision, each query, returned result order, expected article, misses, and setup effort. |
+| Testable question | For ten answerable reader questions, can it show the expected article in the first five results? |
+| Decision rule, set before testing | Continue to a reader trial if at least eight of the ten answerable questions meet that target and a separate no-answer question shows zero results or a clear no-match message. Otherwise revise the search approach and retest. |
+| Small test | Index a fixed snapshot of articles, run the ten answerable questions, then run one question that the snapshot cannot answer. |
+| Evidence | Record the snapshot revision, each query, its expected article or lack of one, returned order and snippets, misses, whether the no-match condition appeared, and setup effort. |
 | Boundary | This test says nothing yet about mobile usability, accessibility, site traffic, or how articles are reviewed. |
 
 The numbers and scenario above are **invented teaching examples**. No
-search experiment was run for this page. A result such as “eight of ten
-questions found the expected article” would inform the decision but
-would not prove that future readers will always find what they need.
-The team might proceed with conditions, revise the search approach,
-or test more representative questions.
+search experiment was run for this page. A hypothetical result of eight of ten
+answerable questions meeting the target, plus a clear no-match result for the
+unanswerable question, would meet the stated rule for a reader trial. It would
+not prove that future readers will always find what they need. If the
+no-answer result is not a clear no-match, the team revises the search approach
+even if eight answerable questions succeeded.
 
 ## What the result can and cannot tell you
 
@@ -82,7 +84,7 @@ or test more representative questions.
 | --- | --- | --- |
 | The required path works in the test setting. | The idea is plausible under those conditions. | Test unrepresented cases and design production controls. |
 | A required condition fails. | The current approach has a blocker. | Change the design or choose another option. |
-| The result is unclear. | The question or measurement was too broad. | Narrow the unknown and run a better test. |
+| The result is unclear. | The question, sample, or measurement may not separate the options. | Tighten the question or add representative cases, then test again. |
 
 A PoC is often built quickly, without the security, logging, recovery,
 and support work needed for real users. Microsoft explicitly warns
@@ -99,7 +101,7 @@ support rather than relying on the label alone.
 
 - What unknown would the example PoC answer? Which important questions
   would it leave open?
-- If the search test succeeds on ten questions, why is that not proof
+- If the search test meets its decision rule, why is that not proof
   that every visitor will find the right article?
 - What evidence would a teammate need to repeat or challenge the result?
 
