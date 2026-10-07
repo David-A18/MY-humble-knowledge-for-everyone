@@ -24,4 +24,4 @@ Practical Git knowledge for daily development, repository maintenance, automatio
 - [Git reference documentation](https://git-scm.com/docs)
 - [GitHub Actions documentation](https://docs.github.com/actions)
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

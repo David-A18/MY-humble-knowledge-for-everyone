@@ -158,3 +158,11 @@ cases:
     question: Does an OpenAPI 3.2 document need a separate JSON Schema for every request body, or do its Schema Objects already use JSON Schema concepts?
     expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md]
     required_source_ids: [openapi-spec, json-schema]
+  - id: git-short-status-comparison
+    question: In Git short status, what do the first and second columns compare, and why does staging change lesson.md from second-column M to first-column M?
+    expected_paths: [knowledge/git/commands/complete-command-catalog.md]
+    required_source_ids: [git-status, git-diff]
+  - id: git-switch-merge-rebase-choice
+    question: Do git switch, merge, and rebase all do the same thing to my current branch and uncommitted files?
+    expected_paths: [knowledge/git/commands/complete-command-catalog.md]
+    required_source_ids: [git-switch, git-merge, git-rebase]

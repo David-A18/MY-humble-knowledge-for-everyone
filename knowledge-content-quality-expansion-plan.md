@@ -1236,7 +1236,7 @@ a remote, or touches repository maintenance data.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Find the right Git command](knowledge/git/commands/complete-command-catalog.md) | Task-to-command map with official manual links; state and effect boundaries; installed-command discovery; a bounded unstaged-versus-staged file example; links to focused Git teaching routes. | Official Git command, everyday, CLI, and revision documentation checked. `git help -a` and the status/diff example were checked on Git 2.53.0, with the file example reproduced in a disposable repository. No Opus review occurred. | Independent Git and Opus review; novice command-selection task; version and platform variation; freshness decision. |
+| [Find the right Git command](knowledge/git/commands/complete-command-catalog.md) | Task-to-command map with official manual links; state and effect boundaries; installed-command discovery; a bounded unstaged-versus-staged file example; links to focused Git teaching routes. | Official Git command, everyday, CLI, revision, switch, merge, rebase, and bisect documentation checked. In focused round 21, Claude Opus 5.5 reviewed the page twice read-only. The state example ran in a disposable Git 2.53.0 repository and a separate bisect check confirmed detached `HEAD` and reset. | Independent Git domain review; novice command-selection task; version and platform variation; freshness decision. |
 
 ### Wave 66 (2026-10-02)
 
@@ -2389,6 +2389,28 @@ separate website was inspected only to confirm its local scaffold status;
 there was no live MCP server, public site release, measured retrieval run,
 independent domain review, or novice reader task. All pages remain `draft`;
 the teaching-wave inventory count is unchanged.
+
+### Focused review round 21 (2026-10-07)
+
+Reviewed the Git command router and its topic indexes with Claude Opus 5.5
+before and after revision. Replaced an index analogy that implied staging
+only stores selected changes with the fundamentals page's full-snapshot
+model. The short-status example now names its two comparison boundaries,
+shows `git add -- lesson.md`, and repeats the checks after staging. It
+explains `--cached` and `--staged`, the path separator, and the `##` branch
+header. The example was rerun in a disposable Git 2.53.0 repository.
+
+Separated branch switching, merging, rebasing, fetching, pushing, checkout,
+bisect, and object maintenance by effect and risk. Current Git manuals
+confirmed switch's default protection for local changes, merge and rebase
+behavior, status's optional index refresh, revision-range differences,
+and bisect cleanup. A disposable bisect run confirmed detached `HEAD` and
+restoration of the original branch. The command index now puts the task map
+first, points newcomers to fundamentals, and returns to the bundle index.
+Two static retrieval cases record the status and branch-operation questions.
+No novice reader trial, independent Git domain review, remote history
+operation, or full command-by-command runtime check occurred. The page
+remains `draft`; the teaching-wave inventory count is unchanged.
 
 ### Candidates for the next wave
 

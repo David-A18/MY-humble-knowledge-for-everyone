@@ -1889,7 +1889,15 @@
         "git-cli",
         "git-revisions",
         "git-status",
-        "git-diff"
+        "git-diff",
+        "git-help",
+        "git-branch",
+        "git-reset",
+        "git-switch",
+        "git-checkout",
+        "git-merge",
+        "git-rebase",
+        "git-bisect"
       ],
       "stale_after": null,
       "status": "draft",
