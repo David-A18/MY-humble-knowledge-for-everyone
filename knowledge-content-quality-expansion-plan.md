@@ -1247,7 +1247,7 @@ permissions, and answer evaluation remain separate responsibilities.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Model Context Protocol](knowledge/ai/ai-tooling/model-context-protocol.md) | Host, client, and server roles; tools, resources, and prompts; illustrative Terraform-state lookup; transport and permission boundaries; current official learning links. Removed obsolete, unrun SDK recipes. | Official MCP architecture, base protocol, tools, resources, transport, and TypeScript SDK v2 documentation checked. Mermaid rendered and visually inspected. No live MCP server or Opus review occurred. | Independent MCP and Opus review; novice concept task; current SDK example in a separate how-to if needed; freshness decision. |
+| [Model Context Protocol](knowledge/ai/ai-tooling/model-context-protocol.md) | Host, client, and server roles; tools, resources, and prompts; illustrative Terraform-state lookup; transport and permission boundaries; current official learning links. Removed obsolete, unrun SDK recipes. | Official MCP architecture, base protocol, tools, resources, transport, and TypeScript SDK v2 documentation checked. In focused round 20, Claude Opus 5.5 reviewed the page twice read-only, the host/model/approval path was corrected, and the revised diagram rendered and was inspected. No live MCP server ran. | Independent MCP domain review; novice concept task; current SDK example in a separate how-to if needed; freshness decision. |
 
 ### Wave 67 (2026-10-02)
 
@@ -1259,7 +1259,7 @@ source of truth.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Knowledge-base creation, management, and optimization](knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md) | Plain-language source-to-reader model; bounded Terraform-state example; diagram and text alternative; roles for topic indexes, static website, search, and optional AI access; new-topic path. | Official Git, OKF, Astro, Pagefind, MCP, and HashiCorp documentation checked. Mermaid rendered and visually inspected. No Opus review occurred. | Independent content/architecture and Opus review; novice reader task; website integration check; freshness decision. |
+| [Knowledge-base creation, management, and optimization](knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md) | Plain-language source-to-reader model; bounded Terraform-state example; diagram and text alternative; roles for topic indexes, static website, search, and optional AI access; new-topic path. | Official Git, OKF, Astro, Pagefind, MCP, and HashiCorp documentation checked. In focused round 20, Claude Opus 5.5 reviewed the page twice read-only and the revised source-to-site diagram rendered and was inspected. The separate site was checked as a local scaffold. | Independent content/architecture review; novice reader task; website integration check; freshness decision. |
 
 ### Wave 68 (2026-10-02)
 
@@ -1303,7 +1303,7 @@ different work.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Knowledge standards landscape](knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md) | Task-based layer map, bounded Orders API example, optional graph roles, diagram and text alternative, official specification links, RDF maturity distinction. | Current primary OKF, OpenAPI, AsyncAPI, JSON Schema, W3C, MCP, AGENTS.md, and llms.txt documents checked. Mermaid rendered and visually inspected. No Opus review occurred. | Independent standards and Opus review; novice choice task; freshness check for evolving specifications. |
+| [Knowledge standards landscape](knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md) | Task-based layer map, bounded Orders API example, optional graph roles, diagram and text alternative, official specification links, RDF maturity distinction. | Current primary OKF, OpenAPI, AsyncAPI, JSON Schema, W3C, MCP, AGENTS.md, and llms.txt documents checked. In focused round 20, Claude Opus 5.5 reviewed the page twice read-only, OpenAPI/JSON Schema and MCP wording was corrected, W3C RDF status was checked on 2026-10-07, and the revised diagram rendered and was inspected. | Independent standards review; novice choice task; freshness check for evolving specifications. |
 
 ### Wave 72 (2026-10-02)
 
@@ -2363,6 +2363,32 @@ Three retrieval cases record the changed questions. No PoC search experiment,
 AWS or Terraform deployment, compiler build, measured retrieval run, or novice
 reader task occurred. These pages remain `draft`, and the teaching-wave
 inventory count is unchanged.
+
+### Focused review round 20 (2026-10-07)
+
+Reviewed three connected AI knowledge explanations with Claude Opus 5.5
+before and after revision. The knowledge-base overview now traces a sourced
+article through a Git branch, source review, a separate reviewed website
+pin, rendered pages, and derived Pagefind search files. It explains how to
+distinguish an old website pin from an error still present in source `main`
+and gives contributors the actual local frontmatter and catalog steps.
+
+The MCP explanation now shows the model's proposed tool call, the host's
+control and possible approval, the client's exchange with the server, and
+the host's final answer. It separates host conversation history from the
+stateless per-request protocol and points older TypeScript examples to
+the migration guide. The standards guide now shows OpenAPI Schema Objects
+using JSON Schema concepts, cites the relevant MCP server and architecture
+pages, and closes its assistant-to-reader path. Its RDF 1.2 Candidate
+Recommendation Snapshot status was checked on 2026-10-07.
+
+The official OKF, MCP, OpenAPI, AsyncAPI, W3C, Astro, and Pagefind pages were
+checked for the changed claims. All three revised Mermaid diagrams rendered
+and were visually inspected. Three static retrieval cases were added. The
+separate website was inspected only to confirm its local scaffold status;
+there was no live MCP server, public site release, measured retrieval run,
+independent domain review, or novice reader task. All pages remain `draft`;
+the teaching-wave inventory count is unchanged.
 
 ### Candidates for the next wave
 

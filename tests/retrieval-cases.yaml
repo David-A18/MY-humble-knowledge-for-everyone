@@ -146,3 +146,15 @@ cases:
     question: Does bootstrapping a compiler or running cdk bootstrap mean adding the Bootstrap web toolkit or creating a Terraform state backend?
     expected_paths: [knowledge/programming-languages/bootstrap-and-bootstrapping.md]
     required_source_ids: [bootstrap-introduction, rust-compiler-bootstrap, aws-cdk-bootstrap]
+  - id: website-pin-versus-source-correction
+    question: If the website still shows an outdated knowledge article, how do I tell whether its source Markdown needs a correction or the website needs a newer pinned commit?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md]
+    required_source_ids: [pagefind-docs, okf-spec]
+  - id: mcp-host-tool-decision
+    question: When an AI assistant searches knowledge through MCP, who proposes the tool call, who can require approval, and who enforces access to articles?
+    expected_paths: [knowledge/ai/ai-tooling/model-context-protocol.md]
+    required_source_ids: [mcp-architecture, mcp-tools]
+  - id: openapi-json-schema-boundary
+    question: Does an OpenAPI 3.2 document need a separate JSON Schema for every request body, or do its Schema Objects already use JSON Schema concepts?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md]
+    required_source_ids: [openapi-spec, json-schema]

@@ -9,7 +9,7 @@ audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
   - id: okf-spec
-    resource: https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+    resource: https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC.md
     title: Open Knowledge Format specification
   - id: openapi-spec
     resource: https://spec.openapis.org/oas/v3.2.0.html
@@ -44,9 +44,12 @@ sources:
   - id: prov-o
     resource: https://www.w3.org/TR/prov-o/
     title: PROV-O
-  - id: mcp-base
-    resource: https://modelcontextprotocol.io/specification/2026-07-28/basic/index
-    title: Model Context Protocol base specification
+  - id: mcp-server-features
+    resource: https://modelcontextprotocol.io/specification/2026-07-28/server/index
+    title: Model Context Protocol server features
+  - id: mcp-architecture
+    resource: https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture
+    title: Model Context Protocol architecture
   - id: agents-md
     resource: https://agents.md/
     title: AGENTS.md project
@@ -68,7 +71,7 @@ clear article and good links.
 
 Think of a workshop: a blueprint describes what to build, a guide
 teaches a newcomer, labels connect related parts, a catalog helps
-find them, and a courier delivers the right item. One cannot replace
+find them, and a courier carries a requested item. One cannot replace
 all the others. The analogy stops at software boundaries: a format
 can participate in more than one job, and no label or catalog checks
 whether a guide's explanation is true.
@@ -82,7 +85,7 @@ whether a guide's explanation is true.
 | Validate JSON structure | **JSON Schema** | Rules a program can check against JSON data.[^json-schema] |
 | Package human-readable concepts | **OKF** | Markdown articles, directory navigation, and metadata about sources and lifecycle.[^okf-spec] |
 | Exchange typed relationships | **RDF** and a serialization such as **JSON-LD** | Identified subject–relationship–object statements that other graph-aware systems can interpret.[^rdf-concepts][^json-ld] |
-| Let an AI application request context | **MCP** | A protocol for tools, resources, and prompts; it does not choose where knowledge is stored.[^mcp-base] |
+| Let an AI application request context | **MCP** | A protocol for tools, resources, and prompts; it does not choose where knowledge is stored.[^mcp-server-features][^mcp-architecture] |
 | Help people find existing pages | A **search index** | A rebuildable way to locate content; it is an implementation, not the authoritative article. |
 | Tell coding agents how to work here | **AGENTS.md** | Repository instructions such as paths, commands, and review expectations.[^agents-md] |
 
@@ -98,8 +101,9 @@ Imagine a team adding a “Create order” HTTP endpoint. This is an
 repository has built:
 
 1. The service's **OpenAPI** document describes the request method,
-   path, inputs, and responses. If a JSON payload has reusable
-   validation rules, **JSON Schema** can describe those rules.
+   path, inputs, and responses. Its Schema Objects build on JSON Schema
+   2020-12 for input and output shapes; a standalone JSON Schema can
+   also be reused where a separate data contract is needed.
    Machine-readable facts should come from the actual service
    description, not be guessed from an AI-written summary.[^openapi-spec][^json-schema]
 2. A beginner article in an **OKF** bundle explains what an order
@@ -107,7 +111,7 @@ repository has built:
    reference.[^okf-spec]
 3. Topic links and a search index help a reader find the article.
    If an AI assistant needs it, an **MCP** server could offer a
-   search or fetch operation over the same curated corpus.[^mcp-base]
+   search or fetch operation over the same curated corpus.[^mcp-server-features]
 4. If several organizations must exchange formal relationships
    such as “this endpoint creates this business entity,” the team
    might add **RDF** and **JSON-LD**. That need does not arise merely
@@ -120,15 +124,16 @@ flowchart LR
   find --> reader["Reader"]
   article -.-> mcp["Optional MCP access"]
   mcp --> assistant["AI assistant"]
+  assistant --> reader
   api -.-> relationships["Optional typed relationship graph"]
   article -.-> relationships
 ```
 
 Text alternative: a service and its API description inform a
 plain-language article. Topic links and search lead readers to it.
-An optional MCP connection can give an assistant access. A typed
-graph is an additional choice when systems must exchange formal
-relationships.
+An optional MCP connection can give an assistant access, and the
+assistant can use it to answer the reader. A typed graph is an
+additional choice when systems must exchange formal relationships.
 
 ## If you need a richer graph
 
@@ -162,10 +167,10 @@ control, or search.[^llms-txt]
 
 The specifications above and the software that implements them
 evolve. Follow the linked primary document for exact syntax,
-conformance, and the current status of a version. For instance, W3C
-lists RDF 1.1 as a Recommendation while [RDF 1.2 Concepts](https://www.w3.org/TR/rdf12-concepts/)
-is a Candidate Recommendation at the time this page was checked;
-those are different maturity levels.[^rdf-concepts][^rdf12-concepts]
+conformance, and the current status of a version. On 2026-10-07, W3C
+listed RDF 1.1 as a Recommendation while [RDF 1.2 Concepts](https://www.w3.org/TR/rdf12-concepts/)
+was a Candidate Recommendation Snapshot; those are different maturity
+levels.[^rdf-concepts][^rdf12-concepts]
 
 ## Check your understanding
 
@@ -174,8 +179,8 @@ those are different maturity levels.[^rdf-concepts][^rdf12-concepts]
   exists?
 - When would a Markdown link be enough, and when might a typed graph
   help?
-- Why does adding MCP not make an article accurate or searchable by
-  itself?
+- Why does adding MCP not make an article accurate? What would the
+  server need to implement to help an assistant find it?
 
 ## Explore further
 
@@ -186,7 +191,7 @@ those are different maturity levels.[^rdf-concepts][^rdf12-concepts]
   the host, client, and server relationship.
 - [Back to agent knowledge bases](index.md).
 
-[^okf-spec]: [Open Knowledge Format specification](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md), source record `okf-spec`.
+[^okf-spec]: [Open Knowledge Format v0.2 specification, pinned revision](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC.md), source record `okf-spec`.
 [^openapi-spec]: [OpenAPI Specification 3.2.0](https://spec.openapis.org/oas/v3.2.0.html), source record `openapi-spec`.
 [^asyncapi-spec]: [AsyncAPI Specification 3.1.0](https://www.asyncapi.com/docs/reference/specification/v3.1.0), source record `asyncapi-spec`.
 [^json-schema]: [JSON Schema 2020-12](https://json-schema.org/draft/2020-12), source record `json-schema`.
@@ -198,6 +203,7 @@ those are different maturity levels.[^rdf-concepts][^rdf12-concepts]
 [^owl]: [OWL 2 Overview](https://www.w3.org/TR/owl2-overview/), source record `owl`.
 [^shacl]: [SHACL](https://www.w3.org/TR/shacl/), source record `shacl`.
 [^prov-o]: [PROV-O](https://www.w3.org/TR/prov-o/), source record `prov-o`.
-[^mcp-base]: [Model Context Protocol base specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/index), source record `mcp-base`.
+[^mcp-server-features]: [Model Context Protocol server features](https://modelcontextprotocol.io/specification/2026-07-28/server/index), source record `mcp-server-features`.
+[^mcp-architecture]: [MCP architecture overview](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture), source record `mcp-architecture`.
 [^agents-md]: [AGENTS.md project](https://agents.md/), source record `agents-md`.
 [^llms-txt]: [llms.txt proposal](https://llmstxt.org/), source record `llms-txt`.

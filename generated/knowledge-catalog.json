@@ -274,7 +274,8 @@
         "owl",
         "shacl",
         "prov-o",
-        "mcp-base",
+        "mcp-server-features",
+        "mcp-architecture",
         "agents-md",
         "llms-txt"
       ],
@@ -430,6 +431,7 @@
         "mcp-base",
         "mcp-tools",
         "mcp-resources",
+        "mcp-server-features",
         "mcp-transports",
         "mcp-typescript-sdk"
       ],
