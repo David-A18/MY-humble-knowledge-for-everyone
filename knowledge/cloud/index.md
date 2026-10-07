@@ -2,7 +2,16 @@
 
 Provider-neutral and provider-specific cloud knowledge.
 
-Status: Initial outline
+Start with [Cloud computing fundamentals](cloud-computing-fundamentals.md)
+for a provider-neutral explanation of what a cloud provider supplies and what
+you still configure. The provider sections below have uneven depth and remain
+under development.
+
+## Beginner explanation
+
+| Topic | Use it for |
+| --- | --- |
+| [Cloud computing fundamentals](cloud-computing-fundamentals.md) | Understand shared responsibility, elasticity, regions, reliability, and metered cost before choosing a service. |
 
 ## Providers
 

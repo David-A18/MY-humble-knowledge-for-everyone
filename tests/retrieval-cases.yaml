@@ -8,6 +8,10 @@ cases:
     question: As a beginner, what happens to my change between editing a file, staging it, committing it, and pushing it in Git?
     expected_paths: [knowledge/git/git-fundamentals.md]
     required_source_ids: [pro-git-reset-demystified]
+  - id: cloud-provider-versus-customer
+    question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
+    expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
+    required_source_ids: [nist-cloud-definition, azure-shared-responsibility]
   - id: cdn-cache-key-personalized-leak
     question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
     expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]

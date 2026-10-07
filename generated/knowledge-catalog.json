@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 167,
+  "concept_count": 168,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -787,6 +787,31 @@
         "security"
       ],
       "title": "IAM OIDC provider and STS web identity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Curious learners and beginning engineers",
+      "description": "Understand what cloud computing provides, what you still control, and why scaling, reliability, and metered cost need deliberate choices.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/cloud-computing-fundamentals.md",
+      "source_ids": [
+        "nist-cloud-definition",
+        "azure-shared-responsibility",
+        "azure-reliability-responsibility",
+        "azure-regions-zones",
+        "aws-autoscaling-groups",
+        "aws-ec2-on-demand"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "fundamentals",
+        "beginner",
+        "shared-responsibility"
+      ],
+      "title": "Cloud computing fundamentals",
       "type": "Explanation"
     },
     {

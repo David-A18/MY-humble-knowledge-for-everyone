@@ -1949,11 +1949,21 @@ limits the conclusion from port-forward to one selected Pod.
 | --- | --- | --- | --- |
 | [How a Kubernetes Service selects Pods](knowledge/kubernetes/core-objects/how-a-service-selects-pods.md) | Defines the selector, EndpointSlice, readiness, DNS, ClusterIP, and port roles; traces the existing two-replica example; uses a limited dispatch analogy, a selection-versus-traffic diagram and text alternative, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only design and revised-page reviews. Current Kubernetes Service, EndpointSlice, readiness, DNS, proxy, Deployment, and port-forward documentation was checked. The diagram rendered and was inspected; no current cluster run or novice reader task occurred. | Independent domain review, a cluster-backed Service request and failed-rollout check, and novice label-to-endpoint task. |
 
+### Wave 120 (2026-10-07)
+
+The cloud section lacked an explanation before the provider and solution
+guides. The new entry page gives a beginner a provider-neutral model and a
+first route into the existing material.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Cloud computing fundamentals](knowledge/cloud/cloud-computing-fundamentals.md) | Defines public cloud resources and the provider/customer split; limits the workshop analogy; walks through an invented photo site; adds a responsibility table, diagram and text alternative, misconception limits, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only outline and draft reviews. The second review identified an overbroad cloud definition, absolute scaling wording, incomplete service-model table, weak analogy limits, and source mismatch in the example; these were corrected. NIST, Microsoft, and AWS primary documentation was checked. The revised diagram was rendered and inspected; no cloud account, live workload, bill, failure test, or novice reader task was used. | Independent domain review, novice responsibility-and-cost task, and a real workload review before operational advice. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 167 concepts, all marked `draft`. Every
+The generated catalog records 168 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 119. This accounting does **not** mean that every explanation
+waves 1 to 120. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -1965,7 +1975,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 2 | 0 |
 | AI, including the embedded OKF example | 20 | 20 | 0 |
-| Cloud | 21 | 21 | 0 |
+| Cloud | 22 | 22 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
 | Decision records | 5 | 5 | 0 |
@@ -1979,7 +1989,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **167** | **167** | **0** |
+| **Total** | **168** | **168** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

@@ -38,6 +38,7 @@ work.
 | If you want to understand... | Start here | What you can explain afterward |
 | --- | --- | --- |
 | How a change moves through Git | [Git fundamentals](git/git-fundamentals.md) | Working tree, index, commit, branch, and remote are different places or pointers. |
+| What cloud computing provides | [Cloud computing fundamentals](cloud/cloud-computing-fundamentals.md) | Provider infrastructure and your workload choices are distinct; scaling, reliability, and cost decisions affect each other. |
 | How Kubernetes keeps an application running | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Desired state, controllers, Pods, and Services each have a role. |
 | How a Kubernetes Service finds Pods | [How a Kubernetes Service selects Pods](kubernetes/core-objects/how-a-service-selects-pods.md) | Labels choose candidates; readiness and EndpointSlices shape normal traffic. |
 | How Terraform decides what to change | [Terraform fundamentals](terraform/fundamentals/terraform-fundamentals.md) | Configuration, state, plan, and apply form a connected loop. |
