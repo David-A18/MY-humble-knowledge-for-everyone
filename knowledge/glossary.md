@@ -23,7 +23,8 @@ currently have only a short definition here.
 | --- | --- |
 | How changes are saved | [Working tree](git/git-fundamentals.md), [Git index](git/git-fundamentals.md), [Commit](git/git-fundamentals.md), [Branch](git/git-fundamentals.md) |
 | How platforms keep things running | [Reconciliation](kubernetes/fundamentals/kubernetes-fundamentals.md), [GitOps](kubernetes/applications-and-tools/gitops.md), [Terraform state](terraform/fundamentals/state-management.md) |
-| How AI finds knowledge | [AI agent](ai/ai-tooling/index.md), [RAG](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md), [Provenance](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) |
+| How AI finds knowledge | [RAG](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md), [Provenance](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) |
+| How AI applications act | [AI agent](ai/ai-fundamentals.md), [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) |
 
 ## All terms
 
@@ -36,8 +37,8 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | --- | --- |
 | [ADR](decision-records/index.md) | Architecture Decision Record; a short document that captures context, decision, and consequences. |
 | Agent knowledge base | An organized collection of pages that a person or AI agent can search, read, cite, and keep up to date with clear source and review information. |
-| [AI](ai/index.md) | Artificial Intelligence; systems or workflows that perform tasks associated with reasoning, generation, prediction, or automation. |
-| [AI agent](ai/ai-tooling/index.md) | An AI system that can follow goals, use tools, inspect context, and take multi-step actions with feedback. |
+| [AI](ai/ai-fundamentals.md) | Artificial Intelligence; systems that use inputs to produce predictions, recommendations, decisions, or content for a goal. |
+| [AI agent](ai/ai-fundamentals.md) | An application where a model can direct a sequence of steps and tool calls within its configured access. |
 | API | Application Programming Interface; a defined way for one program to request information or actions from another. |
 | [API gateway](kubernetes/applications-and-tools/apache-apisix.md) | A traffic entry point that routes API requests and can apply configured policies such as authentication or rate limits. |
 | API product | Apigee bundle of API resources exposed to developers with access, quota, approval, and credential behavior. |
@@ -93,6 +94,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |
 | [FinOps](finops/cost-allocation-basics.md) | A cloud financial management discipline focused on cost visibility, accountability, and optimization. |
 | FunctionRevision | Crossplane package revision object for a concrete installed function version. |
+| [Generative AI](ai/ai-fundamentals.md) | AI models that produce new content such as text, images, audio, or video. |
 
 ### G to M
 
@@ -116,7 +118,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | Kopia | Backup tool used by Velero File System Backup and data movement paths to store deduplicated volume data. |
 | KRaft | Kafka's Raft-based metadata mode that replaces ZooKeeper for Kafka cluster metadata management. |
 | Least privilege | Granting only the permissions needed to perform a task. |
-| LLM | Large Language Model; a model trained to process and generate language and other structured content. |
+| [LLM](ai/ai-fundamentals.md) | Large Language Model; a model trained at large scale on language data, commonly used to generate responses from tokens and context. |
 | Machine-owned region | In this knowledge base's workflow, a page region generated from a structured source and protected from manual changes. |
 | Managed Resource | Crossplane provider-defined Kubernetes object that represents an external resource. |
 | Managed Resource Activation Policy | Crossplane v2 policy that activates selected managed-resource APIs from a provider. |
@@ -125,7 +127,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | MCP client | The MCP connection inside an AI host that sends requests to MCP servers and receives their responses. |
 | MCP host | The AI application or environment that the user interacts with, such as an agent app, IDE, or chat product. |
 | MCP server | An integration process or service that exposes tools, resources, and prompts to an MCP host through an MCP client. |
-| ML | Machine Learning; systems that learn patterns from data to make predictions, classifications, or decisions. |
+| [ML](ai/ai-fundamentals.md) | Machine Learning; methods that train models from data to make predictions or generate content. |
 | MLOps | Operational practices for deploying, monitoring, governing, and maintaining machine learning systems. |
 | [MongoDB](databases/mongodb/index.md) | Document database that stores JSON-like BSON documents and supports flexible document modeling. |
 | MSK | Amazon Managed Streaming for Apache Kafka; AWS managed service for Kafka-compatible streaming workloads. |
@@ -186,7 +188,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | Task role | IAM role associated with an ECS task that grants application containers permission to call AWS APIs. |
 | [Terraform](terraform/fundamentals/terraform-fundamentals.md) | An Infrastructure as Code tool that compares configuration with state and plans changes to managed resources. |
 | [Terraform state](terraform/fundamentals/state-management.md) | Terraform’s record of the real objects it manages and their association with configuration. |
-| Tool (AI agent) | A callable capability exposed to an AI model or agent so it can query data, perform computation, or take an action. |
+| [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) | A callable capability exposed to an AI model or agent so it can query data, perform computation, or take an action. |
 | [Tooling cluster](kubernetes/applications-and-tools/tooling-clusters.md) | A Kubernetes cluster chosen to host shared platform services; target clusters still keep their own control planes and local requirements. |
 | [Usage (Crossplane)](kubernetes/crossplane/managed-resources-and-lifecycle.md) | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
 | Vector store | A search system that stores numerical representations of content with identifiers and metadata for similarity retrieval; this knowledge base treats its indexes as rebuildable. |

@@ -12,6 +12,10 @@ cases:
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
     required_source_ids: [nist-cloud-definition, azure-shared-responsibility]
+  - id: ai-first-terms-and-trust
+    question: As a beginner, how do AI, machine learning, generative AI, LLMs, assistants, and agents differ, and why should I check a generated answer?
+    expected_paths: [knowledge/ai/ai-fundamentals.md]
+    required_source_ids: [oecd-ai-principles, nist-genai-profile]
   - id: cdn-cache-key-personalized-leak
     question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
     expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]

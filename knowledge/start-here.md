@@ -45,6 +45,7 @@ work.
 | Why teams choose different databases | [Relational vs. document databases](databases/relational-vs-document-databases.md) | Relationships and document boundaries affect modeling choices. |
 | How an outside web request reaches a service | [Gateway API and Ingress](kubernetes/applications-and-tools/gateway-api-and-ingress.md) | A route describes traffic; an implementation serves it. |
 | How cloud costs get an owner | [Cost allocation basics](finops/cost-allocation-basics.md) | Direct, shared, and still unallocated cost need different decisions. |
+| What AI, ML, language models, and agents mean | [AI fundamentals](ai/ai-fundamentals.md) | Tell a trained model from the application around it, and explain why an answer needs checking. |
 | How a knowledge search finds evidence for an AI answer | [Retrieval and context efficiency](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Search finds candidates; fetching and checking sources support an answer. This route assumes some AI tooling context. |
 | What “Bootstrap” means in web work | [Bootstrap and bootstrapping](programming-languages/bootstrap-and-bootstrapping.md) | The UI toolkit and first-time system setup are separate ideas. |
 

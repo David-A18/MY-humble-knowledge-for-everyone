@@ -1,8 +1,38 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 168,
+  "concept_count": 169,
   "concepts": [
+    {
+      "audience": "Curious learners and beginning engineers",
+      "description": "Distinguish AI systems, machine learning, generative AI, language models, assistants, and agents through one small library example.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai/ai-fundamentals.md",
+      "source_ids": [
+        "oecd-ai-principles",
+        "oecd-ai-definition-memo",
+        "google-what-is-ml",
+        "google-ml-glossary",
+        "google-llm-introduction",
+        "anthropic-effective-agents",
+        "nist-genai-profile",
+        "anthropic-consumer-data-use"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai",
+        "machine-learning",
+        "generative-ai",
+        "llm",
+        "agents",
+        "fundamentals",
+        "beginner"
+      ],
+      "title": "AI fundamentals",
+      "type": "Explanation"
+    },
     {
       "audience": "Engineering learners and practitioners",
       "description": "Choose between an application function, an MCP server, and agent instructions by following one simple knowledge lookup.",

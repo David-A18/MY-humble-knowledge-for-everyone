@@ -20,6 +20,7 @@ repository. Its Markdown pages are the source material for the reading site.
 | Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
 | Understand how Git tracks and shares changes | [Git fundamentals](git/git-fundamentals.md) | Picture the working tree, index, commits, branches, and remotes before running recovery commands. |
 | Understand cloud computing before choosing a provider | [Cloud computing fundamentals](cloud/cloud-computing-fundamentals.md) | Explain the provider's role, your responsibilities, scaling, reliability, and usage-based cost. |
+| Understand AI before choosing a tool | [AI fundamentals](ai/ai-fundamentals.md) | Separate ML, generative AI, language models, assistants, and agents; check outputs against sources. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
 | Understand Kubernetes Service traffic | [How a Kubernetes Service selects Pods](kubernetes/core-objects/how-a-service-selects-pods.md) | Trace labels, readiness, EndpointSlices, and in-cluster routing. |
@@ -49,7 +50,7 @@ repository. Its Markdown pages are the source material for the reading site.
 
 ## AI and architecture
 
-- [AI](ai/index.md) - AI systems, tooling, MCP, knowledge bases, and safe engineering use.
+- [AI](ai/index.md) - Beginner AI concepts, tooling, MCP, knowledge bases, and safe engineering use.
 - [AI agents](ai-agents/index.md) - Planned coverage for agent workflows, evaluation, and operational safety; use AI tooling for current agent knowledge-base guidance.
 - [LLM](llm/index.md) - Planned LLM route; current retrieval and evaluation material lives in AI tooling.
 - [ML](ml/index.md) and [MLOps](mlops/index.md) - Planned topic maps, not yet a complete learning curriculum.

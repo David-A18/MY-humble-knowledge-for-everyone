@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added an AI fundamentals entry page that separates AI, ML, generative AI, language models, assistants, and agents, and routes beginners into the existing AI tooling guides.
 - Added a provider-neutral cloud computing fundamentals explanation and linked it from the cloud and first-visit indexes.
 - Added ADR-0005 and a source-side website specification for a separate static reading site built from a reviewed, pinned knowledge-base revision.
 - Added a content quality and expansion plan with page-level precision and
