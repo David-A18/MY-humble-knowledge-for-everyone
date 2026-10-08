@@ -1015,12 +1015,15 @@
         "apisix-ingress-start",
         "apisix-routes",
         "apisix-deployment-architecture",
+        "apisix-resources",
         "apisix-gateway-api",
         "apisix-configuration-troubleshooting",
         "apisix-plugin",
         "aws-eks-nlb",
         "aws-eks-auto-nlb",
-        "aws-nlb-listeners"
+        "aws-nlb-listeners",
+        "aws-nlb-target-groups",
+        "k8s-source-ip"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2333,7 +2336,8 @@
         "apisix-controller-install",
         "apisix-gateway-api",
         "apisix-resources",
-        "gateway-api-implementation"
+        "gateway-api-implementation",
+        "gateway-api-gateway"
       ],
       "stale_after": null,
       "status": "draft",
@@ -3431,8 +3435,11 @@
         "apisix-architecture",
         "apisix-config-troubleshoot",
         "apisix-gateway-api",
+        "apisix-resources",
         "gateway-httproute",
-        "k8s-debug-service"
+        "k8s-debug-service",
+        "aws-nlb",
+        "gateway-referencegrant"
       ],
       "stale_after": null,
       "status": "draft",

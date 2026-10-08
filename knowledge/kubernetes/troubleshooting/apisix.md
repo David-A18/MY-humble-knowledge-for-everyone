@@ -17,12 +17,21 @@ sources:
   - id: apisix-gateway-api
     resource: https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/
     title: APISIX Gateway API support
+  - id: apisix-resources
+    resource: https://apisix.apache.org/docs/ingress-controller/concepts/resources/
+    title: APISIX Ingress Controller resources
   - id: gateway-httproute
     resource: https://gateway-api.sigs.k8s.io/reference/api-types/httproute/
     title: Gateway API HTTPRoute
   - id: k8s-debug-service
     resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/
     title: Debug Services
+  - id: aws-nlb
+    resource: https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html
+    title: Elastic Load Balancing - Listeners for Network Load Balancers
+  - id: gateway-referencegrant
+    resource: https://gateway-api.sigs.k8s.io/reference/api-types/referencegrant/
+    title: Gateway API - ReferenceGrant
 ---
 
 # Trace an APISIX 404 to its first failed handoff
@@ -31,9 +40,11 @@ sources:
 
 An HTTP `404` means a request did not find the requested
 resource **somewhere** on its path. The status alone does not
-prove that APISIX rejected the route: a load balancer, gateway,
-or backend application could have returned it. First identify
-the answering layer and the exact request it saw.
+prove that APISIX rejected the route: an HTTP-aware entry layer,
+gateway, or backend application could have returned it. A Network
+Load Balancer forwards network traffic; if it is the only AWS entry
+layer, it does not create an HTTP `404` response itself. First identify
+the answering layer and the exact request it saw.[^aws-nlb]
 
 This guide uses a **made-up** request for
 `https://learn.example.com/lessons` through an APISIX Gateway.
@@ -48,17 +59,21 @@ flowchart LR
   client["Client"] --> entry["DNS and external entry"]
   entry --> gateway["APISIX gateway"]
   gateway --> match["Listener and route match"]
-  match --> upstream["Service and backend"]
-  route["HTTPRoute in<br/>Kubernetes API"] -. "controller translates" .-> gateway
+  match --> upstream["Selected backend Pods"]
+  route["HTTPRoute in<br/>Kubernetes API"] --> controller["APISIX Ingress Controller"]
+  endpoints["Service and EndpointSlices"] --> controller
+  controller -. "routes and endpoints" .-> gateway
 ```
 
 Text alternative: a live request travels from client through
 the external entry into APISIX, then through listener and route
 matching to the backend. Separately, the APISIX Ingress
-Controller translates the `HTTPRoute` stored in Kubernetes
-into gateway configuration. A route existing in Kubernetes
-does not by itself prove that this request matched it.
-[^apisix-architecture][^gateway-httproute]
+Controller translates the `HTTPRoute` and backend Service and
+EndpointSlice information stored in Kubernetes into gateway
+configuration. A route existing in Kubernetes does not by itself
+prove that this request matched it. The Service identifies the backend;
+APISIX normally proxies directly to selected Pod endpoints.
+[^apisix-architecture][^apisix-resources][^gateway-httproute]
 
 ## 1. Capture one failing request
 
@@ -97,11 +112,11 @@ accepted by its listener; an accepted route still requires
 the request's host and path to match.[^gateway-httproute]
 
 If a route refers to a backend in another namespace,
-check the required cross-namespace permission before
+check the required `ReferenceGrant` in the backend namespace before
 assuming the controller can use it. The APISIX support
 matrix is version-specific, so verify that your installed
 controller supports the Gateway API kind and fields in
-the manifest.[^apisix-gateway-api]
+the manifest.[^apisix-gateway-api][^gateway-referencegrant]
 
 ## 3. Check the controller-to-gateway handoff
 
@@ -167,5 +182,8 @@ same user request to verify the result.
 [^apisix-architecture]: [Apache APISIX, Deployment Architecture](https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/), source record `apisix-architecture`.
 [^apisix-config-troubleshoot]: [Apache APISIX, Configuration Troubleshooting](https://apisix.apache.org/docs/ingress-controller/reference/apisix-ingress-controller/configuration-troubleshoot/), source record `apisix-config-troubleshoot`.
 [^apisix-gateway-api]: [Apache APISIX, Gateway API support](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/), source record `apisix-gateway-api`.
+[^apisix-resources]: [Apache APISIX, Ingress Controller Resources](https://apisix.apache.org/docs/ingress-controller/concepts/resources/), source record `apisix-resources`.
 [^gateway-httproute]: [Gateway API, HTTPRoute](https://gateway-api.sigs.k8s.io/reference/api-types/httproute/), source record `gateway-httproute`.
 [^k8s-debug-service]: [Kubernetes, Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/), source record `k8s-debug-service`.
+[^aws-nlb]: [Elastic Load Balancing, NLB listeners](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html), source record `aws-nlb`.
+[^gateway-referencegrant]: [Gateway API, ReferenceGrant](https://gateway-api.sigs.k8s.io/reference/api-types/referencegrant/), source record `gateway-referencegrant`.

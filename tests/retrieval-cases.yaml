@@ -112,6 +112,22 @@ cases:
     question: If an Argo CD Project limits destinations, can the central controller's default remote-cluster credential still have broad Kubernetes permissions?
     expected_paths: [knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md]
     required_source_ids: [argo-getting-started, argo-projects]
+  - id: apisix-eks-service-reference-vs-request-hop
+    question: When an APISIX route on EKS names a backend Kubernetes Service, does every request travel through its cluster IP, or can APISIX proxy directly to Pods?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [apisix-resources]
+  - id: apisix-eks-nlb-client-ip
+    question: Why might APISIX see an NLB node address instead of the original client IP when the NLB targets gateway Pod IPs?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [aws-nlb-target-groups]
+  - id: apisix-404-behind-nlb
+    question: If APISIX is behind only an AWS Network Load Balancer, can the NLB itself produce an HTTP 404, and which layer should I inspect?
+    expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]
+    required_source_ids: [aws-nlb, apisix-config-troubleshoot]
+  - id: apisix-gateway-versus-route-status
+    question: Should I expect Programmed on an APISIX HTTPRoute, or check the route Accepted and ResolvedRefs conditions alongside the Gateway Programmed condition?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]
+    required_source_ids: [gateway-api-implementation, gateway-api-gateway]
   - id: kafka-duplicate-effects
     question: When can at-least-once Kafka processing cause duplicate side effects?
     expected_paths: [knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md]

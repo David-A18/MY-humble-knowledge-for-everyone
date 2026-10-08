@@ -26,6 +26,9 @@ sources:
   - id: gateway-api-implementation
     resource: https://gateway-api.sigs.k8s.io/guides/implementers-guide/
     title: Gateway API - Implementer's Guide
+  - id: gateway-api-gateway
+    resource: https://gateway-api.sigs.k8s.io/reference/api-types/gateway/
+    title: Gateway API - Gateway
 ---
 
 # How the APISIX gateway and controller fit together
@@ -98,11 +101,14 @@ varies by resource and field. Check the
 for the installed controller version rather than assuming every field in
 the Gateway API specification is implemented.[^apisix-resources][^apisix-gateway-api]
 
-Status conditions are valuable, but scoped. Gateway API distinguishes
-`Accepted` from later `Programmed` and from `ResolvedRefs`, which reports
-whether references such as a backend target are valid. A condition should
-be read with its message and observed generation. Even `Programmed` does
-not establish that a user request succeeds end to end.[^gateway-api-implementation]
+Status conditions are valuable, but scoped. On an `HTTPRoute`, inspect
+its parent status for `Accepted` and `ResolvedRefs`, which reports
+whether references such as a backend target are valid. Inspect
+`Programmed` on the `Gateway` and its listeners for the data-plane
+configuration phase; do not look for it as a standard route condition.
+Read each condition with its message and observed generation. Even a
+programmed Gateway does not establish that a user request succeeds end
+to end.[^gateway-api-implementation][^gateway-api-gateway]
 
 ## Where APISIX keeps its configuration
 
@@ -157,8 +163,9 @@ environment-specific steps out of this architectural explanation.
 2. Does an accepted Gateway listener cause APISIX to open its port?
 3. Which deployment mode uses a local file, and which documented mode
    starts with empty in-memory configuration until an API update?
-4. A route is `Programmed`, but a reader cannot load a lesson. What
-   evidence would you seek before calling the problem solved?
+4. The route is `Accepted` and the Gateway is `Programmed`, but a reader
+   cannot load a lesson. What evidence would you seek before calling
+   the problem solved?
 
 ## Explore further
 
@@ -183,3 +190,4 @@ environment-specific steps out of this architectural explanation.
 [^apisix-gateway-api]: [Apache APISIX, Gateway API support](https://apisix.apache.org/docs/ingress-controller/concepts/gateway-api/), source record `apisix-gateway-api`.
 [^apisix-resources]: [Apache APISIX, Ingress Controller Resources](https://apisix.apache.org/docs/ingress-controller/concepts/resources/), source record `apisix-resources`.
 [^gateway-api-implementation]: [Gateway API, Implementer's Guide](https://gateway-api.sigs.k8s.io/guides/implementers-guide/), source record `gateway-api-implementation`.
+[^gateway-api-gateway]: [Gateway API, Gateway](https://gateway-api.sigs.k8s.io/reference/api-types/gateway/), source record `gateway-api-gateway`.

@@ -1058,7 +1058,7 @@ Kubernetes-to-gateway configuration change.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [APISIX on EKS](knowledge/cross-topic-guides/apisix-on-eks.md) | Rewritten with a limited venue analogy, invented lesson API, two-path diagram, ownership and failure tables, TLS placement, plugin boundaries, and understanding checks. | Keyed current Apache APISIX and Amazon EKS/NLB documentation. No cluster, gateway, route, plugin, load balancer, client request, or reader test ran. Claude Code was unavailable at its weekly subscription limit, so this pass did not receive Opus review. | Independent APISIX/EKS security and Opus review; controlled route, policy, TLS, and failure checks; reader test; freshness decision. |
+| [APISIX on EKS](knowledge/cross-topic-guides/apisix-on-eks.md) | Rewritten with a limited venue analogy, invented lesson API, two-path diagram, ownership and failure tables, TLS placement, plugin boundaries, and understanding checks. A later focused review corrected the backend request path and added NLB target and client-IP decisions. | Keyed Apache APISIX and Amazon EKS/NLB documentation; Claude Opus 5.5 reviewed the focused revision read-only. No cluster, gateway, route, plugin, load balancer, client request, or reader test ran. | Independent APISIX/EKS security review; controlled route, policy, TLS, and failure checks; reader test; freshness decision. |
 
 ### Wave 49 (2026-10-02)
 
@@ -2498,6 +2498,32 @@ retrieval cases record the managed-private-target and broad-credential
 questions. No EKS cluster, controller, private endpoint, target API,
 outage, restore, user request, independent security review, or novice
 reader task ran; the revised guides remain `draft`.
+
+### Focused review round 26 (2026-10-08)
+
+Reviewed the APISIX-on-EKS explanation with Claude Opus 5.5 and checked
+its material claims against current Apache APISIX, Gateway API, and AWS
+documentation. The invented request and Mermaid diagram now distinguish
+the backend Service and EndpointSlice configuration reference from the
+usual direct gateway-to-Pod request path. The guide explains instance
+versus IP NLB targets, public exposure, TLS and port placement,
+client-IP preservation, optional listener-port matching, and why a
+route can be present on only some gateway Pods. The linked APISIX 404
+guide now distinguishes an HTTP 404 from NLB network forwarding,
+shows the backend endpoint configuration path, and names the
+cross-namespace `ReferenceGrant` check. A second Opus audit caught a
+Gateway API status error in the linked architecture guide: `Programmed`
+belongs to the Gateway and listeners, while route status reports
+`Accepted` and `ResolvedRefs`. The request and troubleshooting diagrams
+rendered and were visually inspected. Four static retrieval cases record
+the corrected Service, client-IP, NLB 404, and status questions.
+
+Opus's first review could not fetch live documentation and marked
+several version-specific claims uncertain. The changed statements were
+checked independently in official sources; unverified suggestions were
+not added. No EKS cluster, NLB, APISIX gateway, backend, live request,
+independent security review, or novice reader task ran. The three
+revised guides remain `draft`.
 
 ### Candidates for the next wave
 
