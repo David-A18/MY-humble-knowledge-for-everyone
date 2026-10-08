@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified the EKS-to-MSK beginner guide's broker discovery, authentication methods, IAM actions, producer acknowledgments, offset and shipment outcomes, and the database-to-event gap; added three targeted retrieval cases.
 - Corrected the APISIX-on-EKS request path, NLB target and client-IP decisions, TLS and listener-port guidance, the linked 404 diagnosis, and Gateway versus route status; added four targeted retrieval cases.
 - Clarified EKS tooling-cluster choices, managed Argo CD target access, central credential scope, outage and recovery behavior, and two related GitOps explanations.
 - Clarified Kubernetes on AWS with accurate ALB target paths, standard and Auto Mode ownership, Fargate identity and storage limits, and two targeted retrieval cases.

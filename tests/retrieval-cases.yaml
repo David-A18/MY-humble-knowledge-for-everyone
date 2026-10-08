@@ -210,3 +210,15 @@ cases:
     question: Do git switch, merge, and rebase all do the same thing to my current branch and uncommitted files?
     expected_paths: [knowledge/git/commands/complete-command-catalog.md]
     required_source_ids: [git-switch, git-merge, git-rebase]
+  - id: eks-msk-iam-versus-scram-identity
+    question: Does an EKS Pod's IAM role authorize Kafka topic access when its MSK client uses SASL/SCRAM instead of MSK IAM?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [msk-iam, msk-acls, msk-iam-clients]
+  - id: eks-msk-bootstrap-versus-broker-path
+    question: If an EKS Pod reaches one MSK bootstrap broker, why might its Kafka client still time out after connecting?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [msk-bootstrap, msk-client-access]
+  - id: eks-msk-ack-versus-shipment
+    question: Does a completed Kafka producer send with acks=0 prove a broker accepted OrderPaid, and would any Kafka acknowledgment prove a shipment was created?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [kafka-producer-config, kafka-producer-api]

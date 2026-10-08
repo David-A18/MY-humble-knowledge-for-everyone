@@ -1031,7 +1031,7 @@ explanations through the Pod's three separate gates.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [EKS to MSK applications](knowledge/cross-topic-guides/eks-to-msk-applications.md) | Rewritten with a bounded delivery-driver analogy, invented order-to-shipment flow, diagram, network/identity/application gates, IAM authorization scope, lag limitations, and understanding checks. | Keyed current AWS MSK client, bootstrap, IAM, EKS workload identity, and consumer-lag docs plus Apache Kafka documentation. No Pod, cluster, role, event, or shipment was tested. | Independent EKS/Kafka security review; controlled connection and failure checks; reader test; freshness decision. |
+| [EKS to MSK applications](knowledge/cross-topic-guides/eks-to-msk-applications.md) | Rewritten with a bounded delivery-driver analogy, invented order-to-shipment flow, diagram, network/identity/application gates, IAM authorization scope, lag limitations, and understanding checks. Focused review clarified broker discovery, IAM versus SCRAM/mTLS, group actions, producer acknowledgments, offset timing, database-to-event handoff, and Pod shutdown. | Claude Opus 5.5 reviewed the page read-only; current AWS, Apache Kafka, Debezium, and Kubernetes primary docs were checked. The Mermaid diagram rendered and was inspected; three static retrieval cases were added. No Pod, cluster, role, event, or shipment was tested. | Independent EKS/Kafka security review; controlled connection and failure checks; reader test; freshness decision. |
 
 ### Wave 46 (2026-10-02)
 
@@ -2524,6 +2524,28 @@ checked independently in official sources; unverified suggestions were
 not added. No EKS cluster, NLB, APISIX gateway, backend, live request,
 independent security review, or novice reader task ran. The three
 revised guides remain `draft`.
+
+### Focused review round 27 (2026-10-08)
+
+Reviewed the EKS-to-MSK explanation with Claude Opus 5.5 and checked
+its material claims against current Amazon EKS, Amazon MSK, Apache
+Kafka, Debezium, and Kubernetes documentation. The invented order-to-shipment
+example now distinguishes broker discovery from bootstrap, source
+security groups from Pod IAM, MSK IAM from SASL/SCRAM or mutual TLS,
+and Kafka data-plane permissions from MSK control-plane calls. Its
+diagram explicitly shows consumer polling, external shipment creation,
+and a later offset commit. The text explains why an asynchronous send
+or `acks=0` is weak evidence, why committed offset and shipment
+outcome differ, and how either offset timing or a database-to-event
+gap can lose or repeat a business effect. Pod shutdown and the grace
+period are also covered. Three static retrieval cases
+record the identity, broker-path, and acknowledgment questions. The
+diagram rendered and was visually inspected.
+
+This was a documentation review, not a live EKS/MSK run or a measured
+search evaluation. No cluster, broker, Pod, credential, event, shipment,
+independent security review, or novice reader task ran. The page
+remains `draft`.
 
 ### Candidates for the next wave
 
