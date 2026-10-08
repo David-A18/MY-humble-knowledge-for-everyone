@@ -26,7 +26,7 @@ Guides that connect multiple engineering areas into practical workflows.
 | [Crossplane on AWS](crossplane-on-aws.md) | Draft | Follow a resource request through Crossplane into AWS, including identity, ownership, and recovery boundaries. |
 | [GitOps on EKS](gitops-on-eks.md) | Draft | Follow a Git change through GitOps, Kubernetes, and AWS controllers on EKS. |
 | [EKS workload identity](eks-workload-identity.md) | Draft | Understand how Pods get temporary AWS credentials through a service account, and choose IRSA or EKS Pod Identity from a workload's conditions. |
-| [EKS tooling cluster architecture](eks-tooling-cluster-architecture.md) | Draft | Decide when central GitOps helps and how target access and recovery work. |
+| [EKS tooling cluster architecture](eks-tooling-cluster-architecture.md) | Draft | Compare local, self-managed, and EKS-managed GitOps layouts, target access, and recovery. |
 | [Observability stack](observability-stack.md) | Draft | Understand which questions metrics, logs, and traces answer, and how an SLO and alert turn signals into a decision. |
 | [End-to-end deployment](end-to-end-deployment.md) | Draft | Follow the delivery chain from reviewed change to user check and recovery, and what each gate does and does not prove. |
 

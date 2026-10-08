@@ -104,6 +104,14 @@ cases:
     question: If an EKS Deployment is available but users cannot reach the app, how do I check Service selectors, endpoints, and the user route before changing IAM or nodes?
     expected_paths: [knowledge/cross-topic-guides/eks-operations.md]
     required_source_ids: [k8s-debug-services, eks-access-entries]
+  - id: eks-tooling-cluster-managed-argo-private-target
+    question: Does EKS-managed Argo CD need the same VPC connection to a private target cluster as a self-managed controller, and what target permission is still required?
+    expected_paths: [knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md]
+    required_source_ids: [eks-managed-argo-targets, eks-endpoint]
+  - id: eks-tooling-cluster-broad-target-access
+    question: If an Argo CD Project limits destinations, can the central controller's default remote-cluster credential still have broad Kubernetes permissions?
+    expected_paths: [knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md]
+    required_source_ids: [argo-getting-started, argo-projects]
   - id: kafka-duplicate-effects
     question: When can at-least-once Kafka processing cause duplicate side effects?
     expected_paths: [knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md]

@@ -1086,7 +1086,7 @@ limits of a central outage.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [EKS tooling cluster architecture](knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md) | Rewritten with a bounded school-district analogy, invented two-workload-cluster example, management/user-path diagram, local-versus-central comparison, failure table, and recovery questions. | Keyed current Amazon EKS, Argo CD, and Flux documentation. No cluster, controller, credentials, outage, recovery, application request, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent EKS/GitOps security and Opus review; controlled cross-cluster access, outage, and recovery exercise; reader test; freshness decision. |
+| [EKS tooling cluster architecture](knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md) | Rewritten with a bounded school-district analogy, invented two-workload-cluster example, management/user-path diagram, local-versus-central comparison, failure table, and recovery questions. A later focused review added the EKS-managed Argo CD option, three target-access gates, broad-credential risk, and an outage and recovery path. | Keyed current Amazon EKS, Argo CD, Flux, and Kubernetes documentation checked; Claude Opus 5.5 reviewed the focused changes read-only, and the diagram was rendered and inspected. No cluster, controller, credentials, outage, recovery, application request, or reader test ran. | Independent EKS/GitOps security review; controlled cross-cluster access, outage, and recovery exercise; reader test; freshness decision. |
 
 ### Wave 52 (2026-10-02)
 
@@ -2476,6 +2476,28 @@ Two static retrieval cases record the ALB path and Fargate storage and
 identity questions. No AWS account, cluster, load balancer, Pod, volume,
 request, independent EKS security review, or novice reader task ran;
 the guide remains `draft`.
+
+### Focused review round 25 (2026-10-08)
+
+Reviewed the EKS tooling-cluster explanation with Claude Opus 5.5. It
+now distinguishes local controllers, a self-managed controller in a
+tooling cluster, and AWS-managed Argo CD attached to a management
+cluster. The invented two-target diagram separates GitOps control from
+user traffic and shows the target access configuration. A three-gate
+table follows network reachability, authentication, and authorization;
+the article also names the source and user access that lets someone
+ask the controller to act. It corrects the impression that an Argo CD
+Project narrows the underlying target credential, and adds Flux and
+Argo impersonation limits, a conditional admission-webhook outage,
+and a recovery check for automatic reconciliation of emergency edits.
+Two linked guides received matching target-credential corrections.
+
+Current AWS, Argo CD, Flux, and Kubernetes primary documentation was
+checked. The Mermaid diagram rendered and was inspected. Two static
+retrieval cases record the managed-private-target and broad-credential
+questions. No EKS cluster, controller, private endpoint, target API,
+outage, restore, user request, independent security review, or novice
+reader task ran; the revised guides remain `draft`.
 
 ### Candidates for the next wave
 

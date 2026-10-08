@@ -17,6 +17,12 @@ sources:
   - id: argo-projects
     resource: https://argo-cd.readthedocs.io/en/stable/user-guide/projects/
     title: Argo CD - Projects
+  - id: argo-getting-started
+    resource: https://argo-cd.readthedocs.io/en/stable/getting_started/
+    title: Argo CD - Getting Started
+  - id: eks-managed-argo
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/argocd.html
+    title: Amazon EKS - Continuous deployment with Argo CD
   - id: flux-kustomizations
     resource: https://fluxcd.io/flux/components/kustomize/kustomizations/
     title: Flux - Kustomization
@@ -126,7 +132,17 @@ authorization in the target. Flux documents target-cluster credentials
 and service-account impersonation; Argo CD Projects can restrict source
 repositories, destinations, and resource kinds. Choose the layout from
 the clusters and ownership boundaries you actually have.
-[^flux-kustomizations][^argo-projects]
+An Argo CD Project does not reduce the target credential's Kubernetes
+permissions: the common `argocd cluster add` path starts with an
+admin-level target ClusterRole.[^flux-kustomizations][^argo-projects]
+[^argo-getting-started]
+
+EKS also offers AWS-managed Argo CD as a capability attached to a
+management cluster. AWS runs its controller in the control plane, so
+its installation and private-target connection model differ from the
+self-managed controller above. Target permissions and source review
+still need explicit design. See [EKS tooling cluster architecture](eks-tooling-cluster-architecture.md)
+for the three layouts.[^eks-managed-argo]
 
 Keep secret values out of plain Git. Select an encrypted or external
 secret workflow, then decide which controller or workload is allowed to
@@ -182,6 +198,8 @@ For the general release chain, see [End-to-end deployment](end-to-end-deployment
 [^argo-sync]: [Argo CD - Automated Sync Policy](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/).
 [^argo-health]: [Argo CD - Resource Health](https://argo-cd.readthedocs.io/en/stable/operator-manual/health/).
 [^argo-projects]: [Argo CD - Projects](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/).
+[^argo-getting-started]: [Argo CD - Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/).
+[^eks-managed-argo]: [Amazon EKS - Managed Argo CD](https://docs.aws.amazon.com/eks/latest/userguide/argocd.html).
 [^flux-kustomizations]: [Flux - Kustomization](https://fluxcd.io/flux/components/kustomize/kustomizations/).
 [^flux-secrets]: [Flux - Secrets Management](https://fluxcd.io/flux/security/secrets-management/).
 [^eks-load-balancer]: [Amazon EKS - AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html).

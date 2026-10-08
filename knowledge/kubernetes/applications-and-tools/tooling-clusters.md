@@ -11,6 +11,12 @@ sources:
   - id: argo-clusters
     resource: https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-management/
     title: Argo CD - Cluster Management
+  - id: argo-getting-started
+    resource: https://argo-cd.readthedocs.io/en/stable/getting_started/
+    title: Argo CD - Getting Started
+  - id: argo-projects
+    resource: https://argo-cd.readthedocs.io/en/stable/user-guide/projects/
+    title: Argo CD - Projects
   - id: flux-remote
     resource: https://fluxcd.io/flux/components/kustomize/kustomizations/
     title: Flux - Kustomization and remote clusters
@@ -63,7 +69,10 @@ These are design options, not configurations tested in this repository.
 Argo CD supports external clusters, and Flux Kustomizations can target
 remote clusters. The product name alone does not establish what a
 controller can change. Its target credentials and the target cluster's
-authorization determine that.[^argo-clusters][^flux-remote]
+authorization determine that. For example, the usual `argocd cluster
+add` path installs an admin-level target ClusterRole; an Argo CD
+Project restriction does not narrow that Kubernetes credential.
+[^argo-clusters][^argo-getting-started][^argo-projects][^flux-remote]
 
 A third cluster is useful when the team has a real reason to operate
 shared services separately: independent upgrades, capacity, ownership,
@@ -149,6 +158,8 @@ applies the same reasoning to Amazon EKS.
 [Back to Kubernetes applications and tools](index.md)
 
 [^argo-clusters]: [Argo CD - Cluster Management](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-management/).
+[^argo-getting-started]: [Argo CD - Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/).
+[^argo-projects]: [Argo CD - Projects](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/).
 [^flux-remote]: [Flux - Kustomization and remote clusters](https://fluxcd.io/flux/components/kustomize/kustomizations/).
 [^kubernetes-rbac]: [Kubernetes - Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
 [^kubernetes-network-policy]: [Kubernetes - Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
