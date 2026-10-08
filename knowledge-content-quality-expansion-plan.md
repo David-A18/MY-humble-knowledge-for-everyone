@@ -872,7 +872,7 @@ offering a single pseudocode recipe for ID and access tokens.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [OIDC token validation](knowledge/security/identity-federation/oidc-token-validation.md) | Rewritten with a trust-boundary diagram, limited signed-letter analogy, invented two-token rejection example, and separate ID-token, JWT access-token, and opaque-token paths. | OpenID Connect Core and Discovery, RFC 8725, RFC 9068, and RFC 7662 are cited. No application or token was tested. | Independent identity-security review; test with the selected provider and library; reader test; freshness decision. |
+| [OIDC token validation](knowledge/security/identity-federation/oidc-token-validation.md) | Rewritten with a trust-boundary diagram, limited signed-letter analogy, invented token-rejection examples, and separate ID-token, JWT access-token, and opaque-token paths. The focused review below clarifies login-session binding, exact issuer matching, introspection's `active` result, and trusted key discovery. | OpenID Connect Core and Discovery and RFC 7662, 8414, 8725, 9068, and 9700 are cited; Claude Opus 5.5 reviewed the page read-only and the material corrections were checked against the published specifications. No application or token was tested. | Independent identity-security review; test with the selected provider and library; reader test; freshness decision. |
 
 ### Wave 31 (2026-10-01)
 
@@ -2569,6 +2569,27 @@ This was a documentation and static validation review. No Kafka or MSK
 cluster, client, broker restart, event, measured retrieval run,
 independent domain review, or novice reader task ran. The revised
 pages remain `draft`.
+
+### Focused review round 29 (2026-10-08)
+
+Claude Opus 5.5 reviewed OIDC token validation read-only. The revised page
+now ties an ID token to the relying party's own sign-in flow and any nonce
+sent for that session. It explains that a successful HTTP call to an OAuth
+introspection endpoint can still return `"active": false`, and that an
+active response still needs the provider's authorization checks. It also
+clarifies HTTPS key discovery, exact issuer comparison, HMAC-signed ID
+tokens, both RFC 9068 access-token type spellings, and the limit of the
+signed-letter analogy. The identity-federation index now links to the
+knowledge bundle's root. A second Opus pass confirmed the material corrections
+and led to clearer browser-flow binding and a configuration-to-key arrow in
+the diagram. Current OpenID Connect Core and Discovery and RFC
+7662, 8414, 8725, 9068, and 9700 text were checked independently. Two static
+retrieval cases record the login-session and introspection questions.
+
+This was a specification and static validation review. No provider,
+client, login session, token, introspection call, independent identity
+security review, measured search run, or novice reader task was tested.
+The page remains `draft`.
 
 ### Candidates for the next wave
 

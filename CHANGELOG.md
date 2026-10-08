@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified OIDC ID-token login-session checks, HTTPS issuer-key discovery, and OAuth introspection's `active` result; added two targeted retrieval cases.
 - Clarified Kafka fundamentals and Amazon MSK with poll-based diagrams, offset and retention examples, MSK broker-type and connection decisions, and three targeted retrieval cases; aligned and corrected the linked EKS-to-MSK example.
 - Clarified the EKS-to-MSK beginner guide's broker discovery, authentication methods, IAM actions, producer acknowledgments, offset and shipment outcomes, and the database-to-event gap; added three targeted retrieval cases.
 - Corrected the APISIX-on-EKS request path, NLB target and client-IP decisions, TLS and listener-port guidance, the linked 404 diagnosis, and Gateway versus route status; added four targeted retrieval cases.

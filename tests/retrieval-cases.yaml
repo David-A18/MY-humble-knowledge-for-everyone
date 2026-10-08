@@ -28,6 +28,14 @@ cases:
     question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
     expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
     required_source_ids: [openid-connect-core, github-actions-oidc-aws]
+  - id: oidc-id-token-login-session
+    question: Is a validly signed ID token addressed to my app enough to sign in a user if it came from another login session?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [openid-core]
+  - id: opaque-token-introspection-active
+    question: Does HTTP 200 from an OAuth token introspection endpoint mean an opaque access token is valid for my API?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [oauth-token-introspection]
   - id: green-pipeline-is-not-working-deployment
     question: If CI passed and the Kubernetes rollout completed, does that prove the deployment works for users?
     expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cross-topic-guides/github-actions-with-kubernetes.md]
