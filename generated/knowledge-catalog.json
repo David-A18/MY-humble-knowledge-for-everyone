@@ -3453,9 +3453,16 @@
       "source_ids": [
         "pod-lifecycle",
         "debug-pods",
+        "debug-running-pods",
+        "debug-init-containers",
+        "sidecars",
+        "termination-message",
         "kubectl-logs",
         "probes",
-        "resources"
+        "resources",
+        "node-pressure",
+        "replicasets",
+        "rollout-status"
       ],
       "stale_after": null,
       "status": "draft",

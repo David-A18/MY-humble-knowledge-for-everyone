@@ -1313,7 +1313,7 @@ terminated container and prior logs to a specific next investigation.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Diagnose CrashLoopBackOff](knowledge/kubernetes/troubleshooting/crashloopbackoff.md) | Context check, last-state and previous-log inspection, decision diagram and text alternative, cause table, invented missing-setting example, verification after a fix. | Current official Kubernetes Pod lifecycle, debug, logs, probe, and resource documentation checked. Mermaid rendered and visually inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; novice symptom task; disposable cluster reproduction; freshness decision. |
+| [Diagnose CrashLoopBackOff](knowledge/kubernetes/troubleshooting/crashloopbackoff.md) | Context check, per-container last-state and previous-log inspection, decision diagram and text alternative, clean-exit and init-container branches, cause table, invented missing-setting example, and verification over the prior failure interval. | Current official Kubernetes Pod lifecycle, debug, init-container, logs, probe, resource, and node-pressure documentation checked. Claude Opus 5.5 reviewed the guide read-only; revised Mermaid rendered and was visually inspected. No cluster or reader task ran. | Independent Kubernetes review; novice symptom task; disposable cluster reproduction; freshness decision. |
 
 ### Wave 73 (2026-10-02)
 
@@ -2432,6 +2432,30 @@ the changed claims. One static retrieval case records the available
 Deployment and empty-Service question. No account, cluster, Pod, network,
 request, or novice reader trial was run. Independent EKS security review
 and controlled incident exercises remain open; the page is still `draft`.
+
+### Focused review round 23 (2026-10-08)
+
+Reviewed the CrashLoopBackOff guide with Claude Opus 5.5. Corrected the
+claim that a loop always means an application failure: an app container
+under `restartPolicy: Always` can restart after a clean exit. The guide
+now identifies the affected app, init, or sidecar container before
+requesting its previous logs. It directs readers to termination and
+waiting messages when application logs are absent, separates OOM evidence
+from a mere exit code, and warns that missing events cannot rule out a
+probe kill.
+The revised diagram, cause table, and recovery step all follow this
+evidence path. Recovery checks account for a replacement Pod name and
+for a temporarily `Running` container between restarts. Opus's second
+read-only review found that a Deployment Pod points first to a ReplicaSet;
+the guide now follows that ownership chain, confirms rollout completion,
+and observes recovery against the old container's survival time rather
+than waiting through an unrelated backoff on a new Pod.
+
+Current Kubernetes primary documentation was checked for the changed
+claims. The Mermaid diagram rendered and was visually inspected. Two
+static retrieval cases record the clean-exit and init-container
+questions. No live cluster, disposable reproduction, independent
+Kubernetes review, or novice reader task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 

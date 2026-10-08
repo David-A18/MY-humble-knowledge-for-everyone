@@ -60,6 +60,14 @@ cases:
     question: When a Deployment Pod is deleted, does its Service endpoint disappear only after termination, and must the new Pod wait for that removal?
     expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
     required_source_ids: [kubernetes-endpointslices, kubernetes-statefulsets]
+  - id: kubernetes-crashloop-clean-exit
+    question: Why does a Deployment container show CrashLoopBackOff when its last exit code was zero, and how can I avoid mistaking a brief Running state for recovery?
+    expected_paths: [knowledge/kubernetes/troubleshooting/crashloopbackoff.md]
+    required_source_ids: [pod-lifecycle]
+  - id: kubernetes-init-crashloop
+    question: If a Pod shows Init:CrashLoopBackOff, which container's state and previous logs should I inspect?
+    expected_paths: [knowledge/kubernetes/troubleshooting/crashloopbackoff.md]
+    required_source_ids: [debug-init-containers]
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]

@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-08
+
+- **CrashLoopBackOff beginner review**: Added the clean-exit and init-container branches, named the specific container's state and previous logs, clarified OOM and probe evidence, and made recovery checks account for a replacement Pod and the prior failure interval. Claude Opus 5.5 reviewed the guide read-only; current Kubernetes documentation was checked and the revised diagram rendered and was visually inspected. Added two static retrieval cases. No live cluster, independent Kubernetes review, or novice reader task ran; the guide remains `draft`.
+
 ## 2026-10-07
 
 - **EKS operations beginner review**: Made an available Deployment and empty Service concrete through a selector mismatch, and separated AWS token, Kubernetes authentication, and namespace authorization failures. Clarified image-pull identity, Pod Identity checks, scheduling evidence, Auto Mode ownership, and delayed cluster-health signals. Claude Opus 5.5 reviewed the guide read-only; current AWS, Amazon ECR, and Kubernetes documentation was checked. Added one static retrieval case. No cluster, credential, network, user request, independent security review, or novice reader test ran; the guide remains `draft`.
