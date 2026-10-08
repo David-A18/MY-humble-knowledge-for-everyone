@@ -742,7 +742,7 @@ their own pages.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Kafka fundamentals](knowledge/databases/kafka/fundamentals.md) | Rewritten with a bounded order event, limited notice-board analogy, producer-to-group diagram, partition-local ordering, independent offsets, and retention limits. | Keyed Apache Kafka introduction, 4.1 design, and topic-configuration documentation. The scenario is invented; no Kafka cluster ran. | Independent Kafka review; an actual producer/consumer exercise; reader test; freshness decision. |
+| [Kafka fundamentals](knowledge/databases/kafka/fundamentals.md) | Rewritten with a bounded order event, limited notice-board analogy, producer-to-group diagram, partition-local ordering, independent offsets, and retention limits. Focused review made both group polls explicit, separated a record offset from current and committed positions, added broker replicas and a key choice, and clarified unread-data expiration. | Claude Opus 5.5 reviewed the page read-only; current Apache Kafka 4.3 introduction, design, topic-config, and consumer API sources were checked. The new sequence diagram rendered and was inspected. No Kafka cluster ran. | Independent Kafka domain review; an actual producer/consumer exercise; reader test; freshness decision. |
 
 The Apache Kafka documentation was consulted on 2026-09-30. This page does
 not claim that an unconfigured cluster has any particular delivery or
@@ -1003,7 +1003,7 @@ responsibilities already taught in the database section.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Amazon MSK](knowledge/cloud/aws/databases/amazon-msk.md) | Expanded from an outline into a managed-boundary explanation with a limited sorting-center analogy, invented order event, diagram, Provisioned/Serverless choice, network and IAM gates, lag limits, and understanding checks. | Keyed current AWS MSK overview, cluster-type, client-access, IAM, monitoring, lag, and quota docs. No cluster, client, metric, or event was tested. | Independent Kafka/AWS review; representative client and failure check; reader test; freshness decision. |
+| [Amazon MSK](knowledge/cloud/aws/databases/amazon-msk.md) | Expanded from an outline into a managed-boundary explanation with a limited notice-board analogy, invented order event, polling diagram, Standard/Express/Serverless choice, broker discovery, listener identity, lag limits, and understanding checks. | Claude Opus 5.5 reviewed the page read-only; current AWS MSK broker-type, connectivity, IAM/ACL, monitoring, version, patching, and quota sources were checked. The sequence diagram rendered and was inspected. No cluster, client, metric, or event was tested. | Independent Kafka/AWS review; representative client and failure check; reader test; freshness decision. |
 
 ### Wave 43 (2026-10-01)
 
@@ -1031,7 +1031,7 @@ explanations through the Pod's three separate gates.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [EKS to MSK applications](knowledge/cross-topic-guides/eks-to-msk-applications.md) | Rewritten with a bounded delivery-driver analogy, invented order-to-shipment flow, diagram, network/identity/application gates, IAM authorization scope, lag limitations, and understanding checks. Focused review clarified broker discovery, IAM versus SCRAM/mTLS, group actions, producer acknowledgments, offset timing, database-to-event handoff, and Pod shutdown. | Claude Opus 5.5 reviewed the page read-only; current AWS, Apache Kafka, Debezium, and Kubernetes primary docs were checked. The Mermaid diagram rendered and was inspected; three static retrieval cases were added. No Pod, cluster, role, event, or shipment was tested. | Independent EKS/Kafka security review; controlled connection and failure checks; reader test; freshness decision. |
+| [EKS to MSK applications](knowledge/cross-topic-guides/eks-to-msk-applications.md) | Rewritten with a bounded delivery-driver analogy, invented order-to-shipment flow, diagram, network/identity/application gates, IAM authorization scope, lag limitations, and understanding checks. Focused reviews clarified broker discovery, IAM versus SCRAM/mTLS, group actions, producer acknowledgments, offset timing, database-to-event handoff, and Pod shutdown. A linked review corrected auto-commit and Pod Identity Agent wording and aligned the topic name. | Claude Opus 5.5 reviewed the page read-only; current AWS, Apache Kafka, Debezium, and Kubernetes primary docs were checked. The Mermaid diagram rendered and was inspected; four static retrieval cases were added across the focused reviews. No Pod, cluster, role, event, or shipment was tested. | Independent EKS/Kafka security review; controlled connection and failure checks; reader test; freshness decision. |
 
 ### Wave 46 (2026-10-02)
 
@@ -2546,6 +2546,29 @@ This was a documentation review, not a live EKS/MSK run or a measured
 search evaluation. No cluster, broker, Pod, credential, event, shipment,
 independent security review, or novice reader task ran. The page
 remains `draft`.
+
+### Focused review round 28 (2026-10-08)
+
+Reviewed Kafka fundamentals and Amazon MSK with Claude Opus 5.5, then
+checked material claims against current Apache Kafka and Amazon MSK
+documentation. Both pages now draw consumer requests to brokers before
+the brokers return records. The Kafka page separates a record offset,
+the next position after polling, and the saved committed position;
+it also explains partition replicas, key routing, and expiration of
+unread records. The MSK page uses the same notice-board analogy and
+`orders.events` example, distinguishes Standard, Express, and
+Serverless responsibilities, and explains bootstrap discovery,
+authentication modes, lag, and broker patching. The linked EKS-to-MSK
+guide uses the same topic name and now distinguishes auto-commit,
+Pod Identity Agent, producer idempotence, and lag boundaries. Three
+static retrieval cases record the offset, MSK connection, and
+auto-commit questions. All three changed diagrams
+rendered and were visually inspected.
+
+This was a documentation and static validation review. No Kafka or MSK
+cluster, client, broker restart, event, measured retrieval run,
+independent domain review, or novice reader task ran. The revised
+pages remain `draft`.
 
 ### Candidates for the next wave
 

@@ -631,13 +631,22 @@
       "source_ids": [
         "msk-overview",
         "msk-provisioned",
+        "msk-express",
         "msk-serverless",
+        "msk-serverless-connectivity",
         "msk-client-access",
+        "msk-cross-vpc",
+        "msk-bootstrap",
         "msk-iam",
+        "msk-security-settings",
+        "msk-acls",
         "msk-monitoring",
+        "msk-serverless-monitoring",
         "msk-lag",
         "msk-standard-practices",
-        "msk-quotas"
+        "msk-patching",
+        "msk-quotas",
+        "msk-supported-versions"
       ],
       "stale_after": null,
       "status": "draft",
@@ -1158,6 +1167,7 @@
         "msk-lag",
         "kafka-documentation",
         "kafka-producer-config",
+        "kafka-topic-config",
         "kafka-producer-api",
         "kafka-consumer-api",
         "kafka-consumer-config",
@@ -1171,6 +1181,7 @@
         "eks-pod-security-groups",
         "eks-custom-networking",
         "eks-pod-id-sdk",
+        "eks-pod-id-agent",
         "kubernetes-pod-lifecycle"
       ],
       "stale_after": null,
@@ -1509,7 +1520,8 @@
       "source_ids": [
         "kafka-intro",
         "kafka-design",
-        "kafka-topic-configs"
+        "kafka-topic-configs",
+        "kafka-consumer-api"
       ],
       "stale_after": null,
       "status": "draft",

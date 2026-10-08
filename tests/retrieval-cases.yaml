@@ -222,3 +222,15 @@ cases:
     question: Does a completed Kafka producer send with acks=0 prove a broker accepted OrderPaid, and would any Kafka acknowledgment prove a shipment was created?
     expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
     required_source_ids: [kafka-producer-config, kafka-producer-api]
+  - id: kafka-polled-versus-committed-position
+    question: If a Kafka consumer polls records at offsets 0 and 1 but crashes before committing, why can its group receive them again?
+    expected_paths: [knowledge/databases/kafka/fundamentals.md]
+    required_source_ids: [kafka-consumer-api]
+  - id: msk-bootstrap-and-client-authentication
+    question: Why might an MSK client reach a bootstrap broker but still fail to publish, and how do IAM and SASL/SCRAM client identities differ?
+    expected_paths: [knowledge/cloud/aws/databases/amazon-msk.md]
+    required_source_ids: [msk-bootstrap, msk-iam, msk-acls]
+  - id: eks-msk-auto-commit-and-external-result
+    question: When can a Kafka consumer's automatic offset commits stay behind an external shipment result, and when can unfinished work be skipped?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [kafka-consumer-api, kafka-consumer-config]

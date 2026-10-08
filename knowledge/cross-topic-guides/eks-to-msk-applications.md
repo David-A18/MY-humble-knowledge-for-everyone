@@ -35,6 +35,9 @@ sources:
   - id: kafka-producer-config
     resource: https://kafka.apache.org/43/configuration/producer-configs/
     title: Apache Kafka 4.3 - Producer Configs
+  - id: kafka-topic-config
+    resource: https://kafka.apache.org/43/configuration/topic-configs/
+    title: Apache Kafka 4.3 - Topic Configs
   - id: kafka-producer-api
     resource: https://kafka.apache.org/43/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
     title: Apache Kafka 4.3 - KafkaProducer API
@@ -74,6 +77,9 @@ sources:
   - id: eks-pod-id-sdk
     resource: https://docs.aws.amazon.com/eks/latest/userguide/pod-id-minimum-sdk.html
     title: Amazon EKS User Guide - Use Pod Identity with the AWS SDK
+  - id: eks-pod-id-agent
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/pod-id-agent-setup.html
+    title: Amazon EKS User Guide - Set up the Pod Identity Agent
   - id: kubernetes-pod-lifecycle
     resource: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
     title: Kubernetes - Pod Lifecycle
@@ -110,8 +116,8 @@ positions, and retries can repeat an application effect.
 | Identity | Client mechanism matches the MSK listener; the Pod gets the intended credentials and Kafka permissions. | Authentication or authorization error; a wrong listener can also look like a connection failure. |
 | Application | Topic, partition key, group, event format, retries, and side effects meet the contract. | Failed produce/consume, growing lag, or wrong business outcome. |
 
-For an MSK Provisioned cluster, same-VPC client access is private by
-default and the broker security group must allow inbound traffic on the
+For an MSK Provisioned cluster, broker connections are VPC-private by
+default, and the broker security group must allow inbound traffic on the
 chosen listener port from the client, for example by referencing its
 security group. Other VPC arrangements need an explicit supported
 connectivity design, such as VPC peering or MSK multi-VPC private
@@ -136,30 +142,33 @@ MSK Provisioned cluster with IAM client access for this example. No EKS
 Pod, MSK cluster, IAM role, network rule, or shipment was created or
 tested.
 
-An orders API Pod publishes `OrderPaid`, keyed by order ID, to an MSK
-topic. A shipping consumer Pod reads it and creates a shipment in an
-external system. Both Pods run on EKS, but they need different Kafka
-permissions. Under MSK IAM access control, a role that can connect is
+An orders API Pod publishes `OrderPaid`, keyed by order ID, to the
+`orders.events` topic in MSK. A shipping consumer Pod reads it and
+creates a shipment in an external system. Both Pods run on EKS, but
+they need different Kafka permissions. Under MSK IAM access control,
+a role that can connect is
 not automatically allowed to produce to or read every topic.
 [^msk-iam-use-cases]
 
 ```mermaid
 sequenceDiagram
   participant Orders as Orders Pod on EKS
-  participant MSK as MSK brokers: orders topic
+  participant MSK as MSK brokers
   participant Shipping as Shipping Pod on EKS
   participant System as Shipment system
+  Note over MSK: orders.events topic
   Orders->>MSK: Send OrderPaid, keyed by order ID
   Shipping->>MSK: Poll for records
   MSK-->>Shipping: Return OrderPaid
   Shipping->>System: Create shipment, repeat-safe by order ID
   System-->>Shipping: Result
-  Shipping-->>MSK: Commit next offset after verified result
+  Shipping->>MSK: Commit next offset after verified result
 ```
 
 Text alternative: the orders Pod sends `OrderPaid` to an MSK broker,
-which appends it to a partition of the `orders` topic. The shipping Pod polls a broker
-for records and receives `OrderPaid`; the broker does not push it to an
+which appends it to a partition of the `orders.events` topic. The
+shipping Pod polls a broker for records and receives `OrderPaid`; the
+broker does not push it to an
 idle Pod. The shipping Pod creates a shipment outside Kafka. Both Pod
 connections need reachable brokers and authorized clients; the final
 effect needs repeat-safe application logic and its own evidence. After
@@ -169,8 +178,12 @@ separate step.[^kafka-documentation]
 
 This diagram assumes **automatic offset commits are disabled** and the
 shipping application checks the external result before it commits.
-The Java consumer enables automatic commits by default. That setting
-cannot by itself guarantee this order for a slow external operation. The
+The Java consumer enables automatic commits by default. Auto-commits
+follow the poll loop and commit interval, not the shipment result. They
+preserve the processing-before-commit order only if the application
+finishes every returned record before its next `poll()` call or close.
+Continuing to poll after handing unfinished work to another thread
+breaks that condition. The
 [delivery guide](../databases/kafka/delivery-guarantees-and-failure-handling.md)
 explains the commit window.[^kafka-consumer-api][^kafka-consumer-config]
 
@@ -184,8 +197,9 @@ for that failure window. The reverse order is also risky: committing an
 offset before the shipment exists can skip the business effect after a
 crash. A rollout or scale change can reassign partitions to another
 consumer instance and expose either timing mistake. A long processing
-step that exceeds the client's polling interval can also cause a
-rebalance.[^kafka-consumer-api]
+step that exceeds `max.poll.interval.ms` (the maximum time allowed
+between `poll()` calls) can also cause a rebalance.
+[^kafka-consumer-api]
 
 The event can also be lost between the orders database update and the
 Kafka send if those are separate operations. Conversely, publishing
@@ -238,27 +252,35 @@ All action names in the table use the `kafka-cluster:` prefix. The
 topic and group ARNs include the cluster name and UUID. The Apache
 Kafka Java producer enables idempotence by default unless a conflicting
 setting disables it; other client libraries may differ. Check the
-actual client and policy. AWS `kafka:` actions for MSK control-plane
-calls, such as getting bootstrap brokers, are separate from
+actual client and policy. Within a producer session, idempotence
+prevents the producer's own retries from adding duplicate records; it
+does not make the shipping system's external effect repeat-safe. AWS
+`kafka:` actions for MSK control-plane calls, such as getting bootstrap
+brokers, are separate from
 `kafka-cluster:` actions for client traffic.
 [^msk-iam-use-cases][^msk-kafka-actions][^kafka-producer-config]
+[^kafka-producer-api]
 
-Obtaining role credentials is another path. Pods without internet
-egress need access to AWS STS for IRSA or the EKS Auth API for Pod
-Identity; broker connectivity alone does not supply a role. Check the
-IAM client library's credential provider and the
-identity it actually selects. An older SDK, an earlier credential
-source in the chain, or access to the node's instance role through the
+Obtaining role credentials is another path. With IRSA, the Pod's AWS
+client must reach STS, for example through a regional STS VPC endpoint
+when it has no internet egress. With Pod Identity on EC2 nodes, the
+Pod contacts the node-local Pod Identity Agent, which must reach the
+EKS Auth API; nodes without internet egress need its VPC endpoint.
+Broker connectivity alone does not supply a role. Check the IAM
+client library's credential provider and the identity it actually
+selects. An older SDK, an earlier credential source in the chain, or
+access to the node's instance role through the
 instance metadata service can change the result.
-[^eks-private-clusters][^eks-pod-id-sdk][^eks-service-accounts]
+[^eks-private-clusters][^eks-pod-id-sdk][^eks-pod-id-agent]
+[^eks-service-accounts]
 
 Choose bootstrap endpoints and client settings that match the enabled
 listener and port. MSK Serverless requires IAM access control; the
 alternative methods in the table apply to suitable Provisioned
 clusters. With IAM, Kafka ACLs do not authorize IAM identities. With
-SASL/SCRAM or mutual
-TLS, check actual ACLs and MSK's default ACL behavior rather than
-assuming authentication restricts every topic. MSK Provisioned can
+SASL/SCRAM or mutual TLS, check actual ACLs and MSK's default ACL
+behavior rather than assuming authentication restricts every topic.
+MSK Provisioned can
 also have an unauthenticated listener, which does not check a client
 identity, and one cluster can enable multiple methods; inspect the
 actual security settings. The Pod's ability to call an AWS
@@ -274,22 +296,27 @@ before selecting the credential path.[^msk-serverless][^msk-iam]
   `acks=0` has no broker acknowledgment. With `acks=1` or `acks=all`,
   a successful completion reports the configured level of broker
   acknowledgment; none of these proves a shipping system acted on the
-  record.[^kafka-producer-config]
-- **Consumer path:** consumer lag measures how far the group's offset
-  trails the latest records in a topic. It measures Kafka progress, not
-  completed shipments. MSK lag metrics can be absent when the group is
+  record. `acks=all` waits for the current in-sync replicas;
+  `min.insync.replicas` sets the minimum count required for such a
+  successful write.[^kafka-producer-config][^kafka-topic-config]
+- **Consumer path:** MSK Provisioned consumer lag measures how far the
+  group's committed offset trails the latest records in a topic. It
+  measures Kafka progress, not completed shipments. MSK lag metrics
+  can be absent when the group is
   unstable, its name contains a colon or non-ASCII characters, or it has
   no offset yet. An absent lag series is not measured zero lag.[^msk-lag]
 - **Business path:** compare event identifiers with shipment records and
   investigate missing or duplicate outcomes. Keep application errors
   and retry handling visible alongside Kafka metrics.
 
-In a traditional consumer group, at most one consumer instance owns a
-partition at a time. Count consumer instances, not Pods, against the
-partition count: a Pod can run more than one instance, but instances
-beyond the partition count wait idle. A hot key stays on one partition;
-adding Pods cannot divide that key's work. Partition count, ordering
-needs, rebalances, and the slowest processing step belong in the
+In the consumer-group model shown here, at most one consumer instance
+owns a partition at a time. Count consumer instances, not Pods, against
+the partitions the group subscribes to: a Pod can run more than one
+instance, but instances beyond the `orders.events` partition count
+wait idle in this single-topic example. Uneven partition traffic can
+still limit throughput; adding Pods cannot divide one partition's
+ordered work. Partition count, ordering needs, rebalances, and the
+slowest processing step belong in the
 scaling decision.[^kafka-documentation]
 
 ## Check your understanding
@@ -331,6 +358,7 @@ symptom-based investigation. [Back to cross-topic guides](index.md)
 [^msk-lag]: [Amazon MSK - Consumer lag](https://docs.aws.amazon.com/msk/latest/developerguide/consumer-lag.html).
 [^kafka-documentation]: [Apache Kafka - Documentation](https://kafka.apache.org/documentation/).
 [^kafka-producer-config]: [Apache Kafka 4.3 - Producer Configs](https://kafka.apache.org/43/configuration/producer-configs/).
+[^kafka-topic-config]: [Apache Kafka 4.3 - Topic Configs](https://kafka.apache.org/43/configuration/topic-configs/).
 [^kafka-producer-api]: [Apache Kafka 4.3 - KafkaProducer API](https://kafka.apache.org/43/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html).
 [^kafka-consumer-api]: [Apache Kafka 4.3 - KafkaConsumer API](https://kafka.apache.org/43/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html).
 [^kafka-consumer-config]: [Apache Kafka 4.3 - Consumer Configs](https://kafka.apache.org/43/configuration/consumer-configs/).
@@ -344,4 +372,5 @@ symptom-based investigation. [Back to cross-topic guides](index.md)
 [^eks-pod-security-groups]: [Amazon EKS - Security Groups Per Pod](https://docs.aws.amazon.com/eks/latest/best-practices/sgpp.html).
 [^eks-custom-networking]: [Amazon EKS - Custom Networking](https://docs.aws.amazon.com/eks/latest/best-practices/custom-networking.html).
 [^eks-pod-id-sdk]: [Amazon EKS - Use Pod Identity with the AWS SDK](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-minimum-sdk.html).
+[^eks-pod-id-agent]: [Amazon EKS - Set up the Pod Identity Agent](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-agent-setup.html).
 [^kubernetes-pod-lifecycle]: [Kubernetes - Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/).
