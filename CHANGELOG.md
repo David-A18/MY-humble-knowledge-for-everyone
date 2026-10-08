@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified Kubernetes on AWS with accurate ALB target paths, standard and Auto Mode ownership, Fargate identity and storage limits, and two targeted retrieval cases.
 - Clarified CrashLoopBackOff diagnosis for clean exits, init containers, missing logs, memory and probe evidence, and recovery checks across restart delays.
 - Clarified EKS incident diagnosis for available Deployments with empty Services, operator access failures, image-pull identity, workload IAM, and Auto Mode component ownership.
 - Clarified the Git command map's index model, runnable staged-status example, and command effects; improved the Git topic routes and added retrieval cases.

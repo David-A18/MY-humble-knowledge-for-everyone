@@ -68,6 +68,14 @@ cases:
     question: If a Pod shows Init:CrashLoopBackOff, which container's state and previous logs should I inspect?
     expected_paths: [knowledge/kubernetes/troubleshooting/crashloopbackoff.md]
     required_source_ids: [debug-init-containers]
+  - id: eks-alb-instance-versus-ip-targets
+    question: Does an EKS ALB always send traffic directly to a Pod, and what does the Service do in instance and IP target modes?
+    expected_paths: [knowledge/cross-topic-guides/kubernetes-on-aws.md]
+    required_source_ids: [eks-alb-targets]
+  - id: eks-pod-identity-fargate-and-ebs
+    question: Can a Fargate Pod use EKS Pod Identity and mount an EBS volume for shared photo storage?
+    expected_paths: [knowledge/cross-topic-guides/kubernetes-on-aws.md]
+    required_source_ids: [eks-pod-identity, eks-ebs-csi]
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]

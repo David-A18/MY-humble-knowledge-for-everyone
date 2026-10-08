@@ -2,6 +2,7 @@
 
 ## 2026-10-08
 
+- **Kubernetes on AWS beginner review**: Corrected the ALB diagram to show alternative instance/NodePort and IP/Pod target paths and the Ingress-to-Service relationship. Clarified standard and Auto Mode ownership, Fargate limits for Pod Identity and EBS, node-role credential fallback, zonal block storage, and expected `WaitForFirstConsumer` behavior. Claude Opus 5.5 reviewed the guide read-only, current AWS and Kubernetes documentation was checked, the diagram rendered and was inspected, and two static retrieval cases were added. No live AWS check, independent security review, or novice reader task ran; the guide remains `draft`.
 - **CrashLoopBackOff beginner review**: Added the clean-exit and init-container branches, named the specific container's state and previous logs, clarified OOM and probe evidence, and made recovery checks account for a replacement Pod and the prior failure interval. Claude Opus 5.5 reviewed the guide read-only; current Kubernetes documentation was checked and the revised diagram rendered and was visually inspected. Added two static retrieval cases. No live cluster, independent Kubernetes review, or novice reader task ran; the guide remains `draft`.
 
 ## 2026-10-07

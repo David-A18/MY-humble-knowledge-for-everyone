@@ -1076,7 +1076,7 @@ resources, with ownership varying by the EKS mode and chosen integrations.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Kubernetes on AWS](knowledge/cross-topic-guides/kubernetes-on-aws.md) | Rewritten with a limited theatre analogy, invented photo API, Kubernetes-to-AWS mapping, ownership diagram, standard/Auto Mode differences, and understanding checks. | Keyed current Amazon EKS, Amazon ECR, and Kubernetes documentation. No cluster, ALB, Pod, S3 object, EBS volume, request, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent EKS/security and Opus review; controlled network, IAM, and storage checks; reader test; freshness decision. |
+| [Kubernetes on AWS](knowledge/cross-topic-guides/kubernetes-on-aws.md) | Rewritten with a limited theatre analogy, invented photo API, Kubernetes-to-AWS mapping, ownership diagram, standard/Auto Mode differences, and understanding checks. A later focused review corrected ALB target modes, integration ownership, workload identity, and storage limits. | Keyed current Amazon EKS, Amazon ECR, Amazon EBS, and Kubernetes documentation. Claude Opus 5.5 reviewed the focused revision read-only; the revised diagram was rendered and inspected. No cluster, ALB, Pod, S3 object, EBS volume, request, or reader test ran. | Independent EKS/security review; controlled network, IAM, and storage checks; reader test; freshness decision. |
 
 ### Wave 51 (2026-10-02)
 
@@ -2456,6 +2456,26 @@ claims. The Mermaid diagram rendered and was visually inspected. Two
 static retrieval cases record the clean-exit and init-container
 questions. No live cluster, disposable reproduction, independent
 Kubernetes review, or novice reader task ran; the page remains `draft`.
+
+### Focused review round 24 (2026-10-08)
+
+Reviewed Kubernetes on AWS with Claude Opus 5.5. The photo API now
+shows the Ingress-to-Service declaration and the two alternative ALB
+traffic paths: instance targets through a Service NodePort and IP
+targets directly to Pods. Standard EKS no longer implies that EKS
+automatically installs a load-balancer controller, while Auto Mode
+names the IngressClass and IngressClassParams handoff. The guide also
+distinguishes Fargate from Pod Identity and EBS support, warns about
+node-role credential fallback, and explains why one zonal EBS volume
+is not shared storage for replicas. The pending-claim diagnosis now
+accounts for `WaitForFirstConsumer`.
+
+Current AWS and Kubernetes primary documentation was checked for the
+changed claims. The Mermaid diagram rendered and was visually inspected.
+Two static retrieval cases record the ALB path and Fargate storage and
+identity questions. No AWS account, cluster, load balancer, Pod, volume,
+request, independent EKS security review, or novice reader task ran;
+the guide remains `draft`.
 
 ### Candidates for the next wave
 
