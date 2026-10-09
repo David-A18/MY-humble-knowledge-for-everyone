@@ -91,7 +91,15 @@ cases:
   - id: kubernetes-replacement-endpoints
     question: When a Deployment Pod is deleted, does its Service endpoint disappear only after termination, and must the new Pod wait for that removal?
     expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
-    required_source_ids: [kubernetes-endpointslices, kubernetes-statefulsets]
+    required_source_ids: [kubernetes-endpointslices, kubernetes-pod-lifecycle]
+  - id: kubernetes-selector-versus-owner
+    question: Does a Kubernetes Service own the Pods it sends traffic to, and could it select an unrelated Pod with matching labels?
+    expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-owners-dependents, kubernetes-replicasets, kubernetes-services]
+  - id: kubernetes-rollout-stall-versus-rollback
+    question: If a new Kubernetes Deployment image cannot start, will Kubernetes automatically roll back, and what does rollback restore?
+    expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-deployments]
   - id: kubernetes-crashloop-clean-exit
     question: Why does a Deployment container show CrashLoopBackOff when its last exit code was zero, and how can I avoid mistaking a brief Running state for recovery?
     expected_paths: [knowledge/kubernetes/troubleshooting/crashloopbackoff.md]

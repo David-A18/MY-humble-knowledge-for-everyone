@@ -417,7 +417,7 @@ against a running system, and it does not change the page's lifecycle status.
 | Concept | Type | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- | --- |
 | [Git fundamentals](knowledge/git/git-fundamentals.md) | Explanation | New page, authored to the standard; the focused review below adds inspection commands, reverse moves, tracking and branch-switch boundaries, and a clearer diagram. | Claude Opus 5.5 gave two read-only focused reviews. Current Pro Git and Git references were checked. The staged-edit and restore examples were reproduced in disposable repositories, and the revised diagram rendered and was inspected. No hosted remote, independent human technical review, or novice reader task ran. | Independent technical review; reader test; freshness decision. |
-| [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to Kubernetes concept pages; the trace is labelled conceptual. No cluster run for this rewrite. | Independent technical review; reader test; a freshness decision for the rewritten text. |
+| [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md) | Explanation | Rewritten to the standard; the focused review below clarifies selectors, owner references, Pod creation and deletion, node failure, and rollouts. | Claude Opus 5.5 gave two read-only focused reviews. Current Kubernetes references were checked, the revised diagram rendered and was inspected, and two static retrieval cases were added. No cluster run, independent technical review, or novice reader task ran for this rewrite. | Independent technical review; reader test; a freshness decision for the rewritten text. |
 | [Terraform fundamentals](knowledge/terraform/fundamentals/terraform-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to HashiCorp documentation; the `terraform_data` example is labelled illustrative and not executed for this page. | Independent technical review; reader test; a freshness decision for the rewritten text. |
 | [Start here](knowledge/start-here.md) | Learning Path | Route order only: Git fundamentals now precedes Git undo and recovery. | Existing validation evidence left unchanged; a known limitation records that the new and rewritten explanations are unreviewed. | Route re-review after reader testing. |
 
@@ -2665,6 +2665,22 @@ cases cover the `HEAD` distinction and restore boundary.
 
 This review did not use a hosted remote, independent human technical review,
 or novice reader task. The page remains `draft`.
+
+### Focused review round 34 (2026-10-09)
+
+Reviewed Kubernetes fundamentals twice with Claude Opus 5.5 and checked the
+material claims against current Kubernetes documentation. The page now
+distinguishes label selectors from owner references, the Service's traffic
+relationship from the Deployment's ownership chain, and Pod objects from
+running containers. Its linked YAML example identifies the Pod-template
+labels, both selectors, and the readiness probe. The deletion, node-failure,
+and rolling-update traces now state where delays, overlap, capacity limits,
+and stalled rollouts can occur. The revised Mermaid diagram rendered and was
+visually inspected. Two static retrieval cases cover ownership versus traffic
+selection and a stalled rollout versus rollback.
+
+This is source and static review, not a cluster run, independent technical
+review, measured search, or novice reader task. The page remains `draft`.
 
 ### Candidates for the next wave
 
