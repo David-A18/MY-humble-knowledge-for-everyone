@@ -228,6 +228,14 @@ cases:
     question: Can both PostgreSQL tables and MongoDB documents total units sold for one SKU, and what do indexes and aggregation each do?
     expected_paths: [knowledge/databases/relational-vs-document-databases.md]
     required_source_ids: [postgresql-indexes, mongodb-unwind, mongodb-group]
+  - id: mongodb-ticket-snapshot-vs-reference
+    question: If a ticket stores a requester's name and userId, which value is an embedded snapshot, and does MongoDB check that the referenced user exists?
+    expected_paths: [knowledge/databases/mongodb/fundamentals.md]
+    required_source_ids: [mongodb-referencing, mongodb-data-consistency]
+  - id: mongodb-primary-read-and-failover
+    question: Can a replica set secondary lag or a primary-only acknowledged write roll back during failover, and how are read preference and write concern different?
+    expected_paths: [knowledge/databases/mongodb/fundamentals.md]
+    required_source_ids: [mongodb-read-preference, mongodb-write-concern, mongodb-rollbacks]
   - id: gateway-route-attachment-vs-backend-reference
     question: Why can an HTTPRoute fail to attach to a Gateway in another namespace, or attach but fail to use a Service in another namespace?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md]

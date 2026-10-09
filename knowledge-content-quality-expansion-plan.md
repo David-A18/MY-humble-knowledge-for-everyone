@@ -449,7 +449,7 @@ decision has happened.
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [Relational vs. document databases](knowledge/databases/relational-vs-document-databases.md) | Rewritten to the standard and given a focused beginner review in round 37. | Keyed citations to current PostgreSQL and MongoDB documentation; the order example is labelled illustrative; Claude Opus 5.5 reviewed the revision twice read-only; the diagram was rendered and inspected. | Independent technical review; reader test; freshness decision. |
-| [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard. | Keyed citations to the MongoDB manual and, for the backup point, MongoDB's Atlas architecture guidance; the ticket document is labelled illustrative JSON, not database output. | Independent technical review; reader test; freshness decision. |
+| [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard and given a focused beginner review in round 38. | Keyed current MongoDB manual citations and Atlas backup guidance; the ticket document is illustrative JSON, not database output. Claude Opus 5.5 reviewed the revision twice read-only; both diagrams rendered and were inspected. | Independent technical review; reader test; freshness decision. |
 | [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard. | Keyed citations to Apache Kafka 4.1 documentation and the Apache Avro specification; partitions and offsets in the example are invented. The cross-partition ordering and event-format statements are labelled in the page as inferences, because the cited Kafka pages do not state them. | Independent technical review, including the version-pinned Kafka links; reader test; freshness decision. |
 | [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard. | Keyed citations to Kubernetes and Crossplane documentation; the platform API walk-through is conceptual, with no manifest and no cluster run. | Independent technical review; reader test; freshness decision. |
 | [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. | Independent security review before anyone relies on it; reader test; freshness decision. |
@@ -2748,6 +2748,25 @@ revised claims. The revised Mermaid diagram rendered and was visually
 inspected. Two static retrieval cases were added for the write boundary and
 cross-order total. No database workload, measured search, independent
 technical review, or novice reader task ran; the page remains `draft`.
+
+### Focused review round 38 (2026-10-09)
+
+Reviewed MongoDB fundamentals and its topic route with Claude Opus 5.5 twice,
+read-only. Moved document and collection basics ahead of indexes and cluster
+terms. The invented ticket now distinguishes a requester-name snapshot from
+the separate current user document and explicitly notes that MongoDB does not
+enforce the stored reference. A new diagram shows that boundary. The page
+defines the single-document atomic write scope, collection validation and
+already-stored shapes, a ticket-list index and query-plan check, and the
+separate purposes of replication and sharding. The replica diagram and text
+now explain asynchronous copies, majority-dependent failover, and possible
+rollback of writes not recorded by a majority. Numbered answers let a novice
+check the core ideas; two static retrieval cases cover references and failover.
+
+Current MongoDB primary documentation was checked for the revised claims.
+Both Mermaid diagrams rendered and were visually inspected. No MongoDB
+deployment or query, measured search, independent technical review, or novice
+reader task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 
