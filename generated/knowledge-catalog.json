@@ -846,8 +846,10 @@
         "azure-shared-responsibility",
         "azure-reliability-responsibility",
         "azure-regions-zones",
+        "azure-blob-reliability",
         "aws-autoscaling-groups",
-        "aws-ec2-on-demand"
+        "aws-ec2-on-demand",
+        "aws-budgets-costs"
       ],
       "stale_after": null,
       "status": "draft",

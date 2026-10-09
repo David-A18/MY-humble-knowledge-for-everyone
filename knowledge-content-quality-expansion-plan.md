@@ -1957,7 +1957,7 @@ first route into the existing material.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Cloud computing fundamentals](knowledge/cloud/cloud-computing-fundamentals.md) | Defines public cloud resources and the provider/customer split; limits the workshop analogy; walks through an invented photo site; adds a responsibility table, diagram and text alternative, misconception limits, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only outline and draft reviews. The second review identified an overbroad cloud definition, absolute scaling wording, incomplete service-model table, weak analogy limits, and source mismatch in the example; these were corrected. NIST, Microsoft, and AWS primary documentation was checked. The revised diagram was rendered and inspected; no cloud account, live workload, bill, failure test, or novice reader task was used. | Independent domain review, novice responsibility-and-cost task, and a real workload review before operational advice. |
+| [Cloud computing fundamentals](knowledge/cloud/cloud-computing-fundamentals.md) | Defines NIST's essential characteristics and the provider/customer split; limits the workshop analogy; distinguishes availability, durability, backups, and metered use; walks through an invented photo site with responsibility, capacity, recovery, and cost decisions. | Claude Opus 5.5 gave read-only outline and draft reviews, plus the two-pass focused review below. NIST, Microsoft, and AWS primary documentation was checked. The revised diagram rendered and was inspected; two static retrieval cases were added. No cloud account, live workload, bill, failure test, independent domain review, or novice reader task was used. | Independent domain review, novice responsibility-and-cost task, and a real workload review before operational advice. |
 
 ### Wave 121 (2026-10-07)
 
@@ -2629,6 +2629,24 @@ questions.
 
 This is source and static review, not a live model, tool, library service,
 measured search, independent teaching review, or novice reader task. The
+page remains `draft`.
+
+### Focused review round 32 (2026-10-09)
+
+Reviewed cloud computing fundamentals twice with Claude Opus 5.5 and checked
+its material claims against NIST SP 800-145 and current Microsoft and AWS
+primary documentation. The page now names NIST's essential characteristics,
+separates measured service from billing, corrects the public-cloud pooling
+and deployment-model explanations, and makes network controls and identity
+work visible in the IaaS/PaaS/SaaS table. It distinguishes availability,
+durability, and backups; warns that region choice alone does not establish
+zone or regional recovery; and moves quota, backup, and budget choices before
+the invented photo-site event. The cloud index now labels future topics as
+planned. The revised diagram rendered and was visually inspected. Two static
+retrieval cases cover backup misconceptions and metered use.
+
+This is source and static review, not a live cloud workload, bill, failure
+test, independent domain review, measured search, or novice reader task. The
 page remains `draft`.
 
 ### Candidates for the next wave

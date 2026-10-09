@@ -16,6 +16,14 @@ cases:
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
     required_source_ids: [nist-cloud-definition, azure-shared-responsibility]
+  - id: cloud-replication-versus-backup
+    question: If my cloud photo site has several application copies or redundant storage, can I recover an accidentally deleted photo without choosing backup settings?
+    expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
+    required_source_ids: [azure-reliability-responsibility]
+  - id: cloud-metered-service-versus-bill
+    question: Does measured service mean an idle virtual machine is free, and when should I set a spending alert for a traffic event?
+    expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
+    required_source_ids: [nist-cloud-definition, aws-ec2-on-demand, aws-budgets-costs]
   - id: ai-first-terms-and-trust
     question: As a beginner, how do AI, machine learning, generative AI, LLMs, assistants, and agents differ, and why should I check a generated answer?
     expected_paths: [knowledge/ai/ai-fundamentals.md]

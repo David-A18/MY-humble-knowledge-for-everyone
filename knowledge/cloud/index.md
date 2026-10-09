@@ -11,7 +11,7 @@ under development.
 
 | Topic | Use it for |
 | --- | --- |
-| [Cloud computing fundamentals](cloud-computing-fundamentals.md) | Understand shared responsibility, elasticity, regions, reliability, and metered cost before choosing a service. |
+| [Cloud computing fundamentals](cloud-computing-fundamentals.md) | Understand service models, shared responsibility, elasticity, regions, reliability, and metered use before choosing a service. |
 
 ## Providers
 
@@ -49,7 +49,7 @@ under development.
 | CDN caching | [CDN caching and origin protection](edge/cdn-caching-and-origin-protection.md) | Design cache keys, TTLs, purges, and direct-origin controls. |
 | Multi-CDN operations | [Multi-CDN operations](edge/multi-cdn-operations.md) | Keep DNS, cache, security, logs, purges, and rollback consistent across providers. |
 
-## Provider-neutral topics
+## Provider-neutral topics to develop
 
 - Cloud operating models.
 - Multi-cloud comparison notes.
