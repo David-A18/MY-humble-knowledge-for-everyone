@@ -448,7 +448,7 @@ decision has happened.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Relational vs. document databases](knowledge/databases/relational-vs-document-databases.md) | Rewritten to the standard. | Keyed citations to PostgreSQL and MongoDB documentation; the order example is labelled illustrative. | Independent technical review; reader test; freshness decision. |
+| [Relational vs. document databases](knowledge/databases/relational-vs-document-databases.md) | Rewritten to the standard and given a focused beginner review in round 37. | Keyed citations to current PostgreSQL and MongoDB documentation; the order example is labelled illustrative; Claude Opus 5.5 reviewed the revision twice read-only; the diagram was rendered and inspected. | Independent technical review; reader test; freshness decision. |
 | [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard. | Keyed citations to the MongoDB manual and, for the backup point, MongoDB's Atlas architecture guidance; the ticket document is labelled illustrative JSON, not database output. | Independent technical review; reader test; freshness decision. |
 | [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard. | Keyed citations to Apache Kafka 4.1 documentation and the Apache Avro specification; partitions and offsets in the example are invented. The cross-partition ordering and event-format statements are labelled in the page as inferences, because the cited Kafka pages do not state them. | Independent technical review, including the version-pinned Kafka links; reader test; freshness decision. |
 | [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard. | Keyed citations to Kubernetes and Crossplane documentation; the platform API walk-through is conceptual, with no manifest and no cluster run. | Independent technical review; reader test; freshness decision. |
@@ -2729,6 +2729,25 @@ exercises. This round changed reading and navigation text; it did not rerun a
 cluster or Terraform command, measure search results, or include an independent
 novice reader task. The bundle entry and Start here section checkboxes remain
 open until those reader tasks expose and resolve confusing handoffs.
+
+### Focused review round 37 (2026-10-09)
+
+Reviewed the existing relational-versus-document explanation with Claude Opus
+5.5 twice, read-only. Reordered the page so beginners meet the analogy and
+one order before the comparison terms. The order now shows the SQL join and
+the separate all-or-nothing write boundary: three relational inserts in a
+transaction versus one document insert, followed by the separate product
+stock update that crosses either order boundary. The cross-order `BOOK-1`
+total now explicitly filters document array items after `$unwind`, avoiding
+an incorrect sum of `PEN-4`. The decision table treats reporting, shared
+facts, and flexible fields as workload questions rather than universal
+product rankings. The check questions have matching numbered answers.
+
+Current PostgreSQL and MongoDB primary documentation was checked for the
+revised claims. The revised Mermaid diagram rendered and was visually
+inspected. Two static retrieval cases were added for the write boundary and
+cross-order total. No database workload, measured search, independent
+technical review, or novice reader task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 

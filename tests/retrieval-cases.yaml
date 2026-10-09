@@ -220,6 +220,14 @@ cases:
     question: Should I store an order and its line items in relational tables or one document, and how do transactions and product queries affect the choice?
     expected_paths: [knowledge/databases/relational-vs-document-databases.md]
     required_source_ids: [postgresql-transactions, mongodb-atomicity, mongodb-multikey-embedded]
+  - id: relational-document-order-write-boundary
+    question: If creating an order takes three table inserts or one document insert, which writes are atomic and when do I need a transaction?
+    expected_paths: [knowledge/databases/relational-vs-document-databases.md]
+    required_source_ids: [postgresql-transactions, mongodb-atomicity]
+  - id: relational-document-cross-order-total
+    question: Can both PostgreSQL tables and MongoDB documents total units sold for one SKU, and what do indexes and aggregation each do?
+    expected_paths: [knowledge/databases/relational-vs-document-databases.md]
+    required_source_ids: [postgresql-indexes, mongodb-unwind, mongodb-group]
   - id: gateway-route-attachment-vs-backend-reference
     question: Why can an HTTPRoute fail to attach to a Gateway in another namespace, or attach but fail to use a Service in another namespace?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md]

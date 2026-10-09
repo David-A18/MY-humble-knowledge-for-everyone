@@ -6,7 +6,7 @@ Database and data-platform knowledge for modeling, operations, reliability, perf
 
 | Section | Focus |
 | --- | --- |
-| [Relational vs. document databases](relational-vs-document-databases.md) | See one order modeled as tables and as a document, then decide which model fits a workload's access and consistency patterns. |
+| [Relational vs. document databases](relational-vs-document-databases.md) | Compare one order's read path, write boundary, shared product facts, and reporting questions in tables and a document. |
 | [MongoDB](mongodb/index.md) | Document modeling, indexes, replication, sharding, operations, and cloud choices. |
 | [Kafka](kafka/index.md) | Event streaming concepts, topic design, operations, and AWS integration. |
 
