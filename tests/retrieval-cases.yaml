@@ -1,5 +1,11 @@
 version: "1"
 cases:
+  - id: first-visit-single-topic-or-local-route
+    question: Can I learn one topic without installing tools, and where is the no-cloud Git, Kubernetes, and Terraform practice route?
+    expected_paths: [knowledge/start-here.md]
+  - id: first-visit-unfamiliar-term
+    question: Where can I quickly find the meaning of an unfamiliar term before reading a longer guide?
+    expected_paths: [knowledge/glossary.md]
   - id: git-undo-unstaged-edit
     question: How do I discard an unstaged edit without rewriting shared history?
     expected_paths: [knowledge/git/troubleshooting/undo-and-recovery.md]

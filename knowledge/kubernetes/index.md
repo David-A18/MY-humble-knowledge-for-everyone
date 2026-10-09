@@ -2,6 +2,13 @@
 
 Practical Kubernetes notes for workloads, core objects, kubectl workflows, application tooling, troubleshooting, and operations.
 
+Start with [Kubernetes fundamentals](fundamentals/kubernetes-fundamentals.md)
+if clusters, Pods, Deployments, or Services are new to you. Next, see
+[how a Service selects Pods](core-objects/how-a-service-selects-pods.md).
+For hands-on practice, follow [Start here](../start-here.md#end-to-end-local-practice-route):
+it includes the Git basics needed to inspect and restore exercise files before
+the [local deployment learning path](../cross-topic-guides/local-deployment-learning-path.md).
+
 ## Index
 
 | Section | Focus |

@@ -2700,6 +2700,24 @@ The linked tutorial records a prior Terraform v1.13.1 local run; this focused
 revision did not rerun the CLI. It also did not include independent technical
 review, measured search, or a novice reader task. The page remains `draft`.
 
+### Focused review round 36 (2026-10-09)
+
+Reviewed the first-visit route in the bundle root, Start here, and six topic
+indexes with Claude Opus 5.5 twice. The root now opens with learning goals,
+defines draft and outline signals, and names which AI and programming-language
+areas have articles today. Start here puts the topic chooser before the local
+exercise and makes the Git, Kubernetes, and Terraform prerequisites explicit.
+The Kubernetes and Terraform indexes now point to intermediate explanations;
+planned ML, MLOps, LLM, and AI-agent sections direct beginners to published
+AI material while marking advanced engineering references as such. Two static
+retrieval cases cover finding a first topic and looking up an unfamiliar term.
+
+The earlier local Kubernetes and Terraform run evidence remains scoped to those
+exercises. This round changed reading and navigation text; it did not rerun a
+cluster or Terraform command, measure search results, or include an independent
+novice reader task. The bundle entry and Start here section checkboxes remain
+open until those reader tasks expose and resolve confusing handoffs.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
