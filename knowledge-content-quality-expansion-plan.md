@@ -418,7 +418,7 @@ against a running system, and it does not change the page's lifecycle status.
 | --- | --- | --- | --- | --- |
 | [Git fundamentals](knowledge/git/git-fundamentals.md) | Explanation | New page, authored to the standard; the focused review below adds inspection commands, reverse moves, tracking and branch-switch boundaries, and a clearer diagram. | Claude Opus 5.5 gave two read-only focused reviews. Current Pro Git and Git references were checked. The staged-edit and restore examples were reproduced in disposable repositories, and the revised diagram rendered and was inspected. No hosted remote, independent human technical review, or novice reader task ran. | Independent technical review; reader test; freshness decision. |
 | [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md) | Explanation | Rewritten to the standard; the focused review below clarifies selectors, owner references, Pod creation and deletion, node failure, and rollouts. | Claude Opus 5.5 gave two read-only focused reviews. Current Kubernetes references were checked, the revised diagram rendered and was inspected, and two static retrieval cases were added. No cluster run, independent technical review, or novice reader task ran for this rewrite. | Independent technical review; reader test; a freshness decision for the rewritten text. |
-| [Terraform fundamentals](knowledge/terraform/fundamentals/terraform-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to HashiCorp documentation; the `terraform_data` example is labelled illustrative and not executed for this page. | Independent technical review; reader test; a freshness decision for the rewritten text. |
+| [Terraform fundamentals](knowledge/terraform/fundamentals/terraform-fundamentals.md) | Explanation | Rewritten to the standard; the focused review below clarifies managed objects versus state-only resources, saved plans, provider reads, and sensitive outputs. | Claude Opus 5.5 gave two read-only focused reviews. Current HashiCorp references were checked, the revised diagram rendered and was inspected, and two static retrieval cases were added. The linked tutorial records an earlier Terraform v1.13.1 run, but this focused revision did not run the CLI. | Independent technical review; reader test; a freshness decision for the rewritten text. |
 | [Start here](knowledge/start-here.md) | Learning Path | Route order only: Git fundamentals now precedes Git undo and recovery. | Existing validation evidence left unchanged; a known limitation records that the new and rewritten explanations are unreviewed. | Route re-review after reader testing. |
 
 The `stale_after` dates on Kubernetes fundamentals (2026-12-19) and Terraform
@@ -2681,6 +2681,24 @@ selection and a stalled rollout versus rollback.
 
 This is source and static review, not a cluster run, independent technical
 review, measured search, or novice reader task. The page remains `draft`.
+
+### Focused review round 35 (2026-10-09)
+
+Reviewed Terraform fundamentals twice with Claude Opus 5.5 and checked
+material claims against current HashiCorp documentation. The page now
+distinguishes managed external objects from state-only `terraform_data`,
+explains the resource address and what Terraform's state tracks, and marks the
+limit of the contractor analogy: unmanaged infrastructure is not adopted
+automatically. The plan/apply diagram and prose distinguish a reviewed saved
+plan from a fresh apply, and the security explanation covers provider reads,
+partial applies, sensitive saved plans, and redaction limits. The fundamentals
+index now links the local tutorial and no longer lists covered state topics as
+missing. The revised Mermaid diagram rendered and was visually inspected. Two
+static retrieval cases cover saved-plan approval and the state-only example.
+
+The linked tutorial records a prior Terraform v1.13.1 local run; this focused
+revision did not rerun the CLI. It also did not include independent technical
+review, measured search, or a novice reader task. The page remains `draft`.
 
 ### Candidates for the next wave
 
