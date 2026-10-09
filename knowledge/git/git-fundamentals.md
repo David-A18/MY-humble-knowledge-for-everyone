@@ -14,6 +14,9 @@ sources:
   - id: pro-git-getting-repository
     resource: https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
     title: Pro Git - Getting a Git Repository
+  - id: pro-git-first-time-setup
+    resource: https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
+    title: Pro Git - First-Time Git Setup
   - id: pro-git-recording-changes
     resource: https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository
     title: Pro Git - Recording Changes to the Repository
@@ -35,6 +38,15 @@ sources:
   - id: git-reflog
     resource: https://git-scm.com/docs/git-reflog
     title: Git reflog reference
+  - id: git-restore
+    resource: https://git-scm.com/docs/git-restore
+    title: Git restore reference
+  - id: git-switch
+    resource: https://git-scm.com/docs/git-switch
+    title: Git switch reference
+  - id: git-log
+    resource: https://git-scm.com/docs/git-log
+    title: Git log reference
 ---
 
 # Git fundamentals
@@ -57,12 +69,15 @@ Git is a version-control system: it records snapshots of a project folder so
 you can compare versions, return to an earlier one, work on several lines of
 change at once, and exchange that history with other people.
 
+Git is the tool and data format. GitHub and GitLab are services that can host
+a separate repository for your team; you can use Git without either one.
+
 Git keeps a repository's history and settings as metadata alongside your
 files. In an ordinary repository that metadata is in a hidden `.git` directory
 at the top of the project folder. You get one either by running `git init` in
 an existing folder or by copying an existing repository with `git clone`, which
-downloads its history and checks out a working copy of the latest
-version.[^pro-git-getting-repository]
+downloads its history and checks out a working copy of the remote's default
+branch.[^pro-git-getting-repository]
 
 You may occasionally see a `.git` that is a small text file instead of a
 directory. Linked worktrees and submodules use that file to point at metadata
@@ -71,7 +86,7 @@ either way.
 
 ## Why the model matters
 
-Most beginner Git trouble comes from one misunderstanding: assuming a change is
+Much beginner Git trouble comes from one misunderstanding: assuming a change is
 somewhere it is not. Typical examples are "I committed, so my teammate has it"
 or "I ran `git add`, so my later edits will be committed too". Neither is true,
 and both become obvious once you can picture where each version of a file is
@@ -79,7 +94,8 @@ held.
 
 The same model decides how safe an undo is. A change that exists only on your
 machine can usually be reshaped freely. A change that has been pushed to a
-shared branch is part of other people's history and needs a gentler undo.
+shared branch is part of other people's history and usually needs an undo
+that adds a new commit.
 
 ## The mental model: three holders, three pointers, one other repository
 
@@ -93,11 +109,18 @@ this order:
 | --- | --- | --- |
 | Working tree | The ordinary files you see and edit in your folder. | Your editor, or Git checking files out. |
 | Index (staging area) | Git's proposed next commit: the exact file contents that will be saved if you commit now. | `git add` copies the current contents of a file into it. |
-| Commit | A saved snapshot of the whole project, with an author, a message, and a link to the commit before it. | `git commit` turns the index into a new commit. |
+| Commit | A saved snapshot of the tracked project files, with an author, a message, and links to its parent commits when it has them. | `git commit` turns the index into a new commit. |
+
+A **tracked** file has an entry in the index, either because it was in the
+latest commit or because you just staged it. An **untracked** file has no
+index entry. `git add` begins tracking a new file. `.gitignore` hides matching
+untracked files from normal status output; it does not untrack files that Git
+already tracks.[^pro-git-recording-changes]
 
 The Pro Git book calls these Git's "three trees": the working directory, the
-index, and `HEAD`, meaning the snapshot of the last commit on your current
-branch.[^pro-git-reset-demystified]
+index, and `HEAD`. Here `HEAD` is shorthand for the **snapshot of the commit
+it currently resolves to**; the `HEAD` marker itself is only a
+pointer.[^pro-git-reset-demystified]
 
 **Three things are pointers. They hold no file contents; they only say which
 commit is meant.**
@@ -105,23 +128,28 @@ commit is meant.**
 | Pointer | Simple definition | How it moves |
 | --- | --- | --- |
 | Branch | A lightweight, movable label that points at one commit. | When you commit, the current branch moves forward to the new commit. |
-| `HEAD` | Git's marker for "where you are now". It normally points at the current branch. | It changes when you switch branches. |
-| Remote-tracking branch, such as `origin/main` | Your local bookmark of where a branch on the remote was when Git last contacted it. It is not a live view of the server. | Git updates it when you fetch and through relevant remote communication.[^pro-git-remote-branches] |
+| `HEAD` | Git's marker for "where you are now". It normally points at a branch, which is then your current branch. | It changes when you switch branches. |
+| Remote-tracking branch, such as `origin/main` | Your local bookmark of where a branch on the remote was when Git last contacted it. It is not a live view of the server. | A fetch or pull updates it; a successful push to that branch can update it too.[^pro-git-remote-branches] |
 
-A commit stores a pointer to a full project snapshot plus pointers to its
-parent commits, and a branch is simply a movable pointer to one
-commit.[^pro-git-branches]
+Each commit has an ID, which `git log` shows, and refers to a project snapshot
+and any parent commits. A branch is a movable pointer to one commit.
+[^pro-git-branches]
 
 `HEAD` can also point directly at a commit instead of at a branch. Git calls
 this a detached `HEAD`. It happens when you check out a specific commit, and
-commits made in that state do not move any branch.[^git-glossary] If Git tells
-you that you are in a detached `HEAD` state, stop and read the message before
-committing.
+commits made in that state do not move any branch.[^git-glossary] It can
+happen when you inspect a commit, tag, or remote-tracking branch directly.
+If you made commits while detached, `git switch -c <new-branch>` gives those
+commits and future work a branch name. `git switch <existing-branch>` returns
+to an existing branch when you do not need to keep detached commits. If
+`git status` says a rebase or bisect is in progress, finish or exit that
+operation first.[^git-switch]
 
 **One thing is a separate repository.** A remote is another repository that you
 exchange commits with, often a hosted copy. It has its own commits and its own
 branches. `git push` sends your commits to it and `git fetch` downloads commits
-from it. It is "remote" only in the sense of being a different repository: it
+from it. `origin` is the name `git clone` normally gives the repository it
+copied. It is "remote" only in the sense of being a different repository: it
 is usually on a server, but it can be another folder on the same
 machine.[^pro-git-remotes]
 
@@ -141,8 +169,9 @@ Imagine you are shipping parts from a workshop:
 - The **shared depot** is the remote: a separate shelf with its own boxes and
   its own sticky notes. Your colleagues see a box only after you deliver it
   there.
-- Your **last note from the depot** is a remote-tracking branch such as
-  `origin/main`. It can be out of date until you contact the depot again.
+- Your **copy of the depot's sticky note**, as it looked at your last visit,
+  is a remote-tracking branch such as `origin/main`. It can be out of date.
+- A **"you are here" arrow** pointing at your current sticky note is `HEAD`.
 
 The analogy is useful for one idea: preparing, saving, and sharing are three
 separate actions. It breaks down in several places, and each break teaches
@@ -165,45 +194,68 @@ something true about Git:
   reflog entries expire and unreachable objects can later be removed.
   [^git-reflog]
 
+The reflog records where local pointers have been, not every edit to your
+files. A change you never committed has no guaranteed recovery path. Inspect
+before using a command that replaces working files.[^git-reflog][^git-restore]
+
 ## Visual: how a change moves
 
 ```mermaid
-flowchart LR
-  subgraph local["Your machine: one local repository"]
-    wt["Working tree<br/>files you edit"]
-    idx["Index<br/>proposed next commit"]
-    head["Commits<br/>current branch points at the latest"]
-    rt["origin/main<br/>local last-known remote tip"]
-  end
-  remote["Remote repository<br/>shared with others"]
-  wt -- "git add" --> idx
-  idx -- "git commit" --> head
-  head -- "git push" --> remote
-  remote -- "git fetch" --> rt
-  rt -- "merge or rebase if wanted" --> head
+sequenceDiagram
+  participant W as Working tree
+  participant I as Index
+  participant L as Local commit store
+  participant R as Remote repository
+  W->>I: git add copies the current file version
+  I->>L: git commit saves the index snapshot
+  L->>R: git push sends commits
+  R->>L: git fetch downloads commits
+  Note over L: HEAD normally → branch → commit
+  Note over L: origin/main → last-known remote tip
 ```
 
 Text alternative: inside your machine, a change starts in the working tree.
 `git add` copies it into the index. `git commit` turns the index into a new
 commit, and the current branch moves to point at it. Everything so far is
 local. Only `git push` sends commits to the remote repository. `git fetch`
-brings remote commits into this repository and updates the local
-remote-tracking branch `origin/main`. A later merge or rebase can bring those
-commits into your current branch. Fetch alone does not move that branch or
-edit your working files. The diagram shows the three holders, the last-known
-remote pointer, and the remote repository. `HEAD` points at the current branch
-and is not drawn separately.
+brings remote commits into this repository's commit store and updates the
+local remote-tracking pointer `origin/main`. The fetched commits are in the
+same local store as your commits; the pointer only names their tip. A later
+merge or rebase can integrate them into your current branch. Fetch alone
+does not move that branch or edit your working files. A successful push can
+also update your local remote-tracking pointer. `HEAD` points at the current
+branch and is not drawn separately. If a push is rejected because the remote
+branch moved, fetch and integrate its commits before retrying.
 
 Use the diagram to answer one question before any command: which arrow am I
 about to cross, and who will be affected when I do?
 
+## See where a change lives
+
+These commands inspect without moving a change:
+
+| Question | Command | What it shows |
+| --- | --- | --- |
+| What is staged, unstaged, or untracked? | `git status` | File-level differences between the latest commit, index, and working tree. |
+| What have I changed but not staged? | `git diff` | Working-tree changes compared with the index. New untracked files do not appear here; use `git status` to find them. |
+| What will my next commit include? | `git diff --staged` | Index changes compared with the latest commit. |
+| Where do my branch labels point? | `git log --oneline --graph --all --decorate` | Commit history and the local branch and remote-tracking pointers Git currently knows. |
+
+These views use your local repository; they do not ask the remote server
+whether someone pushed a newer commit.[^pro-git-recording-changes]
+[^pro-git-remote-branches][^git-log]
+
 ## Walk-through: one file change
 
-This is an illustrative sequence, not recorded command output. Start with a
+This is an illustrative sequence, not recorded command output; its state
+transitions were checked in a disposable local repository. Start with a
 clean repository on branch `main`, where the committed file `greeting.txt`
 contains `Hello`. The remote `origin` has the same `main` commit. Assume
-this is a personal practice remote that allows a direct push; team
-repositories may require a branch and pull request instead.
+local `main` tracks `origin/main` and this is a personal practice remote
+that allows a direct push; team repositories may require a branch and pull
+request instead. To try it yourself, set your commit name and email and
+use your repository's actual branch name, which may differ from `main`.
+[^pro-git-first-time-setup]
 
 1. You edit `greeting.txt` to `Hello, world`.
 2. You run `git add greeting.txt`.
@@ -211,35 +263,37 @@ repositories may require a branch and pull request instead.
 4. You run `git commit -m "Greet the world"`.
 5. You run `git push origin main`.
 
-| After step | Working tree | Index | Latest commit on local `main` | `main` on the remote |
-| --- | --- | --- | --- | --- |
-| Start | `Hello` | `Hello` | `Hello` | `Hello` |
-| 1. Edit | `Hello, world` | `Hello` | `Hello` | `Hello` |
-| 2. Stage | `Hello, world` | `Hello, world` | `Hello` | `Hello` |
-| 3. Edit again | `Hello, world!` | `Hello, world` | `Hello` | `Hello` |
-| 4. Commit | `Hello, world!` | `Hello, world` | `Hello, world` | `Hello` |
-| 5. Push | `Hello, world!` | `Hello, world` | `Hello, world` | `Hello, world` |
+| After step | Working tree | Index | Local `main` commit | Local `origin/main` pointer | Remote `main` commit |
+| --- | --- | --- | --- | --- | --- |
+| Start | `Hello` | `Hello` | `Hello` | `Hello` | `Hello` |
+| 1. Edit | `Hello, world` | `Hello` | `Hello` | `Hello` | `Hello` |
+| 2. Stage | `Hello, world` | `Hello, world` | `Hello` | `Hello` | `Hello` |
+| 3. Edit again | `Hello, world!` | `Hello, world` | `Hello` | `Hello` | `Hello` |
+| 4. Commit | `Hello, world!` | `Hello, world` | `Hello, world` | `Hello` | `Hello` |
+| 5. Push | `Hello, world!` | `Hello, world` | `Hello, world` | `Hello, world` | `Hello, world` |
 
 What to notice:
 
-- After step 3, `git status` reports the file as both staged and not staged.
-  That is correct: the index and the working tree hold different
-  versions.[^pro-git-recording-changes]
+- After step 3, `git status` lists the file under both "Changes to be
+  committed" and "Changes not staged for commit". The index and working
+  tree hold different versions.[^pro-git-recording-changes]
 - The commit in step 4 saves the index, so it contains `Hello, world` without
   the exclamation mark. The exclamation mark is still only in your working
   tree.
 - Until step 5, the new commit exists only on your machine. If that disk failed
   before the push, the commit would be lost unless something else had backed
   it up.
-- Step 5 succeeds only if you have write access and nobody else has pushed new
-  commits to the remote `main` in the meantime.[^pro-git-remotes]
+- Step 5 requires write access and a remote that accepts the update. New
+  commits on remote `main`, branch rules, or server hooks can reject the
+  push.[^pro-git-remotes]
 
-The "`main` on the remote" column describes the real remote for this invented
-sequence. On your machine, `origin/main` is only the last-known position. It
-stays at the starting commit while you make the local edit and commit. A push
-or fetch can update that bookmark, but another person's later push can make
-it stale again. Even an "up to date with `origin/main`" status message does
-not check the server live.[^pro-git-remote-branches]
+The remote column describes the real remote for this invented sequence.
+`origin/main` is only the last-known position on your machine. It stays at
+the starting commit while you edit and commit; after step 4, `git status`
+reports that your branch is ahead of `origin/main` by one commit. A push or
+fetch can update that bookmark, but another person's later push can make it
+stale again. Even an "up to date with `origin/main`" status message does not
+check the server live.[^pro-git-remote-branches]
 
 ## Local commit versus remote push
 
@@ -259,18 +313,35 @@ This difference drives the safest way to undo a mistake:
 
 | Where the unwanted commit is | Usual safe direction |
 | --- | --- |
-| Only in your local repository | You can usually amend or reset it, after making a backup branch. |
+| Only in your local repository | You can usually amend or reset it; first keep a branch at any commit you might need again. |
 | Pushed to a branch others use | Add a new commit that reverses it with `git revert`, instead of rewriting shared history. |
+
+This table concerns **commits**. A backup branch and the reflog do not save
+unstaged or staged edits that were never committed. If you pushed to a
+branch only you use, rewriting it may be acceptable; read the recovery
+guide before any force push.
 
 The [undo and recovery guide](troubleshooting/undo-and-recovery.md) explains
 how to tell which case you are in and which command to choose.
 
+Two reverse moves also follow from the three-holder model. For a tracked
+file, `git restore <file>` replaces its working-tree contents with the index
+version; this discards unstaged edits. `git restore --staged <file>` replaces
+the index version with the latest commit's version while leaving the working
+file alone. A staged version that differs from the working file can be lost
+from the index. If the file was new and never committed, unstaging it makes
+it untracked again. Inspect `git status` and both diffs before either
+command, then use the recovery guide for the exact situation.[^git-restore]
+
 ## Common misconceptions
 
-- **"Committing backs up my work."** Not until you push. A commit protects you
-  against your own later edits, not against losing the machine.
-- **"`git add` tracks a file, so future edits are included."** `git add` stages
-  the file's contents at that moment. Later edits need another `git add`.
+- **"Committing backs up my work."** A local commit protects you against your
+  own later edits, not against losing the machine. A push to a repository on
+  another machine provides another copy.
+- **"Once a file is tracked, my later edits are committed automatically."**
+  `git add` stages its contents at that moment. Later edits need another
+  `git add`. The separate `git commit -a` option stages changes to already
+  tracked files, but does not add untracked files.[^pro-git-recording-changes]
 - **"A branch is a copy of the project."** A branch is a label pointing at one
   commit. Creating a branch does not copy any files.[^pro-git-branches]
 - **"Moving a branch deletes its old commits."** A branch points at one commit
@@ -280,6 +351,13 @@ how to tell which case you are in and which command to choose.
   [^pro-git-branches][^git-reflog]
 - **"Fetching changes my files."** Fetch only downloads. Merging or rebasing is
   a separate step.[^pro-git-remotes]
+- **"Uncommitted edits belong to this branch."** There is one working tree
+  and one index in this checkout. When you switch branches, Git updates them
+  toward the target branch and carries edits across when it safely can; it
+  refuses a switch that would overwrite them. Untracked files also stay in
+  the working tree unless they block the switch. Commit first or follow the
+  [task-switching guide](commands/common-use-cases.md#other-common-tasks)
+  to store edits temporarily.[^git-switch]
 
 ## Check your understanding
 
@@ -292,12 +370,19 @@ how to tell which case you are in and which command to choose.
 - Why is `git revert` preferred over rewriting history for a commit that is
   already on a shared branch?
 
+**Answers:** A normal commit saves the index, so the other two edits remain
+only in the working tree. Your teammate cannot see your two local commits
+until you push them. If a push is rejected because the remote moved forward,
+fetch and integrate the new history before retrying. On a shared branch,
+`git revert` records the reversal in a new commit so teammates do not have to
+repair their copies of rewritten history.
+
 ## Next steps
 
+- Look up everyday commands in [Git daily commands](commands/daily-commands.md).
 - Practise safe inspection and recovery in [Git undo and
   recovery](troubleshooting/undo-and-recovery.md); start with its [first
   checks](troubleshooting/undo-and-recovery.md#first-find-out-where-the-mistake-lives).
-- Look up everyday commands in [Git daily commands](commands/daily-commands.md).
 - See branching and remote workflows in [common Git use
   cases](commands/common-use-cases.md).
 - Return to the [Start here](../start-here.md) learning route.
@@ -308,6 +393,8 @@ how to tell which case you are in and which command to choose.
   Demystified](https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified).
 - Creating or cloning a repository: [Pro Git - Getting a Git
   Repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository).
+- Configuring your commit identity and default branch: [Pro Git - First-Time
+  Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
 - Tracked, untracked, modified, and staged files: [Pro Git - Recording Changes
   to the
   Repository](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
@@ -321,6 +408,9 @@ how to tell which case you are in and which command to choose.
   Remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes).
 - Your local record of remote branches: [Pro Git - Remote
   Branches](https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches).
+- Working-tree and index recovery: [Git restore](https://git-scm.com/docs/git-restore).
+- Switching branches with pending work: [Git switch](https://git-scm.com/docs/git-switch).
+- Inspecting local commits and pointers: [Git log](https://git-scm.com/docs/git-log).
 - Temporary recovery records for moved branch tips: [Git reflog](https://git-scm.com/docs/git-reflog).
 - Every command's options: [Git reference documentation](https://git-scm.com/docs).
 
@@ -334,6 +424,7 @@ how to tell which case you are in and which command to choose.
 
 [^pro-git-reset-demystified]: [Pro Git - Reset Demystified](https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified), source record `pro-git-reset-demystified`.
 [^pro-git-getting-repository]: [Pro Git - Getting a Git Repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository), source record `pro-git-getting-repository`.
+[^pro-git-first-time-setup]: [Pro Git - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup), source record `pro-git-first-time-setup`.
 [^pro-git-recording-changes]: [Pro Git - Recording Changes to the Repository](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository), source record `pro-git-recording-changes`.
 [^pro-git-branches]: [Pro Git - Branches in a Nutshell](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell), source record `pro-git-branches`.
 [^pro-git-remotes]: [Pro Git - Working with Remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes), source record `pro-git-remotes`.
@@ -341,3 +432,6 @@ how to tell which case you are in and which command to choose.
 [^git-glossary]: [Git glossary](https://git-scm.com/docs/gitglossary), source record `git-glossary`.
 [^git-repository-layout]: [Git repository layout](https://git-scm.com/docs/gitrepository-layout), source record `git-repository-layout`.
 [^git-reflog]: [Git reflog reference](https://git-scm.com/docs/git-reflog), source record `git-reflog`.
+[^git-restore]: [Git restore reference](https://git-scm.com/docs/git-restore), source record `git-restore`.
+[^git-switch]: [Git switch reference](https://git-scm.com/docs/git-switch), source record `git-switch`.
+[^git-log]: [Git log reference](https://git-scm.com/docs/git-log), source record `git-log`.

@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified Git fundamentals with inspection commands, tracked and untracked states, `HEAD` pointers, `git restore` directions, branch-switch behavior, and a revised local-versus-remote diagram; added two retrieval cases.
 - Clarified cloud computing fundamentals with NIST's exact characteristics, IaaS/PaaS/SaaS network and identity duties, availability versus durability, backup limits, region and zone choices, quotas, and budget alerts; added two retrieval cases.
 - Clarified AI fundamentals with context-versus-training, classification, tool-execution, and prompt-injection explanations; corrected the library diagram and added two retrieval cases.
 - Routed 90 knowledge-bundle return-to-home links to the knowledge index instead of the repository README, removed a governance link from the beginner Start here page, and clarified the authoring rule for future pages.

@@ -416,7 +416,7 @@ against a running system, and it does not change the page's lifecycle status.
 
 | Concept | Type | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- | --- |
-| [Git fundamentals](knowledge/git/git-fundamentals.md) | Explanation | New page, authored to the standard. | Keyed citations to Pro Git chapters; the walk-through is labelled illustrative. No execution or review record. | Independent technical review; reader test; freshness decision. |
+| [Git fundamentals](knowledge/git/git-fundamentals.md) | Explanation | New page, authored to the standard; the focused review below adds inspection commands, reverse moves, tracking and branch-switch boundaries, and a clearer diagram. | Claude Opus 5.5 gave two read-only focused reviews. Current Pro Git and Git references were checked. The staged-edit and restore examples were reproduced in disposable repositories, and the revised diagram rendered and was inspected. No hosted remote, independent human technical review, or novice reader task ran. | Independent technical review; reader test; freshness decision. |
 | [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to Kubernetes concept pages; the trace is labelled conceptual. No cluster run for this rewrite. | Independent technical review; reader test; a freshness decision for the rewritten text. |
 | [Terraform fundamentals](knowledge/terraform/fundamentals/terraform-fundamentals.md) | Explanation | Rewritten to the standard. | Keyed citations to HashiCorp documentation; the `terraform_data` example is labelled illustrative and not executed for this page. | Independent technical review; reader test; a freshness decision for the rewritten text. |
 | [Start here](knowledge/start-here.md) | Learning Path | Route order only: Git fundamentals now precedes Git undo and recovery. | Existing validation evidence left unchanged; a known limitation records that the new and rewritten explanations are unreviewed. | Route re-review after reader testing. |
@@ -2648,6 +2648,23 @@ retrieval cases cover backup misconceptions and metered use.
 This is source and static review, not a live cloud workload, bill, failure
 test, independent domain review, measured search, or novice reader task. The
 page remains `draft`.
+
+### Focused review round 33 (2026-10-09)
+
+Reviewed Git fundamentals twice with Claude Opus 5.5 and checked the material
+claims against current Pro Git and Git command references. The page now shows
+how to inspect the working tree, index, commits, and branch pointers; explains
+why Pro Git calls `HEAD` a tree even though the marker is a pointer; defines
+tracked and untracked files; and distinguishes Git from Git hosting services.
+The reverse `git restore` moves, uncommitted-work limits, detached `HEAD`
+route, branch-switch behavior, and remote-tracking pointer are more explicit.
+The invented staged-edit sequence and restore outcomes were reproduced in
+disposable repositories, including a local bare remote. The revised Mermaid
+sequence diagram rendered and was visually inspected. Two static retrieval
+cases cover the `HEAD` distinction and restore boundary.
+
+This review did not use a hosted remote, independent human technical review,
+or novice reader task. The page remains `draft`.
 
 ### Candidates for the next wave
 

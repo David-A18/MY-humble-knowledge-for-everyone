@@ -12,6 +12,14 @@ cases:
     question: Does Git saying my branch is up to date with origin/main prove that nobody has pushed to the remote since my last fetch?
     expected_paths: [knowledge/git/git-fundamentals.md]
     required_source_ids: [pro-git-remote-branches]
+  - id: git-head-pointer-versus-snapshot
+    question: Is HEAD itself a copy of my project files, and what does Pro Git mean by calling HEAD one of the three trees?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-reset-demystified]
+  - id: git-restore-working-versus-staged
+    question: What is the difference between git restore file and git restore --staged file, and which uncommitted edits can I lose?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [git-restore]
   - id: cloud-provider-versus-customer
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]

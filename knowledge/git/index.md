@@ -13,10 +13,10 @@ Practical Git knowledge for daily development, repository maintenance, automatio
 | Section | Focus |
 | --- | --- |
 | [Commands](commands/index.md) | Daily work, branch-to-review paths, recovery and diagnostics, a second-worktree exercise, and a task-based command map. |
-| [Troubleshooting](troubleshooting/index.md) | Recovery procedures for common Git problems; read Git fundamentals first if the three trees are unfamiliar. |
+| [Troubleshooting](troubleshooting/index.md) | Recovery procedures for common Git problems; read Git fundamentals first if the working tree, index, and commits are unfamiliar. |
 | [Best practices](best-practices/index.md) | Branching, commit hygiene, and review readiness. |
 | [Tricks](tricks/index.md) | Useful productivity patterns and lesser-known commands. |
-| [GitHub Actions](github-actions/index.md) | Workflow design, CI/CD patterns, and action troubleshooting. |
+| [GitHub Actions](github-actions/index.md) | GitHub's workflow automation: CI/CD patterns and action troubleshooting. |
 
 ## Official documentation
 

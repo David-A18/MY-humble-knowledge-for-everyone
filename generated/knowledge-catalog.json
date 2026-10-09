@@ -2054,13 +2054,17 @@
       "source_ids": [
         "pro-git-reset-demystified",
         "pro-git-getting-repository",
+        "pro-git-first-time-setup",
         "pro-git-recording-changes",
         "pro-git-branches",
         "pro-git-remotes",
         "pro-git-remote-branches",
         "git-glossary",
         "git-repository-layout",
-        "git-reflog"
+        "git-reflog",
+        "git-restore",
+        "git-switch",
+        "git-log"
       ],
       "stale_after": null,
       "status": "draft",
