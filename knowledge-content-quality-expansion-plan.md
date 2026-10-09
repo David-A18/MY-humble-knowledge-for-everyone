@@ -1969,11 +1969,23 @@ through one invented library and sends readers to the deeper tooling routes.
 | --- | --- | --- | --- |
 | [AI fundamentals](knowledge/ai/ai-fundamentals.md) | Distinguishes AI systems, ML, generative AI, LLMs, assistants, and agents; separates training from using a model; uses a limited sign-painter analogy, an invented library, a diagram and text alternative, understanding questions, and official next steps. The focused review below clarifies context versus training, classification with a generative model, application-executed tools, and untrusted input. | Claude Opus 5.5 gave read-only design and draft reviews, plus the two-pass focused review below. OECD, Google, Anthropic, and NIST primary sources were checked. The revised diagram rendered and was inspected; two static retrieval cases were added. No model, tool, library service, measured retrieval run, or novice reader task ran. | Independent AI education and technical review, novice classification-and-trust task, and revision from observed confusion. |
 
+### Wave 122 (2026-10-09)
+
+The programming-languages section now has a first entry for readers who have
+never written a program. It uses one small Python script to trace source text,
+parsing, input, a function call, a condition, return, and printed output. The
+page also distinguishes Python's script path from other language runtimes and
+points to the official Python and MDN learning routes.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [Programming fundamentals](knowledge/programming-languages/programming-fundamentals.md) | Plain definitions, a limited museum-guide analogy, a three-input Python trace, a flow diagram and text alternative, misconceptions, understanding questions, and official next steps. Linked from the topic index, root, Start here, and glossary. | Claude Opus 5.5 drafted and reviewed it read-only; Codex corrected its Python execution model and verified claims against current official Python and MDN documentation. The exact code block ran on Python 3.14.4 with inputs `30`, `12`, and `warm`; the two valid inputs succeeded and invalid text raised `ValueError`. The diagram rendered and was inspected; two static retrieval cases were added. | Independent programming-education review, a novice trace-and-error task, and a maintained beginner exercise before treating this as a complete programming course. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 169 concepts, all marked `draft`. Every
+The generated catalog records 170 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 121. This accounting does **not** mean that every explanation
+waves 1 to 122. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -1994,12 +2006,12 @@ demonstration, so most teaching elements do not apply there.
 | Git | 17 | 17 | 0 |
 | Kubernetes | 46 | 46 | 0 |
 | Migrations | 9 | 9 | 0 |
-| Programming languages | 3 | 3 | 0 |
+| Programming languages | 4 | 4 | 0 |
 | Security | 3 | 3 | 0 |
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **169** | **169** | **0** |
+| **Total** | **170** | **170** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks

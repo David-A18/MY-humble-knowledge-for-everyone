@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Added a beginner programming fundamentals explanation with a verified three-input Python example, source-to-output diagram, official references, first-visit links, glossary terms, and two retrieval cases.
 - Reworked the knowledge-base first-visit route, clarified local practice prerequisites and review evidence, linked beginner paths from topic indexes, and added two navigation retrieval cases.
 - Clarified Terraform fundamentals with external versus state-only resources, resource addresses, saved-plan approval and staleness, provider reads, partial applies, and sensitive-output limits; linked its local tutorial and added two retrieval cases.
 - Clarified Kubernetes fundamentals with selector and owner-reference boundaries, scheduler and kubelet handoffs, Pod deletion and node-failure timing, and rolling-update stall and rollback behavior; added two retrieval cases.

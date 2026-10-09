@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: programming-first-program-flow
+    question: How does a tiny program move from source code and typed input through a function and condition to printed output?
+    expected_paths: [knowledge/programming-languages/programming-fundamentals.md]
+    required_source_ids: [python-interpreter, python-control-flow, python-builtins]
+  - id: programming-return-versus-print
+    question: In a Python function, why is returning a value different from printing it, and what happens if a typed value cannot become an integer?
+    expected_paths: [knowledge/programming-languages/programming-fundamentals.md]
+    required_source_ids: [python-control-flow, python-builtins]
   - id: first-visit-single-topic-or-local-route
     question: Can I learn one topic without installing tools, and where is the no-cloud Git, Kubernetes, and Terraform practice route?
     expected_paths: [knowledge/start-here.md]

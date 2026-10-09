@@ -22,6 +22,7 @@ not yet have a dedicated explanation.
 | If you are learning... | Read these terms |
 | --- | --- |
 | How changes are saved | [Working tree](git/git-fundamentals.md), [Git index](git/git-fundamentals.md), [Commit](git/git-fundamentals.md), [Branch](git/git-fundamentals.md) |
+| How a small program runs | [Source code](programming-languages/programming-fundamentals.md), [Interpreter](programming-languages/programming-fundamentals.md), [Variable](programming-languages/programming-fundamentals.md), [Function](programming-languages/programming-fundamentals.md) |
 | How Kubernetes keeps apps running | [Desired state](kubernetes/fundamentals/kubernetes-fundamentals.md), [Current state](kubernetes/fundamentals/kubernetes-fundamentals.md), [Reconciliation](kubernetes/fundamentals/kubernetes-fundamentals.md), [Deployment](kubernetes/fundamentals/kubernetes-fundamentals.md) |
 | How infrastructure changes are planned | [Terraform](terraform/fundamentals/terraform-fundamentals.md), [Plan (Terraform)](terraform/fundamentals/terraform-fundamentals.md), [Terraform state](terraform/fundamentals/state-management.md) |
 | How AI models produce answers | [Model](ai/ai-fundamentals.md), [Training](ai/ai-fundamentals.md), [Inference](ai/ai-fundamentals.md), [LLM](ai/ai-fundamentals.md) |
@@ -77,6 +78,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | Composition | Crossplane implementation that maps a composite resource to composed resources through a function pipeline. |
 | Composition Function | Crossplane package that supplies logic used by a Composition or Operation. |
 | Composition Revision | Crossplane-generated immutable version of a Composition used for rollout and rollback control. |
+| [Condition (programming)](programming-languages/programming-fundamentals.md) | An expression used to choose which instructions run next. |
 | [Confabulation (AI)](ai/ai-fundamentals.md) | A generated answer that presents false or made-up information as if it were true. |
 | [Configuration (Terraform)](terraform/fundamentals/terraform-fundamentals.md) | The `.tf` files that describe the managed objects and values you want Terraform to use. |
 | Configuration Package | Crossplane OCI package that bundles platform APIs, compositions, and package dependencies. |
@@ -105,6 +107,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [Fetch (Git)](git/git-fundamentals.md) | Download commits and update your local record of remote branches without changing your current branch or working files. |
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |
 | [FinOps](finops/cost-allocation-basics.md) | A cloud financial management discipline focused on cost visibility, accountability, and optimization. |
+| [Function (programming)](programming-languages/programming-fundamentals.md) | A named block of instructions that runs when called and can return a value. |
 | FunctionRevision | Crossplane package revision object for a concrete installed function version. |
 
 ### G to M
@@ -120,6 +123,8 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | IAM | Identity and Access Management; AWS's system for defining who or what may perform actions on AWS resources. |
 | [ID token](security/identity-federation/oidc-fundamentals.md) | A token issued in OpenID Connect that carries identity claims about an authenticated user to a client. |
 | [Inference (AI)](ai/ai-fundamentals.md) | Using a trained model on new input to produce a result; one request normally does not retrain it. |
+| [Input (programming)](programming-languages/programming-fundamentals.md) | Data given to a running program, such as text typed at a prompt. |
+| [Interpreter](programming-languages/programming-fundamentals.md) | A program that reads and runs instructions written in a language such as Python. |
 | [IRSA](cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md) | IAM Roles for Service Accounts; an EKS workload-identity pattern using a Kubernetes service-account token and IAM OIDC trust to obtain AWS credentials. |
 | JWKS | JSON Web Key Set; a document containing public keys used to verify tokens signed by an identity provider. |
 | [JWT](security/identity-federation/oidc-token-validation.md) | JSON Web Token; a compact token format whose claims and signature must be checked for the intended use. |
@@ -164,12 +169,14 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [OIDC](security/identity-federation/oidc-fundamentals.md) | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
 | [OKF](ai/ai-tooling/knowledge-bases/okf-v0.2.md) | Open Knowledge Format; a Markdown and YAML-frontmatter format for portable human- and agent-readable knowledge bundles with structured metadata. |
 | [Operation (Crossplane)](kubernetes/crossplane/component-model.md) | A Crossplane function pipeline for a bounded operational task, separate from continuous resource reconciliation. |
+| [Output (programming)](programming-languages/programming-fundamentals.md) | Data a running program produces, such as text printed to a terminal. |
 | Pilot (delivery) | Controlled real-world rollout of a more complete solution to a limited audience before wider launch. |
 | PKCE | Proof Key for Code Exchange; an OAuth 2.0 extension used with authorization code flows to reduce authorization-code interception risk. |
 | [Plan (Terraform)](terraform/fundamentals/terraform-fundamentals.md) | A proposal showing what Terraform would create, change, replace, or destroy; planning does not apply those actions. |
 | Platform API | Stable internal API exposed by a platform team to hide implementation details behind a product-like request shape. |
 | PoC | Proof of Concept; a small, time-boxed effort used to prove whether an idea, technology, integration, architecture, or approach is feasible. |
 | [Pod](kubernetes/fundamentals/kubernetes-fundamentals.md) | The smallest Kubernetes unit that runs one or more containers sharing networking and any volumes declared for them. |
+| [Program](programming-languages/programming-fundamentals.md) | Instructions that a computer runs to process input and produce an outcome. |
 | Prompt | Input text, and sometimes other content, given to a model for one interaction; a prompt template is saved for repeated use. |
 | Prototype | Early model used to explore shape, interaction, behavior, or design before a full implementation. |
 | [Provenance](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) | A record of where a page or claim came from, such as its source document, revision, and the work that produced it. |
@@ -191,6 +198,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | RPO | Recovery Point Objective; acceptable data loss measured in time. |
 | RTO | Recovery Time Objective; acceptable time to restore service after an outage. |
 | Runbook | A repeatable operational procedure for known tasks or incidents. |
+| [Runtime (programming)](programming-languages/programming-fundamentals.md) | The period while a program is running; an error at runtime appears during execution. |
 | [Selector (Kubernetes)](kubernetes/core-objects/how-a-service-selects-pods.md) | A rule that chooses objects by matching their labels; a Service selector chooses candidate Pods in its Namespace. |
 | [Semantic reranking](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | A retrieval step that reorders candidate results by their likely relevance to a query. |
 | [Service (Kubernetes)](kubernetes/core-objects/how-a-service-selects-pods.md) | A Kubernetes object that gives clients a stable name for changing Pods and normally routes to ready ones; the common ClusterIP type adds an in-cluster virtual IP. |
@@ -201,6 +209,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | SLI | Service Level Indicator; a measured aspect of service behavior, such as the fraction of requests that succeed. |
 | SLO | Service Level Objective; a reliability target for a service behavior. |
 | [SonarQube](devops/code-quality/sonarqube.md) | Code quality and security analysis platform that uses scanners, quality profiles, quality gates, and pull request analysis to report code issues. |
+| [Source code](programming-languages/programming-fundamentals.md) | The human-readable instructions written in a programming language. |
 | Spike | Short investigation used to learn enough to estimate, design, or make a technical decision. |
 
 ### T to Z
@@ -217,6 +226,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [Tooling cluster](kubernetes/applications-and-tools/tooling-clusters.md) | A Kubernetes cluster chosen to host shared platform services; target clusters still keep their own control planes and local requirements. |
 | [Training (AI)](ai/ai-fundamentals.md) | A process that uses data to build or adjust a model before it is used on new input. |
 | [Usage (Crossplane)](kubernetes/crossplane/managed-resources-and-lifecycle.md) | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
+| [Variable (programming)](programming-languages/programming-fundamentals.md) | A name used to refer to a value while a program runs. |
 | Vector store | A search system that stores numerical representations of content with identifiers and metadata for similarity retrieval; this knowledge base treats its indexes as rebuildable. |
 | [Velero](migrations/velero/fundamentals.md) | Kubernetes backup and restore tool that stores backed-up resource definitions in object storage and can also protect selected volume data. |
 | VolumeSnapshot | Kubernetes request for a point-in-time snapshot of a persistent volume claim. |

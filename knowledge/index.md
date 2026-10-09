@@ -18,6 +18,7 @@ growing; topic indexes distinguish published pages from planned coverage.
 | Understand how Git tracks and shares changes | [Git fundamentals](git/git-fundamentals.md) | Picture the working tree, index, commits, branches, and remotes before running recovery commands. |
 | Understand cloud computing before choosing a provider | [Cloud computing fundamentals](cloud/cloud-computing-fundamentals.md) | Explain the provider's role, your responsibilities, scaling, reliability, and usage-based cost. |
 | Understand AI before choosing a tool | [AI fundamentals](ai/ai-fundamentals.md) | Separate ML, generative AI, language models, assistants, and agents; check outputs against sources. |
+| Understand how a program runs | [Programming fundamentals](programming-languages/programming-fundamentals.md) | Trace source code, input, a function and condition, and output in a small Python example. |
 | Understand Kubernetes before running commands | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | See how desired state, controllers, Pods, and Services fit together. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
@@ -52,7 +53,7 @@ growing; topic indexes distinguish published pages from planned coverage.
 - [Security](security/index.md) - Identity federation and cross-platform security guidance.
 - [FinOps](finops/index.md) - Cost visibility, allocation, and accountability.
 - [DevOps](devops/index.md) - Delivery, automation, reliability, and code quality.
-- [Programming languages](programming-languages/index.md) - Currently three articles on Bootstrap and bootstrapping; broader language coverage is planned.
+- [Programming languages](programming-languages/index.md) - Begin with a small Python program; three Bootstrap and bootstrapping articles follow, with broader language coverage planned.
 
 ## AI and architecture
 

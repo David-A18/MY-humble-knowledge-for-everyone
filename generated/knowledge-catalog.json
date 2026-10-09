@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 169,
+  "concept_count": 170,
   "concepts": [
     {
       "audience": "Curious learners and beginning engineers",
@@ -3867,6 +3867,34 @@
         "setup"
       ],
       "title": "Bootstrapping a system",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Complete beginners with no programming experience",
+      "description": "Learn what source code, an interpreter, variables, functions, conditions, input, and output are by tracing one tiny Python program from start to finish.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/programming-languages/programming-fundamentals.md",
+      "source_ids": [
+        "python-interpreter",
+        "python-introduction",
+        "python-control-flow",
+        "python-errors",
+        "python-builtins",
+        "python-command-line",
+        "python-function-definitions",
+        "python-glossary",
+        "mdn-what-is-javascript"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "programming-languages",
+        "python",
+        "fundamentals",
+        "beginner"
+      ],
+      "title": "Programming fundamentals",
       "type": "Explanation"
     },
     {
