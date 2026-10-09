@@ -136,7 +136,7 @@ decisions.[^finops-allocation]
 - [Cost allocation basics](../../../finops/cost-allocation-basics.md)
 - [Back to AWS FinOps](index.md)
 - [Back to AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+- [Back to knowledge index](../../../index.md)
 
 [^aws-cost-allocation-tags]: [AWS Billing - Cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html), source record `aws-cost-allocation-tags`.
 [^aws-activate-tags]: [AWS Billing - Activating user-defined cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/activating-tags.html), source record `aws-activate-tags`.

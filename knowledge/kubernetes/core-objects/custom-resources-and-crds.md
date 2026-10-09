@@ -245,7 +245,7 @@ Where the analogy stops being accurate:
 - [CRD task documentation](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)
 - [Back to Kubernetes core objects](index.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^kubernetes-custom-resources]: [Kubernetes - Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/), source record `kubernetes-custom-resources`.
 [^kubernetes-crd-task]: [Kubernetes - Extend the Kubernetes API with CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/), source record `kubernetes-crd-task`.

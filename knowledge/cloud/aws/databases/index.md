@@ -20,4 +20,4 @@ Database service notes and architecture considerations.
 - Backup and restore.
 - Multi-AZ and read replica patterns.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

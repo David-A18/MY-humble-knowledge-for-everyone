@@ -238,7 +238,7 @@ IDs; they do not yet run a search engine or measure ranking.
 - [Security and governance](security-and-governance.md)
 - [Back to agent knowledge bases](index.md)
 - [Back to AI tooling](../index.md)
-- [Back to root index](../../../../README.md)
+- [Back to knowledge index](../../../index.md)
 
 [^sqlite-fts5]: [SQLite - FTS5 Extension](https://www.sqlite.org/fts5.html), source record `sqlite-fts5`.
 [^elasticsearch-similarity]: [Elasticsearch - Similarity settings](https://www.elastic.co/docs/reference/elasticsearch/index-settings/similarity), source record `elasticsearch-similarity`.

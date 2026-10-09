@@ -68,4 +68,4 @@ Revisit this decision after KB-14 records actual reader outcomes. If a site is r
 - [Maintenance review queue](../../maintenance-review-queue.md)
 - [Knowledge-base review](../../knowledge-base-review.md)
 - [Decision records](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

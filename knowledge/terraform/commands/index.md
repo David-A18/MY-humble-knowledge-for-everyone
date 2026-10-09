@@ -18,4 +18,4 @@ points before a command can change infrastructure.
 - Workspace commands.
 - Provider lock file maintenance.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

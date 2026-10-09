@@ -30,4 +30,4 @@ Guides that connect multiple engineering areas into practical workflows.
 | [Observability stack](observability-stack.md) | Draft | Understand which questions metrics, logs, and traces answer, and how an SLO and alert turn signals into a decision. |
 | [End-to-end deployment](end-to-end-deployment.md) | Draft | Follow the delivery chain from reviewed change to user check and recovery, and what each gate does and does not prove. |
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

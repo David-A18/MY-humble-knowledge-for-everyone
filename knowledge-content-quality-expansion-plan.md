@@ -2591,6 +2591,25 @@ client, login session, token, introspection call, independent identity
 security review, measured search run, or novice reader task was tested.
 The page remains `draft`.
 
+### Focused review round 30 (2026-10-09)
+
+Audited the bundle's return-to-home links against the website content
+contract, which maps `knowledge/index.md` to the reading site's home route.
+Ninety links labeled "Back to root index" instead pointed outside the
+published bundle to the repository `README.md`. Changed those links to
+relative paths to `knowledge/index.md` and used the label "Back to knowledge
+index". One existing link already reached the bundle home and received
+only the consistent label. The authoring instructions now say where a
+reader-facing home link must lead. A path check confirmed all 114 links
+labeled "Back to knowledge index" resolve to `knowledge/index.md`, and the
+local-link validator checked all 297 Markdown files. The beginner
+[Start here](knowledge/start-here.md) page also drops a governance-plan
+link that would have sent a new reader out of the learning route.
+
+This is a static navigation correction, not a measured website session or
+reader test. It does not mark the affected pages technically reviewed or
+change their `draft` status.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational

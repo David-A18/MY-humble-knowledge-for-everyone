@@ -19,4 +19,4 @@ Practical Terraform notes for infrastructure as code, module design, commands, s
 - [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
 - [Terraform CLI documentation](https://developer.hashicorp.com/terraform/cli)
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

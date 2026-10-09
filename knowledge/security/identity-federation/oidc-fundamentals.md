@@ -358,7 +358,7 @@ Where the analogy stops being accurate:
 - [OpenID Connect specification](https://openid.net/developers/specs/)
 - [Back to identity federation](index.md)
 - [Back to security index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^openid-connect-core]: [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html), source record `openid-connect-core`.
 [^openid-connect-discovery]: [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html), source record `openid-connect-discovery`.

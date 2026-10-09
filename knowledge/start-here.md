@@ -127,7 +127,4 @@ After completing the local path, choose based on your goal:
 | Learn infrastructure control planes | [Crossplane on AWS](cross-topic-guides/crossplane-on-aws.md) | Kubernetes context, Crossplane concepts, AWS sandbox account, and cleanup discipline. |
 | Learn backup and recovery | [Velero](migrations/velero/index.md) | Kubernetes cluster, object storage, and backup/restore test space. |
 
-## Related links
-
-- [Knowledge-base improvement plan](../knowledge-base-improvement-plan.md)
-- [Back to root index](../README.md)
+[Back to knowledge index](index.md)

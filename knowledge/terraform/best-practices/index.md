@@ -19,4 +19,4 @@ Maintainability and safety practices for Terraform projects.
 - [ ] Review destructive changes carefully.
 - [ ] Keep generated provider lock files under version control when appropriate for the project.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

@@ -18,4 +18,4 @@ Cost visibility, allocation, accountability, and optimization practices for AWS.
 - Savings Plans and reservations.
 - Storage lifecycle optimization.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

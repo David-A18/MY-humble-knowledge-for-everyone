@@ -282,7 +282,7 @@ Where the analogy stops being accurate:
 - [Flux](flux.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^argo-cd-overview]: [Argo CD - Overview](https://argo-cd.readthedocs.io/en/stable/), source record `argo-cd-overview`.
 [^argo-cd-architecture]: [Argo CD - Architectural Overview](https://argo-cd.readthedocs.io/en/stable/operator-manual/architecture/), source record `argo-cd-architecture`.

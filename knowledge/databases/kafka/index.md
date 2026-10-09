@@ -13,4 +13,4 @@ Apache Kafka knowledge for event streaming architecture, topic design, operation
 | [Kafka operations](operations.md) | Locate a likely fault along the producer, broker, consumer, and application path using distinct signals. |
 | [Kafka on AWS](../../cloud/aws/databases/amazon-msk.md) | Use Amazon MSK and connect AWS workloads to Kafka. |
 
-[Back to databases index](../index.md) | [Back to root index](../../../README.md)
+[Back to databases index](../index.md) | [Back to knowledge index](../../index.md)

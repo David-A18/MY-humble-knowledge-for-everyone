@@ -259,7 +259,7 @@ and [GitOps on EKS](gitops-on-eks.md).
 - [GitHub Actions section](../git/github-actions/index.md)
 - [End-to-end deployment](end-to-end-deployment.md)
 - [Back to cross-topic guides](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^github-deployment-environments]: [GitHub Docs - Deployments and environments](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments), source record `github-deployment-environments`.
 [^github-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-oidc-reference`.

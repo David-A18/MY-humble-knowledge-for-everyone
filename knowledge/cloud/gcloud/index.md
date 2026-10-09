@@ -24,4 +24,4 @@ Status: Initial outline
 - [Google Cloud Architecture Framework](https://cloud.google.com/architecture/framework)
 - [Apigee documentation](https://cloud.google.com/apigee/docs)
 
-[Back to cloud index](../index.md) | [Back to root index](../../../README.md)
+[Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

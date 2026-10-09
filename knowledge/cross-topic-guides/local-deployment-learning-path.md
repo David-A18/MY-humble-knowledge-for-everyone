@@ -386,7 +386,7 @@ review its contents before removing it or repeating the exercise.
 - [Git undo and recovery](../git/troubleshooting/undo-and-recovery.md)
 - [Back to cross-topic guides](index.md)
 - [Back to Kubernetes index](../kubernetes/index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^kind-quick-start]: [kind - Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/).
 [^kubernetes-deployment]: [Kubernetes - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).

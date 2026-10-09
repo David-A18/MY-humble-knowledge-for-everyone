@@ -92,4 +92,4 @@ producer changes
 - [Back to AI tooling](../index.md)
 - [Back to AI index](../../index.md)
 - [Back to LLM index](../../../llm/index.md)
-- [Back to root index](../../../../README.md)
+- [Back to knowledge index](../../../index.md)

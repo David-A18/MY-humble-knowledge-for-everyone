@@ -215,7 +215,7 @@ selects Pods](../core-objects/how-a-service-selects-pods.md).
 - [How a Kubernetes Service selects Pods](../core-objects/how-a-service-selects-pods.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^kubernetes-ingress]: [Kubernetes - Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), source record `kubernetes-ingress`.
 [^kubernetes-gateway]: [Kubernetes - Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/), source record `kubernetes-gateway`.

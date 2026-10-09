@@ -16,4 +16,4 @@ Status: Draft
 - Unit economics and ownership workflows.
 - Provider-specific cost practices linked back to cloud sections.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

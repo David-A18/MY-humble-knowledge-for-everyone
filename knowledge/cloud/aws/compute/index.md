@@ -19,4 +19,4 @@ Compute services and operational notes for running workloads on AWS.
 - Elastic Load Balancing.
 - Lambda.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

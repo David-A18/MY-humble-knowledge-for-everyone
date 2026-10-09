@@ -18,4 +18,4 @@ Security practices, detection, encryption, and operational controls on AWS.
 - Security Hub, GuardDuty, and CloudTrail notes.
 - Incident response checklists.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

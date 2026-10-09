@@ -25,4 +25,4 @@ evidence, and making a reviewed change.
 
 - [EKS operations](../../cross-topic-guides/eks-operations.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)

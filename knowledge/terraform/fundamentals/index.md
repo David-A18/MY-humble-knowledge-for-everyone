@@ -19,4 +19,4 @@ Core Terraform concepts and mental models.
 
 - Remote state and backends.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

@@ -20,4 +20,4 @@ Status: Initial outline
 - [Bootstrapping a system](bootstrapping-a-system.md): understand a first-time
   project or infrastructure dependency before normal work can run.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

@@ -18,4 +18,4 @@ Status: Initial outline
 | --- | --- |
 | [Agent knowledge bases](../ai/ai-tooling/knowledge-bases/index.md) | Git-backed knowledge corpora, OKF, retrieval budgets, freshness, security, and quality evaluation for LLM systems. |
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

@@ -63,4 +63,4 @@ create a new topic label merely to make one incoming note fit.
 - [Cloud](../cloud/index.md)
 - [AI agent router](../../AGENTS.md)
 - [Back to decision records](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

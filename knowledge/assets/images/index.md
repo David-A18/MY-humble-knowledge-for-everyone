@@ -10,4 +10,4 @@ Expected content:
 - CLI output screenshots only when text output is not enough.
 - Annotated troubleshooting evidence.
 
-[Back to assets index](../index.md) | [Back to root index](../../../README.md)
+[Back to assets index](../index.md) | [Back to knowledge index](../../index.md)

@@ -216,7 +216,7 @@ Where the analogy stops being accurate:
 - [AWS index](../cloud/aws/index.md)
 - [Deploying to EKS](deploying-to-eks.md)
 - [Back to cross-topic guides](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^github-deployment-environments]: [GitHub Docs - Deployments and environments](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments), source record `github-deployment-environments`.
 [^terraform-plan]: [terraform plan command](https://developer.hashicorp.com/terraform/cli/commands/plan), source record `terraform-plan`.

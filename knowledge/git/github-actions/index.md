@@ -42,4 +42,4 @@ The source map is organized by need:
 - [GitHub Actions workflow syntax](https://docs.github.com/actions/writing-workflows/workflow-syntax-for-github-actions)
 - [GitHub CLI manual](https://cli.github.com/manual/gh)
 
-[Back to Git index](../index.md) | [Back to root index](../../../README.md)
+[Back to Git index](../index.md) | [Back to knowledge index](../../index.md)

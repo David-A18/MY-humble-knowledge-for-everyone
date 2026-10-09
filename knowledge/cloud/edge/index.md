@@ -24,4 +24,4 @@ If you are looking for **Akamai** information, start with [Akamai vs. CloudFront
 | [Multi-CDN operations](multi-cdn-operations.md) | Keep public, private, and origin behaviour consistent while traffic can use two CDNs. |
 | [CloudFront](../aws/networking/cloudfront.md) | Use Amazon CloudFront in AWS architectures. |
 
-[Back to cloud index](../index.md) | [Back to root index](../../../README.md)
+[Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

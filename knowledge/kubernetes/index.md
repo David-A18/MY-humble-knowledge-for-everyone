@@ -48,4 +48,4 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 - [kubectl reference](https://kubernetes.io/docs/reference/kubectl/)
 - [Amazon EKS documentation](https://docs.aws.amazon.com/eks/)
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

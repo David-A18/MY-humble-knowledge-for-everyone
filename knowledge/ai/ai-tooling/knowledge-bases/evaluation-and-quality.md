@@ -268,7 +268,7 @@ layer exists.
   evaluation fits in the full system.
 - [Back to agent knowledge bases](index.md)
 - [Back to AI tooling](../index.md)
-- [Back to root index](../../../../README.md)
+- [Back to knowledge index](../../../index.md)
 
 [^stanford-ir-ranked-evaluation]: [Manning, Raghavan, and Schütze - Introduction to Information Retrieval, Evaluation of ranked retrieval results](https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-ranked-retrieval-results-1.html), source record `stanford-ir-ranked-evaluation`.
 [^azure-rag-retrieval]: [Microsoft Azure Architecture Center - Develop a RAG solution, information-retrieval phase](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-information-retrieval), source record `azure-rag-retrieval`.

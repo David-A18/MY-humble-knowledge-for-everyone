@@ -24,4 +24,4 @@ Architecture guidance, reference patterns, and design trade-offs for AWS workloa
 
 - [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

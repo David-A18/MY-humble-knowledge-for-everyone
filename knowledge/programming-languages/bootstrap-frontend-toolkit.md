@@ -134,7 +134,7 @@ you.
 - [Bootstrap and bootstrapping](bootstrap-and-bootstrapping.md)
 - [Bootstrapping a system](bootstrapping-a-system.md)
 - [Back to programming languages](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^bootstrap-introduction]: [Bootstrap - Get started](https://getbootstrap.com/docs/5.3/getting-started/introduction/), source record `bootstrap-introduction`.
 [^bootstrap-grid]: [Bootstrap - Grid system](https://getbootstrap.com/docs/5.3/layout/grid/), source record `bootstrap-grid`.

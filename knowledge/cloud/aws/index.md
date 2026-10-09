@@ -23,4 +23,4 @@ Practical AWS knowledge for cloud architecture, networking, compute, storage, se
 - [AWS documentation](https://docs.aws.amazon.com/)
 - [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
 
-[Back to cloud index](../index.md) | [Back to root index](../../../README.md)
+[Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

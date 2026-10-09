@@ -13,4 +13,4 @@ MongoDB knowledge for document modeling, indexing, replication, sharding, operat
 | [MongoDB operations](operations.md) | Trace a reader symptom through application, query, member, shard, and recovery evidence before changing MongoDB. |
 | [MongoDB on AWS](../../cloud/aws/databases/mongodb-on-aws.md) | Compare Atlas, self-managed MongoDB, and AWS integration choices. |
 
-[Back to databases index](../index.md) | [Back to root index](../../../README.md)
+[Back to databases index](../index.md) | [Back to knowledge index](../../index.md)

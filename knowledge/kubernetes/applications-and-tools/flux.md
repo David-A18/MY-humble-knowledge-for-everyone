@@ -278,7 +278,7 @@ Where the analogy stops being accurate:
 - [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^flux-components]: [Flux - GitOps Toolkit components](https://fluxcd.io/flux/components/), source record `flux-components`.
 [^flux-concepts]: [Flux - Core Concepts](https://fluxcd.io/flux/concepts/), source record `flux-concepts`.

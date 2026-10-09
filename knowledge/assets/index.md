@@ -10,4 +10,4 @@ This directory stores supporting media for the knowledge base.
 | [images](images/index.md) | Screenshots and visual references used by articles. |
 | [icons](icons/index.md) | Small reusable icons or visual markers. |
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

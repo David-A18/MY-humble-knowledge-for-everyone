@@ -170,7 +170,7 @@ needed for application consistency.
 - [Stateful vs. stateless on AWS](../../cloud/aws/architecture/stateful-vs-stateless.md)
 - [Back to Kubernetes core objects](index.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^kubernetes-statefulset]: [Kubernetes - StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/), source record `kubernetes-statefulset`.
 [^kubernetes-pv]: [Kubernetes - Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), source record `kubernetes-pv`.

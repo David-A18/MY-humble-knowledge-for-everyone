@@ -349,7 +349,7 @@ Where the analogy stops being accurate:
 - [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md)
 - [Back to Kubernetes applications and tools](index.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^opengitops-principles]: [OpenGitOps - GitOps Principles v1.0.0](https://opengitops.dev/), source record `opengitops-principles`.
 [^opengitops-glossary]: [OpenGitOps - GitOps Glossary](https://github.com/open-gitops/documents/blob/main/GLOSSARY.md), source record `opengitops-glossary`.

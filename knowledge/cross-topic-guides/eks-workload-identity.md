@@ -303,7 +303,7 @@ Confirm which workload needs which action first.
 - [OIDC fundamentals](../security/identity-federation/oidc-fundamentals.md)
 - [IAM OIDC provider and STS web identity](../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md)
 - [Back to cross-topic guides](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^aws-eks-service-accounts]: [Amazon EKS User Guide - Grant Kubernetes workloads access to AWS using Kubernetes Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/service-accounts.html), source record `aws-eks-service-accounts`.
 [^aws-eks-pod-identities]: [Amazon EKS User Guide - Learn how EKS Pod Identity grants pods access to AWS services](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html), source record `aws-eks-pod-identities`.

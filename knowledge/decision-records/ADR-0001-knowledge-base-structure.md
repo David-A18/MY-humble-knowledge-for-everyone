@@ -54,4 +54,4 @@ homes.
 - [Templates](../templates/index.md)
 - [Contributing](../../CONTRIBUTING.md)
 - [Back to decision records](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

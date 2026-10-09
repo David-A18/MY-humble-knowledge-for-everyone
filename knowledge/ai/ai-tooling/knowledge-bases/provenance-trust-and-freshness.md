@@ -297,7 +297,7 @@ standards landscape](knowledge-standards-landscape.md) for where it fits.
   shows why search results should carry status and revision.
 - [Back to agent knowledge bases](index.md)
 - [Back to AI tooling](../index.md)
-- [Back to root index](../../../../README.md)
+- [Back to knowledge index](../../../index.md)
 
 [^okf-spec]: [Open Knowledge Format (OKF) v0.2 specification](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md), source record `okf-spec`.
 [^w3c-prov-dm]: [W3C - PROV-DM, The PROV Data Model](https://www.w3.org/TR/prov-dm/), source record `w3c-prov-dm`.

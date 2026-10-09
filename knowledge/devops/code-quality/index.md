@@ -13,4 +13,4 @@ into a team policy, and how the result reaches a GitHub pull request.
 ## Related links
 
 - [Back to DevOps index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)

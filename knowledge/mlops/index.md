@@ -12,4 +12,4 @@ Status: Initial outline
 - Governance, security, and reproducibility guidance.
 - Cloud and Kubernetes patterns for ML workloads.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

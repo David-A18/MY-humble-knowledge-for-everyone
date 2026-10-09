@@ -140,7 +140,7 @@ guide should say which of those are needed.
 - [Bootstrap frontend toolkit](bootstrap-frontend-toolkit.md)
 - [Terraform state management](../terraform/fundamentals/state-management.md)
 - [Back to programming languages](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^npm-install]: [npm - npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/), source record `npm-install`.
 [^terraform-backend]: [Terraform - Backend configuration](https://developer.hashicorp.com/terraform/language/backend), source record `terraform-backend`.

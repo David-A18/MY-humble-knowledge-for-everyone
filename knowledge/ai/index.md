@@ -20,4 +20,4 @@ generative AI, language models, assistants, and agents are new to you.
 - Safety, governance, and operational practices.
 - Cross-links to LLM, ML, MLOps, and AI agent content.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

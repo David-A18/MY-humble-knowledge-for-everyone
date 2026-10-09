@@ -190,4 +190,4 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [Crossplane v2 overview](https://docs.crossplane.io/latest/whats-new/)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)

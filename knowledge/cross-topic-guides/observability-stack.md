@@ -259,7 +259,7 @@ Where the analogy stops being accurate:
 - [End-to-end deployment](end-to-end-deployment.md)
 - [Kubernetes troubleshooting](../kubernetes/troubleshooting/index.md)
 - [Back to cross-topic guides](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^opentelemetry-observability-primer]: [OpenTelemetry - Observability primer](https://opentelemetry.io/docs/concepts/observability-primer/), source record `opentelemetry-observability-primer`.
 [^opentelemetry-signals]: [OpenTelemetry - Signals](https://opentelemetry.io/docs/concepts/signals/), source record `opentelemetry-signals`.

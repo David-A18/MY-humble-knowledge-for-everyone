@@ -311,7 +311,7 @@ Where the analogy stops being accurate:
 - [Apache Kafka documentation](https://kafka.apache.org/documentation/)
 - [Back to Kafka index](index.md)
 - [Back to databases index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^apache-kafka-introduction]: [Apache Kafka - Introduction](https://kafka.apache.org/intro), source record `apache-kafka-introduction`.
 [^apache-kafka-design]: [Apache Kafka 4.1 documentation - Design](https://kafka.apache.org/41/design/design/), source record `apache-kafka-design`.

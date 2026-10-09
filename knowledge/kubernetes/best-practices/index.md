@@ -129,4 +129,4 @@ What it does: confirms the AWS identity, active Kubernetes context, and namespac
 - [Investigate Kubernetes resource pressure](../commands/workflows.md)
 - [Kubernetes on AWS](../../cross-topic-guides/kubernetes-on-aws.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)

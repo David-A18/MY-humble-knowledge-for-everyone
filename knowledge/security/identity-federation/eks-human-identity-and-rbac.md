@@ -352,7 +352,7 @@ Confirm which person and which namespace actually need the access.
 - [EKS workload identity](../../cross-topic-guides/eks-workload-identity.md)
 - [Back to identity federation](index.md)
 - [Back to security index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^aws-eks-grant-k8s-access]: [Amazon EKS User Guide - Grant IAM users and roles access to Kubernetes APIs](https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html), source record `aws-eks-grant-k8s-access`.
 [^aws-eks-access-entries]: [Amazon EKS User Guide - Grant IAM users access to Kubernetes with EKS access entries](https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html), source record `aws-eks-access-entries`.

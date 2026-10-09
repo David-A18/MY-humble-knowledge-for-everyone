@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-09
+
+- **Reader navigation home links**: Routed 90 return-to-home links from the repository README to `knowledge/index.md`, the bundle and reading-site home, and made one already-correct label consistent. Removed a governance-plan link from the beginner Start here page. Updated authoring guidance to keep new reader-facing home links inside the bundle. All 114 links labeled "Back to knowledge index" resolve to that file and local-link validation passed. This was a static navigation correction, not a live-site or reader test.
+
 ## 2026-10-08
 
 - **OIDC token-validation beginner review**: Tied ID-token acceptance to the relying party's sign-in flow, browser-response protection, and session nonce when sent; clarified exact issuer and trusted HTTPS key discovery, HMAC-signed ID tokens, RFC 9068 type spellings, and the `active` result of OAuth introspection. The identity-federation index now returns to the bundle's root. Claude Opus 5.5 reviewed the page read-only, material claims were checked against current OpenID Connect and IETF specifications, the diagram rendered and was inspected, and two static retrieval cases were added. No provider, token, session, introspection call, independent identity-security review, measured search, or novice reader task ran; the page remains `draft`.

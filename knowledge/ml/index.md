@@ -12,4 +12,4 @@ Status: Initial outline
 - Model interpretation, limitations, and risk notes.
 - Links to MLOps when the topic becomes operational.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

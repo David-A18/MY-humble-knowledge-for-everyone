@@ -85,4 +85,4 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 - Kustomize.
 - External secrets operators.
 
-[Back to Kubernetes index](../index.md) | [Back to root index](../../../README.md)
+[Back to Kubernetes index](../index.md) | [Back to knowledge index](../../index.md)

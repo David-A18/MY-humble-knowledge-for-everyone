@@ -124,6 +124,9 @@ of implying the metadata alone proves an execution or review.
 - Only the bundle-root `knowledge/index.md` has frontmatter, and it contains only `okf_version: "0.2"`.
 - `log.md` files use newest-first `## YYYY-MM-DD` headings.
 - Use relative links that resolve in GitHub. Include a concise description beside each index link.
+- Link a reader's return to the knowledge home to `knowledge/index.md`, using
+  the correct relative path. Link the repository `README.md` only when the
+  reader needs repository setup or governance outside the published bundle.
 - Keep examples outside tables, explain what they do, and place risk warnings before risky actions.
 - Keep indexes focused on navigation. Move a substantial tutorial, reference, or
   explanation into a named concept so people and agents can discover its metadata.

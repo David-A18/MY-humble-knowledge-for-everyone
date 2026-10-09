@@ -306,7 +306,7 @@ self-contained ones.
 - [MongoDB fundamentals](mongodb/fundamentals.md)
 - [MongoDB data modeling](mongodb/data-modeling.md)
 - [Back to databases index](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^postgresql-table-basics]: [PostgreSQL documentation - Table Basics](https://www.postgresql.org/docs/current/ddl-basics.html), source record `postgresql-table-basics`.
 [^postgresql-constraints]: [PostgreSQL documentation - Constraints](https://www.postgresql.org/docs/current/ddl-constraints.html), source record `postgresql-constraints`.

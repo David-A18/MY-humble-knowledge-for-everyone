@@ -19,4 +19,4 @@ Status: Initial outline
 - Developer experience and platform engineering notes.
 - Cross-links to Git, GitHub Actions, Terraform, Kubernetes, and cloud guides.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

@@ -263,7 +263,7 @@ not appear in a code review of resource blocks.
 - [AWS index](../cloud/aws/index.md)
 - [GitHub Actions with Terraform](github-actions-with-terraform.md)
 - [Back to cross-topic guides](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)
 
 [^terraform-aws-provider]: [Terraform Registry - AWS Provider documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), source record `terraform-aws-provider`.
 [^terraform-s3-backend]: [Terraform - S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3), source record `terraform-s3-backend`.

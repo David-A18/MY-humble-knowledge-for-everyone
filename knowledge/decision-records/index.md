@@ -21,5 +21,5 @@ decision state below is separate from the page's OKF maturity label.
 
 Use the [ADR template](../templates/architecture-decision-record-template.md) for future decisions.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)
 | [Back to knowledge index](../index.md)

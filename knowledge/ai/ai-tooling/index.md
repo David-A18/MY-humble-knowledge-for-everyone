@@ -30,4 +30,4 @@ Use the smallest surface that solves the problem. A prompt is enough for one-off
 - [Back to AI index](../index.md)
 - [Back to AI agents index](../../ai-agents/index.md)
 - [Back to LLM index](../../llm/index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)

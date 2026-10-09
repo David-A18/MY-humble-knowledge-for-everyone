@@ -55,4 +55,4 @@ under development.
 - Multi-cloud comparison notes.
 - Shared architecture, governance, reliability, and cost-management patterns.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

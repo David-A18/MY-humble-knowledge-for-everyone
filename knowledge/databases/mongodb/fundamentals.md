@@ -294,7 +294,7 @@ Where the analogy stops being accurate:
 - [Relational vs. document databases](../relational-vs-document-databases.md)
 - [Back to MongoDB index](index.md)
 - [Back to databases index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^mongodb-documents]: [MongoDB manual - Documents](https://www.mongodb.com/docs/manual/core/document/), source record `mongodb-documents`.
 [^mongodb-databases-collections]: [MongoDB manual - Databases and Collections](https://www.mongodb.com/docs/manual/core/databases-and-collections/), source record `mongodb-databases-collections`.

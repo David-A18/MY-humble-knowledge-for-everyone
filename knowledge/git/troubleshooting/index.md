@@ -22,4 +22,4 @@ planned focused guides.
 - Add sparse-checkout and submodule recovery guidance when there is enough
   evidence for a focused guide.
 
-[Back to Git index](../index.md) | [Back to root index](../../../README.md)
+[Back to Git index](../index.md) | [Back to knowledge index](../../index.md)

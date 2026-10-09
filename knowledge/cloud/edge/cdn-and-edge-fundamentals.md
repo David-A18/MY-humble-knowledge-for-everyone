@@ -312,7 +312,7 @@ Where the analogy stops being accurate:
 - [Amazon CloudFront documentation](https://docs.aws.amazon.com/cloudfront/)
 - [Back to edge and CDN index](index.md)
 - [Back to cloud index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
 
 [^rfc-9111-http-caching]: [RFC 9111 - HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111.html), source record `rfc-9111-http-caching`.
 [^cloudfront-how-it-works]: [Amazon CloudFront Developer Guide - How CloudFront delivers content](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFrontWorks.html), source record `cloudfront-how-it-works`.

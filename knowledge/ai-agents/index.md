@@ -19,4 +19,4 @@ Status: Initial outline
 - Evaluation, guardrails, and handoff procedures.
 - Practical examples for documentation and engineering agents.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

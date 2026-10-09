@@ -20,4 +20,4 @@ Focused notes for the Kubernetes objects used most often in application operatio
 - PersistentVolumes and PersistentVolumeClaims.
 - Jobs and CronJobs.
 
-[Back to Kubernetes index](../index.md) | [Back to root index](../../../README.md)
+[Back to Kubernetes index](../index.md) | [Back to knowledge index](../../index.md)

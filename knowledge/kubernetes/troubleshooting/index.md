@@ -28,4 +28,4 @@ restarted; they are not a universal first check.
 
 - [Investigate Kubernetes resource pressure](../commands/workflows.md)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)

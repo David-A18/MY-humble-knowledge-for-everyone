@@ -38,4 +38,4 @@ Velero is a Kubernetes backup, restore, disaster recovery, and cluster migration
 - [Kubernetes volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/)
 - [Amazon EKS CSI snapshot controller](https://docs.aws.amazon.com/eks/latest/userguide/csi-snapshot-controller.html)
 
-[Back to migrations index](../index.md) | [Back to root index](../../../README.md)
+[Back to migrations index](../index.md) | [Back to knowledge index](../../index.md)

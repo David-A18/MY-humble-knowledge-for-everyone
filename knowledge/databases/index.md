@@ -17,4 +17,4 @@ Database and data-platform knowledge for modeling, operations, reliability, perf
 - Database performance investigation workflows.
 - Data contracts and schema governance.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

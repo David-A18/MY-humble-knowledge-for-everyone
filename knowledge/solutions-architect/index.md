@@ -23,4 +23,4 @@ Status: Initial outline
 | --- | --- |
 | [Blue-green deployment](../cloud/solutions/blue-green-deployment.md) | Low-downtime releases, traffic cutover, rollback planning, and deployment architecture reviews. |
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

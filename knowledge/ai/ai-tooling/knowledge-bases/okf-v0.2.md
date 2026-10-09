@@ -332,4 +332,4 @@ this repository require more frontmatter than OKF itself?
 - [Reference architecture](reference-architecture.md)
 - [Back to agent knowledge bases](index.md)
 - [Back to AI tooling](../index.md)
-- [Back to root index](../../../index.md)
+- [Back to knowledge index](../../../index.md)
