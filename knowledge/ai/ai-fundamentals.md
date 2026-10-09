@@ -26,6 +26,15 @@ sources:
   - id: anthropic-effective-agents
     resource: https://www.anthropic.com/engineering/building-effective-agents
     title: Anthropic - Building effective agents
+  - id: anthropic-tool-use
+    resource: https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works
+    title: Anthropic - How tool use works
+  - id: anthropic-context-windows
+    resource: https://platform.claude.com/docs/en/build-with-claude/context-windows
+    title: Anthropic - Context windows
+  - id: anthropic-ticket-routing
+    resource: https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing
+    title: Anthropic - Ticket routing
   - id: nist-genai-profile
     resource: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
     title: NIST AI 600-1 - Generative AI Profile
@@ -44,27 +53,39 @@ AI, a large language model, an assistant, and an agent. You should also be
 able to explain why building a model differs from using one.
 
 These words have overlapping uses. This page gives a beginner's working
-model, grounded in the [OECD's AI system definition](https://oecd.ai/en/ai-principles).
+model, starting with the [OECD's AI system definition](https://oecd.ai/en/ai-principles).
 The library example below is invented. No model was trained, queried, or
 tested for it.
 
 ## What AI means here
 
-An **AI system** takes input and works out an output for a goal. The output
-may be a prediction, recommendation, decision, or new content. For example,
+An **AI system** is machine-based: it takes input and infers an output for
+an explicit or implicit goal. The output may be a prediction,
+recommendation, decision, or new content. For example,
 an email sorter predicts a category; a writing assistant produces a draft.
-AI systems differ in how independently they operate.[^oecd-ai-principles]
+AI systems differ in how independently they operate and whether they adapt
+after deployment.[^oecd-ai-principles]
+
 An application built around a model may also include an interface,
 instructions, data sources, tools, and a step where people review its output.
 
-Not every AI system learns from examples. Some use explicit knowledge and
-reasoning rules; many current systems use **machine learning (ML)**. In ML,
-a training process uses data to build a **model** that can make predictions or
-generate content on new input. **Inference** means using that model after it
-has been built. During ordinary use, its learned internal values
-(**parameters**, often called **weights**) usually stay
-fixed; some systems are designed to adapt, and teams can train and release a
-new version later.[^oecd-ai-definition-memo][^google-what-is-ml][^google-ml-glossary]
+Not every AI system learns from examples. Some reason over represented
+knowledge and rules; many current systems use **machine learning (ML)**.
+A simple hand-written keyword rule is usually ordinary software; an `if`
+statement alone does not make a system AI. In ML, **training** uses data to
+build or adjust a **model** that can make predictions or generate content.
+**Inference** means using that model to produce an output. A normal
+inference call does not update the model's learned internal values
+(**parameters**, often called **weights**). A system can update them through
+a separate training or adaptation step, even if it runs that step
+frequently.[^oecd-ai-definition-memo][^google-what-is-ml][^google-ml-glossary]
+
+An assistant can seem to remember because its application sends earlier
+messages, saved notes, or retrieved records back as input. The model can
+use that input in a new response without changing its
+weights.[^anthropic-context-windows] The OECD memorandum also uses "infer
+how" for work during system building; this page
+uses **inference** for producing an output with an existing model.[^oecd-ai-definition-memo]
 
 ## Why the distinctions matter
 
@@ -73,31 +94,41 @@ asking a question teaches the model, that a fluent sentence is a checked
 fact, or that an agent can act without limits. Those assumptions change how
 you protect data, review an answer, and decide which tools an application may
 use. A generated answer can sound certain while being false; NIST calls this
-**confabulation**.[^nist-genai-profile]
+**confabulation**, often called a "hallucination" in everyday AI
+discussion.[^nist-genai-profile] A text-generating LLM predicts output
+tokens from learned patterns and the current input. That process alone does
+not check a claim against an up-to-date record.[^google-llm-introduction]
 
-One request usually does not change the model you are using. That says
+One request does not by itself train the model you are using. That says
 nothing about whether the application stores your input or whether a provider
 may use it when training a future model. Product policies differ; check the
 current data-use policy before submitting sensitive material. Anthropic's
 consumer data-use notice is one concrete example of such a policy, not a
-rule for every AI service.[^oecd-ai-definition-memo][^anthropic-consumer-data-use]
+rule for every AI service.[^anthropic-consumer-data-use]
 
 ## The mental model: five different questions
 
 | Question | Term | Plain meaning |
 | --- | --- | --- |
 | How was the model built? | Machine learning | Training uses data to build or adjust a model. Other AI approaches can use explicit knowledge and rules. |
-| What does it produce? | Generative AI | A model creates content such as text, images, audio, or video. A classifier that only picks a label is ML, but not generative AI. |
-| What kind of language model is it? | Large language model (LLM) | A model trained at large scale on language data. The generative LLMs here produce responses in tokens, small pieces of text or other encoded content. “Large” has no single cutoff in this guide. |
+| What can the model create? | Generative AI | A model can create content such as text, images, audio, or video, beyond choosing from a fixed set of labels. It can still be asked to return just one label. |
+| Is it a large model for language? | Large language model (LLM) | An ML model trained at large scale on language data. Text-generating LLMs produce output in tokens, small pieces of text or other encoded content. “Large” has no single cutoff in this guide. |
 | How is a model presented in a conversation? | Assistant | An application presents a model through an interface and may add instructions, information, or tools. Other applications, such as a message router, need no chat assistant. |
 | Who chooses the next step? | Agent | In one common meaning, the model directs a sequence of steps and tool calls instead of following only a fixed path. |
 
-Generative AI includes more than LLMs. A model that generates an image is
-generative too. Likewise, an LLM is a component of an assistant, not the whole
-application. Anthropic distinguishes a fixed **workflow**, where code decides
-the sequence, from an **agent**, where the model directs its next steps and
-tool use. Other organizations use the word “agent” more broadly, so check
-what a particular product actually lets it do.[^oecd-ai-definition-memo][^google-llm-introduction][^anthropic-effective-agents]
+Today's LLMs are ML models; many use deep learning with neural networks.
+Generative AI includes more than LLMs: a model that generates an image is
+generative too. An LLM is a component of an assistant, not the whole
+application. A generative model can also be asked to classify a message by
+returning one label; the task alone does not identify the model type.[^google-what-is-ml][^google-llm-introduction]
+
+Anthropic distinguishes a **workflow**, where code defines the paths,
+from an **agent**, where the model chooses its next steps and tool requests.
+An assistant can also behave as an agent. A model's request does not run a
+tool by itself: the application checks whether the tool is available,
+executes an allowed call, and returns the result. Other organizations use
+the word “agent” more broadly, so check what a product actually lets it
+do.[^anthropic-effective-agents][^anthropic-tool-use]
 
 ## An analogy: an apprentice sign painter
 
@@ -105,17 +136,18 @@ Imagine an apprentice who studies many examples of shop signs. Later a
 customer asks for a new sign. The long study resembles **training**; making
 this sign resembles **inference**. The apprentice can paint convincing words
 without checking whether the shop really opens on Sunday. Giving the
-apprentice access to the official shop-hours book gives them a way to check.
-A ladder adds a tool for hanging a sign. Permission to use it on a real
-shopfront is a separate decision. AI tool access and authorization are
-separate too.
+apprentice the official shop-hours book puts the right information within
+reach; they can still copy it incorrectly, so someone compares the sign
+with the book. A ladder adds a tool for hanging a sign. Permission to use it
+on a real shopfront is a separate decision. AI tool access and authorization
+are separate too.
 
 The analogy breaks in useful ways:
 
-- A person may learn from each job. A deployed model's learned values usually
-  do not change just because you asked a question. An application can retain
-  a conversation or train a later model version; neither is the same as this
-  inference call updating the model.[^oecd-ai-definition-memo]
+- A person may learn from each job. The model in this example does not
+  update its weights when answering. The application can retain the
+  conversation or use feedback in a later training cycle; these are
+  separate from this inference call.
 - A person can visit the shop. A model cannot inspect a live record unless
   the application gives it a way to retrieve that record. A remembered
   pattern is not evidence for today's opening hours.
@@ -126,35 +158,46 @@ The analogy breaks in useful ways:
 ## Example: the invented Riverside Library
 
 The library wants to sort incoming messages and answer opening-hours
-questions. These are two separate jobs:
+questions. These are two jobs shown in four steps:
 
 1. **Build a sorter.** Staff label past messages as *membership*, *room
    booking*, or *lost item*. Training produces a classifier; staff check it
    on different messages it has not seen. It predicts one label and does not
-   write a reply. This is ML, but it is not generative AI.
+   write a reply. This classifier is ML but does not generate content.
 2. **Use the sorter.** A new message arrives. The classifier predicts *room
    booking* and the application routes it to the right queue. This is
    inference. That one prediction does not retrain the model. Staff can
    correct mistakes and use reviewed examples for a later training cycle.
-3. **Draft an answer.** The library also uses a pre-trained LLM to draft a
-   reply to a patron's web-form question about special-event hours. Without
-   the current schedule, it might give plausible but wrong hours. The
-   application fetches the published schedule, passes the relevant entry to
-   the model, and shows staff a draft with a link to that entry. Staff verify
+3. **Draft an answer.** The library also uses an existing LLM trained by a
+   provider. It asks the model to draft a reply to a patron's web-form
+   question about special-event hours. Without the current schedule, the
+   model might give plausible but wrong hours. The application fetches the
+   published schedule, passes the relevant entry to the model, and shows
+   staff a draft with a link to that entry. Staff verify
    the entry and answer before sending the reply. This is a fixed **workflow**:
-   application code chooses when to fetch and review; the model does not
-   choose those steps. A source link helps checking but does not guarantee
-   that the draft interpreted it well.
-4. **Consider an agent.** If the model instead chose when to call a
-   read-only `get_schedule` tool, it could direct that lookup step. A separate
-   `edit_booking` tool, if granted with write credentials, would let it
-   change bookings. The library does not grant that tool in this example;
-   any real write path would need its own access limits and human confirmation.
+   application code defines the lookup and review steps. A source link helps
+   checking but does not guarantee that the draft interpreted it well.
+4. **Consider an agent.** The model could instead request a read-only
+   `get_schedule` call when it decides the schedule is needed. The
+   application checks and runs the request, then gives the result back to
+   the model.[^anthropic-tool-use] A separate `edit_booking` tool could
+   change bookings if the application granted it write access and ran its
+   requests. The library does not grant that tool in this example; a real
+   write path would need its own access limits and human confirmation.
+
+The library could also ask an LLM to choose one of the three message labels.
+That would be a generative model used for a classification task, instead of
+the separate classifier the library trained here.[^anthropic-ticket-routing]
+
+The patron's message and fetched material are input, not instructions from
+the library. If either contains a command for the model, the application
+must not let that text grant new tool access or override its checks. This
+kind of attempted redirection is called **prompt injection**.[^nist-genai-profile]
 
 **End state:** the library trained one model for labels and used another for
 draft text. Its fixed workflow checks the reply before sending it; the
-optional agent path has only a read tool. This is a teaching example, not a claim about a real
-library or a tested product.
+optional agent path has only a read tool. This is a teaching example, not a
+claim about a real library or a tested product.
 
 ## Visual: building a model and using it are separate
 
@@ -165,11 +208,12 @@ flowchart TD
     incoming[New message] --> classifier
     classifier --> category[Predicted category]
     category --> queue[Application routes message]
-    visitor[Patron's hours question] --> assistant[Library application]
-    assistant --> fetch[Fetch published schedule entry]
-    fetch --> prompt[Question and entry form model input]
-    assistant --> prompt
-    prompt --> llm[Pre-trained language model]
+    provider[Provider trained LLM earlier] --> llm[Existing language model]
+    visitor[Patron's hours question] --> app[Library application]
+    app --> fetch[Fetch published schedule entry]
+    fetch --> prompt[Question plus schedule entry become model input]
+    app --> prompt
+    prompt --> llm
     llm --> draft[Draft reply]
     draft --> show[Application shows draft and source link]
     fetch --> show
@@ -181,11 +225,11 @@ flowchart TD
 checking step to create a classifier. A new message goes through that saved
 classifier, and the application routes its predicted category. Separately,
 a patron's question reaches an application that fetches the published
-schedule entry, sends the question and entry to a pre-trained language model,
-then shows staff the draft and source link. Staff compare them before sending
-a reply.
-The diagram shows the fixed workflow, not the optional agent path. Use the two paths to decide whether a
-task needs a newly trained model, an existing model, an up-to-date record,
+schedule entry, sends the question and entry to a language model trained
+earlier by a provider, then shows staff the draft and source link. Staff
+compare them before sending a reply. The diagram shows the fixed workflow,
+not the optional agent path. Use the two paths to decide whether a task
+needs a newly trained model, an existing model, an up-to-date record,
 or a human review step.
 
 ## Common misconceptions
@@ -195,10 +239,15 @@ or a human review step.
 - **“Generative AI is just chat.”** Images, audio, and video are also possible
   outputs.[^oecd-ai-definition-memo]
 - **“The model learned my question.”** A normal inference call uses a model;
-  it does not by itself change its learned values. Check the product's
-  data-use policy separately.[^oecd-ai-definition-memo][^anthropic-consumer-data-use]
+  it does not by itself change its learned values. Earlier messages supplied
+  again as context can change the next answer without training the
+  model.[^anthropic-context-windows]
+  Check the product's data-use policy separately.[^anthropic-consumer-data-use]
 - **“A citation makes an answer true.”** Check that the source exists, is
   current for the question, and supports the exact claim.[^nist-genai-profile]
+- **“It said it checked, so it did.”** Inspect the actual source or tool
+  result. The model's statement about its own steps is not evidence that the
+  application fetched the record.[^anthropic-tool-use]
 - **“An agent can do anything.”** Tools, credentials, and back-end checks
   bound its access. It can still make mistakes within that access, so grant
   only the capabilities it needs.[^anthropic-effective-agents]
@@ -206,8 +255,10 @@ or a human review step.
 ## Check your understanding
 
 1. Which Riverside model did staff train, and which did they only use?
-2. Why is the message sorter ML but not generative AI?
-3. Why can the assistant give wrong event hours even if its text is fluent?
+2. Why does the library's trained classifier differ from the LLM, even
+   though either model could be used to choose a message label?
+3. Without the schedule entry, why might the drafting workflow give wrong
+   hours? Even with the entry, why must staff check the draft?
 4. Who chooses the schedule lookup in the library's fixed workflow? Who
    would choose it in the optional agent path, and what additional risk would
    `edit_booking` create?
@@ -233,7 +284,13 @@ library feature. Follow the official lessons below for guided ML practice.
   and [LLM lesson](https://developers.google.com/machine-learning/crash-course/llm/transformers)
   go deeper into trained models and text generation.
 - [Anthropic's agent guide](https://www.anthropic.com/engineering/building-effective-agents)
-  compares fixed workflows with model-directed tool use.
+  compares fixed workflows with model-directed tool use, and its
+  [tool-use guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works)
+  shows how an application runs a model-requested tool.
+- Anthropic's [context-window guide](https://platform.claude.com/docs/en/build-with-claude/context-windows)
+  explains why a conversation can use earlier messages without retraining,
+  while its [ticket-routing guide](https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing)
+  shows a language model used for classification.
 - [NIST's Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
   covers risks including confidently wrong output.
 - [Anthropic's consumer data-use notice](https://privacy.claude.com/en/articles/10023555-how-do-you-use-personal-data-in-model-training)
@@ -252,5 +309,8 @@ library feature. Follow the official lessons below for guided ML practice.
 [^google-ml-glossary]: [Google for Developers - Machine Learning Glossary](https://developers.google.com/machine-learning/glossary), source record `google-ml-glossary`.
 [^google-llm-introduction]: [Google for Developers - What's a large language model?](https://developers.google.com/machine-learning/crash-course/llm/transformers), source record `google-llm-introduction`.
 [^anthropic-effective-agents]: [Anthropic - Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), source record `anthropic-effective-agents`.
+[^anthropic-tool-use]: [Anthropic - How tool use works](https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works), source record `anthropic-tool-use`.
+[^anthropic-context-windows]: [Anthropic - Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), source record `anthropic-context-windows`.
+[^anthropic-ticket-routing]: [Anthropic - Ticket routing](https://platform.claude.com/docs/en/about-claude/use-case-guides/ticket-routing), source record `anthropic-ticket-routing`.
 [^nist-genai-profile]: [NIST AI 600-1 - Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf), source record `nist-genai-profile`.
 [^anthropic-consumer-data-use]: [Anthropic Privacy Center - How do you use personal data in model training?](https://privacy.claude.com/en/articles/10023555-how-do-you-use-personal-data-in-model-training), source record `anthropic-consumer-data-use`.

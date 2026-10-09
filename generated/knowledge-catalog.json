@@ -16,6 +16,9 @@
         "google-ml-glossary",
         "google-llm-introduction",
         "anthropic-effective-agents",
+        "anthropic-tool-use",
+        "anthropic-context-windows",
+        "anthropic-ticket-routing",
         "nist-genai-profile",
         "anthropic-consumer-data-use"
       ],

@@ -1967,7 +1967,7 @@ through one invented library and sends readers to the deeper tooling routes.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [AI fundamentals](knowledge/ai/ai-fundamentals.md) | Distinguishes AI systems, ML, generative AI, LLMs, assistants, and agents; separates training from using a model; uses a limited sign-painter analogy, an invented library, a diagram and text alternative, understanding questions, and official next steps. | Claude Opus 5.5 gave read-only design and draft reviews. The second review found privacy ambiguity, an unanswered agent question, model/application source mismatch, and diagram handoff errors; these were corrected. OECD, Google, Anthropic, and NIST primary sources were checked. The revised diagram rendered and was inspected; no model, tool, library service, or novice reader task ran. | Independent AI education and technical review, novice classification-and-trust task, and revision from observed confusion. |
+| [AI fundamentals](knowledge/ai/ai-fundamentals.md) | Distinguishes AI systems, ML, generative AI, LLMs, assistants, and agents; separates training from using a model; uses a limited sign-painter analogy, an invented library, a diagram and text alternative, understanding questions, and official next steps. The focused review below clarifies context versus training, classification with a generative model, application-executed tools, and untrusted input. | Claude Opus 5.5 gave read-only design and draft reviews, plus the two-pass focused review below. OECD, Google, Anthropic, and NIST primary sources were checked. The revised diagram rendered and was inspected; two static retrieval cases were added. No model, tool, library service, measured retrieval run, or novice reader task ran. | Independent AI education and technical review, novice classification-and-trust task, and revision from observed confusion. |
 
 ### Not yet reviewed against the teaching standard
 
@@ -2609,6 +2609,27 @@ link that would have sent a new reader out of the learning route.
 This is a static navigation correction, not a measured website session or
 reader test. It does not mark the affected pages technically reviewed or
 change their `draft` status.
+
+### Focused review round 31 (2026-10-09)
+
+Reviewed AI fundamentals twice with Claude Opus 5.5 and checked its
+material claims against current OECD, Google, NIST, and Anthropic primary
+sources. The page now separates an ordinary inference call from a model
+update and explains how an assistant can appear to remember by receiving
+earlier messages as input. It distinguishes a classifier model from an LLM
+used for a classification task, and a fixed library workflow from an agent
+whose tool request the application must check and execute. The limited
+sign-painter analogy now shows that access to the right record does not
+ensure a correct answer. The invented library example also names untrusted
+input and prompt injection. The diagram shows that the provider trained
+the existing LLM earlier; it rendered and was visually inspected. The AI
+index identifies the ML, LLM, and agent sections as outlines. Two static
+retrieval cases record the memory-versus-training and tool-execution
+questions.
+
+This is source and static review, not a live model, tool, library service,
+measured search, independent teaching review, or novice reader task. The
+page remains `draft`.
 
 ### Candidates for the next wave
 

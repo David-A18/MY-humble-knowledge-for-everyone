@@ -20,6 +20,14 @@ cases:
     question: As a beginner, how do AI, machine learning, generative AI, LLMs, assistants, and agents differ, and why should I check a generated answer?
     expected_paths: [knowledge/ai/ai-fundamentals.md]
     required_source_ids: [oecd-ai-principles, nist-genai-profile]
+  - id: ai-memory-versus-training
+    question: If an AI assistant remembers an earlier message, did my question retrain the model?
+    expected_paths: [knowledge/ai/ai-fundamentals.md]
+    required_source_ids: [google-what-is-ml]
+  - id: ai-agent-tool-execution-boundary
+    question: When an AI agent asks to edit a booking, does the model itself change the record, and why must the application check the tool request?
+    expected_paths: [knowledge/ai/ai-fundamentals.md]
+    required_source_ids: [anthropic-tool-use]
   - id: cdn-cache-key-personalized-leak
     question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
     expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
