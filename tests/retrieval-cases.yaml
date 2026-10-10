@@ -82,6 +82,14 @@ cases:
     question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
     expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
     required_source_ids: [openid-connect-core, github-actions-oidc-aws]
+  - id: oidc-browser-code-versus-token
+    question: In an OIDC authorization-code sign-in, what returns through the browser, when does the app receive the ID token, and who creates the session?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [openid-connect-core]
+  - id: oidc-github-audience-versus-subject
+    question: If a GitHub Actions job asks for the AWS STS audience, does that alone restrict which repository and workflow can assume an IAM role?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [github-actions-oidc-reference, github-actions-oidc-aws]
   - id: oidc-id-token-login-session
     question: Is a validly signed ID token addressed to my app enough to sign in a user if it came from another login session?
     expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]

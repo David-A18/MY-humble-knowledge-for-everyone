@@ -452,7 +452,7 @@ decision has happened.
 | [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard and given a focused beginner review in round 38. | Keyed current MongoDB manual citations and Atlas backup guidance; the ticket document is illustrative JSON, not database output. Claude Opus 5.5 reviewed the revision twice read-only; both diagrams rendered and were inspected. | Independent technical review; reader test; freshness decision. |
 | [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard and given a focused beginner review in round 39. | Keyed citations to current Apache Kafka 4.3 documentation and the Apache Avro specification; partition and offset examples are invented. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
 | [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard; focused beginner review in round 41. | Keyed Kubernetes and Crossplane citations; the invented platform API has an illustrative instance manifest, not a complete CRD or cluster run. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
-| [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. | Independent security review before anyone relies on it; reader test; freshness decision. |
+| [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard; focused beginner review in round 42. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. Claude Opus 5.5 reviewed the revised page read-only; both diagrams rendered and were inspected. | Independent security review before anyone relies on it; reader test; freshness decision. |
 | [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard. | Keyed citations to RFC 9111 and the CloudFront Developer Guide; the cache-key example is reasoned from the model, not a recorded test. Only CloudFront's provider behaviour was checked. | Independent technical review; a second provider's documentation for the provider-neutral claims; reader test; freshness decision. |
 
 Supporting changes in the same wave: parent index descriptions for the six
@@ -2823,6 +2823,23 @@ Current Kubernetes and Crossplane primary documentation was checked for the
 revised claims. The Mermaid diagram rendered and was visually inspected. No
 cluster, controller, external network, independent technical review, measured
 search, or novice reader task ran; the page remains `draft`.
+
+### Focused review round 42 (2026-10-10)
+
+Reviewed OIDC fundamentals with Claude Opus 5.5 read-only. The browser
+example now follows the authorization code through the callback and token
+exchange before Team Wiki validates the ID token and creates its own session.
+The receiver starts with a configured issuer and audience, including exact
+issuer matching after discovery. The GitHub-to-AWS example distinguishes an
+audience a job can request from the subject condition that limits the intended
+repository and workflow context. The conference analogy now separates the
+initial identity check from the app session and AWS credential exchange. Two
+static retrieval cases cover the code flow and AWS trust boundary.
+
+Current OpenID Connect, GitHub, and AWS primary sources were checked for the
+revised claims. Both Mermaid diagrams rendered and were visually inspected.
+No live provider, token, AWS exchange, independent identity-security review,
+measured search, or novice reader task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 
