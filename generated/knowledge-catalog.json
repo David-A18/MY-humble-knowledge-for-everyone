@@ -904,7 +904,11 @@
         "cloudfront-cache-key",
         "cloudfront-expiration",
         "cloudfront-invalidation",
-        "cloudfront-edge-functions"
+        "cloudfront-edge-functions",
+        "cloudfront-origin-request-policy",
+        "cloudfront-edge-events",
+        "cloudfront-function-association",
+        "akamai-property-caching"
       ],
       "stale_after": null,
       "status": "draft",
@@ -926,6 +930,9 @@
         "rfc-9111-http-caching",
         "cloudfront-cache-key",
         "cloudfront-cache-policy",
+        "cloudfront-managed-cache-policies",
+        "cloudfront-behavior-settings",
+        "cloudfront-standard-logs",
         "cloudfront-origin-request-policy",
         "cloudfront-s3-oac",
         "cloudfront-vpc-origins",

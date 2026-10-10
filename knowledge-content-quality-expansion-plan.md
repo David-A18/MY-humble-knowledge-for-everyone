@@ -453,7 +453,7 @@ decision has happened.
 | [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard and given a focused beginner review in round 39. | Keyed citations to current Apache Kafka 4.3 documentation and the Apache Avro specification; partition and offset examples are invented. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
 | [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard; focused beginner review in round 41. | Keyed Kubernetes and Crossplane citations; the invented platform API has an illustrative instance manifest, not a complete CRD or cluster run. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
 | [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard; focused beginner review in round 42. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. Claude Opus 5.5 reviewed the revised page read-only; both diagrams rendered and were inspected. | Independent security review before anyone relies on it; reader test; freshness decision. |
-| [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard. | Keyed citations to RFC 9111 and the CloudFront Developer Guide; the cache-key example is reasoned from the model, not a recorded test. Only CloudFront's provider behaviour was checked. | Independent technical review; a second provider's documentation for the provider-neutral claims; reader test; freshness decision. |
+| [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard; focused beginner review in round 43. | Keyed RFC 9111, CloudFront, and Akamai citations; the cache-key example is invented, not a recorded request. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent CDN/security review; reader test; freshness decision. |
 
 Supporting changes in the same wave: parent index descriptions for the six
 pages were updated, and two golden retrieval cases were added
@@ -927,7 +927,7 @@ about who may share a cached response and who may reach the origin directly.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [CDN caching and origin protection](knowledge/cloud/edge/cdn-caching-and-origin-protection.md) | Rewritten with a limited shelf-and-door analogy, two-boundary diagram, invented public catalog and private account example, origin-pattern table, and understanding checks. Corrected the reversed cache-key trade-off and explained CloudFront's positive minimum TTL override of private response headers. | Keyed RFC 9111 and current CloudFront cache-key, cache-policy, origin-request, S3 OAC, VPC-origin, custom-origin, and invalidation documentation. No CDN configuration or request was tested. | Independent CDN/security review; controlled cache and direct-origin checks; second provider review before generalising; reader test; freshness decision. |
+| [CDN caching and origin protection](knowledge/cloud/edge/cdn-caching-and-origin-protection.md) | Rewritten with a limited shelf-and-door analogy, two-boundary diagram, invented public catalog and private account example, origin-pattern table, and understanding checks; round 43 added a private-path checklist and clarified origin-only values. | Keyed RFC 9111 and current CloudFront cache-key, policy, origin-request, managed-policy, S3 OAC, VPC-origin, custom-origin, and invalidation documentation. No CDN configuration or request was tested. | Independent CDN/security review; controlled cache and direct-origin checks; second provider review before generalising; reader test; freshness decision. |
 
 ### Wave 35 (2026-10-01)
 
@@ -2840,6 +2840,27 @@ Current OpenID Connect, GitHub, and AWS primary sources were checked for the
 revised claims. Both Mermaid diagrams rendered and were visually inspected.
 No live provider, token, AWS exchange, independent identity-security review,
 measured search, or novice reader task ran; the page remains `draft`.
+
+### Focused review round 43 (2026-10-10)
+
+Reviewed CDN and edge fundamentals and its linked caching and origin-protection
+guide with Claude Opus 5.5 read-only. The beginner model now separates the
+cache key, which distinguishes stored responses, from values forwarded only
+on an origin miss. The invented `/home` leak specifies the configuration and
+origin response mistake needed for the leak to happen. The guide explains
+HTTP `Vary` alongside CDN-specific key policies, treats TTL as a freshness
+threshold rather than a forced discard time, and distinguishes viewer and
+origin edge-function triggers. The linked guide gives explicit CloudFront
+private-account checks and separates origin traffic from total viewer traffic.
+Three static retrieval cases cover these boundaries.
+
+Claude's second read-only review caught private-path pattern coverage, stale
+reuse limits, and the difference between CloudFront Functions and Lambda@Edge;
+those points were corrected. Current RFC 9111, CloudFront, and Akamai Property
+Manager primary sources were checked. The revised Mermaid diagram rendered
+and was visually inspected. No live CDN, account request, independent security
+review, measured search, or
+novice reader task ran; both pages remain `draft`.
 
 ### Candidates for the next wave
 

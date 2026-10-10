@@ -78,6 +78,18 @@ cases:
     question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
     expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
     required_source_ids: [cloudfront-cache-key]
+  - id: cdn-forwarded-session-not-in-key
+    question: If CloudFront forwards a session cookie on a miss but leaves it out of the cache key, what happens when a personalized response is stored?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-origin-request-policy]
+  - id: cdn-private-account-response
+    question: Which CloudFront path patterns, cache policy, and origin request policy let an account page receive its session cookie without storing one visitor's private response for another?
+    expected_paths: [knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-behavior-settings, cloudfront-managed-cache-policies, cloudfront-origin-request-policy, rfc-9111-http-caching]
+  - id: cdn-stale-versus-edge-trigger
+    question: Does a CDN TTL force a cached response to be discarded, and do CloudFront origin-request functions run on a cache hit?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md]
+    required_source_ids: [rfc-9111-http-caching, cloudfront-edge-events]
   - id: oidc-signin-versus-workload-federation
     question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
     expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]

@@ -17,6 +17,15 @@ sources:
   - id: cloudfront-cache-policy
     resource: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-key-understand-cache-policy.html
     title: Amazon CloudFront Developer Guide - Understand cache policies
+  - id: cloudfront-managed-cache-policies
+    resource: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html
+    title: Amazon CloudFront Developer Guide - Use managed cache policies
+  - id: cloudfront-behavior-settings
+    resource: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesCacheBehavior.html
+    title: Amazon CloudFront Developer Guide - Cache behavior settings
+  - id: cloudfront-standard-logs
+    resource: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/standard-logs-reference.html
+    title: Amazon CloudFront Developer Guide - Standard logging reference
   - id: cloudfront-origin-request-policy
     resource: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-origin-requests.html
     title: Amazon CloudFront Developer Guide - Control origin requests with a policy
@@ -52,7 +61,7 @@ when deciding cache behaviour and origin access for a site or API. The HTTP
 rules below are general; CloudFront settings and origin patterns are labelled
 as AWS examples. Check another provider's own rules before applying them.
 
-## Two separate decisions
+## Four separate decisions
 
 | Decision | What it controls | Failure when it is wrong |
 | --- | --- | --- |
@@ -113,8 +122,10 @@ the cache either mixes responses or fills with duplicates.[^cloudfront-cache-key
 
 CloudFront has a separate **origin request policy**. It can send a value to
 the origin without putting that value in the cache key. That is useful for
-analytics data that does not change the body. It is unsafe for a value that
-*does* change a cacheable body: on a hit, the origin is not asked again, so
+values the origin needs while handling a miss but that do not change the body,
+such as a request-tracing header. The origin sees only misses, so count all
+viewer traffic from CDN logs rather than origin request logs. Forwarding only
+is unsafe for a value that *does* change a cacheable body: on a hit, the origin is not asked again, so
 the next viewer receives the stored response for the same key. Values in the
 cache key are automatically forwarded to the origin.[^cloudfront-origin-request-policy]
 
@@ -127,15 +138,35 @@ headers for private responses, but a CDN's own settings must agree.
 
 CloudFront has an important exception: a cache policy with a **minimum TTL
 greater than zero** caches for at least that duration even when the origin
-sends `private`, `no-store`, or `no-cache`. Setting the minimum, default, and
-maximum TTLs all to zero disables CloudFront caching for that behaviour.
-For a private path such as `/account`, use a no-cache behaviour, and check the
-actual response headers and policy together.[^cloudfront-cache-policy]
+sends `private`, `no-store`, or `no-cache`.[^cloudfront-cache-policy]
+The managed `CachingOptimized` policy has a one-second minimum TTL, so do not
+apply it to a private response simply because the origin sends `private`.
+[^cloudfront-managed-cache-policies]
+
+For a private path such as `/account`, use these CloudFront checks:
+
+1. Match every private URL with the intended cache behaviour: a pattern for
+   `/account` alone might not cover `/account/orders` or `/api/me`. Check the
+   order of CloudFront's path patterns so a public default behaviour cannot
+   catch a private path.[^cloudfront-behavior-settings] Attach the managed
+   `CachingDisabled` cache policy, or a policy with minimum, default, and
+   maximum TTLs all zero.[^cloudfront-managed-cache-policies]
+2. Forward the session cookie to the origin with an origin request policy.
+   The disabled cache policy does not put that cookie in the key, and
+   CloudFront does not forward it by default.[^cloudfront-origin-request-policy]
+3. Have the origin send `Cache-Control: private, no-store` for the account
+   response. `no-cache` alone is different: it permits storage but requires
+   validation before reuse under HTTP rules.[^rfc-9111-http-caching]
+4. Check the actual policy and response headers for every private path. Then
+   request the same path as account A twice, account B, and anonymously from
+   one network location; inspect the bodies and CloudFront cache-result logs.
+   [^cloudfront-standard-logs]
+   Repeat from another location if possible. A few clean responses alone do
+   not prove every path and edge is safe.
 
 Do not treat the presence of a cookie as an automatic cache ban. The HTTP
 standard explicitly notes that `Set-Cookie` alone does not prevent a response
-from being cached.[^rfc-9111-http-caching] Conversely, a valid cache key
-cannot make an accidentally public origin private.
+from being cached.[^rfc-9111-http-caching]
 
 ## Keep the origin behind the edge
 
@@ -149,9 +180,9 @@ The origin control depends on the kind of origin:
 
 These are *origin* controls. A private S3 bucket does not stop two viewers from
 sharing a mistakenly cached account response. A perfect cache policy does not
-stop someone from calling an exposed origin directly. Keep the CDN's viewer
-hostname distinct from the origin hostname so the origin route does not point
-back to the CDN.
+stop someone from calling an exposed origin directly. Give the origin its own
+hostname that resolves to the origin rather than back to the CDN, or origin
+requests could loop.
 
 ## Freshness and a bad release
 
@@ -162,7 +193,8 @@ next request can fetch them again. For frequently updated static assets,
 versioned filenames are usually easier to reason about than repeatedly
 invalidating the same URL.[^cloudfront-invalidation] Invalidation does not
 close a direct-origin route or repair a policy that may cache private data
-again.
+again. If private data was cached, fix the policy first, then invalidate the
+affected paths to remove copies the CDN already holds.
 
 ## Check your understanding
 
@@ -182,6 +214,12 @@ again.
 - [CloudFront cache keys](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html)
   and [cache policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-key-understand-cache-policy.html)
   for request variation and TTL settings.
+- [CloudFront managed cache policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html)
+  for `CachingDisabled` and the minimum TTL of `CachingOptimized`.
+- [CloudFront cache behavior settings](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesCacheBehavior.html)
+  for path-pattern matching and behavior order.
+- [CloudFront standard logging reference](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/standard-logs-reference.html)
+  for cache-result evidence when checking requests.
 - [CloudFront origin request policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-origin-requests.html)
   for forwarding data without varying the cache.
 - [CloudFront S3 OAC](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
@@ -196,6 +234,9 @@ For an architecture choice, see [Akamai vs. CloudFront](akamai-vs-cloudfront.md)
 [^rfc-9111-http-caching]: [RFC 9111 - HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111.html).
 [^cloudfront-cache-key]: [Amazon CloudFront - Understand the cache key](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html).
 [^cloudfront-cache-policy]: [Amazon CloudFront - Understand cache policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-key-understand-cache-policy.html).
+[^cloudfront-managed-cache-policies]: [Amazon CloudFront - Use managed cache policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html).
+[^cloudfront-behavior-settings]: [Amazon CloudFront - Cache behavior settings](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesCacheBehavior.html).
+[^cloudfront-standard-logs]: [Amazon CloudFront - Standard logging reference](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/standard-logs-reference.html).
 [^cloudfront-origin-request-policy]: [Amazon CloudFront - Control origin requests with a policy](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-origin-requests.html).
 [^cloudfront-s3-oac]: [Amazon CloudFront - Restrict access to an Amazon S3 origin](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html).
 [^cloudfront-vpc-origins]: [Amazon CloudFront - Restrict access with VPC origins](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html).

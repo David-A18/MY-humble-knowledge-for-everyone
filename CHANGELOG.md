@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified CDN cache keys versus origin forwarding, `Vary`, TTL and revalidation, edge-function triggers, and private account responses; added Akamai comparison and three retrieval cases.
 - Clarified OIDC authorization-code sign-in, trusted issuer discovery, app sessions, and GitHub-to-AWS audience and subject boundaries; added two retrieval cases.
 - Check two pinned GitHub source files through their raw URLs in Lychee after repeated CI 503 responses, while keeping the published source links readable.
 - Clarified the CRD, custom-resource, and controller handoff with an illustrative object, accurate status and deletion checks, Crossplane XRD boundaries, and two retrieval cases.
