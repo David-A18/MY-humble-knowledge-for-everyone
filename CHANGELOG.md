@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Check two pinned GitHub source files through their raw URLs in Lychee after repeated CI 503 responses, while keeping the published source links readable.
 - Clarified the CRD, custom-resource, and controller handoff with an illustrative object, accurate status and deletion checks, Crossplane XRD boundaries, and two retrieval cases.
 - Clarified observability signals, trace correlation and sampling, SLO error budgets, alert pace, and user-path blind spots in the incident example; added two retrieval cases.
 - Clarified Kafka topic and event design with accurate append-order and key boundaries, a fulfillment replay example, two-direction Avro compatibility, retention and compaction limits, a revised diagram, current Kafka 4.3 sources, and two retrieval cases.
