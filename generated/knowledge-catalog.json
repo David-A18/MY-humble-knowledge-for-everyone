@@ -2210,7 +2210,11 @@
         "github-workflow-syntax",
         "github-secrets",
         "github-artifacts",
-        "github-caching"
+        "github-caching",
+        "github-variables",
+        "github-secure-use",
+        "github-manual-run",
+        "github-token"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2303,7 +2307,9 @@
         "github-triggering",
         "github-token",
         "github-checkout",
-        "github-setup-node"
+        "github-setup-node",
+        "github-events",
+        "github-manual-run"
       ],
       "stale_after": null,
       "status": "draft",

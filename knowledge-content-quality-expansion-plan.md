@@ -621,8 +621,8 @@ permissions in one bounded example.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [GitHub Actions components and concepts](knowledge/git/github-actions/components-and-concepts.md) | Rewritten with a workshop analogy, an illustrative parallel-job diagram, a small manual workflow, data boundaries, and understanding checks. | Keyed current GitHub documentation for the core model, workflow syntax, secrets, artifacts, and caching. The YAML has not been run. | Independent technical review; run the tiny workflow in a safe repository; reader test; freshness decision. |
-| [GitHub Actions workflow structure](knowledge/git/github-actions/workflow-structure.md) | Rewritten around one complete Node test workflow, a nesting map, change decisions, and the job file-sharing boundary. | Keyed GitHub workflow syntax and token documentation plus official checkout and setup-node action repositories. The example assumes a compatible Node project and has not been run. | Independent technical review; run in a matching sample repository; reader test; freshness decision. |
+| [GitHub Actions components and concepts](knowledge/git/github-actions/components-and-concepts.md) | Rewritten with a workshop analogy, an illustrative parallel-job diagram, a small manual workflow, data boundaries, and understanding checks; focused beginner review in round 44 corrected token scope, cross-step state, and untrusted-input guidance. | Keyed GitHub documentation for the core model, workflow syntax, secrets, artifacts, caching, variables, manual runs, and secure use. Claude Opus 5.5 reviewed the page read-only; the YAML has not been run. | Independent technical review; run the tiny workflow in a safe repository; reader test; freshness decision. |
+| [GitHub Actions workflow structure](knowledge/git/github-actions/workflow-structure.md) | Rewritten around one complete Node test workflow, a nesting map, change decisions, and the job file-sharing boundary; focused beginner review in round 44 added a test-merge diagram and clarified pull-request triggers, token scopes, and action revisions. | Keyed GitHub workflow, event, manual-run, and token documentation plus official checkout and setup-node action repositories. Claude Opus 5.5 reviewed the page read-only; the diagram rendered and was visually inspected. The example assumes a compatible Node project and has not been run. | Independent technical review; run in a matching sample repository; reader test; freshness decision. |
 
 The current GitHub documentation was consulted on 2026-09-30. The page is a
 draft explanation, not evidence of an operating pipeline.
@@ -2861,6 +2861,27 @@ Manager primary sources were checked. The revised Mermaid diagram rendered
 and was visually inspected. No live CDN, account request, independent security
 review, measured search, or
 novice reader task ran; both pages remain `draft`.
+
+### Focused review round 44 (2026-10-10)
+
+Reviewed the GitHub Actions components and workflow-structure pages with
+Claude Opus 5.5 read-only. The pages now explain that a `pull_request` check
+normally tests GitHub's temporary merge, that only selected pull request
+activities start the example workflow, and that an explicit `permissions`
+block sets other configurable token scopes to `none`. They distinguish shared workspace
+files from separate step processes, show the artifact transfer boundary, and
+give actionable guidance for untrusted event text in shell scripts. The
+workflow map separates `uses` and `run` steps. Two static retrieval cases
+cover the merge checkout and job/step data boundaries.
+
+Claude's second read-only review caught the distinction between repository
+secrets and the special `GITHUB_TOKEN`, the default checkout credential
+setting, and the misleading step-list map; these were corrected. Current
+GitHub Actions documentation and the official checkout and setup-node
+repositories were checked for the revised claims. The new test-merge diagram
+rendered and was visually inspected. No workflow was run in a
+matching Node repository, no independent technical or security review,
+measured search, or novice reader task ran; both pages remain `draft`.
 
 ### Candidates for the next wave
 

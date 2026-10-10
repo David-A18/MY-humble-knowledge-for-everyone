@@ -50,6 +50,14 @@ cases:
     question: What is the difference between git restore file and git restore --staged file, and which uncommitted edits can I lose?
     expected_paths: [knowledge/git/git-fundamentals.md]
     required_source_ids: [git-restore]
+  - id: actions-pr-merge-checkout
+    question: When a GitHub Actions pull_request workflow uses checkout without a ref, does its test run against the proposed branch alone or the temporary merge with its base branch?
+    expected_paths: [knowledge/git/github-actions/workflow-structure.md]
+    required_source_ids: [github-events, github-checkout]
+  - id: actions-job-and-step-state
+    question: If one GitHub Actions job builds a file and another job needs it, will needs share the file, and will a shell export persist into the next step of the same job?
+    expected_paths: [knowledge/git/github-actions/components-and-concepts.md]
+    required_source_ids: [github-artifacts, github-variables]
   - id: cloud-provider-versus-customer
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
