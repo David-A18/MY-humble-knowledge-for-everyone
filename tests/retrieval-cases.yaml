@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: kubernetes-crd-type-versus-controller
+    question: If I install a CRD and create a valid ApplicationNetwork object, why might no network appear, and what did the API server do with the object?
+    expected_paths: [knowledge/kubernetes/core-objects/custom-resources-and-crds.md]
+    required_source_ids: [kubernetes-custom-resources, kubernetes-crd-task]
+  - id: kubernetes-crd-status-and-deletion
+    question: Does old status prove my latest custom-resource change succeeded, and why might an object stay visible after I ask to delete it?
+    expected_paths: [knowledge/kubernetes/core-objects/custom-resources-and-crds.md]
+    required_source_ids: [crossplane-api-reference, kubernetes-finalizers]
   - id: observability-error-budget-versus-slo-breach
     question: Can an alert fire because booking failures are using the 30-day error budget quickly before the full 30-day SLO is missed?
     expected_paths: [knowledge/cross-topic-guides/observability-stack.md]

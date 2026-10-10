@@ -2920,9 +2920,11 @@
       "source_ids": [
         "kubernetes-custom-resources",
         "kubernetes-crd-task",
+        "kubernetes-api-concepts",
         "kubernetes-operator-pattern",
         "kubernetes-finalizers",
-        "crossplane-xrd"
+        "crossplane-xrd",
+        "crossplane-api-reference"
       ],
       "stale_after": null,
       "status": "draft",

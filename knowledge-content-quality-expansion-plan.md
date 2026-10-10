@@ -451,7 +451,7 @@ decision has happened.
 | [Relational vs. document databases](knowledge/databases/relational-vs-document-databases.md) | Rewritten to the standard and given a focused beginner review in round 37. | Keyed citations to current PostgreSQL and MongoDB documentation; the order example is labelled illustrative; Claude Opus 5.5 reviewed the revision twice read-only; the diagram was rendered and inspected. | Independent technical review; reader test; freshness decision. |
 | [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard and given a focused beginner review in round 38. | Keyed current MongoDB manual citations and Atlas backup guidance; the ticket document is illustrative JSON, not database output. Claude Opus 5.5 reviewed the revision twice read-only; both diagrams rendered and were inspected. | Independent technical review; reader test; freshness decision. |
 | [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard and given a focused beginner review in round 39. | Keyed citations to current Apache Kafka 4.3 documentation and the Apache Avro specification; partition and offset examples are invented. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
-| [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard. | Keyed citations to Kubernetes and Crossplane documentation; the platform API walk-through is conceptual, with no manifest and no cluster run. | Independent technical review; reader test; freshness decision. |
+| [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard; focused beginner review in round 41. | Keyed Kubernetes and Crossplane citations; the invented platform API has an illustrative instance manifest, not a complete CRD or cluster run. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
 | [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. | Independent security review before anyone relies on it; reader test; freshness decision. |
 | [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard. | Keyed citations to RFC 9111 and the CloudFront Developer Guide; the cache-key example is reasoned from the model, not a recorded test. Only CloudFront's provider behaviour was checked. | Independent technical review; a second provider's documentation for the provider-neutral claims; reader test; freshness decision. |
 
@@ -2805,6 +2805,24 @@ Current OpenTelemetry and Google SRE primary sources were checked for the
 revised claims. The Mermaid diagram rendered and was visually inspected. No
 real stack, independent technical review, measured search, or novice reader
 task ran; the page remains `draft`.
+
+### Focused review round 41 (2026-10-10)
+
+Reviewed custom resources and CRDs with Claude Opus 5.5 read-only. The page
+now follows one invented `ApplicationNetwork` from registered API type to
+stored instance and controller reconciliation. It distinguishes validation,
+defaulting, and field pruning from infrastructure creation; the small YAML
+specimen shows what a learner would submit without claiming it was applied.
+The diagnostic table treats absent status and old status as clues, not proof,
+and explains authorization, served versions, and finalizer-protected deletion.
+The Crossplane section distinguishes an XRD and generated CRD from the
+Composition and provider controllers. Two static retrieval cases cover the
+type/controller and status/deletion boundaries.
+
+Current Kubernetes and Crossplane primary documentation was checked for the
+revised claims. The Mermaid diagram rendered and was visually inspected. No
+cluster, controller, external network, independent technical review, measured
+search, or novice reader task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 
