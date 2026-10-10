@@ -236,6 +236,14 @@ cases:
     question: Can a replica set secondary lag or a primary-only acknowledged write roll back during failover, and how are read preference and write concern different?
     expected_paths: [knowledge/databases/mongodb/fundamentals.md]
     required_source_ids: [mongodb-read-preference, mongodb-write-concern, mongodb-rollbacks]
+  - id: kafka-key-append-order-boundary
+    question: If OrderPlaced and OrderPaid use the same Kafka key, does Kafka guarantee business order, and what happens if partitions or key encoding change?
+    expected_paths: [knowledge/databases/kafka/topic-and-event-design.md]
+    required_source_ids: [apache-kafka-introduction, apache-kafka-operations, apache-kafka-producer-configs]
+  - id: kafka-schema-replay-and-compaction
+    question: When a Kafka consumer replays old OrderPaid events, how do Avro reader defaults and topic compaction affect what it can read?
+    expected_paths: [knowledge/databases/kafka/topic-and-event-design.md]
+    required_source_ids: [apache-avro-specification, apache-kafka-design]
   - id: gateway-route-attachment-vs-backend-reference
     question: Why can an HTTPRoute fail to attach to a Gateway in another namespace, or attach but fail to use a Service in another namespace?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md]

@@ -450,7 +450,7 @@ decision has happened.
 | --- | --- | --- | --- |
 | [Relational vs. document databases](knowledge/databases/relational-vs-document-databases.md) | Rewritten to the standard and given a focused beginner review in round 37. | Keyed citations to current PostgreSQL and MongoDB documentation; the order example is labelled illustrative; Claude Opus 5.5 reviewed the revision twice read-only; the diagram was rendered and inspected. | Independent technical review; reader test; freshness decision. |
 | [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard and given a focused beginner review in round 38. | Keyed current MongoDB manual citations and Atlas backup guidance; the ticket document is illustrative JSON, not database output. Claude Opus 5.5 reviewed the revision twice read-only; both diagrams rendered and were inspected. | Independent technical review; reader test; freshness decision. |
-| [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard. | Keyed citations to Apache Kafka 4.1 documentation and the Apache Avro specification; partitions and offsets in the example are invented. The cross-partition ordering and event-format statements are labelled in the page as inferences, because the cited Kafka pages do not state them. | Independent technical review, including the version-pinned Kafka links; reader test; freshness decision. |
+| [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard and given a focused beginner review in round 39. | Keyed citations to current Apache Kafka 4.3 documentation and the Apache Avro specification; partition and offset examples are invented. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
 | [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard. | Keyed citations to Kubernetes and Crossplane documentation; the platform API walk-through is conceptual, with no manifest and no cluster run. | Independent technical review; reader test; freshness decision. |
 | [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. | Independent security review before anyone relies on it; reader test; freshness decision. |
 | [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard. | Keyed citations to RFC 9111 and the CloudFront Developer Guide; the cache-key example is reasoned from the model, not a recorded test. Only CloudFront's provider behaviour was checked. | Independent technical review; a second provider's documentation for the provider-neutral claims; reader test; freshness decision. |
@@ -2767,6 +2767,27 @@ Current MongoDB primary documentation was checked for the revised claims.
 Both Mermaid diagrams rendered and were visually inspected. No MongoDB
 deployment or query, measured search, independent technical review, or novice
 reader task ran; the page remains `draft`.
+
+### Focused review round 39 (2026-10-10)
+
+Reviewed Kafka topic and event design with Claude Opus 5.5 twice,
+read-only. The order example now distinguishes partition append order from
+the order in which business facts happened. It shows two keys, a classic
+consumer group polling the partitions, opaque event IDs, an illustrative
+`OrderPaid` value, and a fulfillment side effect consistent with payment
+already having occurred. It distinguishes current and committed consumer
+positions, repeat delivery from deliberate replay, and the scope of Kafka's
+exactly-once features. The schema section now tests both old-reader and
+new-reader directions using a bounded Avro example with writer schema and a
+valid union default. Retention explains segment-based deletion and why
+compaction is unsuitable for a full order-event history. Two static retrieval
+cases cover the key/order boundary and schema/replay boundary.
+
+Current Apache Kafka 4.3 and Apache Avro primary documentation was checked
+for the revised claims. The Mermaid diagram rendered and was visually
+inspected. No broker, producer, consumer, schema registry, measured search,
+independent technical review, or novice reader task ran; the page remains
+`draft`.
 
 ### Candidates for the next wave
 

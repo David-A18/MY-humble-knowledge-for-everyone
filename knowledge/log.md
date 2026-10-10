@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-10
+
+- **Kafka topic and event design beginner review**: Clarified partition append order versus business order, key and partition-change effects, classic consumer-group polling, a repeat-safe fulfillment example with opaque event IDs, schema changes in both Avro reader directions, and retention versus compaction for order history. The revised diagram rendered and was inspected, and two static retrieval cases were added. Claude Opus 5.5 reviewed the page twice read-only; current Apache Kafka 4.3 and Avro documentation was checked. No broker, producer, consumer, registry, independent technical review, measured search, or novice reader task ran; the page remains `draft`.
+
 ## 2026-10-09
 
 - **MongoDB fundamentals beginner review**: Reordered the first definitions around one invented ticket, added a diagram of embedded snapshot versus unenforced user reference, bounded single-document atomicity, clarified collection validation and a ticket-list index, and corrected replica failover, rollback, and sharding explanations. The topic index now sends beginners through the database comparison first; two static retrieval cases cover references and failover. Claude Opus 5.5 reviewed the page twice read-only; current MongoDB documentation was checked, and both diagrams rendered and were inspected. No MongoDB deployment or query, independent technical review, measured search, or novice reader task ran; the page remains `draft`.

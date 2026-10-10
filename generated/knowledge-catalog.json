@@ -1569,6 +1569,8 @@
         "apache-kafka-design",
         "apache-kafka-topic-configs",
         "apache-kafka-operations",
+        "apache-kafka-producer-configs",
+        "apache-kafka-messages",
         "apache-avro-specification"
       ],
       "stale_after": null,
