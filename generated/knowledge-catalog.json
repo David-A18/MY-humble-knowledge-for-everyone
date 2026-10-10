@@ -1438,7 +1438,8 @@
         "opentelemetry-context-propagation",
         "opentelemetry-sampling",
         "opentelemetry-collector",
-        "google-sre-book-slo"
+        "google-sre-book-slo",
+        "google-sre-workbook-alerting"
       ],
       "stale_after": null,
       "status": "draft",

@@ -475,7 +475,7 @@ maintainer value was added, and no example was run.
 | [GitHub Actions with Kubernetes](knowledge/cross-topic-guides/github-actions-with-kubernetes.md) | Rewritten to the standard. | Keyed citations to GitHub and Kubernetes documentation; no workflow file and no cluster run. | Independent technical review; reader test; freshness decision. |
 | [GitHub Actions with Terraform](knowledge/cross-topic-guides/github-actions-with-terraform.md) | Rewritten to the standard. | Keyed citations to Terraform CLI documentation, HashiCorp's automation tutorial, and GitHub documentation; the pipeline walk-through is invented. The partial-apply statement is labelled as not quoted from the cited pages. | Independent technical and security review; reader test; freshness decision. |
 | [Terraform on AWS](knowledge/cross-topic-guides/terraform-on-aws.md) | Rewritten to the standard. | Keyed citations to the S3 backend, backend, locking, AWS provider, and AWS IAM documentation; the wrong-account example is reasoned, with placeholder account numbers and no AWS call. The AWS provider registry page is rendered by script, so its content was checked against the provider's documentation source. | Independent technical and security review; reader test; freshness decision. |
-| [Observability stack](knowledge/cross-topic-guides/observability-stack.md) | Rewritten to the standard. | Keyed citations to OpenTelemetry documentation and the Google SRE Book; the incident story is invented. | Independent technical review; a check against one concrete stack; reader test; freshness decision. |
+| [Observability stack](knowledge/cross-topic-guides/observability-stack.md) | Rewritten to the standard; focused beginner review in round 40. | Keyed citations to OpenTelemetry and Google SRE documentation; the incident story is invented. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; a check against one concrete stack; reader test; freshness decision. |
 
 The two Terraform pages have no analogy of their own. They rely on the
 analogy in Terraform fundamentals and use a diagram and a worked example
@@ -2788,6 +2788,23 @@ for the revised claims. The Mermaid diagram rendered and was visually
 inspected. No broker, producer, consumer, schema registry, measured search,
 independent technical review, or novice reader task ran; the page remains
 `draft`.
+
+### Focused review round 40 (2026-10-10)
+
+Reviewed the observability stack explanation with Claude Opus 5.5 read-only.
+The incident now defines its request-success SLI and error budget, shows why a
+fast budget-burn alert can fire before the 30-day objective is missed, and
+distinguishes a local payment-client connection-pool wait from time inside the
+external provider. Trace IDs join the invented request's logs to its span;
+head and tail sampling explain why one trace cannot represent the failure
+rate. The diagram includes the user path and an external check, and the
+analogy now matches the SLO alert model. Two static retrieval cases cover the
+budget and correlation questions.
+
+Current OpenTelemetry and Google SRE primary sources were checked for the
+revised claims. The Mermaid diagram rendered and was visually inspected. No
+real stack, independent technical review, measured search, or novice reader
+task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 

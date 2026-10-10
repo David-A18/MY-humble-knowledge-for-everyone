@@ -2,6 +2,7 @@
 
 ## 2026-10-10
 
+- **Observability stack beginner review**: Clarified how trace context joins spans and logs, how sampling limits conclusions, why error-budget alerts can precede a 30-day SLO miss, and how a local connection-pool wait differs from a slow external provider. Revised the stack diagram and the invented incident, linked the Google SRE Workbook, and added two static retrieval cases. Claude Opus 5.5 reviewed the page read-only; current OpenTelemetry and Google SRE primary sources were checked. No live stack, independent technical review, measured search, or novice reader task ran; the page remains `draft`.
 - **Kafka topic and event design beginner review**: Clarified partition append order versus business order, key and partition-change effects, classic consumer-group polling, a repeat-safe fulfillment example with opaque event IDs, schema changes in both Avro reader directions, and retention versus compaction for order history. The revised diagram rendered and was inspected, and two static retrieval cases were added. Claude Opus 5.5 reviewed the page twice read-only; current Apache Kafka 4.3 and Avro documentation was checked. No broker, producer, consumer, registry, independent technical review, measured search, or novice reader task ran; the page remains `draft`.
 
 ## 2026-10-09

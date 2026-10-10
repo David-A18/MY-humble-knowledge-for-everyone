@@ -100,6 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified observability signals, trace correlation and sampling, SLO error budgets, alert pace, and user-path blind spots in the incident example; added two retrieval cases.
 - Clarified Kafka topic and event design with accurate append-order and key boundaries, a fulfillment replay example, two-direction Avro compatibility, retention and compaction limits, a revised diagram, current Kafka 4.3 sources, and two retrieval cases.
 - Clarified MongoDB fundamentals with one ticket's embedded snapshot and reference boundary, accurate atomicity and validation scope, a query/index example, corrected replica and sharding explanations, two diagrams, numbered answers, and two retrieval cases.
 - Clarified relational versus document databases with the order write boundary, correct cross-order item totals, a revised diagram and decision table, numbered answer checks, current official sources, and two retrieval cases.

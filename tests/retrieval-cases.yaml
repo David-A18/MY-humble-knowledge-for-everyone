@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: observability-error-budget-versus-slo-breach
+    question: Can an alert fire because booking failures are using the 30-day error budget quickly before the full 30-day SLO is missed?
+    expected_paths: [knowledge/cross-topic-guides/observability-stack.md]
+    required_source_ids: [google-sre-workbook-alerting]
+  - id: observability-trace-local-versus-provider-time
+    question: If a payment client span times out, how can logs with the same trace ID help distinguish a local connection-pool wait from a slow external provider?
+    expected_paths: [knowledge/cross-topic-guides/observability-stack.md]
+    required_source_ids: [opentelemetry-context-propagation, opentelemetry-traces]
   - id: programming-first-program-flow
     question: How does a tiny program move from source code and typed input through a function and condition to printed output?
     expected_paths: [knowledge/programming-languages/programming-fundamentals.md]

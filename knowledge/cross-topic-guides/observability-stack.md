@@ -35,6 +35,9 @@ sources:
   - id: google-sre-book-slo
     resource: https://sre.google/sre-book/service-level-objectives/
     title: Google SRE Book - Service Level Objectives
+  - id: google-sre-workbook-alerting
+    resource: https://sre.google/workbook/alerting-on-slos/
+    title: Google SRE Workbook - Alerting on SLOs
 ---
 
 # Observability stack
@@ -77,22 +80,25 @@ doing.[^opentelemetry-signals] Three are widely used.
 
 | Signal | Simple definition | The question it answers best | What it cannot tell you |
 | --- | --- | --- | --- |
-| Metric | A measurement of a service captured at runtime, such as a request count or a duration.[^opentelemetry-metrics] | "How much, how often, and is it changing?" | Which individual request failed, or why. |
-| Log | A timestamped text record of an event, structured or unstructured.[^opentelemetry-logs] | "What exactly happened at this moment, in this component?" | How common the event is, unless you count the records. What happened in components that logged nothing. |
+| Metric | A measurement such as request count or duration, usually viewed as an aggregate over time.[^opentelemetry-metrics] | "How much, how often, and is it changing?" | Which individual request failed, or why. |
+| Log | A timestamped record of an event, structured or unstructured.[^opentelemetry-logs] | "What exactly happened at this moment, in this component?" | Which request it belongs to unless it carries an identifier; what happened in components that logged nothing. |
 | Trace | The path one request takes through the system, made of spans, where each span is one unit of work.[^opentelemetry-traces] | "Where did this request spend its time, and which step failed?" | Whether this request is typical. |
 
 The signals complement each other. A metric tells you there is a problem and
 how large it is. A trace tells you where in the request path it sits. A log
 tells you what the component said about it.
 
-They are most useful when they can be connected. Context propagation passes
-identifiers along with a request so that signals produced in different
-services can be correlated.[^opentelemetry-context-propagation] Without it,
-you have three separate piles of data about the same event.
+They are most useful when they can be connected. **Context propagation**
+carries a trace ID and parent span ID between services, often in a request
+header. The receiving service can add its span to the same trace; logs that
+record the trace ID can be found alongside it.[^opentelemetry-context-propagation]
+If a service or intermediary does not pass the context onward, the path can
+split into disconnected traces. Metrics usually summarize many requests;
+context propagation does not turn every metric into a record of one request.
 
 ## From a signal to a decision: SLI, SLO, and alert
 
-Signals describe. They do not decide. Three terms turn a measurement into a
+Signals describe. They do not decide. These terms turn a measurement into a
 decision:
 
 - A **service level indicator (SLI)** is a carefully defined quantitative
@@ -101,39 +107,53 @@ decision:
   users' perspective.[^opentelemetry-observability-primer]
 - A **service level objective (SLO)** is a target value or range for an
   SLI.[^google-sre-book-slo] For example: 99.5% of booking requests succeed,
-  measured over 30 days.
-- An **alert** is a rule that notifies a person when the objective is at risk.
+  measured over a rolling 30-day window.
+- An **error budget** is the allowed share of unsuccessful requests over the
+  SLO period. A 99.5% success target allows up to 0.5% unsuccessful requests
+  over that period. For one million eligible requests, that is 5,000 allowed
+  failures; the count changes with traffic.[^google-sre-workbook-alerting]
+- The **burn rate** says how quickly the budget is being spent compared with
+  an even pace that would use the full budget over the whole SLO period.
+  A rate of 12 means 12 times that pace.[^google-sre-workbook-alerting]
+- An **alert** is a rule that notifies a person when action is needed. One
+  approach alerts when recent failures are consuming the error budget much
+  faster than planned, before the full-period SLO is necessarily
+  missed.[^google-sre-workbook-alerting]
 
 The chain runs: a user journey matters, an SLI measures it, an SLO says how
-good is good enough, and an alert asks a person to act when the service is
-falling short.
+good is good enough, the error budget defines the allowed failures, and an
+alert asks a person to act when that budget is at risk.
 
 This is what separates an alert worth waking someone for from a graph that
 looks alarming. "CPU is at 90%" is a fact about a machine. "Booking requests
-are failing faster than our objective allows" is a statement about users and a
-reason to act.
+are using their error budget unusually fast" is a statement about users and a
+reason to investigate.
 
 ## The boundaries of a stack
 
 ```mermaid
 flowchart LR
+  user["User<br/>tries a task"]
   app["Instrumented services<br/>emit metrics, logs, traces"]
   col["Collection<br/>receive, process, export"]
   store["Storage and query<br/>retention limits apply"]
   view["Dashboards and queries"]
   alert["Alert rules<br/>based on SLOs"]
+  probe["External check<br/>tests the user path"]
   human["A person decides<br/>and acts"]
+  user --> app
   app --> col --> store
   store --> view --> human
   store --> alert --> human
+  probe --> alert
 ```
 
-Text alternative: instrumented services emit metrics, logs, and traces. A
-collection layer receives, processes, and exports them. A storage and query
-layer keeps them, within retention limits. From storage, two paths lead to a
-person: dashboards and queries that someone looks at, and alert rules based on
-SLOs that notify someone. In both cases the final step is a person deciding
-and acting.
+Text alternative: a user tries a task against instrumented services. Those
+services emit metrics, logs, and traces, which a collection layer receives,
+processes, and exports. A storage and query layer keeps them within retention
+limits. From storage, dashboards and queries inform a person, and alert rules
+based on SLOs notify one. An external check of the user path can also feed an
+alert. In each case, a person decides and acts.
 
 Each boundary is a place where data can be missing:
 
@@ -141,38 +161,56 @@ Each boundary is a place where data can be missing:
 | --- | --- | --- |
 | Instrumentation | Code in the system emits signals. | Anything not instrumented is invisible. No later stage can recover it. |
 | Collection | Receives, processes, and exports telemetry. The OpenTelemetry Collector is one vendor-neutral implementation of this layer.[^opentelemetry-collector] | Data dropped or filtered here never reaches storage. |
+| Sampling | Keeps some traces, in the service or collection layer, to control volume. | A request whose trace is not kept has no trace to inspect. |
 | Storage and query | Keeps data and answers questions about it. | Data older than the retention period is gone. Detail that was aggregated away cannot be recovered. |
-| Dashboards and alerts | Present data and notify people. | A dashboard shows only the questions someone thought to ask. |
+| Dashboards and alerts | Present data and notify people. | A dashboard shows only the questions someone thought to ask. An alert fires only for conditions someone defined. |
 
-Traces have one more boundary. Tracing is often **sampled**, which means only
-some traces are processed and exported.[^opentelemetry-sampling] The request
-you want to examine may not be among them.
+Tracing is often **sampled**, which means only some traces are processed and
+exported.[^opentelemetry-sampling] **Head sampling** decides early, before it
+knows whether the request will fail; a failure might have no trace. **Tail
+sampling** can decide after seeing most or all of a trace and favor failures,
+but it requires more collection work. The traces you keep under such a rule
+will not represent the proportion of failures in all requests. Count the
+requests covered by the SLI using metrics recorded independently of trace
+sampling, not a handful of kept traces.
 
 ## Example: an incident on a booking service
 
 This story is illustrative. The service, numbers, and findings are invented,
 and it does not describe a real incident or a tested setup.
 
-`bookings-api` has an illustrative SLO that 99.5% of `POST /bookings` requests
-succeed over 30 days. Its team also uses an alert on a short window of fast
-error-budget consumption. A new version was deployed twenty minutes ago and
-the rollout completed.
+`bookings-api` has an illustrative SLO: over a rolling 30 days, 99.5% of valid
+`POST /bookings` requests that reach the service return a successful response
+before a defined timeout. Invalid input rejected as a client error does not
+count as a service failure in this example. This SLI cannot see requests
+blocked before they reach the service. The team also uses an alert for a
+short window of fast error-budget consumption. A new version was deployed
+twenty minutes ago and the rollout completed.
+
+At a 6% SLI failure ratio, requests are failing at 12 times the 0.5% budget
+pace (`6 ÷ 0.5 = 12`). If that rate persisted at steady traffic, it would
+consume a *full* 30-day budget in about 2.5 days; any budget already spent
+would leave less time. The alert warns about the pace. It does not prove
+that the 30-day SLO has already been missed. This arithmetic illustrates
+burn rate; it is not a tested alert rule.[^google-sre-workbook-alerting]
 
 | Step | Signal | What it reveals | What it cannot prove |
 | --- | --- | --- | --- |
 | 1 | A short-window error-budget alert fires for booking requests. | Recent failures put the 30-day SLO at risk and warrant investigation. | Why requests failed or whether the full 30-day objective is already missed. |
-| 2 | Metrics show the error rate rose from 0.2% to 6% starting at the deployment time, and that latency for the payment step tripled. | How large, since when, and that it coincides with the deployment. | That the deployment caused it. Coincidence in time is a lead, not proof. |
-| 3 | A trace of one failed request shows most of its time spent in a call to the payment provider, ending in a timeout. | Where in the request path the failure sits. | That every failing request looks like this one. If traces are sampled, the collection may not be representative. |
-| 4 | Logs from the booking service around that span show "connection pool exhausted" errors. | What the component reported at that moment. | What happened inside the payment provider, which emits no logs into this stack. |
-| 5 | The team compares versions and finds that the new release lowered the connection pool size. They roll back, and the recent success rate returns toward its former level. | The rollback is followed by recovery in the current traffic. | That the pool size was the only cause, or that the rolling 30-day objective has recovered. |
+| 2 | Metrics recorded independently of trace sampling show the SLI failure ratio rose from 0.2% to 6% starting at deployment time, and payment-step latency tripled. | How large, since when, and that it coincides with the deployment. | That the deployment caused it. Coincidence in time is a lead, not proof. |
+| 3 | A trace of one failed request shows that the booking service's payment client span takes most of the time and ends in a timeout. | Which part of this request needs investigation. | Whether time was spent waiting locally for a connection or inside the provider; whether other failed requests look alike. |
+| 4 | Booking-service logs carrying the same trace ID show "connection pool exhausted" errors. | What this service reported for the traced request. | What happened inside the payment provider, which emits no logs into this stack. |
+| 5 | The team compares versions and finds that the new release lowered the connection pool size. They roll back, and the recent success rate returns toward its former level. | The rollback is followed by recovery in the current traffic. | That the pool-size change caused the failures: rollback reverted the whole release. Failures already counted remain in the rolling window until they age out. |
 
 What to notice:
 
 - Each signal narrowed the question. None answered it alone.
-- The alert came from the SLO, not from a machine-level metric. CPU and memory
-  were normal throughout.
+- The alert used recent budget consumption, not a machine-level metric. CPU
+  and memory were normal throughout.
 - The dashboard for Pod health was green the whole time. It was accurate, and
   it was answering a different question.
+- The service's SLI has a blind spot: failures before a request reaches it
+  require a check from the user's side of the path.
 
 ## What a green dashboard does not prove
 
@@ -197,14 +235,19 @@ missing data, are worth having alongside internal signals.
   someone thought an event was worth recording.
 - **A trace** is following one patient from admission through every
   department to discharge.
-- **The SLO** is the ward's agreed standard of care, and **an alert** is the
-  call to a doctor when the monitor shows the standard is not being met.
+- **The SLO** is a measurable standard, such as "95% of patients are seen
+  within four hours this month." **An alert** is a call for help when the
+  current pace suggests the ward may miss that target.
+- **A trace ID** is like a wristband number: it can connect one patient's
+  records from different departments.
 
 Where the analogy stops being accurate:
 
-- **Software emits only what it was built to emit.** A monitor measures a
-  patient whether or not anyone planned for it. An uninstrumented service says
-  nothing.
+- **Both need instruments.** A ward chooses and attaches its monitors;
+  software teams add instrumentation to services and code paths. Either can
+  miss a problem outside what it measures.
+- **The ID must travel.** A wristband stays with a patient. A trace ID joins
+  software records only if each relevant hop passes the context onward.
 - **Most journeys are not followed.** With sampling, only some requests have a
   trace at all.
 - **Records are discarded on a schedule.** Telemetry past its retention
@@ -225,13 +268,16 @@ Where the analogy stops being accurate:
 
 ## Check your understanding
 
-- An alert says the booking success rate is below its objective. Which signal
-  would you open next, and what question would you ask of it?
+- An alert says booking requests are consuming their error budget much faster
+  than planned. Which signal would you open next, and what question would you
+  ask of it?
 - Why can a trace of one slow request not tell you how many requests are slow?
 - In the example, the Pod health dashboard was green during the incident. Why
   was that not a contradiction?
 - A service emits no telemetry. At which boundary is the information lost, and
   can a later stage recover it?
+- A trace ends at your service's payment client span. Does this alone prove
+  the external payment provider was slow? Why?
 
 ## Next steps
 
@@ -251,11 +297,12 @@ Where the analogy stops being accurate:
 - What sampling keeps and drops: [OpenTelemetry - Sampling](https://opentelemetry.io/docs/concepts/sampling/).
 - The collection layer: [OpenTelemetry - Collector](https://opentelemetry.io/docs/collector/).
 - Indicators, objectives, and choosing targets: [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/). This is a published engineering text, not product documentation.
+- Choosing alert windows and error-budget burn rates: [Google SRE Workbook - Alerting on SLOs](https://sre.google/workbook/alerting-on-slos/). This is published engineering guidance, not an automatic rule for every service.
 
 ## Related links
 
 - [AWS CloudWatch documentation](https://docs.aws.amazon.com/cloudwatch/)
-- [Kubernetes monitoring documentation](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
+- [Kubernetes resource-usage monitoring for CPU and memory](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
 - [End-to-end deployment](end-to-end-deployment.md)
 - [Kubernetes troubleshooting](../kubernetes/troubleshooting/index.md)
 - [Back to cross-topic guides](index.md)
@@ -270,3 +317,4 @@ Where the analogy stops being accurate:
 [^opentelemetry-sampling]: [OpenTelemetry - Sampling](https://opentelemetry.io/docs/concepts/sampling/), source record `opentelemetry-sampling`.
 [^opentelemetry-collector]: [OpenTelemetry - Collector](https://opentelemetry.io/docs/collector/), source record `opentelemetry-collector`.
 [^google-sre-book-slo]: [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/), source record `google-sre-book-slo`.
+[^google-sre-workbook-alerting]: [Google SRE Workbook - Alerting on SLOs](https://sre.google/workbook/alerting-on-slos/), source record `google-sre-workbook-alerting`.
