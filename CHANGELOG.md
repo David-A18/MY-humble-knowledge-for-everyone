@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified GitHub Actions run inspection and troubleshooting, including failed-job rerun direction, pending versus skipped required checks, fork approval, token and OIDC boundaries, runner queues, and concurrency; added two static retrieval cases.
 - Added a focused review of the GitHub Actions workflow-choice and action-selection pages, correcting PR merge checks, required merge rules, fork limitations, reusable-workflow secret scope, and the topic learning path.
 - Added a focused beginner review of the GitHub Actions concept and workflow-structure pages, with corrected pull-request checkout, token, state-sharing, and event-data explanations plus two static retrieval cases.
 - Added an AI fundamentals entry page that separates AI, ML, generative AI, language models, assistants, and agents, and routes beginners into the existing AI tooling guides.

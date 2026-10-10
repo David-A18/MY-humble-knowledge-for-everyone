@@ -2161,7 +2161,11 @@
         "gh-run-rerun",
         "github-rerun",
         "gh-workflow-run",
-        "github-workflow-commands"
+        "github-workflow-commands",
+        "gh-pr-checks",
+        "github-rerun-api",
+        "github-manual-run",
+        "github-workflow-syntax"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2188,7 +2192,12 @@
         "actions-secrets",
         "actions-oidc",
         "actions-environments",
-        "actions-concurrency"
+        "actions-concurrency",
+        "actions-events",
+        "actions-required-checks",
+        "actions-pr-target-security",
+        "actions-oidc-reference",
+        "actions-fork-settings"
       ],
       "stale_after": null,
       "status": "draft",

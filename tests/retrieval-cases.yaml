@@ -66,6 +66,14 @@ cases:
     question: If I call a reusable GitHub Actions workflow with secrets inherit, which secrets and token permissions can it receive?
     expected_paths: [knowledge/git/github-actions/actions-and-uses-catalog.md]
     required_source_ids: [github-reusable-workflows, github-token]
+  - id: actions-failed-job-rerun-direction
+    question: If a GitHub Actions test job fails, will a failed-jobs rerun repeat its successful upstream setup job or the publish job that depends on it, and will it include a later fix?
+    expected_paths: [knowledge/git/github-actions/commands.md]
+    required_source_ids: [github-rerun-api, github-rerun]
+  - id: actions-pr-required-check-triage
+    question: For a pull request into main, why can a required GitHub Actions check remain pending after a branch filter skips its workflow while a job skipped by if can appear successful?
+    expected_paths: [knowledge/git/github-actions/common-solutions.md]
+    required_source_ids: [actions-events, actions-required-checks]
   - id: cloud-provider-versus-customer
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]

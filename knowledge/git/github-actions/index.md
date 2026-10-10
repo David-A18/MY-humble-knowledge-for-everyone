@@ -1,6 +1,6 @@
 # GitHub Actions
 
-Workflow design, CI/CD patterns, security, command references, action usage, examples, and troubleshooting notes for GitHub Actions.
+Workflow design, CI/CD patterns, security, run inspection, action usage, examples, and troubleshooting notes for GitHub Actions.
 
 ## Articles
 
@@ -23,7 +23,8 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 3. Read [Security, secrets, and permissions](security-secrets-and-permissions.md) before adding credentials, deploys, or third-party actions.
 4. Use [Choose an action](actions-and-uses-catalog.md) to check a reusable dependency before adding it.
 5. Choose a starting shape from [Workflow shapes and use cases](examples-and-use-cases.md), then adapt its example to your repository.
-6. Use [Common solutions](common-solutions.md) when a workflow fails.
+6. Use [Inspect an Actions run](commands.md) to find the first failure, then
+   [Common solutions](common-solutions.md) to locate the failed handoff.
 
 ## Finding actions
 

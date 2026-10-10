@@ -1151,7 +1151,7 @@ cloud OIDC trust before suggesting a configuration change.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [GitHub Actions common solutions](knowledge/git/github-actions/common-solutions.md) | Rewritten as a Troubleshooting Guide with an event-to-outcome diagram, text alternative, bounded branch/path trigger example, symptom table, repository versus cloud authority map, and environment/concurrency limits. | Keyed current official GitHub documentation. No workflow, runner, secret, OIDC exchange, deployment, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent GitHub Actions/security and Opus review; controlled trigger, fork, permission, OIDC, and queue cases; reader test; freshness decision. |
+| [GitHub Actions common solutions](knowledge/git/github-actions/common-solutions.md) | Rewritten as a Troubleshooting Guide with an event-to-outcome diagram, text alternative, bounded branch/path trigger example, symptom table, repository versus cloud authority map, and environment/concurrency limits. Focused review in round 46 separated missing runs from queued jobs, workflow-filter pending checks from skipped-job success, PR base filters from source branches, and token, OIDC, and concurrency failure boundaries. | Keyed current official GitHub documentation. Claude Opus 5.5 reviewed the page read-only; current GitHub sources were checked independently. No workflow, runner, secret, OIDC exchange, deployment, or novice reader test ran. | Independent GitHub Actions/security review; controlled trigger, fork, permission, OIDC, and queue cases; reader test; freshness decision. |
 
 ### Wave 58 (2026-10-02)
 
@@ -1204,7 +1204,7 @@ The earlier broad command inventory mixed terminal and in-job controls.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Inspect a GitHub Actions run](knowledge/git/github-actions/commands.md) | One failed-run path through list, view, failed-step logs, and fix-versus-rerun choice; a boundary table distinguishes terminal CLI commands from job environment files and marks privileged controls. | Current official GitHub CLI and Actions documentation checked. Read-only `gh run list` and `gh run view` succeeded on this repository; `gh run rerun --help` confirmed flags. No workflow was triggered or rerun. Claude Code remained at its weekly limit. | Independent Actions and Opus review; novice reader task on a failed run; controlled rerun exercise; freshness decision. |
+| [Inspect a GitHub Actions run](knowledge/git/github-actions/commands.md) | One failed-run path through PR checks, list, view, failed-step logs, and fix-versus-rerun choice; a boundary table distinguishes terminal CLI commands from job environment files and marks privileged controls. Focused review in round 46 corrected failed-jobs rerun direction and original-revision semantics, added approval, pending-check, and runner-queue triage, and clarified job output scope. | Current official GitHub CLI and Actions documentation checked. Claude Opus 5.5 reviewed the page read-only. Read-only `gh run list` and `gh run view` succeeded on this repository; no workflow was triggered or rerun. | Independent Actions review; novice reader task on a failed run; controlled rerun exercise; freshness decision. |
 
 ### Wave 63 (2026-10-02)
 
@@ -2903,6 +2903,27 @@ primary documentation was checked for the revised claims. The illustrative
 YAML parsed, and the final diagram rendered and was visually inspected. No workflow,
 registry publish, deployment, independent Actions/security review, measured
 search, or novice reader task ran; both concepts remain `draft`.
+
+### Focused review round 46 (2026-10-10)
+
+Reviewed the GitHub Actions run-inspection and troubleshooting guides and
+their topic index with Claude Opus 5.5 read-only. The terminal path now starts
+with pull-request checks when relevant, selects the correct run, reads the
+first causal error, and distinguishes a rerun of the original revision from
+a newly committed fix. A failed-jobs rerun includes failed jobs and their
+dependents, not their successful prerequisites; a dependent publishing job
+may execute if the failed test passes on the new attempt.
+
+The troubleshooting path separates a workflow filtered before it runs from a
+job skipped inside a run, queued runners, fork approval, permission and secret
+boundaries, OIDC subject changes when an environment is added, and default
+concurrency cancellation. Two static retrieval cases cover rerun direction
+and pending-versus-skipped required checks. Current GitHub and GitHub CLI
+primary documentation was checked for material claims. Read-only CLI listing,
+run inspection, and PR check inspection succeeded against this repository;
+the revised diagram rendered and was visually inspected. No failed-job rerun,
+new workflow, deployment, independent Actions/security review, measured search,
+or novice reader task ran; both concepts remain `draft`.
 
 ### Candidates for the next wave
 
