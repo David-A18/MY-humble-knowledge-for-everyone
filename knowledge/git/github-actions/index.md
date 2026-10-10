@@ -20,10 +20,10 @@ Workflow design, CI/CD patterns, security, command references, action usage, exa
 
 1. Read [Components and concepts](components-and-concepts.md).
 2. Read [Workflow structure](workflow-structure.md).
-3. Use [Choose an action](actions-and-uses-catalog.md) to check a reusable dependency before adding it.
-4. Choose a starting shape from [Workflow shapes and use cases](examples-and-use-cases.md), then adapt its example to your repository.
-5. Use [Common solutions](common-solutions.md) when a workflow fails.
-6. Review [Security, secrets, and permissions](security-secrets-and-permissions.md) before adding deploys or third-party actions.
+3. Read [Security, secrets, and permissions](security-secrets-and-permissions.md) before adding credentials, deploys, or third-party actions.
+4. Use [Choose an action](actions-and-uses-catalog.md) to check a reusable dependency before adding it.
+5. Choose a starting shape from [Workflow shapes and use cases](examples-and-use-cases.md), then adapt its example to your repository.
+6. Use [Common solutions](common-solutions.md) when a workflow fails.
 
 ## Finding actions
 
@@ -31,7 +31,7 @@ Start with [Choose an action](actions-and-uses-catalog.md) for common source rep
 
 The source map is organized by need:
 
-- repository files and language setup,
+- repository files, language setup, and dependency review,
 - caching and artifacts,
 - cloud authentication and infrastructure tooling,
 - container registry and image work.
@@ -39,7 +39,7 @@ The source map is organized by need:
 ## Official documentation
 
 - [GitHub Actions documentation](https://docs.github.com/actions)
-- [GitHub Actions workflow syntax](https://docs.github.com/actions/writing-workflows/workflow-syntax-for-github-actions)
+- [GitHub Actions workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
 - [GitHub CLI manual](https://cli.github.com/manual/gh)
 
 [Back to Git index](../index.md) | [Back to knowledge index](../../index.md)

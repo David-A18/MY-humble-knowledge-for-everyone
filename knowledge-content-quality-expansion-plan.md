@@ -1194,7 +1194,7 @@ action versions and an invalid Terraform example, so the replacement is
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [GitHub Actions workflow shapes](knowledge/git/github-actions/examples-and-use-cases.md) | Event, job, permission, and inspectable-result model; PR, matrix, publishing, deployment, maintenance, and Terraform choices; one bounded PR test example; merge-gate and user-outcome boundaries; diagram and understanding checks. | Current official GitHub workflow, token, branch, environment, registry, and action documentation checked. The illustrative YAML parsed and the Mermaid diagram rendered and was visually inspected. No workflow executed in a repository; Claude Code remained at its weekly limit. | Independent Actions and Opus review; actual repository workflow run; novice reader tasks; freshness decision. |
+| [GitHub Actions workflow shapes](knowledge/git/github-actions/examples-and-use-cases.md) | Event, job, permission, and inspectable-result model; PR, matrix, publishing, deployment, maintenance, and Terraform choices; one bounded PR test example; merge-gate and user-outcome boundaries. Focused review in round 45 clarified the PR test merge, fork approval, checkout credentials, required checks, and separate review decision; the diagram now shows these handoffs. | Current official GitHub workflow, token, event, fork, branch, environment, registry, and action documentation checked. Claude Opus 5.5 reviewed the page twice read-only; the revised Mermaid diagram rendered and was visually inspected. No workflow executed in a matching repository. | Independent Actions/security review; actual repository workflow run; novice reader tasks; freshness decision. |
 
 ### Wave 62 (2026-10-02)
 
@@ -1214,7 +1214,7 @@ whose versions and permissions can drift.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Choose a GitHub Actions action](knowledge/git/github-actions/actions-and-uses-catalog.md) | Explains step actions versus job-level reusable workflows; groups common official and vendor-maintained source repositories by need; gives a reviewed-ref, metadata, permission, and outcome checklist with a bounded checkout example. | Current official GitHub workflow syntax, secure-use, reusable-workflow, token, checkout, and setup-node documentation checked. The older unverified deployment, third-party, and obsolete-version snippets were removed. No sample workflow executed; Claude Code remained at its weekly limit. | Independent Actions/security and Opus review; novice action-selection task; workflow execution and freshness decision. |
+| [Choose a GitHub Actions action](knowledge/git/github-actions/actions-and-uses-catalog.md) | Explains step actions versus job-level reusable workflows; groups common official and vendor-maintained source repositories by need; gives a reviewed-ref, metadata, permission, and outcome checklist. Focused review in round 45 clarified local workflow paths, named versus inherited secrets, token limits, moving tags, and transitive dependencies. | Current official GitHub workflow syntax, secure-use, reusable-workflow, token, checkout, and setup-node documentation checked. Claude Opus 5.5 reviewed the page twice read-only. No sample workflow executed. | Independent Actions/security review; novice action-selection task; workflow execution and freshness decision. |
 
 ### Wave 64 (2026-10-02)
 
@@ -2868,8 +2868,8 @@ Reviewed the GitHub Actions components and workflow-structure pages with
 Claude Opus 5.5 read-only. The pages now explain that a `pull_request` check
 normally tests GitHub's temporary merge, that only selected pull request
 activities start the example workflow, and that an explicit `permissions`
-block sets other configurable token scopes to `none`. They distinguish shared workspace
-files from separate step processes, show the artifact transfer boundary, and
+block sets other configurable token scopes to `none`. They distinguish shared
+workspace files from separate step processes, show the artifact transfer boundary, and
 give actionable guidance for untrusted event text in shell scripts. The
 workflow map separates `uses` and `run` steps. Two static retrieval cases
 cover the merge checkout and job/step data boundaries.
@@ -2882,6 +2882,27 @@ repositories were checked for the revised claims. The new test-merge diagram
 rendered and was visually inspected. No workflow was run in a
 matching Node repository, no independent technical or security review,
 measured search, or novice reader task ran; both pages remain `draft`.
+
+### Focused review round 45 (2026-10-10)
+
+Reviewed the workflow-shapes explanation, the action-selection reference, and
+their parent learning path with Claude Opus 5.5 read-only. The PR example now
+names the temporary test merge, uses `persist-credentials: false`, and explains
+fork token and secret limits plus possible maintainer approval. Required checks
+and required reviews are separate decisions; the revised diagram shows a
+human or authorized automation merging before the `main` publishing path.
+The action reference now distinguishes local step actions from local reusable
+workflow jobs, named from inherited secrets, the caller's token ceiling, and
+the limits of pinning only an outer dependency. Two static retrieval cases
+cover the PR merge gate and reusable-workflow secret scope.
+
+Claude's second read-only review found gaps in merge-conflict checks, fork-run
+approval, required-check skips, package access, OIDC permissions, and local
+action references; these were corrected. Current GitHub and official action
+primary documentation was checked for the revised claims. The illustrative
+YAML parsed, and the final diagram rendered and was visually inspected. No workflow,
+registry publish, deployment, independent Actions/security review, measured
+search, or novice reader task ran; both concepts remain `draft`.
 
 ### Candidates for the next wave
 

@@ -58,6 +58,14 @@ cases:
     question: If one GitHub Actions job builds a file and another job needs it, will needs share the file, and will a shell export persist into the next step of the same job?
     expected_paths: [knowledge/git/github-actions/components-and-concepts.md]
     required_source_ids: [github-artifacts, github-variables]
+  - id: actions-pr-example-check-and-merge-gate
+    question: Does a passing pull_request test automatically allow a merge, and which revision does checkout test in the example workflow?
+    expected_paths: [knowledge/git/github-actions/examples-and-use-cases.md]
+    required_source_ids: [github-events, github-required-checks]
+  - id: actions-reusable-workflow-secret-scope
+    question: If I call a reusable GitHub Actions workflow with secrets inherit, which secrets and token permissions can it receive?
+    expected_paths: [knowledge/git/github-actions/actions-and-uses-catalog.md]
+    required_source_ids: [github-reusable-workflows, github-token]
   - id: cloud-provider-versus-customer
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]

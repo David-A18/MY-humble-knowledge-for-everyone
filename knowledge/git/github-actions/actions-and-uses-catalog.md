@@ -26,6 +26,9 @@ sources:
   - id: github-setup-node
     resource: https://github.com/actions/setup-node
     title: actions/setup-node
+  - id: github-oidc
+    resource: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers
+    title: Configuring OpenID Connect in cloud providers
 ---
 
 # Choose a GitHub Actions action
@@ -33,7 +36,7 @@ sources:
 ## The simple idea
 
 An **action** is reusable code that a workflow step runs. The `uses` key
-names that code. It may come from a public repository, a path in your own
+names that code. It may come from another repository, a path in your own
 repository, or a container image. A **reusable workflow** is a larger unit
 called by a job, also with `uses`. These two placements have different
 inputs and security boundaries.[^github-syntax][^github-reuse]
@@ -54,11 +57,12 @@ starting points, not endorsements or complete workflow recipes. Read
 | --- | --- | --- |
 | Step in a job | `owner/repository@ref` | An action from another repository at the chosen ref. |
 | Step in a job | `./path/to/action` | An action checked out from this repository; its files must be present on the runner. |
-| Step in a job | `docker://image:tag` | A container image as an action step; verify the image source and tag. |
+| Step in a job | `docker://image:tag` | A container image as an action step. Tags can move; verify the source and use an image digest when a fixed image is required. |
 | Whole job | `owner/repository/.github/workflows/file.yml@ref` | A reusable workflow with its own jobs and declared inputs. |
+| Whole job | `./.github/workflows/file.yml` | A reusable workflow in this repository, loaded from the caller's commit. |
 
 For example, this step uses the official checkout action at the `v7`
-major-version tag shown in its current README:
+major-version tag shown in its README:
 
 ```yaml
 steps:
@@ -76,18 +80,32 @@ the runner it supports before adding it.[^github-checkout][^github-syntax]
 for a step. The action's `action.yml` or `action.yaml` and README tell you
 which inputs exist. Neither key automatically grants permission: token
 scopes, repository access, external credentials, and event trust still
-determine what the code can do.[^github-syntax][^github-token]
+determine what the code can do. An action can access `GITHUB_TOKEN` through
+`github.token` even when you do not explicitly pass it, so set the job's
+`permissions` deliberately.[^github-syntax][^github-token]
 
 ### A reusable workflow is a job call
 
 Put the reusable workflow's `uses` at the **job** level, not inside
-`steps`. The called workflow must declare `workflow_call`. Its `with:`
-inputs follow the called workflow's contract. Pass only the named secrets
-it needs; `secrets: inherit` passes every secret available to the caller
-to the called workflow.[^github-reuse][^github-syntax]
+`steps`. The called workflow file must be directly under `.github/workflows/`
+and declare `workflow_call`. Its `with:` inputs follow the called workflow's
+contract. The calling job has `uses`, not its own `runs-on` and `steps`; the
+called workflow defines the jobs and steps that run. For a named secret,
+declare it under `on.workflow_call.secrets` in the called workflow and pass
+it by name from the caller. `secrets: inherit`
+can pass all secrets available to the caller to a directly called workflow
+in the same organization or enterprise. Environment secrets are different:
+the caller cannot pass them through `workflow_call`. If a called job sets an
+environment, a same-named secret from that environment takes precedence over
+the caller's passed secret. The calling job's `permissions` or its inherited
+default sets the `GITHUB_TOKEN` ceiling; the called workflow can only keep or
+reduce it.[^github-reuse][^github-syntax]
 
-A same-repository action and a same-repository reusable workflow use
-different paths. The [workflow syntax reference](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
+A local action is a **step** such as `uses: ./path/to/action` and needs its
+files checked out first. A local reusable workflow is a **job** such as
+`uses: ./.github/workflows/check.yml`; it is loaded from the caller's commit
+without a separate `@ref` or checkout step. The
+[workflow syntax reference](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
 has the supported forms, including GitHub Enterprise Server differences.
 
 ## Find a candidate by the job you need
@@ -105,9 +123,9 @@ in your repository.
 | Cache dependencies | [actions/cache](https://github.com/actions/cache) | Can an untrusted ref write or restore this cache? |
 | Move files between jobs | [actions/upload-artifact](https://github.com/actions/upload-artifact) and [actions/download-artifact](https://github.com/actions/download-artifact) | Which run and artifact produced the files? |
 | Review dependency changes | [actions/dependency-review-action](https://github.com/actions/dependency-review-action) | Does the event provide a meaningful PR comparison and required permission? |
-| Authenticate to AWS | [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) | Does OIDC trust restrict repository, ref or environment, and role permissions? |
-| Authenticate to Azure | [azure/login](https://github.com/Azure/login) | Which federated identity and subscription will the job use? |
-| Authenticate to Google Cloud | [google-github-actions/auth](https://github.com/google-github-actions/auth) | Which workload identity provider and service account are trusted? |
+| Authenticate to AWS | [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) | For OIDC, grant `id-token: write`; check trusted repository, ref or environment, and role permissions.[^github-oidc] |
+| Authenticate to Azure | [azure/login](https://github.com/Azure/login) | For OIDC, grant `id-token: write`; check the federated identity and subscription.[^github-oidc] |
+| Authenticate to Google Cloud | [google-github-actions/auth](https://github.com/google-github-actions/auth) | For OIDC, grant `id-token: write`; check the workload identity provider and service account.[^github-oidc] |
 | Install Terraform | [hashicorp/setup-terraform](https://github.com/hashicorp/setup-terraform) | Which CLI version, backend, and cloud identity does the job need? |
 | Log in to a container registry | [docker/login-action](https://github.com/docker/login-action) | Which registry and least-privilege credential will be used? |
 | Build or publish an image | [docker/build-push-action](https://github.com/docker/build-push-action) | Is pushing intended, and how will the digest be verified? |
@@ -144,12 +162,20 @@ shape around publishing, read [workflow shapes](examples-and-use-cases.md).
 | Major or full version tag | A name that the owner can move. | Easier updates, but recheck what the tag resolves to. |
 | Branch name | A moving branch tip. | Avoid for privileged jobs unless that movement is part of the design. |
 
-These choices apply to external actions and reusable workflows. A local
-action follows the calling repository's checked-out revision, so check
-which code the workflow event supplies. GitHub's
+These ref choices apply to external actions and external reusable workflows.
+A local reusable workflow comes from the caller's commit. A local action runs
+whatever is at its path in the runner workspace: after a normal
+`pull_request` checkout, that is the temporary test merge, but a different
+checkout ref or repository changes the files. Check which code the workflow
+event and checkout actually supply. GitHub's
 [secure-use reference](https://docs.github.com/en/actions/reference/security/secure-use)
 explains why untrusted pull-request code and powerful credentials need
 separate treatment.[^github-secure]
+
+Pinning an outer action to a full commit SHA fixes that action's revision;
+it does not automatically pin every external action or image that code may
+fetch. Inspect the action's implementation and its dependencies before using
+it in a privileged job.[^github-secure]
 
 ## Check your understanding
 
@@ -169,6 +195,8 @@ separate treatment.[^github-secure]
 - [GITHUB_TOKEN permissions](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token)
   and the [official checkout](https://github.com/actions/checkout) and
   [Node setup](https://github.com/actions/setup-node) source repositories.
+- [OIDC cloud authentication](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers)
+  explains the `id-token: write` permission and external trust boundary.
 - Return to [GitHub Actions](index.md), [workflow shapes](examples-and-use-cases.md),
   or the [knowledge index](../../index.md).
 
@@ -177,3 +205,4 @@ separate treatment.[^github-secure]
 [^github-reuse]: [GitHub Docs, reuse workflows](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows).
 [^github-token]: [GitHub Docs, use GITHUB_TOKEN](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token).
 [^github-checkout]: [Official actions/checkout repository](https://github.com/actions/checkout).
+[^github-oidc]: [Configuring OpenID Connect in cloud providers](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers).

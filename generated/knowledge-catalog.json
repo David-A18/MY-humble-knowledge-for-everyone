@@ -2113,7 +2113,8 @@
         "github-reusable-workflows",
         "github-token",
         "github-checkout",
-        "github-setup-node"
+        "github-setup-node",
+        "github-oidc"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2260,7 +2261,12 @@
         "github-protected-branches",
         "github-checkout",
         "github-setup-node",
-        "github-container-registry"
+        "github-container-registry",
+        "github-required-checks",
+        "github-fork-approval",
+        "github-pr-target-security",
+        "github-manual-run",
+        "github-package-access"
       ],
       "stale_after": null,
       "status": "draft",
