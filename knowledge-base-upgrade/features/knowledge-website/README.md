@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Plan a separate, public reading site for the canonical [OKF knowledge bundle](../../../knowledge/index.md). The website renders an exact revision of this repository's `main` branch as static pages. Git remains the content source of truth; the site owns presentation, search output, redirects, and deployment.
+Specify a separate, public reading site for the canonical [OKF knowledge bundle](../../../knowledge/index.md). The website renders an exact revision of this repository's `main` branch as static pages. Git remains the content source of truth; the site owns presentation, search output, redirects, and deployment.
 
-Status: Implementation specification; website repository and host are not yet selected
+Status: Local website project scaffolded; public GitHub repository, host, and domain remain to be selected
 Audience: Website implementers and knowledge-base maintainers
 Maintainer: Unassigned
 Design input: Read-only Claude Code Opus 5.5 architecture reviews on 2026-09-26; these are design reviews, not runtime or reader-test evidence
@@ -22,7 +22,7 @@ The decision to launch before independent reader testing is recorded in [ADR-000
 
 ## Repository boundary
 
-This directory contains the source-side specification. The future website repository holds code and operational instructions. It references this specification at the pinned source revision rather than copying knowledge prose or maintaining competing requirements.
+This directory contains the source-side specification. The separate local website project holds code and operational instructions. When published as a GitHub repository, it will reference this specification at the pinned source revision rather than copying knowledge prose or maintaining competing requirements.
 
 ## Related links
 

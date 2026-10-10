@@ -18,10 +18,10 @@ If you are looking for **Akamai** information, start with [Akamai vs. CloudFront
 
 | Article | Purpose |
 | --- | --- |
-| [CDN and edge fundamentals](cdn-and-edge-fundamentals.md) | Understand edge locations, caching, cache misses, origin offload, and edge compute. |
-| [CDN caching and origin protection](cdn-caching-and-origin-protection.md) | Design cache keys, TTLs, purges, and direct-origin controls safely. |
-| [Akamai vs. CloudFront](akamai-vs-cloudfront.md) | Compare Akamai and Amazon CloudFront at a decision-guide level. |
-| [Multi-CDN operations](multi-cdn-operations.md) | Operate multiple CDN providers with consistent DNS, cache, security, logging, and rollback behavior. |
+| [CDN and edge fundamentals](cdn-and-edge-fundamentals.md) | Follow a response through a CDN, then distinguish cache keys, origin forwarding, freshness, and edge code. |
+| [CDN caching and origin protection](cdn-caching-and-origin-protection.md) | Decide which responses may be shared, protect a private path, and prevent direct-origin bypass. |
+| [Akamai vs. CloudFront](akamai-vs-cloudfront.md) | Compare provider configurations against a site's caching, origin, security, and operations needs. |
+| [Multi-CDN operations](multi-cdn-operations.md) | Keep public, private, and origin behaviour consistent while traffic can use two CDNs. |
 | [CloudFront](../aws/networking/cloudfront.md) | Use Amazon CloudFront in AWS architectures. |
 
-[Back to cloud index](../index.md) | [Back to root index](../../../README.md)
+[Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

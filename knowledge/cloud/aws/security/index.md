@@ -8,7 +8,7 @@ Security practices, detection, encryption, and operational controls on AWS.
 
 | Article | Purpose |
 | --- | --- |
-| [IAM OIDC provider and STS web identity](iam-oidc-provider-and-sts-web-identity.md) | Understand AWS trust for external OIDC tokens and temporary credentials. |
+| [IAM OIDC provider and STS web identity](iam-oidc-provider-and-sts-web-identity.md) | Separate provider registration, role trust, STS exchange, and API permissions. |
 
 ## Expected content
 
@@ -18,4 +18,4 @@ Security practices, detection, encryption, and operational controls on AWS.
 - Security Hub, GuardDuty, and CloudTrail notes.
 - Incident response checklists.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

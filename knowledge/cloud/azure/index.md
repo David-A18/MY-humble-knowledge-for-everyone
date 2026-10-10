@@ -17,4 +17,4 @@ Status: Initial outline
 - [Azure documentation](https://learn.microsoft.com/azure/)
 - [Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/)
 
-[Back to cloud index](../index.md) | [Back to root index](../../../README.md)
+[Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

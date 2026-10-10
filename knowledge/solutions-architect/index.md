@@ -14,8 +14,8 @@ Status: Initial outline
 
 ## Articles
 
-- [Proof of Concept](proof-of-concept.md): explains PoC meaning, vocabulary,
-  success criteria, scope control, deliverables, examples, and review questions.
+- [Proof of concept](proof-of-concept.md): see how a small, bounded test
+  turns one important unknown into evidence for a decision.
 
 ## Related cloud solution patterns
 
@@ -23,4 +23,4 @@ Status: Initial outline
 | --- | --- |
 | [Blue-green deployment](../cloud/solutions/blue-green-deployment.md) | Low-downtime releases, traffic cutover, rollback planning, and deployment architecture reviews. |
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

@@ -2,18 +2,18 @@
 
 AI knowledge for concepts, systems, workflows, tools, knowledge bases, and practical engineering use.
 
+Start with [AI fundamentals](ai-fundamentals.md) if AI, machine learning,
+generative AI, language models, assistants, and agents are new to you.
+
 ## Guides
 
 | Guide | Use it for |
 | --- | --- |
-| [AI tooling](ai-tooling/index.md) | MCP servers, Claude and Codex custom tools, skills, Markdown knowledge bases, retrieval, OKF, and agent knowledge-base reference architecture. |
+| [AI fundamentals](ai-fundamentals.md) | Start here: understand the basic terms, training versus use, and how to check an answer against a current source. |
+| [AI tooling](ai-tooling/index.md) | After the fundamentals, explore tools, retrieval, Markdown knowledge bases, and agent knowledge-base design. |
 
-## Expected content
+The [ML](../ml/index.md), [LLM](../llm/index.md), and
+[AI agents](../ai-agents/index.md) sections are currently outlines; begin
+with the existing guides above.
 
-- AI system design and evaluation notes.
-- Retrieval, prompting, MCP, tooling, and automation patterns.
-- Markdown knowledge-base and custom-tool design practices.
-- Safety, governance, and operational practices.
-- Cross-links to LLM, ML, MLOps, and AI agent content.
-
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

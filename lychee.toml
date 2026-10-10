@@ -15,3 +15,25 @@ exclude = [
   # runners intermittently fail to connect to this Netlify-backed domain.
   "^https://docs\\.crossplane\\.io(/.*)?$",
 ]
+
+# Check public sources without overwhelming a single host. GitHub served
+# intermittent 503/504 responses to valid links on three consecutive CI
+# attempts; pace that host while keeping real broken links as failures.
+max_concurrency = 16
+max_retries = 6
+retry_wait_time = 3
+
+# Check the raw files behind GitHub blob links that repeatedly returned 503
+# to Actions runners. The published Markdown keeps its readable GitHub links,
+# while a missing source file still fails the external-link check.
+remap = [
+  '^https://github\.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC\.md$ https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md',
+  '^https://github\.com/GoogleCloudPlatform/open-knowledge-format/blob/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC\.md$ https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC.md',
+  '^https://github\.com/open-gitops/documents/blob/main/GLOSSARY\.md$ https://raw.githubusercontent.com/open-gitops/documents/main/GLOSSARY.md',
+  '^https://github\.com/crossplane-contrib/provider-upjet-aws/blob/main/AUTHENTICATION\.md$ https://raw.githubusercontent.com/crossplane-contrib/provider-upjet-aws/main/AUTHENTICATION.md',
+  '^https://github\.com/kubernetes/kube-state-metrics/blob/4057c6d6f3fce76ae122dc9dfa44000abc164968/docs/metrics/workload/pod-metrics\.md$ https://raw.githubusercontent.com/kubernetes/kube-state-metrics/4057c6d6f3fce76ae122dc9dfa44000abc164968/docs/metrics/workload/pod-metrics.md',
+]
+
+[hosts."github.com"]
+concurrency = 2
+request_interval = "300ms"

@@ -6,9 +6,9 @@ Database and data-platform knowledge for modeling, operations, reliability, perf
 
 | Section | Focus |
 | --- | --- |
-| [Kafka](kafka/index.md) | Event streaming concepts, topic design, operations, and AWS integration. |
+| [Relational vs. document databases](relational-vs-document-databases.md) | Compare one order's read path, write boundary, shared product facts, and reporting questions in tables and a document. |
 | [MongoDB](mongodb/index.md) | Document modeling, indexes, replication, sharding, operations, and cloud choices. |
-| [Relational vs. document databases](relational-vs-document-databases.md) | Decide when document or relational models fit better. |
+| [Kafka](kafka/index.md) | Event streaming concepts, topic design, operations, and AWS integration. |
 
 ## Expected future content
 
@@ -17,4 +17,4 @@ Database and data-platform knowledge for modeling, operations, reliability, perf
 - Database performance investigation workflows.
 - Data contracts and schema governance.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

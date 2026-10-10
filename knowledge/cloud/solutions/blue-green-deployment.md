@@ -1,182 +1,129 @@
 ---
 type: "Explanation"
 title: "Blue-green deployment"
-description: "Use this page to understand what blue-green deployment means, what kind of cloud solution it is, how to recognize it in real environments, and which services usually participate."
+description: "Understand how two application versions share a release window, when traffic moves, and why switching back may not undo data changes."
 tags: [cloud, solutions, blue-green-deployment]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: aws-codedeploy
+    resource: https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments.html
+    title: AWS CodeDeploy - Working with deployments
+  - id: aws-ecs-blue-green
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html
+    title: Amazon ECS - Blue-green deployments
+  - id: azure-container-apps
+    resource: https://learn.microsoft.com/en-us/azure/container-apps/blue-green-deployment
+    title: Microsoft Learn - Blue-green deployment in Azure Container Apps
+  - id: cloud-run-rollouts
+    resource: https://cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration
+    title: Google Cloud - Cloud Run rollouts and traffic migration
 ---
 
 # Blue-green deployment
 
-## Purpose
+## The idea in plain language
 
-Use this page to understand what blue-green deployment means, what kind of cloud solution it is, how to recognize it in real environments, and which services usually participate.
+A blue-green deployment keeps two application versions available during a
+release. **Blue** is the version currently serving users; **green** is the
+candidate. The team checks green, moves traffic to it, watches the result,
+and keeps blue available for a defined time in case traffic needs to move
+back.[^aws-ecs-blue-green][^azure-container-apps]
 
-## Short definition
+Picture a theater with two stages. While one stage hosts the show, the
+other is prepared and checked. The audience can be directed to the new
+stage when it is ready. The analogy has a limit: both stages may share the
+same ticket system, so changing that shared system affects both versions.
+For software, that shared system might be a database, queue, or API.
 
-Blue-green deployment is a release strategy where two production-capable environments exist at the same time:
+## Follow one release
 
-- **Blue** is the environment currently receiving production traffic.
-- **Green** is the environment with the new application version.
+Imagine a checkout service moving from version 1 to version 2. This is an
+illustrative flow, not an observed deployment.
 
-After the green environment passes health checks, smoke tests, and monitoring checks, traffic moves from blue to green. If the new version fails, traffic can move back to blue while blue is still available.
+```mermaid
+flowchart LR
+  users["Users"] --> router["Traffic router"]
+  router --> blue["Blue: version 1 serving users"]
+  router -. "after checks" .-> green["Green: version 2 ready"]
+  blue --> data["Shared data and dependencies"]
+  green --> data
+```
 
-Blue-green deployment is not one specific cloud product. It is an application delivery and reliability pattern implemented with compute, traffic routing, health checks, deployment automation, and observability.
+Text alternative: a stable user endpoint reaches a routing layer. Initially
+it sends production traffic to blue while green is prepared. After checks,
+routing moves some or all traffic to green according to the platform's
+release configuration. Both versions may use the same data and external
+dependencies.[^aws-codedeploy]
 
-## What kind of solution is it?
+The word “blue-green” describes **two versions and a controlled traffic
+change**, not one exact traffic schedule. AWS CodeDeploy can shift ECS or
+Lambda traffic all at once, linearly, or in canary increments. Azure
+Container Apps can use revision traffic weights. Cloud Run also offers
+traffic migration between revisions.[^aws-codedeploy][^azure-container-apps][^cloud-run-rollouts]
 
-| Category | Meaning |
-| --- | --- |
-| Release strategy | It controls how a new application version reaches users. |
-| Availability pattern | It reduces downtime by keeping the old version available during the release. |
-| Rollback pattern | It keeps a previous known-good environment ready for fast fallback. |
-| Traffic management pattern | It depends on a router, load balancer, gateway, service mesh, DNS record, or platform traffic-splitting feature. |
+## What each stage answers
 
-Blue-green deployment is usually part of a CI/CD and platform architecture. It is most useful when the application can run two versions side by side and production traffic can be redirected without changing clients.
-
-## When to use it
-
-- You need low-downtime releases for a user-facing service.
-- You want to test a new version in a production-like environment before full cutover.
-- You need a fast rollback path after deployment.
-- The application is mostly stateless, or state changes are backward-compatible.
-- The extra temporary infrastructure cost is acceptable.
-
-Do not choose blue-green deployment just because it sounds safer. For small internal services, a rolling update may be enough. For high-risk behavior changes, a canary release with small traffic percentages may be safer than an immediate full swap.
-
-## How it works
-
-1. Build and publish a new artifact, such as a container image, VM image, package, or function version.
-2. Deploy the artifact to the green environment without replacing blue.
-3. Run readiness checks, smoke tests, synthetic checks, and dependency checks against green.
-4. Shift traffic from blue to green through a controlled routing layer.
-5. Watch errors, latency, saturation, business metrics, and logs during the bake period.
-6. Keep blue available until the new version is accepted.
-7. Remove or repurpose blue only after rollback risk is low.
-
-## Services involved
-
-| Layer | Common services or resources | What to look for |
+| Stage | Reader question | Evidence to seek |
 | --- | --- | --- |
-| Source and CI/CD | GitHub Actions, Azure DevOps, AWS CodePipeline, Google Cloud Deploy, Jenkins, Argo CD, Flux | Pipeline stages named deploy, smoke test, promote, swap, or rollback. |
-| Artifact storage | Amazon ECR, Azure Container Registry, Google Artifact Registry, VM image galleries, package registries | Two deployable versions available at the same time. |
-| Compute runtime | ECS services and task sets, EKS or Kubernetes Deployments, App Service slots, Azure Container Apps revisions, Cloud Run revisions, EC2 or VM scale sets, Lambda versions | Old and new runtime groups exist side by side. |
-| Traffic routing | Application Load Balancer, Network Load Balancer, CodeDeploy, Route 53, Azure Front Door, Azure Traffic Manager, Application Gateway, Cloud Load Balancing, Kubernetes Service, Ingress, Gateway API, service mesh | Routing rules, target groups, weights, selectors, slots, or revision traffic split between versions. |
-| Health and release gates | Load balancer health checks, readiness probes, CloudWatch alarms, Azure Monitor alerts, Cloud Monitoring metrics, synthetic tests | Automated checks decide whether to continue, stop, or roll back. |
-| Configuration and secrets | Parameter Store, Secrets Manager, Azure Key Vault, Google Secret Manager, Kubernetes Secrets and ConfigMaps | Both environments can read compatible configuration without sharing unsafe mutable state. |
-| Data layer | RDS, DynamoDB, Azure SQL, Cosmos DB, Cloud SQL, Spanner, MongoDB, Kafka, queues, caches | Schema and message changes are compatible with both blue and green during the transition. |
+| Prepare green | Can the new version start beside blue? | Deployment status, configuration, dependency compatibility. |
+| Test green | Does it perform the intended user flow? | A representative smoke test or test traffic, not only process health. |
+| Move traffic | Are users reaching the intended version? | Router weights or target groups, version-labelled requests, errors, latency. |
+| Observe | Is green behaving acceptably under real load? | Agreed technical and user-facing signals over a defined period. |
+| Keep or retire blue | Is switching traffic back still useful? | Old capacity remains available and shared data still works with version 1. |
 
-## How to know you are seeing blue-green deployment
+The precise checks and observation period are team decisions. A green
+health check can show the process is alive without proving checkout, login,
+or payment works. The example needs the application's own acceptance
+signals before a real release.
 
-You are probably looking at blue-green deployment when several of these signals are true:
+## Why rollback has a boundary
 
-- There are two production-sized or production-capable environments for the same application.
-- The names include `blue`, `green`, `stable`, `candidate`, `active`, `inactive`, `slot`, `revision`, `task-set`, or `target-group`.
-- One public endpoint, load balancer, gateway, or DNS name can route to either version.
-- The release process includes a traffic switch, slot swap, selector change, traffic weight change, or target group change.
-- The previous version is intentionally kept alive after the new version starts receiving traffic.
-- Rollback means routing traffic back to the previous environment, not rebuilding the old application.
-- Deployment dashboards show two versions during the release window.
+If version 2 fails because of its code or configuration, traffic may be
+redirected to version 1 while blue remains available. AWS ECS and Azure
+Container Apps describe this as a benefit of their blue-green
+approaches.[^aws-ecs-blue-green][^azure-container-apps]
 
-You are probably not looking at blue-green deployment when a single Deployment, service, or VM group is updated in place and old instances are removed gradually as new instances become ready. That is usually a rolling deployment.
+But routing back does **not** undo a database migration, a message already
+sent, or a payment already processed. Both versions must understand any
+shared data they encounter during the transition, or the team needs a
+separate recovery plan. This is reasoning from the shared-dependency model,
+not a promise from a cloud service.
 
-## Provider examples
+Running both versions also consumes extra capacity during the overlap.
+Amazon ECS explicitly calls out temporary resource usage as a
+consideration.[^aws-ecs-blue-green] The team should plan when blue can be
+retired and what evidence is needed before removing it.
 
-| Platform | Common implementation |
-| --- | --- |
-| AWS ECS | ECS service with blue-green deployment through CodeDeploy, task sets, a load balancer, and traffic shifting. |
-| AWS EC2 | Two Auto Scaling groups or instance fleets behind a load balancer, with traffic moved between target groups or DNS records. |
-| AWS Lambda | Function versions and aliases with traffic shifting, usually managed by CodeDeploy or deployment tooling. |
-| Azure App Service | Production and staging deployment slots, then a slot swap when the new version is ready. |
-| Azure Container Apps | Revisions, revision labels, and traffic weights representing blue and green versions. |
-| Google Cloud Run | Immutable revisions with traffic split or full traffic migration between old and new revisions. |
-| Google Kubernetes Engine or Kubernetes | Separate blue and green Deployments or clusters, with traffic controlled by a Service selector, Ingress, Gateway API, service mesh, or load balancer. |
+## When this pattern fits
 
-## Common designs
+Choose it when you can run two versions together, route users deliberately,
+check green before full cutover, and keep shared data compatible long enough
+to switch back. If those conditions are absent, the label “blue-green” will
+not make a release safe. A rolling update or a gradual rollout may fit a
+different capacity or risk constraint; compare the actual traffic and
+recovery behavior rather than the name.
 
-### Load balancer with two target groups
+## Check your understanding
 
-```text
-users -> dns -> load balancer -> blue target group -> current version
-                          \-> green target group -> new version
-```
+- What is the difference between making green ready and moving production
+  traffic to it?
+- Why might moving traffic back to blue fail after a database change?
+- Can a blue-green release shift traffic gradually, or must it be one switch?
 
-What it shows: the public endpoint stays stable while the routing layer changes which backend group receives production traffic.
+## Official documentation for deeper study
 
-### Kubernetes service switch
+- [AWS CodeDeploy deployments](https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments.html) explains platform-specific blue-green traffic options.
+- [Amazon ECS blue-green deployments](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html) covers service revisions, validation, overlap, and rollback.
+- [Azure Container Apps blue-green deployment](https://learn.microsoft.com/en-us/azure/container-apps/blue-green-deployment) shows revisions and traffic weights.
+- [Cloud Run rollouts and traffic migration](https://cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration) describes revision traffic and rollback controls.
 
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: checkout
-spec:
-  selector:
-    app: checkout
-    release: blue
-  ports:
-    - port: 80
-      targetPort: 8080
-```
+See the [cloud solutions index](index.md) and [end-to-end
+deployment](../../cross-topic-guides/end-to-end-deployment.md).
 
-What it does: routes service traffic only to Pods labeled `release: blue`. A blue-green switch can point the selector, gateway route, or mesh route to green after validation.
-
-> [!IMPORTANT]
-> In production Kubernetes systems, prefer a release controller, GitOps workflow, service mesh, Gateway API implementation, or ingress controller that can make the traffic change auditable and reversible. Manual selector edits are easy to understand but risky in shared environments.
-
-### Revision traffic split
-
-```text
-checkout-v1: 100%
-checkout-v2:   0%
-
-after validation:
-checkout-v1:   0%
-checkout-v2: 100%
-```
-
-What it shows: platforms such as Cloud Run or Azure Container Apps can keep immutable revisions and move traffic by changing revision weights.
-
-## Decision checklist
-
-Use blue-green deployment when all of these are true:
-
-- Users can reach the application through a stable routing layer.
-- The old and new versions can run at the same time.
-- Database schema changes are backward-compatible.
-- Background workers, queues, scheduled jobs, and consumers will not double-process work.
-- Health checks validate real dependencies, not only process liveness.
-- Logs, metrics, and traces include version or environment labels.
-- Rollback is tested and documented.
-- The team accepts temporary duplicate capacity cost.
-
-## Common failure modes
-
-| Symptom | Likely cause | Next step |
-| --- | --- | --- |
-| Green passes health checks but fails real traffic | Health checks are too shallow. | Add synthetic checks that hit dependencies and critical user paths. |
-| Rollback fails after a database migration | Schema change is not backward-compatible. | Use expand-and-contract migrations so both versions can run together. |
-| Some users stay on the old version unexpectedly | Session affinity, DNS caching, client caching, or long-lived connections. | Check routing method, TTLs, sticky sessions, and connection draining. |
-| Both versions process the same queue messages or scheduled jobs | Worker ownership is not part of the release plan. | Gate worker startup, isolate queues, or use idempotency and leader election. |
-| Costs spike during release windows | Blue and green both run full capacity. | Plan temporary capacity, autoscaling limits, and cleanup timing. |
-
-## Official references
-
-- [AWS CodeDeploy blue-green deployments](https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html)
-- [Amazon ECS blue-green deployments](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html)
-- [Azure Container Apps blue-green deployment](https://learn.microsoft.com/en-us/azure/container-apps/blue-green-deployment)
-- [Azure App Service deployment best practices](https://learn.microsoft.com/en-us/azure/app-service/deploy-best-practices)
-- [Cloud Run rollbacks, gradual rollouts, and traffic migration](https://cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration)
-- [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
-- [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
-
-## Related links
-
-- [Cloud solutions](index.md)
-- [Cloud index](../index.md)
-- [End-to-end deployment](../../cross-topic-guides/end-to-end-deployment.md)
-- [GitHub Actions with Kubernetes](../../cross-topic-guides/github-actions-with-kubernetes.md)
-- [Back to root index](../../../README.md)
+[^aws-codedeploy]: [Working with deployments in CodeDeploy](https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments.html).
+[^aws-ecs-blue-green]: [Amazon ECS blue-green deployments](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html).
+[^azure-container-apps]: [Blue-green deployment in Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/blue-green-deployment).
+[^cloud-run-rollouts]: [Cloud Run rollouts, rollbacks, and traffic migration](https://cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration).

@@ -58,6 +58,17 @@ def markdown_links(markdown: str) -> set[str]:
     return {match.group(1).split("#", 1)[0] for match in LINK.finditer(markdown)}
 
 
+def has_template_marker(value: object) -> bool:
+    """Reject copyable-template placeholders in concept metadata."""
+    if isinstance(value, str):
+        return "REPLACE_WITH_" in value
+    if isinstance(value, dict):
+        return any(has_template_marker(key) or has_template_marker(item) for key, item in value.items())
+    if isinstance(value, list):
+        return any(has_template_marker(item) for item in value)
+    return False
+
+
 def validate_bundle(bundle: Path) -> list[str]:
     errors: list[str] = []
     markdown_files = sorted(bundle.rglob("*.md"))
@@ -93,6 +104,8 @@ def validate_bundle(bundle: Path) -> list[str]:
         if metadata is None:
             errors.append(f"{rel}: concept is missing YAML frontmatter")
             continue
+        if has_template_marker(metadata):
+            errors.append(f"{rel}: template placeholder remains in frontmatter")
         for field in ("type", "title", "description", "tags", "status", "maturity", "audience", "maintainer"):
             if field not in metadata or metadata[field] in (None, "", []):
                 errors.append(f"{rel}: missing required profile field {field}")

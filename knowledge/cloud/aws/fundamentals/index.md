@@ -12,4 +12,4 @@ Core AWS concepts and operating models.
 - Service quotas.
 - Resilience terminology.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

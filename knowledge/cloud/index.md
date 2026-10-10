@@ -2,7 +2,16 @@
 
 Provider-neutral and provider-specific cloud knowledge.
 
-Status: Initial outline
+Start with [Cloud computing fundamentals](cloud-computing-fundamentals.md)
+for a provider-neutral explanation of what a cloud provider supplies and what
+you still configure. The provider sections below have uneven depth and remain
+under development.
+
+## Beginner explanation
+
+| Topic | Use it for |
+| --- | --- |
+| [Cloud computing fundamentals](cloud-computing-fundamentals.md) | Understand service models, shared responsibility, elasticity, regions, reliability, and metered use before choosing a service. |
 
 ## Providers
 
@@ -29,7 +38,7 @@ Status: Initial outline
 
 | Topic | Start here | Follow-up |
 | --- | --- | --- |
-| Apigee API management | [Apigee API management](gcloud/apigee.md) | Understand API proxies, policies, products, developer apps, environments, and hybrid deployment trade-offs. |
+| Apigee API management | [Apigee API management](gcloud/apigee.md) | See how a proxy handles a request and how a product grants app access. |
 
 ## Edge and CDN quick paths
 
@@ -40,10 +49,10 @@ Status: Initial outline
 | CDN caching | [CDN caching and origin protection](edge/cdn-caching-and-origin-protection.md) | Design cache keys, TTLs, purges, and direct-origin controls. |
 | Multi-CDN operations | [Multi-CDN operations](edge/multi-cdn-operations.md) | Keep DNS, cache, security, logs, purges, and rollback consistent across providers. |
 
-## Provider-neutral topics
+## Provider-neutral topics to develop
 
 - Cloud operating models.
 - Multi-cloud comparison notes.
 - Shared architecture, governance, reliability, and cost-management patterns.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

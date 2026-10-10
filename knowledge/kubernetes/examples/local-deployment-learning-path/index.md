@@ -28,4 +28,4 @@ This directory contains the exact Kubernetes manifests used by the [local deploy
 - [Local deployment learning path](../../../cross-topic-guides/local-deployment-learning-path.md)
 - [Back to Kubernetes examples](../index.md)
 - [Back to Kubernetes index](../../index.md)
-- [Back to root index](../../../../README.md)
+- [Back to knowledge index](../../../index.md)

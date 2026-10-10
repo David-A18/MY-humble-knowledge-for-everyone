@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified GitHub Actions PR and deployment credential boundaries and the AWS OIDC environment-subject example; aligned the linked IAM denial path and added two static retrieval cases.
+- Clarified GitHub Actions run inspection and troubleshooting, including failed-job rerun direction, pending versus skipped required checks, fork approval, token and OIDC boundaries, runner queues, and concurrency; added two static retrieval cases.
+- Added a focused review of the GitHub Actions workflow-choice and action-selection pages, correcting PR merge checks, required merge rules, fork limitations, reusable-workflow secret scope, and the topic learning path.
+- Added a focused beginner review of the GitHub Actions concept and workflow-structure pages, with corrected pull-request checkout, token, state-sharing, and event-data explanations plus two static retrieval cases.
+- Added an AI fundamentals entry page that separates AI, ML, generative AI, language models, assistants, and agents, and routes beginners into the existing AI tooling guides.
+- Added a provider-neutral cloud computing fundamentals explanation and linked it from the cloud and first-visit indexes.
 - Added ADR-0005 and a source-side website specification for a separate static reading site built from a reviewed, pinned knowledge-base revision.
 - Added a content quality and expansion plan with page-level precision and
   explanation standards, phased coverage priorities, evidence rules, and
@@ -98,6 +104,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified CDN cache keys versus origin forwarding, `Vary`, TTL and revalidation, edge-function triggers, and private account responses; added Akamai comparison and three retrieval cases.
+- Clarified OIDC authorization-code sign-in, trusted issuer discovery, app sessions, and GitHub-to-AWS audience and subject boundaries; added two retrieval cases.
+- Check two pinned GitHub source files through their raw URLs in Lychee after repeated CI 503 responses, while keeping the published source links readable.
+- Clarified the CRD, custom-resource, and controller handoff with an illustrative object, accurate status and deletion checks, Crossplane XRD boundaries, and two retrieval cases.
+- Clarified observability signals, trace correlation and sampling, SLO error budgets, alert pace, and user-path blind spots in the incident example; added two retrieval cases.
+- Clarified Kafka topic and event design with accurate append-order and key boundaries, a fulfillment replay example, two-direction Avro compatibility, retention and compaction limits, a revised diagram, current Kafka 4.3 sources, and two retrieval cases.
+- Clarified MongoDB fundamentals with one ticket's embedded snapshot and reference boundary, accurate atomicity and validation scope, a query/index example, corrected replica and sharding explanations, two diagrams, numbered answers, and two retrieval cases.
+- Clarified relational versus document databases with the order write boundary, correct cross-order item totals, a revised diagram and decision table, numbered answer checks, current official sources, and two retrieval cases.
+- Added a beginner programming fundamentals explanation with a verified three-input Python example, source-to-output diagram, official references, first-visit links, glossary terms, and two retrieval cases.
+- Reworked the knowledge-base first-visit route, clarified local practice prerequisites and review evidence, linked beginner paths from topic indexes, and added two navigation retrieval cases.
+- Clarified Terraform fundamentals with external versus state-only resources, resource addresses, saved-plan approval and staleness, provider reads, partial applies, and sensitive-output limits; linked its local tutorial and added two retrieval cases.
+- Clarified Kubernetes fundamentals with selector and owner-reference boundaries, scheduler and kubelet handoffs, Pod deletion and node-failure timing, and rolling-update stall and rollback behavior; added two retrieval cases.
+- Clarified Git fundamentals with inspection commands, tracked and untracked states, `HEAD` pointers, `git restore` directions, branch-switch behavior, and a revised local-versus-remote diagram; added two retrieval cases.
+- Clarified cloud computing fundamentals with NIST's exact characteristics, IaaS/PaaS/SaaS network and identity duties, availability versus durability, backup limits, region and zone choices, quotas, and budget alerts; added two retrieval cases.
+- Clarified AI fundamentals with context-versus-training, classification, tool-execution, and prompt-injection explanations; corrected the library diagram and added two retrieval cases.
+- Routed 90 knowledge-bundle return-to-home links to the knowledge index instead of the repository README, removed a governance link from the beginner Start here page, and clarified the authoring rule for future pages.
+- Clarified OIDC ID-token login-session checks, HTTPS issuer-key discovery, and OAuth introspection's `active` result; added two targeted retrieval cases.
+- Clarified Kafka fundamentals and Amazon MSK with poll-based diagrams, offset and retention examples, MSK broker-type and connection decisions, and three targeted retrieval cases; aligned and corrected the linked EKS-to-MSK example.
+- Clarified the EKS-to-MSK beginner guide's broker discovery, authentication methods, IAM actions, producer acknowledgments, offset and shipment outcomes, and the database-to-event gap; added three targeted retrieval cases.
+- Corrected the APISIX-on-EKS request path, NLB target and client-IP decisions, TLS and listener-port guidance, the linked 404 diagnosis, and Gateway versus route status; added four targeted retrieval cases.
+- Clarified EKS tooling-cluster choices, managed Argo CD target access, central credential scope, outage and recovery behavior, and two related GitOps explanations.
+- Clarified Kubernetes on AWS with accurate ALB target paths, standard and Auto Mode ownership, Fargate identity and storage limits, and two targeted retrieval cases.
+- Clarified CrashLoopBackOff diagnosis for clean exits, init containers, missing logs, memory and probe evidence, and recovery checks across restart delays.
+- Clarified EKS incident diagnosis for available Deployments with empty Services, operator access failures, image-pull identity, workload IAM, and Auto Mode component ownership.
+- Clarified the Git command map's index model, runnable staged-status example, and command effects; improved the Git topic routes and added retrieval cases.
+- Clarified the knowledge article to website release path, the MCP host and server roles, and OpenAPI's JSON Schema relationship in three beginner explanations; added targeted retrieval cases.
+- Corrected the search proof-of-concept decision example, security group defaults across AWS and Terraform, and bootstrapping meanings; added source records and retrieval cases for those beginner questions.
+- Expanded the glossary with first-visit Git, Kubernetes, Terraform, and AI
+  terms and aligned shared definitions with their current explanations.
+- Corrected the first-visit Terraform value flow and Kubernetes Service
+  explanation, including plan versus apply state timing and the distinction
+  between port-forward and normal Service routing.
+- Clarified Git, Kubernetes, and Terraform fundamentals with source-backed
+  corrections to remote-tracking branches, Pod replacement and endpoints,
+  provider refresh, and secrets in Terraform state.
 - Expanded the stable Git undo-and-recovery guide with official Git source
   records, safer decision paths, expected results, untracked cleanup guidance,
   reflog recovery, and updated maintenance evidence.

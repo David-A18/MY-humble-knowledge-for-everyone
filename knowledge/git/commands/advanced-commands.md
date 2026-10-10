@@ -1,224 +1,175 @@
 ---
-type: "How-to Guide"
-title: "Advanced Git commands"
-description: "Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands."
-tags: [git, advanced-commands]
+type: How-to Guide
+title: Inspect an older Git revision in a second worktree
+description: Open an older commit beside current uncommitted work, inspect it without changing the first checkout, and remove the temporary worktree safely.
+tags: [git, advanced-commands, worktree, history]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Engineering learners and practitioners
+maintainer: unassigned
+sources:
+  - id: git-worktree
+    resource: https://git-scm.com/docs/git-worktree
+    title: git-worktree
+  - id: git-status
+    resource: https://git-scm.com/docs/git-status
+    title: git-status
+  - id: git-rebase
+    resource: https://git-scm.com/docs/git-rebase
+    title: git-rebase
+  - id: git-range-diff
+    resource: https://git-scm.com/docs/git-range-diff
+    title: git-range-diff
+  - id: git-cherry-pick
+    resource: https://git-scm.com/docs/git-cherry-pick
+    title: git-cherry-pick
+  - id: git-bisect
+    resource: https://git-scm.com/docs/git-bisect
+    title: git-bisect
+  - id: git-push
+    resource: https://git-scm.com/docs/git-push
+    title: git-push
 ---
 
-# Advanced Git commands
+# Inspect an older Git revision in a second worktree
 
-## Purpose
+## The simple idea
 
-Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands.
+A Git **worktree** is another working directory attached to the same
+repository. Each worktree has its own checked-out files, index, and `HEAD`;
+they share the repository's object store and most refs. You can inspect an
+older commit in a second directory while current, uncommitted edits stay in
+the first.[^git-worktree]
 
-> [!WARNING]
-> Advanced Git commands often rewrite history, change many files, or operate on repository internals. Inspect first, save work, and avoid rewriting commits that other people may have based work on.
+Picture two desks reading from one archive. Papers spread across one desk
+do not appear on the other. The analogy stops at the archive: new commits
+and branch ref updates are shared, and a worktree is not a separate remote
+repository or a security boundary.[^git-worktree]
 
-## History editing and review
+```mermaid
+flowchart TB
+  shared["Shared repository<br/>objects and branch refs"]
+  shared --> current["Current worktree<br/>its files, index, HEAD"]
+  shared --> older["Older-revision worktree<br/>its files, index, HEAD"]
+```
 
-| Task | Command | When to use it |
+Text alternative: both worktrees use one repository's object store and
+branch refs, while each worktree has separate checked-out files, index,
+and `HEAD`. A file edit in one directory does not copy into the other.
+
+## Use a temporary checkout to inspect a change
+
+Imagine a lesson project with at least two commits. You have an unfinished
+edit in the current directory and want to see how the previous revision
+behaved. `HEAD~1` means the first parent of the current commit. This
+example does not fetch, push, or change either branch.[^git-worktree]
+
+1. Inspect the current directory and make sure you are in the intended
+   repository:
+
+   ```bash
+   git status --short --branch
+   git rev-parse --show-toplevel
+   ```
+
+   Run the remaining commands from the repository root reported above;
+   relative paths use your shell's current directory. Record the current
+   branch and unfinished paths. Choose a sibling path that does not already
+   contain files; here it is `../lesson-older`. Stop if `HEAD~1` does not
+   exist or that path is already in use.
+
+2. Add a detached worktree at the previous commit:
+
+   ```bash
+   git worktree add --detach ../lesson-older HEAD~1
+   git worktree list
+   ```
+
+   `--detach` lets you inspect the commit without moving or creating a
+   branch. `git worktree list` should show both directories, with the
+   second at the older commit.[^git-worktree]
+
+3. Read from the second directory without changing your shell location:
+
+   ```bash
+   git -C ../lesson-older status --short --branch
+   git -C ../lesson-older log -1 --oneline
+   ```
+
+   Open the files or run a safe inspection there. A detached `HEAD` is fine
+   for reading. If you decide to make and keep a fix, first create a
+   properly named branch in that worktree; commits left only on a detached
+   tip are easy to lose track of.
+
+4. Check both directories before cleanup:
+
+   ```bash
+   git -C ../lesson-older status --short
+   git status --short
+   ```
+
+   The temporary worktree should be clean. Your original unfinished edits
+   should still be visible in the second status output from the original
+   directory.
+   If the temporary worktree has work you need, commit it on a branch or
+   copy it to a reviewed location before removing the worktree.
+
+5. Remove only the clean temporary worktree:
+
+   ```bash
+   git worktree remove ../lesson-older
+   git worktree list
+   ```
+
+   Git refuses ordinary removal of a worktree with uncommitted changes.
+   Do not force removal as a cleanup shortcut. The original directory
+   remains in the worktree list.[^git-worktree]
+
+This sequence was checked in a disposable Git 2.53.0 repository with two
+commits and one uncommitted edit in the original directory. It did not
+exercise a remote or a shared team branch.
+
+## Know which advanced operation you actually need
+
+The worktree example changes **which files you inspect**. Other advanced
+commands affect history, refs, or repository data. Start from the task
+rather than trying commands in sequence:
+
+| Need | Official command | Boundary to understand first |
 | --- | --- | --- |
-| Rebase local branch | `git rebase <base>` | Keeping local feature commits on top of a newer base. |
-| Edit commit series | `git rebase -i <base>` | Squashing, rewording, reordering, or dropping local commits before review. |
-| Compare two versions of a branch | `git range-diff <old> <new>` | After rebasing or revising a patch series. |
-| Apply one commit elsewhere | `git cherry-pick <commit>` | Backporting or moving a specific commit to another branch. |
-| Force push with lease | `git push --force-with-lease` | Updating a remote branch after an agreed history rewrite. |
+| Revise your own commit series | [`git rebase`](https://git-scm.com/docs/git-rebase) | Replayed commits get new IDs; save the old tip and avoid rewriting others' work. |
+| Compare an old and revised series | [`git range-diff`](https://git-scm.com/docs/git-range-diff) | It compares patch series; it does not prove the application behaves the same. |
+| Apply one commit on another branch | [`git cherry-pick`](https://git-scm.com/docs/git-cherry-pick) | It creates a new commit and may conflict or duplicate a change. |
+| Locate a regression with a reliable test | [`git bisect`](https://git-scm.com/docs/git-bisect) | It checks out other revisions; start with known good and bad points and restore your starting state afterward. |
+| Limit a large working tree | [`git sparse-checkout`](https://git-scm.com/docs/git-sparse-checkout) | It changes which paths are populated locally, not which repository data you may access. |
+| Diagnose object integrity | [`git fsck`](https://git-scm.com/docs/git-fsck) | Diagnose first; do not run pruning or repair commands without a backup and a specific cause. |
+| Update a remote after a coordinated rewrite | [`git push --force-with-lease`](https://git-scm.com/docs/git-push) | The lease checks an expected remote value but still replaces history; confirm the branch and team agreement. |
 
-### Rebase local work
+The [Git recovery guide](../troubleshooting/undo-and-recovery.md) covers
+mistakes by location, and [common use cases](common-use-cases.md) covers
+the ordinary branch-to-review path. The
+[Git command map](complete-command-catalog.md) helps find official
+references for other tasks.
 
-```bash
-git rebase origin/main
-git rebase -i origin/main
-```
+## Check your understanding
 
-What it does: replays local commits on top of another base. Interactive rebase lets you reword, squash, reorder, or drop commits. Do not rebase shared commits that others may have based work on.
+- Which parts of two worktrees are separate, and which repository data do
+  they share?
+- Why does `--detach` suit reading an older commit but need extra care
+  before keeping a new commit?
+- What would you inspect before `git worktree remove`?
+- Why does `--force-with-lease` still need coordination on a shared branch?
 
-### Compare rewritten history
+## Official documentation and next routes
 
-```bash
-git range-diff origin/main..v1 origin/main..v2
-```
+- [Worktree](https://git-scm.com/docs/git-worktree) and
+  [status](https://git-scm.com/docs/git-status) define the inspected
+  directory and cleanup behavior.
+- [Rebase](https://git-scm.com/docs/git-rebase),
+  [range-diff](https://git-scm.com/docs/git-range-diff),
+  [cherry-pick](https://git-scm.com/docs/git-cherry-pick), and
+  [bisect](https://git-scm.com/docs/git-bisect) cover separate history tasks.
+- Return to [Git commands](index.md), [Git](../index.md), or the
+  [knowledge index](../../index.md).
 
-What it does: compares two versions of a commit series by patch identity, which makes it useful after rebasing or revising a branch.
-
-### Move one commit
-
-```bash
-git cherry-pick abc1234
-```
-
-What it does: applies the changes from an existing commit as a new commit on the current branch.
-
-### Push rewritten history safely
-
-```bash
-git push --force-with-lease origin HEAD
-```
-
-What it does: force pushes only if the remote still points where your local remote-tracking ref expects. It is safer than `--force`, but it still rewrites public history.
-
-## Debug and search history
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Find the commit that introduced a bug | `git bisect` | A regression exists and you know a good and bad commit. |
-| Show line history | `git blame <path>` | Investigating why a line exists. |
-| Search tracked content | `git grep <pattern>` | Searching repository files tracked by Git. |
-| Reuse recorded conflict resolutions | `git rerere` | Repeated rebases or long-running branches hit the same conflicts. |
-
-### Find a regression
-
-```bash
-git bisect start
-git bisect bad
-git bisect good v1.2.0
-```
-
-What it does: binary-searches history until Git finds the first bad commit. Finish with `git bisect reset`.
-
-### Search and inspect history
-
-```bash
-git blame src/app.js
-git grep "TODO"
-```
-
-What it does: `git blame` shows the last commit that changed each line. `git grep` searches tracked files at the current revision.
-
-### Reuse conflict resolutions
-
-```bash
-git config rerere.enabled true
-git rerere status
-```
-
-What it does: records and reapplies previous conflict resolutions. Review auto-applied resolutions before committing.
-
-## Patch, archive, and multi-worktree workflows
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Apply a patch file | `git apply <patch>` | Applying a raw patch without creating a commit automatically. |
-| Import mailbox patches | `git am` | Email-based patch workflows. |
-| Create patch files | `git format-patch <base>` | Sending a branch as patch files. |
-| Send patches by email | `git send-email` | Mailing-list projects that accept patches by email. |
-| Maintain several working trees | `git worktree` | Working on multiple branches without stashing. |
-| Limit checkout to selected paths | `git sparse-checkout` | Large repositories where you need only part of the tree. |
-| Manage nested repositories | `git submodule` | Repository depends on another repository at a fixed commit. |
-| Create repository bundle | `git bundle` | Offline transfer or backup of refs and objects. |
-| Export a tree archive | `git archive` | Creating source archives without `.git` metadata. |
-| Add notes to objects | `git notes` | Adding metadata without changing commits. |
-
-### Apply or create patches
-
-```bash
-git apply --check fix.patch
-git apply fix.patch
-git format-patch origin/main
-```
-
-What it does: checks a patch, applies it to the working tree, or creates one patch file per commit.
-
-### Email patch workflow
-
-```bash
-git am -3 patches/*.patch
-git send-email *.patch
-```
-
-What it does: imports patches as commits or sends patch files through email. This is common in mailing-list projects, not most pull-request workflows.
-
-### Work with separate trees
-
-```bash
-git worktree add ../repo-hotfix hotfix
-git sparse-checkout set docs src
-git submodule update --init --recursive
-```
-
-What it does: creates another working directory, narrows a checkout to selected paths, or initializes nested repositories.
-
-### Package repository content
-
-```bash
-git bundle create backup.bundle --all
-git archive --format=zip --output=release.zip HEAD
-git notes add -m "Reviewed by security"
-```
-
-What it does: creates an offline repository bundle, exports tracked files without `.git` metadata, or attaches notes to objects without changing commits.
-
-## Plumbing and maintenance
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Inspect objects | `git cat-file` | Learning or scripting against Git object data. |
-| Inspect tree contents | `git ls-tree` | Listing files in a commit or tree. |
-| Compute merge base | `git merge-base <a> <b>` | Scripting comparisons or understanding branch divergence. |
-| List commits programmatically | `git rev-list <range>` | Scripts need commit IDs or counts. |
-| Parse revisions safely | `git rev-parse <rev>` | Scripts need canonical object IDs or repository paths. |
-| List refs with formatting | `git for-each-ref` | Scripts need branch or tag metadata. |
-| Update index metadata | `git update-index` | Advanced index changes such as file mode updates. |
-| Validate repository objects | `git fsck` | Diagnosing corruption or missing objects. |
-| Run cleanup and optimization | `git gc` | After heavy repository maintenance when you understand object reachability. |
-| Run background-style maintenance | `git maintenance` | Routine performance maintenance. |
-| Rewrite history with old tool | `git filter-branch` | Legacy scripts that still use it. |
-
-### Inspect Git internals
-
-```bash
-git cat-file -p HEAD^{tree}
-git ls-tree -r --name-only HEAD
-git merge-base main feature/login
-```
-
-What it does: prints object content, lists tree entries, and finds the best common ancestor between branches.
-
-### Script with revisions and refs
-
-```bash
-git rev-list --count origin/main..HEAD
-git rev-parse --show-toplevel
-git for-each-ref --format="%(refname:short)" refs/heads
-```
-
-What it does: counts commits, prints repository metadata, and formats refs for scripts.
-
-### Maintain repository data
-
-```bash
-git update-index --chmod=+x script.sh
-git fsck --full
-git maintenance run
-git gc
-```
-
-What it does: updates index metadata, verifies object integrity, and runs repository optimization tasks.
-
-### Legacy history rewrite
-
-```bash
-git filter-branch --tree-filter "rm -f secret.txt" HEAD
-```
-
-What it does: rewrites many commits with a legacy tool. Prefer modern tools such as `git filter-repo` when available, and never rewrite shared history without coordination.
-
-## Advanced safety rules
-
-- Rebase private commits freely; coordinate before rewriting shared history.
-- Use `git revert` for public mistakes.
-- Prefer `git push --force-with-lease` over `git push --force` when a force push is approved.
-- Treat plumbing commands as building blocks for scripts and diagnostics, not normal daily workflow.
-
-## Related links
-
-- [Git reference documentation](https://git-scm.com/docs)
-- [Pro Git: Rebasing](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
-- [gitworkflows documentation](https://git-scm.com/docs/gitworkflows)
-- [Back to Git commands](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+[^git-worktree]: [Git documentation, git-worktree](https://git-scm.com/docs/git-worktree).

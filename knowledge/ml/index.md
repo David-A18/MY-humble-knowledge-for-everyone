@@ -4,6 +4,10 @@ Machine learning knowledge for core concepts, model development, evaluation, and
 
 Status: Initial outline
 
+No ML articles are published in this section yet. Start with
+[AI fundamentals](../ai/ai-fundamentals.md) for a first explanation of
+machine learning and how it differs from other AI systems.
+
 ## Expected content
 
 - ML fundamentals and terminology.
@@ -12,4 +16,4 @@ Status: Initial outline
 - Model interpretation, limitations, and risk notes.
 - Links to MLOps when the topic becomes operational.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

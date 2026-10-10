@@ -1,130 +1,148 @@
 ---
 type: "Explanation"
 title: "Stateful design decision checklist"
-description: "Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS."
+description: "Decide what a stateful AWS workload must preserve, which failure it must survive, and what recovery evidence is still missing."
 tags: [cloud, aws, architecture]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: aws-objectives
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_objective_defined_recovery.html
+    title: AWS Well-Architected - Define recovery objectives for downtime and data loss
+  - id: aws-recovery-test
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_backing_up_data_periodic_recovery_testing_data.html
+    title: AWS Well-Architected - Perform periodic recovery of the data
+  - id: k8s-statefulset
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+    title: Kubernetes - StatefulSets
 ---
 
 # Stateful design decision checklist
 
-## Purpose
+## The idea in plain language
 
-Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS.
+A workload is **stateful** when the next piece of work depends on information
+kept from earlier work. Before calling it ready for production, ask where
+that information lives, which failures it must survive, and how you would
+show that recovery works. A second running replica is useful, but it does
+not answer every data-loss question.
 
-## How state changes the design
+Think of a shop's order book. Two cashiers can keep serving customers if
+they both use a shared record, but a second cashier cannot restore an order
+that was deleted from the record. The analogy has limits: real systems may
+have several state stores and replicas; a backup may contain an earlier
+version; and correctness can require application-specific checks.
 
-Stateful components must recover specific information after failure. That changes scaling, deployment, backup, networking, and security decisions.
+AWS frames recovery around two targets: **recovery time objective (RTO)** is
+the maximum acceptable delay before service returns, and **recovery point
+objective (RPO)** limits how old the recovered data may be. The owners of a
+workload choose these based on the impact of downtime and lost data; a
+diagram or service label cannot set them for you.[^aws-objectives]
 
-```text
-stateless replica failure
-  -> stop routing
-  -> replace replica
+## Follow the state and the failure
 
-stateful replica failure
-  -> protect data
-  -> preserve quorum or leadership
-  -> reattach or rebuild state
-  -> verify consistency
-  -> then resume traffic
+```mermaid
+flowchart LR
+  request["New order"] --> app["Replaceable app worker"]
+  app --> store["Authoritative order store"]
+  store --> replica["Replica for store failure"]
+  store --> backup["Separate recovery copy"]
+  replica --> check["Failover and data checks"]
+  backup --> check
 ```
 
-## Components to identify
+Text alternative: an app worker writes an order to the authoritative store.
+A replica can help with some store failures, while a separate recovery copy
+can help with loss or corruption that also reaches the live system. Both
+paths end with a check that the expected orders are usable. The diagram
+helps identify which component owns data and which failure each recovery
+path is meant to cover; it does not prove either path is configured.
 
-| Component | Questions to answer |
+For each important state item, write down four things:
+
+| Question | Why the answer changes the design |
 | --- | --- |
-| State owner | Which service or process is authoritative? |
-| Storage layer | Where does the state physically live? |
-| Replication layer | How many copies exist and where? |
-| Backup layer | What separate recovery copy exists? |
-| Coordination layer | How are leaders, locks, or partitions assigned? |
-| Network path | Do stateful network devices need symmetric flow routing? |
-| Runbook | Who can fail over, restore, replay, or scale down safely? |
+| What is the authoritative copy? | A cache can be rebuilt; the only copy of a customer order cannot. |
+| Where are its live and recovery copies? | A failure can affect one process, host, Availability Zone, Region, account, or operator action. |
+| What is the acceptable outage and data gap? | RTO and RPO guide the choice between restore, failover, and other recovery paths. |
+| What observation proves recovery? | A green backup job does not show that the application can read the right data. |
 
-## Classification questions
+Replication and backup serve different questions. A live replica may shorten
+recovery from one component failure, but a bad write can also be copied to
+it. A retained backup can offer an earlier recovery point, but restoring it
+takes time and may lose work since that point. These are design
+possibilities, not guarantees of an AWS product or configuration.
 
-| Question | Why it matters |
-| --- | --- |
-| What exact state exists? | Avoid vague labels such as "the app is stateful." |
-| Where is the state stored? | Recovery depends on the storage boundary. |
-| Is the state authoritative or rebuildable? | Authoritative state needs stronger durability. |
-| Is the state local or shared? | Local state makes replicas harder to replace. |
-| Which failure must it survive? | Process, host, AZ, Region, and operator error require different designs. |
-| What are RPO and RTO? | Backup and failover choices need measurable targets. |
-| How is split brain prevented? | Stateful leaders require fencing or quorum discipline. |
+## One illustrative review
 
-## Stateful AWS examples
+Imagine an online shop with two app workers and a database of paid orders.
+This is an invented workload, not an AWS deployment or recovery test.
 
-| Area | Example | Design concern |
-| --- | --- | --- |
-| Networking | NAT Gateway, Security Group tracking, Network Firewall stateful engine. | Flow state and symmetric routing. |
-| Storage | EBS, EFS, S3. | Durability, backup, access mode, and deletion protection. |
-| Databases | RDS, Aurora, DynamoDB, self-managed MongoDB. | Replication, backup, failover, and consistency. |
-| Streaming | Amazon MSK. | Partitions, offsets, broker health, and replay. |
-| Workflows | Step Functions. | Execution history, retries, and timeout behavior. |
-| Kubernetes | StatefulSet with PVC. | Stable identity does not replace application-level replication. |
+1. The app workers are replaceable only if the paid orders are stored in the
+   database rather than in one worker's memory.
+2. The team names the database as the authoritative state and asks what
+   happens if its instance, storage, or entire location fails. A replica
+   might help with one failure; a separately retained backup may be needed
+   for accidental deletion or corruption.
+3. The shop owners choose acceptable downtime and lost-order limits. Those
+   targets become RTO and RPO. A 15-minute backup interval, for example,
+   is **not** itself proof of a 15-minute RPO: backup completion, restore
+   point, and data validity still need checking.
+4. In an isolated recovery exercise, the team would restore, retrieve known
+   paid orders, measure how long users could not use the service, and compare
+   recovered data to the chosen targets. AWS explicitly recommends checking
+   recovered data, not merely seeing that a restore job completed.[^aws-recovery-test]
 
-## Network-state checklist
+If the database runs on Kubernetes, a StatefulSet can give Pods stable
+identity and associated storage. It does not perform the database's
+replication, choose a valid recovery point, or prove queries work after
+failover.[^k8s-statefulset] See [stateful workloads in
+Kubernetes](../../../kubernetes/core-objects/stateful-workloads.md) for that
+boundary.
 
-- Security Groups are stateful and allow tracked return traffic.
-- Network ACLs are stateless and need both directions permitted.
-- Stateful firewalls must see both directions of a flow.
-- Transit Gateway appliance mode and Gateway Load Balancer stickiness can help preserve flow path.
-- VPC Flow Logs can show accept/reject decisions but do not replace route, firewall, and app logs.
+## Review questions before approval
 
-### NACL return traffic example
+- **State:** List authoritative records, derived data, caches, files,
+  messages, and external services. Which can be rebuilt, and from what?
+- **Failure:** Name the failure scope you are designing for. Is the copy
+  outside that scope and protected from unintended deletion?
+- **Recovery:** Record the chosen RTO and RPO and the procedure intended to
+  meet them. What must be restored or failed over first?
+- **Correctness:** Define an application-level check, such as reading a
+  known paid order. What result would make you stop rather than resume
+  traffic?
+- **Evidence:** Record an actual recovery exercise with measured timing,
+  recovered data, and unresolved gaps before claiming the targets are met.
 
-```text
-Inbound:
-allow TCP 443 from client
+Network flow state needs a different review. For security groups, network
+ACLs, and inspection appliances, use [stateful
+networking](../networking/stateful-networking.md). For the simpler
+compute-versus-data model, start with [stateful vs.
+stateless](stateful-vs-stateless.md).
 
-Outbound:
-allow TCP ephemeral ports to client
-```
+## Check your understanding
 
-What it does: permits both directions for a stateless Network ACL. A Security Group would track the connection, but a NACL evaluates each direction independently.
+- Why does a second app worker not protect an order stored only in the first
+  worker's memory?
+- What different failures might a live replica and a retained backup address?
+- What would you measure to support a claim that the chosen RTO and RPO are
+  achievable?
 
-## Data-state checklist
+## Official documentation for deeper study
 
-- Backups are separate from replication.
-- Restore procedures are tested, not assumed.
-- Encryption and access policies cover the state store.
-- Lifecycle policies do not delete required recovery points.
-- Scale-in procedures protect leaders, partitions, and attached volumes.
-- Monitoring covers replication lag, disk, quorum, and failed backups.
+- [Define recovery objectives for downtime and data loss](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_objective_defined_recovery.html)
+  explains how business impact shapes RTO and RPO.
+- [Perform periodic recovery of data](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_backing_up_data_periodic_recovery_testing_data.html)
+  explains why backup integrity and restoration require a recovery test.
+- [Kubernetes StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+  explains stable Pod identity and storage association.
 
-## Kubernetes-state checklist
+Next, use [stateless application
+patterns](stateless-application-patterns.md) to see how replaceable compute
+depends on shared state, or return to the [AWS architecture index](index.md).
 
-- StatefulSet identity is required and understood.
-- The StorageClass topology mode matches the workload.
-- EBS volumes and Pods land in compatible Availability Zones.
-- Operators or application logic handle replication and failover.
-- Pod disruption budgets and maintenance windows protect quorum.
-- PVC deletion and reclaim policies are intentional.
-
-> [!WARNING]
-> A StatefulSet gives Pods stable names and storage association. It does not automatically make PostgreSQL, Kafka, MongoDB, or another database highly available.
-
-## Production readiness evidence
-
-- Restore was tested from backup into an isolated environment.
-- Failover was tested without creating two writers.
-- Monitoring covers lag, quorum, disk saturation, and backup failures.
-- Scale-in has a drain or decommission procedure.
-- Security policy covers snapshots, backups, logs, and replicas.
-- RPO and RTO are written down and accepted by the service owner.
-
-## Related links
-
-- Official documentation: [Kubernetes StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
-- Official documentation: [Amazon EBS volume attachment](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-attaching-volume.html)
-- [Stateful vs. stateless](stateful-vs-stateless.md)
-- [Stateless application patterns](stateless-application-patterns.md)
-- [Stateful networking](../networking/stateful-networking.md)
-- [Stateful workloads](../../../kubernetes/core-objects/stateful-workloads.md)
-- [Back to AWS architecture](index.md)
-- [Back to AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+[^aws-objectives]: [AWS Well-Architected: Define recovery objectives](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_objective_defined_recovery.html).
+[^aws-recovery-test]: [AWS Well-Architected: Perform periodic recovery of the data](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_backing_up_data_periodic_recovery_testing_data.html).
+[^k8s-statefulset]: [Kubernetes: StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).

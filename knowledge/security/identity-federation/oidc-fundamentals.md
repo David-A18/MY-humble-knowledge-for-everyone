@@ -1,64 +1,424 @@
 ---
 type: "Explanation"
 title: "OIDC fundamentals"
-description: "Use this page to understand OpenID Connect before applying it to AWS, EKS, or GitHub Actions."
+description: "Use this page to understand OpenID Connect sign-in, ID tokens, and claims, and how OIDC-compatible workload federation differs, before applying it to AWS, EKS, or GitHub Actions."
 tags: [security, identity-federation, oidc-fundamentals]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: openid-connect-core
+    resource: https://openid.net/specs/openid-connect-core-1_0.html
+    title: OpenID Connect Core 1.0
+  - id: openid-connect-discovery
+    resource: https://openid.net/specs/openid-connect-discovery-1_0.html
+    title: OpenID Connect Discovery 1.0
+  - id: github-actions-oidc
+    resource: https://docs.github.com/en/actions/concepts/security/openid-connect
+    title: GitHub Docs - OpenID Connect
+  - id: github-actions-oidc-aws
+    resource: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws
+    title: GitHub Docs - Configuring OpenID Connect in Amazon Web Services
+  - id: github-actions-oidc-reference
+    resource: https://docs.github.com/en/actions/reference/security/oidc
+    title: GitHub Docs - OpenID Connect reference
+  - id: github-actions-secure-use
+    resource: https://docs.github.com/en/actions/reference/security/secure-use
+    title: GitHub Docs - Secure use reference
+  - id: aws-sts-assume-role-with-web-identity
+    resource: https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html
+    title: AWS STS API Reference - AssumeRoleWithWebIdentity
 ---
 
 # OIDC fundamentals
 
 ## Purpose
 
-Use this page to understand OpenID Connect before applying it to AWS, EKS, or GitHub Actions.
+Use this page to understand what OpenID Connect (OIDC) is, what an ID token
+says, and how to read its claims, before you apply OIDC to AWS, EKS, or GitHub
+Actions.
 
-## What OIDC does
+> [!IMPORTANT]
+> This page is a conceptual introduction to a security-sensitive subject. It
+> is not an implementation or validation procedure. When you write code or
+> policy that accepts tokens, follow [OIDC token validation](oidc-token-validation.md)
+> and the official specifications and provider documentation linked below.
 
-OpenID Connect adds an identity layer on top of OAuth 2.0. It lets an application or service trust signed tokens from an identity provider instead of handling passwords or long-lived shared credentials directly.
+The page keeps two uses apart, because mixing them causes real mistakes:
 
-OIDC can support interactive user login, workload federation, and CI/CD federation, but each use case has different token claims, audiences, and trust policies.
+- **OIDC sign-in**, as defined by the OpenID Connect Core specification. The
+  common case, and the one used as the example here, is a person signing in
+  through a browser so that an application learns who they are. Core defines
+  more than one flow, and real deployments vary; this page does not describe
+  them all.[^openid-connect-core]
+- **OIDC-compatible workload federation**: an automated job, with no person
+  and no browser, presents a signed token to a cloud provider to obtain
+  short-lived credentials. This reuses OIDC's token format and trust model but
+  is defined by each provider's own documentation.
 
-## Concepts
+## What OIDC is
 
-| Concept | Meaning |
+OpenID Connect is an identity layer on top of the OAuth 2.0 protocol. It lets
+an application confirm who an end user is, based on authentication performed
+by a separate identity provider, without the application handling the user's
+password.[^openid-connect-core]
+
+The provider reports the result in an **ID token**: a signed statement that
+says who authenticated, who issued the statement, who it is intended for, and
+when it expires.
+
+## Why it matters
+
+Applications and automated jobs both need some way to establish identity. Two
+long-standing approaches are for each application to keep its own user
+passwords, and for automated jobs to carry long-lived secret keys. Credentials
+like these tend to be copied into many places and are hard to rotate.
+
+OIDC is one standard way to avoid them; it is not the only one. With OIDC, an
+application can rely on a provider's signed statements instead of holding
+passwords. The same trust model lets a CI job obtain short-lived cloud
+credentials instead of storing a long-lived cloud secret.[^github-actions-oidc]
+The benefit holds only if the receiver checks each token strictly, which is why
+the vocabulary below matters.
+
+## Authentication is not authorization
+
+**Authentication** answers "who is this?" **Authorization** answers "what may
+they do?"
+
+OIDC provides authentication. An ID token tells the receiver who the subject
+is. Deciding what that subject may do remains the receiver's job, using its
+own rules: an application's roles, an AWS IAM role's permissions, or
+Kubernetes RBAC. A valid token is a reason to believe an identity, never by
+itself a reason to grant access.
+
+## Vocabulary
+
+| Term | Simple definition |
 | --- | --- |
-| OpenID Provider | Identity provider that issues signed tokens. |
-| Relying Party | Application or service that trusts the provider. |
-| Issuer | Stable URL identifying the token issuer. |
-| JWKS | Public keys used to verify token signatures. |
-| ID token | Token carrying authentication claims about a subject. |
-| Access token | Token used to access an API. |
-| Claims | Token fields such as `iss`, `sub`, `aud`, and `exp`. |
+| OpenID Provider (OP) | The service that authenticates the end user and issues tokens about that event.[^openid-connect-core] Often called the identity provider. |
+| Relying Party (RP) | The application that asks for authentication and relies on the provider's answer.[^openid-connect-core] |
+| End user | The person being authenticated. |
+| ID token | A signed JSON Web Token (JWT) containing claims about an authentication event.[^openid-connect-core] |
+| Claim | One piece of information asserted about a subject, such as an identifier.[^openid-connect-core] |
+| Access token | A different token, used to call a protected API. In OIDC it is what a client presents to the provider's UserInfo endpoint.[^openid-connect-core] |
 
-## How it works
+The claims you must be able to read:
 
-```text
-subject authenticates with identity provider
-  -> provider issues signed token
-  -> relying party validates signature and claims
-  -> application maps trusted claims to local authorization
+| Claim | Meaning | What the receiver does with it |
+| --- | --- | --- |
+| `iss` (issuer) | Identifier of whoever issued the token, as an `https` URL.[^openid-connect-discovery] | Must exactly match the issuer the receiver expects. |
+| `sub` (subject) | Identifier of the subject. OIDC Core requires issuer-local uniqueness and no reassignment for end users.[^openid-connect-core] | Identifies who the token is about. Meaningful only together with `iss`; check workload-provider formats separately. |
+| `aud` (audience) | Who the token is intended for. In OIDC sign-in it must contain the relying party's client identifier.[^openid-connect-core] | Must include the receiver. A token meant for someone else is rejected. |
+| `exp` (expiry) | The time on or after which the token must not be accepted.[^openid-connect-core] | Reject expired tokens. |
+| `iat` (issued at) | When the token was issued.[^openid-connect-core] | Helps judge the token's age. |
+
+In a browser sign-in, the application also keeps information about the
+login it started. An unpredictable `state` value, bound to that browser's
+login session, travels in the authorization request and response. Checking
+it rejects callbacks the application did not start for that session (login
+CSRF). A `nonce`, when the application sends one, must come back as a matching
+claim in the ID token. Neither is a substitute for checking the issuer, audience,
+signature, and expiry.[^openid-connect-core] These are sign-in flow checks,
+not fields an AWS workload trust policy should copy blindly.
+
+Two supporting pieces make the signature checkable:
+
+- **Discovery.** Starting from the issuer the receiver was configured to
+  trust, a provider that supports OIDC Discovery publishes a JSON document
+  at that issuer URL followed by `/.well-known/openid-configuration`. Remove
+  a final `/` only when forming the discovery URL. The document's `issuer`
+  value must still exactly equal the configured issuer and the token's
+  `iss` claim; do not choose a new issuer from an unverified token.
+  [^openid-connect-discovery]
+- **JWKS.** The discovery document's `jwks_uri` points to the provider's JSON
+  Web Key Set: the public keys a receiver uses to verify the provider's
+  signatures.[^openid-connect-discovery]
+
+## The mental model: a signed statement, checked by the receiver
+
+```mermaid
+flowchart LR
+  issuer["Issuer (OpenID Provider)<br/>authenticates the subject"]
+  config["Receiver's trusted settings<br/>expected issuer and audience"]
+  keys["Provider's published keys<br/>typical public-key case"]
+  token["Signed token<br/>claims: iss, sub, aud, exp"]
+  receiver["Receiver<br/>checks signature, claims, and flow rules"]
+  policy["Receiver's own rules<br/>authorization decision"]
+  issuer -- "signs and issues" --> token
+  issuer -- "publishes" --> keys
+  token -- "reaches the receiver through the intended flow" --> receiver
+  config -- "sets expected values" --> receiver
+  config -- "selects trusted provider" --> keys
+  keys -- "are fetched by" --> receiver
+  receiver -- "only if every check passes" --> policy
 ```
 
-OIDC authenticates identity. Authorization still happens in the relying application, AWS IAM role, Kubernetes RBAC rule, or API gateway policy.
+Text alternative: the issuer authenticates the subject, then signs and issues
+a token containing the claims `iss`, `sub`, `aud`, and `exp`. The issuer also
+publishes its public keys through its discovery document and JWKS in the
+common public-key case. In browser code flow, the app obtains the ID token
+directly from the provider's token endpoint after exchanging the code; in
+the workload example, the job presents its token to AWS STS. The receiver
+starts with its configured issuer and audience, fetches keys from that
+trusted provider, and checks the token's
+signature, issuer, audience, expiry, and applicable flow rules. Only if
+all required checks pass does the receiver move on to its own authorization
+decision. The issuer takes no part in that last step.
 
-## Token anatomy
+Some registered clients verify an ID token with a shared secret under the
+Core specification instead of published public keys. The receiver still
+starts from its trusted configuration; see [OIDC token
+validation](oidc-token-validation.md) for that distinction.
 
-```text
-header.payload.signature
+This shape is common to both uses of OIDC on this page. What changes is who
+the subject is, who the receiver is, and what the receiver hands back.
+
+## Two uses, kept apart
+
+| Question | OIDC sign-in (OpenID Connect Core) | OIDC-compatible workload federation |
+| --- | --- | --- |
+| Who is the subject? | A person, the end user. | A workload, such as one CI job. |
+| Is a browser involved? | In the common case shown on this page, yes: the person is sent to the provider to sign in. | No. |
+| Who issues the token? | The OpenID Provider the application is registered with. | The platform running the workload, acting as an OIDC provider. |
+| Who receives and checks it? | The relying party application. | A cloud provider's token service. |
+| What does `aud` name? | The application's client identifier. | The value the cloud provider's trust configuration expects. |
+| What comes back? | The application accepts an ID token, then creates its own signed-in session. | The cloud token service returns short-lived credentials for the job. |
+| Where is it specified? | OpenID Connect Core. | The platform's and the cloud provider's documentation. |
+
+OpenID Connect Core describes end-user authentication flows. Workload
+federation borrows the signed JWT, the standard claims, and the discovery and
+JWKS mechanism. Do not assume that a rule stated for one use holds for the
+other; read the documentation for the specific pair of platforms.
+
+## Example 1: a person signs in to an internal application
+
+This is a conceptual example of the browser-based **authorization code
+flow**. The names and values are invented placeholders, and no real token
+is shown. The diagram leaves out implementation details such as PKCE;
+follow the provider and [token-validation guide](oidc-token-validation.md)
+when building a real sign-in.[^openid-connect-core]
+
+Dana opens an internal application called Team Wiki. Team Wiki is a relying
+party registered with the company's OpenID Provider.
+
+```mermaid
+sequenceDiagram
+  participant B as Dana's browser
+  participant W as Team Wiki server
+  participant P as OpenID Provider
+  B->>W: Open Team Wiki
+  W-->>B: Redirect to provider with state and optional nonce
+  B->>P: Sign in (Team Wiki never sees the password)
+  P-->>B: Redirect back with code and state
+  B->>W: Send code and state
+  W->>W: Check session-bound state
+  W->>P: Exchange code at token endpoint
+  P-->>W: ID token and access token
+  W->>W: Validate ID token and nonce if sent
+  W-->>B: Create Team Wiki session
 ```
 
-What it does: separates metadata, claims, and cryptographic proof. The payload can be decoded by anyone; the signature is what makes the claims trustworthy after validation.
+Text alternative: Dana's browser opens Team Wiki and is redirected to the
+provider. Dana signs in there. The browser returns to Team Wiki with an
+authorization code and `state`, not an ID token in this flow. Team Wiki
+checks its session-bound `state`, exchanges the code directly with the
+provider's token endpoint, receives an ID token and access token, validates
+the ID token (including the `nonce` if it sent one), and creates its own
+session.
 
-## Validation checklist
+The **code** is a short-lived intermediate value, not proof of identity by
+itself. The exchange must use the client protection required by the chosen
+flow, such as client authentication and/or PKCE; this diagram is not a
+deployment recipe. Team Wiki establishes Dana's identity only after
+accepting the ID token and reading these claims:[^openid-connect-core]
 
-- Verify the token signature with the issuer keys.
-- Confirm `iss` is the expected issuer.
-- Confirm `aud` matches the intended recipient.
-- Confirm `exp` and `nbf` are valid for the current time.
-- Authorize actions separately from authentication.
+| Claim | Illustrative value | What Team Wiki concludes |
+| --- | --- | --- |
+| `iss` | `https://login.example.com` | Issued by the provider Team Wiki trusts. |
+| `sub` | `user-8f3a` | The subject is the account with this identifier at that provider. |
+| `aud` | `team-wiki` | The token was issued for Team Wiki. |
+| `exp` | ten minutes after issue | Still within its lifetime. |
+
+If Team Wiki sent a `nonce`, it also checks that the ID token contains the
+same value stored for Dana's login request. The example is intentionally
+about the shape of the flow, not a complete token-validation recipe.
+
+Team Wiki now knows who Dana is. Whether Dana may edit a page is decided by
+Team Wiki's own permission rules, not by the token.
+
+If Team Wiki also needs to call a protected API, it uses an access token the
+provider issued for that purpose. It does not forward the ID token, whose
+audience is Team Wiki itself.
+
+## Example 2: a CI job obtains cloud credentials
+
+This example is also conceptual, with placeholder names. It follows the flow
+that GitHub and AWS document for GitHub Actions. Other platforms differ.
+
+A workflow in the repository `octo-org/octo-repo` needs to deploy to AWS
+without a stored AWS secret.
+
+1. **Trust is configured in advance.** In AWS, GitHub's token issuer is
+   registered as an identity provider, and an IAM role's trust policy names
+   that provider.[^github-actions-oidc-aws][^aws-sts-assume-role-with-web-identity]
+2. **The job requests a token.** GitHub's OIDC provider issues a signed JWT
+   for that workflow job. This is a workload identity exchange, with no
+   browser callback or end-user sign-in session.[^github-actions-oidc]
+3. **The job presents the token to AWS.** It calls the AWS Security Token
+   Service operation `AssumeRoleWithWebIdentity`. The call is not signed with
+   AWS credentials; the token is what identifies the
+   caller.[^aws-sts-assume-role-with-web-identity]
+4. **AWS checks the token against the role's trust policy** and, if it is
+   accepted, returns temporary credentials: an access key ID, a secret access
+   key, and a session token, lasting one hour by
+   default.[^aws-sts-assume-role-with-web-identity]
+
+| Claim | Illustrative value | Role in the trust decision |
+| --- | --- | --- |
+| `iss` | `https://token.actions.githubusercontent.com` | Must be the provider registered in AWS.[^github-actions-oidc-aws] |
+| `aud` | `sts.amazonaws.com` | The audience requested for the official AWS credentials action; the role's trust policy must expect it.[^github-actions-oidc-aws] |
+| `sub` | `repo:octo-org/octo-repo:ref:refs/heads/main` | Says which repository and branch the job ran from.[^github-actions-oidc-reference] |
+
+This `sub` is an illustrative **older-format** value. GitHub's current
+[OIDC reference](https://docs.github.com/en/actions/reference/security/oidc)
+also documents immutable owner and repository IDs in subjects for newer,
+opted-in, renamed, or transferred repositories. Before writing a trust
+condition, check the `sub` value issued for the intended repository and job
+context, then make the policy match that format. A job that names an
+environment uses an `environment:`
+subject instead of this `ref:` shape; a pull-request job without an
+environment has a `pull_request` shape.[^github-actions-oidc-reference]
+The older name-based format could identify a different repository after a
+name was recycled; the immutable-ID format addresses that risk where GitHub
+supports it. A name-based trust condition does not match an immutable-ID
+subject, or vice versa.[^github-actions-oidc-reference]
+
+What to notice:
+
+- **The trust decision has several parts, and `sub` names the allowed
+  workload context.** The role's trust policy names the trusted issuer's
+  provider ARN and requires audience and subject conditions. An eligible job
+  can request the `sts.amazonaws.com` audience, so that value alone does not
+  identify your repository. GitHub relays AWS IAM's recommendation to check
+  `sub` for every role trusting GitHub's provider. Match the intended subject
+  as narrowly as the deployment allows: a condition like
+  `repo:octo-org/octo-repo:*` admits other branch, pull-request, and
+  environment contexts in that repository.[^github-actions-oidc-aws]
+  [^github-actions-oidc-reference]
+- **GitHub controls also define who can become that subject.** A person
+  able to change a workflow or push to its trusted branch may be able to
+  run a matching job. Protect the branch and any deployment environment,
+  review who may edit workflow files, and grant `id-token: write` only to
+  jobs that need the token.[^github-actions-oidc-aws][^github-actions-oidc-reference][^github-actions-secure-use]
+- **Assuming the role and using it are separate controls.** The trust policy
+  decides who may assume the role. The role's IAM permissions decide which
+  operations the resulting credentials allow. Both need to be narrow.
+- **What comes back is not an OIDC token.** The temporary credentials are AWS
+  credentials.[^aws-sts-assume-role-with-web-identity]
+- **There is no end user.** No person signs in and no browser is involved,
+  which is why OpenID Connect Core's sign-in flows do not describe this case.
+
+For the AWS and GitHub specifics, see [IAM OIDC provider and STS web
+identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md)
+and [AWS OIDC federation for GitHub
+Actions](../../git/github-actions/aws-oidc-federation.md).
+
+## An analogy: a conference badge
+
+Think of the browser sign-in as a conference entrance:
+
+- Team Wiki sends Dana to the **registration desk** (provider) and keeps a
+  private note of the visit it started (`state`).
+- After signing Dana in, the desk sends Dana back with a **claim ticket**
+  (authorization code). Team Wiki checks that the return matches its note.
+- Team Wiki exchanges the ticket directly with the desk for a **badge** (ID
+  token). The badge states **who Dana is** (`sub`), **which desk issued it**
+  (`iss`), **which application it is for** (`aud`), and **when it expires**
+  (`exp`). Team Wiki checks the badge against the desk and application it
+  already trusts.
+- Only then does Team Wiki issue its own **wristband** (application session).
+  Its own rules decide which pages Dana may edit.
+
+In the separate CI example, AWS STS checks a job token under its trust
+policy and exchanges it for temporary AWS credentials. There is no claim
+ticket, browser, or human sign-in session in that flow.
+
+Where the analogy stops being accurate:
+
+- **Anyone can read an unencrypted token.** In the flows this page describes,
+  ID tokens are signed, while encryption is optional.[^openid-connect-core]
+  Unless a token is also encrypted, its payload is encoded, not hidden. The
+  signature prevents tampering; it does not keep the contents secret. Tokens
+  must not be logged, pasted into tickets, or shared.
+- **A genuine badge for another event must be refused.** A token with a valid
+  signature but the wrong audience was not issued for this receiver and must
+  be rejected.
+- **A copied token works until it expires.** Whoever holds a bearer token can
+  present it. Short lifetimes limit the damage; they do not remove the risk.
+- **The stamp changes.** A provider can rotate its signing keys by publishing
+  new keys in its JWK Set, which is why a receiver looks up the current keys
+  there instead of fixing one key forever.[^openid-connect-core]
+- **A badge is not a room key.** An ID token's audience is the relying party
+  it names, and the specification has clients use an access token, not the ID
+  token, to call the UserInfo endpoint.[^openid-connect-core] From that, this
+  page concludes that an ID token should not be sent to other APIs as a
+  credential. The conclusion is this page's reasoning, not a quoted rule.
+
+## Common misconceptions
+
+- **"The token decoded, so it is valid."** Decoding proves nothing. Trust
+  begins only after signature, issuer, audience, expiry, and applicable
+  flow-specific checks pass. See [OIDC token validation](oidc-token-validation.md).
+- **"OIDC handles permissions."** It establishes identity. Permissions come
+  from the receiver's own policy.
+- **"An ID token can be sent to any API as a bearer token."** Its audience is
+  the relying party in a sign-in flow. APIs are called with access tokens
+  issued for them. The separate workload example sends a GitHub OIDC token
+  to STS because that issuer, audience, and exchange are explicitly
+  supported by AWS; it is not permission to reuse a sign-in ID token at
+  an arbitrary API.[^github-actions-oidc-aws][^aws-sts-assume-role-with-web-identity]
+- **"Trusting the issuer is enough for CI federation."** The issuer is shared
+  by every repository on the platform. In AWS, the trust policy names the
+  issuer's provider ARN and requires audience and subject conditions; the
+  role's permissions should still be limited to what the job needs.[^github-actions-oidc-aws]
+- **"Workload federation is OIDC sign-in without the browser."** It reuses the
+  token and key mechanisms, but its rules come from the platforms involved.
+
+## Check your understanding
+
+- Which claim tells a receiver that a token was intended for it, and what
+  should the receiver do when that claim names someone else?
+- In Team Wiki's authorization code flow, what returns through Dana's
+  browser, and when does Team Wiki create its own session?
+- Why does a valid ID token not tell Team Wiki whether Dana may edit a page?
+- In the CI example, what could go wrong if the role's trust policy did not
+  restrict the `sub` claim?
+- What does AWS return after accepting the job's token, and why is that not an
+  OIDC token?
+
+## Next steps
+
+- Learn the checks a receiver must perform in [OIDC token
+  validation](oidc-token-validation.md).
+- See how AWS trusts external issuers in [IAM OIDC provider and STS web
+  identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md).
+- Apply federation to pipelines in [AWS OIDC federation for GitHub
+  Actions](../../git/github-actions/aws-oidc-federation.md).
+- Separate human and workload access on EKS in [EKS human identity and
+  Kubernetes RBAC](eks-human-identity-and-rbac.md) and [EKS workload
+  identity](../../cross-topic-guides/eks-workload-identity.md).
+
+## Official documentation for deeper study
+
+- Actors, ID token claims, and ID token validation rules: [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html).
+- The discovery document, `issuer`, and `jwks_uri`: [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html).
+- How GitHub Actions issues tokens to jobs: [GitHub Docs - OpenID Connect](https://docs.github.com/en/actions/concepts/security/openid-connect).
+- Subject formats and audience controls: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc).
+- Provider, audience, and subject conditions for AWS: [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws).
+- What AWS accepts and returns: [AWS STS - AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html).
+- All OpenID specifications: [OpenID specifications](https://openid.net/developers/specs/).
 
 ## Related links
 
@@ -66,7 +426,16 @@ What it does: separates metadata, claims, and cryptographic proof. The payload c
 - [EKS human identity and Kubernetes RBAC](eks-human-identity-and-rbac.md)
 - [IAM OIDC provider and STS web identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md)
 - [EKS workload identity](../../cross-topic-guides/eks-workload-identity.md)
+- [AWS OIDC federation for GitHub Actions](../../git/github-actions/aws-oidc-federation.md)
 - [OpenID Connect specification](https://openid.net/developers/specs/)
 - [Back to identity federation](index.md)
 - [Back to security index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
+
+[^openid-connect-core]: [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html), source record `openid-connect-core`.
+[^openid-connect-discovery]: [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html), source record `openid-connect-discovery`.
+[^github-actions-oidc]: [GitHub Docs - OpenID Connect](https://docs.github.com/en/actions/concepts/security/openid-connect), source record `github-actions-oidc`.
+[^github-actions-oidc-aws]: [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws), source record `github-actions-oidc-aws`.
+[^github-actions-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-actions-oidc-reference`.
+[^github-actions-secure-use]: [GitHub Docs - Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use), source record `github-actions-secure-use`.
+[^aws-sts-assume-role-with-web-identity]: [AWS STS API Reference - AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html), source record `aws-sts-assume-role-with-web-identity`.

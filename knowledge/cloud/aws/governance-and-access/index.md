@@ -12,4 +12,4 @@ Account governance, IAM, organizations, and access management notes.
 - Permission boundaries.
 - Break-glass access.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

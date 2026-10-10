@@ -1,155 +1,151 @@
 ---
-type: "Explanation"
-title: "Crossplane AWS S3 lab validation template"
-description: "Record an authorized sandbox execution of the [Crossplane local AWS S3 lab](local-aws-s3-lab.md) without committing credentials, account-sensitive output, or private infrastructure details."
-tags: [kubernetes, crossplane, aws-s3-lab-validation-template]
+type: How-to Guide
+title: Record evidence from a Crossplane S3 sandbox lab
+description: Capture the actual identity, versions, managed-resource conditions, AWS result, and cleanup outcome of one authorized S3 lab run.
+tags: [kubernetes, crossplane, aws, s3, validation]
 status: draft
 maturity: draft
-audience: "Maintainers validating Crossplane AWS authentication guidance"
+audience: Maintainers validating the Crossplane S3 tutorial
 maintainer: unassigned
+sources:
+  - id: crossplane-managed
+    resource: https://docs.crossplane.io/latest/managed-resources/managed-resources/
+    title: Crossplane - Managed Resources
+  - id: aws-head-bucket
+    resource: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html
+    title: AWS - HeadBucket
 ---
 
-# Crossplane AWS S3 lab validation template
+# Record evidence from a Crossplane S3 sandbox lab
 
-## Purpose
+## Purpose and expected result
 
-Record an authorized sandbox execution of the [Crossplane local AWS S3 lab](local-aws-s3-lab.md) without committing credentials, account-sensitive output, or private infrastructure details.
+Use this record *during* an authorized run of
+[Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md).
+A successful record shows the same sandbox identity was used for
+the provider Secret and AWS CLI, the managed resource became
+`Synced=True` and `Ready=True`, AWS returned the expected
+bucket and tag, and deletion was confirmed before the local
+cluster was removed. A filled-in form alone proves none of
+these events occurred.[^crossplane-managed][^aws-head-bucket]
 
-Status: Draft
-Audience: Maintainers validating Crossplane AWS authentication guidance
-Page type: Validation template
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Use with the Crossplane local AWS S3 lab and installed provider versions under test
-Validation evidence: Template structure reviewed against KB-04 acceptance criteria; no sandbox execution has been recorded in this file
-Known limitations: This template does not prove the lab works until a maintainer records an authorized sandbox run
-Next review: After the first authorized sandbox execution
+Copy the sections below to a private implementation record.
+Never include access keys, secret keys, session tokens, full
+credential files, or unredacted private account details in
+this knowledge bundle. Use `not run`, `failed`, or
+`inconclusive` where appropriate; leave no blank that could
+be mistaken for a pass.
 
-Copy this template into a private-safe issue, pull request note, or implementation record before running the lab. Redact account IDs when appropriate, never paste access keys or session tokens, and delete local credential files during cleanup.
+## Run identity
 
-## Sandbox scope
-
-| Field | Value |
+| Field | Actual value |
 | --- | --- |
-| Date | YYYY-MM-DD |
-| Executor | Unassigned |
-| AWS account type | Sandbox, training, or other non-production account |
-| AWS region | To record |
-| Cost guardrail checked | Yes or no |
-| Cleanup owner | To record |
-| Repository commit | To record |
+| Run date and executor | Not run |
+| Repository commit of lab instructions | Not run |
+| AWS sandbox account and provider role, suitably redacted | Not run |
+| Region | Not run |
+| Temporary credential expiry, if known | Not run |
+| Cleanup owner | Not run |
 
-## Tool and package versions
+The AWS CLI identity check must use the **same credential file**
+that becomes the provider Secret. A default laptop profile is
+not sufficient evidence of the provider's account. Record only
+the account and role comparison, not the credential values.
+[^crossplane-managed]
 
-| Component | Version or evidence |
+## Versions and prerequisites
+
+| Item | Actual version or result |
 | --- | --- |
-| AWS CLI | `aws --version` |
-| Docker | `docker version` |
-| kind | `kind version` |
-| kubectl | `kubectl version --client=true` |
-| Helm | `helm version --short` |
-| Kubernetes server | `kubectl version` after cluster creation |
-| Crossplane Helm chart | `helm list -n crossplane-system` |
-| Crossplane core | `kubectl get deployment crossplane -n crossplane-system -o jsonpath='{.spec.template.spec.containers[0].image}'` |
-| AWS S3 provider package | `kubectl get providers.pkg.crossplane.io provider-aws-s3 -o yaml` |
-| Provider revision | `kubectl get providerrevisions.pkg.crossplane.io` |
+| Docker daemon and `kind` | Not run |
+| Kubernetes context and server version | Not run |
+| Helm version and Crossplane chart | Not run |
+| Crossplane core image/version | Not run |
+| AWS S3 provider package and revision | Not run |
+| AWS family provider package and revision, if installed | Not run |
+| Namespaced Bucket CRD group/version | Not run |
+| AWS CLI version | Not run |
 
-## Identity and credential checks
+If an installed API or package differs from the lab, record
+the difference and the source used to validate the change.
+Do not silently treat a different provider as the tested one.
 
-Run identity checks without printing secret values.
+## Evidence by handoff
 
-```bash
-aws sts get-caller-identity
-aws configure list
-```
+Record a short result and a timestamp for each checkpoint.
+A screenshot or redacted log excerpt may be linked in a
+private record. Do not paste full Secret or Pod environment
+output here.
 
-Record only public-safe facts:
-
-| Check | Result |
-| --- | --- |
-| Expected sandbox account confirmed | To record |
-| Temporary credentials used | Yes or no |
-| Session token present for STS credentials | Yes or no |
-| Credentials file permission set to `600` | Yes or no |
-| Credential file excluded from Git | Yes or no |
-| Secret created without printing values | Yes or no |
-
-## Execution checklist
-
-| Step | Command or evidence | Result |
+| Checkpoint | Pass criterion | Actual result and time |
 | --- | --- | --- |
-| Create local kind cluster | `kind create cluster --name crossplane-lab` | To record |
-| Install Crossplane | `helm install crossplane ...` | To record |
-| Confirm Crossplane readiness | `kubectl get pods -n crossplane-system` | To record |
-| Install AWS S3 provider | `kubectl apply -f provider-aws-s3.yaml` | To record |
-| Confirm provider health | `kubectl get providers.pkg.crossplane.io` | To record |
-| Create AWS credential Secret | `kubectl create secret generic aws-secret ...` | To record |
-| Apply provider config | `kubectl apply -f provider-config.yaml` | To record |
-| Server-side dry-run bucket | `kubectl apply --dry-run=server -f bucket.yaml` | To record |
-| Apply bucket | `kubectl apply -f bucket.yaml` | To record |
-| Observe Crossplane readiness | `kubectl get bucket.s3.aws.m.upbound.io ...` | To record |
-| Verify bucket in AWS | `aws s3api head-bucket --bucket ...` | To record |
-| Apply public-access block | `kubectl apply -f bucket-public-access.yaml` | To record |
-| Verify tags and public access block | `aws s3api get-bucket-tagging ...` and `aws s3api get-public-access-block ...` | To record |
-| Test drift correction | Record the safe drift action and reconciliation result | To record |
-| Delete managed resources | `kubectl delete -f ...` | To record |
-| Confirm AWS bucket deletion | `aws s3api head-bucket --bucket ...` should fail after cleanup | To record |
-| Delete Secret and credential file | Record cleanup without printing values | To record |
-| Delete local cluster | `kind delete cluster --name crossplane-lab` | To record |
+| Same-file AWS identity | The credential file used for the Secret returns the intended sandbox account and role. | Not run |
+| Crossplane installation | Helm reports success; Crossplane Pods are ready in the expected `kind` context. | Not run |
+| Provider installation | S3 provider and any required family provider are healthy; namespaced Bucket CRD exists. | Not run |
+| Bucket candidate precheck | `HeadBucket` returned `404` using valid sandbox credentials before apply. A `403` or timeout is inconclusive. | Not run |
+| Kubernetes request | Server dry run and apply accepted the exact manifest used for this run. | Not run |
+| Provider reconciliation | The Bucket managed resource showed `Synced=True`, `Ready=True`, and the intended external name. | Not run |
+| AWS observation | `HeadBucket` succeeded with the same identity and `get-bucket-tagging` showed the requested `Purpose` tag. | Not run |
+| Kubernetes deletion | Bucket managed resource disappeared after a normal delete; no finalizer was removed manually. | Not run |
+| AWS deletion | `HeadBucket` returned `404` with still-valid sandbox credentials after deletion. A `403` or expired token is inconclusive. | Not run |
+| Local cleanup | ProviderConfig, Secret, local credential file, and `kind` cluster were removed after the AWS result was checked. | Not run |
 
-## Expected evidence snippets
+AWS documents `HeadBucket` as returning a generic HTTP
+status when a bucket is absent or the caller cannot access
+it. Record the **actual status code and identity context**;
+a generic command failure is not a deletion result.
+[^aws-head-bucket]
 
-Record short public-safe summaries, not full secret-bearing output.
+This lab does not create a `BucketPublicAccessBlock`
+managed resource or test drift correction. New S3 buckets
+may already show public-access blocks. Do not record
+those defaults as evidence that Crossplane installed
+a separate public-access resource.
 
-```text
-Provider installed:
-Provider healthy:
-Bucket Ready condition:
-AWS head-bucket result:
-Public access block result:
-Drift test result:
-Cleanup result:
-```
+## When a checkpoint fails
 
-## Failure and expiry checks
-
-Use this section if the lab fails or credentials expire during the run.
-
-| Symptom | Evidence | Likely cause | Follow-up |
-| --- | --- | --- | --- |
-| Provider authentication error | To record | Missing or expired session token, wrong Secret key, or wrong provider config | To record |
-| Provider unhealthy | To record | Package pull, revision, runtime, or permission issue | To record |
-| Bucket not ready | To record | AWS permission, region, naming, or provider schema issue | To record |
-| Cleanup incomplete | To record | Finalizers, bucket contents, or credential loss | To record |
-
-## Cleanup proof
-
-| Resource | Cleanup evidence |
+| Field | Actual observation |
 | --- | --- |
-| S3 bucket | To record |
-| Bucket public access block | To record |
-| Crossplane managed resources | To record |
-| Kubernetes Secret | To record |
-| Local credential file | To record |
-| kind cluster | To record |
-| Remaining AWS cost risk | None known, or describe follow-up |
+| First failing checkpoint and time | Not run |
+| Kubernetes condition Reason and Message, redacted | Not run |
+| Provider package/revision health | Not run |
+| AWS error code and operation, redacted | Not run |
+| External resource still present? | Not run |
+| Temporary credentials still valid? | Not run |
+| Follow-up owner and next check | Not run |
 
-## Publication update
+If deletion remains unresolved, keep the provider and
+control plane available for reconciliation. A missing
+Kubernetes object, an expired token, or a removed cluster
+does not prove the AWS bucket is gone.[^crossplane-managed]
 
-After a successful run, update:
+## Outcome and publication
 
-- [Crossplane local AWS S3 lab](local-aws-s3-lab.md) review-information block.
-- [Crossplane providers and authentication](providers-and-authentication.md) review-information block if authentication behavior was validated.
-- [Knowledge-base improvement plan](../../../knowledge-base-improvement-plan.md) KB-04 record.
-- [Maintenance review queue](../../../maintenance-review-queue.md) if the blocked evidence is resolved.
-- [CHANGELOG.md](../../../CHANGELOG.md) for the validation evidence update.
+Choose exactly one after reviewing the recorded evidence:
+
+- **Passed:** every relevant checkpoint above has an observed
+  result meeting its pass criterion.
+- **Partial:** the bucket was created or observed, but one or
+  more checks or cleanup steps remain incomplete.
+- **Failed:** a required checkpoint contradicted its criterion.
+- **Not run:** no authorized execution occurred.
+
+Current outcome: **Not run**.
+
+After a real run, update the
+[lab](local-aws-s3-lab.md) only with the behavior actually
+observed, then add the evidence to the
+[improvement plan](../../../knowledge-base-improvement-plan.md)
+and [maintenance review queue](../../../maintenance-review-queue.md)
+where it affects their status. Keep this reusable template
+free of invented run results.
 
 ## Related links
 
-- [Crossplane local AWS S3 lab](local-aws-s3-lab.md)
-- [Crossplane providers and authentication](providers-and-authentication.md)
-- [Maintenance review queue](../../../maintenance-review-queue.md)
-- [Knowledge-base improvement plan](../../../knowledge-base-improvement-plan.md)
+- [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md)
+- [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
+- [Find the first failing Crossplane handoff](troubleshooting.md)
 - [Back to Crossplane index](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+
+[^crossplane-managed]: Crossplane, [Managed Resources](https://docs.crossplane.io/latest/managed-resources/managed-resources/).
+[^aws-head-bucket]: AWS, [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html).

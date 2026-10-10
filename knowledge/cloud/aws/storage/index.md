@@ -17,4 +17,4 @@ Storage service notes for object, block, and file storage on AWS.
 - [Velero AWS S3 and EBS installation](../../../migrations/velero/aws-s3-ebs-installation.md)
 - [Velero storage and volume backups](../../../migrations/velero/storage-and-volume-backups.md)
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

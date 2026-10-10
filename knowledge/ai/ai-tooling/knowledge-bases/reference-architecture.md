@@ -1,176 +1,222 @@
 ---
-type: "Explanation"
-title: "Reference architecture"
-description: "This guide defines an agent-first, Git-backed, standards-aware knowledge system. It is for engineers, platform engineers, AI or LLMOps engineers, solutions architects, and agents that need a trustworthy corpus for retrieval, reasoning, citation, and maintenance."
+type: Explanation
+title: Reference architecture
+description: See how official sources, curated Markdown, rebuildable search and website output, and optional AI access fit into one knowledge system.
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Engineering learners and practitioners
+maintainer: unassigned
+sources:
+  - id: okf-spec
+    resource: https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+    title: Open Knowledge Format specification
+  - id: git-version-control
+    resource: https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control
+    title: Git book, about version control
+  - id: astro-collections
+    resource: https://docs.astro.build/en/guides/content-collections/
+    title: Astro content collections
+  - id: pagefind-docs
+    resource: https://pagefind.app/docs/
+    title: Pagefind documentation
+  - id: mcp-architecture
+    resource: https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture
+    title: MCP architecture overview
+  - id: terraform-state
+    resource: https://developer.hashicorp.com/terraform/language/state
+    title: Terraform state documentation
 ---
 
 # Reference architecture
 
-## Purpose
+## The simple idea
 
-This guide defines an agent-first, Git-backed, standards-aware knowledge system. It is for engineers, platform engineers, AI or LLMOps engineers, solutions architects, and agents that need a trustworthy corpus for retrieval, reasoning, citation, and maintenance.
+A knowledge system needs **one reviewable place for its explanations**
+and several ways for people to find and read them. In this repository,
+that place is the Markdown **bundle** (a linked collection of pages) under
+[knowledge/](../../../index.md). Topic indexes, page metadata, links, and
+Git history help maintain it. The separate website project pins a knowledge
+commit and builds static pages and search data from it. An optional AI
+retrieval service could read the same bundle; none is deployed here.
 
-## Goals and non-goals
+There are two kinds of authority. A product's official documentation
+is the authority for that product's behavior. The accepted Markdown
+revision is the authority for what **this knowledge base says** about
+it. A versioned article can still be mistaken or out of date; Git
+history alone does not make its claims true.
 
-| Type | Statement |
-| --- | --- |
-| Goal | One logical place for agents and humans to ask for authoritative knowledge across many producers. |
-| Goal | Token-efficient retrieval through progressive disclosure and bounded responses. |
-| Goal | Self-healing freshness through reconciliation and proposed changes. |
-| Goal | Trustworthy-by-construction facts through deterministic extraction and source metadata. |
-| Goal | Agent-managed, human-gated maintenance through patches and PRs. |
-| Goal | Extensible producer classes without redesigning the architecture. |
-| Goal | OKF interoperability when OKF bundles are produced or consumed. |
-| Non-goal | Requiring a CMS, website, vector database, graph database, warehouse, persistent search database, write API, or one implementation framework. |
-| Non-goal | Replacing OpenAPI, AsyncAPI, JSON Schema, RDF, OWL, SKOS, MCP, source repositories, or human review. |
+Picture a museum. The original artifact is the upstream source;
+a carefully written exhibit label is the knowledge article; the
+gallery map is its topic index. A dated edition of the labels is a
+Git commit, while the visitor kiosk is a website and search built
+from that edition. The analogy stops at correctness: a clear label
+can still misdescribe an artifact, and a new discovery can make
+yesterday's label stale.
 
-## System layers
+## The parts and their jobs
+
+| Part | Job | Example here |
+| --- | --- | --- |
+| **Upstream source** | Supplies product facts or a standard's rules. | HashiCorp's Terraform state documentation.[^terraform-state] |
+| **Curated article** | Explains one reader outcome in plain language and links its sources. | [Terraform state management](../../../terraform/fundamentals/state-management.md). |
+| **Bundle structure** | Gives each article a topic, path, links, and lifecycle metadata. | Parent `index.md` files and OKF frontmatter, the metadata block at the top of a concept.[^okf-spec] |
+| **Knowledge Git revision** | Identifies exactly which Markdown version was built or cited; it does not prove review. | A commit SHA, Git's unique identifier for that saved version.[^git-version-control] |
+| **Website project** | Pins one knowledge commit and holds rendering code, redirects, and release checks, not a second authored copy of the articles. | A separate local project with `content-lock.json` and a static build. |
+| **Derived output** | Makes the pinned revision easy to browse or search. | Rendered HTML and Pagefind search data generated from that HTML.[^astro-collections][^pagefind-docs] |
+| **Optional AI access** | Lets an assistant request selected knowledge. | A read-oriented Model Context Protocol (MCP) server, if one is built.[^mcp-architecture] |
+
+The word **derived** matters. If the source article is wrong, fix it and
+rebuild the presentation from the corrected revision. If the article is
+right but the displayed page is wrong, inspect the website's pinned
+commit, rendering, and search build. A search index can hold excerpts and
+rank articles, but nobody edits the explanation there; corrections start
+in the source article or the presentation code.
+
+## The reading path
 
 ```mermaid
 flowchart TB
-    P["Authoritative producers"] --> E["Deterministic extraction"]
-    E --> N["Normalization and representation"]
-    N --> M["Provenance, trust, freshness metadata"]
-    M --> G["Git-backed knowledge corpus"]
-    G --> I["Disposable indexes and caches"]
-    I --> R["Retrieval layer"]
-    R --> S["Read-only serving layer"]
-    S --> A["MCP adapter"]
-    A --> C["Agents and humans"]
+  source["Official source"] -->|"informs and is cited by"| article["Curated Markdown article"]
+  article --> revision["Knowledge Git commit"]
+  revision --> lock["Website pins commit SHA"]
+  lock --> snapshot["Fetch and verify pinned snapshot"]
+  snapshot --> html["Astro renders HTML"]
+  html --> search["Pagefind indexes HTML"]
+  html --> artifact["Static pages and search files"]
+  search --> artifact
+  artifact --> reader["Reader"]
+  revision -.-> ai["Optional, separate AI search and fetch"]
+  ai -.-> reader
 ```
 
-| Layer | Responsibility | Must not be confused with |
-| --- | --- | --- |
-| Authoritative producer | Original system or artifact, such as API schema, code repo, docs, database schema, or vendor spec. | The derived knowledge corpus. |
-| Derived knowledge | Curated representation generated or written from sources. | The original source. |
-| Deterministic facts | Machine-owned regions parsed from exact source data. | Model-authored interpretation. |
-| Model-authored reasoning | Explanation, trade-offs, relationships, and troubleshooting guidance. | Exact machine-readable facts. |
-| Retrieval artifacts | Search indexes, embeddings, graph indexes, caches, chunk stores. | Source of truth. |
-| Serving layer | Read-only search and fetch access with authorization and audit. | Maintenance write path. |
-| Maintenance workflow | Reconciliation, regeneration, enrichment, validation, PR, and review. | User-facing serving path. |
+Text alternative: an official source informs and is cited by a curated
+Markdown article. A Git commit saves its exact version. The separate
+website project pins that commit, fetches and verifies the snapshot, then
+Astro renders HTML and Pagefind indexes it. Static pages and search files
+form one reader artifact.
 
-## Source-of-truth distinctions
+A separate, optional AI search and fetch service could use the same
+knowledge commit; it would need its own retrieval design.
 
-| Term | Meaning |
-| --- | --- |
-| Source-of-truth producer | The authoritative upstream artifact or system for a fact. |
-| Knowledge source of truth | The Git-backed derived corpus that agents and humans review and serve. |
-| Derived serving state | Rebuildable indexes, embeddings, caches, and retrieval views. |
+A static site can render Markdown into pages, and Pagefind builds search
+data from the finished HTML.[^astro-collections][^pagefind-docs]
+The [website architecture plan](../../../../knowledge-base-upgrade/features/knowledge-website/architecture.md)
+specifies an exact pinned knowledge commit for this project. The separate
+website project builds locally, while the public host and domain remain
+unselected. A site build or an AI answer should identify the
+revision it used so a reader can check the underlying article. MCP
+standardizes how an AI host asks a server for context; it does not choose
+the source of truth or judge whether an answer is accurate.[^mcp-architecture]
 
-Git is the knowledge source of truth because it gives reviewable diffs, history, authorship, rollback, branches, PRs, and reproducible corpus revisions. A database can serve the corpus, but it should not become the record of authority unless a concrete architecture explicitly accepts that trade-off.
+For example, a reader asks, “Why does Terraform need state?” The curated
+[Terraform state article](../../../terraform/fundamentals/state-management.md)
+explains how a resource address maps to a managed object and links
+HashiCorp's documentation.[^terraform-state] A knowledge commit fixes the
+article's wording; the website lock selects that commit; the build renders
+the article and creates search data from its HTML. This traces a possible
+reader path, not a claim that a particular query already ranks first or
+that a beginner reader has tested it.
 
-## Deterministic facts and reasoned meaning
+## The change path
 
-Use deterministic extractors for:
+Imagine that an official Terraform state page changes an important
+rule. This is an **illustrative sequence**; no such change or
+automated reconciliation is claimed here.
 
-- OpenAPI descriptions.
-- AsyncAPI descriptions.
-- JSON Schema.
-- Terraform configuration and state exports.
-- Kubernetes manifests and CRDs.
-- SQL schemas.
-- Structured APIs.
-- Git metadata.
-- Configuration files.
+1. A maintainer or optional monitor notices the upstream change
+   and checks what actually changed in the official source.
+2. The author finds affected articles, updates the explanation and
+   citations, and marks any unresolved uncertainty clearly.
+3. Repository checks catch structural problems such as invalid
+   metadata and broken internal links. A reviewer checks the meaning
+   of the revised claims before the knowledge change reaches `main`.
+4. When website synchronization is connected, it can propose a new pinned
+   knowledge SHA. The website's own build checks and maintainer review
+   come before that pin is accepted. Once hosted, the site continues to
+   show its previous artifact until a new build is released.
 
-Use LLMs or agents for:
-
-- Explanation.
-- "When should I use this?"
-- Relationships between systems.
-- Operational guidance.
-- Architecture context.
-- Troubleshooting reasoning.
-- Summarization.
-
-> [!IMPORTANT]
-> Enforce "zero model-authored claims in machine-owned regions" with generated-region markers, renderer hashes, source hashes, and validation. Prompt text is not an enforcement boundary.
-
-## Maintenance loop
+The dispatch event is a wake-up signal, not the source revision itself.
+The website sync reads the current validated knowledge `main` commit before
+proposing a pin change. A missed event can be recovered by scheduled or
+manual reconciliation; neither path skips website review.
 
 ```mermaid
-flowchart LR
-    Change["Producer change"] --> Reconcile["Reconciliation"]
-    Reconcile --> Affected["Affected concept detection"]
-    Affected --> Regen["Deterministic regeneration"]
-    Regen --> Enrich["Agent enrichment where needed"]
-    Enrich --> Validate["Validation"]
-    Validate --> Diff["Meaningful Git diff"]
-    Diff --> PR["PR or patch"]
-    PR --> Human["Human review"]
-    Human --> Merge["Merge"]
-    Merge --> Corpus["New corpus Git state"]
+flowchart TB
+  changed["Upstream change"] --> notice["Person or optional monitor notices"]
+  notice --> inspect["Inspect affected claims"]
+  inspect --> patch["Proposed Markdown change"]
+  patch --> checks["Knowledge checks and review"]
+  checks --> revision["Knowledge main commit"]
+  revision --> sync["Dispatch or scheduled sync, when connected"]
+  sync --> pin["Proposed website pin update from validated main"]
+  pin --> sitecheck["Website build checks and review"]
+  sitecheck --> rebuild["New static artifact"]
 ```
 
-Track this producer state:
+Text alternative: a person or optional monitor notices an upstream change
+and inspects affected claims. A proposed Markdown patch goes through
+knowledge checks and review before reaching knowledge `main`. When
+connected, dispatch or scheduled reconciliation can propose a website pin
+update from validated `main`. The proposed pin goes through website build
+checks and review before producing a new static artifact. Once hosted,
+readers continue seeing the earlier artifact until the new one is released.
 
-| Field | Why it matters |
-| --- | --- |
-| `producer_id` | Stable producer identity. |
-| `pinned_revision` | Last accepted producer revision. |
-| `observed_revision` | Current producer revision seen by the reconciler. |
-| `source_path` | Exact source scope. |
-| `source_hash` | Content comparison independent of events. |
-| `renderer_version` | Reproducible generation behavior. |
-| `knowledge_concepts` | Dependent concepts to regenerate or review. |
-| `generated_hash` | Detects output drift and no-op updates. |
-| `last_reconciled_at` | Freshness and lag signal. |
-| `status` | Active, stale, failed, retired, or blocked as internal state. |
+An event or scheduled **reconciler** could help detect upstream changes:
+it would compare a source's current version with the version recorded in
+the article and propose review when they differ. That is a possible
+maintenance design, not a claim that one already runs. Likewise, passing
+metadata and link checks is evidence that the bundle is structurally
+sound; it does not verify every technical sentence or replace a reader
+test. See [provenance, trust, and freshness](provenance-trust-and-freshness.md)
+for the fuller reconciliation loop.
 
-A missed webhook should increase latency, not permanently break correctness. Scheduled reconciliation compares revisions and hashes. A no-change reconciliation must produce byte-identical output and no PR.
+## Add topics without losing the path
 
-## Serving surface
+A new topic should have one clear home. This repository requires its
+Markdown article under the nearest subject directory, a link from that
+directory's `index.md`, and the concept metadata in
+[the authoring instructions](../../../../instructions.md). If a new
+directory is needed, add its own `index.md` and link that directory
+from its parent. These are this repository's rules; OKF itself allows
+more flexible bundle layouts.[^okf-spec] The links help people and tools
+discover the new material as the corpus grows.
 
-Keep normal serving read-only:
+Keep separate questions separate:
 
-| Operation | Behavior |
-| --- | --- |
-| `search_knowledge` | Returns bounded results with IDs, titles, summaries, metadata, trust, freshness, and authority signals. |
-| `fetch_knowledge_entry` | Fetches a specific document or section by stable ID. |
-| `fetch_source_evidence` | Fetches related evidence only when needed and authorized. |
+- **Is it true?** Check the official source and record real evidence.
+- **Can readers find it?** Check topic links and representative search
+  questions.
+- **Can readers understand it?** Try the explanation with people who
+  are new to the subject.
+- **Is it still current?** Revisit the article when its source changes.
 
-Do not expose a generic "modify production knowledge" operation through the normal serving interface. Maintenance tools may create branches, patches, or PRs, but they belong behind a separate security boundary with stronger authorization, validation, and audit logging.
+## Check your understanding
 
-## Implementation procedure
+- If a website page looks wrong, how would you decide whether to fix the
+  source article, the pinned commit, or the renderer?
+- What is the difference between an official product source and the
+  knowledge bundle's Git revision?
+- Which checks can find a broken link, and which work is needed to
+  catch a misleading but well-formed explanation?
 
-1. Inventory producers and classify source authority.
-2. Define canonical corpus paths and concept IDs.
-3. Choose plain Markdown or OKF for the corpus representation.
-4. Write deterministic extractors for structured producers.
-5. Mark machine-owned regions and validate them.
-6. Add provenance, generation, verification, lifecycle, and freshness metadata.
-7. Build lexical search first.
-8. Add semantic reranking, vector search, or graph retrieval only after measured failures justify them.
-9. Expose read-only search and fetch operations.
-10. Add reconciliation and PR-based maintenance.
-11. Evaluate retrieval, answer quality, freshness, determinism, and cost.
-12. Trace searches, fetched evidence, corpus revision, and authorization decisions.
+## Explore further
 
-## What can go wrong
-
-| Risk | Control |
-| --- | --- |
-| Agent cannot find existing knowledge | Golden retrieval questions and index coverage checks. |
-| Retrieval returns too much | Budgets, progressive disclosure, and section fetches. |
-| Stale content looks valid | `stale_after`, producer reconciliation, source hashes, and lag metrics. |
-| LLM alters machine-owned facts | Generated-region validation and renderer re-run checks. |
-| Conflicting sources are silently merged | Source authority metadata and conflict reporting. |
-| Unauthorized content is retrieved | Retrieval-time authorization before ranking and fetch. |
-| Write path mutates production silently | Propose-only maintenance, PR review, and audit. |
-
-## Related links
-
-- [OKF v0.2](okf-v0.2.md)
-- [Knowledge standards landscape](knowledge-standards-landscape.md)
-- [Retrieval and context efficiency](retrieval-and-context-efficiency.md)
+- [Knowledge-base creation, management, and optimization](../knowledge-bases-creation-management-and-optimization.md)
+  is the shorter reader-focused introduction.
 - [Provenance, trust, and freshness](provenance-trust-and-freshness.md)
-- [Security and governance](security-and-governance.md)
-- [Evaluation and quality](evaluation-and-quality.md)
-- [Back to agent knowledge bases](index.md)
-- [Back to AI tooling](../index.md)
-- [Back to root index](../../../../README.md)
+  explains how to record the source and review status of a claim.
+- [Retrieval and context efficiency](retrieval-and-context-efficiency.md)
+  explains the search-to-fetch path.
+- [Evaluation and quality](evaluation-and-quality.md) separates
+  discovery, ranking, and answer quality.
+- [Security and governance](security-and-governance.md) covers
+  permission boundaries in retrieval and maintenance.
+- [Back to agent knowledge bases](index.md).
+
+[^okf-spec]: [Open Knowledge Format specification](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md), source record `okf-spec`.
+[^git-version-control]: [Git book, about version control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control), source record `git-version-control`.
+[^astro-collections]: [Astro content collections](https://docs.astro.build/en/guides/content-collections/), source record `astro-collections`.
+[^pagefind-docs]: [Pagefind documentation](https://pagefind.app/docs/), source record `pagefind-docs`.
+[^mcp-architecture]: [MCP architecture overview](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture), source record `mcp-architecture`.
+[^terraform-state]: [HashiCorp, Terraform state](https://developer.hashicorp.com/terraform/language/state), source record `terraform-state`.

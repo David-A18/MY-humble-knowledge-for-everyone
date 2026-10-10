@@ -1,8 +1,11 @@
 # Programming languages
 
-Programming language notes, idioms, tooling, runtime behavior, and practical examples.
+Start with how a small program runs, then follow the focused language and
+tooling pages as this section grows.
 
-Status: Initial outline
+Status: Early coverage. The programming fundamentals page teaches a first
+model with Python; the other current articles explain Bootstrap and
+bootstrapping. Language-specific courses are still planned.
 
 ## Expected content
 
@@ -13,8 +16,13 @@ Status: Initial outline
 
 ## Articles
 
-- [Bootstrap and bootstrapping](bootstrap-and-bootstrapping.md): explains
-  Bootstrap as a frontend toolkit and bootstrapping as a general setup or
-  startup process.
+- [Programming fundamentals](programming-fundamentals.md): trace one small
+  Python program from source text through a condition to printed output.
+- [Bootstrap and bootstrapping](bootstrap-and-bootstrapping.md): distinguish
+  the two meanings of a commonly confusing word.
+- [Bootstrap frontend toolkit](bootstrap-frontend-toolkit.md): understand
+  what Bootstrap CSS and JavaScript add to an HTML page.
+- [Bootstrapping a system](bootstrapping-a-system.md): understand a first-time
+  project or infrastructure dependency before normal work can run.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

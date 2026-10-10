@@ -1,148 +1,164 @@
 ---
-type: "How-to Guide"
-title: "Kubernetes advanced commands"
-description: "Collect advanced kubectl commands for structured output, API discovery, server-side operations, debugging, node maintenance, and authorization checks."
-tags: [kubernetes, advanced-commands]
+type: How-to Guide
+title: Inspect a Kubernetes API field before changing a manifest
+description: Find a field in the cluster's API schema, compare it with a live Deployment, and check a proposed manifest without persisting it.
+tags: [kubernetes, kubectl, api-discovery, manifests, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform engineer
+maintainer: unassigned
+sources:
+  - id: api-resources
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_api-resources/
+    title: kubectl api-resources
+  - id: explain
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain/
+    title: kubectl explain
+  - id: get
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+    title: kubectl get
+  - id: apply
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_apply/
+    title: kubectl apply
+  - id: dry-run
+    resource: https://kubernetes.io/docs/reference/using-api/api-concepts/#dry-run
+    title: Kubernetes API dry-run
 ---
 
-# Kubernetes advanced commands
+# Inspect a Kubernetes API field before changing a manifest
 
-## Purpose
+## What you will learn
 
-Collect advanced `kubectl` commands for structured output, API discovery, server-side operations, debugging, node maintenance, and authorization checks.
+A manifest field has three different views: the **schema** says what
+the API accepts, a **live object** says what the cluster currently
+stores, and a **proposed file** says what you intend to send. Checking
+one view does not establish the others.[^explain][^get][^dry-run]
 
-## API discovery and structured output
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| List API resources | `kubectl api-resources` | Discover resource names, short names, and scopes. |
-| Explain resource fields | `kubectl explain <resource>.<field>` | Check manifest schema from the cluster API. |
-| Print JSONPath output | `kubectl get <resource> -o jsonpath='<path>'` | Extract one field for scripts or checks. |
-| Use custom columns | `kubectl get <resource> -o custom-columns=<columns>` | Create readable views without external tools. |
-
-### Explain a manifest field
-
-```bash
-kubectl explain deployment.spec.strategy
+```mermaid
+flowchart LR
+  schema["API schema: what is allowed"] --> question["Can this field be used?"]
+  live["Live object: what is stored"] --> current["What is set now?"]
+  file["Proposed manifest"] --> dry["Server dry run: would this request be accepted now?"]
 ```
 
-What it does: shows the API description for the Deployment rollout strategy field.
+Text alternative: ask the API for the field definition, read the
+current object, then submit the proposed file as a server dry run.
+A successful dry run still does not prove a later rollout or user
+request will work.
 
-### Extract node names from pods
+This guide uses an **invented** Deployment named `web` in namespace
+`shop` and a file at `k8s/web-deployment.yaml`. No cluster was used
+to test the example. Replace all three values with your actual
+target; do not create the example file just to follow along.
 
-```bash
-kubectl get pods -n app -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.nodeName}{"\n"}{end}'
-```
+## Before you start
 
-What it does: prints each pod name and the node where it is scheduled.
+- Confirm which cluster and namespace you are allowed to inspect.
+  The [opening inspection guide](daily-usage.md) explains how to
+  check a context whose name may be ambiguous.
+- Have read access to the Deployment for the live-object step.
+  A server dry run needs the same authorization as the corresponding
+  real request, even though it does not persist the object.[^dry-run]
+- Know who owns the live object. A GitOps or release controller may
+  replace a direct change. This guide does not apply a live change.
 
-## Dry runs and server-side apply
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Client dry run | `kubectl apply -f <file> --dry-run=client` | Validate local command construction. |
-| Server dry run | `kubectl apply -f <file> --dry-run=server` | Ask the API server to validate without persisting. |
-| Server-side apply | `kubectl apply --server-side -f <file>` | Let the API server track field ownership. |
-| Force field conflicts | `kubectl apply --server-side --force-conflicts -f <file>` | Take ownership during controlled migrations. |
-
-### Validate with the API server
-
-```bash
-kubectl apply -f k8s/deployment.yaml --dry-run=server
-```
-
-What it does: sends the object to the API server for validation without creating or updating it.
-
-### Use server-side apply
+### 1. Ask this cluster about the field
 
 ```bash
-kubectl apply --server-side -f k8s/
+kubectl config current-context
+kubectl api-resources --api-group=apps
+kubectl explain deployment.spec.strategy --api-version=apps/v1
 ```
 
-What it does: applies manifests using server-side field management.
+Compare the context with your intended environment **before** using
+the next two commands. `api-resources` lists API resources served by
+this cluster; its `NAMESPACED` column helps distinguish namespaced
+resources such as Deployments from cluster-scoped ones. `explain`
+reads the resource's API field documentation. It describes
+`strategy`, not the value used by your `web` Deployment.
+[^api-resources][^explain]
 
-> [!WARNING]
-> `--force-conflicts` can overwrite fields owned by another manager. Use it only when you know which controller or workflow should own those fields.
-
-## Debug workloads
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Create a debug container | `kubectl debug -it <pod> -n <namespace> --image=<image> --target=<container>` | Inspect a pod with a helper image. |
-| Copy a pod for debug | `kubectl debug <pod> -n <namespace> --copy-to=<name> --container=<container> -- sh` | Investigate without changing the original pod. |
-| Run a temporary pod | `kubectl run <name> --rm -it --image=<image> -- sh` | Test DNS, network, or tooling from inside the cluster. |
-| Check resource usage | `kubectl top pod -n <namespace>` | Inspect CPU and memory when metrics are installed. |
-
-### Start a temporary network debug pod
+For a nested setting, ask for the exact path:
 
 ```bash
-kubectl run net-debug --rm -it --restart=Never --image=curlimages/curl -- sh
+kubectl explain deployment.spec.strategy.rollingUpdate.maxUnavailable --api-version=apps/v1
 ```
 
-What it does: starts an interactive temporary pod and removes it when the shell exits.
+The answer tells you the accepted field shape and description for
+the chosen API version. If `explain` cannot find it, check the kind,
+API version, field spelling, and cluster version. Do not treat an
+example from a different Kubernetes version as proof that this
+cluster accepts it.[^explain]
 
-### Add an ephemeral debug container
+### 2. Read the stored Deployment
 
 ```bash
-kubectl debug -it web-7c9d8f9d6b-xm2ql -n app --image=busybox:1.36 --target=web -- sh
+kubectl get deployment web -n shop -o yaml
 ```
 
-What it does: attaches a temporary debug container to the selected pod.
+Find `spec.strategy` in the returned object. Compare only the fields
+relevant to your proposed change; the server may include defaults
+or metadata absent from your file. `NotFound` calls for checking
+context, namespace, and name before going further. The live object
+is evidence of stored configuration, not proof that the Pods are
+ready or that users can reach the service.[^get]
 
-> [!NOTE]
-> Ephemeral containers depend on cluster support and RBAC permissions. Some locked-down production clusters restrict this operation.
+> [!CAUTION]
+> A full YAML response can include configuration details. Use the
+> same care when sharing it as you would with the manifest.
 
-## Node maintenance
+### 3. Check the proposed file with the API server
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Mark node unschedulable | `kubectl cordon <node>` | Stop new pods from scheduling on a node. |
-| Drain node | `kubectl drain <node> --ignore-daemonsets --delete-emptydir-data` | Evict workloads before maintenance. |
-| Re-enable scheduling | `kubectl uncordon <node>` | Return a node to service. |
-| Show node details | `kubectl describe node <node>` | Inspect pressure, capacity, taints, and events. |
-
-### Drain a node for maintenance
+After reviewing the file's kind, name, namespace, and changed fields,
+run a server dry run:
 
 ```bash
-kubectl cordon ip-10-0-12-34.ec2.internal
-kubectl drain ip-10-0-12-34.ec2.internal --ignore-daemonsets --delete-emptydir-data
+kubectl apply -f k8s/web-deployment.yaml -n shop --dry-run=server -o yaml
 ```
 
-What it does: prevents new scheduling and evicts eligible pods from the node.
+This sends an apply request through the API server without
+persisting the resource. The server can perform admission,
+defaulting, validation, and merge-conflict checks. It may reject
+the request because of authorization or a webhook that cannot
+safely support dry run. Read the error instead of switching to a
+real apply to bypass it.[^apply][^dry-run]
 
-> [!WARNING]
-> `kubectl drain` can disrupt applications. Confirm PodDisruptionBudgets, replica counts, and maintenance windows before draining shared or production nodes.
+A successful response means this request was acceptable **at that
+moment**. Generated fields in the response can differ from a real
+request, and the live object or admission setup can change before
+a later apply. It does not approve the change, predict rollout
+health, or test the application.[^dry-run]
 
-## Authorization checks
+## Choose the next route
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Check a verb/resource | `kubectl auth can-i <verb> <resource> -n <namespace>` | Confirm whether your identity can perform an action. |
-| Check as another user | `kubectl auth can-i <verb> <resource> --as=<user>` | Validate RBAC from another identity. |
-| List own permissions | `kubectl auth can-i --list -n <namespace>` | Review namespace-level access. |
+- To make an approved direct change and verify its outcome, follow
+  [Review and apply a Kubernetes manifest change](common-commands.md).
+- To inspect a Pod that is already failing, use
+  [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md)
+  and then the relevant symptom guide.
+- For a different operation, read the focused official procedure:
+  [server-side apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/)
+  explains field ownership;
+  [debug running Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/)
+  explains debug containers and copies;
+  [safely drain a node](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/)
+  explains workload disruption;
+  [authorization](https://kubernetes.io/docs/reference/access-authn-authz/authorization/)
+  explains permission checks. These actions have different
+  prerequisites from field inspection.
 
-### Check deployment update permission
+## Explore further
 
-```bash
-kubectl auth can-i update deployments -n app
-```
-
-What it does: asks the API server whether the current identity can update Deployments in the `app` namespace.
-
-## Official documentation
-
+- [kubectl api-resources](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_api-resources/)
+  lists resource names, groups, and scopes.[^api-resources]
 - [kubectl explain](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain/)
-- [Server-side apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/)
-- [Debug running pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/)
-- [Safely drain a node](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/)
-- [Authorization overview](https://kubernetes.io/docs/reference/access-authn-authz/authorization/)
+  documents fields served by the cluster.[^explain]
+- [Kubernetes API dry-run](https://kubernetes.io/docs/reference/using-api/api-concepts/#dry-run)
+  describes server processing and its limits.[^dry-run]
+- [Back to Kubernetes commands](index.md).
 
-## Related links
-
-- [Back to Kubernetes commands](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^api-resources]: [Kubernetes, kubectl api-resources](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_api-resources/), source record `api-resources`.
+[^explain]: [Kubernetes, kubectl explain](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain/), source record `explain`.
+[^get]: [Kubernetes, kubectl get](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/), source record `get`.
+[^apply]: [Kubernetes, kubectl apply](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_apply/), source record `apply`.
+[^dry-run]: [Kubernetes, Kubernetes API dry-run](https://kubernetes.io/docs/reference/using-api/api-concepts/#dry-run), source record `dry-run`.

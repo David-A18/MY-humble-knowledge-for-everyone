@@ -1,7 +1,7 @@
 ---
 type: "Decision Record"
 title: "ADR-0003: Keep repository navigation before adding a searchable site"
-description: "The knowledge base is currently published as a Git repository with Markdown indexes, focused articles, local validation scripts, and an explicit maintenance review queue. The improvement plan asks whether a searchable static reading site would be worthwhile after reader-task testing produces findability evidence."
+description: "Historical decision to defer a reading site pending reader tests; ADR-0005 superseded it when the owner chose to launch first."
 tags: [decision-records]
 status: draft
 maturity: draft
@@ -11,7 +11,26 @@ maintainer: "unassigned"
 
 # ADR-0003: Keep repository navigation before adding a searchable site
 
-Status: Superseded by [ADR-0005](adr-0005-git-backed-reading-site.md). The decision below records the earlier position.
+Decision state: Superseded by [ADR-0005](adr-0005-git-backed-reading-site.md).
+The page's OKF `status: draft` describes review maturity, not whether
+this decision is still active. The decision below records the earlier
+position.
+
+## Why this record is still here
+
+The earlier decision asked for evidence that repository navigation was hard
+to use before taking on a second publishing surface. That was a
+reasonable maintenance question: a site adds build, search,
+accessibility, link, and deployment work. The options below show the
+trade-off that was considered at the time.
+
+The planned reader-task protocol (KB-14 in the [improvement
+plan](../../knowledge-base-improvement-plan.md)) was created, but independent reader
+sessions had not been recorded when [ADR-0005](adr-0005-git-backed-reading-site.md)
+changed the decision at the owner's direction. The original trigger
+below did **not** fire. Follow ADR-0005 for the active website choice;
+use this record to understand the earlier rationale and the costs the
+site still needs to manage.
 
 ## Context
 
@@ -49,4 +68,4 @@ Revisit this decision after KB-14 records actual reader outcomes. If a site is r
 - [Maintenance review queue](../../maintenance-review-queue.md)
 - [Knowledge-base review](../../knowledge-base-review.md)
 - [Decision records](index.md)
-- [Back to root index](../../README.md)
+- [Back to knowledge index](../index.md)

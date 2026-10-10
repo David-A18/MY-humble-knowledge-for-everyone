@@ -11,7 +11,7 @@ planned focused guides.
 
 | Article | Purpose |
 | --- | --- |
-| [Undo and recovery](undo-and-recovery.md) | Safely inspect, undo, and recover local Git changes, staged changes, pushed commits, local resets, lost branch tips, and untracked cleanup. |
+| [Undo and recovery](undo-and-recovery.md) | Locate a mistake before changing anything, then choose a path-scoped file fix, revert, private-history recovery, or scoped cleanup. |
 
 ## Expected future content
 
@@ -22,4 +22,4 @@ planned focused guides.
 - Add sparse-checkout and submodule recovery guidance when there is enough
   evidence for a focused guide.
 
-[Back to Git index](../index.md) | [Back to root index](../../../README.md)
+[Back to Git index](../index.md) | [Back to knowledge index](../../index.md)

@@ -17,4 +17,4 @@ Practical examples for Terraform configuration and operational workflows.
 - Module examples.
 - GitHub Actions validation examples.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

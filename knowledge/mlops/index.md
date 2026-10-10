@@ -4,6 +4,10 @@ MLOps knowledge for machine learning delivery, evaluation, deployment, monitorin
 
 Status: Initial outline
 
+No MLOps articles are published in this section yet. Start with
+[AI fundamentals](../ai/ai-fundamentals.md) for the model and training terms
+used in this planned area.
+
 ## Expected content
 
 - Model training and deployment workflows.
@@ -12,4 +16,4 @@ Status: Initial outline
 - Governance, security, and reproducibility guidance.
 - Cloud and Kubernetes patterns for ML workloads.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

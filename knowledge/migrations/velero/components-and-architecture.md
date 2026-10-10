@@ -1,229 +1,146 @@
 ---
 type: "Explanation"
 title: "Velero components and architecture"
-description: "Use this page to understand Velero's server, CLI, custom resources, controllers, plugins, and data movement components."
+description: "Understand how a Velero request becomes a backup or restore, which component does each part, and where the backup remains available."
 tags: [migrations, velero, components-and-architecture]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: velero-how
+    resource: https://velero.io/docs/v1.18/how-velero-works/
+    title: Velero v1.18 - How Velero Works
+  - id: velero-locations
+    resource: https://velero.io/docs/v1.18/locations/
+    title: Velero v1.18 - Backup Storage Locations and Volume Snapshot Locations
+  - id: velero-fsb
+    resource: https://velero.io/docs/v1.18/file-system-backup/
+    title: Velero v1.18 - File System Backup
 ---
 
 # Velero components and architecture
 
-## Purpose
+## The idea in plain language
 
-Use this page to understand Velero's server, CLI, custom resources, controllers, plugins, and data movement components.
+A Velero command does not copy a cluster by itself. It tells Kubernetes to
+create a **request object**, such as `Backup` or `Restore`. A Velero
+**controller** running in the cluster notices that object and does the work.
+An object-storage location keeps the backup archive outside the cluster.
+This separation is why a new cluster can discover a backup after the source
+cluster is gone, provided it can access the same backup data.[^velero-how]
 
-## Contents
+Imagine an order slip sent to a workshop. The slip describes the job; a
+worker carries it out and records the result. The analogy stops there: a
+Kubernetes `Backup` object is only the in-cluster request and status, while
+the archive in object storage holds the selected resource data. Keeping the
+slip does not replace keeping the archive.
 
-- [Mental model](#mental-model)
-- [Component map](#component-map)
-- [Controller responsibilities](#controller-responsibilities)
-- [Important custom resources](#important-custom-resources)
-- [Backup workflow](#backup-workflow)
-- [Restore workflow](#restore-workflow)
-- [Scheduled backup workflow](#scheduled-backup-workflow)
-- [Storage location architecture](#storage-location-architecture)
-- [Backup expiration and retention](#backup-expiration-and-retention)
+## Meet the parts
 
-## Mental model
+| Part | Plain-language role |
+| --- | --- |
+| Velero CLI or automation | Asks Kubernetes to create a `Backup`, `Restore`, or `Schedule` object. |
+| Kubernetes API | Stores those request objects so controllers can find them. |
+| Velero server | Watches requests, reads or recreates selected Kubernetes objects, and records operation status. |
+| `BackupStorageLocation` | Names the object-storage bucket or prefix for backup archives and metadata. |
+| `VolumeSnapshotLocation` | Configures provider snapshot locations when that snapshot path is used. |
+| Node-agent | Performs file system backup work on cluster nodes when that method is configured. |
 
-Velero is built like a Kubernetes operator. The CLI does not directly copy every object into object storage. Instead, the CLI creates Kubernetes custom resources such as `Backup`, `Restore`, and `Schedule`. The Velero server watches those resources, reconciles them, calls the Kubernetes API and provider plugins, and records status back into the custom resources.
+The last two rows are conditional. A resource-only backup need not use a
+volume snapshot location or node-agent. Different volume methods have
+different prerequisites and durability boundaries.[^velero-locations][^velero-fsb]
+
+## Follow one request
 
 ```mermaid
 flowchart LR
-  operator["Operator or automation"] --> cli["velero CLI"]
-  cli --> api["Kubernetes API"]
-  api --> crds["Velero custom resources"]
-  crds --> server["Velero server controllers"]
-  server --> k8s["Kubernetes resources"]
-  server --> plugins["Provider and CSI plugins"]
-  server --> objectstore["Object storage"]
-  plugins --> snapshots["Provider or CSI snapshots"]
-  server --> nodeagent["node-agent"]
-  nodeagent --> repo["BackupRepository in object storage"]
+  user["Operator or schedule"] --> api["Kubernetes API: Backup request"]
+  api --> controller["Velero backup controller"]
+  controller --> objects["Read selected Kubernetes objects"]
+  objects --> store["Object-storage backup"]
+  controller --> optional["Optional volume method"]
+  optional --> data["Snapshot or file data"]
+  store --> target["Restore in target cluster"]
+  data --> target
 ```
 
-What it shows: operators express intent through Velero CRDs, and controllers turn that intent into backup archives, restore operations, snapshots, or file/data movement.
+Text alternative: an operator or schedule creates a request in the
+Kubernetes API. The Velero controller reads selected Kubernetes objects and
+stores their archive in object storage. A configured volume method may
+protect data separately. A target cluster needs access to the relevant
+backup pieces before it can restore them. The diagram helps locate where a
+missing object or missing file would have been lost.
 
-## Component map
+Velero can also create backups on a schedule. A `Schedule` object tells its
+controller when to create new `Backup` objects; each backup then follows the
+same path. For a restore, the CLI creates a `Restore` object, and a restore
+controller fetches the saved backup data and recreates eligible Kubernetes
+resources.[^velero-how]
 
-| Component | Runs where | Role |
-| --- | --- | --- |
-| Velero CLI | Operator workstation or automation runner | Creates and inspects Backup, Restore, and Schedule resources. |
-| Velero server | Kubernetes cluster | Runs controllers that process Velero custom resources. |
-| Velero CRDs | Kubernetes API | Store Velero operations such as backups, restores, schedules, and locations. |
-| Backup controller | Velero server | Collects Kubernetes resources and writes backup artifacts to object storage. |
-| Restore controller | Velero server | Reads backup artifacts and recreates selected resources and volumes. |
-| Plugins | Velero deployment init containers | Add provider-specific object store and volume snapshot behavior. |
-| Node-agent | Kubernetes DaemonSet | Hosts file-system backup and data movement controllers on cluster nodes. |
-| Data mover pods | Kubernetes workload pods | Move volume data between snapshots, PVCs, and backup repositories. |
+## An illustrative second-cluster restore
 
-## Controller responsibilities
+Suppose cluster A backed up a small `notes` application to an object-storage
+bucket. Cluster B has Velero installed and permission to read the same
+backup location. This is an invented scenario; no cluster was used.
 
-| Controller path | Watches | Does |
-| --- | --- | --- |
-| Backup | `Backup` | Validates spec, collects resources, writes backup archive, starts volume operations, records warnings and errors. |
-| Schedule | `Schedule` | Creates timestamped `Backup` objects from a backup template on a cron interval. |
-| Restore | `Restore` | Reads backup metadata and archive, sorts resources, recreates objects, starts volume restores, records skipped resources. |
-| Garbage collection | expired `Backup` objects | Deletes expired backup CRs, backup archives, snapshots, and related restores when retention allows it. |
-| Backup storage sync | `BackupStorageLocation` and object storage | Recreates missing completed `Backup` CRs from backup files in object storage and removes stale completed CRs whose archive is gone. |
-| Backup repository | `BackupRepository` | Manages Kopia repositories used by File System Backup and data movement. |
-| Node-agent volume work | `PodVolumeBackup`, `PodVolumeRestore`, `DataUpload`, `DataDownload` | Performs file-system backup, restore, and built-in data movement on nodes. |
+1. Cluster A's Velero server wrote selected object definitions to the
+   configured `BackupStorageLocation`. Any volume data followed its
+   configured protection method.
+2. Cluster B's Velero server checks the object-storage location. Velero can
+   recreate a missing in-cluster `Backup` object from an available backup
+   archive. That is **object-storage sync**, not a copy of cluster A's
+   Kubernetes database.[^velero-how]
+3. A restore request in cluster B tells its controller which backup to use.
+   It recreates eligible resources and uses the volume method recorded by
+   the backup when protected data is available.[^velero-how]
+4. The operator checks restore warnings and the app's actual notes. A
+   restored `Backup` object or a completed `Restore` status does not by
+   itself prove the app works.
 
-## Important custom resources
+This path depends on access to the object-storage archive, compatible
+Kubernetes APIs and storage, and the volume data's own location. For
+example, a provider snapshot may remain with that provider; it is not
+automatically copied into the object-storage archive. File System Backup
+stores its volume data under the backup storage location.[^velero-locations]
 
-| Resource | Meaning | Common check |
-| --- | --- | --- |
-| `Backup` | Requested or completed backup operation. | `velero backup describe <name> --details` |
-| `Restore` | Requested or completed restore operation. | `velero restore describe <name> --details` |
-| `Schedule` | Cron-style recurring backup definition. | `velero schedule get` |
-| `BackupStorageLocation` | Object storage destination for backup metadata and artifacts. | `velero backup-location get` |
-| `VolumeSnapshotLocation` | Provider-specific block snapshot location. | `velero snapshot-location get` |
-| `BackupRepository` | Repository used by file-system backup or data movement. | `kubectl get backuprepositories -n velero` |
-| `PodVolumeBackup` | File-system backup of a pod volume. | `kubectl get podvolumebackups -n velero` |
-| `PodVolumeRestore` | File-system restore of a pod volume. | `kubectl get podvolumerestores -n velero` |
-| `DataUpload` | Data movement upload operation. | `kubectl get datauploads -n velero` |
-| `DataDownload` | Data movement download operation. | `kubectl get datadownloads -n velero` |
+## Where to look when a piece is missing
 
-### Inspect CRD status directly
+| Symptom | First architecture question |
+| --- | --- |
+| No backup request appears | Did the CLI or schedule create the object in the intended cluster? |
+| A request exists but no archive is available | Could the controller complete and write to the configured backup storage location? |
+| Cluster B cannot discover a backup | Can its Velero server read the same location and backup archive? |
+| Objects return but files do not | Was the volume method enabled, successful, and usable in this target? |
+| Restore completes but the app fails | Are its dependencies, configuration, and application data actually usable? |
 
-```bash
-kubectl get backups,restores,schedules -n velero
-kubectl describe backup <backup-name> -n velero
-kubectl describe restore <restore-name> -n velero
-```
+These are diagnosis questions, not proof of a particular failure. The
+[troubleshooting guide](troubleshooting-and-operations.md) has operational
+checks. A `BackupStorageLocation` or `VolumeSnapshotLocation` setting alone
+does not certify that any backup is restorable.
 
-What it does: reads the Kubernetes objects Velero controllers reconcile and shows status, phase, errors, warnings, and labels.
+## Check your understanding
 
-### Important labels and status fields
+- What does the Velero CLI create, and which component does the backup work?
+- If the original cluster disappears, which data must a new cluster still
+  be able to read?
+- Why might the backup archive exist while a volume cannot be restored?
 
-| Field or label | Where to look | Meaning |
-| --- | --- | --- |
-| `status.phase` | `Backup`, `Restore`, `PodVolumeBackup`, `DataUpload` | Current lifecycle state such as `InProgress`, `Completed`, `PartiallyFailed`, or `Failed`. |
-| `status.warnings` and `status.errors` | `Backup` and `Restore` | Count of issues that need log review before trusting the operation. |
-| `velero.io/backup-name` | Restored resources and volume-operation objects | Connects a resource or helper object back to the backup that produced it. |
-| `velero.io/restore-name` | Restored resources and volume-operation objects | Connects a resource or helper object back to the restore that created it. |
-| `velero.io/gc-failure` | `Backup` | Indicates backup garbage collection could not delete one or more artifacts. |
+## Official documentation for deeper study
 
-## Backup workflow
+- [How Velero works](https://velero.io/docs/v1.18/how-velero-works/) explains
+  controllers, requests, scheduled backups, and object-storage sync.
+- [Backup and snapshot locations](https://velero.io/docs/v1.18/locations/)
+  explains where metadata and volume data live.
+- [File System Backup](https://velero.io/docs/v1.18/file-system-backup/)
+  explains the node-agent path for volume data.
 
-When you create a backup, the CLI creates a `Backup` object. The Velero server validates it, queries the Kubernetes API for selected resources, writes a backup archive to the configured `BackupStorageLocation`, and optionally triggers persistent volume protection.
+For first principles, return to [Velero fundamentals](fundamentals.md). For
+method selection, read [storage and volume
+backups](storage-and-volume-backups.md). For commands, use [backup and
+restore workflows](backup-restore-workflows.md). Return to the [Velero
+index](index.md).
 
-The workflow is:
-
-1. The CLI sends a `Backup` custom resource to the Kubernetes API.
-2. The backup controller notices the new object and validates filters, storage location, TTL, hooks, and volume options.
-3. The controller queries the API server for resources that match namespace, label, resource, and cluster-scope filters.
-4. Velero writes a compressed backup archive and metadata to object storage.
-5. If volume backup is enabled, Velero creates provider snapshots, CSI snapshots, `PodVolumeBackup`, or `DataUpload` objects depending on the selected method.
-6. The backup completes with status, warnings, errors, expiration, and volume-operation details.
-
-### Create a namespace backup
-
-```bash
-velero backup create app-prod-$(date +%Y%m%d%H%M%S) --include-namespaces app-prod --wait
-```
-
-What it does: creates a backup for one namespace and waits until the operation reaches a terminal state.
-
-> [!NOTE]
-> Velero backups are not fully atomic. If resources are created or modified during backup, some object state may not match a single exact instant.
-
-### Inspect what Velero captured
-
-```bash
-velero backup describe <backup-name> --details
-velero backup logs <backup-name>
-```
-
-What it does: shows included resources, skipped resources, warnings, errors, hook output, and volume backup activity.
-
-## Restore workflow
-
-When you create a restore, the CLI creates a `Restore` object. The restore controller verifies the source backup, downloads backup content from object storage, filters and sorts resources, recreates Kubernetes objects, and restores persistent volume data according to the backup method used.
-
-The workflow is:
-
-1. The CLI sends a `Restore` custom resource to the Kubernetes API.
-2. The restore controller validates the backup name, filters, namespace mappings, restore policy, and resource modifiers.
-3. The controller reads backup metadata and archive content from object storage.
-4. Velero restores eligible resources in an order intended to satisfy dependencies.
-5. Existing resources are skipped by default unless an update policy is requested.
-6. Velero restores persistent volume data through snapshots, CSI restore behavior, `PodVolumeRestore`, or `DataDownload`.
-7. The restore completes with warnings and errors that must be reviewed before the restore is considered usable.
-
-### Inspect restore details
-
-```bash
-velero restore describe <restore-name> --details
-velero restore logs <restore-name>
-```
-
-What it does: shows the resources restored, warnings, errors, and log output needed for troubleshooting.
-
-> [!WARNING]
-> A restore can recreate or modify objects in live namespaces. Restore into a temporary namespace first when you are validating behavior or recovering a subset of data.
-
-## Scheduled backup workflow
-
-A `Schedule` is a reusable backup template plus a cron expression. Velero creates timestamped backups from the schedule. Scheduled backups follow the same controller path as manual backups after the `Backup` object exists.
-
-```bash
-velero schedule create app-prod-daily \
-  --schedule "0 3 * * *" \
-  --include-namespaces app-prod \
-  --ttl 168h
-```
-
-What it does: creates a daily backup template for `app-prod`; each created backup expires after seven days unless retention tooling removes it sooner.
-
-## Storage location architecture
-
-Velero treats object storage as durable backup storage and as the source of truth for backup discovery. If a destination cluster points Velero to the same bucket and prefix, Velero can sync backup metadata from object storage and make those backups available for restore.
-
-Provider snapshots are separate from the backup archive. For AWS, the backup metadata lives in S3, while EBS volume data may live in EBS snapshots unless File System Backup or CSI snapshot data movement copies data into object storage.
-
-### What lives in object storage
-
-| Artifact | Stored in backup object storage | Notes |
-| --- | --- | --- |
-| Backup metadata | Yes | Used for discovery, status, and restore selection. |
-| Kubernetes resource archive | Yes | Contains serialized Kubernetes API objects selected by the backup. |
-| Backup and restore logs | Yes | Useful for post-incident review and debugging. |
-| Kopia repository data | Yes, when File System Backup or data movement is used | Contains volume data chunks and indexes. |
-| Provider-native snapshots | No | Usually live in the cloud provider or storage backend, referenced by metadata. |
-
-### Object storage sync behavior
-
-When a destination cluster starts with access to an existing `BackupStorageLocation`, Velero can discover backup files and create corresponding `Backup` custom resources in the destination cluster. This is why cluster migration and disaster recovery work without copying etcd from the source cluster.
-
-If a completed backup custom resource exists in Kubernetes but the object storage archive is missing, Velero may remove the stale completed backup object during sync. Failed and partially failed backup objects require operator review instead of being treated as trusted restore points.
-
-## Backup expiration and retention
-
-Each backup can have a TTL. When the TTL expires, Velero garbage collection attempts to remove the backup custom resource, backup files from object storage, related restores, and provider snapshots it owns.
-
-```bash
-velero backup create app-prod-short-lived \
-  --include-namespaces app-prod \
-  --ttl 24h \
-  --wait
-```
-
-What it does: creates a backup that Velero should garbage-collect after 24 hours.
-
-> [!IMPORTANT]
-> Align Velero TTL with object storage lifecycle rules, snapshot retention, legal hold, and recovery objectives. If object storage lifecycle deletes data before Velero TTL, the Kubernetes backup object may exist but the restore data may be gone.
-
-## Related links
-
-- [How Velero works](https://velero.io/docs/v1.18/how-velero-works/)
-- [Velero API types](https://velero.io/docs/v1.18/api-types/)
-- [Velero backup reference](https://velero.io/docs/v1.18/backup-reference/)
-- [Velero restore reference](https://velero.io/docs/v1.18/restore-reference/)
-- [Backup and restore workflows](backup-restore-workflows.md)
-- [Back to Velero index](index.md)
-- [Back to migrations index](../index.md)
-- [Back to root index](../../../README.md)
+[^velero-how]: [Velero v1.18: How Velero Works](https://velero.io/docs/v1.18/how-velero-works/).
+[^velero-locations]: [Velero v1.18: Backup Storage Locations and Volume Snapshot Locations](https://velero.io/docs/v1.18/locations/).
+[^velero-fsb]: [Velero v1.18: File System Backup](https://velero.io/docs/v1.18/file-system-backup/).

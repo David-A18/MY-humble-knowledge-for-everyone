@@ -1,209 +1,220 @@
 ---
-type: "Explanation"
-title: "Crossplane professional operating model"
-description: "Use this page to understand how professional platform teams actually work with Crossplane: what they give developers, what they keep private, how they review changes, and how Crossplane fits with GitOps, Terraform, AWS identity, policy, and observability."
-tags: [kubernetes, crossplane, professional-operating-model]
+type: Explanation
+title: How a team operates a Crossplane platform API
+description: Follow one invented storage request through team ownership, Git review, controller work, and outcome checks.
+tags: [kubernetes, crossplane, platform-team, gitops, operations, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform and infrastructure learner
+maintainer: unassigned
+sources:
+  - id: crossplane-xrds
+    resource: https://docs.crossplane.io/latest/composition/composite-resource-definitions/
+    title: Crossplane - Composite Resource Definitions
+  - id: crossplane-xrs
+    resource: https://docs.crossplane.io/latest/composition/composite-resources/
+    title: Crossplane - Composite Resources
+  - id: crossplane-compositions
+    resource: https://docs.crossplane.io/latest/composition/compositions/
+    title: Crossplane - Compositions
+  - id: crossplane-revisions
+    resource: https://docs.crossplane.io/latest/composition/composition-revisions/
+    title: Crossplane - Composition Revisions
+  - id: crossplane-providers
+    resource: https://docs.crossplane.io/latest/packages/providers/
+    title: Crossplane - Providers
+  - id: crossplane-argo
+    resource: https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/
+    title: Crossplane - Configuring Crossplane with Argo CD
+  - id: crossplane-cli
+    resource: https://docs.crossplane.io/cli/latest/command-reference/
+    title: Crossplane CLI - Command Reference
+  - id: kubernetes-rbac
+    resource: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    title: Kubernetes - Using RBAC Authorization
 ---
 
-# Crossplane professional operating model
+# How a team operates a Crossplane platform API
 
-## Purpose
+## The idea in one minute
 
-Use this page to understand how professional platform teams actually work with Crossplane: what they give developers, what they keep private, how they review changes, and how Crossplane fits with GitOps, Terraform, AWS identity, policy, and observability.
+A platform team can publish a small Kubernetes API for a
+service it is willing to operate. Application teams create
+requests through that API. Crossplane turns each request
+into composed resources; provider controllers work with
+external systems and report conditions back.
+[^crossplane-xrds][^crossplane-xrs][^crossplane-compositions]
 
-Professional Crossplane use is rarely about letting every developer write raw cloud resources. The durable pattern is a platform team running Crossplane as a management control plane and exposing small internal APIs that represent approved infrastructure products.
+Think of a service counter and a workshop. The counter
+offers a short request form. The workshop owns the tools,
+materials, and work instructions. The analogy has a limit:
+the platform must keep checking and repairing its managed
+resources after the first request, and a successful form
+submission is not proof of a usable service.
 
-## The professional split
+This page shows **one possible team arrangement**. Teams can
+use GitOps, direct API access, a portal, or another approved
+entry point. They still need clear ownership, permissions,
+and ways to verify the result.
 
-| Concern | Platform team owns | Application team sees |
-| --- | --- | --- |
-| Bootstrap | Management cluster, Crossplane core, GitOps, policy, observability. | Usually hidden. |
-| Provider installation | Provider package versions, runtime configs, activation policies. | Usually hidden. |
-| Credentials | IAM roles, ProviderConfigs, account mapping, secret flow. | A safe namespace or platform API. |
-| Cloud implementation | Managed resources, references, tagging, networking, encryption, deletion rules. | A small XR such as `SecureBucket` or `ApplicationEnvironment`. |
-| Reviews | Composition changes, provider upgrades, IAM changes, destructive behavior. | Pull requests for resource requests. |
-| Operations | Metrics, alerts, backups, incident response, upgrades, recovery. | Status, events, and platform support paths. |
+## One invented bucket request
 
-## How the system really works
+Imagine an application team asks for a SecureBucket to hold
+payments reports. The platform team has decided which
+regions and retention options it offers. This request and
+its implementation are illustrative; no bucket or cluster
+was created for this article.
 
-Crossplane extends the Kubernetes API. Providers add Kubernetes API endpoints for external systems and run controller pods that reconcile those objects. A managed resource is the Kubernetes-side object; the cloud service, such as an S3 bucket, is the external resource.
-
-```text
-Developer or GitOps commit
-        |
-        v
-Kubernetes API object
-        |
-        v
-Crossplane core selects composition or provider watches managed resource
-        |
-        v
-Provider pod authenticates through ProviderConfig
-        |
-        v
-AWS API create, read, update, delete, tag, or observe call
-        |
-        v
-status.conditions, status.atProvider, external-name, events
-```
-
-The key operational detail is that `kubectl apply` does not call AWS. It changes Kubernetes desired state. The provider controller later calls AWS and writes status.
-
-## Professional patterns
-
-| Pattern | Why professionals use it |
+| Who or what | Responsibility for this request |
 | --- | --- |
-| Management cluster | Keeps the infrastructure control plane separate from ordinary workloads. |
-| GitOps first | Makes Git the review and audit point before Kubernetes desired state changes. |
-| Platform APIs over raw resources | Hides provider complexity and prevents teams from bypassing standards. |
-| Namespaced XRs and managed resources | Uses Kubernetes namespace and RBAC boundaries for tenant isolation. |
-| Explicit ProviderConfigs | Prevents accidental use of the wrong credentials or account. |
-| Provider package pinning | Avoids surprise schema, controller, or Terraform-provider behavior changes. |
-| Managed Resource Activation Policies | Reduces API surface and cluster overhead for large providers. |
-| Composition rendering in CI | Gives reviewers a view of generated resources before reconciliation. |
-| Sandbox integration tests | Finds IAM, quota, eventual-consistency, and provider-schema issues before production. |
-| Cloud guardrails outside Crossplane | IAM, SCPs, AWS Config, CloudTrail, and budgets catch mistakes Crossplane cannot know about. |
+| Application team | Chooses the supported region and retention period, then creates one SecureBucket XR. |
+| Platform team | Defines the SecureBucket XRD, Composition, provider installation, identity, and policy for this service. |
+| GitOps controller, if used | Applies reviewed manifests from Git to the Kubernetes API. |
+| Crossplane | Selects the Composition and applies the desired composed resources returned by its function pipeline. |
+| Provider controller | Uses configured identity to call the external API and observes the resulting resource.[^crossplane-providers] |
+| Both teams | Check that the bucket is actually usable for the application and respond when it is not. |
 
-## Repository workflow
-
-Professional teams usually separate platform implementation from user requests.
-
-```text
-platform/
-  crossplane/
-    core/
-    providers/
-    functions/
-    provider-configs/
-    xrd/
-    compositions/
-    policy/
-
-environments/
-  dev/
-    requests/
-  staging/
-    requests/
-  prod/
-    requests/
+```mermaid
+flowchart TB
+  app["Application team<br/>SecureBucket request"] --> review["Review or approved<br/>request path"]
+  platform["Platform team<br/>XRD + Composition + provider"] --> platformReview["Implementation review"]
+  platformReview --> api["Kubernetes API"]
+  review --> api
+  api --> xr["SecureBucket XR"]
+  xr --> composition["Crossplane runs<br/>Composition pipeline"]
+  composition --> mr["Composed resources<br/>managed resources here"]
+  mr --> provider["Provider controller<br/>configured identity"]
+  provider -->|"observe and change"| external["External storage API"]
+  provider --> status["Managed-resource<br/>conditions"]
+  status --> xrStatus["XR readiness"]
+  xrStatus --> api
 ```
 
-Platform PRs change packages, credentials, XRDs, compositions, functions, and policy. Application PRs create or update small XRs.
+Text alternative: an application team submits one SecureBucket
+request through its approved path. The platform team publishes
+the XRD, Composition, and provider. Kubernetes stores the XR.
+Crossplane runs the Composition's pipeline to apply
+composed resources, which are managed resources in this
+bucket example. The provider controller observes and
+changes the external system, then writes the managed
+resource's conditions in Kubernetes. Crossplane uses
+those observations to report XR readiness.
+[^crossplane-xrs][^crossplane-compositions][^crossplane-providers]
 
-## Change flow
+## Separate the two kinds of change
 
-1. Platform engineer changes an XRD, Composition, Function, provider version, or IAM role in Git.
-2. CI runs YAML validation, policy checks, `kubectl apply --dry-run=server`, and `crossplane composition render`.
-3. A sandbox control plane reconciles the change against a non-production AWS account.
-4. Reviewers inspect generated resources, permissions, deletion behavior, and migration notes.
-5. GitOps promotes the change to staging, then production.
-6. Crossplane reconciles the approved desired state.
-7. Observability confirms provider health, `Ready=True`, `Synced=True`, and expected AWS audit events.
+**A request change** asks for another bucket or updates an
+allowed field on an existing XR. The application team can
+review its own need, while the platform enforces the API
+contract and access rules.
 
-## Developer request flow
+**An implementation change** alters the XRD, Composition,
+function, provider package, credentials, or policy. It may
+affect many existing XRs, depending on their Composition
+revision update policies and selected revisions. The
+platform team should review generated resources, rollout
+scope, permissions, and recovery before promotion.
+[^crossplane-xrds][^crossplane-compositions][^crossplane-revisions][^crossplane-providers]
 
-Developers should usually create a platform resource, not raw cloud resources.
+| Change | Useful check before rollout | What that check cannot prove |
+| --- | --- | --- |
+| A new SecureBucket XR | API fields, namespace access, retention choice, and expected account. | That the external API will create a usable bucket. |
+| A Composition change | Render a representative XR and validate the output against the intended schemas.[^crossplane-cli] | That provider credentials, external permissions, and live behavior work. |
+| A provider upgrade | Check package revision, API compatibility, and a disposable integration exercise.[^crossplane-providers] | That every production resource will reconcile unchanged. |
+| An identity change | Check which controller uses the identity and which external actions it permits. | That the application can use the resulting bucket. |
 
-```yaml
-apiVersion: platform.example.com/v1alpha1
-kind: SecureBucket
-metadata:
-  name: payments-artifacts
-  namespace: payments
-spec:
-  region: eu-west-1
-  lifecycle:
-    expireAfterDays: 90
-  dataClassification: internal
-```
+Local rendering runs the function pipeline with the
+Crossplane CLI. It needs its documented runtime setup;
+observed resources must be supplied when testing how a
+pipeline reacts to existing objects. Schema validation
+is a separate step. None of these is a live provider
+or application test.[^crossplane-cli]
 
-What it does: asks for an approved S3-backed storage product. The platform owns bucket names, tags, public-access blocking, encryption, logging, versioning, lifecycle policy, and AWS account placement.
+If the team uses Argo CD, it must configure resource
+tracking and health assessment for Crossplane objects.
+The Crossplane guide specifies annotation-based tracking;
+GitOps sync and resource health remain separate signals.
+[^crossplane-argo]
 
-## Platform implementation flow
+## The access boundary matters
 
-The platform team defines the API contract with an XRD, then implements it with a Composition.
+A small XR helps simplify requests only when access rules
+support that boundary. An application team that can also
+create raw provider managed resources, edit the Composition,
+or select a broad ClusterProviderConfig may bypass the
+platform's intended defaults. In the documented AWS provider
+model, a namespaced ProviderConfig applies within its
+namespace, while a ClusterProviderConfig can serve managed
+resources across namespaces. Kubernetes RBAC and admission
+rules, provider identity, and external permissions each
+enforce a different part of the boundary.
+[^kubernetes-rbac][^crossplane-providers]
 
-```yaml
-apiVersion: apiextensions.crossplane.io/v2
-kind: CompositeResourceDefinition
-metadata:
-  name: securebuckets.platform.example.com
-spec:
-  scope: Namespaced
-  group: platform.example.com
-  names:
-    kind: SecureBucket
-    plural: securebuckets
-  versions:
-    - name: v1alpha1
-      served: true
-      referenceable: true
-      schema:
-        openAPIV3Schema:
-          type: object
-          properties:
-            spec:
-              type: object
-              properties:
-                region:
-                  type: string
-                  enum:
-                    - eu-west-1
-                    - eu-central-1
-                dataClassification:
-                  type: string
-                  enum:
-                    - internal
-                    - confidential
-                lifecycle:
-                  type: object
-                  properties:
-                    expireAfterDays:
-                      type: integer
-                      minimum: 30
-                      maximum: 365
-              required:
-                - region
-                - dataClassification
-```
+For the bucket example, the platform can let an application
+team create SecureBucket XRs in its namespace while keeping
+provider installation and Composition changes under platform
+control. The exact RBAC and provider configuration depend on
+the installed versions and the organization's account model;
+this article does not specify a deployable policy.
 
-What it does: defines a small namespaced platform API and prevents unsupported regions or classifications at the Kubernetes API layer.
+## Check delivery in layers
 
-## Review checklist for real teams
+1. **Request accepted:** the XR exists with the expected
+   values and namespace. This proves API admission.
+2. **Composition selected:** inspect the XR's selected
+   Composition and resource references, then trace each
+   composed resource and its Kubernetes events.
+   [^crossplane-xrs]
+3. **Controllers reconcile:** Synced reports whether the
+   controller reconciled successfully. Ready reports
+   readiness as defined by the relevant controller or
+   Composition function pipeline. Investigate the first
+   failing layer.[^crossplane-xrs][^crossplane-providers]
+4. **External outcome works:** an authorized application
+   operation succeeds with the expected retention and access
+   behavior. That check is separate from controller status.
 
-- [ ] Does the XRD expose intent instead of cloud-provider internals?
-- [ ] Are destructive fields omitted, locked down, or separately approved?
-- [ ] Does the Composition generate required tags, encryption, public-access blocks, logging, and deletion behavior?
-- [ ] Does CI render the Composition and show generated resources?
-- [ ] Are provider package versions pinned?
-- [ ] Are provider roles least-privilege and account-scoped?
-- [ ] Are ProviderConfigs selected by platform logic rather than arbitrary user input?
-- [ ] Are AWS SCPs, Config, CloudTrail, budgets, and IAM guardrails in place?
-- [ ] Does the recovery plan preserve external-name mappings?
-- [ ] Are Terraform and Crossplane ownership boundaries documented?
+A platform service also needs an owner for incidents,
+upgrades, backups, and deletion decisions. These are team
+responsibilities, not automatic effects of installing
+Crossplane. Read [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
+for those deeper operating questions.
 
-## What professionals avoid
+## Check your understanding
 
-- Letting every team create arbitrary raw managed resources in production.
-- Using `AdministratorAccess` for all provider pods.
-- Letting Crossplane and Terraform update the same resource fields.
-- Upgrading providers directly in production without rendering and sandbox reconciliation.
-- Relying on Crossplane alone for compliance.
-- Deleting the management cluster before external resources are cleanly deleted or intentionally orphaned.
-- Removing finalizers without an external-resource recovery decision.
+1. Who creates the one bucket request, and who defines what
+   that request is allowed to contain?
+2. Why can a rendered Composition be useful before rollout
+   without proving the external bucket exists?
+3. Which access paths could let a team bypass a SecureBucket
+   policy?
+4. Why should a provider identity change receive different
+   review from a new SecureBucket request?
 
-## Related links
+## Explore further
 
-- [Crossplane](index.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
-- [AWS resource workflow](aws-resource-workflow.md)
-- [Crossplane compositions](compositions.md)
-- [Providers and authentication](providers-and-authentication.md)
-- [Production, GitOps, and operations](production-gitops-and-operations.md)
-- [Crossplane references](references.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Crossplane XRDs](https://docs.crossplane.io/latest/composition/composite-resource-definitions/),
+  [XRs](https://docs.crossplane.io/latest/composition/composite-resources/),
+  and [Compositions](https://docs.crossplane.io/latest/composition/compositions/)
+  explain the platform API and implementation.
+  [^crossplane-xrds][^crossplane-xrs][^crossplane-compositions]
+- [Crossplane Providers](https://docs.crossplane.io/latest/packages/providers/)
+  covers provider packages and controller work.[^crossplane-providers]
+- [Composition Revisions](https://docs.crossplane.io/latest/composition/composition-revisions/)
+  explains rollout policies for existing XRs.[^crossplane-revisions]
+- [Crossplane CLI](https://docs.crossplane.io/cli/latest/command-reference/)
+  documents render and resource validation.[^crossplane-cli]
+- [Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/)
+  covers GitOps tracking and health configuration.[^crossplane-argo]
+- [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+  explains API access control.[^kubernetes-rbac]
+- [Back to Crossplane](index.md).
+
+[^crossplane-xrds]: [Crossplane, Composite Resource Definitions](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), source record `crossplane-xrds`.
+[^crossplane-xrs]: [Crossplane, Composite Resources](https://docs.crossplane.io/latest/composition/composite-resources/), source record `crossplane-xrs`.
+[^crossplane-compositions]: [Crossplane, Compositions](https://docs.crossplane.io/latest/composition/compositions/), source record `crossplane-compositions`.
+[^crossplane-revisions]: [Crossplane, Composition Revisions](https://docs.crossplane.io/latest/composition/composition-revisions/), source record `crossplane-revisions`.
+[^crossplane-providers]: [Crossplane, Providers](https://docs.crossplane.io/latest/packages/providers/), source record `crossplane-providers`.
+[^crossplane-argo]: [Crossplane, Configuring Crossplane with Argo CD](https://docs.crossplane.io/latest/guides/crossplane-with-argo-cd/), source record `crossplane-argo`.
+[^crossplane-cli]: [Crossplane CLI, Command Reference](https://docs.crossplane.io/cli/latest/command-reference/), source record `crossplane-cli`.
+[^kubernetes-rbac]: [Kubernetes, Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/), source record `kubernetes-rbac`.

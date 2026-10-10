@@ -8,9 +8,9 @@ Architecture guidance, reference patterns, and design trade-offs for AWS workloa
 
 | Article | Purpose |
 | --- | --- |
-| [Stateful vs. stateless](stateful-vs-stateless.md) | Classify AWS components by where state lives and how that affects operations. |
-| [Stateless application patterns](stateless-application-patterns.md) | Move application compute toward replaceable replicas with externalized state. |
-| [Stateful design decision checklist](stateful-design-decision-checklist.md) | Review state ownership, recovery, networking, data, and Kubernetes risks before production. |
+| [Stateful vs. stateless](stateful-vs-stateless.md) | Ask what a replacement replica needs to recover and where that state lives. |
+| [Stateless application patterns](stateless-application-patterns.md) | See how shared state and a queue let app replicas be replaced, and what partial failures still need handling. |
+| [Stateful design decision checklist](stateful-design-decision-checklist.md) | Trace authoritative data through failure and recovery, then identify the evidence needed for RTO and RPO claims. |
 
 ## Expected content
 
@@ -24,4 +24,4 @@ Architecture guidance, reference patterns, and design trade-offs for AWS workloa
 
 - [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

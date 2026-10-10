@@ -8,9 +8,9 @@ VPC, routing, connectivity, and traffic-control notes.
 
 | Article | Purpose |
 | --- | --- |
-| [Security groups](security-groups.md) | Understand security group behavior and troubleshooting checks. |
-| [CloudFront](cloudfront.md) | Design CloudFront distributions, origins, cache behavior, and EKS edge paths. |
-| [Stateful networking](stateful-networking.md) | Compare stateful and stateless AWS network controls. |
+| [Security groups](security-groups.md) | See how resource-level allow rules and group references admit a web-to-database request. |
+| [CloudFront](cloudfront.md) | Follow ordered path behaviours, two TLS connections, and origin protection for an AWS site. |
+| [Stateful networking](stateful-networking.md) | Follow one request and reply through a stateful security group and a stateless subnet ACL. |
 
 ## Expected future content
 
@@ -20,4 +20,4 @@ VPC, routing, connectivity, and traffic-control notes.
 - VPC endpoints.
 - Transit Gateway.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

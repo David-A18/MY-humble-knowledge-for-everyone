@@ -1,75 +1,121 @@
 ---
 type: "Explanation"
 title: "Stateful vs. stateless on AWS"
-description: "Use this page to classify AWS application components by where state lives and how that affects scaling, recovery, and operations."
+description: "Understand where an application keeps information between requests and what happens when one compute replica is replaced."
 tags: [cloud, aws, architecture]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: aws-stateless
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html
+    title: AWS Well-Architected - Make systems stateless where possible
+  - id: aws-lambda-design
+    resource: https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html
+    title: AWS Lambda - Designing Lambda applications
 ---
 
 # Stateful vs. stateless on AWS
 
-## Purpose
+## The idea in plain language
 
-Use this page to classify AWS application components by where state lives and how that affects scaling, recovery, and operations.
+**State** is information from an earlier request or event that a system needs
+later. A shopping cart, a user session, a saved file, and a job's progress
+are all state. The useful question is **where that information lives**.
 
-## What state means
+A **stateless compute replica** can handle the next request without relying
+on information kept only in its own memory or local disk. It may still read
+or write a database, queue, or object store. A **stateful component** keeps
+information whose loss or inconsistency would matter to future work. AWS's
+reliability guidance recommends separating needed state from replaceable
+compute when possible.[^aws-stateless]
 
-State is information from a previous request, packet, transaction, or execution that affects correct future behavior.
+Picture a restaurant. A waiter can leave at the end of a shift if every
+order is recorded where the next waiter can find it. If the waiter alone
+remembers the orders, replacing them loses essential information. The
+analogy has a limit: the shared order book itself must be protected and
+available; moving state does not make it disappear.
 
-```text
-stateful: the component must remember something
-stateless: the component can process the request without private local history
+## Follow one request
+
+Imagine two web replicas serving a shopping cart. This is an invented
+example, not a deployed AWS workload.
+
+```mermaid
+flowchart LR
+  customer["Customer request"] --> balancer["Load balancer"]
+  balancer --> a["App replica A"]
+  balancer --> b["App replica B"]
+  a --> store["Shared cart store"]
+  b --> store
 ```
 
-A stateless API can still read and write large amounts of data. The difference is that durable data lives in shared systems such as RDS, DynamoDB, S3, EFS, SQS, MSK, or Step Functions instead of only inside one replaceable compute replica.
+Text alternative: a load balancer can send the next customer request to
+either app replica. Both read and update the same cart store, so required
+cart history is not held only by the replica that handled the last request.
+If replica A fails, replica B can read the cart *if the store and access path
+remain healthy*. That last condition is why the store still needs its own
+availability, backup, and recovery plan.
 
-## Core distinction
+If cart state instead lives only in replica A's memory, replica B cannot
+recover it after A fails. Sticky routing to A can hide the problem during
+normal operation but does not make A's private memory durable.
 
-| Type | Meaning | Operational effect |
+## What changes operationally
+
+| Question | Replaceable compute | Component holding required state |
 | --- | --- | --- |
-| Stateless component | Does not rely on local durable state to serve the next request. | Easier to replace, scale horizontally, and deploy. |
-| Stateful component | Owns data or session state that must survive or stay consistent. | Needs backup, placement, failover, and careful scaling. |
-| Persistent storage | Durable storage such as EBS, EFS, S3, or a database. | Persistence alone does not make an application highly available. |
+| What happens after one instance fails? | Start another and reconnect to shared state. | Recover or fail over the data and check consistency. |
+| What makes scaling harder? | Usually capacity, dependencies, and startup time. | Data placement, replication, ordering, or ownership may constrain placement. |
+| What must be protected? | Reproducible code, configuration, and credentials. | Data integrity, access, backups, and recovery objectives. |
 
-## AWS examples
+These are design tendencies, not automatic properties of an AWS service.
+For example, a web process can become stateful if it keeps uploads only on
+local disk. A managed database remains a stateful dependency even when AWS
+operates much of its infrastructure. Replacing compute and recovering data
+are different tasks.
 
-- Stateless web tier: ALB plus Auto Scaling group, ECS service, or Lambda backed by external data stores.
-- Stateful data tier: RDS, DynamoDB, ElastiCache, MSK, EBS-backed workloads, or self-managed databases.
-- Mixed design: stateless API with stateful authentication, queue, cache, database, or workflow layer.
+## Decide what must survive
 
-## How replacement differs
+Before calling a component stateless, list what it holds between requests:
 
-```text
-Stateless app replica fails
-  -> load balancer marks it unhealthy
-  -> Auto Scaling, ECS, or Kubernetes creates another
-  -> new replica reads shared state
+1. **Required state:** a cart, uploaded file, payment record, or work item
+   whose loss would violate the user outcome.
+2. **Rebuildable state:** a cache or derived file that can be recreated from
+   another authoritative store within an acceptable time.
+3. **Short-lived state:** temporary calculations used only during one
+   request, provided retry behavior is understood.
 
-Stateful node fails
-  -> failover, reattach, replay, restore, or elect
-  -> verify data consistency
-  -> resume traffic
-```
+Then ask: if this replica vanishes now, where would a replacement get each
+required item? AWS lists databases, caches, file systems, and object storage
+as ways to offload state, chosen according to the data and access
+need.[^aws-stateless] In standard Lambda functions, AWS says not to rely on an
+execution environment persisting between invocations; permanent changes
+belong in durable services before the invocation ends.[^aws-lambda-design]
 
-What it does: highlights why stateful systems need runbooks and recovery tests, while stateless compute should be routinely replaceable.
+Moving required state to a shared service introduces new questions: Is that
+service available? Is data encrypted and access controlled? Can a retry
+repeat an operation safely? What are the acceptable recovery time and data
+loss? The answer cannot be inferred from the word “stateless” alone.
 
-## Design checklist
+## Check your understanding
 
-- Inventory all session, file, cache, queue, workflow, and database state.
-- Externalize sessions and uploads before scaling application instances freely.
-- Treat retries and duplicate processing as state-management concerns.
-- Match recovery design to RPO and RTO, not just service names.
+- A web server writes uploaded files only to its local disk. What happens
+  when that server is replaced?
+- Why can an API be stateless while the whole application is still stateful?
+- What extra evidence would you need before claiming that an application
+  remains available after one replica fails?
 
-## Related links
+## Official documentation for deeper study
 
-- [Stateless application patterns](stateless-application-patterns.md)
-- [Stateful design decision checklist](stateful-design-decision-checklist.md)
-- [Stateful networking](../networking/stateful-networking.md)
-- [Stateful workloads](../../../kubernetes/core-objects/stateful-workloads.md)
-- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
-- [Back to AWS architecture](index.md)
-- [Back to AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+- [AWS Well-Architected: make systems stateless where possible](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html) explains separating session and user data from compute.
+- [Designing Lambda applications](https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html) explains why functions must treat execution environments as replaceable and store permanent changes externally.
+
+Next, use [stateless application patterns](stateless-application-patterns.md)
+for AWS component choices, or the [stateful design
+checklist](stateful-design-decision-checklist.md) before an operational
+decision. See the [AWS architecture index](index.md).
+
+[^aws-stateless]: [Make systems stateless where possible](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html).
+[^aws-lambda-design]: [Designing Lambda applications](https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html).

@@ -1,58 +1,66 @@
 ---
 type: "Explanation"
 title: "GitHub Actions workflow structure"
-description: "Use this page to understand the structure of workflow YAML files and where each key belongs."
+description: "Read a workflow file from its trigger through jobs and steps, and understand how permissions, dependencies, and conditions change what runs."
 tags: [git, github-actions, workflow-structure]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: github-workflow-syntax
+    resource: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+    title: GitHub Docs - Workflow syntax for GitHub Actions
+  - id: github-triggering
+    resource: https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow
+    title: GitHub Docs - Triggering a workflow
+  - id: github-token
+    resource: https://docs.github.com/en/actions/tutorials/authenticate-with-github_token
+    title: GitHub Docs - Use GITHUB_TOKEN for authentication in workflows
+  - id: github-checkout
+    resource: https://github.com/actions/checkout
+    title: actions/checkout - official action repository
+  - id: github-setup-node
+    resource: https://github.com/actions/setup-node
+    title: actions/setup-node - official action repository
+  - id: github-events
+    resource: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+    title: GitHub Docs - Events that trigger workflows
+  - id: github-manual-run
+    resource: https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow
+    title: GitHub Docs - Manually running a workflow
 ---
 
 # GitHub Actions workflow structure
 
-## Purpose
+## The idea in plain language
 
-Use this page to understand the structure of workflow YAML files and where each key belongs.
+A workflow file tells GitHub **when to start**, **what jobs exist**, and
+**what each job does**. Put it directly under `.github/workflows/` with a
+`.yml` or `.yaml` extension. GitHub reads the YAML as nested settings: a step
+belongs to a job, and a job belongs to the workflow.[^github-workflow-syntax]
 
-## Workflow file location
+If YAML is new to you, picture labeled boxes inside other boxes. The amount
+of indentation tells you which box owns a setting. The label `run` under a
+step means “execute this shell command”; `runs-on` under a job means “choose
+this runner.” Putting either key at the wrong level changes or invalidates
+the workflow. A dash (`-`) starts a new step in the `steps` list, while
+`name`, `uses`, `with`, or `run` indented under that dash describe that step.
+Use spaces for indentation, not tabs. Quote version strings such as `'22'`
+so YAML treats them as text rather than numbers.[^github-workflow-syntax]
 
-| Item | Standard |
-| --- | --- |
-| Directory | `.github/workflows/` |
-| File extension | `.yml` or `.yaml` |
-| File purpose | One automated workflow per file |
-| Common naming | `ci.yml`, `deploy.yml`, `release.yml`, `terraform-plan.yml` |
+Read [components and concepts](components-and-concepts.md) first if event,
+job, step, or runner is unfamiliar.
 
-### Workflow file path
+## Read one complete file
 
-```text
-.github/
-  workflows/
-    ci.yml
-    deploy.yml
-```
-
-How it works: GitHub scans `.github/workflows/` for workflow files. Each valid YAML file can define a separate automation.
-
-What it does: keeps CI, deployment, release, and maintenance automation close to the repository.
-
-## Common top-level keys
-
-| Key | Use | Notes |
-| --- | --- | --- |
-| `name` | Human-readable workflow name. | Shows in the Actions tab. |
-| `on` | Events that trigger the workflow. | Can be simple or deeply filtered. |
-| `permissions` | Default `GITHUB_TOKEN` permissions. | Prefer least privilege. |
-| `env` | Environment variables shared by jobs. | Do not store secrets here directly. |
-| `defaults` | Default shell or working directory. | Useful for monorepos. |
-| `concurrency` | Prevent overlapping runs. | Good for deploy workflows. |
-| `jobs` | Job definitions. | Required for useful workflows. |
-
-### Minimal top-level structure
+This is an illustrative workflow for a repository with a Node project at its
+root and an `npm test` script. It has not been run in this knowledge-base
+repository. A real project should check its Node version, lockfile, script,
+and action revisions before copying it.
 
 ```yaml
-name: CI
+name: Test a proposed change
 
 on:
   pull_request:
@@ -67,122 +75,142 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: npm test
-```
-
-How it works: `on` defines triggers, `permissions` limits token access, and `jobs` defines the work GitHub schedules.
-
-What it does: runs tests for pull requests and pushes to `main` with read-only repository access.
-
-## Triggers
-
-| Trigger | When it runs | Common use |
-| --- | --- | --- |
-| `push` | Code is pushed to matching refs. | CI on `main` or release branches. |
-| `pull_request` | Pull request activity happens. | Validate proposed changes. |
-| `workflow_dispatch` | User or CLI manually starts a workflow. | Manual deploys, maintenance, one-off jobs. |
-| `schedule` | Cron schedule is reached. | Nightly scans, dependency checks. |
-| `workflow_call` | Another workflow calls this workflow. | Reusable workflows. |
-| `workflow_run` | Another workflow completes or is requested. | Follow-up automation. |
-
-### Filter events
-
-```yaml
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "src/**"
-      - ".github/workflows/ci.yml"
-```
-
-How it works: GitHub only starts this workflow for pushes to `main` that touch one of the listed paths.
-
-What it does: avoids running CI when unrelated files change.
-
-## Jobs
-
-| Key | Use | Notes |
-| --- | --- | --- |
-| `runs-on` | Select runner type. | Example: `ubuntu-latest`. |
-| `needs` | Wait for other jobs. | Use for build-then-deploy flow. |
-| `if` | Conditionally run a job. | Uses expression syntax. |
-| `strategy.matrix` | Run job with multiple values. | Common for versions or operating systems. |
-| `timeout-minutes` | Stop stuck jobs. | Helps control cost and noise. |
-| `environment` | Use protected deployment environment. | Can require approvals. |
-| `permissions` | Override token permissions for one job. | Use least privilege per job. |
-| `outputs` | Expose values to downstream jobs. | Requires step outputs. |
-
-### Matrix job
-
-```yaml
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20, 22]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Check out code
+        uses: actions/checkout@v7
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm test
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
 ```
 
-How it works: GitHub expands the job into one run for each matrix value.
+The top-level `on` field starts a run for matching pull request activity and
+pushes to `main`.[^github-triggering] For `pull_request`, the default
+activities are opening, reopening, and adding commits to a pull request. In a
+mergeable pull request, checkout uses a temporary merge of the proposed
+change into its base branch;
+the test is against that merged result, not just the branch tip. Pull requests
+from forks normally receive no repository secrets and a read-only
+`GITHUB_TOKEN`.[^github-events] See
+[security, secrets, and permissions](security-secrets-and-permissions.md) before
+adding credentials to a workflow.
 
-What it does: tests the project against Node.js 20 and 22.
+```mermaid
+flowchart LR
+  head["Proposed PR commits"] --> merge["Temporary test merge"]
+  base["Base branch"] --> merge
+  merge --> checkout["Checkout step"]
+  checkout --> tests["npm test"]
+```
 
-## Steps
+Text alternative: GitHub combines the proposed pull request commits with the
+base branch in a temporary merge. The default checkout step gives the test job
+that merge, so `npm test` checks the combined result. A push to `main` instead
+checks out the pushed commit.[^github-events][^github-checkout]
 
-| Step key | Use | Notes |
+A green result describes the commit this run tested. If the base branch later
+changes, check whether your repository requires an up-to-date branch or a new
+run before merge; the earlier result alone does not test later commits.
+
+`permissions` gives the workflow's `GITHUB_TOKEN` read access to repository
+contents; other configurable scopes become `none`. If `permissions` is omitted,
+the repository or organization default applies. The single `test` job uses an Ubuntu
+runner and runs four steps in order: fetch the commit being tested, set up
+Node, install from the lockfile, and run the project test
+script.[^github-workflow-syntax][^github-token]
+
+The checkout action is needed because a runner does not automatically have
+your repository files. This example uses the major-version tags `@v7` shown
+in the official action READMEs. Tags can move;
+check each action's current version and runner requirements before adoption,
+and use a full commit SHA when you need an immutable action revision. Checkout
+fetches only one commit by default, so a task needing history must request a
+greater `fetch-depth`. Checkout normally leaves Git credentials available to
+later steps; this example sets `persist-credentials: false` because its tests
+do not need authenticated Git commands. This does not replace narrow
+`GITHUB_TOKEN` permissions.[^github-checkout][^github-setup-node]
+
+## The nesting map
+
+```text
+.github/workflows/test.yml
+  name                    label in the Actions view
+  on                      events that can start a run
+  permissions             GITHUB_TOKEN scopes for all jobs, unless a job overrides them
+  jobs
+    test                  job identifier
+      runs-on             runner choice
+      steps               ordered list within this job
+        - uses            reusable action step (may have with inputs)
+        - run             shell command step (instead of uses)
+```
+
+Text alternative: workflow settings sit at the top of the file; each entry
+under `jobs` defines a job; each entry under a job's `steps` is an ordered
+action or shell command. GitHub's workflow syntax reference is the source
+for valid keys and levels.[^github-workflow-syntax]
+
+## Change the run deliberately
+
+| If you need... | Add or change | Effect |
 | --- | --- | --- |
-| `name` | Human-readable step label. | Helps logs stay readable. |
-| `uses` | Run an action. | Pin to a version or SHA. |
-| `run` | Run shell commands. | Uses the runner shell. |
-| `with` | Pass inputs to an action. | Input names depend on the action. |
-| `env` | Set environment variables for the step. | Step-scoped values. |
-| `id` | Name a step for outputs. | Required for `steps.<id>.outputs`. |
-| `if` | Conditionally run a step. | Useful for branch or result logic. |
-| `working-directory` | Run command from a directory. | Useful for monorepos. |
+| A manual start | `workflow_dispatch` under `on` | Once the workflow file is on the default branch, a user with write access can request a run and select a branch through GitHub or the CLI.[^github-manual-run] |
+| Another operating system or runtime | `runs-on` or a setup action | Changes the environment in which a job runs. |
+| A second independent check | A sibling entry under `jobs` | GitHub can schedule it independently of `test`; the new job needs its own checkout and setup steps. |
+| A job only after tests pass | `needs: test` on that job | Waits for the named job and normally skips if it fails or is skipped. Small declared job outputs can pass values; files need artifacts.[^github-workflow-syntax] |
+| A conditional job or step | `if:` at that level | Runs only when the expression matches.[^github-workflow-syntax] |
+| Token scopes for one job | `permissions` at job level | Replaces the workflow-level set for that job; list only the scopes it needs.[^github-workflow-syntax] |
 
-### Action step and shell step
+This table shows where to look, not complete syntax for every feature. In
+particular, adding a deploy job changes external state. Its credentials,
+environment, and approval rules need a separate design; a successful test
+job alone does not make deployment safe.
 
-```yaml
-steps:
-  - name: Check out repository
-    uses: actions/checkout@v4
+## A common two-job mistake
 
-  - name: Run tests
-    run: npm test
-```
+Suppose a `build` job creates `dist/app.zip`, and `deploy` declares
+`needs: build`. The dependency orders the jobs; it does not move the ZIP.
+Each job gets a separate runner environment. Upload the build result as an
+artifact and download it in the later job, or build it again there. See
+[components and concepts](components-and-concepts.md) for the artifact and
+cache distinction.
 
-How it works: the first step runs a reusable action. The second step runs a shell command on the runner.
+Another common mistake is a trigger filter that excludes the change you
+care about. If a workflow does not start, inspect `on` before debugging
+steps that never ran. For a pull request, also check for merge conflicts;
+`pull_request` workflows do not run on a conflicted PR. A failing step, by
+contrast, means a run started and reached that job. GitHub's
+[event reference](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows)
+shows event and filter behavior.[^github-events]
 
-What it does: prepares the code, then runs the test script.
+## Check your understanding
 
-## Concurrency
+- Which top-level key decides whether a push to `main` starts this file?
+- On a pull request, which commit does the default checkout test?
+- Why does `npm ci` need checkout and a matching lockfile first?
+- What changes when a second job adds `needs: test`?
+- Where would you narrow `GITHUB_TOKEN` permissions for one job?
 
-### Cancel old runs for the same branch
+## Official documentation for deeper study
 
-```yaml
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
-```
+- [Workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax) lists every supported key, level, and condition.
+- [Triggering a workflow](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow) explains event choices and manual starts.
+- [Using `GITHUB_TOKEN`](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token) explains token permissions.
+- [Official checkout action](https://github.com/actions/checkout) documents action behavior and current examples.
+- [Official Node setup action](https://github.com/actions/setup-node) documents supported Node versions and inputs.
+- [Events that trigger workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows) explains the pull request merge ref and default activity types.
 
-How it works: GitHub groups runs by branch ref. When a newer run starts in the same group, GitHub cancels the older in-progress run.
+See the [GitHub Actions index](index.md) and [examples and use cases](examples-and-use-cases.md).
 
-What it does: reduces wasted CI time when developers push several commits quickly.
-
-## Related links
-
-- [Workflow syntax for GitHub Actions](https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions)
-- [Expressions](https://docs.github.com/en/actions/concepts/workflows-and-actions/expressions)
-- [Back to GitHub Actions](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+[^github-workflow-syntax]: [Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax).
+[^github-triggering]: [Triggering a workflow](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
+[^github-token]: [Use `GITHUB_TOKEN` for authentication](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token).
+[^github-checkout]: [Official `actions/checkout` repository](https://github.com/actions/checkout).
+[^github-setup-node]: [Official `actions/setup-node` repository](https://github.com/actions/setup-node).
+[^github-events]: [Events that trigger workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+[^github-manual-run]: [Manually running a workflow](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).

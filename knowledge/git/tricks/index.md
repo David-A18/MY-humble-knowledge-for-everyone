@@ -14,4 +14,4 @@ Small productivity techniques for working faster and safer with Git.
 > [!IMPORTANT]
 > Tricks should explain when they are safe to use and when a simpler command is clearer.
 
-[Back to Git index](../index.md) | [Back to root index](../../../README.md)
+[Back to Git index](../index.md) | [Back to knowledge index](../../index.md)

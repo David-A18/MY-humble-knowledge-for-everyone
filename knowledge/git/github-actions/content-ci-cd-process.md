@@ -1,133 +1,151 @@
 ---
 type: "Explanation"
 title: "Content CI/CD process"
-description: "This page defines the repository CI/CD process for documentation-only changes. The goal is to keep main as the single published source of truth while keeping content updates lightweight."
+description: "Follow a knowledge-page change from a working branch through validation on develop to the canonical main revision and optional website sync."
 tags: [git, github-actions, content-ci-cd-process]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: github-workflow-events
+    resource: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+    title: GitHub Docs - Events that trigger workflows
+  - id: github-protected-branches
+    resource: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches
+    title: GitHub Docs - Managing protected branches
 ---
 
 # Content CI/CD process
 
-## Purpose
+## What the process is for
 
-This page defines the repository CI/CD process for documentation-only changes. The goal is to keep `main` as the single published source of truth while keeping content updates lightweight.
+**Continuous integration (CI)** checks a proposed knowledge change before
+it becomes part of a shared branch. **Publication** means selecting a
+validated commit for readers. For this repository, Markdown under
+`knowledge/` is the source of truth; `main` is the canonical branch that a
+separate reading site can pin to an exact commit. A green check says the
+automated rules passed. It does **not** prove that a technical explanation
+is clear, current, or correct for every environment.
 
-## Policy
+The current [agent instructions](../../../AGENTS.md#validation-and-publication) route
+knowledge-base upgrades through `develop`, require the repository checks,
+and allow promotion to `main` only after the bundle and governance checks
+pass. The [contribution guide](../../../CONTRIBUTING.md) also requires
+evidence-aware authoring. Use those live files for the exact commands.
 
-| Rule | Repository standard |
-| --- | --- |
-| Merge target | Always merge documentation changes into `main`. |
-| Review requirement | No required human review for normal content changes. |
-| Validation requirement | Run Markdown and link validation before pushing or merging when tooling is available. |
-| Branch cleanup | Delete topic branches after their useful content is merged or already covered by `main`. |
-| Source of truth | Treat `main` as the canonical branch for readers and future agents. |
+## One change through the branches
 
-> [!IMPORTANT]
-> This repository is a content knowledge base, not an application release repository. CI/CD means validating and publishing documentation changes through `main`, not deploying runtime services.
+Think of a draft page moving through three places: a contributor's desk,
+an editing table shared by maintainers, and a published shelf. A working
+branch is the desk, `develop` is the editing table, and `main` is the
+published shelf. The analogy has limits: Git commits are immutable
+snapshots, two branches can share commits, and publication or site sync
+does not happen merely because a document looks finished.
 
-## Branch flow
-
-1. Start from the latest `main`.
-2. Make focused content changes on a short-lived branch when useful.
-3. Run local validation.
-4. Merge the branch into `main` after validation passes.
-5. Push `main`.
-6. Delete the branch if `main` already contains the useful content.
-
-### Update main before work
-
-```bash
-git fetch --all --prune
-git switch main
-git pull --ff-only
+```mermaid
+flowchart TB
+  branch["Working branch:<br/>one focused change"]
+  pr["Pull request to develop"]
+  checks["Local and GitHub checks"]
+  develop["develop: integrated work"]
+  main["main: canonical source revision"]
+  website["Website lock PR<br/>if sync is configured"]
+  branch --> pr --> checks --> develop
+  develop -- "review and validated promotion" --> main
+  main -. "successful source validation" .-> website
 ```
 
-What it does: refreshes remote branch knowledge, moves to `main`, and fast-forwards the local branch without creating a merge commit.
+Text alternative: a contributor prepares a focused change on a working
+branch and opens a pull request to `develop`. The local and GitHub checks
+run before integration. After appropriate review and a passing bundle and
+governance check, maintainers can promote `develop` to `main`. A successful
+validated `main` push can signal the separate website repository if that
+integration has been configured; the website then reviews a pinned source
+revision before its own release.
 
-### Validate content
+## Follow an illustrative page edit
 
-```bash
-npx markdownlint-cli2 "**/*.md"
-node scripts/test-local-link-validator.mjs
-node scripts/validate-local-links.mjs
-python3 scripts/validate-issue-templates.py
-```
+Suppose a contributor improves the [Kafka delivery explanation](../../databases/kafka/delivery-guarantees-and-failure-handling.md).
+This is an example of the process, not a claim about a completed merge.
 
-What it does: runs the repository Markdown lint check, validates the local-link checker against fixtures, checks local Markdown links, heading fragments, required directory indexes, root reachability, and validates GitHub issue form YAML structure.
+1. Update the concept, its nearest parent index, and `knowledge/log.md` as
+   required. Cite the upstream documentation actually consulted. If the
+   concept metadata changed, rebuild the generated catalog. The
+   [contribution guide](../../../CONTRIBUTING.md) explains these authoring
+   rules.
+2. Run the [required local checks](../../../AGENTS.md#validation-and-publication):
+   OKF structure, command paths, catalog freshness, retrieval cases,
+   teaching coverage, issue templates, labels, Markdown, local links, and
+   diff whitespace. A failure is a reason to fix the change before it is
+   presented as ready.
+3. Open a pull request to `develop`. The repository's validation workflows
+   run on pull requests, and they also run on pushes to `develop` and
+   `main`. GitHub's event rules determine when those runs
+   start.[^github-workflow-events]
+4. Review the explanation and its evidence separately from CI. Automated
+   validators can confirm metadata, references, and links; they cannot
+   observe whether a new learner understands the page or whether an
+   example was executed in a real Kafka cluster.
+5. After integration on `develop`, promote to `main` only when the required
+   bundle and governance checks have passed. Do not treat a green topic
+   branch as evidence that a later `main` commit passed the same checks.
 
-If Node or Python tooling is unavailable, inspect the changed Markdown or issue templates manually and record the missing tool in the handoff.
+The precise workflow files are in [`.github/workflows/`](../../../.github/workflows/okf-validation.yml).
+They currently run OKF, link, Markdown, issue-template, and Terraform-format
+jobs on pull requests and on pushes to `develop` and `main`. The
+[teaching-coverage validator](../../../scripts/validate-teaching-coverage.py)
+checks accounting, not prose quality. Branch protection or required review
+settings, if enabled on GitHub, are separate enforcement rules; inspect
+their current configuration before describing them as
+mandatory.[^github-protected-branches]
 
-### Merge a content branch into main
+## Where the website fits
 
-```bash
-git switch main
-git merge --no-ff <branch-name>
-```
+The [Git-backed reading-site decision](../../decision-records/adr-0005-git-backed-reading-site.md)
+keeps the `knowledge/` Markdown canonical. The source repository's
+[`website-dispatch` workflow](../../../.github/workflows/website-dispatch.yml)
+is designed to send an event **only after** a successful OKF validation run
+for a `main` push, and only when the website repository variable is set.
+That event is a signal, not a publication: the website plan requires a
+separate pull request that updates its pinned source commit, passes its own
+checks, and is reviewed before deployment. See the [website rollout
+plan](../../../knowledge-base-upgrade/features/knowledge-website/rollout.md).
 
-What it does: merges the topic branch into `main` while preserving an explicit merge point for the content batch.
+This distinction matters for a reader: source `main` can have a newer
+explanation than the website's pinned revision until the site's update is
+approved and released. The displayed source SHA identifies what the site
+actually rendered.
 
-> [!WARNING]
-> Resolve conflicts by preserving the newest useful documentation, indexes, and changelog entries. Do not accept deletions from older branches when `main` already contains newer expanded content.
+## What checks can and cannot establish
 
-### Delete a covered branch
-
-```bash
-git branch -d <branch-name>
-git push origin --delete <branch-name>
-```
-
-What it does: removes a local branch and then removes the remote branch after `main` already contains the useful content.
-
-## Pull request handling
-
-Pull requests are allowed as a packaging mechanism, but they should target `main`. For normal content-only changes, do not require approving reviews. The author or agent is responsible for self-checking the diff, validating links, and confirming parent indexes are updated.
-
-Use reviews only when a change introduces sensitive security guidance, high-risk commands, external product claims that need domain verification, or broad repository workflow changes.
-
-## GitHub settings
-
-If branch protection or repository rules are configured for `main`, use them to require validation checks instead of human approval for normal content changes.
-
-Recommended settings:
-
-- Require status checks for Markdown lint and link validation when those workflows are active.
-- Leave required approving reviews disabled for normal documentation changes.
-- Keep force pushes disabled on `main`.
-- Keep branch deletion disabled for `main`.
-- Allow topic branch deletion after merge.
-
-## CI triggers
-
-Documentation validation workflows should run on:
-
-- `pull_request` targeting `main`, when a pull request is used;
-- `push` to `main`, after direct or merged content changes land;
-- `workflow_dispatch`, for manual validation reruns.
-
-## Validation scope
-
-| Check | Purpose | Local command |
+| Evidence | What it supports | What it does not prove |
 | --- | --- | --- |
-| Markdown lint | Formatting, heading, table, and Markdown style checks in the configured curated scope. | `npx markdownlint-cli2 "**/*.md"` |
-| Local link validation | Local inline/reference links, heading fragments, required directory indexes, and root reachability. | `node scripts/validate-local-links.mjs` |
-| Local-link validator fixtures | Confirms valid links pass and intentional broken targets, fragments, fenced links, and the OKF portable-bundle exception behave as expected. | `node scripts/test-local-link-validator.mjs` |
-| Issue-template validator fixtures | Confirms label-manifest parsing, undeclared label failures, duplicate label failures, and duplicate body-id failures behave as expected. | `python3 scripts/test-issue-template-validator.py` |
-| Issue template validation | Parses GitHub issue form YAML and checks required repository conventions for fields, IDs, dropdown options, required flags, and labels declared in `.github/labels.yml`. | `python3 scripts/validate-issue-templates.py` |
-| Live label check | Compares declared labels with live GitHub repository labels. This requires authenticated `gh` access and is a maintainer check rather than ordinary CI. | `python3 scripts/check-github-labels.py --repo David-A18/MY-humble-knowledge-for-everyone` |
-| External link validation | Checks remote URL availability with exclusions from `lychee.toml`. Network failures, authentication, runner connectivity, and rate limits are external availability evidence, not local content structure evidence. The Crossplane documentation domain is excluded because GitHub-hosted lychee runners repeatedly fail to connect even when the same official URLs return `200` locally. | `lychee --config lychee.toml --root-dir . "**/*.md"` |
-| Terraform formatting | Formats tracked Terraform example files when they exist; reports a skip when the repository has no `.tf` examples. | `terraform fmt -recursive -check terraform` |
+| OKF and catalog checks pass | Required metadata and derived catalog are consistent. | The explanation is technically accurate. |
+| Local-link check passes | Paths and heading fragments resolve in the repository. | An external source remains current or a reader follows the route easily. |
+| Markdown lint passes | The files meet configured style rules. | The page teaches its subject well. |
+| Reviewed source and example | Specific claims or examples have been assessed. | Every version or deployment behaves the same way. |
+| Reader-task result | An observed reader completed a stated task. | Every future reader will succeed. |
 
-Use Node.js 22 or newer for the local link validator scripts. Use Python 3 and PyYAML for issue-template validation. Current baseline evidence was refreshed with `markdownlint-cli2 v0.23.2`, `markdownlint v0.41.1`, and Git 2.53.0.
+Record actual evidence and remaining uncertainty in the page or review
+queue. Do not turn a passing CI badge into an invented review or runtime
+test.
 
-## Related links
+## Check your understanding
 
-- Official documentation: [GitHub Actions events that trigger workflows](https://docs.github.com/actions/reference/workflows-and-actions/events-that-trigger-workflows)
-- Official documentation: [GitHub protected branches](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
-- [GitHub Actions examples and use cases](examples-and-use-cases.md)
-- [GitHub Actions security, secrets, and permissions](security-secrets-and-permissions.md)
-- [Back to GitHub Actions](index.md)
-- [Back to Git index](../index.md)
-- [Back to root index](../../../README.md)
+1. Why does a branch with passing Markdown lint still need technical review?
+2. Which branch is the canonical source for a published site revision?
+3. Why might the website display an older explanation than source `main`?
+
+## Official documentation for deeper study
+
+- [GitHub workflow events](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows)
+  explains pull request, push, and chained workflow triggers.
+- [Managing protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches)
+  explains how a repository can enforce checks and reviews.
+
+For practical examples, continue to [GitHub Actions examples](examples-and-use-cases.md)
+or return to the [GitHub Actions index](index.md).
+
+[^github-workflow-events]: [GitHub Docs: Events that trigger workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+[^github-protected-branches]: [GitHub Docs: Managing protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches).
