@@ -823,7 +823,8 @@
         "aws-sts-web-identity",
         "github-aws-oidc",
         "github-actions-oidc-reference",
-        "github-actions-secure-use"
+        "github-actions-secure-use",
+        "aws-policy-evaluation"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2136,8 +2137,11 @@
       "source_ids": [
         "github-oidc-reference",
         "github-oidc-aws",
+        "github-deployment-environments",
         "aws-github-role",
-        "aws-credentials-action"
+        "aws-credentials-action",
+        "aws-policy-evaluation",
+        "aws-role-session-permissions"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2300,7 +2304,9 @@
         "github-actions-secrets",
         "github-actions-pull-request-target",
         "github-actions-deployments",
-        "github-actions-oidc"
+        "github-actions-oidc",
+        "github-actions-events",
+        "github-actions-checkout"
       ],
       "stale_after": null,
       "status": "draft",

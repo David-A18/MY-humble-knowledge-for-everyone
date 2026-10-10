@@ -74,6 +74,14 @@ cases:
     question: For a pull request into main, why can a required GitHub Actions check remain pending after a branch filter skips its workflow while a job skipped by if can appear successful?
     expected_paths: [knowledge/git/github-actions/common-solutions.md]
     required_source_ids: [actions-events, actions-required-checks]
+  - id: actions-same-repository-pr-credential-boundary
+    question: Does a GitHub Actions pull_request check from a branch in the same repository get the same automatic secret and token restrictions as a fork PR, and can the contributor change its workflow?
+    expected_paths: [knowledge/git/github-actions/security-secrets-and-permissions.md]
+    required_source_ids: [github-actions-workflow-syntax, github-actions-pull-request-target]
+  - id: actions-aws-oidc-environment-subject
+    question: If an AWS deployment job uses a GitHub production environment, does its default OIDC subject still prove the run came from main, and which system must restrict the branch?
+    expected_paths: [knowledge/git/github-actions/aws-oidc-federation.md]
+    required_source_ids: [github-oidc-reference, github-oidc-aws, aws-github-role]
   - id: cloud-provider-versus-customer
     question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]

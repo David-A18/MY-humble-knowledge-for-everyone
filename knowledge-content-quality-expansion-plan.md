@@ -858,8 +858,8 @@ lead to a failed or overly broad trust policy.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [AWS OIDC federation](knowledge/git/github-actions/aws-oidc-federation.md) | Rewritten around one GitHub job, a token-to-credential diagram, bounded badge analogy, invented deployment, and failure-boundary checks. | Current GitHub OIDC reference, AWS configuration guide, AWS IAM role guide, and upstream credentials-action documentation. No deployment or token exchange ran. | Independent GitHub/AWS security review; controlled role-assumption exercise; reader test; freshness decision. |
-| [IAM OIDC provider and STS web identity](knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md) | Rewritten around provider registration, role trust, STS exchange, and effective permissions, with a bounded example and diagram. | Current AWS IAM provider and role guides and STS API reference. No AWS role, provider, or workload ran. | Independent IAM review; controlled federation exercise; reader test; freshness decision. |
+| [AWS OIDC federation](knowledge/git/github-actions/aws-oidc-federation.md) | Rewritten around one GitHub job, a token-to-credential diagram, bounded badge analogy, invented deployment, and failure-boundary checks. Focused review in round 47 made the example's `production` environment, allowed `main` ref, and AWS environment-subject trust one coherent path; it now explains job-wide token requests and effective AWS policy checks. | Current GitHub OIDC and AWS IAM, STS, and credentials-action documentation checked. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. No deployment or token exchange ran. | Independent GitHub/AWS security review; controlled role-assumption exercise; reader test; freshness decision. |
+| [IAM OIDC provider and STS web identity](knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md) | Rewritten around provider registration, role trust, STS exchange, and effective permissions, with a bounded example and diagram. Round 47 aligned the API-denial path with AWS identity, resource, session, boundary, and organization policy evaluation. | Current AWS IAM provider, role, policy-evaluation, and STS documentation checked. No AWS role, provider, or workload ran. | Independent IAM review; controlled federation exercise; reader test; freshness decision. |
 
 The OIDC fundamentals page received a targeted correction to label its
 older-format GitHub subject example; it was already counted in wave 2 and
@@ -918,7 +918,7 @@ runs, what credential it receives, and what that credential can change.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [GitHub Actions security, secrets, and permissions](knowledge/git/github-actions/security-secrets-and-permissions.md) | Rewritten with a limited workshop analogy, trust-boundary diagram, invented documentation PR/deployment sequence, distinct token/secret/environment/OIDC controls, and an event-risk table. Removed a movable action-version example and an implied automatic environment approval gate. | Keyed current GitHub documentation for workflow syntax, secure use, secrets, deployment environments, OIDC, and `pull_request_target`. No workflow ran. | Independent Actions security review; controlled PR and deployment workflow exercise; reader test; freshness decision. |
+| [GitHub Actions security, secrets, and permissions](knowledge/git/github-actions/security-secrets-and-permissions.md) | Rewritten with a limited workshop analogy, trust-boundary diagram, invented documentation PR/deployment sequence, distinct token/secret/environment/OIDC controls, and an event-risk table. Focused review in round 47 separated fork and same-repository PR authority, clarified job permission override, environment-secret scope, checkout credential persistence, OIDC job scope, and privileged follow-up risks. | Current official GitHub workflow, secure-use, secret, environment, event, checkout, and OIDC documentation checked. Claude Opus 5.5 reviewed the page read-only; the diagram rendered and was inspected. No workflow ran. | Independent Actions security review; controlled PR and deployment workflow exercise; reader test; freshness decision. |
 
 ### Wave 34 (2026-10-01)
 
@@ -2924,6 +2924,32 @@ run inspection, and PR check inspection succeeded against this repository;
 the revised diagram rendered and was visually inspected. No failed-job rerun,
 new workflow, deployment, independent Actions/security review, measured search,
 or novice reader task ran; both concepts remain `draft`.
+
+### Focused review round 47 (2026-10-10)
+
+Reviewed GitHub Actions credential boundaries and the GitHub-to-AWS OIDC
+explanation with Claude Opus 5.5 read-only. The security page now explains
+that normal pull-request runs use proposed workflow code, that fork-specific
+credential restrictions do not apply to a branch inside the same repository,
+and that a privileged `workflow_run` can consume attacker-influenced earlier
+artifacts. It distinguishes repository and environment secret gates, job-level
+token permissions, checkout credential persistence, and job-wide OIDC token
+requests. The invented PR case shows why a later secret-bearing step in the
+same job is not a complete boundary from an earlier untrusted build script.
+
+The AWS example now follows one concrete path: a reviewed `main` push, a
+`production` environment configured to allow `main` and require review, an
+environment-shaped OIDC subject checked by AWS, and a narrowly scoped AWS
+role. It states that the default subject does not identify the workflow file
+or job and no longer implies the IAM environment subject also proves the
+branch. The linked AWS-side guide now points readers to all applicable
+policy types when the role succeeds but an API call is denied. Two static
+retrieval cases cover the same-repository PR and environment-subject
+boundaries. Current GitHub and AWS primary sources were checked, including
+GitHub's July 2026 immutable-subject rule. Both revised diagrams rendered and
+were visually inspected. No real PR credential test, environment approval,
+OIDC token, role assumption, AWS call, independent security review, measured
+search, or novice reader task ran; the pages remain `draft`.
 
 ### Candidates for the next wave
 

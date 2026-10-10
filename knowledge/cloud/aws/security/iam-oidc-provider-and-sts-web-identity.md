@@ -26,6 +26,9 @@ sources:
   - id: github-actions-secure-use
     resource: https://docs.github.com/en/actions/reference/security/secure-use
     title: GitHub Docs - Secure use reference
+  - id: aws-policy-evaluation
+    resource: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
+    title: AWS IAM - Policy evaluation logic
 ---
 
 # IAM OIDC provider and STS web identity
@@ -124,7 +127,7 @@ only to jobs that need the exchange.[^github-aws-oidc][^github-actions-secure-us
 | --- | --- |
 | AWS does not recognize the token's issuer or audience | Does the IAM OIDC provider registration match the token issuer and intended audience? |
 | STS denies the role assumption | Does the role's trust policy admit this provider and the token's actual audience and subject, including an environment or immutable-ID format? |
-| STS succeeds but an AWS API denies the operation | Does the role's effective permissions policy allow that action on that resource? |
+| STS succeeds but an AWS API denies the operation | Do the role's identity policy and any applicable resource, session, boundary, or organization policies allow that action on that resource?[^aws-policy-evaluation][^aws-sts-web-identity] |
 
 Do not broaden a trust condition simply to clear an error. Confirm the
 identity of the intended workload first. A successful exchange proves
@@ -160,3 +163,4 @@ action succeeded or that the trust policy is appropriately narrow.
 [^github-aws-oidc]: [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws), source record `github-aws-oidc`.
 [^github-actions-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-actions-oidc-reference`.
 [^github-actions-secure-use]: [GitHub Docs - Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use), source record `github-actions-secure-use`.
+[^aws-policy-evaluation]: [AWS IAM - Policy evaluation logic](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html), source record `aws-policy-evaluation`.
