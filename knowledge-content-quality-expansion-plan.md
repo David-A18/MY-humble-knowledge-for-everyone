@@ -1161,7 +1161,7 @@ reviewed saved plans for create, in-place update, and destroy.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Terraform local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Rewritten as a Tutorial with a stage table, expected outcomes, stop conditions, state-file boundaries, and understanding checks. | The full revised sequence ran in a disposable local directory with Terraform v1.13.1 from an official archive verified against its published SHA-256 sum. Observed one addition, one in-place update, one destruction, and empty final state. No cloud resource or human reader test was involved. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Terraform and Opus review; novice reader exercise; freshness decision. |
+| [Terraform local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Rewritten as a Tutorial with a stage table, expected outcomes, stop conditions, state-file boundaries, and understanding checks. Focused review round 52 explains known versus after-apply plan values, the synthetic ID, the one-time override, and guarded cleanup in the diagram and steps. | The local path first ran on 2026-10-06 and was rerun on 2026-10-11 in a disposable directory with Terraform v1.13.1 from an official SHA-256-checked archive. The latter run observed one addition, one in-place update, one destruction, ignored plan/state files, a plain plan toward the default, a stale saved plan, and empty final state. The revised cleanup guard refused `/tmp` and removed a disposable matching path; the revised diagram rendered and was inspected. Claude Opus 5.5 reviewed the tutorial and linked explanation read-only. No cloud resource or human reader test was involved. | Independent Terraform review; novice reader exercise, including shell and platform differences; freshness decision. |
 
 ### Wave 59 (2026-10-02)
 
@@ -3034,6 +3034,26 @@ version loss, branch-range example, and stash visibility across worktrees;
 three static retrieval cases cover the affected questions. No actual secret,
 hosted pull request, independent human review, or novice reader task ran;
 all revised concepts remain `draft`.
+
+### Focused review round 52 (2026-10-11)
+
+Reviewed the Terraform local state tutorial and its value-flow explanation
+with Claude Opus 5.5 read-only. The tutorial now tells learners which
+values the create and update plans know immediately and which outputs
+appear as `(known after apply)`. It explains the `terraform_data` ID as
+a state entry rather than a cloud object, and shows the un-applied plain
+plan back to the default as a side path in the diagram. The steps now
+name their Bash requirement and link to the specific official CLI and
+local-backend references.
+
+The disposable exercise was rerun with Terraform v1.13.1 from a verified
+official archive. Creation, update, reverse plain plan, stale saved plan,
+destruction, state inspection, and Git ignore observations matched the
+revised page. A separate Bash test confirmed that the cleanup guard rejects
+`/tmp` and removes a matching six-character lab directory. The diagram
+rendered and was inspected; two static retrieval cases cover the plan
+outputs and temporary override. No cloud resource, independent domain
+review, or novice reader task ran; the tutorial remains `draft`.
 
 ### Candidates for the next wave
 

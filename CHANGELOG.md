@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified the Terraform local-state tutorial's known versus after-apply plan values, one-time override, synthetic ID, official CLI references, and guarded cleanup; added two static retrieval cases.
 - Clarified Git branch review and recovery: divergent-base checks, diff versus log ranges, stash restoration, staged-only content, and the first response to a pushed secret; added three static retrieval cases.
 - Clarified Terraform state, command, CI, and AWS guides around S3 locking, empty-state stop signals, sensitive saved plans, isolated PR validation, and comparable verification; added two static retrieval cases.
 - Clarified Terraform-on-AWS account, Region, backend, and state boundaries and the end-to-end path from PR checks through a tested merged-commit image to user checks and recovery; added two static retrieval cases.

@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: terraform-local-plan-known-after-apply
+    question: In the local Terraform tutorial, why does input.version have a value while terraform_data.release.output and release_summary say known after apply?
+    expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md, knowledge/terraform/language/how-values-move-through-terraform.md]
+    required_source_ids: [terraform-data]
+  - id: terraform-local-var-override-next-plan
+    question: After applying the local tutorial's saved plan with release_version=1.1.0, why does a plain plan propose version 1.0.0 again?
+    expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
+    required_source_ids: [terraform-plan]
   - id: git-staged-only-version-before-unstaging
     question: I staged draft A, edited the file again to draft B, and now want to unstage it. Which version can be lost from the index?
     expected_paths: [knowledge/git/commands/solve-issues.md]
