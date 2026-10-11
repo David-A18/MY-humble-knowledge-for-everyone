@@ -107,9 +107,10 @@ you trust; keep pull-request code and untrusted artifacts out of that job.
 [^github-oidc-reference]
 
 By default, the AWS credentials action makes the temporary AWS credentials
-available as environment variables to later steps in the same job. Build and
-test before this action, or use a separate job; review every later action and
-script as code that can call AWS with the assumed role.
+available as environment variables to later steps in the same job. Keep
+untrusted build and test steps in a separate job without `id-token: write`;
+even earlier steps in this job could request their own token. Review every
+action and script in the credential-bearing job as code that could call AWS.
 [^aws-credentials-action]
 
 ## A bounded deployment example

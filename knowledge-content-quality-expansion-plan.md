@@ -472,8 +472,8 @@ maintainer value was added, and no example was run.
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [End-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) | Rewritten to the standard. | Keyed citations to GitHub, Terraform, and Kubernetes documentation; the service walk-through is labelled illustrative. | Independent technical review; reader test; freshness decision. |
-| [GitHub Actions with Kubernetes](knowledge/cross-topic-guides/github-actions-with-kubernetes.md) | Rewritten to the standard. | Keyed citations to GitHub and Kubernetes documentation; no workflow file and no cluster run. | Independent technical review; reader test; freshness decision. |
-| [GitHub Actions with Terraform](knowledge/cross-topic-guides/github-actions-with-terraform.md) | Rewritten to the standard. | Keyed citations to Terraform CLI documentation, HashiCorp's automation tutorial, and GitHub documentation; the pipeline walk-through is invented. The partial-apply statement is labelled as not quoted from the cited pages. | Independent technical and security review; reader test; freshness decision. |
+| [GitHub Actions with Kubernetes](knowledge/cross-topic-guides/github-actions-with-kubernetes.md) | Rewritten to the standard; focused review in round 48 separated GitHub-to-cloud, cloud-to-cluster, and cluster authorization, and clarified rollout failure and recovery. | Keyed current GitHub, AWS EKS, and Kubernetes citations; Claude Opus 5.5 reviewed the draft read-only. No workflow file or cluster run. | Independent technical and security review; reader test; freshness decision. |
+| [GitHub Actions with Terraform](knowledge/cross-topic-guides/github-actions-with-terraform.md) | Rewritten to the standard; focused review in round 48 separated throwaway PR plans from a saved plan made from the merged commit and reviewed before apply. | Keyed current HashiCorp and GitHub citations; Claude Opus 5.5 reviewed the draft read-only. The pipeline walk-through is invented; no Terraform run. | Independent technical and security review; reader test; freshness decision. |
 | [Terraform on AWS](knowledge/cross-topic-guides/terraform-on-aws.md) | Rewritten to the standard. | Keyed citations to the S3 backend, backend, locking, AWS provider, and AWS IAM documentation; the wrong-account example is reasoned, with placeholder account numbers and no AWS call. The AWS provider registry page is rendered by script, so its content was checked against the provider's documentation source. | Independent technical and security review; reader test; freshness decision. |
 | [Observability stack](knowledge/cross-topic-guides/observability-stack.md) | Rewritten to the standard; focused beginner review in round 40. | Keyed citations to OpenTelemetry and Google SRE documentation; the incident story is invented. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; a check against one concrete stack; reader test; freshness decision. |
 
@@ -2950,6 +2950,31 @@ GitHub's July 2026 immutable-subject rule. Both revised diagrams rendered and
 were visually inspected. No real PR credential test, environment approval,
 OIDC token, role assumption, AWS call, independent security review, measured
 search, or novice reader task ran; the pages remain `draft`.
+
+### Focused review round 48 (2026-10-11)
+
+Reviewed the GitHub Actions with Terraform and Kubernetes cross-topic guides
+with Claude Opus 5.5 read-only. The Terraform guide now separates
+backend-free pull-request validation, optional throwaway PR plans, a saved
+plan produced from the merged `main` commit, and an apply job that uses the
+same reviewed artifact. The example shows Terraform rejecting a plan after
+state changes and requires a new plan and review. It also explains the gap
+left by out-of-band changes that never updated state.
+
+The Kubernetes guide now follows GitHub OIDC trust, EKS cluster identity
+mapping, and Kubernetes or EKS authorization as separate controls. It
+clarifies job-level token scope, protected-environment approval, image
+provenance, rollout deadline and rollback limits, and the possibility that
+capacity is already reduced when new Pods fail readiness. The linked AWS OIDC
+guide now keeps untrusted build steps out of a token-enabled job. The
+Terraform page also warns that a public repository's workflow artifacts are
+readable by signed-in public readers, so a raw production plan cannot be
+treated as a private artifact. Two static
+retrieval cases cover the PR-plan boundary and the EKS identity chain.
+Current HashiCorp, GitHub, Kubernetes, and AWS primary sources were checked.
+The diagrams were rendered and inspected. No Terraform or Kubernetes run,
+independent technical or security review, measured search, or novice reader
+task ran; both concepts remain `draft`.
 
 ### Candidates for the next wave
 

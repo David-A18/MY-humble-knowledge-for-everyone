@@ -150,6 +150,14 @@ cases:
     question: Is it safe to store a saved Terraform plan file as a CI artifact, and why must apply in CI sit behind an approval gate?
     expected_paths: [knowledge/cross-topic-guides/github-actions-with-terraform.md]
     required_source_ids: [terraform-plan, terraform-apply]
+  - id: terraform-pr-plan-after-merge
+    question: Can the Terraform plan made on a pull request be approved and applied after that pull request merges?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-terraform.md]
+    required_source_ids: [terraform-automation]
+  - id: actions-eks-identity-chain
+    question: If a GitHub Actions job successfully assumes an AWS role, can it already change a Kubernetes Deployment in EKS?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-kubernetes.md]
+    required_source_ids: [eks-access-entries, kubernetes-rbac]
   - id: terraform-s3-backend-locking-default
     question: Does the Terraform S3 backend lock state by default, and is DynamoDB locking still the recommended approach?
     expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]

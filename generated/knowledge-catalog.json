@@ -1306,6 +1306,9 @@
         "kubernetes-container-images",
         "kubernetes-deployments",
         "kubernetes-rbac",
+        "kubernetes-rbac-good-practices",
+        "eks-access-entries",
+        "eks-access-policies",
         "kubernetes-probes"
       ],
       "stale_after": null,
@@ -1331,8 +1334,10 @@
         "terraform-state-locking",
         "terraform-s3-backend",
         "terraform-automation",
+        "terraform-plan-tutorial",
         "github-deployment-environments",
-        "github-oidc-reference"
+        "github-oidc-reference",
+        "github-artifact-download"
       ],
       "stale_after": null,
       "status": "draft",

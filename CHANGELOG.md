@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified the GitHub Actions with Terraform and Kubernetes learning paths, including post-merge saved-plan review, cluster identity mapping, rollout recovery limits, and two static retrieval cases.
 - Clarified GitHub Actions PR and deployment credential boundaries and the AWS OIDC environment-subject example; aligned the linked IAM denial path and added two static retrieval cases.
 - Clarified GitHub Actions run inspection and troubleshooting, including failed-job rerun direction, pending versus skipped required checks, fork approval, token and OIDC boundaries, runner queues, and concurrency; added two static retrieval cases.
 - Added a focused review of the GitHub Actions workflow-choice and action-selection pages, correcting PR merge checks, required merge rules, fork limitations, reusable-workflow secret scope, and the topic learning path.

@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-11
+
+- **GitHub Actions with Terraform and Kubernetes beginner review**: Separated throwaway pull-request plans from saved Terraform plans made after merge, clarified the review-to-apply artifact handoff, public-artifact exposure, and stale-plan limits, and explained the GitHub-to-cloud-to-cluster identity chain. The Kubernetes guide now states rollout deadline and recovery limits and the possibility of reduced capacity; the linked AWS OIDC guide keeps untrusted steps out of token-enabled jobs. Claude Opus 5.5 reviewed both pages twice read-only; current HashiCorp, GitHub, Kubernetes, and AWS sources were checked, diagrams rendered and were inspected, and two static retrieval cases were added. No Terraform run, cluster deployment, independent technical or security review, measured search, or novice reader task ran; both cross-topic pages remain `draft`.
+
 ## 2026-10-10
 
 - **GitHub Actions security and AWS OIDC beginner review**: Distinguished fork from same-repository PR authority, repository from environment secret gates, job-level GitHub token scopes, checkout credential persistence, and the risk of a privileged follow-up consuming earlier untrusted artifacts. The invented deployment now uses a configured `production` environment to restrict `main`, while AWS trusts its environment-shaped OIDC subject; the default subject does not identify a particular job. The linked IAM guide now names effective policy checks after successful STS. Claude Opus 5.5 reviewed the pages read-only; current GitHub and AWS primary sources were checked, both diagrams rendered and were inspected, and two static retrieval cases were added. No live PR, environment, token, AWS call, independent security review, measured search, or novice reader task ran; the concepts remain `draft`.

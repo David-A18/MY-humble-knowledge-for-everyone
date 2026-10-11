@@ -29,12 +29,18 @@ sources:
   - id: terraform-automation
     resource: https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform
     title: HashiCorp tutorial - Running Terraform in automation
+  - id: terraform-plan-tutorial
+    resource: https://developer.hashicorp.com/terraform/tutorials/cli/plan
+    title: HashiCorp tutorial - Create a Terraform plan
   - id: github-deployment-environments
     resource: https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments
     title: GitHub Docs - Deployments and environments
   - id: github-oidc-reference
     resource: https://docs.github.com/en/actions/reference/security/oidc
     title: GitHub Docs - OpenID Connect reference
+  - id: github-artifact-download
+    resource: https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts
+    title: GitHub Docs - Downloading workflow artifacts
 ---
 
 # GitHub Actions with Terraform
@@ -74,8 +80,8 @@ reviewed.
 | Activity | When it runs | What it needs | Can it change infrastructure? |
 | --- | --- | --- | --- |
 | Pull request validation | On every proposed change. | The configuration, with its providers and modules installed. No backend or cloud access. | No. |
-| Plan | On a proposed change, for a specific environment. | Access to state, the provider's read operations, and any backend locking operations. | It does not apply the proposed resource changes. |
-| Apply | After review, for a specific environment. | Write access to state and to the provider. | Yes. |
+| Plan | After merge, from the exact `main` commit to be deployed, for a specific environment. An optional pull-request plan is only a preview. | Access to state, provider operations needed to plan, and backend locking. | It does not apply the proposed resource changes. |
+| Apply | After review of that post-merge saved plan. | Write access to state and to the provider. | Yes. |
 
 **Validation** checks that configuration is syntactically valid and
 internally consistent. `terraform validate` does not check remote services
@@ -88,11 +94,20 @@ to real resources.
 **Plan** reads the current state of existing remote objects, compares the
 configuration with the prior state, and proposes a set of changes. It does not
 carry them out.[^terraform-plan] A plan is environment-specific: the same
-configuration can produce a different plan against a different state.
+configuration can produce a different plan against a different state. Planning
+can still acquire a backend lock and read provider data; it is not a promise
+of no other side effects.
 
-**Apply** carries out proposed resource changes through the provider. Planning
-can still acquire a state-backend lock or read provider data; it is not a
-promise of no other side effects.
+**Apply** carries out proposed resource changes through the provider.
+
+An optional **speculative plan on a pull request** can help code review. It
+is throwaway: do not apply its saved file after merge. HashiCorp's automation
+guide runs pull-request plans without `-out` and creates the plan to apply
+from the primary branch after merge.[^terraform-automation] A pull request
+can change the configuration, modules, providers, and workflow that its own
+job runs. Only offer a PR plan against real state where PR authors are already
+trusted with that state and cloud role; otherwise keep that access out of PR
+jobs. The applied plan still comes from the merged branch.
 
 ## The pieces that make CI different
 
@@ -115,7 +130,9 @@ covers backends and locking in depth.
 The job must prove who it is to the cloud provider. A job can request an OIDC
 token from GitHub and exchange it for short-lived credentials, which avoids
 storing a long-lived cloud key as a repository secret. The `id-token: write`
-permission only allows the job to request that token.[^github-oidc-reference]
+permission only allows the job to request that token, but it applies to every
+step in that job.[^github-oidc-reference] Run untrusted tooling in a separate
+job without this permission or cloud credentials; see [Actions security](../git/github-actions/security-secrets-and-permissions.md).
 
 Planning proposes resource changes; applying carries them out. A team may
 give the planning job narrower cloud-resource permissions than the apply job.
@@ -127,17 +144,27 @@ own permissions. For example, the S3 backend with `use_lockfile` needs write
 and delete permissions on its lock object even during a plan that acquires a
 state lock.[^terraform-s3-backend]
 
+Give planning and applying separate trust paths if they use different cloud
+roles. A plan job on `main` can use a separate planning environment restricted
+to `main` and a read-oriented role; the apply job can use the protected
+production environment and write role.
+Check each role's actual OIDC subject and target account. A pull-request job
+must not receive the apply role. See the [AWS OIDC trust model](../git/github-actions/aws-oidc-federation.md).
+
 ### Branch and environment gate
 
-A GitHub deployment environment can require reviewers and can restrict which
-branches may deploy. Secrets stored in the environment are unavailable to a
-job until a required reviewer approves it.[^github-deployment-environments]
+A GitHub deployment environment can require reviewers and restrict which
+branches may deploy. These rules must actually be configured. The protected
+job does not start until they pass, so it cannot request its environment-shaped
+OIDC token before then. Self-review and administrator bypass settings also
+affect the gate.[^github-deployment-environments]
 
-The token's subject claim can also name the environment. GitHub documents a
-subject of the form `repo:ORG/REPO:environment:NAME` for a job that references
-an environment.[^github-oidc-reference] A cloud role that trusts only that
-subject cannot be assumed by a job that does not reference the environment,
-such as an ordinary pull request check.
+The token's subject claim can name the environment. GitHub documents
+`repo:ORG/REPO:environment:NAME` as one format, but immutable repository IDs
+and claim customization can change it. Match the actual claim. An environment
+subject alone does not name the workflow, job, or event: another workflow on
+an allowed ref could reference the same environment. Protect the workflow and
+use the environment branch rules with the cloud trust policy.[^github-oidc-reference]
 
 ### Why the approval has to live in the pipeline
 
@@ -145,62 +172,72 @@ Run interactively without a plan file, `terraform apply` creates a plan and
 asks you to approve it. Given a saved plan file, it performs the operations in
 that plan without prompting.[^terraform-apply]
 
-In automation, the saved-plan route is the common one, so Terraform itself
-will not pause. The review has to happen before the apply job starts, and the
-environment gate is what enforces it.
+In automation, a saved-plan apply will not pause. A required environment
+reviewer can hold the apply job before it starts. The pipeline must show that
+reviewer the **post-merge saved plan** and ensure the job applies that exact
+plan. The gate approves a job; by itself it does not bind a plan artifact to
+the job. That is an inference from GitHub's job-level gate and HashiCorp's
+requirement to connect approval to the correct plan.[^github-deployment-environments][^terraform-automation]
 
 ### Drift between plan and apply
 
-Time passes between the plan a reviewer reads and the apply that runs. In that
-gap, another change may be applied, or someone may change a resource by hand.
+Time passes between the saved plan a reviewer reads and the apply. If another
+apply updates the Terraform state first, Terraform rejects the saved plan as
+stale. Generate a new plan from `main` and obtain a new review.[^terraform-automation]
 
-HashiCorp's automation guidance addresses this directly: when a plan is
-applied, other plans produced against the same state are invalidated, because
-they must be recomputed against the new state. It recommends allowing only one
-outstanding plan at a time, and approving promptly so that the plan does not
-go stale.[^terraform-automation]
+An out-of-band change to a real resource does not itself update Terraform
+state, so this stale-plan check cannot prove that remote objects stayed the
+same. Keep the gap short and allow only one outstanding plan, as HashiCorp
+recommends.[^terraform-automation] If remote drift is suspected, investigate
+it before making and reviewing a new plan.
 
-The safe pattern is to apply the same saved plan that was reviewed, not a
-fresh plan computed at apply time that nobody has read.
+Record the merged source commit, target account, workspace and backend, and
+plan artifact identity. Apply the exact saved plan the reviewer saw. A new
+plan made inside the apply job is a different plan and needs a new review.
 
 ### Plan files are sensitive
 
-A saved plan file contains the full configuration, the values associated with
-the planned changes, and the input variables. If the plan includes sensitive
-data, it is saved in clear text in the plan file, even where Terraform's
-terminal output hides it. The documentation says to treat saved plan files as
-potentially sensitive artifacts.[^terraform-plan]
+A saved plan file contains the full configuration, prior state, input
+variables, and values associated with planned changes. Even unchanged
+resources in that prior state may hold secrets. Sensitive values can be in
+clear text in the file even where terminal output hides them. Treat it as a
+potentially sensitive artifact.[^terraform-plan][^terraform-plan-tutorial]
 
-In a pipeline this matters because the plan has to travel from the plan job to
-the apply job. Wherever it is stored, anyone who can download it can read
-those values. The same caution applies to posting plan output in a pull
-request comment: redaction in the terminal does not make a plan safe to
-publish widely.
+The plan may need to travel between jobs. In GitHub Actions, signed-in people
+with repository read access can download workflow artifacts; on a public
+repository that includes public readers.[^github-artifact-download] Do not
+upload a plaintext production plan there. Use a restricted store or encrypt
+the artifact, and ensure the apply job gets the exact reviewed file.
+HashiCorp calls for the entire initialized working directory to be restored
+at the same absolute path, with the same provider plugins, operating system,
+architecture, Terraform version, and target account when planning and
+applying on different machines.[^terraform-automation][^terraform-plan-tutorial]
+Keep the provider lock file with the configuration. The same caution applies to
+posting plan output in a pull-request comment: terminal redaction does not
+make a plan safe to publish widely.
 
 ## Visual: where the gate sits
 
 ```mermaid
-flowchart LR
+flowchart TB
   pr["Pull request"] --> val["Validate<br/>no backend or cloud access"]
-  val --> plan["Plan<br/>narrow resource access<br/>backend access"]
-  plan --> review{"Reviewer reads the plan"}
-  review -- "reject" --> pr
-  review -- "approve and merge" --> gate["Environment gate<br/>required reviewer, branch rule"]
-  gate --> apply["Apply the reviewed plan<br/>write identity"]
+  val --> merge["Code review and merge"]
+  merge --> plan["Plan on main<br/>saved, restricted artifact"]
+  plan --> gate["Environment gate<br/>review this saved plan"]
+  gate --> apply["Apply that same plan<br/>write identity"]
   apply --> real["Real infrastructure<br/>and updated state"]
 ```
 
-Text alternative: a pull request is validated without backend or cloud access,
-then planned with narrow provider permissions and the backend access it
-needs. A reviewer reads the plan. If they
-reject it, the work returns to the pull request. If they approve and merge,
-the change reaches an environment gate with a required reviewer and a branch
-rule. Only after that gate does a job with a write identity apply the reviewed
-plan, which changes real infrastructure and updates state.
+Text alternative: a pull request is validated without backend or cloud access
+and merged after code review. A trusted job on `main` then creates a saved
+plan for the target environment. A required reviewer reads that plan and
+releases the gated apply job, which uses a write identity to apply the same
+plan and update real infrastructure and state.
 
-Nothing to the left of the environment gate applies the proposed resource
-changes. The plan may still lock its backend and expose sensitive state; that
-boundary is what the diagram is meant to show.
+Nothing before the environment gate applies proposed resource changes.
+The plan may still lock its backend and expose sensitive state. A speculative
+pull-request plan, if used, is a separate preview and never crosses into the
+apply job.
 
 ## Example: one change through the pipeline
 
@@ -213,18 +250,18 @@ opens a pull request that adds one tag to a subnet.
 | Moment | What happens | Managed resources changed? | What could go wrong |
 | --- | --- | --- | --- |
 | Pull request opened | Formatting and validation run. | No | Nothing reaches the cloud or the state. |
-| Plan job | The job reads state and reports one in-place update. | No | The plan file holds values from the configuration, so it is stored with restricted access. |
-| Review | A reviewer confirms the plan shows one update and no destroy. | No | A reviewer who reads only the code diff misses what the plan would do. |
-| Merge | The change lands on the main branch. | No | Still nothing has changed in the cloud. |
-| Meanwhile | A colleague's separate change is applied first. | Yes | The reviewed plan was computed against the older state. |
-| Apply job | The pipeline refuses to reuse the outdated plan, produces a new one, and asks for review again. | No | Applying without re-review would run changes nobody read. |
-| Apply job, second attempt | After approval in the `production` environment, the reviewed plan is applied. | Yes | If it fails part-way, some changes are made and others are not. |
+| Code review and merge | The change lands on `main`. A pull-request preview, if one existed, is discarded. | No | A PR plan could differ from the merged commit. |
+| Plan job on `main` | The job reads the production state and saves a plan showing one in-place update. | No | The saved file holds configuration, variables, and planned values; restrict access. |
+| Deployment review | A reviewer checks this exact saved plan, its source commit, and target. | No | Code review alone did not approve this post-merge plan. |
+| Meanwhile | A colleague's separate change is applied first. | Yes | It changes the state the reviewed plan used. |
+| Apply job | Terraform rejects the stale saved plan; the job fails. | No | The job must not silently replace it with a fresh plan. |
+| New plan and review | A trusted job on `main` saves a fresh plan; a reviewer approves a new gated apply job. | No | The new plan may describe different changes. |
+| Second apply job | It applies that new saved plan with the production write identity. | Yes | A partial failure can still require recovery. |
 
-What to notice: only two rows change real infrastructure, and both sit behind
-a review. The interruption in the middle is the process working. How a
-particular pipeline detects an outdated plan depends on how it is built; the
-principle from HashiCorp's guidance is that a plan is valid only against the
-state it was computed from.
+What to notice: two rows change real infrastructure; each was separately
+reviewed. The rejected saved plan is the process working. Terraform detects
+that the state changed; it does not prove that no remote change happened
+without a state update.
 
 ## Trade-offs and failure boundaries
 
@@ -232,16 +269,15 @@ state it was computed from.
   intervening apply is safe and can be frustrating on a busy repository.
   Smaller, separate state files reduce collisions.
 - **A partly failed apply is not an all-or-nothing operation.** Changes that
-  completed before the failure stay in place, and recovery is a further plan
-  and apply, not an undo. This describes Terraform's general behaviour and is
-  not quoted from the pages cited here; the apply documentation points to a
-  tutorial on recovering from apply errors.
+  completed before the failure stay in place. Inspect what changed, resolve
+  the error, and make and review another plan before applying again; Terraform
+  does not automatically roll back.[^terraform-apply]
 - **Plan permissions still reveal information.** An identity without permission
   to change managed resources can still read state, and state can contain
   secrets. Narrow resource permissions do not make a planning job harmless.
-- **Pull requests from outside the team deserve extra care.** A workflow that
-  plans against a real environment for any incoming pull request exposes that
-  environment's read access to code nobody has reviewed yet.
+- **Any privileged pull-request plan is risky.** Same-repository authors can
+  change workflow and Terraform code too. A PR job with cloud or state access
+  exposes that access to its steps. Never grant it the apply identity.
 
 ## Check your understanding
 
@@ -253,6 +289,8 @@ state it was computed from.
   Why should the approved plan not simply be applied?
 - Why is a saved plan file treated as sensitive even when the terminal output
   shows values as hidden?
+- Why should the plan applied after merge come from the merged commit rather
+  than the pull-request run?
 
 ## Next steps
 
@@ -290,5 +328,7 @@ state it was computed from.
 [^terraform-state-locking]: [Terraform - State locking](https://developer.hashicorp.com/terraform/language/state/locking), source record `terraform-state-locking`.
 [^terraform-s3-backend]: [Terraform - S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3), source record `terraform-s3-backend`.
 [^terraform-automation]: [HashiCorp tutorial - Running Terraform in automation](https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform), source record `terraform-automation`.
+[^terraform-plan-tutorial]: [HashiCorp tutorial - Create a Terraform plan](https://developer.hashicorp.com/terraform/tutorials/cli/plan), source record `terraform-plan-tutorial`.
 [^github-deployment-environments]: [GitHub Docs - Deployments and environments](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments), source record `github-deployment-environments`.
 [^github-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-oidc-reference`.
+[^github-artifact-download]: [GitHub Docs - Downloading workflow artifacts](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts), source record `github-artifact-download`.
