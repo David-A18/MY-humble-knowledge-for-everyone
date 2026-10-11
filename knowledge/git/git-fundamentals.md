@@ -313,13 +313,15 @@ This difference drives the safest way to undo a mistake:
 
 | Where the unwanted commit is | Usual safe direction |
 | --- | --- |
-| Only in your local repository | You can usually amend or reset it; first keep a branch at any commit you might need again. |
+| Only in your local repository | You can consider amending or resetting it; first keep a branch at any commit you might need again. An amend includes staged changes, so inspect them and read the [`--amend` option](https://git-scm.com/docs/git-commit) in the Git commit reference. |
 | Pushed to a branch others use | Add a new commit that reverses it with `git revert`, instead of rewriting shared history. |
 
 This table concerns **commits**. A backup branch and the reflog do not save
 unstaged or staged edits that were never committed. If you pushed to a
-branch only you use, rewriting it may be acceptable; read the recovery
-guide before any force push.
+branch only you use, rewriting it may be acceptable, but this hub gives
+no generic force-push recipe. Check your team's rule and the
+[official push documentation](https://git-scm.com/docs/git-push) before
+changing remote history.
 
 The [undo and recovery guide](troubleshooting/undo-and-recovery.md) explains
 how to tell which case you are in and which command to choose.

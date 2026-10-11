@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: git-staged-only-version-before-unstaging
+    question: I staged draft A, edited the file again to draft B, and now want to unstage it. Which version can be lost from the index?
+    expected_paths: [knowledge/git/commands/solve-issues.md]
+    required_source_ids: [git-restore]
+  - id: git-pushed-secret-revert-limit
+    question: If a pushed commit exposed a credential, does reverting it remove the secret from Git history, and what must happen first?
+    expected_paths: [knowledge/git/commands/solve-issues.md, knowledge/git/troubleshooting/undo-and-recovery.md]
+    required_source_ids: [github-sensitive-data-removal]
+  - id: git-review-diff-versus-log-ranges
+    question: Why does git diff origin/develop...HEAD compare from the common ancestor while git log origin/develop..HEAD lists only topic commits?
+    expected_paths: [knowledge/git/commands/common-use-cases.md]
+    required_source_ids: [git-diff, git-revisions]
   - id: terraform-s3-state-lock-and-empty-state
     question: If my Terraform S3 backend has a bucket but no lock file configured and my state looks empty, is a create plan safe to apply?
     expected_paths: [knowledge/terraform/fundamentals/state-management.md]

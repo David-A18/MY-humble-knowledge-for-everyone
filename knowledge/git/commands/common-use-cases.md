@@ -41,6 +41,12 @@ sources:
   - id: git-worktree
     resource: https://git-scm.com/docs/git-worktree
     title: Git - git-worktree
+  - id: git-revisions
+    resource: https://git-scm.com/docs/gitrevisions
+    title: Git - Specifying revisions and ranges
+  - id: github-pull-requests
+    resource: https://docs.github.com/en/pull-requests/get-started/about-pull-requests
+    title: GitHub Docs - About pull requests
 ---
 
 # Common Git use cases
@@ -57,35 +63,55 @@ Start from a cloned repository with an `origin` remote, permission
 to push a topic branch, and a clean working tree. Run commands from
 the repository root. Read [Git fundamentals](../git-fundamentals.md)
 first if working tree, index, commit, branch, or remote are new terms.
+The `git switch` commands need Git 2.23 or later.[^git-switch]
 
 | Location | What it contains before you push |
 | --- | --- |
 | Working tree | The files you can edit. |
 | Index, also called staging area | The exact file versions selected for the next commit. |
-| Local topic branch | Your new commits; a commit stays here until you push. |
+| Local topic branch | Your new commits; they exist only locally until you push. |
 | Remote topic branch | A copy of pushed commits that collaborators can review. |
 
 A branch is a movable name for a commit. Making a local commit
 does **not** publish it; `git push` sends it to the remote.
-Pushing does **not** merge it into `develop` or automatically
-approve a pull request.[^git-commit][^git-push]
+Pushing does **not** merge it into `develop`. A pull request is a feature
+of the hosting service for proposing and reviewing the change; pushing
+does not automatically approve one.[^git-commit][^git-push]
+[^github-pull-requests]
 
 ## 1. Check the target and update the base
 
 ```bash
 git status --short --branch
 git remote -v
+```
+
+Stop if status shows file changes, or if `origin` is not the repository
+you intend. Save unfinished work before switching branches.[^git-status]
+Then:
+
+```bash
 git fetch origin
 git switch develop
 git pull --ff-only origin develop
 ```
 
-`status` should show no file changes before you switch branches.[^git-status]
-`remote -v` should name the repository you intend to use. Fetch
-updates your local knowledge of `origin`; it does not merge changes
+`git fetch` updates your local knowledge of `origin`; it does not merge changes
 into your current branch. The pull then updates local `develop`
 only when it can fast-forward. If it reports divergent history,
-stop and inspect that branch rather than forcing it forward.
+stop. Inspect commits unique to local `develop` and to the last-fetched
+`origin/develop`:
+
+```bash
+git log --oneline origin/develop..develop
+git log --oneline develop..origin/develop
+```
+
+The first list may contain local work you need to preserve. The second
+shows newer remote work as of the fetch. Do not reset or force push to
+make the error disappear; save a branch for wanted local commits and
+follow [Undo and recovery](../troubleshooting/undo-and-recovery.md) if
+the branch needs repair.[^git-revisions]
 [^git-fetch][^git-pull]
 
 If you already have uncommitted work, save it deliberately or use
@@ -144,12 +170,27 @@ git log origin/develop..HEAD --oneline
 git status --short --branch
 ```
 
-The three-dot diff compares the common starting commit with
-your branch tip. The log lists commits reachable from your
-branch but not from `origin/develop`. Check that the file
-list, diff, and commit list match the intended change. Fetch
-first so the remote-tracking reference is current.[^git-diff]
+The three-dot **diff** compares the common ancestor with your branch
+tip. The two-dot **log** lists commits reachable from your branch but
+not from `origin/develop`. In the example below, a two-dot **diff**
+from `origin/develop` to HEAD would compare Y with B and also show
+the remote's X and Y changes in reverse. Dot notation answers a
+different question in `diff` and `log`.[^git-diff][^git-revisions]
 [^git-log]
+
+```mermaid
+flowchart LR
+  base["M: common ancestor"] --> topic1["A: topic commit"] --> topic2["B: HEAD"]
+  base --> remote1["X: remote commit"] --> remote2["Y: origin/develop"]
+```
+
+Text alternative: topic commits A and B and remote commits X and Y
+branch from shared commit M. `git diff origin/develop...HEAD` compares
+M with B, showing the topic's file changes. `git log origin/develop..HEAD`
+lists A and B because they are reachable from HEAD but not from the
+remote branch. Check the file list, diff, and commit list before pushing.
+Fetch first so `origin/develop` reflects the remote as of that fetch.
+[^git-diff][^git-revisions]
 
 ```bash
 git push -u origin HEAD
@@ -162,6 +203,7 @@ first push; a push makes the commits visible to people with
 access to that remote. Afterward, open a pull request against
 the repository's required base branch, `develop` in this
 example, and wait for its review and checks.[^git-push]
+[^github-pull-requests]
 
 If the remote rejects the push, read the error before retrying.
 Authentication, permission, branch rules, or a changed remote
@@ -184,8 +226,21 @@ reviewable branch:
 
 `git stash` is a temporary local store, not a backup shared with
 the remote. Restoring a stash can conflict with later edits.
+To resume, inspect `git stash list`, then inspect the selected entry
+with `git stash show -p`, specifying its reference, for example
+`git stash show -p 'stash@{1}'`. Recheck the list immediately before
+`git stash apply` and again before any `git stash drop`: the number
+can shift when another stash is created. Apply the selected reference,
+then check files and status before dropping it. Plain `apply` does not
+guarantee the original staged state; `--index` requests that too, and
+can fail if it conflicts. Stashes are shared by this repository's
+worktrees, so choose the entry by its list output rather than assuming
+the latest one is yours.[^git-stash][^git-worktree]
 The worktree command requires the example branch name and directory
-to be unused; inspect `git worktree list` before creating one.
+to be unused; inspect `git worktree list` before creating one. A branch
+already checked out in another worktree cannot normally be checked out
+again. When the extra worktree is clean and no longer needed, remove it
+with `git worktree remove ../other-task` rather than deleting its folder.
 [^git-stash][^git-worktree]
 
 ## Verify your understanding
@@ -208,6 +263,8 @@ to be unused; inspect `git worktree list` before creating one.
   for the working-tree-to-index review.
 - [Git push](https://git-scm.com/docs/git-push)
   for upstream tracking and publishing.
+- [Revision ranges](https://git-scm.com/docs/gitrevisions)
+  for two-dot log ranges and branch comparisons.
 - [Git workflows](https://git-scm.com/docs/gitworkflows)
   for other team branching patterns.
 
@@ -224,3 +281,5 @@ to be unused; inspect `git worktree list` before creating one.
 [^git-log]: [Git - git-log](https://git-scm.com/docs/git-log).
 [^git-stash]: [Git - git-stash](https://git-scm.com/docs/git-stash).
 [^git-worktree]: [Git - git-worktree](https://git-scm.com/docs/git-worktree).
+[^git-revisions]: [Git - Specifying revisions and ranges](https://git-scm.com/docs/gitrevisions), source record `git-revisions`.
+[^github-pull-requests]: [GitHub Docs - About pull requests](https://docs.github.com/en/pull-requests/get-started/about-pull-requests), source record `github-pull-requests`.

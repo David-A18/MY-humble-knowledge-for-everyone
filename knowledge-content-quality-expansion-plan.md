@@ -1119,7 +1119,7 @@ published work.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Common Git use cases](knowledge/git/commands/common-use-cases.md) | Rewritten as an outcome-led branch workflow with context checks, staged review, three-dot branch comparison, first push, stop signals, and short routes to other tasks. | Current official Git documentation was checked. The core fetch/switch/pull/edit/add/diff/commit/push sequence succeeded in a disposable clone with a bare remote; no real GitHub pull request or reader test was run. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Git/Opus review; reader task for branch selection, staged-versus-working-tree reasoning, and remote publishing; freshness decision. |
+| [Common Git use cases](knowledge/git/commands/common-use-cases.md) | Rewritten as an outcome-led branch workflow with context checks, staged review, branch comparison and diagram, first push, stop signals, and short routes to other tasks. Focused review round 51 clarified two-dot log versus three-dot diff, divergent-base inspection, stash recovery, and hosted pull-request review. | Current official Git and GitHub documentation checked. The core fetch/switch/pull/edit/add/diff/commit/push sequence succeeded earlier in a disposable clone with a bare remote. A Git 2.53.0 disposable repository confirmed the revised diff/log example and shared stash visibility across worktrees; the diagram rendered and was inspected. Claude Opus 5.5 reviewed the guide read-only. No real GitHub pull request or reader task ran. | Independent Git review; reader task for branch selection, staged-versus-working-tree reasoning, and remote publishing; freshness decision. |
 
 ### Wave 55 (2026-10-02)
 
@@ -1129,7 +1129,7 @@ detailed recovery procedures remain in Undo and recovery.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Solve Git issues](knowledge/git/commands/solve-issues.md) | Rewritten as a Troubleshooting Guide with read-only first checks, a symptom-to-route table, an index-versus-working-tree example, and stop signals for destructive or shared-history changes. | Current official Git references were checked. The staged-file example was reproduced in a disposable repository; no shared-branch revert, lost-commit recovery, or reader test was run. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Git/Opus review; reader tasks for staged, shared-history, and lost-commit scenarios; freshness decision. |
+| [Solve Git issues](knowledge/git/commands/solve-issues.md) | Rewritten as a Troubleshooting Guide with read-only first checks, a symptom-to-route table, an index-versus-working-tree example, and stop signals for destructive or shared-history changes. Focused review round 51 added a pushed-secret stop path and corrected the staged-only and new-file unstaging outcomes. | Current official Git and GitHub documentation checked. A Git 2.53.0 disposable repository confirmed that unstaging replaces a staged-only version while leaving the later working-tree edit. Claude Opus 5.5 reviewed this guide and the linked recovery and fundamentals pages read-only. No actual secret, shared-branch revert, lost-commit recovery, or reader task was involved. | Independent Git/security review; reader tasks for staged, shared-history, secret, and lost-commit scenarios; freshness decision. |
 
 ### Wave 56 (2026-10-02)
 
@@ -1183,7 +1183,7 @@ and uses narrow changes before considering history edits. The prior
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) | Symptom-to-location table and decision diagram; a staged-versus-working-tree file example; scoped restore, revert, private soft reset, reflog branch, and untracked cleanup paths with explicit stop conditions. | Current official Git documentation checked. A Git 2.53.0 disposable repository reproduced the file example and confirmed restore, branch-backed soft reset, scoped clean, and revert. `git clean -n -- build/` summarized the directory, prompting an added individual-file inspection step. Mermaid diagram rendered and visually inspected. Claude Code remained at its weekly limit. | Independent Git and Opus review; novice reader tasks including shared commit and lost tip; complex conflict and sparse-checkout cases; freshness decision. |
+| [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) | Symptom-to-location table and decision diagram; a staged-versus-working-tree file example; scoped restore, revert, private soft reset, reflog branch, and untracked cleanup paths with explicit stop conditions. Focused review rounds 2 and 51 corrected combined-restore loss, in-progress operations, recovery-branch checks, staged-only preservation, and a pushed-secret stop. | Current official Git and GitHub documentation checked. A Git 2.53.0 disposable repository reproduced the file example and confirmed restore, branch-backed soft reset, scoped clean, and revert; round 51 separately reproduced staged-only loss. `git clean -n -- build/` summarized the directory, prompting an added individual-file inspection step. Mermaid diagram rendered and visually inspected. Claude Opus 5.5 reviewed the guide read-only in round 2 and as linked context in round 51. | Independent Git/security review; novice reader tasks including shared commit and lost tip; complex conflict and sparse-checkout cases; freshness decision. |
 
 ### Wave 61 (2026-10-02)
 
@@ -3013,6 +3013,27 @@ HashiCorp and GitHub documentation was checked. Two static retrieval cases
 cover S3 locking and saved-plan exposure. No AWS or Terraform run, independent
 technical or security review, measured search, or novice reader task ran;
 the revised pages remain `draft`.
+
+### Focused review round 51 (2026-10-11)
+
+Reviewed the Common Git use cases and Solve Git issues guides with Claude
+Opus 5.5 read-only, including their linked recovery and fundamentals pages.
+The branch workflow now shows why a three-dot diff and two-dot log answer
+different questions, gives read-only commands for a divergent base branch,
+and explains how to identify and restore a stash. The revised diagram was
+rendered and inspected.
+
+The troubleshooting route now checks both staged and working-tree versions
+before unstaging. It stops readers with a pushed secret from treating revert
+as erasure: rotate or revoke the credential first, then follow a focused
+procedure. The linked recovery page carries the same boundary, while Git
+fundamentals now links to official amend guidance and does not promise a
+generic force-push path. Current Git and GitHub primary documentation was
+checked. Disposable Git 2.53.0 repositories reproduced the staged-only
+version loss, branch-range example, and stash visibility across worktrees;
+three static retrieval cases cover the affected questions. No actual secret,
+hosted pull request, independent human review, or novice reader task ran;
+all revised concepts remain `draft`.
 
 ### Candidates for the next wave
 

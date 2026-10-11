@@ -29,6 +29,12 @@ sources:
   - id: git-clean
     resource: https://git-scm.com/docs/git-clean
     title: Git - git-clean
+  - id: github-sensitive-data-removal
+    resource: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository
+    title: GitHub Docs - Removing sensitive data from a repository
+  - id: git-revisions
+    resource: https://git-scm.com/docs/gitrevisions
+    title: Git - Specifying revisions and index entries
 ---
 
 # Solve Git issues
@@ -51,8 +57,10 @@ git diff --staged
 git log --oneline --decorate --max-count=8
 ```
 
-`status` identifies changed and untracked paths. The first diff
-shows unstaged tracked edits; the second shows what is staged.
+The full `status` also reports an in-progress operation; short status
+gives a compact path list. Untracked files appear in status but not in
+either ordinary diff. The first diff shows unstaged tracked edits; the
+second shows what is staged.
 The log shows recent commits. If Git reports a merge, rebase,
 cherry-pick, or revert in progress, identify that operation
 before trying an unrelated recovery command.[^git-status]
@@ -66,20 +74,22 @@ as shared history.
 
 | Symptom | What the checks should show | First route |
 | --- | --- | --- |
-| A file is staged but should stay edited | `git diff --staged` shows it. | Unstage only that path with `git restore --staged -- <path>`; the working-tree edit stays. |
+| A file is staged but should stay edited | `git diff --staged -- <path>` shows the staged change; `git diff -- <path>` shows any later unstaged edit. | Follow the [path-scoped unstaging procedure](../troubleshooting/undo-and-recovery.md#if-a-file-was-staged-by-mistake); protect a staged-only version before replacing it. |
 | An unstaged tracked edit should be discarded | `git diff -- <path>` shows the exact unwanted lines. | Follow the single-file restore procedure in [Undo and recovery](../troubleshooting/undo-and-recovery.md). |
 | A file was deleted from the working tree | `git status` marks a tracked path deleted. | Use the [tracked-file recovery checks](../troubleshooting/undo-and-recovery.md#if-a-tracked-file-was-deleted-by-mistake) to distinguish an unstaged from a staged deletion. |
 | An unwanted file was never tracked | `git status` shows `??`. | Inspect that path, then use the [directory-scoped clean preview](../troubleshooting/undo-and-recovery.md#if-untracked-files-should-be-deleted). |
-| The last commit is wrong but private | The commit is only local and no one depends on it. | Back up the branch, then consider a [content-preserving reset](../troubleshooting/undo-and-recovery.md#if-the-commit-is-private-and-its-content-should-stay). |
+| The last commit is wrong but private | Log and upstream comparison identify the commit, but cannot prove that no one else has it. | Confirm it is private, back up the branch, then consider a [content-preserving reset](../troubleshooting/undo-and-recovery.md#if-the-commit-is-private-and-its-content-should-stay). |
+| A pushed commit contains a credential or other secret | The secret was published in a commit, even if a later commit removes it. | Treat it as exposed. Revoke or rotate the credential first; follow a focused [sensitive-data procedure](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository). Revert alone does not remove the old commit.[^github-sensitive-data-removal] |
 | A pushed commit is wrong | Others may have the commit. | Follow the [shared-commit revert procedure](../troubleshooting/undo-and-recovery.md#if-a-bad-commit-has-been-shared), and be ready to resolve or abort a conflict. |
 | A commit seems lost after reset, amend, or rebase | The commit is absent from normal log output. | Follow the [reflog recovery procedure](../troubleshooting/undo-and-recovery.md#if-a-branch-tip-or-commit-seems-lost) to name the right commit. |
 | Git reports an operation in progress | `git status` names the operation and conflicted paths. | Follow that operation's continue or abort instructions; first decide whether to keep the conflict resolutions you made. |
 
-Unstaging is usually reversible because it leaves your file
-content alone. Restoring a file, cleaning untracked files, and
-`reset --hard` can discard content that Git cannot recover if it
-was never committed. `git revert` records a new commit rather
-than moving a shared branch backward.[^git-restore][^git-clean]
+Unstaging leaves the working-tree file alone, but can replace a
+different version that exists only in the index. Restoring a file,
+cleaning untracked files, and `reset --hard` can discard content;
+assume an uncommitted version may be lost permanently. `git revert`
+records a new commit rather than moving a shared branch backward.
+[^git-restore][^git-clean]
 [^git-reset][^git-revert]
 
 ## Example: you staged the wrong note
@@ -91,16 +101,30 @@ next snapshot:
 
 ```bash
 git diff --staged -- knowledge/glossary.md
+git diff -- knowledge/glossary.md
+```
+
+Stop if the second diff has output: the staged version may exist only
+in the index. Inspect it with `git show :knowledge/glossary.md`.
+If you need to keep that exact version, save the output to a new,
+private file outside the repository before unstaging; check that the
+destination does not already exist and protect any sensitive content.
+The `:path` form names the file's staged version.[^git-revisions]
+When you intend to replace the staged version, continue:
+
+```bash
 git restore --staged -- knowledge/glossary.md
+git status --short -- knowledge/glossary.md
 git diff --staged -- knowledge/glossary.md
 git diff -- knowledge/glossary.md
 ```
 
-Expected result: the second staged diff is empty for that path,
-while the final working-tree diff still shows your edit. The
-command changes the index copy, **not** the working-tree file.
-If you had already committed the change, this procedure would
-not remove it from that commit.[^git-restore]
+For an existing tracked file, the later staged diff is empty and the
+final working-tree diff shows the file edit. A newly added file
+instead becomes untracked (`??` in status) and does not appear in the
+final ordinary diff. The command changes the index copy, **not** the
+working-tree file. If you had already committed the change, this
+procedure would not remove it from that commit.[^git-restore]
 
 ## Stop before a destructive or shared-history change
 
@@ -108,6 +132,10 @@ not remove it from that commit.[^git-restore]
   for that exact path before using `restore`.
 - If a commit may be shared, do not guess with `reset` or a force
   push. Prefer the public-history-safe revert route.
+- If a pushed commit contains a secret, revoke or rotate it first.
+  Reverting does not remove the original commit or end the exposure.
+  [GitHub's sensitive-data procedure](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+  explains when coordinated history removal may be needed.
 - If a cleanup preview includes work you need, narrow the path
   or move that work elsewhere before running `git clean`.
 - If the branch tip moved unexpectedly, inspect reflog before
@@ -142,6 +170,8 @@ cannot contact a remote, start with
 - [Git reflog](https://git-scm.com/docs/git-reflog)
   and [Git clean](https://git-scm.com/docs/git-clean)
   for local recovery and untracked-file cleanup.
+- [Remove sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+  when a pushed commit exposed a credential.
 
 [Back to Git commands](index.md)
 
@@ -152,3 +182,5 @@ cannot contact a remote, start with
 [^git-reset]: [Git - git-reset](https://git-scm.com/docs/git-reset).
 [^git-reflog]: [Git - git-reflog](https://git-scm.com/docs/git-reflog).
 [^git-clean]: [Git - git-clean](https://git-scm.com/docs/git-clean).
+[^github-sensitive-data-removal]: [GitHub Docs - Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository), source record `github-sensitive-data-removal`.
+[^git-revisions]: [Git - Specifying revisions and index entries](https://git-scm.com/docs/gitrevisions), source record `git-revisions`.

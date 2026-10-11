@@ -1966,7 +1966,9 @@
         "git-push",
         "git-log",
         "git-stash",
-        "git-worktree"
+        "git-worktree",
+        "git-revisions",
+        "github-pull-requests"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2044,7 +2046,9 @@
         "git-revert",
         "git-reset",
         "git-reflog",
-        "git-clean"
+        "git-clean",
+        "github-sensitive-data-removal",
+        "git-revisions"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2369,7 +2373,9 @@
         "git-clean",
         "git-branch",
         "git-ls-tree",
-        "pro-git-undoing-things"
+        "pro-git-undoing-things",
+        "github-sensitive-data-removal",
+        "git-revisions"
       ],
       "stale_after": null,
       "status": "draft",

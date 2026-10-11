@@ -38,6 +38,12 @@ sources:
   - id: pro-git-undoing-things
     resource: https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things
     title: Pro Git - Undoing Things
+  - id: github-sensitive-data-removal
+    resource: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository
+    title: GitHub Docs - Removing sensitive data from a repository
+  - id: git-revisions
+    resource: https://git-scm.com/docs/gitrevisions
+    title: Git - Specifying revisions and index entries
 ---
 
 # Undo and recovery
@@ -119,8 +125,11 @@ git diff -- path/to/file
 ```
 
 If both diffs show changes, the staged version may exist only in the
-index. Unstaging replaces that version there; save it separately if you
-need it. When you are ready:
+index. Inspect it with `git show :path/to/file`. If you need it,
+save that output to a new private file outside the repository before
+unstaging; check that the destination does not already exist and
+protect sensitive content. The `:path` form names the file's staged
+version.[^git-revisions] When you are ready:
 
 ```bash
 git restore --staged -- path/to/file
@@ -221,6 +230,10 @@ use the combined command above until you know which version it will copy.
 
 A revert makes a **new commit** that reverses the selected commit's
 changes. It keeps the existing commit history available to everyone.
+If the commit exposed a credential or other secret, stop here. Revoke
+or rotate the credential first; a revert leaves the secret in the old
+commit. Follow a focused [sensitive-data procedure](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+for any coordinated history removal.[^github-sensitive-data-removal]
 Use the exact commit ID after checking the log and the diff. Git
 requires a clean working tree for this ordinary revert flow.
 [^git-revert]
@@ -341,6 +354,8 @@ shows nothing.[^git-status][^git-clean]
 - The repository uses sparse checkout or submodules; broad restore
   and reset commands can affect more than the visible path.
 - A shared branch would require history rewriting or a force push.
+- A pushed commit exposed a secret. Revoke or rotate the credential
+  before deciding how to handle repository history.
 - Object corruption, missing objects, or an unknown remote state is
   involved. See [Git troubleshooting commands](../commands/troubleshooting-commands.md).
 
@@ -360,6 +375,8 @@ shows nothing.[^git-status][^git-clean]
   [reset a private branch](https://git-scm.com/docs/git-reset), and
   [inspect reflog](https://git-scm.com/docs/git-reflog).
 - [Preview untracked cleanup](https://git-scm.com/docs/git-clean).
+- [Respond to a published secret](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+  before considering a revert or history rewrite.
 - Return to [Solve Git issues](../commands/solve-issues.md) if you still
   need help locating the mistake, or [Git fundamentals](../git-fundamentals.md)
   for the working tree, index, commit, and remote model.
@@ -376,3 +393,5 @@ shows nothing.[^git-status][^git-clean]
 [^git-branch]: [git branch documentation](https://git-scm.com/docs/git-branch).
 [^git-ls-tree]: [git ls-tree documentation](https://git-scm.com/docs/git-ls-tree).
 [^pro-git-undoing-things]: [Pro Git: Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things).
+[^github-sensitive-data-removal]: [GitHub Docs - Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository), source record `github-sensitive-data-removal`.
+[^git-revisions]: [Git - Specifying revisions and index entries](https://git-scm.com/docs/gitrevisions), source record `git-revisions`.
