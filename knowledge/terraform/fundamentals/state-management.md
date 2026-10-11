@@ -41,6 +41,12 @@ sources:
   - id: terraform-state-cli-tutorial
     resource: https://developer.hashicorp.com/terraform/tutorials/state/state-cli
     title: HashiCorp tutorial - Manage Terraform state
+  - id: terraform-s3-backend
+    resource: https://developer.hashicorp.com/terraform/language/backend/s3
+    title: Terraform - S3 backend
+  - id: terraform-import
+    resource: https://developer.hashicorp.com/terraform/language/import
+    title: Terraform - Import existing resources
 ---
 
 # Terraform state management
@@ -109,9 +115,10 @@ replacement, or target environment is a reason to stop.
 
 ## A useful analogy, with limits
 
-Think of state as a museum's collection register. A catalog number points
-to one physical artifact, and the register records where staff last placed
-it. Renaming a display label should not make staff acquire a second artifact.
+Think of state as a museum's collection register. A catalog number connects
+an entry to one physical artifact, and the entry records details about it.
+If staff rename an entry, they must carry its existing artifact binding to
+the new name. Otherwise the register may appear to describe a new artifact.
 
 The analogy has limits:
 
@@ -134,7 +141,7 @@ created or modified for this page.
 
 | Event | What changed | What to check in the plan |
 | --- | --- | --- |
-| An operator changes a server setting outside Terraform | The real object changed; configuration and prior state did not. | Does the plan propose to restore the configured setting? If the outside change should remain, first decide how to represent it in configuration. |
+| An operator changes a setting that this configuration controls outside Terraform | The real object changed; configuration and prior state did not. | Does the plan propose to restore the configured setting? If the outside change should remain, first decide how to represent it in configuration. |
 | A contributor renames `aws_instance.learning_web` to `aws_instance.course_web` | The Terraform address changed; the intended remote object did not. | Add a reviewed `moved` block so the existing binding follows the new address, then confirm the plan does not replace the server merely because of the rename.[^terraform-moved-blocks] |
 | A team stops managing the server but keeps it running | Terraform ownership changes; the remote object should remain. | Replace the resource block with a reviewed `removed` block whose `lifecycle` sets `destroy = false`; verify the plan leaves the server in place. Simply deleting the resource block normally requests destruction.[^terraform-removed-blocks] |
 
@@ -186,6 +193,16 @@ Terraform automatically locks operations that could write state
 lock, it does not continue. Do not use `-lock=false` as a routine way
 past another run; force-unlock is for your own stale lock after
 automatic unlocking failed.[^terraform-state-locking]
+
+For example, an S3 backend stores state remotely but does not enable its
+lock file by default: `use_lockfile` must be set to `true`. Check the bucket,
+key, workspace, and lock setting together. A lock for one state path does not
+protect a different path.[^terraform-s3-backend]
+
+Remote state storage does not make every local file harmless. Saved plan files
+can contain the prior state, and `.terraform/terraform.tfstate` can contain
+backend settings. Protect the initialized working directory and any artifact
+used to move a saved plan between jobs.[^terraform-plan][^terraform-backends]
 
 Backend configuration has its own rules: a root module can have only
 one backend block, and that block cannot read ordinary input
@@ -241,6 +258,12 @@ object back.
 
 - A plan proposes to destroy or replace an object you meant to keep.
 - The workspace, backend, account, or project is not the intended one.
+- A familiar managed resource is missing from state, or state unexpectedly
+  appears empty. Stop before applying a plan that proposes creating it again;
+  locate the intended state and review the backend or recovery path first.
+  If the object exists but is genuinely unmanaged, follow Terraform's
+  [import procedure](https://developer.hashicorp.com/terraform/language/import)
+  rather than assuming an empty state is safe.[^terraform-import]
 - A lock belongs to an active run or its owner is unknown.
 - A state operation would make two addresses claim one real object, or
   make Terraform forget an object without a clear new owner.
@@ -268,6 +291,7 @@ object back.
 - Read [state locking](https://developer.hashicorp.com/terraform/language/state/locking)
   and [sensitive data](https://developer.hashicorp.com/terraform/language/manage-sensitive-data)
   before a shared deployment.
+- For S3 state, check [lock-file setup and permissions](https://developer.hashicorp.com/terraform/language/backend/s3).
 - Use [moved blocks](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring)
   and [removed blocks](https://developer.hashicorp.com/terraform/language/state/remove)
   for a reviewed ownership change.
@@ -285,3 +309,5 @@ object back.
 [^terraform-local-backend]: [Terraform local backend](https://developer.hashicorp.com/terraform/language/backend/local), source record `terraform-local-backend`.
 [^terraform-workspaces]: [Terraform CLI workspaces](https://developer.hashicorp.com/terraform/cli/workspaces), source record `terraform-workspaces`.
 [^terraform-state-cli-tutorial]: [HashiCorp tutorial - Manage Terraform state](https://developer.hashicorp.com/terraform/tutorials/state/state-cli), source record `terraform-state-cli-tutorial`.
+[^terraform-s3-backend]: [Terraform - S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3), source record `terraform-s3-backend`.
+[^terraform-import]: [Terraform - Import existing resources](https://developer.hashicorp.com/terraform/language/import), source record `terraform-import`.

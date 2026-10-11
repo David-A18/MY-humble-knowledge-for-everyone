@@ -198,6 +198,9 @@ State is also sensitive. With a remote backend, Terraform does not keep state
 on local disk in normal operation, which the documentation calls a major
 benefit when state contains sensitive values.[^terraform-backends] The bucket
 then becomes the thing to protect: whoever can read it can read the state.
+Saved plans can still contain prior state, and the initialized working
+directory can contain sensitive backend settings. Protect those local files
+and any CI archive that carries them.[^terraform-backends]
 
 Backend access has its own permission needs, even if the same role supplies
 both provider and backend credentials. For S3 these include listing the
@@ -277,8 +280,8 @@ Where the analogy stops being accurate:
 - **Losing state does not delete resources.** They keep running and may keep
   costing money, but Terraform loses their bindings. Restore a known-good
   state version or backup if one exists; otherwise recovery may require
-  carefully importing existing resources, not applying an empty
-  plan.[^terraform-s3-backend][^terraform-import]
+  carefully importing existing resources, not applying a plan made from empty
+  state.[^terraform-s3-backend][^terraform-import]
 - **Destroy is as real as apply.** Removing resources through Terraform
   deletes them in AWS. Check the account and Region before a destroy with the
   same care as before an apply.

@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: terraform-s3-state-lock-and-empty-state
+    question: If my Terraform S3 backend has a bucket but no lock file configured and my state looks empty, is a create plan safe to apply?
+    expected_paths: [knowledge/terraform/fundamentals/state-management.md]
+    required_source_ids: [terraform-s3-backend, terraform-import]
+  - id: terraform-public-plan-artifact-and-follow-up
+    question: Can I put a Terraform production plan in a public GitHub Actions artifact, and what must match when checking the result after apply?
+    expected_paths: [knowledge/terraform/commands/core-workflow.md]
+    required_source_ids: [terraform-plan, github-artifact-download]
   - id: kubernetes-crd-type-versus-controller
     question: If I install a CRD and create a valid ApplicationNetwork object, why might no network appear, and what did the API server do with the object?
     expected_paths: [knowledge/kubernetes/core-objects/custom-resources-and-crds.md]

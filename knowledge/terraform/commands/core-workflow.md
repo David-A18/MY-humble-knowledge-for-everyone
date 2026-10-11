@@ -50,6 +50,12 @@ sources:
   - id: terraform-aws-caller-identity
     resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity
     title: AWS provider - caller identity data source
+  - id: terraform-automation
+    resource: https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform
+    title: HashiCorp tutorial - Running Terraform in automation
+  - id: github-artifact-download
+    resource: https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts
+    title: GitHub Docs - Downloading workflow artifacts
 ---
 
 # Review and apply a Terraform change
@@ -87,10 +93,12 @@ used by the **AWS CLI only**. Inspect the Terraform AWS provider's
 `profile`, `assume_role`, aliases, and region, plus the backend's own
 credential settings; they can differ from the CLI and from each other.
 If the project includes an `aws_caller_identity` data source, check its
-account in the plan if it is resolved for the provider configuration
-used by the target resource. Otherwise follow the project's
-provider-specific identity check before approval; a CLI result alone
-is insufficient.
+account in the plan if the configuration actually references it and it is
+resolved for the provider configuration used by the target resource.
+Otherwise follow the project's provider-specific identity check before
+approval; a CLI result alone is insufficient. For an AWS-only project,
+`allowed_account_ids` in the provider can reject an unexpected account;
+verify the backend account separately.[^terraform-aws-provider]
 `terraform workspace show` checks the Terraform workspace, **not** the
 cloud account.[^aws-caller-identity][^terraform-aws-provider]
 [^terraform-s3-backend][^terraform-aws-caller-identity]
@@ -108,6 +116,8 @@ working data and saved plans:
 *.tfplan
 ```
 
+If your project uses a different plan filename or extension, add a matching
+ignore pattern and verify it with `git status` before saving a plan.
 Do not ignore `.terraform.lock.hcl`; review and commit that provider lock
 file with the configuration. Review variable files and crash logs separately
 because they may also contain secrets.[^terraform-dependency-lock]
@@ -247,10 +257,14 @@ reason, and destroy action.
 > and the remote objects before applying.
 
 Treat `change.tfplan` and its displayed details as sensitive. Keep the file
-out of Git, restrict any CI artifact, and remove it according to the
-project's retention policy. The plan file includes configuration,
-input values, plan options, and potentially cleartext sensitive
-values.[^terraform-plan]
+out of Git and remove it according to the project's retention policy. The
+plan file includes prior state as well as configuration, input values, plan
+options, and potentially cleartext sensitive values.[^terraform-plan][^terraform-plan-tutorial]
+On GitHub, signed-in people with repository read access can download Actions
+artifacts, including readers of a public repository. Do not upload a plaintext
+production plan as a public-repository artifact. Use a restricted store or
+encrypt it, and preserve the link from the reviewed file to the file applied.
+[^github-artifact-download][^terraform-automation]
 
 ## 4. Apply the plan you reviewed
 
@@ -281,6 +295,8 @@ If Terraform reports that a saved plan is stale because the state changed
 after planning, make and review a new plan. Do the same if the intended
 target changed. Even a saved plan is not proof that no one changed a
 remote object after it was created.[^terraform-plan]
+HashiCorp recommends one outstanding plan at a time and applying the saved
+plan that was actually reviewed.[^terraform-automation]
 
 ## 5. Check Terraform and the service
 
@@ -288,6 +304,10 @@ remote object after it was created.[^terraform-plan]
 terraform plan
 ```
 
+A follow-up plan is comparable only when it uses the same intended backend,
+workspace, provider target, variable values and files, and relevant plan
+options as the reviewed run. Reproduce those inputs here; a bare command is
+only correct when that is how this project's inputs are supplied.
 A no-change plan is useful evidence that configuration, state, and the
 provider's current view agree at this moment. It does not prove that
 the staging web service is healthy for users. Run the project's
@@ -326,6 +346,8 @@ application failure.
 - [Inspect a saved plan](https://developer.hashicorp.com/terraform/cli/commands/show)
   and [apply it](https://developer.hashicorp.com/terraform/cli/commands/apply).
 - [Understand the provider dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock).
+- [Run Terraform in automation](https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform)
+  when a separate job reviews and applies a saved plan.
 
 [Back to Terraform commands](index.md) |
 [Back to Terraform index](../index.md) |
@@ -345,3 +367,5 @@ application failure.
 [^terraform-aws-provider]: [HashiCorp AWS provider documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), source record `terraform-aws-provider`.
 [^terraform-s3-backend]: [Terraform S3 backend](https://developer.hashicorp.com/terraform/language/backend/s3), source record `terraform-s3-backend`.
 [^terraform-aws-caller-identity]: [AWS provider - caller identity data source](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity), source record `terraform-aws-caller-identity`.
+[^terraform-automation]: [HashiCorp tutorial - Running Terraform in automation](https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform), source record `terraform-automation`.
+[^github-artifact-download]: [GitHub Docs - Downloading workflow artifacts](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts), source record `github-artifact-download`.

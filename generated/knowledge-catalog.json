@@ -1337,7 +1337,9 @@
         "terraform-plan-tutorial",
         "github-deployment-environments",
         "github-oidc-reference",
-        "github-artifact-download"
+        "github-artifact-download",
+        "github-runner-choice",
+        "github-self-hosted-runners"
       ],
       "stale_after": null,
       "status": "draft",
@@ -4170,7 +4172,9 @@
         "terraform-external-data-source",
         "terraform-aws-provider",
         "terraform-s3-backend",
-        "terraform-aws-caller-identity"
+        "terraform-aws-caller-identity",
+        "terraform-automation",
+        "github-artifact-download"
       ],
       "stale_after": null,
       "status": "draft",
@@ -4225,7 +4229,9 @@
         "terraform-state-cli",
         "terraform-local-backend",
         "terraform-workspaces",
-        "terraform-state-cli-tutorial"
+        "terraform-state-cli-tutorial",
+        "terraform-s3-backend",
+        "terraform-import"
       ],
       "stale_after": null,
       "status": "draft",

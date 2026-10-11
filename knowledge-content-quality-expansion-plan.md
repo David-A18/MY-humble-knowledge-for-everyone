@@ -1171,8 +1171,8 @@ the new text, so both now show `draft` status and need fresh review.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Terraform state management](knowledge/terraform/fundamentals/state-management.md) | Explains address-to-object binding, backend and lock boundaries, drift, and reviewed moves/removals through an invented server, bounded register analogy, diagram and text alternative, and understanding checks. | Current official HashiCorp state, backend, locking, plan, sensitive-data, moved, and removed documentation checked. Mermaid diagram rendered and visually inspected. The example was not run. Claude Code remained at its weekly limit. | Independent Terraform and Opus review; novice reader test; freshness decision. |
-| [Review and apply a Terraform change](knowledge/terraform/commands/core-workflow.md) | Turns a command reference into a target-to-verification How-to Guide with expected evidence at each stage, saved-plan approval boundary, partial-apply caution, and service check. | Current official HashiCorp CLI and lock-file documentation checked. The `fmt -recursive -check` and `workspace show` commands passed in the separate disposable local lab; no cloud plan or apply ran for the illustrative staging service. Claude Code remained at its weekly limit. | Independent Terraform and Opus review; project-specific approval, backend, and service checks; novice reader test; freshness decision. |
+| [Terraform state management](knowledge/terraform/fundamentals/state-management.md) | Explains address-to-object binding, backend and lock boundaries, drift, and reviewed moves/removals through an invented server, bounded register analogy, diagram and text alternative, and understanding checks. Focused review in round 50 clarified the S3 lock setting, empty-state stop signal, and sensitive local files. | Current official HashiCorp state, backend, locking, plan, sensitive-data, moved, removed, S3, and import documentation checked. Mermaid diagram rendered and visually inspected in the initial pass. The example was not run. Claude Opus 5.5 reviewed the page read-only in round 50. | Independent Terraform review; novice reader test; freshness decision. |
+| [Review and apply a Terraform change](knowledge/terraform/commands/core-workflow.md) | Turns a command reference into a target-to-verification How-to Guide with expected evidence at each stage, saved-plan approval boundary, partial-apply caution, and service check. Focused review in round 50 clarified plan-file exposure, provider identity, one outstanding plan, and comparable verification inputs. | Current official HashiCorp CLI, lock-file, automation, and GitHub artifact documentation checked. The `fmt -recursive -check` and `workspace show` commands passed in the separate disposable local lab; no cloud plan or apply ran for the illustrative staging service. Claude Opus 5.5 reviewed the page read-only in round 50. | Independent Terraform and security review; project-specific approval, backend, and service checks; novice reader test; freshness decision. |
 
 ### Wave 60 (2026-10-02)
 
@@ -2995,6 +2995,24 @@ AWS, GitHub, and Kubernetes primary sources were checked; diagrams rendered
 and were inspected. No Terraform command, AWS resource, image build, cluster
 deployment, independent domain review, measured search, or novice reader task
 ran; both concepts remain `draft`.
+
+### Focused review round 50 (2026-10-11)
+
+Reviewed Terraform state management and the core command workflow with Claude
+Opus 5.5 read-only. The state guide now describes its register analogy without
+implying Terraform infers renamed addresses, names S3's explicit lock-file
+setting, and stops on unexpectedly empty state before a duplicate-creation
+plan. The command guide warns that saved plans carry prior state and must not
+be uploaded as plaintext artifacts to a public repository; it also makes
+provider identity and follow-up plan inputs explicit.
+
+The linked GitHub Actions and Terraform-on-AWS guides now agree on isolated,
+uncredentialed pull-request validation, sensitive initialized directories,
+and the difference between an empty state and a no-change plan. Official
+HashiCorp and GitHub documentation was checked. Two static retrieval cases
+cover S3 locking and saved-plan exposure. No AWS or Terraform run, independent
+technical or security review, measured search, or novice reader task ran;
+the revised pages remain `draft`.
 
 ### Candidates for the next wave
 

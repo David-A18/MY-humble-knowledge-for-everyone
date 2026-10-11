@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified Terraform state, command, CI, and AWS guides around S3 locking, empty-state stop signals, sensitive saved plans, isolated PR validation, and comparable verification; added two static retrieval cases.
 - Clarified Terraform-on-AWS account, Region, backend, and state boundaries and the end-to-end path from PR checks through a tested merged-commit image to user checks and recovery; added two static retrieval cases.
 - Clarified the GitHub Actions with Terraform and Kubernetes learning paths, including post-merge saved-plan review, cluster identity mapping, rollout recovery limits, and two static retrieval cases.
 - Clarified GitHub Actions PR and deployment credential boundaries and the AWS OIDC environment-subject example; aligned the linked IAM denial path and added two static retrieval cases.
