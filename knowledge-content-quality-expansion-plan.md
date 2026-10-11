@@ -471,10 +471,10 @@ maintainer value was added, and no example was run.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [End-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) | Rewritten to the standard. | Keyed citations to GitHub, Terraform, and Kubernetes documentation; the service walk-through is labelled illustrative. | Independent technical review; reader test; freshness decision. |
+| [End-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) | Rewritten to the standard; focused review in round 49 separated PR checks, review and merge, an image built and tested from the merged commit, optional infrastructure work, production rollout, user check, and recovery. | Keyed current GitHub, Terraform, and Kubernetes citations; Claude Opus 5.5 reviewed the draft read-only. The service walk-through is illustrative, not an executed pipeline. | Independent technical review; reader test; freshness decision. |
 | [GitHub Actions with Kubernetes](knowledge/cross-topic-guides/github-actions-with-kubernetes.md) | Rewritten to the standard; focused review in round 48 separated GitHub-to-cloud, cloud-to-cluster, and cluster authorization, and clarified rollout failure and recovery. | Keyed current GitHub, AWS EKS, and Kubernetes citations; Claude Opus 5.5 reviewed the draft read-only. No workflow file or cluster run. | Independent technical and security review; reader test; freshness decision. |
 | [GitHub Actions with Terraform](knowledge/cross-topic-guides/github-actions-with-terraform.md) | Rewritten to the standard; focused review in round 48 separated throwaway PR plans from a saved plan made from the merged commit and reviewed before apply. | Keyed current HashiCorp and GitHub citations; Claude Opus 5.5 reviewed the draft read-only. The pipeline walk-through is invented; no Terraform run. | Independent technical and security review; reader test; freshness decision. |
-| [Terraform on AWS](knowledge/cross-topic-guides/terraform-on-aws.md) | Rewritten to the standard. | Keyed citations to the S3 backend, backend, locking, AWS provider, and AWS IAM documentation; the wrong-account example is reasoned, with placeholder account numbers and no AWS call. The AWS provider registry page is rendered by script, so its content was checked against the provider's documentation source. | Independent technical and security review; reader test; freshness decision. |
+| [Terraform on AWS](knowledge/cross-topic-guides/terraform-on-aws.md) | Rewritten to the standard; focused review in round 49 separated provider and backend credentials, effective account, regional defaults and overrides, empty-state risk, and state recovery. | Keyed current HashiCorp, AWS provider, and AWS S3 citations; Claude Opus 5.5 reviewed the draft read-only. The wrong-account example is invented, with placeholder accounts and no AWS call. | Independent technical and security review; reader test; freshness decision. |
 | [Observability stack](knowledge/cross-topic-guides/observability-stack.md) | Rewritten to the standard; focused beginner review in round 40. | Keyed citations to OpenTelemetry and Google SRE documentation; the incident story is invented. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; a check against one concrete stack; reader test; freshness decision. |
 
 The two Terraform pages have no analogy of their own. They rely on the
@@ -2975,6 +2975,26 @@ Current HashiCorp, GitHub, Kubernetes, and AWS primary sources were checked.
 The diagrams were rendered and inspected. No Terraform or Kubernetes run,
 independent technical or security review, measured search, or novice reader
 task ran; both concepts remain `draft`.
+
+### Focused review round 49 (2026-10-11)
+
+Reviewed the Terraform-on-AWS and end-to-end deployment cross-topic guides
+with Claude Opus 5.5 read-only. The Terraform guide now shows provider and
+backend access as separate paths, explains the effective provider account and
+AWS provider v6 Region overrides, and replaces the ambiguous wrong-account
+story with an explicitly empty-state example. Its bounded work-crew analogy
+explains why state loss leaves AWS resources running. The S3 section now
+distinguishes recoverable retained versions from S3's default encryption.
+
+The deployment guide now follows PR validation, review and merge, conditional
+infrastructure work, a trusted build and test of the image from the merged
+commit, rollout, user check, and recovery. It no longer treats a digest by
+itself as proof of testing or a cluster rollback as a repository fix. Two
+static retrieval cases cover those mistaken inferences. Current HashiCorp,
+AWS, GitHub, and Kubernetes primary sources were checked; diagrams rendered
+and were inspected. No Terraform command, AWS resource, image build, cluster
+deployment, independent domain review, measured search, or novice reader task
+ran; both concepts remain `draft`.
 
 ### Candidates for the next wave
 

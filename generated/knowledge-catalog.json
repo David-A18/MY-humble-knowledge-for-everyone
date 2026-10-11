@@ -1275,7 +1275,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Understand the delivery chain from a reviewed change to a working service: what each stage proves, what it cannot prove, and who owns recovery.",
+      "description": "Understand the delivery chain from a proposed change to a working service: what each stage proves, what it cannot prove, and who owns recovery.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/end-to-end-deployment.md",
@@ -1471,10 +1471,14 @@
       "path": "knowledge/cross-topic-guides/terraform-on-aws.md",
       "source_ids": [
         "terraform-aws-provider",
+        "terraform-aws-region-guide",
         "terraform-s3-backend",
         "terraform-backends",
         "terraform-state-locking",
-        "aws-iam-best-practices"
+        "aws-iam-best-practices",
+        "terraform-import",
+        "aws-vpc-overview",
+        "s3-default-encryption"
       ],
       "stale_after": null,
       "status": "draft",

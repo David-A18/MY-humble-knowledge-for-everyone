@@ -1,7 +1,7 @@
 ---
 type: "Explanation"
 title: "End-to-end deployment"
-description: "Understand the delivery chain from a reviewed change to a working service: what each stage proves, what it cannot prove, and who owns recovery."
+description: "Understand the delivery chain from a proposed change to a working service: what each stage proves, what it cannot prove, and who owns recovery."
 tags: [cross-topic-guides, end-to-end-deployment]
 status: draft
 maturity: draft
@@ -26,11 +26,11 @@ sources:
 
 ## Purpose
 
-Use this page to see a software delivery path as one chain: a reviewed change,
-automated validation, infrastructure, a built artifact, a deployment, a check
-that users are served, and a way back. After reading it you should be able to
-say, for any stage, what evidence it produces and what that evidence does not
-prove.
+Use this page to see a software delivery path as one chain: a proposed change,
+validation, review and merge, optional infrastructure work, a built artifact,
+a deployment, a check that users are served, and a recovery path. After
+reading it you should be able to say what evidence each stage produces and
+what it does not prove.
 
 This is a map, not a production deployment recipe. Each stage links to the
 page that covers it properly.
@@ -38,13 +38,14 @@ page that covers it properly.
 ## What a delivery chain is
 
 A delivery chain is the sequence of steps that turns a change in a repository
-into a change in a running system. Each step is a **gate**: a point where
-something is checked and the change either continues or stops.
+into a change in a running system. Some steps are **gates**, where a check or
+review allows the change to continue. Other steps create or observe the
+result; they are not proof of the next step's success.
 
 Three terms used below:
 
-- **CI (continuous integration)** is the automation that checks a change
-  before it is merged, such as tests and linting.
+- **CI (continuous integration)** is automation that checks changes as they
+  are integrated, such as tests and linting on a pull request and after merge.
 - An **artifact** is the built thing that is deployed, for example a container
   image.
 - A **rollout** is the process of replacing the running version with a new
@@ -52,10 +53,11 @@ Three terms used below:
 
 ## Why it matters
 
-The most common misreading of a pipeline is "CI is green, so it works". CI
-runs before deployment, against the code and a test environment. It says
-nothing about whether the new version started in the real environment, whether
-it can reach its database, or whether users are being served.
+An easy misreading of a pipeline is "CI is green, so it works". CI usually
+runs before deployment, against a specific revision in its runner or test
+setup. It does not prove the new version started in production, reached its
+database, or served users correctly. Check which revision was tested and
+which was built after merge.
 
 Every gate answers one narrow question. Trouble starts when a team treats the
 answer to one question as the answer to another.
@@ -64,28 +66,32 @@ answer to one question as the answer to another.
 
 | Stage | Question it answers | Evidence it produces | What it does not prove |
 | --- | --- | --- | --- |
-| 1. Reviewed change | Did someone other than the author agree to this change? | An approved pull request on a specific commit. | That the change works. |
-| 2. Validation (CI) | Does the code build and pass its automated checks? | Check results tied to that commit. | That it works in the target environment. |
-| 3. Infrastructure | Do the environment's resources match what the configuration declares? | A reviewed plan, then an apply result. | That the application running on them is healthy. |
-| 4. Artifact | Exactly which build will run? | An image identified by its digest. | That the image behaves correctly. |
-| 5. Deploy | Did the platform replace the old version with the new one? | A completed rollout. | That users get correct responses. |
-| 6. Health and user check | Is the service doing its job for users? | Health signals and a user-level check. | That it will stay healthy. |
-| 7. Recovery | Can we return to a working state? | A rollback rehearsed for this kind of change, with a named owner. | That every infrastructure or data change can be reversed. |
+| 1. Pull-request validation | Do the proposed files pass the automated checks? | Check results tied to the revision the workflow actually tested. | That the eventual merged commit or deployed image works. |
+| 2. Review and merge | Did an authorized reviewer approve the change, and which commit landed on `main`? | Review record and merged commit ID. | That the merged commit is safe to release. |
+| 3. Infrastructure, when changed | What would change in the target environment, and what did apply do? | A saved plan made from the merged commit, its review, an apply result, and a follow-up resource check. | That the application stays healthy afterward. |
+| 4. Artifact build | Exactly which image came from the merged commit? | Build record and immutable image digest; test results for that exact image when claimed. | That it behaves correctly in production. |
+| 5. Deploy | Did the platform bring up the selected image? | Target cluster and namespace, observed Pod template image reference, and completed rollout. | That users get correct responses. |
+| 6. User check | Is the service doing its job for users now? | A user-level check and relevant live signals. | That it will stay healthy. |
+| 7. Recovery, if needed | Can the team restore service or fix forward? | An observed recovery result, using a path planned before release. | That every infrastructure or data change was reversed. |
 
 Some supporting facts from the tools involved:
 
 - **A gate can require a person.** In GitHub Actions, a deployment environment
   can have protection rules, such as required reviewers or a restriction on
-  which branches may deploy. A job that references the environment cannot use
-  the environment's secrets until a required reviewer approves
-  it.[^github-deployment-environments]
+  which branches may deploy. Configure those rules: naming an environment
+  alone does not require approval. A protected job waits for the configured
+  rules before it starts.[^github-deployment-environments]
 - **An infrastructure plan is a proposal.** `terraform plan` does not carry out
-  the changes it proposes.[^terraform-plan] The evidence for stage 3 is the
-  plan someone reviewed plus the result of applying it.
-- **A digest identifies one exact image.** A tag can be moved to point at a
-  different image; a digest is a hash of the image's content and is
-  fixed.[^kubernetes-container-images] Deploying by digest is what lets you
-  say the artifact that was tested is the artifact that is running.
+  the proposed resource changes.[^terraform-plan] If infrastructure changes,
+  review the plan made from the merged commit and apply that same saved plan;
+  a throwaway pull-request plan is not the applied artifact. See
+  [GitHub Actions with Terraform](github-actions-with-terraform.md).
+- **A digest pins one image reference.** A tag can be moved to point at a
+  different image; a digest is content-derived and fixed for the referenced
+  image manifest or multi-platform index.[^kubernetes-container-images] It
+  lets you identify the deployed image. To say the *tested* image is running,
+  test that exact digest and carry it through a trusted build and deployment
+  path.
 - **A completed rollout is a platform statement.** Kubernetes marks a
   Deployment complete when all replicas are updated, all are available, and no
   old replicas are running.[^kubernetes-deployments] That is about Pods, not
@@ -94,25 +100,35 @@ Some supporting facts from the tools involved:
 ## Visual: the chain and its way back
 
 ```mermaid
-flowchart LR
-  pr["1. Reviewed change"] --> ci["2. Validation"]
-  ci --> infra["3. Infrastructure"]
-  infra --> art["4. Artifact"]
-  art --> dep["5. Deploy"]
-  dep --> chk{"6. Healthy for users?"}
-  chk -- "yes" --> done["Change is live"]
-  chk -- "no" --> rec["7. Recovery<br/>return to last good version"]
-  rec -- "fix goes back through every gate" --> pr
+flowchart TB
+  pr["1. Pull request"] --> ci["Validate proposed change"]
+  ci --> merge["2. Review and merge<br/>record merged commit"]
+  merge --> need{"3. Infrastructure<br/>changed?"}
+  need -- "yes" --> infra["Review and apply<br/>merged-commit plan"]
+  need -- "no" --> art["4. Build and test image<br/>from merged commit"]
+  infra --> art
+  art --> gate["Production approval<br/>when configured"]
+  gate --> dep["5. Deploy that digest"]
+  dep --> chk{"6. Working for users?"}
+  chk -- "yes" --> done["Change is live<br/>keep monitoring"]
+  chk -- "no" --> rec["7. Restore service<br/>or fix forward"]
+  done -. "later regression" .-> rec
 ```
 
-Text alternative: the chain runs left to right through a reviewed change,
-validation, infrastructure, artifact, and deploy. It then reaches a decision:
-is the service healthy for users? If yes, the change is live. If no, recovery
-returns the system to the last good version, and the fix starts again at a
-reviewed change and passes every gate.
+Text alternative: the chain starts with a pull request, validation, review
+and merge. Infrastructure is planned, reviewed, and applied only if changed.
+A build from the merged commit produces an image. After any configured
+production approval, the job deploys that image by digest. A user check then
+asks whether the service works. If it passes, monitoring continues; a later
+regression can still need recovery. If it fails, the team restores service or
+fixes forward. A new code fix starts another validation and review pass.
 
-The diagram makes one point that a list hides: the decision comes after the
-deploy, so a pipeline that ends at "deploy succeeded" has not reached it.
+The user check happens after at least some users can reach the new version. It
+can **detect** impact but cannot prevent every first bad request. A
+pre-production user-path test can catch some defects earlier; a staged or
+canary rollout can limit the number of users exposed while live checks run.
+Neither proves every user path works. See [Blue-green deployment](../cloud/solutions/blue-green-deployment.md)
+for one release pattern.
 
 ## Example: one change to a fictional service
 
@@ -121,30 +137,35 @@ and nothing here was run.
 
 A team owns `bookings-api`, a small service running on Kubernetes with a
 database managed through Terraform. A developer changes how booking dates are
-validated.
+validated. The invented merged commit is `a9c4e7a`; no database or
+infrastructure configuration changes in this release.
 
 | Stage | What happens | Evidence | Owner |
 | --- | --- | --- | --- |
-| 1 | A teammate reviews and approves the pull request. | Approval on commit `a1b2c3d`. | Author and reviewer. |
-| 2 | CI builds the code and runs tests. | All checks pass on `a1b2c3d`. | Author. |
-| 3 | No infrastructure change is needed this time. | The Terraform plan reports no changes. | Infrastructure owner. |
-| 4 | The build publishes a container image. | An image digest recorded for `a1b2c3d`. | Pipeline. |
-| 5 | The deployment job, after approval in the production environment, updates the Deployment to that digest. | The rollout completes. | Deployer. |
-| 6 | The error rate for `POST /bookings` rises, and a test booking fails. | Metrics and a failed user-level check. | On-call engineer. |
-| 7 | The on-call engineer rolls back to the previous digest. The author prepares a fix. | Error rate returns to normal. | On-call engineer, then author. |
+| 1 | PR CI runs checks against the proposed change. | Recorded check results and tested revision. | Author. |
+| 2 | A teammate approves the change, and it merges as `a9c4e7a`. | Review and merged commit ID. | Author and reviewer. |
+| 3 | The team identifies no infrastructure change and does not run a Terraform apply. | The release record says this stage was skipped; it makes no claim about drift. | Infrastructure owner. |
+| 4 | A trusted `main` build creates an image from `a9c4e7a`, tests that image, and records its digest. | Build, test, and digest tied to the merged commit. | Pipeline. |
+| 5 | A production job waits for configured environment approval, then deploys that digest. | Target, digest, and completed rollout. | Deployer. |
+| 6 | `POST /bookings` errors rise, and a test booking using the mobile client's date format fails. | Metrics and a failed user-level check. | On-call engineer. |
+| 7 | Because no data or schema changed and the old image is retained, the engineer sends its digest through the service's controlled recovery job and checks the booking path again. The author prepares a fix. | Previous rollout and user check succeed; error rate falls. | On-call engineer, then author. |
 
 What went wrong: the new validation rejected a date format that a mobile
-client still sends. The tests did not include that format, so stages 1 to 5
-were all green. Only stage 6 looked at real requests.
+client still sends. PR and image tests did not include that format, so the
+earlier checks and rollout passed. Only stage 6 exercised that user path.
 
 What to notice:
 
-- Five gates passed and the change was still wrong. Each gate did its job;
-  none of them was designed to answer the question stage 6 asks.
-- The rollback was quick because stage 4 recorded an exact previous digest to
-  return to.
+- The earlier checks passed and the change was still wrong. Each check had a
+  narrower question than the user-path check in stage 6.
+- The recovery was possible because the previous image was retained and this
+  release had no incompatible data or infrastructure change. Recording its
+  digest alone would not guarantee that it could still be pulled or run.
 - The rollback did not fix the code. The repository still contains the faulty
-  change until a new change goes through the chain.
+  change until a new change goes through the chain. A later deployment from
+  that repository could bring the fault back; a GitOps controller may
+  reconcile it sooner. Use the owning deployment path to keep the cluster
+  and repository aligned. See [GitOps](../kubernetes/applications-and-tools/gitops.md).
 
 ## Who owns rollback
 
@@ -154,7 +175,7 @@ equally reversible.
 | Layer | How it is reversed | Typical owner | Limit |
 | --- | --- | --- | --- |
 | Source | A new commit that reverses the change. See [Git undo and recovery](../git/troubleshooting/undo-and-recovery.md). | The authoring team. | Reverting code does not by itself change what is running. |
-| Running version | Return the workload to a retained previous revision or image. Kubernetes Deployment history depends on `.spec.revisionHistoryLimit`; setting it to zero removes the ability to roll back after cleanup.[^kubernetes-deployments] | Whoever is on call for the service. | Requires the old image and revision to be available; it restores neither old data nor schema. |
+| Running version | Return the workload to a retained previous revision or known-good image. Kubernetes Deployment history depends on `.spec.revisionHistoryLimit`; setting it to zero removes the ability to roll back after cleanup.[^kubernetes-deployments] | Whoever is on call for the service. | Needs a retained revision or known-good template and a still-available image. It does not restore separate ConfigMaps, Secrets, data, or schema. |
 | Infrastructure | A new reviewed plan that moves resources back. | The infrastructure owner. | Terraform has no undo; some changes replace or destroy resources. |
 | Data | Depends on the change. A schema or data migration may not be reversible. | The service team, often with the database owner. | Plan this before the change, not during the incident. |
 
@@ -162,7 +183,7 @@ The practical rule: decide who may trigger each kind of rollback, and how,
 before the deployment starts. During an incident is too late to find out that
 nobody has permission.
 
-## An analogy: a relay of sign-offs
+## An analogy: a series of inspections
 
 Think of a building project that needs separate sign-offs: the drawings are
 approved, the materials are inspected, the wiring is certified, and the keys
@@ -172,8 +193,11 @@ Where the analogy stops being accurate:
 
 - **Software gates are much narrower than they sound.** "Tests passed" covers
   only the cases someone wrote.
-- **The last sign-off is never final.** A building is inspected once. A
-  service has to keep proving it is healthy for as long as it runs.
+- **The service can be exposed before the last check.** Building inspections
+  usually precede handing over keys; a live user check observes a deployed
+  version after traffic has begun reaching it.
+- **The last check is not permanent.** An inspection describes a moment. A
+  service needs continued monitoring while it runs.
 - **Going back takes preparation.** Returning to a previous version depends
   on a retained revision, an available image, and compatible data and
   infrastructure. Rehearse the recovery path for the kind of change you make.
@@ -198,8 +222,9 @@ Where the analogy stops being accurate:
 - Deploy stage: [Kubernetes fundamentals](../kubernetes/fundamentals/kubernetes-fundamentals.md)
   and [GitHub Actions with Kubernetes](github-actions-with-kubernetes.md).
 - Health and user check: [Observability stack](observability-stack.md).
-- Practise the whole loop locally, including a deliberate failure and a
-  rollback: [Local deployment learning path](local-deployment-learning-path.md).
+- Practise a rollout failure caught by Kubernetes, then recover locally:
+  [Local deployment learning path](local-deployment-learning-path.md). It does
+  not exercise the user-level failure in this page's example.
 
 ## Official documentation for deeper study
 

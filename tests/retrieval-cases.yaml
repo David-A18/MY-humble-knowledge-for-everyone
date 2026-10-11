@@ -162,6 +162,14 @@ cases:
     question: Does the Terraform S3 backend lock state by default, and is DynamoDB locking still the recommended approach?
     expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
     required_source_ids: [terraform-s3-backend]
+  - id: terraform-wrong-account-empty-state
+    question: If my AWS credentials point to production but I have an empty local Terraform state, can a plan create another network instead of finding sandbox resources?
+    expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
+    required_source_ids: [terraform-aws-provider, terraform-import]
+  - id: deployment-merged-image-tested
+    question: Does a green pull-request check and deploying an image by digest prove the running image was tested from the merged commit?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md]
+    required_source_ids: [kubernetes-container-images]
   - id: gitops-prune-and-self-heal-defaults
     question: If I delete a manifest from Git or edit a resource by hand, will Argo CD or Flux delete or revert it by default?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md, knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
