@@ -1434,7 +1434,9 @@
         "kubernetes-patch",
         "kubernetes-wait",
         "kubernetes-describe",
-        "git-restore"
+        "kubernetes-use-context",
+        "git-restore",
+        "git-pull"
       ],
       "stale_after": null,
       "status": "draft",

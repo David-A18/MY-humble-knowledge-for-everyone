@@ -1096,7 +1096,7 @@ strategic merge patch, and every `kubectl` command names the intended context.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Local deployment learning path](knowledge/cross-topic-guides/local-deployment-learning-path.md) | Reworked with a sequence/outcome map, clearer Deployment/Service/port-forward model, two-replica rolling-update arithmetic, bounded failure interpretation, explicit context, recovery, and official next steps. | Current kind, Kubernetes, and Git references were checked. The earlier revision recorded a 2026-09-19 local run. This revised patch and command sequence were **not** run: no active Docker daemon, kind, or kubectl is available in the current environment. Claude Code remained at its weekly limit, so no Opus review occurred. | Run the revised path end to end in a disposable local cluster; independent Kubernetes and Opus review; KB-14 reader test; freshness decision. |
+| [Local deployment learning path](knowledge/cross-topic-guides/local-deployment-learning-path.md) | Reworked with a sequence/outcome map, clearer Deployment/Service/port-forward model, two-replica rolling-update arithmetic, bounded failure interpretation, explicit context, recovery, and official next steps. Focused review in round 56 added a failed-rollout diagram, a bounded staffing analogy, visible intermediate Git state, clone and context checks, and honest evidence in the linked example index. | Current kind, Kubernetes, and Git references checked; Claude Opus 5.5 reviewed read-only twice. Diagram rendered and inspected; disposable Git example confirmed staged, unstaged, and restored status. The earlier version recorded a 2026-09-19 local run. The current patch and sequence were **not** run: Docker daemon, kind, and kubectl are unavailable here. | Run the revised path end to end in a disposable local cluster; independent Kubernetes review; KB-14 reader test; freshness decision. |
 
 ### Wave 53 (2026-10-02)
 
@@ -3108,6 +3108,26 @@ guidance was checked. The revised Mermaid rendered and was visually
 inspected; one static retrieval case covers the stop-versus-revise choice.
 No search experiment, independent architecture review, or novice reader
 task ran. The concept remains `draft`.
+
+### Focused review round 56 (2026-10-12)
+
+Reviewed the local deployment learning path and its example files with
+Claude Opus 5.5 twice read-only. The guide now distinguishes the live
+cluster patch and rollback from the separate Git-file exercise. It shows
+the staged, unstaged, and restored file states, puts a timeout on the first
+healthy rollout, and gives novice checks for clone freshness and kubectl
+context cleanup. A failed-rollout diagram and bounded analogy show how
+the Deployment, ReplicaSets, Pods, Service endpoint readiness, and local
+port-forward relate. The example-files index now states that the current
+patch and revised sequence have not been run in a cluster.
+
+Current kind, Kubernetes Deployment, EndpointSlice, port-forward, context,
+and Git documentation was checked. The Mermaid diagram rendered and was
+inspected. A disposable Git repository reproduced the three file states;
+two static retrieval cases cover the live-cluster-versus-Git boundary and
+ready-endpoint model. Docker has no running daemon here, and kind and
+kubectl are absent, so no revised cluster run occurred. No independent
+Kubernetes review or novice reader task ran; the path remains `draft`.
 
 ### Candidates for the next wave
 

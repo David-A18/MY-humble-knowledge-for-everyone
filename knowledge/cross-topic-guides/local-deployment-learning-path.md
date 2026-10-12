@@ -35,9 +35,15 @@ sources:
   - id: kubernetes-describe
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
     title: Kubernetes - kubectl describe
+  - id: kubernetes-use-context
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_use-context/
+    title: Kubernetes - kubectl config use-context
   - id: git-restore
     resource: https://git-scm.com/docs/git-restore
     title: Git - git-restore
+  - id: git-pull
+    resource: https://git-scm.com/docs/git-pull
+    title: Git - git-pull
 ---
 
 # Local deployment learning path
@@ -60,7 +66,9 @@ a failed rollout does not necessarily stop the older version.
 
 This path runs the cluster locally. You do not need AWS, EKS, Crossplane,
 or a paid account. The first run needs access to public image registries
-for the kind node image and `nginx:1.27-alpine`.
+for the kind node image and `nginx:1.27-alpine`. The fixed nginx tag makes
+the lesson easier to repeat; it is not a production image recommendation.
+The commands use a Bash-compatible shell on Linux, macOS, or WSL on Windows.
 
 ## Route through the exercise
 
@@ -94,6 +102,14 @@ for the kind node image and `nginx:1.27-alpine`.
 | Label | Key-value metadata used by the Service selector and troubleshooting commands. |
 | Reconciliation | Kubernetes repeatedly compares actual state with desired state and tries to close the gap. |
 
+As a mental model, the Deployment is a staffing plan that calls for two
+workers, while the Service is one contact point for workers with the
+matching name badge. Readiness decides who can normally receive a request.
+The analogy stops there: Kubernetes uses Pod labels and readiness signals,
+not a human judgment of whether the response is correct. A port-forward
+is a temporary direct connection to one Pod, not a test of that shared
+Service contact point.
+
 ## Prepare a local cluster
 
 Install Docker, `kind`, `kubectl`, Git, and optionally `curl`
@@ -106,6 +122,12 @@ runtime.[^kind-quick-start]
 Run `kind get clusters` first. If `kb-local` already exists, stop
 or choose a different name throughout the exercise. The commands
 below assume that `kb-local` belongs only to this exercise.
+If you already use `kubectl` with another cluster, run
+`kubectl config current-context` and write down the result before creating
+this cluster. On a new setup, `current-context is not set` is an expected
+response, not a failed cluster check. `kind` can change
+the current context when it creates or deletes a cluster; the commands
+below name `kind-kb-local` explicitly.
 
 ```bash
 kind create cluster --name kb-local --wait 5m
@@ -136,7 +158,16 @@ git clone https://github.com/David-A18/MY-humble-knowledge-for-everyone.git know
 cd knowledge-source
 ```
 
-If you already have a clone, go to its root instead. Before continuing,
+If you already have a clone, go to its root instead. Run
+`git status --short --branch` there. Continue only if it says `## main`
+with no changed-file lines. Then run `git pull --ff-only origin main` and
+read `knowledge/kubernetes/examples/local-deployment-learning-path/failing-image-patch.yaml`.
+It should contain a `web` container with
+`image: nginx:does-not-exist-kb-learning` under `spec.template.spec`.
+If the checkout is not clean or the patch differs, stop and use a fresh
+clone of the current published `main` revision instead of guessing which
+patch to apply.[^git-pull]
+Before continuing,
 check that `/tmp/kb-local-path` does not already contain someone else's
 files or an earlier exercise. If it does, stop and choose another path,
 replacing `/tmp/kb-local-path` consistently in the commands below.
@@ -169,7 +200,7 @@ use your own identity if you intend to publish it.
 kubectl --context kind-kb-local apply -f namespace.yaml
 kubectl --context kind-kb-local apply -f deployment.yaml
 kubectl --context kind-kb-local apply -f service.yaml
-kubectl --context kind-kb-local rollout status deployment/kb-web -n kb-learning
+kubectl --context kind-kb-local rollout status deployment/kb-web -n kb-learning --timeout=180s
 kubectl --context kind-kb-local get pods -n kb-learning --show-labels
 kubectl --context kind-kb-local get svc kb-web -n kb-learning
 kubectl --context kind-kb-local describe svc kb-web -n kb-learning
@@ -182,6 +213,11 @@ description shows `Selector: app.kubernetes.io/name=kb-web`. The Deployment
 creates and replaces Pods; the Service's selector gives clients a
 stable way to find them even when Pod names change.[^kubernetes-deployment]
 [^kubernetes-service][^kubernetes-describe]
+
+If the first rollout times out or shows `ErrImagePull`, stop before the
+deliberate failure step. Inspect the Pod and its events: the *original*
+nginx image may be unreachable or the registry may have limited pulls.
+That is a setup problem, not evidence that the planned bad-image test worked.
 
 ## Inspect the running app
 
@@ -256,6 +292,29 @@ because its label matches even though it cannot serve. EndpointSlice
 readiness shows which Pods are eligible for normal Service traffic;
 it does not prove that a user request succeeded.[^kubernetes-endpointslices]
 
+During this failed rollout, the relationships should look like this:
+
+```mermaid
+flowchart LR
+  deployment["Deployment: two desired replicas"] --> oldRS["Old ReplicaSet"]
+  deployment --> newRS["New ReplicaSet"]
+  oldRS --> oldPods["Two older ready Pods"]
+  newRS --> badPod["New Pod: image pull fails"]
+  service["Service selector"] --> slice["EndpointSlice: endpoint readiness"]
+  slice -- "Ready" --> oldPods
+  slice -. "Not ready" .-> badPod
+  browser["Your browser"] --> tunnel["kubectl port-forward"]
+  tunnel -- "Bypasses Service virtual IP" --> selected["One selected older Pod"]
+  oldPods -. "One of these" .-> selected
+```
+
+Text alternative: the Deployment still wants two replicas. The old
+ReplicaSet keeps two ready Pods while the new ReplicaSet has a Pod that
+cannot pull its image. The Service's selector leads to ready EndpointSlice
+records for the old Pods; the new Pod may be listed as not ready. A local
+port-forward reaches one selected older Pod directly; it does not test the
+Service virtual IP.
+
 To check whether one selected Pod still answers during the failed
 rollout, run this in one
 terminal:
@@ -304,13 +363,22 @@ kubectl --context kind-kb-local get endpointslices -n kb-learning \
   -l kubernetes.io/service-name=kb-web -o yaml
 ```
 
-What it does: rolls back to the previous Deployment revision and waits for healthy Pods again.
+What it does: changes the Deployment back to the previous revision and
+waits for it to be available. The two older ready Pods usually remain in
+place during this particular failed rollout; compare their names with your
+earlier `get pods -o wide` output. Do not assume that a rollback restarted
+every Pod or repaired an unrelated failure.
 
 Expected condition: the Deployment becomes available and the
 new bad-image Pods disappear. Check that the current Pods appear as
 ready EndpointSlice endpoints. Repeat the port-forward and HTTP request
 if you want evidence that one selected Pod answers again; rollout
 status alone does not prove it.
+
+The image patch and rollback changed the **live cluster**, not
+`deployment.yaml` in your temporary Git copy. Git cannot see that live
+change. The next Git exercise edits the file separately and practices a
+different kind of recovery.
 
 ## Practice Git recovery
 
@@ -321,13 +389,24 @@ git status --short
 git add deployment.yaml
 git diff --staged
 git restore --staged deployment.yaml
+git status --short
+git diff
 git restore deployment.yaml
 git status --short
 ```
 
 What it does: practices the difference between unstaging a file and
-discarding unstaged edits from the working tree. The second restore
-discards your temporary edit, so inspect the diff first.[^git-restore]
+discarding unstaged edits from the working tree. Between the two restore
+commands, short status should show:
+
+```text
+ M deployment.yaml
+```
+
+The first column is blank and the second contains `M`: the file is still
+edited in your working tree, but no change is staged. `git diff` shows that
+remaining edit. The second restore discards it, so inspect the diff before
+running that command.[^git-restore]
 
 ## Clean up
 
@@ -345,6 +424,12 @@ What it does: removes the exercise resources and then removes the local cluster.
 
 Expected condition: the namespace lookup reports `NotFound`, and
 `kind get clusters` no longer lists `kb-local`.
+Check `kubectl config current-context` afterward. If you wrote down a
+different previous context, restore it with
+`kubectl config use-context <previous-context>` before running plain
+`kubectl` commands again. If you had no previous context, there is
+nothing to restore; `current-context is not set` after cleanup is then
+expected.[^kubernetes-use-context]
 The temporary Git copy at `/tmp/kb-local-path` remains for practice;
 review its contents before removing it or repeating the exercise.
 
@@ -375,6 +460,10 @@ review its contents before removing it or repeating the exercise.
   for reading the Service selector and Pod events.
 - [Git restore](https://git-scm.com/docs/git-restore)
   for staged versus working-tree recovery.
+- [Git pull](https://git-scm.com/docs/git-pull)
+  for fast-forward-only updates of an existing clone.
+- [kubectl config use-context](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_use-context/)
+  for restoring a previously recorded context.
 
 ## Related links
 
@@ -396,4 +485,6 @@ review its contents before removing it or repeating the exercise.
 [^kubernetes-patch]: [Kubernetes - kubectl patch](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/).
 [^kubernetes-wait]: [Kubernetes - kubectl wait](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/).
 [^kubernetes-describe]: [Kubernetes - kubectl describe](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/).
+[^kubernetes-use-context]: [Kubernetes - kubectl config use-context](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_use-context/).
 [^git-restore]: [Git - git-restore](https://git-scm.com/docs/git-restore).
+[^git-pull]: [Git - git-pull](https://git-scm.com/docs/git-pull).

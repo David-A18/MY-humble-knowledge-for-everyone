@@ -230,6 +230,14 @@ cases:
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
     required_source_ids: [kubernetes-concepts]
+  - id: local-rollout-git-boundary
+    question: After I patch and undo a failed Kubernetes rollout, why does git status still show no change, and what does git restore recover in the local lesson?
+    expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md]
+    required_source_ids: [kubernetes-deployment, git-restore]
+  - id: local-rollout-ready-endpoints
+    question: During the local bad-image rollout, why can two older Pods stay ready while the new Pod fails, and what does a Service port-forward actually check?
+    expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md]
+    required_source_ids: [kubernetes-deployment, kubernetes-endpointslices, kubernetes-port-forward]
   - id: kubernetes-service-ready-endpoints
     question: How does a Kubernetes Service choose Pods, and why might a matching Pod not receive normal traffic?
     expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
