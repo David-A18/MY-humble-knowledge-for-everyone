@@ -326,6 +326,14 @@ cases:
     question: How do Crossplane providers authenticate to external APIs?
     expected_paths: [knowledge/kubernetes/crossplane/providers-and-authentication.md]
     required_source_ids: [crossplane-providers]
+  - id: crossplane-aws-account-region
+    question: If a Crossplane bucket appears in the wrong AWS account or region, which setting selects the credentials and which setting selects the region?
+    expected_paths: [knowledge/cross-topic-guides/crossplane-on-aws.md]
+    required_source_ids: [crossplane-providers]
+  - id: crossplane-aws-default-provider-config
+    question: What happens if an AWS managed resource omits providerConfigRef, and why must a platform restrict cluster-wide credential references?
+    expected_paths: [knowledge/cross-topic-guides/crossplane-on-aws.md]
+    required_source_ids: [crossplane-providers]
   - id: eks-deployment
     question: How do I update kubeconfig and validate permissions before deploying to EKS?
     expected_paths: [knowledge/cross-topic-guides/deploying-to-eks.md]

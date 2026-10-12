@@ -1098,8 +1098,11 @@
         "crossplane-managed",
         "crossplane-composition",
         "crossplane-v2",
+        "crossplane-activation",
+        "crossplane-v1-claims",
         "eks-pod-identity",
         "eks-pod-identity-flow",
+        "eks-pod-identity-target-role",
         "eks-irsa"
       ],
       "stale_after": null,

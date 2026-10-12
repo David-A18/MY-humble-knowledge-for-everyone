@@ -1108,7 +1108,7 @@ guides, not their independent review or reader testing.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Crossplane on AWS](knowledge/cross-topic-guides/crossplane-on-aws.md) | Rewritten with a bounded library-desk analogy, invented payments bucket request, XR-to-MR-to-AWS diagram, four-boundary table, Pod Identity/IRSA conditions, ownership and deletion cautions, and failure handoffs. | Keyed current Crossplane and Amazon EKS documentation. No provider, bucket, IAM role, controller, account, application, deletion, or reader test ran. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Crossplane/AWS security and Opus review; controlled provider-identity, account, lifecycle, and deletion exercises; reader test; freshness decision. |
+| [Crossplane on AWS](knowledge/cross-topic-guides/crossplane-on-aws.md) | Bounded library-desk analogy, invented payments bucket request, XR-to-MR-to-AWS diagram, four-boundary table, and failure handoffs. Focused review round 59 clarified account versus region selection, per-MR credential references and their cluster-wide default, provider Pod identity and cross-account target roles, selective API activation, and the conditional GitOps-to-AWS deletion chain. | Current Crossplane and Amazon EKS primary sources checked; Claude Opus 5.5 reviewed the page read-only. Revised diagram rendered and inspected; two static retrieval cases added. No provider, bucket, IAM role, controller, account, application, deletion, independent domain review, or reader test ran. | Independent Crossplane/AWS security review; controlled provider-identity, account, lifecycle, and deletion exercises; reader test; freshness decision. |
 
 ### Wave 54 (2026-10-02)
 
@@ -3170,6 +3170,24 @@ Current kind, Docker, and Kubernetes primary references were checked.
 The two revised custom-cluster diagrams rendered and were inspected.
 Docker has no running daemon here; no cluster, image build, registry,
 image load, Pod, or reader task ran. All three pages remain `draft`.
+
+### Focused review round 59 (2026-10-12)
+
+Reviewed the Crossplane on AWS guide with Claude Opus 5.5 read-only.
+The revised example now separates the managed resource's credential
+reference from its region, explains the cluster-wide default when
+`providerConfigRef` is absent, and shows that one provider can serve
+resources with different credential configurations. The EKS section
+now explains the provider service-account handoff, Pod Identity's
+optional cross-account target role, and the conditional chain from a
+GitOps-pruned XR through an MR to external-resource deletion. The
+request-to-AWS diagram follows those boundaries.
+
+Current Crossplane and Amazon EKS primary documentation was checked.
+The diagram rendered and was inspected, and two static retrieval cases
+were added. No provider, AWS account, IAM role, bucket, GitOps deletion,
+independent Crossplane/AWS review, or novice reader task ran. The guide
+remains `draft`.
 
 ### Candidates for the next wave
 
