@@ -77,8 +77,8 @@ configures each node's container runtime to resolve the image
 reference to that registry. Use the [official local-registry
 procedure](https://kind.sigs.k8s.io/docs/user/local-registry/)
 before using its `localhost:5001/...` example in a Pod. The
-page's older bare `docker tag` and `docker push` recipe did not
-establish this path.[^kind-local-registry]
+registry setup is part of this path; merely pushing from the host
+does not configure the node to find that registry.[^kind-local-registry]
 
 > [!NOTE]
 > An application container running **inside a Pod** has its own
@@ -92,8 +92,9 @@ establish this path.[^kind-local-registry]
 The image reference and `imagePullPolicy` are part of the Pod
 specification. With `IfNotPresent`, the kubelet can use a matching
 image already on the node. With `Always`, it consults a registry
-when starting the container, so side-loading a local image may
-not solve a registry problem. With `Never`, the image must already
+when starting the container. A side-loaded image alone cannot satisfy
+`Always` when its name cannot be resolved at the registry. With
+`Never`, the image must already
 be on the node. Kubernetes chooses a default when the object is
 created: `:latest` or no tag normally selects `Always`, while a
 non-latest tag normally selects `IfNotPresent`. Changing the tag
@@ -101,11 +102,14 @@ later does not automatically rewrite that stored policy.
 Read the actual Pod specification rather than assuming the default.
 [^kubernetes-images][^kind-quick-start]
 
-Reusing `orders-api:dev-1` for new code can confuse a test: one
-node may hold old content under the same tag while another obtains
-a newer copy. Prefer a distinct development tag for each build
-when the result matters, and confirm the Pod is using the image
-you intended. For reproducible release images, consider
+Reusing `orders-api:dev-1` for new code can confuse a test. Even after
+you rebuild and load that same tag again, already running Pods keep
+running their current containers; the unchanged Deployment image field
+does not trigger a new rollout. A registry workflow or a load limited
+to some nodes can also leave different nodes with different content
+behind the same tag. Prefer a distinct development tag for each build
+when the result matters, update the workload reference, and confirm the
+Pod uses the image you intended. For reproducible release images, consider
 digest-based references and a registry rather than treating a
 mutable tag as proof of content.[^kubernetes-images]
 
@@ -133,8 +137,18 @@ different fixes:
 | Host has the build; node does not | Load the matching image into the correct kind cluster, or use a configured registry. |
 | Pod requests another tag or registry prefix | Correct the workload reference or publish the reference it actually requests. |
 | Registry address is `localhost` but kind has no registry alias | Finish the local-registry setup for the node. |
-| Registry says authentication failed | Check the private-registry credential path. |
+| An unprefixed local image produces a public-registry "not found or may require authorization" error | First check whether the image was loaded into the node and whether the pull policy permits the node copy. The message alone does not prove bad credentials. |
+| A known private-registry reference is denied after the node reaches it | Check the private-registry credential path. |
 | Container starts but the application fails | The image is available; inspect application state, logs, and readiness instead. |
+
+## Check your understanding
+
+- If the image exists in your host Docker store but not in the kind node
+  store, which boundary must you cross before `IfNotPresent` can use it?
+- Why can an unprefixed local image produce a public-registry error that
+  mentions authorization without proving a credential problem?
+- After rebuilding and loading the same tag, why do already running Pods
+  keep their old containers until a workload change causes a new start?
 
 ## Explore further
 

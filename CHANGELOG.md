@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified the kind cluster and image path across three linked guides, including node image inspection, pull-policy errors, retry timing, NodePort routing, and three static retrieval cases.
 - Clarified Git troubleshooting outputs for upstream divergence, ignored files, conflicts, and object health; added a diagram and three static retrieval cases.
 - Clarified the local Kubernetes learning path's live-cluster versus Git recovery, intermediate file state, rollout diagram, prerequisites, and test evidence; added two static retrieval cases.
 - Clarified the proof-of-concept example's test setting, time limit, revise-once and stop rules, and diagram; added one static retrieval case.

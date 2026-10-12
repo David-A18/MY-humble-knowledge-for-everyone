@@ -2730,7 +2730,8 @@
         "kind-quick-start",
         "kind-configuration",
         "kind-node-image",
-        "kubernetes-service"
+        "kubernetes-service",
+        "kubernetes-source-ip"
       ],
       "stale_after": null,
       "status": "draft",
@@ -3643,7 +3644,8 @@
         "kind-known-issues",
         "kubernetes-images",
         "kubernetes-debug-pods",
-        "kubectl-get"
+        "kubectl-get",
+        "docker-image-inspect"
       ],
       "stale_after": null,
       "status": "draft",

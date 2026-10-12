@@ -250,6 +250,18 @@ cases:
     question: During the local bad-image rollout, why can two older Pods stay ready while the new Pod fails, and what does a Service port-forward actually check?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md]
     required_source_ids: [kubernetes-deployment, kubernetes-endpointslices, kubernetes-port-forward]
+  - id: kind-host-node-image-auth-message
+    question: My kind Pod says its unprefixed local image does not exist or may require authorization. How can I check the host and node image stores before changing credentials?
+    expected_paths: [knowledge/kubernetes/troubleshooting/kind.md, knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md]
+    required_source_ids: [kind-quick-start, kubernetes-images, docker-image-inspect]
+  - id: kind-same-tag-no-rollout
+    question: If I rebuild and load the same image tag into kind, why do existing Pods keep the old application until I change the workload reference?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md]
+    required_source_ids: [kind-quick-start, kubernetes-images]
+  - id: kind-mapped-node-worker-pod
+    question: Can a kind host port mapped to the control-plane node reach a Pod on a worker through NodePort, and when would Local traffic policy stop it?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md]
+    required_source_ids: [kind-configuration, kubernetes-service, kubernetes-source-ip]
   - id: kubernetes-service-ready-endpoints
     question: How does a Kubernetes Service choose Pods, and why might a matching Pod not receive normal traffic?
     expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]

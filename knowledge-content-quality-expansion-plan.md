@@ -1335,7 +1335,7 @@ Other local symptoms lead to their own evidence and official guidance.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Diagnose a local image pull in kind](knowledge/kubernetes/troubleshooting/kind.md) | Read-first local image path, computer-versus-node image model, conditional `kind load` fix, post-fix check, and routes for context, runtime, scheduling, and host-port symptoms. | Current official kind and Kubernetes documentation checked. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable kind reproduction for matching and mismatched tags and pull policies; beginner symptom task; freshness decision. |
+| [Diagnose a local image pull in kind](knowledge/kubernetes/troubleshooting/kind.md) | Read-first local image path, computer-versus-node image model, conditional `kind load` fix, post-fix check, and routes for context, runtime, scheduling, and host-port symptoms. Focused review in round 58 added explicit Docker host/node inspection, auth-message and `Never` boundaries, context-qualified checks, and retry timing. | Current official kind, Docker, and Kubernetes documentation checked; Claude Opus 5.5 reviewed this and two linked pages read-only twice. No live cluster or image load ran. | Independent Kubernetes review; disposable kind reproduction for matching and mismatched tags and pull policies; beginner symptom task; freshness decision. |
 
 ### Wave 75 (2026-10-02)
 
@@ -1346,8 +1346,8 @@ and the image path from a host or registry to a node.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [How kind custom clusters fit together](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md) | Host/container-node model, limited multi-node analogy, illustrative two-node configuration, complete host-to-Pod port path, node-versus-app-image distinction, and understanding checks. | Current official kind Configuration, Quick Start, Node Image, and Kubernetes Service documentation checked. Example YAML parsed; both Mermaid diagrams rendered and inspected. No kind cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable cluster with matching and mismatched NodePort; beginner model task; freshness decision. |
-| [How images reach a kind Pod](knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md) | Side-load-versus-registry decision, host/node network boundary, pull-policy behavior, private-registry scope, image-flow diagram, and evidence-based failure routes. Removed bare registry push commands that omitted setup. | Current official kind Quick Start, Local Registry, Private Registries, and Kubernetes Images documentation checked. Mermaid rendered and inspected. No image build, registry, cluster, or Opus review occurred. | Independent Kubernetes and Opus review; disposable side-load and configured-registry exercises; beginner image-path task; freshness decision. |
+| [How kind custom clusters fit together](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md) | Host/container-node model, limited multi-node analogy, illustrative two-node configuration, complete host-to-Pod port path, node-versus-app-image distinction, and understanding checks. Focused review in round 58 clarified single-host capacity, control-plane Pod placement, default NodePort cross-node routing, Local policy, local-only host binding, and creation-time port mappings. | Current kind Configuration/Quick Start and Kubernetes Service/Source IP guidance checked; Claude Opus 5.5 reviewed read-only twice. Updated diagrams rendered and inspected. No kind cluster ran. | Independent Kubernetes review; disposable cluster with matching and mismatched NodePort; beginner model task; freshness decision. |
+| [How images reach a kind Pod](knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md) | Side-load-versus-registry decision, host/node network boundary, pull-policy behavior, private-registry scope, image-flow diagram, and evidence-based failure routes. Focused review in round 58 clarified auth-looking public-registry errors, `Always` registry resolution, and same-tag reload versus rollout; added understanding checks. | Current kind Quick Start, Local Registry, Private Registries, and Kubernetes Images documentation checked; Claude Opus 5.5 reviewed read-only twice. Existing Mermaid rendered in the initial pass. No image build, registry, or cluster ran. | Independent Kubernetes review; disposable side-load and configured-registry exercises; beginner image-path task; freshness decision. |
 
 ### Wave 76 (2026-10-02)
 
@@ -3146,6 +3146,30 @@ empty, and `git fsck --full` reporting a dangling blob with exit status 0.
 The diagram rendered and was inspected. Three static retrieval cases were
 added. No hosted push rejection, damaged repository, independent Git review,
 or novice reader task ran. The guide remains `draft`.
+
+### Focused review round 58 (2026-10-12)
+
+Reviewed the connected kind custom-cluster, image-flow, and image-pull
+diagnostic pages with Claude Opus 5.5 twice read-only. The custom-cluster
+page now shows that a control-plane node can run Pods in the default lab,
+that a mapped NodePort can forward to a worker Pod under the default
+traffic policy, and that a Local policy changes that path. It separates
+the application's host binding from the Kubernetes API and explains why
+changing a host mapping requires a new kind cluster.
+
+The image pages now distinguish the Docker host image store from each
+kind node's store with read-only inspection commands. They teach why an
+unprefixed local image can produce an auth-looking public-registry error,
+why `Always` still contacts a registry, why `Never` can report
+`ErrImageNeverPull`, and why reloading the same tag does not restart
+running Pods. The diagnostic guide names the existing Pod's retry delay
+and adds a node-image output example. Three static retrieval cases cover
+the host/node boundary, same-tag behavior, and cross-node NodePort path.
+
+Current kind, Docker, and Kubernetes primary references were checked.
+The two revised custom-cluster diagrams rendered and were inspected.
+Docker has no running daemon here; no cluster, image build, registry,
+image load, Pod, or reader task ran. All three pages remain `draft`.
 
 ### Candidates for the next wave
 
