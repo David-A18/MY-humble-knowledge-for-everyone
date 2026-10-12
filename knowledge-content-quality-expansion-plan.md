@@ -500,7 +500,7 @@ All three remain `status: draft` and `maturity: draft`. No `verified`,
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [GitOps](knowledge/kubernetes/applications-and-tools/gitops.md) | Rewritten to the standard. | Keyed citations to the OpenGitOps principles and glossary and to Flux and Argo CD documentation; the service walk-through is labelled illustrative. The statement that an unreconciled hand edit can later be overwritten is reasoning, not a quoted claim. | Independent technical review; reader test; freshness decision. |
+| [GitOps](knowledge/kubernetes/applications-and-tools/gitops.md) | Rewritten to the standard. Focused review round 62 clarified that Flux's default `MirrorPrune` deletion policy deletes managed resources only when `prune: true`. | Keyed citations to the OpenGitOps principles and glossary and to Flux and Argo CD documentation; the service walk-through is labelled illustrative. Current Flux Kustomization documentation checked for the deletion-policy correction. The statement that an unreconciled hand edit can later be overwritten is reasoning, not a quoted claim. | Independent technical review; reader test; freshness decision. |
 | [Flux](knowledge/kubernetes/applications-and-tools/flux.md) | Rewritten to the standard. | Keyed citations to Flux component, source, Kustomization, HelmRelease, and installation documentation; the commit walk-through is conceptual, with invented revisions, no YAML, and no cluster run. The statement that a failed fetch leaves the previous revision applied is reasoning from the documented chain. | Independent technical review; a check against a running Flux installation; reader test; freshness decision. |
 | [Argo CD vs. Flux](knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md) | Rewritten to the standard. | Keyed citations to Argo CD and Flux documentation for each comparison row; the team decision is invented. The explanation of why overlapping ownership conflicts is labelled in the page as reasoned, because neither project documents the two tools managing one resource. Operational overhead is described only as what each installation runs. | Independent technical review by someone who has operated both tools; reader test; freshness decision. |
 
@@ -1359,7 +1359,7 @@ verification distinct checks.
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [Begin a safe kubectl inspection session](knowledge/kubernetes/commands/daily-usage.md) | Context-and-namespace check, Deployment and Pod scan, illustrative two-replica output, one-Pod evidence path, bounded address analogy, branching diagram and text alternative, symptom routes. Focused review round 61 clarified empty lists, READY fractions and restart comparisons, non-Deployment Pods, general image failures versus local kind, and `Forbidden` routing. | Current official Kubernetes kubeconfig, kubectl, Pod-debug, and RBAC documentation checked; Claude Opus 5.5 reviewed the page read-only. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster, independent Kubernetes review, or novice task ran. | Independent Kubernetes review; beginner inspection in a disposable cluster including empty and denied namespace cases; access variation; freshness decision. |
-| [Review and apply a Kubernetes manifest change](knowledge/kubernetes/commands/common-commands.md) | Scoped target-to-user path, `kubectl diff` exit-code interpretation, manifest review, apply, rollout and user verification, source-of-truth recovery boundary, diagram and text alternative. | Current official Kubernetes diff, apply, rollout-status, Deployment, and context documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable rollout and failed-rollout exercise; beginner change task; freshness decision. |
+| [Review and apply a Kubernetes manifest change](knowledge/kubernetes/commands/common-commands.md) | Scoped target-to-user path, ownership clues and release-owner confirmation, exact Git revision check, illustrative diff and command results, no-op and error stops, autoscaler check, rollout-versus-user verification, source-of-truth recovery, branching diagram and text alternative. Focused review round 62 made the direct-apply boundary and stop conditions explicit. | Current official Kubernetes diff, apply, get, dry-run, field-manager, recommended-label, HPA, rollout-status, rollout-undo, and Deployment documentation checked; Claude Opus 5.5 reviewed the page read-only twice. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster, independent Kubernetes review, or novice task ran. | Independent Kubernetes review; disposable rollout and failed-rollout exercise; beginner change task; freshness decision. |
 
 ### Wave 77 (2026-10-03)
 
@@ -3221,6 +3221,24 @@ was checked. The diagram rendered and was inspected; two static
 retrieval cases were added. No cluster, access denial, image pull,
 independent Kubernetes review, or novice reader task ran. The guide
 remains `draft`.
+
+### Focused review round 62 (2026-10-12)
+
+Reviewed the direct-apply Kubernetes manifest guide with Claude Opus 5.5
+read-only twice. The guide now asks the reader to confirm the cluster,
+release owner, and exact Git file revision, shows illustrative diff,
+apply, rollout, and Deployment output, and stops on unexpected creation,
+no-op, missing apply annotation, permission errors, HPA replica conflict,
+and unexplained changes. Its recovery path corrects the reviewed file
+before another apply; the branching diagram reflects the same choices.
+The linked GitOps explanation now states the `MirrorPrune` dependency
+on Flux `prune: true` explicitly.
+
+Current official Kubernetes command, label, dry-run, HPA, Deployment,
+and Flux documentation was checked. The revised diagram rendered and was
+inspected; two static retrieval cases were added. No cluster, rollout,
+failed rollout, independent Kubernetes review, or novice reader task ran.
+The guide remains `draft`.
 
 ### Candidates for the next wave
 

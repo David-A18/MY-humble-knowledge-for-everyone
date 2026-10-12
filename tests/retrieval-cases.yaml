@@ -404,6 +404,14 @@ cases:
     question: If a Deployment wants replicas but its selector finds no Pods, where should I look for ReplicaSet creation failures?
     expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
     required_source_ids: [deployments, kubectl-describe]
+  - id: kubectl-direct-apply-ownership-check
+    question: Before applying a reviewed Deployment manifest, how do I confirm the live target and determine whether GitOps or another release tool owns it?
+    expected_paths: [knowledge/kubernetes/commands/common-commands.md]
+    required_source_ids: [kubectl-get, recommended-labels]
+  - id: kubectl-apply-noop-and-user-check
+    question: If kubectl apply reports unchanged or rollout status succeeds, does that prove my new release works for users, and how should I recover if a request fails?
+    expected_paths: [knowledge/kubernetes/commands/common-commands.md]
+    required_source_ids: [kubectl-apply, deployments, rollout-undo]
   - id: cloud-cost-allocation
     question: How do I establish cloud cost ownership and a shared-cost allocation policy?
     expected_paths: [knowledge/finops/cost-allocation-basics.md]

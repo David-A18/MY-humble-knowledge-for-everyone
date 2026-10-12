@@ -2861,7 +2861,14 @@
         "kubectl-diff",
         "kubectl-apply",
         "rollout-status",
-        "deployments"
+        "deployments",
+        "kubectl-get",
+        "recommended-labels",
+        "rollout-undo",
+        "field-managers",
+        "declarative-config",
+        "api-dry-run",
+        "horizontal-autoscaling"
       ],
       "stale_after": null,
       "status": "draft",

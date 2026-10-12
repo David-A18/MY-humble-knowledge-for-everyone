@@ -189,8 +189,9 @@ description.
   mechanism.[^argo-cd-automated-sync]
 - In a Flux Kustomization, `prune` is a required field: the author must
   choose. When it is on, removing a resource from the source revision deletes
-  that managed resource. Deleting the Kustomization also deletes its managed
-  resources under the default `MirrorPrune` deletion policy; an explicit
+  that managed resource. With the default `MirrorPrune` deletion policy,
+  deleting the Kustomization deletes its managed resources **only if**
+  `prune: true`; with `prune: false`, they are orphaned. An explicit
   deletion policy can change that outcome.[^flux-kustomization]
 
 **Self-healing** means reverting a change someone made directly in the
