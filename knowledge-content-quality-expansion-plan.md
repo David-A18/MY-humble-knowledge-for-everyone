@@ -1140,7 +1140,7 @@ that change tracked files, credentials, or repository maintenance state.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Git troubleshooting commands](knowledge/git/commands/troubleshooting-commands.md) | Rewritten with branch/upstream, ignored-file, conflict, and object-integrity paths; each explains what the check can and cannot establish. | Current official Git documentation was checked. A disposable repository reproduced a tracked `build/output.txt` still appearing in status despite a matching ignore rule. No remote rejection, conflict, corruption, or reader test was run. Claude Code remained at its weekly limit, so no Opus review occurred. | Independent Git/Opus review; reader tasks for rejected push and tracked-file confusion; freshness decision. |
+| [Git troubleshooting commands](knowledge/git/commands/troubleshooting-commands.md) | Rewritten with branch/upstream, ignored-file, conflict, and object-integrity paths; each explains what the check can and cannot establish. Focused review in round 57 added interpreted sample output, a divergence diagram, explicit tracked-versus-ignored and conflict-completion limits, and a dangling-object warning. | Current official Git documentation checked; Claude Opus 5.5 reviewed read-only twice. Disposable repositories reproduced divergence markers, tracked-ignore behavior, conflict staging, and a dangling blob with exit status 0; diagram rendered and inspected. No hosted rejection, damaged repository, or reader task ran. | Independent Git review; reader tasks for rejected push and tracked-file confusion; freshness decision. |
 
 ### Wave 57 (2026-10-02)
 
@@ -3128,6 +3128,24 @@ two static retrieval cases cover the live-cluster-versus-Git boundary and
 ready-endpoint model. Docker has no running daemon here, and kind and
 kubectl are absent, so no revised cluster run occurred. No independent
 Kubernetes review or novice reader task ran; the path remains `draft`.
+
+### Focused review round 57 (2026-10-12)
+
+Reviewed Git troubleshooting commands with Claude Opus 5.5 twice read-only.
+The page now starts with plain `git status`, shows how an upstream and
+remote connect, and explains local-only versus fetched-upstream commits
+with output and a small diagram. The ignore path distinguishes tracked,
+visible untracked, and ignored files; the conflict path distinguishes an
+empty unmerged list from a finished operation; and the object-health path
+distinguishes a dangling object from a corruption signal.
+
+Current official Git command documentation was checked. Disposable Git
+repositories reproduced ahead/behind and left/right markers, tracked
+ignore-rule output, staged conflict markers after the unmerged list went
+empty, and `git fsck --full` reporting a dangling blob with exit status 0.
+The diagram rendered and was inspected. Three static retrieval cases were
+added. No hosted push rejection, damaged repository, independent Git review,
+or novice reader task ran. The guide remains `draft`.
 
 ### Candidates for the next wave
 

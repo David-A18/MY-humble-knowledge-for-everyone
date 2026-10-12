@@ -102,6 +102,18 @@ cases:
     question: What is the difference between git restore file and git restore --staged file, and which uncommitted edits can I lose?
     expected_paths: [knowledge/git/git-fundamentals.md]
     required_source_ids: [git-restore]
+  - id: git-rejected-push-left-right
+    question: After a rejected Git push, what do the less-than and greater-than markers in git log HEAD...@{upstream} tell me, and can my upstream differ from the push target?
+    expected_paths: [knowledge/git/commands/troubleshooting-commands.md]
+    required_source_ids: [git-fetch, git-log, git-branch]
+  - id: git-tracked-file-ignore-rule
+    question: Why does build/output.txt still appear in Git status even though build/ is in .gitignore, and what does check-ignore --no-index prove?
+    expected_paths: [knowledge/git/commands/troubleshooting-commands.md]
+    required_source_ids: [git-ls-files, git-check-ignore]
+  - id: git-fsck-dangling-versus-corrupt
+    question: Does a dangling blob from git fsck mean my repository is corrupt, and what should I preserve if fsck reports a missing object?
+    expected_paths: [knowledge/git/commands/troubleshooting-commands.md]
+    required_source_ids: [git-fsck, git-gc]
   - id: actions-pr-merge-checkout
     question: When a GitHub Actions pull_request workflow uses checkout without a ref, does its test run against the proposed branch alone or the temporary merge with its base branch?
     expected_paths: [knowledge/git/github-actions/workflow-structure.md]

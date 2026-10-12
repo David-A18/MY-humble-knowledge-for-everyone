@@ -35,6 +35,12 @@ sources:
   - id: git-fsck
     resource: https://git-scm.com/docs/git-fsck
     title: Git - git-fsck
+  - id: git-rebase
+    resource: https://git-scm.com/docs/git-rebase
+    title: Git - git-rebase
+  - id: git-gc
+    resource: https://git-scm.com/docs/git-gc
+    title: Git - git-gc
 ---
 
 # Git troubleshooting commands
@@ -52,15 +58,25 @@ helps choose a recovery action after you know what happened.
 From the affected repository, run:
 
 ```bash
-git status --short --branch
+git status
 git branch -vv
 git remote -v
 ```
 
-Expected result: you can name the current branch, see whether
-Git reports local edits or an unfinished operation, see whether
-that branch has an upstream, and identify its remote URL. These
-commands inspect local state; they do not fetch, merge, or push.
+Expected result: `git status` names the current branch, local edits,
+and any unfinished merge or rebase. `branch -vv` shows each local branch's
+tracking branch, if one exists. For example, this **illustrative** line
+means local `main` tracks `origin/main` and the two have diverged:
+
+```text
+* main 7e8dc77 [origin/main: ahead 1, behind 1] Local edit
+```
+
+The name inside brackets identifies the tracking branch; a local branch
+without brackets has no upstream. Match its remote name, `origin` here,
+to a row in `git remote -v` to read that remote's fetch and push URLs.
+The ahead/behind counts describe the last fetched view and may be stale.
+These commands inspect local state; they do not fetch, merge, or push.
 Be careful when sharing a remote URL from a private repository:
 some URLs contain credentials or internal hostnames.[^git-status]
 [^git-branch][^git-remote]
@@ -87,7 +103,11 @@ git remote -v
 `branch -vv` shows tracking information for local branches;
 `remote -v` shows fetch and push URLs. If the branch has no
 upstream, a command using `@{upstream}` below will fail; stop
-and decide which remote branch should be tracked.[^git-branch]
+and decide which remote branch should be tracked. The upstream is
+not necessarily the branch named in an explicit `git push` command:
+compare the source and destination in the rejection message (for
+example, `main -> main`) with the branch and remote you intended.
+Ahead/behind counts still reflect the last fetch.[^git-branch]
 [^git-remote]
 
 If the URL and upstream are right, refresh your view and compare
@@ -101,8 +121,31 @@ git log --left-right --graph --oneline HEAD...@{upstream}
 
 `fetch` updates remote-tracking references; it does **not**
 merge into the checked-out branch. The log marks commits on
-each side of the split. If there are remote-only commits,
-the rejection may be a normal divergence. If the server
+each side of the symmetric difference `...`: `<` means reachable
+only from local `HEAD`, and `>` means reachable only from its
+upstream as of this fetch. A disposable repository produced this
+**example output** after one commit was made on each side:
+
+```text
+< 7e8dc77 local edit
+> 82a3bc5 remote edit
+```
+
+```mermaid
+flowchart LR
+  base["Common commit"] --> local["HEAD: local-only commit <"]
+  base --> remote["Upstream after fetch: remote-only commit >"]
+```
+
+Text alternative: the two branches share an earlier commit. The local
+branch has one commit marked `<`; the fetched upstream has a different
+commit marked `>`. Neither branch includes the other's new commit yet.
+
+Only `>` lines mean local `HEAD` is behind that upstream. Both markers
+mean the histories diverged. Only `<` means local `HEAD` is ahead, so
+a non-fast-forward rejection needs another explanation, such as a
+different push destination or a remote update after the fetch. No lines
+mean the two tips matched at the time of that fetch. If the server
 reported permission or branch-rule denial, this graph does
 not override that message. Do not force-push as a diagnostic.
 [^git-fetch][^git-log]
@@ -112,9 +155,9 @@ For the safe branch-to-review path, use
 
 ## A file is missing or ignore seems broken
 
-Suppose a generated file at `build/output.txt` appears in
-status even though `.gitignore` contains `build/`. Inspect
-whether Git already tracks it and which rule would match:
+Here, a file is "missing" when it exists on disk but does not appear in
+Git status. Suppose `.gitignore` contains `build/`. Inspect whether
+`build/output.txt` is tracked and which rule would match:
 
 ```bash
 git status --short -- build/output.txt
@@ -122,14 +165,44 @@ git ls-files -- build/output.txt
 git check-ignore -v --no-index -- build/output.txt
 ```
 
-If `ls-files` prints the path, Git tracks it. Ignore rules
-normally apply to **untracked** paths, so adding `build/`
-to `.gitignore` does not remove a tracked file. The
-`--no-index` flag asks `check-ignore` to show the matching
-rule even for a tracked path. If no rule matches, that command
-may print nothing and exit nonzero. Inspect the rule before
-changing tracking; the first question is whether this file
-should remain versioned.[^git-ls-files][^git-check-ignore]
+If `ls-files` prints the path, Git tracks it. A tracked file with an
+unstaged edit might show this in short status:
+
+```text
+ M build/output.txt
+```
+
+An unchanged tracked file shows nothing. Think of `.gitignore` as a
+filter for new files, not a way to remove a file Git already tracks.
+The `--no-index` flag shows a rule that *would* match even for a
+tracked path; it does **not** mean Git currently ignores that tracked
+file. In a disposable repository, the matching-rule output was:
+
+```text
+.gitignore:1:build/    build/output.txt
+```
+
+Read it as rule file, line number, pattern, then path; Git separates
+the pattern and path with a tab. A printed pattern starting with `!`
+is a negation, meaning that rule makes the path *not* ignored. If
+there is no match, `check-ignore -v --no-index` prints nothing and
+exits with status 1.[^git-ls-files][^git-check-ignore]
+
+If `ls-files` prints nothing, the path is not tracked. `??` in short
+status means Git sees an untracked file; if status prints nothing but
+the file exists, ask Git whether an ignore rule hides it:
+
+```bash
+git check-ignore -v -- build/output.txt
+```
+
+An ordinary `build/` match explains why the new file is absent from
+status. A final negated match means Git does not ignore the path. Check
+its exact spelling and case, then try
+`git status --short --untracked-files=all -- build/output.txt` to see
+whether the usual status settings hid an untracked file. Decide whether
+the file should be versioned before changing tracking;
+[Solve Git issues](solve-issues.md) covers the action after this diagnosis.
 
 This example is about a generated file, not a credential.
 If a secret was committed, removing it from current tracking
@@ -145,32 +218,57 @@ git diff --name-only --diff-filter=U
 
 `status` names the in-progress operation and suggests its
 next command. The filtered diff lists paths still marked
-unmerged. Inspect the conflicted files and decide what the
-combined content should be before staging a resolution.
-Do not run `merge --abort`, `rebase --abort`, or a reset
+unmerged. In a disposable merge conflict, `git status` said
+`both modified: config.txt` and the filtered diff printed
+`config.txt`. Inspect the file and decide what the combined
+content should be before staging a resolution. Staging with
+`git add` marks a path resolved; it does not prove the content is
+correct or remove conflict markers for you. After staging, an
+empty filtered diff means no paths remain *marked* unmerged,
+but `git status` may still say a merge, rebase, or cherry-pick
+needs its `--continue` step. Review the content and run the
+relevant checks before continuing.[^git-status][^git-diff]
+
+Do not run `merge --abort`, `rebase --abort`,
+`cherry-pick --abort`, or a reset
 merely because the conflict feels surprising: first confirm
 which operation you would abandon and whether you have
-other edits to preserve.[^git-status][^git-diff]
+other edits to preserve. During a rebase, the meanings of
+"ours" and "theirs" in conflict tools may be opposite to what
+you expect; decide from the actual content and the operation
+named by `git status`.[^git-rebase]
 
 For recovery choices after inspection, use
 [Undo and recovery](../troubleshooting/undo-and-recovery.md).
 
 ## Git reports object errors
 
-When Git says an object is missing or corrupt, avoid
-cleanup commands until you understand the damage. In a
-local repository where an integrity scan is appropriate:
+When Git says an object is missing or corrupt, inspect the
+local object database before attempting repair:
 
 ```bash
 git fsck --full
 ```
 
-This checks connectivity and validity of objects; it may
-take time in a large repository. A failing result is
-evidence to preserve the repository and compare it with
-a known-good clone or backup. A successful result does
-not diagnose every slow command, credential failure, or
-remote service problem.[^git-fsck]
+This checks connectivity and validity of local objects; `--full`
+is already the default but makes the scope explicit. It may take
+time in a large repository. A line such as the following can appear
+with a **zero** exit status; it reports an object outside Git's reachable
+history as checked from references, reflogs, and the index. That alone
+is not proof of corruption:
+
+```text
+dangling blob b38fff39566de31add5cdd9eecb217c86441a778
+```
+
+That example came from a disposable repository with an unreferenced
+blob. Messages such as `missing` or `hash mismatch`, or a nonzero exit,
+need investigation. Before repair or cleanup, preserve a copy of the
+entire repository, including `.git`. Avoid `git gc`, `git prune`, and
+`git reflog expire` until you understand which objects or history you
+may need for recovery. A passing scan does not inspect working-tree
+files, uncommitted edits, or the remote repository; it also cannot
+explain a credential or service failure.[^git-fsck][^git-gc]
 
 ## Check your understanding
 
@@ -197,6 +295,10 @@ remote service problem.[^git-fsck]
   for ignore-rule versus tracked-file behavior.
 - [Git fsck](https://git-scm.com/docs/git-fsck)
   for object integrity checks.
+- [Git rebase](https://git-scm.com/docs/git-rebase)
+  for conflict-side meanings during a rebase.
+- [Git gc](https://git-scm.com/docs/git-gc)
+  for cleanup and expiry behavior.
 
 [Back to Git commands](index.md)
 
@@ -209,3 +311,5 @@ remote service problem.[^git-fsck]
 [^git-ls-files]: [Git - git-ls-files](https://git-scm.com/docs/git-ls-files).
 [^git-diff]: [Git - git-diff](https://git-scm.com/docs/git-diff).
 [^git-fsck]: [Git - git-fsck](https://git-scm.com/docs/git-fsck).
+[^git-rebase]: [Git - git-rebase](https://git-scm.com/docs/git-rebase).
+[^git-gc]: [Git - git-gc](https://git-scm.com/docs/git-gc).

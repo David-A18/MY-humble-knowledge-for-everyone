@@ -2083,7 +2083,9 @@
         "git-check-ignore",
         "git-ls-files",
         "git-diff",
-        "git-fsck"
+        "git-fsck",
+        "git-rebase",
+        "git-gc"
       ],
       "stale_after": null,
       "status": "draft",
