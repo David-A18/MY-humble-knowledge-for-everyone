@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: aws-cost-tag-missing-next-day
+    question: I tagged an EC2 instance application=checkout on Monday; why is Cost Explorer still blank on Tuesday, and which usage may need backfill?
+    expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]
+    required_source_ids: [aws-activate-tags, aws-cost-explorer-enable, aws-tag-backfill]
+  - id: aws-cost-tag-backfill-before-assignment
+    question: A resource got application=checkout in June. Can a cost allocation tag backfill produce checkout values for March usage before it was tagged?
+    expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]
+    required_source_ids: [aws-tag-backfill]
+  - id: aws-cost-category-split-report-scope
+    question: If AWS Cost Categories split a shared charge between teams, will that calculated split appear in Cost Explorer or the Cost and Usage Report?
+    expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]
+    required_source_ids: [aws-split-charges]
   - id: blue-green-classic-and-staged-traffic
     question: Does blue-green always shift every request at once, or can an ECS deployment use canary increments between blue and green?
     expected_paths: [knowledge/cloud/solutions/blue-green-deployment.md]

@@ -2,6 +2,7 @@
 
 ## 2026-10-12
 
+- **AWS cost allocation beginner review**: Clarified resource tagging versus billing-key activation, Tuesday's expected reporting delay, earlier tagged usage that may require backfill, historical values that cannot be recovered, and the limited report scope of Cost Categories split charges. Added a branching diagram with a text alternative and direct answers to the reader questions; simplified the linked policy guide's first cost-basis choice. Claude Opus 5.5 reviewed both pages read-only twice; current AWS Billing, Cost Explorer, Cost Categories, FinOps, and FOCUS v1.4 sources were checked; the diagram rendered and was inspected; three static retrieval cases were added. No account, report, backfill, independent finance review, or novice reader task ran; both pages remain `draft`.
 - **Blue-green deployment beginner review**: Distinguished full cutover, CodeDeploy-managed ECS canary and linear shifts, and ECS's separate built-in strategies. Added a configured test path, illustrative traffic shares, shared-data compatibility example, and a clearer release diagram. Aligned the linked end-to-end guide so a Kubernetes rolling update's completion evidence is not mistaken for a blue-green traffic move. Claude Opus 5.5 reviewed both pages read-only twice; current AWS, Azure, and Cloud Run sources were checked; both diagrams rendered and were inspected; three static retrieval cases were added. No deployment, rollback, independent release engineering review, or novice reader task ran; both pages remain `draft`.
 
 ## 2026-10-11

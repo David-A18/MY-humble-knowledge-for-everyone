@@ -541,8 +541,8 @@ that this rewrite was independently reviewed.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Cost allocation basics](knowledge/finops/cost-allocation-basics.md) | Teaches a first allocation policy with precedence, five nonoverlapping report buckets, calculated coverage measures, and a decision-tree diagram. | Opus 5.5 read-only review; current FinOps Framework, FOCUS, and AWS primary sources checked. The 100-unit report is invented; the diagram rendered and was inspected. | Independent finance review; a real provider report check; reader test; freshness decision. |
-| [AWS cost allocation tags](knowledge/cloud/aws/finops/cost-allocation-tags.md) | Rewritten to separate resource tagging from billing activation, explain reporting delays and historical backfill, and bound tag coverage. | Keyed citations to AWS Billing and FinOps documentation; the EC2 scenario is illustrative, with no account access or billing action. | Independent AWS billing review; a real report check; reader test; freshness decision. |
+| [Cost allocation basics](knowledge/finops/cost-allocation-basics.md) | Teaches a first allocation policy with precedence, five nonoverlapping report buckets, calculated coverage measures, and a decision-tree diagram. Round 54 simplified the first report choice and added answer guidance and AWS backfill limits. | Opus 5.5 read-only reviews; current FinOps Framework, FOCUS v1.4, and AWS primary sources checked. The 100-unit report is invented; its diagram rendered and was inspected earlier. | Independent finance review; a real provider report check; reader test; freshness decision. |
+| [AWS cost allocation tags](knowledge/cloud/aws/finops/cost-allocation-tags.md) | Separates resource tagging from billing activation, explains reporting delays, active versus earlier usage, historical backfill, and the limits of tags and Cost Categories split charges. Round 54 added a branching data-path diagram and answers to the reader questions. | Claude Opus 5.5 reviewed the page read-only twice; current AWS Billing, Cost Explorer, Cost Categories, FinOps Framework, and FOCUS references were checked. The EC2 scenario is illustrative; the revised diagram rendered and was inspected. No account access or billing action occurred. | Independent AWS billing review; a real report check; reader test; freshness decision. |
 
 The AWS and FinOps pages were consulted on 2026-09-30. In particular, AWS
 backfill can apply activation to earlier billing periods, but only dates when
@@ -3072,6 +3072,26 @@ diagrams rendered and were inspected; three static retrieval cases cover
 traffic strategy, shared-data rollback, and the separate traffic step.
 No deployment, traffic migration, data rollback, independent release
 engineering review, or novice reader task ran. Both concepts remain `draft`.
+
+### Focused review round 54 (2026-10-12)
+
+Reviewed AWS cost allocation tags and the linked allocation policy guide
+with Claude Opus 5.5 twice read-only. The AWS page now distinguishes a
+resource label from an activated billing key, explains why Tuesday can
+still be blank after Monday's tag, and separates later active usage from
+earlier tagged usage that may need backfill. Its new diagram shows that
+backfill depends on the key's current active status and cannot invent a
+historical value. It names the refresh and request limits and explains
+that Cost Categories' calculated split charges do not change Cost Explorer
+or the Cost and Usage Report. The policy guide now gives a simpler first
+cost-basis choice and answers its coverage question.
+
+Current AWS Billing, Cost Explorer, and Cost Categories documentation,
+FinOps Framework guidance, and FOCUS v1.4 references were checked. The
+new Mermaid diagram rendered and was inspected; three static retrieval
+cases cover tag timing, historical values, and split-report scope. No
+AWS account, billing report, backfill, independent finance review, or
+novice reader task ran. Both concepts remain `draft`.
 
 ### Candidates for the next wave
 

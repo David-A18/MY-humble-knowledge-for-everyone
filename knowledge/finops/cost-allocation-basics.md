@@ -38,9 +38,10 @@ system was changed for this page.
 
 **Allocation** means assigning a cost to a responsible group. It may use
 account or project ownership, tags, labels, a business mapping, or a shared
-cost rule. A tag is one input, not the policy itself. The FinOps Framework
-separates allocation, metadata, and shared-cost strategies for this
-reason.[^finops-allocation]
+cost rule. A tag is one input, not the policy itself. Within its Allocation
+capability, the FinOps Framework calls for an overall allocation strategy,
+a tagging and metadata strategy, and a shared-cost strategy.
+[^finops-allocation]
 
 Think of a bill for a shared building: a team can own its room directly, while
 the lobby needs an agreed rule. The analogy stops at measurement. Cloud
@@ -68,12 +69,14 @@ disputes, and adjustments.[^finops-cost-allocation-guide]
 
 ## Roll out the first policy
 
-1. Agree which bills, charge types, month, currency, and **cost basis** form
-   the report total. Billed cost follows what is invoiced for the period.
-   Effective cost allocates eligible commitment purchase amounts to the usage
+1. Pick one closed month's report total. Record the included bills and charge
+   types, currency, and **cost basis**: the kind of cost number being counted.
+   For a first invoice-based report, use billed cost. If the organization
+   uses effective cost instead, keep that basis throughout the report.
+   Effective cost spreads eligible commitment purchase amounts over the usage
    they cover, so its monthly total can differ from the invoice. Never add
-   billed purchase lines to effective usage lines in one total. Record how
-   any currency conversion was made.[^focus-billed-cost][^focus-effective-cost]
+   billed purchase lines to effective usage lines in one total. Record any
+   currency conversion.[^focus-billed-cost][^focus-effective-cost]
 2. Define the teams and products that may receive costs, the required
    ownership fields, allowed values, and who approves exceptions. Give the
    policy a version and an effective date.
@@ -94,8 +97,10 @@ disputes, and adjustments.[^finops-cost-allocation-guide]
    month. Label an open month's figures as provisional.
 7. Correct missing ownership metadata for future usage and decide how to
    classify older billing lines for the period in which they occurred.
-   Retagging now does not create historical tag values that never existed;
-   provider backfill has separate limits.[^aws-cost-tag-backfill]
+   Retagging now does not create historical tag values that never existed.
+   For AWS, backfill can apply activation to prior months within its
+   twelve-month window, but only usage that already carried the tag can gain
+   a value.[^aws-cost-tag-backfill]
 
 Expected result: a report can answer both "which team owns this cost?" and
 "which costs still need a decision?" If the two answers disagree with an
@@ -106,8 +111,9 @@ before changing tags.
 > Cost data and tag availability vary by provider and service. Validate
 > reporting behavior in the target provider before treating a tag as an
 > immediate allocation signal. For AWS, see the separate [cost allocation tags
-> explanation](../cloud/aws/finops/cost-allocation-tags.md): a resource tag
-> alone does not make it available in billing reports.
+> explanation](../cloud/aws/finops/cost-allocation-tags.md): adding a tag to
+> a resource does not by itself make that tag key available in billing
+> reports; a billing owner must also activate it.
 
 ## Decide how shared costs work
 
@@ -204,12 +210,18 @@ uncertain costs in a catch-all owner to improve the number.
   decision, and where did the other 30 units go?
 - Who approves the rule for the shared platform account?
 
+In the example, 60 units have one identifiable consuming product team, so
+direct coverage is 60%. Another 30 units have an approved central-funding
+decision, giving 90% decision coverage without calling that shared charge
+direct. Finance and the platform owner must agree who approves the shared
+rule; the page does not assume one universal organization chart.
+
 ## Official documentation for deeper study
 
 - [FinOps Framework: Allocation](https://framework.finops.org/framework/capabilities/allocation/) defines the allocation, metadata, and shared-cost strategies.
 - [FinOps cloud cost allocation guide](https://www.finops.org/wg/cloud-cost-allocation/) discusses shared-cost choices and organizational practice.
 - [FOCUS Billed Cost](https://focus.finops.org/docs/specification/v1-4/columns/invoice-detail/billed-cost/) and [Effective Cost](https://focus.finops.org/docs/specification/v1-4/columns/cost-and-usage/effective-cost/) explain two different bases for financial and usage views.
-- [AWS cost allocation tag backfill](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-allocation-backfill.html) shows why adding a tag now cannot create past values that were never present.
+- [AWS cost allocation tag backfill](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-allocation-backfill.html) explains how current activation status applies to earlier months and its twelve-month limit.
 
 ## Related links
 

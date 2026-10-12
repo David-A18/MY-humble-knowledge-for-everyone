@@ -727,6 +727,8 @@
         "aws-cost-allocation-tags",
         "aws-activate-tags",
         "aws-tag-backfill",
+        "aws-cost-explorer-enable",
+        "aws-split-charges",
         "finops-allocation"
       ],
       "stale_after": null,
