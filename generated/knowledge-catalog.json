@@ -1014,6 +1014,10 @@
       "source_ids": [
         "aws-codedeploy",
         "aws-ecs-blue-green",
+        "aws-ecs-deployment-config",
+        "aws-ecs-codedeploy",
+        "aws-ecs-alb",
+        "aws-blue-green-data",
         "azure-container-apps",
         "cloud-run-rollouts"
       ],
@@ -1283,7 +1287,8 @@
         "github-deployment-environments",
         "terraform-plan",
         "kubernetes-container-images",
-        "kubernetes-deployments"
+        "kubernetes-deployments",
+        "aws-ecs-blue-green"
       ],
       "stale_after": null,
       "status": "draft",

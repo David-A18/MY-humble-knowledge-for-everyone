@@ -12,6 +12,6 @@ Provider-neutral cloud solution patterns for application delivery, reliability, 
 
 | Article | Purpose |
 | --- | --- |
-| [Blue-green deployment](blue-green-deployment.md) | Follow the prepare, test, switch, observe, and retire stages, including shared-data rollback limits. |
+| [Blue-green deployment](blue-green-deployment.md) | Follow the prepare, test, traffic move, observe, and retire stages, including shared-data rollback limits. |
 
 [Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

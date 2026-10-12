@@ -471,7 +471,7 @@ maintainer value was added, and no example was run.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [End-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) | Rewritten to the standard; focused review in round 49 separated PR checks, review and merge, an image built and tested from the merged commit, optional infrastructure work, production rollout, user check, and recovery. | Keyed current GitHub, Terraform, and Kubernetes citations; Claude Opus 5.5 reviewed the draft read-only. The service walk-through is illustrative, not an executed pipeline. | Independent technical review; reader test; freshness decision. |
+| [End-to-end deployment](knowledge/cross-topic-guides/end-to-end-deployment.md) | Rewritten to the standard; focused review in round 49 separated PR checks, review and merge, an image built and tested from the merged commit, optional infrastructure work, production rollout, user check, and recovery. Round 53 distinguished rolling-update completion from green readiness and a separate blue-green traffic move. | Keyed GitHub, Terraform, Kubernetes, and ECS citations; Claude Opus 5.5 reviewed the draft read-only twice across these rounds. The service walk-through is illustrative, not an executed pipeline; both revised diagrams rendered and were inspected. | Independent technical review; reader test; freshness decision. |
 | [GitHub Actions with Kubernetes](knowledge/cross-topic-guides/github-actions-with-kubernetes.md) | Rewritten to the standard; focused review in round 48 separated GitHub-to-cloud, cloud-to-cluster, and cluster authorization, and clarified rollout failure and recovery. | Keyed current GitHub, AWS EKS, and Kubernetes citations; Claude Opus 5.5 reviewed the draft read-only. No workflow file or cluster run. | Independent technical and security review; reader test; freshness decision. |
 | [GitHub Actions with Terraform](knowledge/cross-topic-guides/github-actions-with-terraform.md) | Rewritten to the standard; focused review in round 48 separated throwaway PR plans from a saved plan made from the merged commit and reviewed before apply. | Keyed current HashiCorp and GitHub citations; Claude Opus 5.5 reviewed the draft read-only. The pipeline walk-through is invented; no Terraform run. | Independent technical and security review; reader test; freshness decision. |
 | [Terraform on AWS](knowledge/cross-topic-guides/terraform-on-aws.md) | Rewritten to the standard; focused review in round 49 separated provider and backend credentials, effective account, regional defaults and overrides, empty-state risk, and state recovery. | Keyed current HashiCorp, AWS provider, and AWS S3 citations; Claude Opus 5.5 reviewed the draft read-only. The wrong-account example is invented, with placeholder accounts and no AWS call. | Independent technical and security review; reader test; freshness decision. |
@@ -662,7 +662,7 @@ service catalog to the release path and its rollback boundary.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Blue-green deployment](knowledge/cloud/solutions/blue-green-deployment.md) | Rewritten with a two-stage analogy, illustrative checkout release, traffic diagram, stage questions, and shared-data rollback limit. | Keyed AWS CodeDeploy and ECS, Azure Container Apps, and Cloud Run documentation. No deployment, traffic migration, or rollback was executed. | Independent release engineering review; a real cutover and rollback exercise; reader test; freshness decision. |
+| [Blue-green deployment](knowledge/cloud/solutions/blue-green-deployment.md) | Rewritten with a two-stage analogy, illustrative checkout release, traffic diagram, stage questions, and shared-data rollback limit. Round 53 added a test-path and traffic-move model, distinguished native ECS from CodeDeploy-managed shifts, and explained shared-data compatibility. | Current AWS ECS, CodeDeploy, and AWS blue-green data guidance, plus Azure Container Apps and Cloud Run docs, were checked. Claude Opus 5.5 reviewed the page read-only twice; the revised diagram rendered and was inspected. No deployment, traffic migration, or rollback was executed. | Independent release engineering review; a real cutover and rollback exercise; reader test; freshness decision. |
 
 The provider documentation was consulted on 2026-09-30. The diagrams and
 release path are illustrative, not evidence of a production cutover.
@@ -3054,6 +3054,24 @@ revised page. A separate Bash test confirmed that the cleanup guard rejects
 rendered and was inspected; two static retrieval cases cover the plan
 outputs and temporary override. No cloud resource, independent domain
 review, or novice reader task ran; the tutorial remains `draft`.
+
+### Focused review round 53 (2026-10-12)
+
+Reviewed blue-green deployment and its linked delivery-chain explanation
+with Claude Opus 5.5 twice read-only. The release page now separates the
+simple full traffic move from CodeDeploy-managed ECS canary or linear shifts
+and from ECS's built-in strategies. A small checkout example gives
+illustrative traffic shares, names a separate test path, and explains why
+routing back cannot reverse shared-data changes. The delivery chain now
+states when its Kubernetes rolling-update evidence applies and where a
+blue-green traffic move and user check belong.
+
+Current AWS ECS, CodeDeploy, and blue-green data guidance, plus Azure
+Container Apps and Cloud Run documentation, were checked. Both Mermaid
+diagrams rendered and were inspected; three static retrieval cases cover
+traffic strategy, shared-data rollback, and the separate traffic step.
+No deployment, traffic migration, data rollback, independent release
+engineering review, or novice reader task ran. Both concepts remain `draft`.
 
 ### Candidates for the next wave
 

@@ -20,6 +20,9 @@ sources:
   - id: kubernetes-deployments
     resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
     title: Kubernetes - Deployments
+  - id: aws-ecs-blue-green
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html
+    title: Amazon ECS - Blue-green deployments
 ---
 
 # End-to-end deployment
@@ -48,8 +51,8 @@ Three terms used below:
   are integrated, such as tests and linting on a pull request and after merge.
 - An **artifact** is the built thing that is deployed, for example a container
   image.
-- A **rollout** is the process of replacing the running version with a new
-  one.
+- A **rollout** is the process of bringing a new version into service. It
+  may replace running replicas or move traffic between versions.
 
 ## Why it matters
 
@@ -70,9 +73,18 @@ answer to one question as the answer to another.
 | 2. Review and merge | Did an authorized reviewer approve the change, and which commit landed on `main`? | Review record and merged commit ID. | That the merged commit is safe to release. |
 | 3. Infrastructure, when changed | What would change in the target environment, and what did apply do? | A saved plan made from the merged commit, its review, an apply result, and a follow-up resource check. | That the application stays healthy afterward. |
 | 4. Artifact build | Exactly which image came from the merged commit? | Build record and immutable image digest; test results for that exact image when claimed. | That it behaves correctly in production. |
-| 5. Deploy | Did the platform bring up the selected image? | Target cluster and namespace, observed Pod template image reference, and completed rollout. | That users get correct responses. |
+| 5. Deploy and route | Did the platform bring up the selected image and, when separate, move traffic to it? | Target environment, observed image reference, new version ready, and evidence of how users reach it: completed rolling update or recorded traffic move. | That users get correct responses. |
 | 6. User check | Is the service doing its job for users now? | A user-level check and relevant live signals. | That it will stay healthy. |
 | 7. Recovery, if needed | Can the team restore service or fix forward? | An observed recovery result, using a path planned before release. | That every infrastructure or data change was reversed. |
+
+The concrete Pod and rollout evidence below describes a Kubernetes rolling
+update, where old replicas are replaced. In a blue-green release, green can
+be running and tested while blue still serves users. Moving production
+traffic to green is a separate step, controlled by a person or deployment
+automation. With a staged shift, user checks run while only part of the
+traffic has moved. Blue may remain running during the observation window.
+[^aws-ecs-blue-green] The team must record both green's readiness and the
+actual traffic move.
 
 Some supporting facts from the tools involved:
 
@@ -92,10 +104,11 @@ Some supporting facts from the tools involved:
   lets you identify the deployed image. To say the *tested* image is running,
   test that exact digest and carry it through a trusted build and deployment
   path.
-- **A completed rollout is a platform statement.** Kubernetes marks a
+- **A completed rolling update is a platform statement.** Kubernetes marks a
   Deployment complete when all replicas are updated, all are available, and no
   old replicas are running.[^kubernetes-deployments] That is about Pods, not
-  about whether a user's request succeeds.
+  about whether a user's request succeeds; it does not describe a blue-green
+  release that deliberately retains blue.
 
 ## Visual: the chain and its way back
 
@@ -108,7 +121,7 @@ flowchart TB
   need -- "no" --> art["4. Build and test image<br/>from merged commit"]
   infra --> art
   art --> gate["Production approval<br/>when configured"]
-  gate --> dep["5. Deploy that digest"]
+  gate --> dep["5. Deploy that digest<br/>move traffic if separate"]
   dep --> chk{"6. Working for users?"}
   chk -- "yes" --> done["Change is live<br/>keep monitoring"]
   chk -- "no" --> rec["7. Restore service<br/>or fix forward"]
@@ -118,17 +131,20 @@ flowchart TB
 Text alternative: the chain starts with a pull request, validation, review
 and merge. Infrastructure is planned, reviewed, and applied only if changed.
 A build from the merged commit produces an image. After any configured
-production approval, the job deploys that image by digest. A user check then
+production approval, the job deploys that image by digest. For a blue-green
+release, traffic is moved to it as a separate step. A user check then
 asks whether the service works. If it passes, monitoring continues; a later
 regression can still need recovery. If it fails, the team restores service or
-fixes forward. A new code fix starts another validation and review pass.
+fixes forward.
 
 The user check happens after at least some users can reach the new version. It
 can **detect** impact but cannot prevent every first bad request. A
-pre-production user-path test can catch some defects earlier; a staged or
-canary rollout can limit the number of users exposed while live checks run.
-Neither proves every user path works. See [Blue-green deployment](../cloud/solutions/blue-green-deployment.md)
-for one release pattern.
+pre-production user-path test can catch some defects earlier. A canary or
+other staged traffic shift can limit early exposure while live checks run;
+retaining blue can make switching traffic back faster while it remains
+compatible with shared data. Neither proves every user path works. See
+[Blue-green deployment](../cloud/solutions/blue-green-deployment.md) for
+the relationship between these release choices.
 
 ## Example: one change to a fictional service
 
@@ -146,7 +162,7 @@ infrastructure configuration changes in this release.
 | 2 | A teammate approves the change, and it merges as `a9c4e7a`. | Review and merged commit ID. | Author and reviewer. |
 | 3 | The team identifies no infrastructure change and does not run a Terraform apply. | The release record says this stage was skipped; it makes no claim about drift. | Infrastructure owner. |
 | 4 | A trusted `main` build creates an image from `a9c4e7a`, tests that image, and records its digest. | Build, test, and digest tied to the merged commit. | Pipeline. |
-| 5 | A production job waits for configured environment approval, then deploys that digest. | Target, digest, and completed rollout. | Deployer. |
+| 5 | A production job waits for configured environment approval, then performs a Kubernetes rolling update to that digest. | Target, digest, and completed rollout. | Deployer. |
 | 6 | `POST /bookings` errors rise, and a test booking using the mobile client's date format fails. | Metrics and a failed user-level check. | On-call engineer. |
 | 7 | Because no data or schema changed and the old image is retained, the engineer sends its digest through the service's controlled recovery job and checks the booking path again. The author prepares a fix. | Previous rollout and user check succeed; error rate falls. | On-call engineer, then author. |
 
@@ -175,7 +191,7 @@ equally reversible.
 | Layer | How it is reversed | Typical owner | Limit |
 | --- | --- | --- | --- |
 | Source | A new commit that reverses the change. See [Git undo and recovery](../git/troubleshooting/undo-and-recovery.md). | The authoring team. | Reverting code does not by itself change what is running. |
-| Running version | Return the workload to a retained previous revision or known-good image. Kubernetes Deployment history depends on `.spec.revisionHistoryLimit`; setting it to zero removes the ability to roll back after cleanup.[^kubernetes-deployments] | Whoever is on call for the service. | Needs a retained revision or known-good template and a still-available image. It does not restore separate ConfigMaps, Secrets, data, or schema. |
+| Running version | For a rolling update, return the workload to a retained previous revision or known-good image. For blue-green, route traffic back to blue while it remains available and compatible. Kubernetes Deployment history depends on `.spec.revisionHistoryLimit`; setting it to zero removes the ability to roll back after cleanup.[^kubernetes-deployments][^aws-ecs-blue-green] | Whoever is on call for the service. | Needs a retained, usable version and a working route. It does not restore separate ConfigMaps, Secrets, data, or schema. |
 | Infrastructure | A new reviewed plan that moves resources back. | The infrastructure owner. | Terraform has no undo; some changes replace or destroy resources. |
 | Data | Depends on the change. A schema or data migration may not be reversible. | The service team, often with the database owner. | Plan this before the change, not during the incident. |
 
@@ -232,6 +248,7 @@ Where the analogy stops being accurate:
 - What a plan is and is not: [`terraform plan` command](https://developer.hashicorp.com/terraform/cli/commands/plan).
 - Tags versus digests: [Kubernetes - Images](https://kubernetes.io/docs/concepts/containers/images/).
 - Rollout completion, failure, and rolling back: [Kubernetes - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+- Traffic shift and the time blue stays available: [Amazon ECS blue-green deployments](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html).
 
 ## Related links
 
@@ -247,3 +264,4 @@ Where the analogy stops being accurate:
 [^terraform-plan]: [terraform plan command](https://developer.hashicorp.com/terraform/cli/commands/plan), source record `terraform-plan`.
 [^kubernetes-container-images]: [Kubernetes - Images](https://kubernetes.io/docs/concepts/containers/images/), source record `kubernetes-container-images`.
 [^kubernetes-deployments]: [Kubernetes - Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), source record `kubernetes-deployments`.
+[^aws-ecs-blue-green]: [Amazon ECS blue-green deployments](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html), source record `aws-ecs-blue-green`.

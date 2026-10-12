@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-12
+
+- **Blue-green deployment beginner review**: Distinguished full cutover, CodeDeploy-managed ECS canary and linear shifts, and ECS's separate built-in strategies. Added a configured test path, illustrative traffic shares, shared-data compatibility example, and a clearer release diagram. Aligned the linked end-to-end guide so a Kubernetes rolling update's completion evidence is not mistaken for a blue-green traffic move. Claude Opus 5.5 reviewed both pages read-only twice; current AWS, Azure, and Cloud Run sources were checked; both diagrams rendered and were inspected; three static retrieval cases were added. No deployment, rollback, independent release engineering review, or novice reader task ran; both pages remain `draft`.
+
 ## 2026-10-11
 
 - **Terraform local-state tutorial beginner review**: Clarified which plan values are known before apply, why the synthetic resource ID is not a cloud object, and why an un-applied plain plan proposes the unchanged default after a one-time override. Added specific official CLI sources and a guarded Bash cleanup path. Claude Opus 5.5 reviewed the tutorial and linked explanation read-only; a disposable Terraform v1.13.1 run matched the create, update, reverse plan, stale plan, destroy, and Git ignore observations; the guard refused `/tmp` and removed a matching lab directory; the diagram rendered and was inspected; two static retrieval cases were added. No cloud resource, independent Terraform review, or novice reader task ran; the tutorial remains `draft`.

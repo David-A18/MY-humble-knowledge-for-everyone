@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: blue-green-classic-and-staged-traffic
+    question: Does blue-green always shift every request at once, or can an ECS deployment use canary increments between blue and green?
+    expected_paths: [knowledge/cloud/solutions/blue-green-deployment.md]
+    required_source_ids: [aws-ecs-codedeploy]
+  - id: blue-green-shared-data-rollback-limit
+    question: If green changed shared order data and checkout fails, will routing traffic back to blue undo those writes?
+    expected_paths: [knowledge/cloud/solutions/blue-green-deployment.md]
+    required_source_ids: [aws-blue-green-data]
+  - id: delivery-chain-blue-green-traffic-step
+    question: In a blue-green release, does bringing up green mean users are already reaching it, and can blue still run after traffic moves?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cloud/solutions/blue-green-deployment.md]
+    required_source_ids: [aws-ecs-blue-green]
   - id: terraform-local-plan-known-after-apply
     question: In the local Terraform tutorial, why does input.version have a value while terraform_data.release.output and release_summary say known after apply?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md, knowledge/terraform/language/how-values-move-through-terraform.md]
