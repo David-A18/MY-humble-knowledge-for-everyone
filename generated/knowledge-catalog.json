@@ -2884,10 +2884,12 @@
       "source_ids": [
         "current-context",
         "get-contexts",
+        "kubeconfig-files",
         "kubectl-get",
         "kubectl-describe",
         "kubectl-logs",
-        "debug-pods"
+        "debug-pods",
+        "kubernetes-rbac"
       ],
       "stale_after": null,
       "status": "draft",

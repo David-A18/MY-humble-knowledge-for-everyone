@@ -388,6 +388,14 @@ cases:
     question: How do I confirm my Kubernetes context and inspect Pods, logs, and events safely?
     expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
     required_source_ids: [kubectl-reference]
+  - id: kubectl-empty-namespace-list
+    question: If kubectl get deployments returns an empty list, how do I confirm the namespace and context before concluding nothing runs there?
+    expected_paths: [knowledge/kubernetes/commands/daily-usage.md]
+    required_source_ids: [get-contexts, kubectl-get]
+  - id: kubectl-image-pull-general-versus-kind
+    question: Where should I start when a Pod shows ImagePullBackOff, and when is the local kind image guide the right route?
+    expected_paths: [knowledge/kubernetes/commands/daily-usage.md, knowledge/kubernetes/troubleshooting/common-solutions.md]
+    required_source_ids: [debug-pods]
   - id: kubectl-deployment-selector-versus-owner
     question: If kubectl get pods with my Deployment selector lists two Pods, how do I confirm they belong to that Deployment during a rollout?
     expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]

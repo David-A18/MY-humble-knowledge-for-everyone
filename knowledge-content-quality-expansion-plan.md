@@ -1358,7 +1358,7 @@ verification distinct checks.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Begin a safe kubectl inspection session](knowledge/kubernetes/commands/daily-usage.md) | Context-and-namespace check, Deployment and Pod scan, one-Pod evidence path, bounded address analogy, diagram and text alternative, symptom routes. | Current official Kubernetes context, get, describe, logs, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; beginner inspection in a disposable cluster; access-variation check; freshness decision. |
+| [Begin a safe kubectl inspection session](knowledge/kubernetes/commands/daily-usage.md) | Context-and-namespace check, Deployment and Pod scan, illustrative two-replica output, one-Pod evidence path, bounded address analogy, branching diagram and text alternative, symptom routes. Focused review round 61 clarified empty lists, READY fractions and restart comparisons, non-Deployment Pods, general image failures versus local kind, and `Forbidden` routing. | Current official Kubernetes kubeconfig, kubectl, Pod-debug, and RBAC documentation checked; Claude Opus 5.5 reviewed the page read-only. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster, independent Kubernetes review, or novice task ran. | Independent Kubernetes review; beginner inspection in a disposable cluster including empty and denied namespace cases; access variation; freshness decision. |
 | [Review and apply a Kubernetes manifest change](knowledge/kubernetes/commands/common-commands.md) | Scoped target-to-user path, `kubectl diff` exit-code interpretation, manifest review, apply, rollout and user verification, source-of-truth recovery boundary, diagram and text alternative. | Current official Kubernetes diff, apply, rollout-status, Deployment, and context documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable rollout and failed-rollout exercise; beginner change task; freshness decision. |
 
 ### Wave 77 (2026-10-03)
@@ -3204,6 +3204,23 @@ Current Kubernetes primary documentation was checked, the diagram
 rendered and was inspected, and two static retrieval cases were added.
 No cluster, rollout, ReplicaSet failure, independent Kubernetes review,
 or novice reader task ran. The guide remains `draft`.
+
+### Focused review round 61 (2026-10-12)
+
+Reviewed the opening kubectl inspection guide with Claude Opus 5.5
+read-only. It now includes an explicitly invented two-replica output
+sample, explains `READY` fractions and why restarts need two
+observations, and warns that an empty list needs a target check. The
+route table now covers Pending, Running-but-unready, general image
+pull failures, local kind image failures, and denied reads. The
+branching diagram allows an uncertain-target stop, a no-clue stop,
+and a route when no affected Pod exists.
+
+Current Kubernetes kubeconfig, kubectl, Pod-debug, and RBAC documentation
+was checked. The diagram rendered and was inspected; two static
+retrieval cases were added. No cluster, access denial, image pull,
+independent Kubernetes review, or novice reader task ran. The guide
+remains `draft`.
 
 ### Candidates for the next wave
 
