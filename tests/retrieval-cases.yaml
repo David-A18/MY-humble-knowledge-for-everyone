@@ -404,6 +404,10 @@ cases:
     question: How do I define a proof-of-concept success rule for knowledge-site search before testing, including a question with no answer?
     expected_paths: [knowledge/solutions-architect/proof-of-concept.md]
     required_source_ids: [google-poc, aws-poc]
+  - id: poc-stop-or-revise-boundary
+    question: If a proof-of-concept search test misses its target, when should I revise and retest, and when should I stop the approach?
+    expected_paths: [knowledge/solutions-architect/proof-of-concept.md]
+    required_source_ids: [google-poc, aws-poc]
   - id: security-group-defaults-and-terraform
     question: Why does a VPC default security group allow members to reach each other, and why might a new Terraform-managed group lack outbound access?
     expected_paths: [knowledge/cloud/aws/networking/security-groups.md]

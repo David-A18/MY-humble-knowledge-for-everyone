@@ -1270,7 +1270,7 @@ from claims about future readers or production readiness.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Proof of concept](knowledge/solutions-architect/proof-of-concept.md) | One-unknown model, decision-flow diagram and text alternative, bounded invented search example, evidence and production boundaries, official next-step links. | Official Google Cloud migration, Azure Well-Architected, and AWS Redshift PoC guidance checked. Mermaid rendered and visually inspected. No experiment or Opus review occurred. | Independent architecture and Opus review; novice reader task; a real PoC record if this repository later runs one; freshness decision. |
+| [Proof of concept](knowledge/solutions-architect/proof-of-concept.md) | One-unknown model, decision-flow diagram and text alternative, bounded invented search example, evidence and production boundaries, official next-step links. Focused review in round 55 added a test setting, time box, stop rule, and revision loop; it clarified adjacent terms and aligned source titles. | Current Google Cloud migration, Azure Well-Architected, and AWS Redshift PoC guidance checked; Claude Opus 5.5 reviewed the page read-only. Revised Mermaid rendered and was inspected. One static retrieval case added. No experiment or novice reader task ran. | Independent architecture review; novice reader task; a real PoC record if this repository later runs one; freshness decision. |
 
 ### Wave 69 (2026-10-02)
 
@@ -3092,6 +3092,22 @@ new Mermaid diagram rendered and was inspected; three static retrieval
 cases cover tag timing, historical values, and split-report scope. No
 AWS account, billing report, backfill, independent finance review, or
 novice reader task ran. Both concepts remain `draft`.
+
+### Focused review round 55 (2026-10-12)
+
+Reviewed the proof-of-concept explanation with Claude Opus 5.5 read-only.
+The invented search test now names its local setting and two-day limit,
+gives a predeclared proceed, revise-once, or stop decision, and shows the
+revision loop in the diagram and text alternative. The analogy tests one
+specific bridge uncertainty, the result table uses simpler wording, and
+prototype, pilot, and spike have short beginner definitions. Source titles
+now match the official pages.
+
+Current Google Cloud, Microsoft Azure Well-Architected, and AWS Redshift
+guidance was checked. The revised Mermaid rendered and was visually
+inspected; one static retrieval case covers the stop-versus-revise choice.
+No search experiment, independent architecture review, or novice reader
+task ran. The concept remains `draft`.
 
 ### Candidates for the next wave
 

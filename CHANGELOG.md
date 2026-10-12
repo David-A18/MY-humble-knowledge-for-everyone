@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified the proof-of-concept example's test setting, time limit, revise-once and stop rules, and diagram; added one static retrieval case.
 - Clarified AWS cost tag activation, reporting delay, backfill boundaries, and Cost Categories split-report scope; simplified the linked allocation guide and added three static retrieval cases.
 - Clarified blue-green full and staged traffic moves, configured test paths, shared-data rollback limits, and the linked delivery chain's rolling-update scope; added three static retrieval cases.
 - Clarified the Terraform local-state tutorial's known versus after-apply plan values, one-time override, synthetic ID, official CLI references, and guarded cleanup; added two static retrieval cases.
