@@ -1324,7 +1324,7 @@ as different from a user-path test.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Inspect a Kubernetes Deployment with kubectl](knowledge/kubernetes/commands/kubectl-basics.md) | Read-only context-to-Pod task, selector check, evidence interpretation, invented two-replica case, decision table, diagram and text alternative. Removed an unsupported freshness date. | Current official Kubernetes kubectl context/get/logs, Deployment, and Pod debugging documentation checked. Mermaid rendered and visually inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; beginner task in disposable cluster; permission and platform variation; freshness decision. |
+| [Inspect a Kubernetes Deployment with kubectl](knowledge/kubernetes/commands/kubectl-basics.md) | Read-only context-to-Pod task, selector and owner check, sample Deployment/Pod/event output, invented two-replica case, decision table, diagram and text alternative. Focused review round 60 added the missing ReplicaSet handoff, no-Pod route, context mapping, and event-retention limit. | Current official Kubernetes Deployment, owners, events, kubectl, and Pod-debug documentation checked; Claude Opus 5.5 reviewed the page read-only. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster, independent Kubernetes review, or novice task ran. | Independent Kubernetes review; beginner task in disposable cluster including no-Pod and overlap cases; permission and platform variation; freshness decision. |
 
 ### Wave 74 (2026-10-02)
 
@@ -3188,6 +3188,22 @@ The diagram rendered and was inspected, and two static retrieval cases
 were added. No provider, AWS account, IAM role, bucket, GitOps deletion,
 independent Crossplane/AWS review, or novice reader task ran. The guide
 remains `draft`.
+
+### Focused review round 60 (2026-10-12)
+
+Reviewed the beginner Deployment inspection guide with Claude Opus 5.5
+read-only. The guide now follows Deployment to ReplicaSet to Pod, shows
+illustrative `kubectl` output for a two-replica case, and explains why
+label matches alone do not prove ownership. It separates Deployment
+rollout and creation evidence from Pod scheduling and readiness events,
+adds a route for a ReplicaSet that cannot create Pods, and aligns the
+context-to-cluster check with the adjacent inspection guide. The revised
+diagram includes the ownership handoff.
+
+Current Kubernetes primary documentation was checked, the diagram
+rendered and was inspected, and two static retrieval cases were added.
+No cluster, rollout, ReplicaSet failure, independent Kubernetes review,
+or novice reader task ran. The guide remains `draft`.
 
 ### Candidates for the next wave
 

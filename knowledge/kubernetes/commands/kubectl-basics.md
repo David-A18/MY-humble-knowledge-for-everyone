@@ -14,15 +14,27 @@ sources:
   - id: current-context
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_current-context/
     title: kubectl config current-context
+  - id: get-contexts
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_get-contexts/
+    title: kubectl config get-contexts
   - id: kubectl-get
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
     title: kubectl get
+  - id: kubectl-describe
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+    title: kubectl describe
   - id: deployments
     resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
     title: Kubernetes Deployments
+  - id: owners-dependents
+    resource: https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/
+    title: Kubernetes Owners and Dependents
   - id: debug-pods
     resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/
     title: Kubernetes debug Pods
+  - id: kubernetes-events
+    resource: https://kubernetes.io/docs/reference/kubernetes-api/events/
+    title: Kubernetes Events
   - id: kubectl-logs
     resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
     title: kubectl logs
@@ -40,23 +52,29 @@ delete, scale, or restart resources.[^kubectl-reference]
 [^current-context][^kubectl-get]
 
 A **Deployment** declares how many application Pods Kubernetes
-should keep running. A **Pod** contains one or more containers that
-run the application. The Deployment's status is a summary; Pod
-details and logs help explain why a replica is missing or unready.
+should keep running. It manages **ReplicaSets**, which create and
+replace the **Pods** that run the application's containers. Think
+of a staffing target, a roster, and the people on the shift. The
+analogy stops at the roster: Kubernetes controllers keep correcting
+the actual state as Pods change. The Deployment's status is a
+summary; ReplicaSet and Pod details help explain why a replica is
+missing or unready.
 A green Deployment count still does not test the user's request
 path.[^deployments][^debug-pods]
 
 ```mermaid
-flowchart LR
+flowchart TB
   context["Current cluster context"] --> namespace["Namespace"]
   namespace --> deployment["Deployment and selector"]
-  deployment --> pods["Matching Pods"]
+  deployment --> replicaSet["ReplicaSet<br/>creates Pods"]
+  replicaSet --> pods["Pods and their owners"]
   pods --> evidence["Pod state, events, logs"]
 ```
 
 Text alternative: identify the current cluster and namespace, then
-read the Deployment and its selector. Use the selector to find its
-Pods. Inspect Pod state, events, and logs to choose the next
+read the Deployment, its selector, and its ReplicaSet. Use the
+selector to find candidate Pods, then confirm their owner. Inspect
+Pod state, events, and logs to choose the next
 investigation.
 
 ## Before you start
@@ -77,37 +95,70 @@ investigation.
 
 ```bash
 kubectl config current-context
+kubectl config get-contexts
 kubectl get deployment web -n shop
 ```
 
-The first command prints the active kubeconfig context. Stop if it is
-not the cluster you intended. The second reads the `web` Deployment
-in namespace `shop`; a `NotFound` result can mean the name, namespace,
-or cluster is wrong.[^current-context][^kubectl-get]
+The first command prints the active kubeconfig context. In the second
+command's output, find its row and compare the **CLUSTER** column with
+your intended target. Both names are local labels; if the mapping is
+ambiguous, confirm the cluster's server address through your trusted
+environment instructions. Stop if the target is uncertain. The third
+command reads the `web` Deployment in namespace `shop`; `NotFound` can
+mean the name, namespace, or cluster is wrong.
+[^current-context][^get-contexts][^kubectl-get]
 
-In the Deployment table, compare **READY**, **UP-TO-DATE**, and
-**AVAILABLE** with the desired replica count. Those columns describe
-Kubernetes workload state, not whether a customer can complete a
-request.[^deployments]
+This is **illustrative output**, not a result from a cluster used for
+this page:
+
+```text
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+web    1/2     2            1           5m
+```
+
+The second number in **READY** is the desired two replicas; the
+first says one is ready. **UP-TO-DATE** says two Pods use the current
+template, while **AVAILABLE** says one has met availability rules.
+These columns describe Kubernetes workload state, not whether a
+customer can complete a request.[^deployments]
 
 ## 2. Find the Pods that belong to it
 
 ```bash
 kubectl describe deployment web -n shop
-kubectl get pods -n shop -l app=web
+kubectl get pods -n shop -l 'app=web'
 ```
 
-Read the **Selector** in the Deployment description. The `-l app=web`
-part is only correct if the complete selector is `app=web`;
-otherwise use the full selector shown, including any other labels.
-Do not assume a Pod's label equals the Deployment name. The Pod
-list shows each Pod's readiness, status, restart count, and
-age.[^deployments][^kubectl-get]
+Read the **Selector**, **NewReplicaSet**, and **OldReplicaSets** lines
+in the Deployment description. The `-l 'app=web'` part is only
+correct if the complete selector is `app=web`; otherwise quote and
+use the full selector shown, for example
+`-l 'app=web,tier=frontend'`. Do not assume a Pod's label equals the
+Deployment name. The Pod list shows each candidate Pod's readiness,
+status, restart count, and age. During a rollout, old and new
+ReplicaSets may both have matching Pods.[^deployments][^kubectl-get]
 
-If the Deployment is missing replicas, the description may point
-to scheduling or rollout events. If a Pod exists but is `0/1`
-ready, inspect that Pod next. A Pod can be running while its
-container is not ready to serve traffic.[^debug-pods]
+This is another **illustrative output** from that two-replica example.
+The first lines come from `describe deployment`; the table comes from
+`get pods`:
+
+```text
+Selector:        app=web
+NewReplicaSet:   web-7c8d9f (2/2 replicas created)
+
+NAME                      READY   STATUS    RESTARTS   AGE
+web-7c8d9f-a1b2c          1/1     Running   0          5m
+web-7c8d9f-d3e4f          0/1     Running   0          5m
+```
+
+The selector finds matching Pods; it does **not** prove ownership if
+another controller uses overlapping labels. In each Pod description,
+the **Controlled By** line should name a ReplicaSet shown by this
+Deployment. A Pod can be `Running` while one or more containers are
+not ready. The Deployment description can show rollout or
+replica-creation conditions and events; scheduling failures appear
+on a Pending Pod's events.
+[^deployments][^owners-dependents][^kubectl-describe][^debug-pods]
 
 ## 3. Read one Pod's evidence
 
@@ -118,12 +169,26 @@ kubectl describe pod <pod-name> -n shop
 kubectl logs <pod-name> -n shop --tail=100
 ```
 
-The Pod description shows its container states, conditions, and
-related events. Logs show what the application wrote. If the Pod
-has more than one container, add `-c <container-name>` to the
-logs command; choose the container named in the Pod description.
-These commands can fail if your identity lacks permission to read
-Pods or logs.[^debug-pods][^kubectl-logs]
+The Pod description shows its owner, container states, conditions,
+and related events. Logs show what the selected container wrote. If
+the Pod has more than one container, add `-c <container-name>` to the
+logs command; choose the container named in the Pod description. A
+container that has not started may have no logs yet. These commands
+can also fail if your identity lacks permission to read Pods or
+logs.[^debug-pods][^kubectl-logs]
+
+For the illustrative unready Pod above, an event might look like
+this. It points to a probe failure; it does not establish the
+underlying cause:
+
+```text
+Type      Reason      Message
+Warning   Unhealthy   Readiness probe failed: HTTP probe failed with statuscode: 503
+```
+
+Events have limited retention. If none remain, use current Pod
+conditions and container state before deciding what happened.
+[^debug-pods][^kubernetes-events]
 
 If the container has restarted, the [CrashLoopBackOff guide](../troubleshooting/crashloopbackoff.md)
 shows when to request the previous container's logs.
@@ -149,10 +214,12 @@ of that verification.
 | --- | --- |
 | Unexpected context | Stop and select the intended cluster through your team's normal kubeconfig procedure. |
 | Deployment `NotFound` | Confirm cluster, namespace, and name before searching other namespaces. |
-| Pods do not match `-l app=web` | Read the Deployment's actual selector and use that label set. |
+| Pods do not match `-l 'app=web'` | Read the Deployment's actual selector and use that label set. |
+| No candidate Pods exist | Read the Deployment conditions and **NewReplicaSet**. If a ReplicaSet exists, run `kubectl describe rs <replicaset-name> -n shop` to check for creation failures such as quota or admission denial. |
+| Pod is `Pending` | Read that Pod's conditions and events for scheduling or image setup evidence. |
 | `Forbidden` on a read | Ask for the least privilege needed; do not change context to bypass a denied permission. |
 | Pod is restarting | Follow [Diagnose CrashLoopBackOff](../troubleshooting/crashloopbackoff.md). |
-| Pods look ready but users still fail | Continue with the [service and DNS diagnostic guide](../troubleshooting/common-solutions.md). |
+| Pods look ready but users still fail | Continue with [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md). |
 
 ## Explore further
 
@@ -162,11 +229,17 @@ of that verification.
   explains conditions and events.[^debug-pods]
 - [kubectl get reference](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/)
   explains selectors and output choices.[^kubectl-get]
+- [kubectl describe reference](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/)
+  explains how to inspect one resource and its related events.[^kubectl-describe]
 - [Back to Kubernetes commands](index.md).
 
 [^kubectl-reference]: [Kubernetes, kubectl reference](https://kubernetes.io/docs/reference/kubectl/), source record `kubectl-reference`.
 [^current-context]: [Kubernetes, kubectl config current-context](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_current-context/), source record `current-context`.
+[^get-contexts]: [Kubernetes, kubectl config get-contexts](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_get-contexts/), source record `get-contexts`.
 [^kubectl-get]: [Kubernetes, kubectl get](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/), source record `kubectl-get`.
+[^kubectl-describe]: [Kubernetes, kubectl describe](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/), source record `kubectl-describe`.
 [^deployments]: [Kubernetes, Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), source record `deployments`.
+[^owners-dependents]: [Kubernetes, Owners and Dependents](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/), source record `owners-dependents`.
 [^debug-pods]: [Kubernetes, Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/), source record `debug-pods`.
+[^kubernetes-events]: [Kubernetes, Events](https://kubernetes.io/docs/reference/kubernetes-api/events/), source record `kubernetes-events`.
 [^kubectl-logs]: [Kubernetes, kubectl logs](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/), source record `kubectl-logs`.

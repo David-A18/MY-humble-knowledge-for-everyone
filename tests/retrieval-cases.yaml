@@ -388,6 +388,14 @@ cases:
     question: How do I confirm my Kubernetes context and inspect Pods, logs, and events safely?
     expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
     required_source_ids: [kubectl-reference]
+  - id: kubectl-deployment-selector-versus-owner
+    question: If kubectl get pods with my Deployment selector lists two Pods, how do I confirm they belong to that Deployment during a rollout?
+    expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
+    required_source_ids: [deployments, owners-dependents]
+  - id: kubectl-deployment-no-pods
+    question: If a Deployment wants replicas but its selector finds no Pods, where should I look for ReplicaSet creation failures?
+    expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
+    required_source_ids: [deployments, kubectl-describe]
   - id: cloud-cost-allocation
     question: How do I establish cloud cost ownership and a shared-cost allocation policy?
     expected_paths: [knowledge/finops/cost-allocation-basics.md]

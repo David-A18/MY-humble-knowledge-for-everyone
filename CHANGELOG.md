@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified the beginner Deployment inspection path from context through ReplicaSet to Pod, with example output, ownership checks, a no-Pod route, and two static retrieval cases.
 - Clarified Crossplane on AWS account and region selection, credential references, Pod Identity cross-account roles, and deletion flow; updated its diagram and added two static retrieval cases.
 - Clarified the kind cluster and image path across three linked guides, including node image inspection, pull-policy errors, retry timing, NodePort routing, and three static retrieval cases.
 - Clarified Git troubleshooting outputs for upstream divergence, ignored files, conflicts, and object health; added a diagram and three static retrieval cases.

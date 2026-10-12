@@ -2936,9 +2936,13 @@
       "source_ids": [
         "kubectl-reference",
         "current-context",
+        "get-contexts",
         "kubectl-get",
+        "kubectl-describe",
         "deployments",
+        "owners-dependents",
         "debug-pods",
+        "kubernetes-events",
         "kubectl-logs"
       ],
       "stale_after": null,
