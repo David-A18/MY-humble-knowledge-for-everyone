@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: eks-pending-pod-versus-quota
+    question: In EKS, four Pods exist but two are Pending with FailedScheduling and insufficient CPU; should I change namespace quota or inspect scheduling capacity?
+    expected_paths: [knowledge/kubernetes/commands/eksctl-commands.md]
+    required_source_ids: [kubernetes-debug-pods, kubernetes-quotas]
+  - id: eks-managed-group-at-max-owner
+    question: An EKS Pod cannot schedule for insufficient CPU and its managed node group is at the configured maximum. How do I choose who changes capacity, and what if the cluster uses Fargate or Auto Mode?
+    expected_paths: [knowledge/kubernetes/commands/eksctl-commands.md]
+    required_source_ids: [eks-describe-nodegroup, eks-autoscaling, eks-compute, eks-fargate, eksctl-auto-mode]
   - id: kubernetes-explain-versus-dry-run
     question: Why can kubectl explain list maxUnavailable and maxSurge while a Deployment dry run rejects setting both to zero?
     expected_paths: [knowledge/kubernetes/commands/advanced-commands.md]

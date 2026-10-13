@@ -1396,7 +1396,7 @@ dry run is a complete AWS change preview.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Choose the right control path for an EKS change](knowledge/kubernetes/commands/eksctl-commands.md) | Workload/compute/access ownership model, bounded class-and-building analogy, invented lesson-API case, read-only target checks, diagram and text alternative, focused AWS and Kubernetes references. Removed live infrastructure mutation recipes. | Current official eksctl overview, cluster, node-group, access-entry, Pod Identity, Auto Mode, and dry-run documentation checked, along with Kubernetes Deployment documentation. Mermaid rendered and inspected. No AWS or cluster command or Opus review occurred. | Independent EKS and Opus review; disposable target-and-scheduling scenario; novice owner-selection task; freshness decision. |
+| [Choose the right control path for an EKS change](knowledge/kubernetes/commands/eksctl-commands.md) | Workload/compute/access decision flow, invented lesson-API case, read-only target and scheduling checks, quota-versus-Pending distinction, managed-group owner choice, diagram and text alternative, focused AWS and Kubernetes references. Removed the misleading class-and-building analogy and live infrastructure mutation recipes. | Current official eksctl, EKS compute, Auto Mode, Fargate, human access, Deployment, HPA, Pod debugging, and quota documentation checked; Claude Opus 5.5 reviewed the guide read-only three times. Diagram rendered and inspected; two static retrieval cases added. No AWS or cluster command or novice task ran. | Independent EKS review; disposable target-and-scheduling scenario; novice owner-selection task; freshness decision. |
 
 ### Wave 80 (2026-10-03)
 
@@ -3295,6 +3295,22 @@ documentation was checked. The revised diagram rendered and
 was inspected; two static retrieval cases were added. No live
 cluster, dry-run success or failure, independent Kubernetes
 review, or novice reader task ran. The guide remains `draft`.
+
+### Focused review round 66 (2026-10-13)
+
+Reviewed the EKS change-path guide with Claude Opus 5.5 read-only three times.
+The invented four-replica lesson API example now separates Pod creation
+from scheduling, uses a `FailedScheduling` signal to investigate CPU
+capacity, and reaches the reviewed owner of a managed node group's
+configured maximum. Alternate HPA, Fargate, and Auto Mode paths stay
+visible without treating an empty node-group listing as proof of no
+compute. Commands are read-only and name a fictional cluster.
+
+Current official AWS EKS and Kubernetes sources were checked, the
+diagram rendered and was inspected, and two static retrieval cases
+were added. No AWS account, EKS cluster,
+independent EKS review, or novice owner-selection task ran. The guide
+remains `draft`.
 
 ### Candidates for the next wave
 
