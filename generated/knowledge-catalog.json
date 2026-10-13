@@ -3604,7 +3604,11 @@
         "debug-pods",
         "debug-services",
         "service",
-        "endpointslices"
+        "endpointslices",
+        "kubectl-quick-reference",
+        "kubernetes-events",
+        "kubectl-port-forward",
+        "readiness-probes"
       ],
       "stale_after": null,
       "status": "draft",

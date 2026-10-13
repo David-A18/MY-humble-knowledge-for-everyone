@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-13
+
+- **Kubernetes first-boundary beginner review**: Separated Service label selection from Pod readiness in the diagram and prose, added invented Pod and EndpointSlice outputs, and routed missing endpoints and ready-backend failures to distinct checks. Claude Opus 5.5 reviewed the guide read-only twice; current Kubernetes sources were checked, the revised diagram rendered and was inspected, and two static retrieval cases were added. No cluster, independent Kubernetes review, or novice reader task ran; the guide remains `draft`.
+
 ## 2026-10-12
 
 - **kubectl manifest change beginner review**: Added cluster, release-owner, and exact-file checks; illustrative diff/apply/rollout output; stops for no-op, unexpected creation, missing apply annotation, and HPA replica conflicts; and source-file recovery. Clarified the linked Flux `MirrorPrune` rule. Claude Opus 5.5 reviewed the guide read-only twice; current Kubernetes and Flux sources were checked, the revised diagram rendered and was inspected, and two static retrieval cases were added. No cluster, rollout, independent Kubernetes review, or novice reader task ran; the guide remains `draft`.

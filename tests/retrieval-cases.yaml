@@ -412,6 +412,14 @@ cases:
     question: If kubectl apply reports unchanged or rollout status succeeds, does that prove my new release works for users, and how should I recover if a request fails?
     expected_paths: [knowledge/kubernetes/commands/common-commands.md]
     required_source_ids: [kubectl-apply, deployments, rollout-undo]
+  - id: kubernetes-service-no-endpoints-two-paths
+    question: If my Service has no EndpointSlice endpoints, how do I tell a selector mismatch from a matching Pod that has no IP yet?
+    expected_paths: [knowledge/kubernetes/troubleshooting/common-solutions.md]
+    required_source_ids: [service, debug-services, endpointslices]
+  - id: kubernetes-ready-endpoint-caller-path
+    question: If a Service has a ready endpoint but users still fail, what should I check, and why does a working port-forward not prove the ClusterIP route?
+    expected_paths: [knowledge/kubernetes/troubleshooting/common-solutions.md, knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
+    required_source_ids: [kubectl-port-forward, debug-services]
   - id: cloud-cost-allocation
     question: How do I establish cloud cost ownership and a shared-cost allocation policy?
     expected_paths: [knowledge/finops/cost-allocation-basics.md]

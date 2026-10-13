@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified Kubernetes first-boundary troubleshooting with separate selector and readiness paths, illustrative EndpointSlice output, caller-path checks, and two static retrieval cases.
 - Clarified the reviewed Kubernetes manifest-change path with cluster, release-owner, file-revision, and HPA checks; illustrative command output, stop branches, source-file recovery, a Flux pruning correction, and two static retrieval cases.
 - Clarified the opening kubectl inspection guide with example output, empty-list and permission checks, general versus kind image-pull routes, a branching diagram, and two static retrieval cases.
 - Clarified the beginner Deployment inspection path from context through ReplicaSet to Pod, with example output, ownership checks, a no-Pod route, and two static retrieval cases.

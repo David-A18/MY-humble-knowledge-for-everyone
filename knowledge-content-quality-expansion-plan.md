@@ -1371,7 +1371,7 @@ limit, or node pressure?
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Find the first failing Kubernetes boundary](knowledge/kubernetes/troubleshooting/common-solutions.md) | Read-first symptom map, staged request diagram, invented Service example, selector/readiness/EndpointSlice distinction, `publishNotReadyAddresses` caveat, and focused next routes. Removed unreviewed test-Pod creation and rollback recipes. | Current official Kubernetes Pod lifecycle, Debug Pods, Debug Services, Service, and EndpointSlices documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; novice symptom-to-check task; disposable Service-selector and readiness reproductions; freshness decision. |
+| [Find the first failing Kubernetes boundary](knowledge/kubernetes/troubleshooting/common-solutions.md) | Read-first symptom map, selector-versus-readiness decision diagram, invented Pod and EndpointSlice output, no-endpoint and ready-backend branches, `publishNotReadyAddresses` caveat, and focused next routes. Focused review round 63 corrected the earlier serial selector/readiness model and unnamed `503` assumption. | Current official Kubernetes Pod lifecycle, Debug Pods, Debug Services, Service, EndpointSlices, Event API, kubectl quick reference, and port-forward documentation checked; Claude Opus 5.5 reviewed the guide read-only twice. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster or novice task ran. | Independent Kubernetes review; novice symptom-to-check task; disposable Service-selector and readiness reproductions; freshness decision. |
 | [Investigate Kubernetes resource pressure](knowledge/kubernetes/commands/workflows.md) | Requests-versus-limits-versus-node-pressure model, read-only diagnostic path, optional metrics with delay and scope limits, invented insufficient-memory scheduling case, diagram and text alternative. | Current official Kubernetes resource management, node-pressure, kubectl top, metrics pipeline, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable scheduling/OOM/eviction cases; novice resource-symptom task; freshness decision. |
 
 ### Wave 78 (2026-10-03)
@@ -3239,6 +3239,25 @@ and Flux documentation was checked. The revised diagram rendered and was
 inspected; two static retrieval cases were added. No cluster, rollout,
 failed rollout, independent Kubernetes review, or novice reader task ran.
 The guide remains `draft`.
+
+### Focused review round 63 (2026-10-13)
+
+Reviewed the Kubernetes first-boundary troubleshooting guide with
+Claude Opus 5.5 read-only twice. Service label selection and Pod
+readiness are now separate inputs to the EndpointSlice instead of
+serial steps. The invented example shows a matching but unready Pod
+and endpoint. A missing endpoint now branches between no matching
+Pod, a matching Pod without an IP, and a matching Pod whose slice
+needs closer inspection. A ready endpoint sends the reader to the
+actual caller path, ports, and application response. The earlier
+unattributed HTTP `503` is no longer presented as a Service result.
+
+Current official Kubernetes Pod, Service, EndpointSlice, Event API,
+kubectl, and port-forward documentation was checked. The revised
+diagram rendered and was inspected; two static retrieval cases were
+added. No cluster, Service-selector mismatch, readiness failure,
+independent Kubernetes review, or novice reader task ran. The guide
+remains `draft`.
 
 ### Candidates for the next wave
 
