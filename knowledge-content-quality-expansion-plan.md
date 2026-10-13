@@ -1384,7 +1384,7 @@ examples.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Inspect a Kubernetes API field before changing a manifest](knowledge/kubernetes/commands/advanced-commands.md) | Schema/live/proposed model, invented Deployment, scoped inspection and server dry-run steps, permissions and dry-run limits, diagram and text alternative. Moved debugging, node maintenance, and field ownership to their official procedures. | Current official Kubernetes api-resources, explain, get, apply, and API dry-run documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable dry-run success, authorization failure, and webhook case; novice field-inspection task; freshness decision. |
+| [Inspect a Kubernetes API field before changing a manifest](knowledge/kubernetes/commands/advanced-commands.md) | Schema/live/proposed model, invented three-replica Deployment strategy, client-side apply dry-run checks with explicit outcome stops, diagram and text alternative. Focused review round 65 clarified schema versus whole-object validation, dry-run mode and output, controller boundary, and diff relationship. | Current official Kubernetes api-resources, explain, get, apply, diff, Deployment, server-side apply, and API dry-run documentation checked; Claude Opus 5.5 reviewed the guide read-only twice. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster exercise or novice task ran. | Independent Kubernetes review; disposable dry-run success, authorization failure, and webhook case; novice field-inspection task; freshness decision. |
 
 ### Wave 79 (2026-10-03)
 
@@ -3276,6 +3276,25 @@ and debug documentation was checked. The revised diagram rendered
 and was inspected; two static retrieval cases were added. No cluster,
 scheduling failure, OOM kill, eviction, independent Kubernetes review,
 or novice reader task ran. The guide remains `draft`.
+
+### Focused review round 65 (2026-10-13)
+
+Reviewed the Kubernetes API-field inspection guide with Claude
+Opus 5.5 read-only twice. It now walks through an invented
+three-replica Deployment: the API field definition, stored
+rolling-update values, a proposed change, and the API server's
+dry-run result. The diagram and text stop on uncertain targets,
+errors, unexpected creation, and no change. The guide now
+distinguishes default client-side apply from server-side field
+ownership checks and explains why a valid field shape cannot
+validate a whole object or predict a Pod rollout.
+
+Current official Kubernetes `api-resources`, `explain`, `get`,
+`apply`, `diff`, Deployment, server-side apply, and API dry-run
+documentation was checked. The revised diagram rendered and
+was inspected; two static retrieval cases were added. No live
+cluster, dry-run success or failure, independent Kubernetes
+review, or novice reader task ran. The guide remains `draft`.
 
 ### Candidates for the next wave
 

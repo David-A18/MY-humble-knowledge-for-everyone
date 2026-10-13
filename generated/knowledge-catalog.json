@@ -2836,7 +2836,10 @@
         "explain",
         "get",
         "apply",
-        "dry-run"
+        "dry-run",
+        "deployments",
+        "diff",
+        "server-side-apply"
       ],
       "stale_after": null,
       "status": "draft",

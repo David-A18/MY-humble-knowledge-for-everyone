@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified Kubernetes API-field inspection with a schema/live/proposal example, server dry-run mode and outcome checks, a branching diagram, and two static retrieval cases.
 - Clarified Kubernetes resource-pressure diagnosis with a Pod-state decision diagram, request-budget arithmetic, OOM-versus-eviction evidence, illustrative output, and two static retrieval cases.
 - Clarified Kubernetes first-boundary troubleshooting with separate selector and readiness paths, illustrative EndpointSlice output, caller-path checks, and two static retrieval cases.
 - Clarified the reviewed Kubernetes manifest-change path with cluster, release-owner, file-revision, and HPA checks; illustrative command output, stop branches, source-file recovery, a Flux pruning correction, and two static retrieval cases.

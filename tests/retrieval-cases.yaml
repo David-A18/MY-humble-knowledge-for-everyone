@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: kubernetes-explain-versus-dry-run
+    question: Why can kubectl explain list maxUnavailable and maxSurge while a Deployment dry run rejects setting both to zero?
+    expected_paths: [knowledge/kubernetes/commands/advanced-commands.md]
+    required_source_ids: [explain, dry-run, deployments]
+  - id: kubernetes-client-dry-run-boundary
+    question: Does kubectl apply --dry-run=server without --server-side check field ownership conflicts or create the Deployment's Pods?
+    expected_paths: [knowledge/kubernetes/commands/advanced-commands.md]
+    required_source_ids: [apply, dry-run, server-side-apply]
   - id: kubernetes-pending-vs-low-live-usage
     question: Why is a 2Gi Pod still Pending with FailedScheduling when a node uses only 3Gi of its 7.5Gi allocatable memory?
     expected_paths: [knowledge/kubernetes/commands/workflows.md]
