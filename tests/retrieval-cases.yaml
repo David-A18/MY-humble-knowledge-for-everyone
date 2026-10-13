@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: k9s-empty-pod-view
+    question: K9s shows no Pod in the expected namespace. How do I distinguish a wrong target or active filter from a Deployment or ReplicaSet that failed to create a Pod?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/k9s.md]
+    required_source_ids: [k9s-commands, k8s-debug-pods, k8s-deployments]
+  - id: k9s-image-pull-vs-restart-logs
+    question: In K9s, why should I read Pod events for ImagePullBackOff but previous container logs after a restart, and how do I avoid assuming Pending means unscheduled?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/k9s.md]
+    required_source_ids: [k9s-upstream, k8s-pod-lifecycle, k8s-images, k8s-debug-running]
   - id: helm-chart-versus-release-revision
     question: If development and production install the same Helm chart at version 1.4.0, why can their replicas and release revision numbers differ?
     expected_paths: [knowledge/kubernetes/applications-and-tools/helm.md]

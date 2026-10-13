@@ -1,8 +1,7 @@
 # Kubernetes applications and tools
 
-Status: Initial outline
-
-Notes for tools commonly used to package, deploy, and operate Kubernetes workloads.
+Choose a tool or workflow for packaging, deploying, and inspecting
+Kubernetes workloads. Each article shows its own status and sources.
 
 ## Quick path: kind
 
@@ -54,9 +53,9 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 
 | Need | Read |
 | --- | --- |
-| Understand what K9s reads from Kubernetes. | [Inspect a failing Pod with K9s](k9s.md#what-you-will-do) |
+| Know what K9s shows and its read-only limits. | [Inspect a failing Pod with K9s](k9s.md#what-you-will-do) |
 | Start in a known context and namespace. | [Confirm the target](k9s.md#1-confirm-the-target) |
-| Read a Pod's status, events, and logs. | [Select a Pod](k9s.md#2-open-the-pod-view-and-select-one-pod) and [read its evidence](k9s.md#3-read-the-evidence-for-the-selected-pod). |
+| Separate a missing Pod, scheduling, startup, restart, or readiness failure. | [Select a Pod](k9s.md#2-open-the-pod-view-and-select-one-pod) and [read its evidence](k9s.md#3-read-the-evidence-for-the-selected-pod). |
 | Choose a next investigation without a blind repair. | [Follow the first failed boundary](k9s.md#4-follow-the-first-failed-boundary). |
 
 ## Articles

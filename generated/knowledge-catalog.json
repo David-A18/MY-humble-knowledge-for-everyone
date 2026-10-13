@@ -2715,15 +2715,22 @@
     },
     {
       "audience": "Beginning Kubernetes learner",
-      "description": "Use K9s in a selected context and namespace to inspect a Pod row, events, and logs before choosing a Kubernetes troubleshooting path.",
+      "description": "Select the right cluster and use K9s to separate missing Pods, scheduling, startup, restart, and readiness failures before choosing a troubleshooting path.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/k9s.md",
       "source_ids": [
         "k9s-overview",
         "k9s-commands",
+        "k9s-upstream",
         "k8s-debug-pods",
-        "k8s-pod-lifecycle"
+        "k8s-pod-lifecycle",
+        "k8s-images",
+        "k8s-debug-running",
+        "k8s-debug-init",
+        "k8s-events",
+        "k8s-deployments",
+        "k8s-probes"
       ],
       "stale_after": null,
       "status": "draft",

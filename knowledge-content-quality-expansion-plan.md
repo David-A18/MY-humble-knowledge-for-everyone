@@ -1420,7 +1420,7 @@ controls from actual Kubernetes authorization.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Inspect a failing Pod with K9s](knowledge/kubernetes/applications-and-tools/k9s.md) | Context-to-Pod evidence path, invented image-pull row, status-versus-cause distinction, symptom table, diagram and text alternative, read-only-mode limit, focused official sources. Removed unverified shortcuts, config recipes, and live modification routes. | Current official K9s overview, commands, and configuration plus Kubernetes Pod lifecycle and Pod-debug documentation checked. Mermaid rendered and inspected. No K9s binary, cluster session, or Opus review occurred. | Independent K9s/Kubernetes and Opus review; versioned K9s walkthrough in a disposable cluster; novice Pod-inspection task; freshness decision. |
+| [Inspect a failing Pod with K9s](knowledge/kubernetes/applications-and-tools/k9s.md) | Context-to-Pod decision path separates no Pod, no node, init failure, startup wait, crash, unready running container, and Ready Pod; invented image-pull row versus describe evidence, current versus previous logs, action boundaries, and targeted official routes. Parent index wording was refreshed. | Current official K9s and Kubernetes documentation checked; Claude Opus 5.5 reviewed the page read-only twice. Revised Mermaid rendered and inspected; two static retrieval cases added. No K9s binary, cluster session, or novice task ran. | Independent K9s/Kubernetes review; versioned K9s walkthrough in a disposable cluster including multi-container logs; novice Pod-inspection task; freshness decision. |
 
 ### Wave 82 (2026-10-03)
 
@@ -3327,6 +3327,23 @@ were checked. The revised diagram rendered and was inspected, and two
 static retrieval cases were added. No Helm binary, cluster release,
 independent Helm review, or novice reader task ran. The page remains
 `draft`.
+
+### Focused review round 68 (2026-10-13)
+
+Reviewed the K9s beginner Pod-inspection guide with Claude Opus 5.5
+read-only twice. The revised path distinguishes a Pod that was never
+created from one that cannot schedule, a scheduled container waiting to
+start, an init-container failure, a crash loop, and an unready running
+container. It explains why the displayed `STATUS` is not the Pod phase
+and why a crash loop needs the previous container instance's logs.
+An explicitly invented image-pull row and describe excerpt lead from
+the symptom to the actual event before any source change.
+
+Current official K9s, Kubernetes lifecycle, image, event, Deployment,
+and probe documentation was checked. The branching diagram rendered and
+was inspected, and two static retrieval cases were added. No K9s
+binary, cluster, independent K9s review, or novice reader task ran.
+The page remains `draft`.
 
 ### Candidates for the next wave
 
