@@ -2461,7 +2461,11 @@
         "apisix-gateway-api",
         "apisix-resources",
         "gateway-api-implementation",
-        "gateway-api-gateway"
+        "gateway-api-gateway",
+        "gateway-api-gatewayclass",
+        "gateway-api-status",
+        "apisix-controller-examples",
+        "apisix-config-troubleshoot"
       ],
       "stale_after": null,
       "status": "draft",

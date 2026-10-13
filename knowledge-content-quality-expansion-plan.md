@@ -1483,7 +1483,7 @@ limits are explained as evidence rather than proof of user success.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [How the APISIX gateway and controller fit together](knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md) | Two-path diagram and text alternative, invented lesson route, Gateway API object responsibilities and condition limits, documented traditional/decoupled/standalone mode comparison, failure-boundary table, understanding checks. | Current official APISIX deployment-mode, controller architecture, install, Gateway API, and resource documentation plus Gateway API implementer guidance checked. Mermaid rendered and inspected. No cluster, APISIX mode, listener, backend, request, or Opus review occurred. | Independent APISIX/Gateway API and Opus review; disposable route/status and mode-restart exercise; novice controller-versus-gateway task; freshness decision. |
+| [How the APISIX gateway and controller fit together](knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md) | Two-path diagram and text alternative, invented lesson route, GatewayProxy-to-Admin-API handoff, Gateway API object responsibilities and condition limits, documented traditional/decoupled/standalone mode comparison and restart behavior, failure-boundary table, understanding checks. | Current official APISIX deployment-mode, controller architecture, install, Gateway API, resource, and troubleshooting documentation plus Gateway API status guidance checked. Claude Opus 5.5 reviewed the focused revision read-only twice. Mermaid rendered and inspected; two static retrieval cases added. No cluster, APISIX mode, listener, backend, request, or novice reader test occurred. | Independent APISIX/Gateway API review; disposable route/status and mode-restart exercise; novice controller-versus-gateway task; freshness decision. |
 
 ### Wave 87 (2026-10-03)
 
@@ -3377,6 +3377,23 @@ Current official APISIX runtime and Ingress Controller, Gateway API,
 and Kubernetes networking sources were checked. Both Mermaid diagrams
 rendered and were inspected, and two static retrieval cases were added.
 No APISIX gateway, cluster, client request, independent APISIX review,
+or novice reader task ran. The page remains `draft`.
+
+### Focused review round 71 (2026-10-13)
+
+Reviewed the APISIX architecture page with Claude Opus 5.5 read-only
+twice. The invented lesson request now matches the introduction, and the
+two-path diagram names the GatewayProxy-to-Admin-API configuration handoff
+and status writeback. The explanation separates GatewayClass, Gateway,
+listener, and HTTPRoute status from actual applied gateway configuration;
+it also distinguishes traditional, decoupled, file-driven, and API-driven
+restart behavior. Failure checks include accepted-but-not-applied routes,
+missing parent status, APISIX `404`, and authentication policy.
+
+Current official APISIX runtime 3.19.0, Ingress Controller v0.3.0, and
+Gateway API documentation was checked. The revised Mermaid diagram
+rendered and was inspected, and two static retrieval cases were added.
+No APISIX gateway, cluster, live request, independent APISIX review,
 or novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave

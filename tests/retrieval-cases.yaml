@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: apisix-gatewayproxy-accepted-but-not-applied
+    question: If an HTTPRoute is Accepted but the intended APISIX gateway has no matching route, what GatewayProxy, controller-to-Admin-API, and applied-configuration checks separate these handoffs?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]
+    required_source_ids: [apisix-resources, apisix-controller-examples, apisix-config-troubleshoot]
+  - id: apisix-config-restart-by-mode
+    question: After an APISIX gateway instance restarts, how does recovery differ between an etcd-backed mode, file-driven standalone, and API-driven standalone?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]
+    required_source_ids: [apisix-deployment-modes, apisix-controller-architecture]
   - id: apisix-key-auth-client-versus-person
     question: If someone opens a protected lesson URL in a browser address bar without an API key, does APISIX send the request to the lesson API, and does a valid client key prove that person may see lesson 42?
     expected_paths: [knowledge/kubernetes/applications-and-tools/apache-apisix.md]
