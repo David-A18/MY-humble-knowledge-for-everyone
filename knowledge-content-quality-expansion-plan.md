@@ -1372,7 +1372,7 @@ limit, or node pressure?
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [Find the first failing Kubernetes boundary](knowledge/kubernetes/troubleshooting/common-solutions.md) | Read-first symptom map, selector-versus-readiness decision diagram, invented Pod and EndpointSlice output, no-endpoint and ready-backend branches, `publishNotReadyAddresses` caveat, and focused next routes. Focused review round 63 corrected the earlier serial selector/readiness model and unnamed `503` assumption. | Current official Kubernetes Pod lifecycle, Debug Pods, Debug Services, Service, EndpointSlices, Event API, kubectl quick reference, and port-forward documentation checked; Claude Opus 5.5 reviewed the guide read-only twice. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster or novice task ran. | Independent Kubernetes review; novice symptom-to-check task; disposable Service-selector and readiness reproductions; freshness decision. |
-| [Investigate Kubernetes resource pressure](knowledge/kubernetes/commands/workflows.md) | Requests-versus-limits-versus-node-pressure model, read-only diagnostic path, optional metrics with delay and scope limits, invented insufficient-memory scheduling case, diagram and text alternative. | Current official Kubernetes resource management, node-pressure, kubectl top, metrics pipeline, and Pod-debug documentation checked. Mermaid rendered and inspected. No cluster or Opus review occurred. | Independent Kubernetes and Opus review; disposable scheduling/OOM/eviction cases; novice resource-symptom task; freshness decision. |
+| [Investigate Kubernetes resource pressure](knowledge/kubernetes/commands/workflows.md) | Requests-versus-limits-versus-node-pressure model, read-only diagnostic path, Pod-lifetime comparison and branching diagram, optional metrics with delay and scope limits, invented request-budget arithmetic and three evidence snippets. Focused review round 64 separated container OOM from node-wide OOM and Pod eviction. | Current official Kubernetes resource management, node-pressure, Pod lifecycle, memory task, LimitRange, Pod overhead, kubectl top, metrics pipeline, and Pod-debug documentation checked; Claude Opus 5.5 reviewed the guide read-only twice. Revised Mermaid rendered and inspected; two static retrieval cases added. No cluster or novice task ran. | Independent Kubernetes review; disposable scheduling/OOM/eviction cases; novice resource-symptom task; freshness decision. |
 
 ### Wave 78 (2026-10-03)
 
@@ -3258,6 +3258,24 @@ diagram rendered and was inspected; two static retrieval cases were
 added. No cluster, Service-selector mismatch, readiness failure,
 independent Kubernetes review, or novice reader task ran. The guide
 remains `draft`.
+
+### Focused review round 64 (2026-10-13)
+
+Reviewed the Kubernetes resource-pressure guide with Claude Opus 5.5
+read-only twice. The revised guide distinguishes a Pod without a node,
+a container restarting inside an assigned Pod, and a failed Pod that
+may be replaced. It shows where to read scheduling events, container
+last state, and Pod reason and message. The request example now uses
+one node's allocatable and already requested memory instead of
+confusing live `top` usage with the scheduler's budget. The diagram
+branches on node assignment and observed outcome.
+
+Current official Kubernetes resource-management, node-pressure,
+Pod-lifecycle, memory, LimitRange, Pod-overhead, kubectl top, metrics,
+and debug documentation was checked. The revised diagram rendered
+and was inspected; two static retrieval cases were added. No cluster,
+scheduling failure, OOM kill, eviction, independent Kubernetes review,
+or novice reader task ran. The guide remains `draft`.
 
 ### Candidates for the next wave
 

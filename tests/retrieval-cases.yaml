@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: kubernetes-pending-vs-low-live-usage
+    question: Why is a 2Gi Pod still Pending with FailedScheduling when a node uses only 3Gi of its 7.5Gi allocatable memory?
+    expected_paths: [knowledge/kubernetes/commands/workflows.md]
+    required_source_ids: [resource-management]
+  - id: kubernetes-oom-vs-evicted-evidence
+    question: How can I tell a container restart marked OOMKilled from a Pod evicted for node memory pressure, and where should I look first?
+    expected_paths: [knowledge/kubernetes/commands/workflows.md]
+    required_source_ids: [node-pressure, pod-lifecycle, memory-task]
   - id: aws-cost-tag-missing-next-day
     question: I tagged an EC2 instance application=checkout on Monday; why is Cost Explorer still blank on Tuesday, and which usage may need backfill?
     expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]

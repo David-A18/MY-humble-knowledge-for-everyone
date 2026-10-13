@@ -2976,7 +2976,11 @@
         "node-pressure",
         "top-pod",
         "metrics-pipeline",
-        "debug-pods"
+        "debug-pods",
+        "pod-lifecycle",
+        "memory-task",
+        "limit-range",
+        "pod-overhead"
       ],
       "stale_after": null,
       "status": "draft",

@@ -2,6 +2,7 @@
 
 ## 2026-10-13
 
+- **Kubernetes resource-pressure beginner review**: Distinguished an unscheduled Pod, a restarted OOM-killed container, and a node-pressure-evicted Pod by their evidence and Pod lifetime. Added a decision diagram, invented request arithmetic and output, plus two static retrieval cases. Claude Opus 5.5 reviewed the page read-only twice; current Kubernetes documentation was checked, and the diagram rendered and was inspected. No cluster, independent Kubernetes review, or novice reader task ran; the guide remains `draft`.
 - **Kubernetes first-boundary beginner review**: Separated Service label selection from Pod readiness in the diagram and prose, added invented Pod and EndpointSlice outputs, and routed missing endpoints and ready-backend failures to distinct checks. Claude Opus 5.5 reviewed the guide read-only twice; current Kubernetes sources were checked, the revised diagram rendered and was inspected, and two static retrieval cases were added. No cluster, independent Kubernetes review, or novice reader task ran; the guide remains `draft`.
 
 ## 2026-10-12
