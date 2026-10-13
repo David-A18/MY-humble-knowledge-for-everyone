@@ -1470,7 +1470,7 @@ assumption that every request must pass through kube-proxy.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [What Apache APISIX does for an API](knowledge/kubernetes/applications-and-tools/apache-apisix.md) | Lobby analogy with limits, invented lesson request, request and configuration diagrams with text alternatives, route/plugin/upstream/application ownership table, Kubernetes Service versus APISIX Service distinction, version-aware Gateway API link, understanding checks. | Current official APISIX route, plugin, controller, Kubernetes resource, and Gateway API documentation checked. Both Mermaid diagrams rendered and inspected. No gateway, route, backend, request, or Opus review occurred. | Independent APISIX and Opus review; disposable gateway and controller request exercise; novice route-versus-backend task; freshness decision. |
+| [What Apache APISIX does for an API](knowledge/kubernetes/applications-and-tools/apache-apisix.md) | Lobby analogy with proxy limit, invented trusted-client request and missing-key branch, two-path diagrams with text alternatives, route/plugin/upstream/application ownership, Consumer credential versus person identity, TLS and path-rewrite boundaries, Kubernetes Service versus APISIX Service distinction, version-aware Gateway API link, understanding checks. | Current official APISIX runtime and controller, Gateway API, and Kubernetes networking documentation checked. Claude Opus 5.5 reviewed the focused revision read-only twice. Both Mermaid diagrams rendered and inspected; two static retrieval cases added. No gateway, route, backend, live request, or novice reader test occurred. | Independent APISIX review; disposable gateway and controller request exercise; novice route-versus-backend task; freshness decision. |
 
 ### Wave 86 (2026-10-03)
 
@@ -3360,6 +3360,24 @@ AWS NLB, and Kubernetes sources were checked. The revised Mermaid
 diagram rendered and was inspected, and two static retrieval cases
 were added. No APISIX gateway, cluster, live request, independent
 APISIX review, or novice reader task ran. The page remains `draft`.
+
+### Focused review round 70 (2026-10-13)
+
+Reviewed the APISIX introduction with Claude Opus 5.5 read-only twice.
+The invented lesson request now names a trusted API client with an
+`apikey` header, an APISIX Consumer credential, and a configured
+credential-hiding choice. The request diagram branches at missing route
+and rejected key; the explanation separates client authentication from
+person-level authorization and distinguishes a missing lesson from a
+path-rewrite mismatch. The Kubernetes path now names route attachment,
+GatewayProxy connection settings, applied configuration, and direct
+Pod-endpoint routing without treating kube-proxy as another server.
+
+Current official APISIX runtime and Ingress Controller, Gateway API,
+and Kubernetes networking sources were checked. Both Mermaid diagrams
+rendered and were inspected, and two static retrieval cases were added.
+No APISIX gateway, cluster, client request, independent APISIX review,
+or novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: apisix-key-auth-client-versus-person
+    question: If someone opens a protected lesson URL in a browser address bar without an API key, does APISIX send the request to the lesson API, and does a valid client key prove that person may see lesson 42?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apache-apisix.md]
+    required_source_ids: [apisix-key-auth, apisix-plugin]
+  - id: apisix-route-versus-controller-handoff
+    question: If an HTTPRoute exists in Kubernetes but APISIX has not applied it, which path should I inspect before debugging the lesson API, and does the controller handle each live request?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apache-apisix.md]
+    required_source_ids: [apisix-gateway-api, apisix-config-troubleshoot, apisix-resources]
   - id: apisix-404-cross-namespace-attachment
     question: A lessons HTTPRoute references a Gateway in gateway-system, but GET /lessons returns 404. What allows the cross-namespace route attachment, and why is ReferenceGrant a different check?
     expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]

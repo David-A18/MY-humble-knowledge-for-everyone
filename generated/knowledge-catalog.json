@@ -2428,7 +2428,13 @@
         "apisix-plugin",
         "apisix-controller",
         "apisix-resources",
-        "apisix-gateway-api"
+        "apisix-gateway-api",
+        "apisix-key-auth",
+        "apisix-proxy-rewrite",
+        "apisix-config-troubleshoot",
+        "gateway-rewrites",
+        "k8s-service-virtual-ips",
+        "apisix-certificate"
       ],
       "stale_after": null,
       "status": "draft",

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified the APISIX introduction with a consistent key-auth client, Consumer credential, rejection branch, TLS and path-rewrite limits, GatewayProxy handoff, and two static retrieval cases.
 - Clarified APISIX 404 diagnosis across entry, route attachment, unexpected matches, backend responses, controller handoff, and listener-port matching; added two static retrieval cases.
 - Clarified K9s Pod inspection with a branching symptom path, an invented image-pull event, previous-log and readiness checks, current command citations, and two static retrieval cases.
 - Clarified Helm's chart, values, manifest, and release boundaries with an invented production diagnosis, revision and CRD limits, a rendered diagram, and two static retrieval cases.
