@@ -1433,7 +1433,7 @@ the real request.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Trace an APISIX 404 to its first failed handoff](knowledge/kubernetes/troubleshooting/apisix.md) | Exact-request capture, entry/gateway/route/backend boundaries, controller handoff diagram and text alternative, read-only HTTPRoute inspection, conditional listener-port mismatch, evidence-to-next-step table, official source routes. | Current official APISIX deployment, Gateway API support, configuration troubleshooting, Gateway API HTTPRoute, and Kubernetes Service-debug documentation checked. Mermaid rendered and inspected. No gateway, cluster, request, or Opus review occurred. | Independent APISIX/Gateway API and Opus review; disposable route-match and listener-port reproductions; novice 404 task; freshness decision. |
+| [Trace an APISIX 404 to its first failed handoff](knowledge/kubernetes/troubleshooting/apisix.md) | Exact-request capture, entry/gateway/route/backend boundaries, cross-namespace route attachment, controller handoff diagram and text alternative, read-only HTTPRoute inspection, conditional listener-port mismatch, evidence-to-next-step table, official source routes. | Current official APISIX v0.3.0, Gateway API, curl, and Kubernetes Service-debug documentation checked. Claude Opus 5.5 reviewed the focused revision read-only twice. Mermaid rendered and inspected; two static retrieval cases added. No gateway, cluster, or live request was tested. | Independent APISIX/Gateway API review; disposable route-match and listener-port reproductions; novice 404 task; freshness decision. |
 
 ### Wave 83 (2026-10-03)
 
@@ -3344,6 +3344,22 @@ and probe documentation was checked. The branching diagram rendered and
 was inspected, and two static retrieval cases were added. No K9s
 binary, cluster, independent K9s review, or novice reader task ran.
 The page remains `draft`.
+
+### Focused review round 69 (2026-10-13)
+
+Reviewed the APISIX 404 troubleshooting guide with Claude Opus 5.5
+read-only twice. The revised path distinguishes an HTTP-aware entry,
+unmatched APISIX route, unexpected matched route, and backend `404`.
+It adds cross-namespace `allowedRoutes` versus `ReferenceGrant`, route
+status and generation checks, per-replica request correlation, direct
+Pod-endpoint routing, and the conditional listener-port case. The
+invented example and read-only commands are labeled as such.
+
+Current official APISIX Ingress Controller v0.3.0, Gateway API, curl,
+AWS NLB, and Kubernetes sources were checked. The revised Mermaid
+diagram rendered and was inspected, and two static retrieval cases
+were added. No APISIX gateway, cluster, live request, independent
+APISIX review, or novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

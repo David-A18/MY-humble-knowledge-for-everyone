@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: apisix-404-cross-namespace-attachment
+    question: A lessons HTTPRoute references a Gateway in gateway-system, but GET /lessons returns 404. What allows the cross-namespace route attachment, and why is ReferenceGrant a different check?
+    expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]
+    required_source_ids: [gateway-traffic-matching, gateway-referencegrant, gateway-status]
+  - id: apisix-404-answering-layer
+    question: A request through APISIX returns 404. How do I tell whether an entry layer, unmatched route, different matched route, or backend application produced it?
+    expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]
+    required_source_ids: [apisix-config-troubleshoot, apisix-variables, gateway-httproute]
   - id: k9s-empty-pod-view
     question: K9s shows no Pod in the expected namespace. How do I distinguish a wrong target or active filter from a Deployment or ReplicaSet that failed to create a Pod?
     expected_paths: [knowledge/kubernetes/applications-and-tools/k9s.md]

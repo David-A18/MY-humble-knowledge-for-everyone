@@ -3619,7 +3619,13 @@
         "gateway-httproute",
         "k8s-debug-service",
         "aws-nlb",
-        "gateway-referencegrant"
+        "gateway-referencegrant",
+        "gateway-traffic-matching",
+        "gateway-status",
+        "gateway-api-spec",
+        "apisix-request-id",
+        "apisix-variables",
+        "curl-resolve"
       ],
       "stale_after": null,
       "status": "draft",
