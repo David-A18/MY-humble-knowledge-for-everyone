@@ -1408,7 +1408,7 @@ release boundary ends and another controller's package lifecycle begins.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [How Helm turns a chart into a release](knowledge/kubernetes/applications-and-tools/helm.md) | Blueprint analogy with limits, chart/values/release diagram and text alternative, invented dev/prod release comparison, preview-versus-server-versus-user checks, rollback and CRD boundaries, Crossplane controller handoff. Replaced unrun install and provider mutation recipes with official procedures. | Current official Helm usage, template, upgrade, status, and CRD documentation plus Crossplane install and provider documentation checked. Mermaid rendered and inspected. No Helm binary, cluster exercise, or Opus review occurred. | Independent Helm/Crossplane and Opus review; disposable chart rendering and cluster release exercise; novice chart-versus-release task; freshness decision. |
+| [How Helm turns a chart into a release](knowledge/kubernetes/applications-and-tools/helm.md) | Blueprint analogy with limits; chart/values/render/install diagram; invented dev/prod template and production replica diagnosis; chart version versus release revision, local versus server preview, rollback, CRD, Argo CD, and Crossplane boundaries. | Current official Helm, Argo CD, Kubernetes, and Crossplane documentation checked; Claude Opus 5.5 reviewed the page read-only three times. Diagram rendered and inspected; two static retrieval cases added. No Helm binary, cluster exercise, or novice task ran. | Independent Helm/Crossplane review; disposable chart rendering and cluster release exercise; novice chart-versus-release task; freshness decision. |
 
 ### Wave 81 (2026-10-03)
 
@@ -3311,6 +3311,22 @@ diagram rendered and was inspected, and two static retrieval cases
 were added. No AWS account, EKS cluster,
 independent EKS review, or novice owner-selection task ran. The guide
 remains `draft`.
+
+### Focused review round 67 (2026-10-13)
+
+Reviewed the Helm chart-to-release explanation with Claude Opus 5.5
+read-only three times. The invented development and production case
+now shows how one values key becomes a Deployment field. Its follow-up
+asks readers to compare supplied and computed values, current and
+previous manifests, the live Deployment, HPA ownership, chart version,
+and release revision before deciding which source to change. The
+diagram separates local rendering from a live Helm release.
+
+Current official Helm, Argo CD, Kubernetes, and Crossplane sources
+were checked. The revised diagram rendered and was inspected, and two
+static retrieval cases were added. No Helm binary, cluster release,
+independent Helm review, or novice reader task ran. The page remains
+`draft`.
 
 ### Candidates for the next wave
 
