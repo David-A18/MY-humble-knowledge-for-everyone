@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified StatefulSet failed-node identity, headless DNS and readiness, storage ownership, PVC retention versus PV reclaim, and zonal placement; corrected the linked fundamentals eviction timing and added two static retrieval cases.
 - Clarified APISIX on EKS with a consistent HTTPS and API-key request, NLB TCP/IP-target example, private Admin API handoff, health-check limits, client-IP quota risk, backend isolation, TLS choices, and two static retrieval cases.
 - Clarified APISIX policy boundaries for a trusted key-auth client, Consumer quotas, canary weights, invalid-key protection, telemetry scope, and two static retrieval cases.
 - Clarified APISIX architecture with the GatewayProxy-to-Admin-API handoff, Gateway API status limits, mode-specific restart behavior, and two static retrieval cases.

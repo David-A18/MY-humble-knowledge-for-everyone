@@ -272,10 +272,10 @@ Nobody issued a "replace the Pod" command. The gap between desired and current
 state was enough.
 
 A failed machine takes longer to handle. Kubernetes first has to detect that
-the node is unreachable. By default, the node controller waits five minutes
-*after marking its `Ready` condition `Unknown`* before its first eviction
-request. Pods also get a default 300-second toleration for the node's
-`unreachable` taint unless configured otherwise. On a one-node cluster there
+the node is unreachable and mark its `Ready` condition `Unknown`. Pods get a
+default 300-second toleration for the node's `unreachable` taint unless
+configured otherwise. That is the roughly five-minute wait before an eviction
+request, not another five minutes added afterward. On a one-node cluster there
 is no other healthy node for a replacement to run on.
 Any replacement still needs a healthy node, time to start, and a passing
 readiness probe. The remaining Pods may have to carry the traffic meanwhile;

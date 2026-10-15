@@ -526,7 +526,7 @@ received a later Opus review in [focused review round 11](#focused-review-round-
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [Gateway API and Ingress](knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md) | Explains the external request path, listener attachment, backend references, TLS boundary, and choice of API. | Opus 5.5 read-only review and current Kubernetes/Gateway API documentation check; the two-team example is illustrative. The diagram rendered and was inspected. | Implementation-specific feature and public-request check; reader test; freshness decision. |
-| [Stateful workloads](knowledge/kubernetes/core-objects/stateful-workloads.md) | Rewritten to explain Pod identity, separate storage claims, placement, and two deletion policies. | Keyed citations to Kubernetes storage and controller documentation; the three-Pod failure is illustrative, with no cluster run or restore test. | Independent technical review; storage-driver behavior check; reader test; freshness decision. |
+| [Stateful workloads](knowledge/kubernetes/core-objects/stateful-workloads.md) | Rewritten to explain Pod identity, headless DNS, separate storage claims, failed-node safety, placement, and the two deletion policies. | Two Claude Opus 5.5 read-only reviews and current Kubernetes controller/storage docs; the three-Pod failure is illustrative, with no cluster run or restore test. | Independent Kubernetes/storage review; storage-driver behavior check; reader test; freshness decision. |
 
 The current Kubernetes documentation was consulted on 2026-09-30. These
 pages contain no manifests to apply. The diagrams illustrate relationships,
@@ -3434,6 +3434,27 @@ limit-count documentation was checked against the Opus findings. The
 revised Mermaid diagram rendered and was inspected, and two static
 retrieval cases were added. No EKS cluster, gateway, load
 balancer, client request, independent APISIX/EKS security review, or
+novice reader task ran. The page remains `draft`.
+
+### Focused review round 74 (2026-10-15)
+
+Reviewed Stateful workloads with Claude Opus 5.5 read-only twice. The illustrative
+three-Pod example now distinguishes an unreachable node from a safely
+replaced StatefulSet Pod: the old identity can remain `Terminating`, its
+volume can remain attached, and force deletion before confirming the old
+process stopped risks two writers. A revised diagram separates the controller's
+Pod and claim creation from Pod mounting, PV binding/provisioning, and headless
+Service DNS. The page gives a concrete per-Pod name and explains DNS readiness
+and cached misses; the name can persist while the IP changes. A
+three-to-two-to-three scale example separates the StatefulSet's claim
+retention from the PV's reclaim policy. The linked fundamentals page now
+explains that the default 300-second unreachable toleration and roughly
+five-minute eviction delay describe one wait, not two.
+
+Current official Kubernetes StatefulSet, force-deletion, PV, and StorageClass
+documentation was checked. The diagram rendered and was inspected. Two static
+retrieval cases were added. No cluster,
+storage driver, forced deletion, restore, independent Kubernetes review, or
 novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave

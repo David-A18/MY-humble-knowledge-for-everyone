@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: statefulset-unreachable-node-identity
+    question: A node running store-1 is unreachable and its StatefulSet Pod remains Terminating. Why is there no immediate replacement, and what must be established before force deletion?
+    expected_paths: [knowledge/kubernetes/core-objects/stateful-workloads.md]
+    required_source_ids: [kubernetes-statefulset, kubernetes-force-delete-statefulset-pod]
+  - id: statefulset-pvc-retain-vs-pv-reclaim
+    question: If I scale a StatefulSet from three Pods to two and back, which claim and data return by default, and how does PV reclaim differ if the claim is deleted?
+    expected_paths: [knowledge/kubernetes/core-objects/stateful-workloads.md]
+    required_source_ids: [kubernetes-statefulset, kubernetes-pv, kubernetes-storageclass]
   - id: apisix-eks-healthy-target-no-route
     question: If the EKS NLB reports a healthy APISIX target but HTTPS fails or APISIX returns no route, what did the TCP health check actually prove and which configuration handoff should I inspect?
     expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]

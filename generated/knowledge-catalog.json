@@ -3110,7 +3110,9 @@
         "kubernetes-pv",
         "kubernetes-storageclass",
         "kubernetes-dynamic-provisioning",
-        "kubernetes-deployment"
+        "kubernetes-deployment",
+        "kubernetes-force-delete-statefulset-pod",
+        "kubernetes-service-dns"
       ],
       "stale_after": null,
       "status": "draft",
