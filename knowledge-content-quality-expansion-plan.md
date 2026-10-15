@@ -651,7 +651,7 @@ disappears, and where does its replacement find required information?
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [Stateful vs. stateless on AWS](knowledge/cloud/aws/architecture/stateful-vs-stateless.md) | Rewritten with a bounded cart example, replica and store diagram, state inventory, and limits of the stateless label. The focused review below adds a request-by-request cart trace, identifier boundary, lost update, and safe-retry limit. | Claude Opus 5.5 reviewed the revision twice read-only. Current AWS Well-Architected, Lambda, DynamoDB, Builders' Library, and OWASP guidance was checked; two static retrieval cases were added. The cart example is invented; no AWS application or failure test ran. | Independent AWS architecture review; real failure and data-recovery check; reader test; freshness decision. |
-| [Stateless application patterns on AWS](knowledge/cloud/aws/architecture/stateless-application-patterns.md) | Rewritten with shared-state and queue model, a bounded photo-upload sequence, partial-failure cases, and retry limits. | Keyed AWS Well-Architected, S3, SQS standard-queue, and Lambda documentation. The scenario is invented; no AWS resource or failure test ran. | Independent architecture and security review; real upload and retry test; reader test; freshness decision. |
+| [Stateless application patterns on AWS](knowledge/cloud/aws/architecture/stateless-application-patterns.md) | Rewritten with shared-state and queue model, a bounded photo-upload sequence, partial-failure cases, and retry limits. The focused review below separates record, object, and queue ownership and corrects the payment retry example. | Claude Opus 5.5 reviewed the revision twice read-only. Current AWS S3, SQS, Lambda, Stripe, and OWASP primary guidance was checked; the diagram rendered and was inspected, and three static retrieval cases were added. The scenarios are invented; no AWS resource, upload, queue run, or payment occurred. | Independent architecture and security review; real upload and retry test; reader test; freshness decision. |
 
 The original AWS guidance was consulted on 2026-09-30 and the focused
 sources above on 2026-10-16. This page gives a
@@ -3598,6 +3598,23 @@ Builders' Library, and OWASP guidance was checked; two static retrieval
 cases were added. The cart is invented; no AWS deployment, failover drill,
 independent domain review, or novice reader task ran. The page remains
 `draft`.
+
+### Focused review round 83 (2026-10-16)
+
+Reviewed stateless application patterns twice with Claude Opus 5.5
+read-only. The photo example now uses a new server-generated S3 key and
+makes the user record the authority for the current photo. It distinguishes
+an orphaned object, an unknown record-write outcome, a lost response, and a
+fixed-key overwrite. The diagram separates the record store, object store,
+queue, and worker. The SQS section explains visibility timeout, redelivery,
+retention, and the gap before a message is submitted. The payment example
+now shows why a local check is insufficient and uses a stable operation ID
+only when the provider supports that idempotency contract.
+
+Current AWS S3, SQS, Lambda, Stripe, and OWASP primary guidance was checked;
+the diagram rendered and was inspected, and three static retrieval cases
+were added. No AWS upload, worker, payment, independent domain review, or
+novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

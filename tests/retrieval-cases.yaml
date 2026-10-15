@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: stateless-photo-new-key-and-record-handoff
+    question: Why should a profile-photo replacement use a new S3 object key before updating the user record, and what remains if the app crashes between those writes?
+    expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]
+    required_source_ids: [aws-s3]
+  - id: stateless-sqs-visibility-and-worker-retry
+    question: If an SQS worker crashes or exceeds the visibility timeout before deleting a message, when can another worker receive it and why must processing tolerate duplicates?
+    expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]
+    required_source_ids: [aws-sqs-visibility, aws-sqs-delivery]
+  - id: stateless-payment-idempotency-boundary
+    question: Why can a local already-charged check still double-charge after SQS redelivery, and what must a payment provider's idempotency key represent?
+    expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]
+    required_source_ids: [stripe-idempotent-requests]
   - id: stateless-cart-identifier-and-replica-switch
     question: If a shopper's second cart request reaches a different web replica, how does that replica find the same cart, and what happens if the first replica kept the cart only in memory?
     expected_paths: [knowledge/cloud/aws/architecture/stateful-vs-stateless.md]

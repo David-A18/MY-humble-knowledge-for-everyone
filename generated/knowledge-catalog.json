@@ -502,7 +502,11 @@
         "aws-stateless",
         "aws-s3",
         "aws-sqs-delivery",
-        "aws-lambda-design"
+        "aws-sqs-visibility",
+        "aws-sqs-overview",
+        "aws-lambda-design",
+        "stripe-idempotent-requests",
+        "owasp-authorization"
       ],
       "stale_after": null,
       "status": "draft",
