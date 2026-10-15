@@ -560,7 +560,7 @@ two focused explanations carry the detail. All three pages remain drafts.
 | --- | --- | --- | --- |
 | [Bootstrap and bootstrapping](knowledge/programming-languages/bootstrap-and-bootstrapping.md) | Rewritten as a term disambiguation with a bounded example and next routes. | Keyed citations to Bootstrap and Terraform documentation; the team sentence is illustrative. | Independent editorial review; reader test. |
 | [Bootstrap frontend toolkit](knowledge/programming-languages/bootstrap-frontend-toolkit.md) | Explains CSS classes, optional JavaScript, and a responsive grid with rendered narrow and wide examples. | Keyed Bootstrap 5.3 citations; the pinned 5.3.8 fixture was rendered in the local browser, and the 767/768 px breakpoint was measured. The content remains an illustrative dashboard. | Independent accessibility and browser review; reader test; freshness decision. |
-| [Bootstrapping a system](knowledge/programming-languages/bootstrapping-a-system.md) | New explanation of dependency order with project and Terraform backend examples and a diagram. | Keyed npm and HashiCorp citations; no npm install, Terraform run, or AWS change was performed. | Technical review; a safe first-run check; reader test; freshness decision. |
+| [Bootstrapping a system](knowledge/programming-languages/bootstrapping-a-system.md) | Explains local package setup and the longer-lived S3 state foundation with a two-path diagram, observed Node import failure and recovery, and honest same-configuration migration limits. | Two Claude Opus 5.5 read-only reviews; current npm v10 and HashiCorp documentation checked. A disposable Node v22.23.2/npm 10.9.8 run used one local file dependency offline; no Terraform CLI or AWS run. The revised diagram rendered and was inspected. | Independent Terraform review; cloud setup or safe local-state migration check; reader test; freshness decision. |
 
 The Bootstrap 5.3, npm CLI v11, and current Terraform documentation were
 consulted on 2026-09-30. The text diagram and Mermaid relationships are
@@ -3563,6 +3563,25 @@ showed the cards on separate rows at 767 px and the same row at 768 px. Two
 static retrieval cases were added. This is evidence for one browser's sample
 layout only; no independent accessibility or cross-browser review or novice
 reader task ran. The page remains `draft`.
+
+### Focused review round 81 (2026-10-15)
+
+Reviewed the Bootstrapping a system explanation twice with Claude Opus 5.5
+read-only. The page now teaches the simple Node case before the S3 backend
+case, shows both dependency paths in a rendered diagram, and explains where
+a separate Terraform bootstrap configuration stores its own state. It
+distinguishes a separate setup from a possible local-state first phase in
+one configuration, clarifies `-migrate-state` versus `-reconfigure`, and
+names versioning, access, and shared-run locking as state safeguards.
+
+Current official npm v10 and HashiCorp backend, S3, init, sensitive-data,
+and locking documentation was checked. A disposable Node v22.23.2/npm
+10.9.8 fixture used a local file dependency: `npm start` first failed with
+`ERR_MODULE_NOT_FOUND`, offline `npm ci --ignore-scripts` installed it, and
+`npm start` then printed `Hello, Ada!`. The diagram rendered and was
+inspected; three static retrieval cases were added. No Terraform CLI,
+AWS bucket, independent technical review, or novice reader task ran. The
+page remains `draft`.
 
 ### Candidates for the next wave
 

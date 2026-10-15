@@ -4044,9 +4044,13 @@
       "path": "knowledge/programming-languages/bootstrapping-a-system.md",
       "source_ids": [
         "npm-install",
+        "npm-ci",
+        "npm-scripts",
         "terraform-backend",
         "terraform-s3-backend",
-        "terraform-init"
+        "terraform-init",
+        "terraform-sensitive-data",
+        "terraform-state-locking"
       ],
       "stale_after": null,
       "status": "draft",

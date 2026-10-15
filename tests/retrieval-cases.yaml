@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: bootstrap-node-missing-package-and-clean-install
+    question: A cloned Node app declares a local package, but npm start says ERR_MODULE_NOT_FOUND. What has to happen before the import works, and what does npm ci require?
+    expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
+    required_source_ids: [npm-ci, npm-install]
+  - id: bootstrap-npm-install-script-scope
+    question: If I use npm ci --ignore-scripts to prepare an unfamiliar project, what installation scripts are skipped and what does a successful import still not prove?
+    expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
+    required_source_ids: [npm-scripts, npm-ci]
+  - id: bootstrap-terraform-state-bucket-order
+    question: Why must an S3 bucket exist before a Terraform configuration enables it as its backend, where can a separate bootstrap configuration keep state, and which init flag moves existing state rather than reconfiguring without migration?
+    expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
+    required_source_ids: [terraform-backend, terraform-init, terraform-s3-backend]
   - id: bootstrap-grid-breakpoint-and-viewport
     question: Why do two Bootstrap col-12 col-md-6 cards stack below 768 px but sit side by side at 768 px and wider, and what viewport tag does the page need?
     expected_paths: [knowledge/programming-languages/bootstrap-frontend-toolkit.md]
