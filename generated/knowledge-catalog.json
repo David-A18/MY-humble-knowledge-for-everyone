@@ -2685,7 +2685,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Understand GitOps as a declarative, versioned, pulled, and continuously reconciled operating model, and what a successful sync does and does not prove.",
+      "description": "Understand GitOps as a declarative, versioned, pulled, and continuously reconciled operating model; distinguish a pending revision, drift, sync status, health, and real user success.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/gitops.md",
@@ -2693,8 +2693,10 @@
         "opengitops-principles",
         "opengitops-glossary",
         "flux-kustomization",
+        "flux-helmrelease",
         "flux-secrets-management",
         "argo-cd-automated-sync",
+        "argo-cd-core-concepts",
         "argo-cd-resource-health",
         "argo-cd-secret-management"
       ],

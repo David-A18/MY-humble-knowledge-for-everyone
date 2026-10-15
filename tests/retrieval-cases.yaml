@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: gitops-pending-revision-vs-live-drift
+    question: If a new GitOps configuration commit is waiting to apply, how is that different from someone changing the live Deployment by hand, even though Argo CD can report OutOfSync for both?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]
+    required_source_ids: [opengitops-glossary, argo-cd-core-concepts]
+  - id: gitops-sync-health-user-request
+    question: If Argo CD says Synced and Healthy or a Flux Kustomization says Ready, what has each status checked and why might the real customer request still fail?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]
+    required_source_ids: [argo-cd-core-concepts, argo-cd-resource-health, flux-kustomization]
+  - id: gitops-emergency-edit-reconciler-owners
+    question: During a GitOps incident, why might suspending a Flux Kustomization leave a HelmRelease active, or changing an ApplicationSet-generated Argo CD Application fail to pause its automatic sync?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]
+    required_source_ids: [flux-kustomization, flux-helmrelease, argo-cd-automated-sync]
   - id: flux-manifest-vs-chart-artifact
     question: Does a Flux Kustomization and HelmRelease consume the same source artifact, and how does a HelmRelease get a chart through spec.chart or spec.chartRef?
     expected_paths: [knowledge/kubernetes/applications-and-tools/flux.md]

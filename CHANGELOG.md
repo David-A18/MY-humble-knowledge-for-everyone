@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified GitOps's pending-revision and live-drift causes, sync versus health signals, CI and controller permissions, emergency reconciliation owners, and an illustrative hand-edit recovery; added three static retrieval cases.
 - Clarified Flux's separate manifest and chart artifact paths, HelmRelease chart source choices, two apply identities, Ready scope, and optional automation; added two static retrieval cases.
 - Clarified Argo CD and Flux pull paths, sync and health defaults, Helm lifecycles, tenant authority, and deletion scope with a diagram, event table, and three static retrieval cases.
 - Clarified the Flux HelmRelease path through Git and chart artifacts, generated HelmChart namespace, health-check timeout, status boundaries, and pruning risk; added two static retrieval cases.

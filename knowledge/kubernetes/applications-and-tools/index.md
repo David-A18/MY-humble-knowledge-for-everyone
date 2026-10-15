@@ -26,7 +26,7 @@ Kubernetes workloads. Each article shows its own status and sources.
 
 | Need | Read |
 | --- | --- |
-| Understand GitOps as a pulled, continuously reconciled operating model and what a green sync does not prove. | [GitOps](gitops.md) |
+| Separate a pending revision from a live edit, sync from health, and controller status from a working user request. | [GitOps](gitops.md) |
 | Compare Argo CD and Flux on documented differences and defaults, or split ownership between them. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
 | Understand the Flux paths for manifest and chart artifacts, and what each `Ready` condition proves. | [Flux](flux.md) |
 | Follow a HelmRelease declaration from Git to an installed chart. | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) |
@@ -66,7 +66,7 @@ Kubernetes workloads. Each article shows its own status and sources.
 | [How the APISIX gateway and controller fit together](apisix-architecture-and-deployment.md) | Understand the two paths, Gateway API objects, deployment modes, and status limits. |
 | [How APISIX policies shape one request](apisix-security-traffic-and-observability.md) | Follow one request through optional auth, limit, release, and telemetry policies. |
 | [Gateway API and Ingress](gateway-api-and-ingress.md) | Understand the request path, controller requirement, Gateway API ownership, and route choice. |
-| [GitOps](gitops.md) | Understand the four GitOps principles, what CI publishes versus what a controller pulls, and the limits of a green sync. |
+| [GitOps](gitops.md) | Understand the four principles, CI and controller permissions, and what pending revisions, drift, sync, and health prove. |
 | [Argo CD vs. Flux](argo-cd-vs-flux.md) | Compare application model, components, interfaces, sync defaults, and multi-cluster boundaries from each project's documentation. |
 | [Flux](flux.md) | Understand which Flux controller fetches, which reconciles, and which capabilities are optional. |
 | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) | Understand the two controller handoffs and what their status reports prove. |
