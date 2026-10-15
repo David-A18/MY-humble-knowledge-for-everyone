@@ -2563,6 +2563,7 @@
         "flux-helm-guide",
         "flux-gitrepository",
         "flux-helmrepository",
+        "flux-helmchart",
         "flux-troubleshooting",
         "flux-cli-chart",
         "flux-multitenancy"

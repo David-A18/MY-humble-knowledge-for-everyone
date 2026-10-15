@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: flux-helmchart-creation-and-namespace
+    question: A HelmRelease lives in apps but refers to a HelmRepository in flux-system. Which controller creates its HelmChart, where does that object appear, and which controller fetches its chart artifact?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md]
+    required_source_ids: [flux-helm-guide, flux-helmchart, flux-helmrelease]
+  - id: flux-kustomization-ready-versus-helmrelease
+    question: A Flux Kustomization applied a HelmRelease whose chart is unavailable. Why can its health check report Ready=False after timeout, and what would Kustomization Ready mean without that check?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md]
+    required_source_ids: [flux-kustomization, flux-helmrelease]
   - id: flux-helmrelease-unset-identity
     question: A scoped Flux Kustomization creates a HelmRelease whose chart requests a ClusterRoleBinding. Why can an unset HelmRelease serviceAccountName still be dangerous, and which controller must be locked down?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md]

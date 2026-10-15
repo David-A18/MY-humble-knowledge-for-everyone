@@ -1445,7 +1445,7 @@ separate chart-source path explains where the package comes from.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [How Flux applies a HelmRelease from Git](knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Request-and-installer analogy with limits, two-path diagram and text alternative, invented Git/chart example, minimal manifests, source-to-reconciler status table, explicit health-check and pruning implications, focused official source routes. The linked security review now labels the example as platform-owned or single-team, because it omits scoped apply accounts in both stages and uses a cross-namespace chart source. | Current official Flux Kustomization, HelmRelease, Helm-repository, Helm guide, multi-tenancy, and troubleshooting documentation checked. Mermaid rendered and inspected. No Flux or Helm binary, chart fetch, cluster run, or focused Opus review of this page occurred. | Independent Flux/Helm and Opus review; disposable chart/release exercise including fetch and health-check failures; novice controller-handoff task; freshness decision. |
+| [How Flux applies a HelmRelease from Git](knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Names the Git-to-Kubernetes and HelmRelease-to-install handoffs; traces an invented version change through HelmChart creation in the source namespace, chart fetch, and Helm install. A revised two-path diagram, status table, and answer hints separate the actors and evidence. The example is labeled platform-owned or single-team because both apply accounts are omitted and the chart source crosses namespaces. | Two Claude Opus 5.5 read-only reviews and current official Flux Kustomization, HelmRelease, HelmRepository, HelmChart, CLI, multi-tenancy, and troubleshooting documentation checked. Mermaid rendered and inspected. No Flux or Helm binary, chart fetch, cluster run, independent review, or novice task occurred. | Independent Flux/Helm technical and security review; disposable chart/release exercise including fetch and health-check failures; novice controller-handoff task; freshness decision. |
 
 ### Wave 84 (2026-10-03)
 
@@ -3480,6 +3480,22 @@ checked; the diagram rendered and was inspected. Three static retrieval
 cases were added. No shared cluster, controller, chart fetch, denied
 request, independent security review, or novice reader task ran. Both pages
 remain `draft`.
+
+### Focused review round 76 (2026-10-15)
+
+Reviewed the linked Flux HelmRelease teaching page twice with Claude Opus 5.5
+read-only. The page now names its two handoffs, shows that the Git path
+applies both the HelmRelease and HelmRepository, and traces helm-controller's
+HelmChart creation in the source namespace through source-controller's chart
+artifact to the Helm install. The invented version-change example, status
+commands, failure table, and answer hints use that same path. It also
+clarifies the health-check timeout, privileged default apply identities,
+and consequence of pruning a HelmRelease declaration.
+
+Current official Flux documentation was checked. The revised diagram
+rendered and was inspected. Two static retrieval cases were added. No chart
+fetch, controller, Helm release, cluster, independent technical review, or
+novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 
