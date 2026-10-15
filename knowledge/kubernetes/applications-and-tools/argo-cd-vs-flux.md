@@ -23,18 +23,30 @@ sources:
   - id: argo-cd-application-sources
     resource: https://argo-cd.readthedocs.io/en/stable/user-guide/application_sources/
     title: Argo CD - Tools
+  - id: argo-cd-helm
+    resource: https://argo-cd.readthedocs.io/en/stable/user-guide/helm/
+    title: Argo CD - Helm
+  - id: argo-cd-oci
+    resource: https://argo-cd.readthedocs.io/en/stable/user-guide/oci/
+    title: Argo CD - OCI
   - id: argo-cd-multiple-sources
     resource: https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/
     title: Argo CD - Multiple Sources for an Application
   - id: argo-cd-automated-sync
     resource: https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/
     title: Argo CD - Automated Sync Policy
+  - id: argo-cd-app-deletion
+    resource: https://argo-cd.readthedocs.io/en/stable/user-guide/app_deletion/
+    title: Argo CD - App Deletion
   - id: argo-cd-resource-health
     resource: https://argo-cd.readthedocs.io/en/stable/operator-manual/health/
     title: Argo CD - Resource Health
   - id: argo-cd-projects
     resource: https://argo-cd.readthedocs.io/en/stable/user-guide/projects/
     title: Argo CD - Projects
+  - id: argo-cd-sync-impersonation
+    resource: https://argo-cd.readthedocs.io/en/stable/operator-manual/app-sync-using-impersonation/
+    title: Argo CD - Application Sync using impersonation
   - id: argo-cd-applicationset
     resource: https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/
     title: Argo CD - Introduction to ApplicationSet controller
@@ -53,6 +65,12 @@ sources:
   - id: flux-optional-components
     resource: https://fluxcd.io/flux/installation/configuration/optional-components/
     title: Flux - Optional components
+  - id: flux-multitenancy
+    resource: https://fluxcd.io/flux/installation/configuration/multitenancy/
+    title: Flux - Multi-tenancy lockdown
+  - id: flux-installation
+    resource: https://fluxcd.io/flux/installation/
+    title: Flux - Installation
   - id: flux-faq
     resource: https://fluxcd.io/flux/faq/
     title: Flux - Frequently asked questions
@@ -78,6 +96,29 @@ implement the same operating model. They differ in how they package it: what
 object represents "an application", which components you run, how people
 interact with them, and what their defaults are.
 
+```mermaid
+flowchart TB
+  source["External Git, Helm, or OCI source"]
+  app["Argo CD Application<br/>names source, destination, sync policy"]
+  app --> repo["repo-server<br/>renders manifests"]
+  source -->|"repo-server fetches"| repo
+  repo --> argo["application-controller<br/>applies"]
+  fluxSource["Flux source object<br/>names source"] --> artifact["source-controller<br/>publishes artifact"]
+  source -->|"source-controller fetches"| artifact
+  artifact --> fluxReconcile["Kustomization or HelmRelease<br/>kustomize-controller or helm-controller"]
+  argo --> api["Kubernetes API<br/>desired objects"]
+  fluxReconcile --> api
+```
+
+Text alternative: both tools fetch from an external source; the source does
+not push into the cluster. Argo CD groups a source, destination, and sync
+policy in an `Application`. Its repo-server renders manifests and its
+application controller applies them. Flux gives a source its own object and artifact;
+kustomize-controller or helm-controller then reconciles a `Kustomization` or
+`HelmRelease`. Both paths send desired objects to the Kubernetes API. The
+diagram shows the main handoff, not every controller or credential involved.
+[^argo-cd-architecture][^flux-components]
+
 ## Why it matters
 
 Comparisons of these tools are often reduced to slogans, such as "one has a
@@ -95,31 +136,45 @@ Read each row as "what the documentation says", not as a score.
 
 | Aspect | Argo CD | Flux |
 | --- | --- | --- |
-| What represents an application | An `Application` object: usually one source, optionally several, plus a destination cluster and namespace.[^argo-cd-declarative-setup][^argo-cd-multiple-sources] | No single object. A source object is fetched into an artifact, and a `Kustomization` or `HelmRelease` reconciles it.[^flux-components] |
-| Where desired state can come from | Git repositories holding Kustomize, Helm, Jsonnet, or plain manifests; OCI images; and custom plugins.[^argo-cd-application-sources] | Git repositories, OCI repositories, Helm repositories, and buckets, each as its own source type.[^flux-components] |
-| Components you run | An API server, a repository server, and an application controller.[^argo-cd-architecture] A separate core installation omits the API server and UI.[^argo-cd-installation] | Separate controllers. source-controller and kustomize-controller are the minimum; helm-controller and notification-controller are added by default; image automation is extra.[^flux-optional-components] |
+| What represents an application | An `Application` object: usually one source, optionally several, plus a destination cluster and namespace.[^argo-cd-declarative-setup][^argo-cd-multiple-sources] | No required all-in-one `Application` object. A source object is fetched into an artifact, and a `Kustomization` or `HelmRelease` reconciles it.[^flux-components] |
+| Where desired state can come from | Git repositories holding Kustomize, Helm, Jsonnet, or plain manifests; Helm chart repositories; OCI images; and custom plugins.[^argo-cd-application-sources][^argo-cd-helm][^argo-cd-oci] | Common source objects include GitRepository, OCIRepository, HelmRepository, and Bucket; Flux also has generated chart and artifact objects.[^flux-components] |
+| Main control components | The API server, repository server, and application controller have distinct roles.[^argo-cd-architecture] A separate core installation omits the API server and UI.[^argo-cd-installation] | source-controller and kustomize-controller are the minimum; helm-controller and notification-controller are added by default. Optional extras include image automation and source-watcher.[^flux-optional-components] |
 | How people operate it | Through the API server, which serves a web UI, a CLI, and CI systems, with its own sign-on and access rules.[^argo-cd-architecture][^argo-cd-overview] In the core installation, through Kubernetes objects and Kubernetes access rules.[^argo-cd-installation] | Through Kubernetes custom resources, created by a user or by other automation.[^flux-components] The project ships no UI of its own and points to UIs from other projects.[^flux-faq] |
-| Applying a new revision | Manual unless an automated sync policy is set on the application.[^argo-cd-automated-sync] | Automatic. A `Kustomization` reconciles when the source revision changes and on every interval, until it is suspended.[^flux-kustomization] |
-| Pruning removed resources | Off by default under automated sync, described as a safety mechanism.[^argo-cd-automated-sync] | `prune` is a required field on a `Kustomization`, so the author must choose.[^flux-kustomization] |
-| Reverting hand edits | Off by default. A live change does not trigger automated sync unless self-heal is enabled.[^argo-cd-automated-sync] | On for a `Kustomization`, which corrects drift on each interval.[^flux-kustomization] Opt-in for a `HelmRelease`, through drift detection.[^flux-helmrelease] |
-| Health | Built-in checks for standard resource types. An application's health is the worst health among its immediate child resources.[^argo-cd-resource-health] | Opt-in on a `Kustomization`, through `healthChecks` or `wait`. They feed its `Ready` condition.[^flux-kustomization] |
+| Applying a new revision | Manual unless an automated sync policy is set on the application.[^argo-cd-automated-sync] | A `Kustomization` reconciles a new source revision and on its interval until suspended. A `HelmRelease` also reacts to a new chart artifact.[^flux-kustomization][^flux-helmrelease] |
+| Pruning removed resources | Automatic pruning is off by default; a manual sync may still prune when selected.[^argo-cd-automated-sync] | `prune` is required on a `Kustomization`, so the author must choose. Deleting a `HelmRelease` is a separate uninstall path.[^flux-kustomization][^flux-helmrelease] |
+| Reverting hand edits | Self-heal is off by default. A hand edit is reported as OutOfSync but does not alone trigger an automated sync; a later sync can overwrite it.[^argo-cd-automated-sync] | A `Kustomization` corrects drift on each interval.[^flux-kustomization] A `HelmRelease` needs drift detection enabled for that behaviour.[^flux-helmrelease] |
+| Health | Built-in checks for standard resource types; custom checks can be configured. Application health reflects its immediate child resources, not every descendant.[^argo-cd-resource-health] | A `Kustomization` waits for health only when `healthChecks` or `wait` is set. A `HelmRelease` waits for its resources by default during Helm actions.[^flux-kustomization][^flux-helmrelease] |
+| Using a Helm chart | Argo CD renders the chart with `helm template`; Argo CD manages the applied Kubernetes objects rather than a Helm release lifecycle.[^argo-cd-helm] | A `HelmRelease` asks helm-controller to perform Helm install and upgrade actions with a chart artifact.[^flux-helmrelease] |
 | Reaching other clusters | A destination is part of each `Application`. Credentials for other clusters are stored as Secrets in Argo CD's cluster.[^argo-cd-declarative-setup] An `ApplicationSet` can target many clusters from one manifest.[^argo-cd-applicationset] | A `Kustomization` or `HelmRelease` can carry a `kubeConfig` reference to apply to a remote cluster.[^flux-kustomization][^flux-helmrelease] |
-| Limiting what a team can deploy | A project restricts source repositories, destination clusters and namespaces, and resource kinds. The `default` project permits everything.[^argo-cd-projects] | A `Kustomization` can name a service account to impersonate, so Kubernetes access rules bound what it may apply.[^flux-kustomization] |
+| Limiting what a team can deploy | An `AppProject` restricts sources, destinations, and kinds, but the `default` project is permissive and project rules do not narrow the underlying cluster credential. Optional sync impersonation is beta and off by default.[^argo-cd-projects][^argo-cd-sync-impersonation] | A `Kustomization` and a `HelmRelease` can each name a service account. Without one or an enforced default account, their controllers can apply with cluster-admin authority.[^flux-multitenancy] |
 
 Both tools can also be installed in the cluster they manage, so that each
 cluster reconciles itself and no cluster holds another's
-credentials.[^argo-cd-installation][^flux-optional-components] Whether one
+credentials.[^argo-cd-installation][^flux-installation] Whether one
 central installation or one per cluster is better is an architecture
 question; see [Tooling clusters](tooling-clusters.md).
 
 ### Reading the rows about defaults
 
 The three rows on applying, pruning, and reverting are the ones to check
-first when you adopt or migrate, because the defaults point in different
-directions. Out of the box, an Argo CD application waits to be synced and
-leaves hand edits and removed resources alone. A Flux `Kustomization` applies
-new revisions and corrects drift on its own, and deletes removed resources
-only if its author set `prune` to true.
+first when you adopt or migrate. Here is what the same event means for an
+Argo CD `Application` without automated sync and a Flux `Kustomization`
+with its required `prune` choice:
+
+| Event | Argo CD application default | Flux `Kustomization` |
+| --- | --- | --- |
+| A new source revision arrives. | Reports OutOfSync and waits for a sync. | Reconciles the revision when the source is available. |
+| Someone changes a managed field in the cluster. | Reports OutOfSync; that edit alone does not trigger sync. A later sync can overwrite it. | Corrects the difference on a later reconciliation, unless suspended or configured to ignore it. |
+| A managed manifest disappears from the source. | Does not prune it automatically; a manual sync can prune it if selected. | Removes it only when `prune: true`; the author must set `prune`. |
+
+These are controller behaviours, not proof that a workload works. A Flux
+`HelmRelease` also has its own upgrade, uninstall, and optional drift rules.
+Deleting the reconciliation object itself follows a different path: an Argo
+CD `Application` can cascade to its resources through a finalizer; a Flux
+`Kustomization` uses its deletion policy, which defaults to mirroring
+`prune`; deleting a `HelmRelease` starts a Helm uninstall. Review those
+rules separately from removing a manifest.
+[^argo-cd-app-deletion][^flux-kustomization][^flux-helmrelease]
 
 Both can be configured toward the other's behaviour. Neither default is
 safer in general: one favours a human decision before change, the other
@@ -127,8 +182,9 @@ favours the cluster always matching the source.
 
 ### Operational overhead
 
-The documentation supports statements about what you run, not about how much
-effort it costs.
+The documentation supports statements about the main roles, not a complete
+Pod count or how much effort an installation costs. Check the actual install
+manifests and optional components for the version you would run.
 
 - Argo CD's usual installation is a multi-tenant one that is typically
   maintained by a platform team, and the project recommends its
@@ -158,14 +214,19 @@ their constraints before looking at either tool.
 | Constraint | What the documentation says | Effect on the decision |
 | --- | --- | --- |
 | Application developers have no access to the production Kubernetes API, and must still see what is deployed and whether it is healthy. | Argo CD's API server and UI have their own sign-on and access rules.[^argo-cd-overview] Flux is operated through Kubernetes objects and ships no UI.[^flux-faq] | Favours Argo CD's multi-tenant installation, unless the team adds a separate UI or grants read access to the cluster. |
-| Production credentials must not be stored in another cluster. | Either tool can be installed in the cluster it manages. | Neutral. It rules out one central instance for both clusters. |
-| Nothing in production is deleted without a person deciding. | Argo CD does not prune under automated sync by default.[^argo-cd-automated-sync] Flux requires an explicit `prune` value.[^flux-kustomization] | Neutral. Both can meet it; the team must set it and review it. |
-| Each team may deploy only to its own namespaces. | Argo CD projects restrict destinations.[^argo-cd-projects] Flux can impersonate a scoped service account.[^flux-kustomization] | Neutral. Both need deliberate setup; Argo CD's `default` project would not enforce it. |
-| A hand edit during an incident must not be silently reverted or silently kept. | Self-heal is off by default in Argo CD.[^argo-cd-automated-sync] A Flux `Kustomization` corrects drift until suspended.[^flux-kustomization] | Neutral, but it requires an incident procedure that fits the chosen tool. |
+| A controller outside production must not have production deployment authority. | Either tool can run inside each cluster and reconcile that cluster.[^argo-cd-installation][^flux-installation] | Neutral. The team chooses a local installation in each cluster. |
+| Removing a plain Kubernetes manifest from production source must not automatically delete its live object. | Argo CD does not prune under automated sync by default.[^argo-cd-automated-sync] Flux requires an explicit `prune` value on a `Kustomization`.[^flux-kustomization] | Neutral for this plain-manifest case. Helm chart upgrades and deletion of controller objects need their own review.[^argo-cd-app-deletion][^flux-helmrelease] |
+| Each team may deploy only to its own namespaces. | Argo CD projects can restrict destinations, but `default` is permissive and the underlying cluster credential needs separate review.[^argo-cd-projects][^argo-cd-sync-impersonation] Flux can impersonate scoped accounts, but its apply controllers are broadly privileged by default.[^flux-multitenancy] | Neutral. Neither tool's default tenant setup enforces this; the platform must configure and test the boundary. |
+| A hand edit during an incident must not be silently reverted or silently kept. | Argo CD reports OutOfSync without self-healing by default, but a later sync can overwrite the edit.[^argo-cd-automated-sync] A Flux `Kustomization` corrects drift unless suspended or configured to ignore it.[^flux-kustomization] | Neutral, but it requires an incident procedure that fits the chosen tool. |
 
 Four of the five constraints do not separate the tools. The first one does,
-so the team chooses Argo CD, installed in each cluster, with one project per
-application team and automatic pruning left off in production.
+so the team chooses Argo CD, installed in each cluster, with restricted
+projects and UI roles for each application team and automatic pruning left
+off in production. They must still protect who can change each project or
+`Application`, inspect the actual cluster credential or configured sync
+impersonation, and test allowed and denied deployments. The
+[GitOps security page](gitops-security-and-multitenancy.md) traces those
+checks; a comparison table cannot establish a tenant boundary.
 
 What would change the answer:
 
@@ -234,7 +295,7 @@ Where the analogy stops being accurate:
   one."** Argo CD has an installation without the UI, and other projects
   provide UIs for Flux.
 - **"Flux is Git-native and Argo CD is not."** Both reconcile from Git, and
-  both can use OCI registries.
+  both can use OCI registries.[^argo-cd-oci][^flux-components]
 - **"They behave the same once installed."** Their defaults for applying,
   pruning, and reverting differ.
 - **"One is for small teams and one for large."** Nothing in either project's
@@ -252,6 +313,13 @@ Where the analogy stops being accurate:
 - Why is "make both repositories contain the same manifest" a weaker fix than
   assigning the resource to one tool?
 
+Answer hints: on migration, a new commit may wait for manual Argo CD sync,
+and a hand edit may remain OutOfSync until another sync. The Tidewater choice
+turned on developer visibility without production API access; read access
+or a separate UI could change that. With overlapping ownership, the tool
+that corrects drift can restore its copy while the other reports OutOfSync.
+Identical copies are fragile because the next change can make them differ.
+
 ## Next steps
 
 - The shared operating model: [GitOps](gitops.md).
@@ -268,9 +336,13 @@ Where the analogy stops being accurate:
 - Multi-tenant and core installations: [Argo CD - Installation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/).
 - Applications, projects, and cluster credentials as objects: [Argo CD - Declarative Setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/).
 - Combining sources within one application: [Argo CD - Multiple Sources for an Application](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/).
+- Argo CD with [Helm chart repositories](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/)
+  or [OCI sources](https://argo-cd.readthedocs.io/en/stable/user-guide/oci/).
 - Automated sync, pruning, and self-heal: [Argo CD - Automated Sync Policy](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/).
 - How health is computed: [Argo CD - Resource Health](https://argo-cd.readthedocs.io/en/stable/operator-manual/health/).
 - Restricting sources and destinations: [Argo CD - Projects](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/).
+- Optional [Argo CD sync impersonation](https://argo-cd.readthedocs.io/en/stable/operator-manual/app-sync-using-impersonation/)
+  and [Flux multi-tenancy lockdown](https://fluxcd.io/flux/installation/configuration/multitenancy/).
 - Flux's controllers and resource types: [Flux - GitOps Toolkit components](https://fluxcd.io/flux/components/).
 - Pruning, drift correction, health checks, impersonation, and remote clusters: [Flux - Kustomization](https://fluxcd.io/flux/components/kustomize/kustomizations/).
 - Helm drift detection: [Flux - HelmRelease](https://fluxcd.io/flux/components/helm/helmreleases/).
@@ -289,14 +361,20 @@ Where the analogy stops being accurate:
 [^argo-cd-installation]: [Argo CD - Installation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/), source record `argo-cd-installation`.
 [^argo-cd-declarative-setup]: [Argo CD - Declarative Setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/), source record `argo-cd-declarative-setup`.
 [^argo-cd-application-sources]: [Argo CD - Tools](https://argo-cd.readthedocs.io/en/stable/user-guide/application_sources/), source record `argo-cd-application-sources`.
+[^argo-cd-helm]: [Argo CD - Helm](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/), source record `argo-cd-helm`.
+[^argo-cd-oci]: [Argo CD - OCI](https://argo-cd.readthedocs.io/en/stable/user-guide/oci/), source record `argo-cd-oci`.
 [^argo-cd-multiple-sources]: [Argo CD - Multiple Sources for an Application](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/), source record `argo-cd-multiple-sources`.
 [^argo-cd-automated-sync]: [Argo CD - Automated Sync Policy](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/), source record `argo-cd-automated-sync`.
+[^argo-cd-app-deletion]: [Argo CD - App Deletion](https://argo-cd.readthedocs.io/en/stable/user-guide/app_deletion/), source record `argo-cd-app-deletion`.
 [^argo-cd-resource-health]: [Argo CD - Resource Health](https://argo-cd.readthedocs.io/en/stable/operator-manual/health/), source record `argo-cd-resource-health`.
 [^argo-cd-projects]: [Argo CD - Projects](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/), source record `argo-cd-projects`.
+[^argo-cd-sync-impersonation]: [Argo CD - Application Sync using impersonation](https://argo-cd.readthedocs.io/en/stable/operator-manual/app-sync-using-impersonation/), source record `argo-cd-sync-impersonation`.
 [^argo-cd-applicationset]: [Argo CD - Introduction to ApplicationSet controller](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/), source record `argo-cd-applicationset`.
 [^argo-cd-sync-options]: [Argo CD - Sync Options](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/), source record `argo-cd-sync-options`.
 [^flux-components]: [Flux - GitOps Toolkit components](https://fluxcd.io/flux/components/), source record `flux-components`.
 [^flux-kustomization]: [Flux - Kustomization](https://fluxcd.io/flux/components/kustomize/kustomizations/), source record `flux-kustomization`.
 [^flux-helmrelease]: [Flux - HelmRelease](https://fluxcd.io/flux/components/helm/helmreleases/), source record `flux-helmrelease`.
 [^flux-optional-components]: [Flux - Optional components](https://fluxcd.io/flux/installation/configuration/optional-components/), source record `flux-optional-components`.
+[^flux-multitenancy]: [Flux - Multi-tenancy lockdown](https://fluxcd.io/flux/installation/configuration/multitenancy/), source record `flux-multitenancy`.
+[^flux-installation]: [Flux - Installation](https://fluxcd.io/flux/installation/), source record `flux-installation`.
 [^flux-faq]: [Flux - Frequently asked questions](https://fluxcd.io/flux/faq/), source record `flux-faq`.

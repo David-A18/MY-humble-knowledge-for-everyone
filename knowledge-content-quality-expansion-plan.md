@@ -502,7 +502,7 @@ All three remain `status: draft` and `maturity: draft`. No `verified`,
 | --- | --- | --- | --- |
 | [GitOps](knowledge/kubernetes/applications-and-tools/gitops.md) | Rewritten to the standard. Focused review round 62 clarified that Flux's default `MirrorPrune` deletion policy deletes managed resources only when `prune: true`. | Keyed citations to the OpenGitOps principles and glossary and to Flux and Argo CD documentation; the service walk-through is labelled illustrative. Current Flux Kustomization documentation checked for the deletion-policy correction. The statement that an unreconciled hand edit can later be overwritten is reasoning, not a quoted claim. | Independent technical review; reader test; freshness decision. |
 | [Flux](knowledge/kubernetes/applications-and-tools/flux.md) | Rewritten to the standard. | Keyed citations to Flux component, source, Kustomization, HelmRelease, and installation documentation; the commit walk-through is conceptual, with invented revisions, no YAML, and no cluster run. The statement that a failed fetch leaves the previous revision applied is reasoning from the documented chain. | Independent technical review; a check against a running Flux installation; reader test; freshness decision. |
-| [Argo CD vs. Flux](knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md) | Rewritten to the standard. | Keyed citations to Argo CD and Flux documentation for each comparison row; the team decision is invented. The explanation of why overlapping ownership conflicts is labelled in the page as reasoned, because neither project documents the two tools managing one resource. Operational overhead is described only as what each installation runs. | Independent technical review by someone who has operated both tools; reader test; freshness decision. |
+| [Argo CD vs. Flux](knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md) | The comparison now has a pull-path diagram, a same-event defaults table, and a Tidewater choice that separates plain-manifest pruning, chart upgrades, controller deletion, team permissions, and visibility. It distinguishes Argo CD's Helm rendering from Flux's Helm release lifecycle and labels overlapping ownership as a reasoned risk. | Two Claude Opus 5.5 read-only reviews; current official Argo CD and Flux sources checked for sync, health, Helm, tenancy, installation, and deletion. The diagram rendered and was inspected; three static retrieval cases were added. No installation, cluster, application, independent dual-operator review, or novice task ran. | Independent technical review by someone who has operated both tools; staging comparison; reader task; freshness decision. |
 
 The cited pages were read on 2026-09-30 from the Argo CD `stable`
 documentation and the current Flux documentation. The links are not pinned to
@@ -3496,6 +3496,22 @@ Current official Flux documentation was checked. The revised diagram
 rendered and was inspected. Two static retrieval cases were added. No chart
 fetch, controller, Helm release, cluster, independent technical review, or
 novice reader task ran. The page remains `draft`.
+
+### Focused review round 77 (2026-10-15)
+
+Reviewed Argo CD versus Flux twice with Claude Opus 5.5 read-only. The revised
+comparison adds a diagram of the two pull and apply paths and a short table
+showing what a new revision, hand edit, or removed plain manifest does under
+the stated defaults. It corrects the impression that Flux health is always
+opt-in, Argo CD cannot read Helm repositories, or either tool's default
+tenant setup limits cluster authority. The invented Tidewater decision now
+separates plain-manifest pruning from chart upgrades and controller-object
+deletion, and it names the permission work still needed after choosing a tool.
+
+Current official Argo CD and Flux documentation was checked. The diagram
+rendered and was inspected. Three static retrieval cases were added. No
+installation, cluster, Helm upgrade, independent review by operators of both
+tools, or novice task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

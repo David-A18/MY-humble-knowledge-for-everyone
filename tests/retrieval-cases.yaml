@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: argocd-flux-default-hand-edit-and-prune
+    question: With no automated sync or self-heal configured, how does Argo CD report a hand edit or removed manifest, and how does a Flux Kustomization treat drift and pruning by default?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-automated-sync, flux-kustomization]
+  - id: argocd-flux-helm-lifecycle-choice
+    question: When both tools consume a Helm chart, which one renders with helm template and which one manages Helm release install and upgrade actions?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-helm, flux-helmrelease]
+  - id: argocd-flux-tenant-default-boundaries
+    question: If an application team may deploy only into its namespace, why are a permissive Argo CD default project and a Flux object with no scoped apply account both unsafe defaults?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-projects, argo-cd-sync-impersonation, flux-multitenancy]
   - id: flux-helmchart-creation-and-namespace
     question: A HelmRelease lives in apps but refers to a HelmRepository in flux-system. Which controller creates its HelmChart, where does that object appear, and which controller fetches its chart artifact?
     expected_paths: [knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md]
