@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-15
+
+- **APISIX policy beginner review**: Aligned the invented lesson request with the trusted-client example, clarified Consumer-keyed and per-replica quota scope, invalid-key protection, stable/canary weights, request-ID trust, gateway metrics, and OpenTelemetry's unsampled default. Claude Opus 5.5 reviewed the page read-only twice; current official sources were checked, the diagram rendered and was inspected, and two static retrieval cases were added. No gateway, backend, canary, collector, independent APISIX review, or novice task ran; the page remains `draft`.
+
 ## 2026-10-13
 
 - **APISIX architecture beginner review**: Aligned the invented lesson request with the introduction and clarified GatewayProxy-to-Admin-API configuration, Gateway API status scope, per-replica applied state, and mode-specific restart behavior. Claude Opus 5.5 reviewed the page read-only twice; current official sources were checked, the diagram rendered and was inspected, and two static retrieval cases were added. No gateway, cluster, live request, independent APISIX review, or novice task ran; the page remains `draft`.

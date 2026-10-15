@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: apisix-consumer-quota-and-invalid-key
+    question: A trusted lesson client uses an APISIX API key. How do I count requests per Consumer across gateway replicas, and why does that quota not itself protect against invalid-key attempts?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md]
+    required_source_ids: [apisix-key-auth, apisix-limit-count, apisix-plugin]
+  - id: apisix-canary-and-missing-traces
+    question: If a 1-to-9 APISIX canary has unexpected traffic and no trace appears, what do traffic-split weights, request IDs, Prometheus metrics, and the OpenTelemetry sampler actually show?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md]
+    required_source_ids: [apisix-traffic-split, apisix-request-id, apisix-prometheus, apisix-opentelemetry]
   - id: apisix-gatewayproxy-accepted-but-not-applied
     question: If an HTTPRoute is Accepted but the intended APISIX gateway has no matching route, what GatewayProxy, controller-to-Admin-API, and applied-configuration checks separate these handoffs?
     expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified APISIX policy boundaries for a trusted key-auth client, Consumer quotas, canary weights, invalid-key protection, telemetry scope, and two static retrieval cases.
 - Clarified APISIX architecture with the GatewayProxy-to-Admin-API handoff, Gateway API status limits, mode-specific restart behavior, and two static retrieval cases.
 - Clarified the APISIX introduction with a consistent key-auth client, Consumer credential, rejection branch, TLS and path-rewrite limits, GatewayProxy handoff, and two static retrieval cases.
 - Clarified APISIX 404 diagnosis across entry, route attachment, unexpected matches, backend responses, controller handoff, and listener-port matching; added two static retrieval cases.

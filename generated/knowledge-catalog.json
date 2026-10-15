@@ -2494,7 +2494,8 @@
         "apisix-traffic-split",
         "apisix-request-id",
         "apisix-prometheus",
-        "apisix-opentelemetry"
+        "apisix-opentelemetry",
+        "apisix-controller-resources"
       ],
       "stale_after": null,
       "status": "draft",

@@ -1496,7 +1496,7 @@ possible outcomes rather than claiming a fixed plugin execution order.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [How APISIX policies shape one request](knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md) | Invented lesson request, branch diagram and text alternative, four policy questions, local-versus-shared quota scope, canary and telemetry limits, failure table, understanding checks. | Current official APISIX plugin, key-auth, openid-connect, limit-count, traffic-split, request-id, prometheus, and opentelemetry documentation checked. Mermaid rendered and inspected. No gateway, backend, quota, identity provider, canary, telemetry collector, reader task, or Opus review occurred. | Independent APISIX/security and Opus review; disposable request exercise across multiple gateway replicas and telemetry paths; novice policy-scope task; freshness decision. |
+| [How APISIX policies shape one request](knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md) | Trusted-client lesson request, branch diagram and text alternative, Consumer-keyed quota and local-versus-shared counter scope, stable-versus-canary weights, invalid-key boundary, telemetry limits, failure table, understanding checks. | Current official APISIX plugin, key-auth, openid-connect, limit-count, traffic-split, request-id, prometheus, opentelemetry, and controller-resource documentation checked. Claude Opus 5.5 reviewed the focused revision read-only twice. Mermaid rendered and inspected; two static retrieval cases added. No gateway, backend, quota, identity provider, canary, telemetry collector, or novice task occurred. | Independent APISIX/security review; disposable request exercise across multiple gateway replicas and telemetry paths; novice policy-scope task; freshness decision. |
 
 ### Wave 88 (2026-10-03)
 
@@ -3395,6 +3395,24 @@ Gateway API documentation was checked. The revised Mermaid diagram
 rendered and was inspected, and two static retrieval cases were added.
 No APISIX gateway, cluster, live request, independent APISIX review,
 or novice reader task ran. The page remains `draft`.
+
+### Focused review round 72 (2026-10-15)
+
+Reviewed the APISIX policy page with Claude Opus 5.5 read-only twice.
+The invented lesson request now uses the same trusted client, API key,
+and Consumer credential as the introduction. The branch diagram and
+text alternative separate key rejection, Consumer quota, release choice,
+application authorization, and configured gateway signals. The page
+explains a Consumer counter key, local versus shared quota scope,
+invalid-key limits, a 1:9 route-upstream canary, and why request IDs,
+metrics, and unsampled traces cannot prove a lesson outcome.
+
+Current official APISIX 3.19.0 and Ingress Controller resource
+documentation was checked against the Opus findings. The revised Mermaid
+diagram rendered and was inspected, and two static retrieval cases were
+added. No gateway, backend, multiple-replica quota, identity provider,
+canary, collector, independent APISIX review, or novice reader task ran.
+The page remains `draft`.
 
 ### Candidates for the next wave
 
