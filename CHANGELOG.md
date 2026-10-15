@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified stateful versus stateless compute with a cart-ID walkthrough, two-tab lost-update and retry boundaries, and two static retrieval cases.
 - Clarified system bootstrapping with a rendered Node-versus-S3 dependency diagram, an offline local import demonstration, careful backend-migration guidance, and three static retrieval cases.
 - Rendered the Bootstrap 5.3.8 grid example at narrow and wide widths, clarified its 768 px breakpoint and CSS-versus-JavaScript checks, and added two static retrieval cases.
 - Clarified GitOps's pending-revision and live-drift causes, sync versus health signals, CI and controller permissions, emergency reconciliation owners, and an illustrative hand-edit recovery; added three static retrieval cases.

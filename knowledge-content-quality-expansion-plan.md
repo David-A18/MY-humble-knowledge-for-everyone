@@ -650,10 +650,11 @@ disappears, and where does its replacement find required information?
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Stateful vs. stateless on AWS](knowledge/cloud/aws/architecture/stateful-vs-stateless.md) | Rewritten with a bounded cart example, replica and store diagram, state inventory, and limits of the stateless label. | Keyed AWS Well-Architected and Lambda application-design documentation. The cart example is invented; no AWS application or failure test ran. | Independent AWS architecture review; real failure and data-recovery check; reader test; freshness decision. |
+| [Stateful vs. stateless on AWS](knowledge/cloud/aws/architecture/stateful-vs-stateless.md) | Rewritten with a bounded cart example, replica and store diagram, state inventory, and limits of the stateless label. The focused review below adds a request-by-request cart trace, identifier boundary, lost update, and safe-retry limit. | Claude Opus 5.5 reviewed the revision twice read-only. Current AWS Well-Architected, Lambda, DynamoDB, Builders' Library, and OWASP guidance was checked; two static retrieval cases were added. The cart example is invented; no AWS application or failure test ran. | Independent AWS architecture review; real failure and data-recovery check; reader test; freshness decision. |
 | [Stateless application patterns on AWS](knowledge/cloud/aws/architecture/stateless-application-patterns.md) | Rewritten with shared-state and queue model, a bounded photo-upload sequence, partial-failure cases, and retry limits. | Keyed AWS Well-Architected, S3, SQS standard-queue, and Lambda documentation. The scenario is invented; no AWS resource or failure test ran. | Independent architecture and security review; real upload and retry test; reader test; freshness decision. |
 
-The AWS documentation was consulted on 2026-09-30. This page gives a
+The original AWS guidance was consulted on 2026-09-30 and the focused
+sources above on 2026-10-16. This page gives a
 classification model and does not claim a particular service or workload
 meets its recovery goals.
 
@@ -3582,6 +3583,21 @@ and locking documentation was checked. A disposable Node v22.23.2/npm
 inspected; three static retrieval cases were added. No Terraform CLI,
 AWS bucket, independent technical review, or novice reader task ran. The
 page remains `draft`.
+
+### Focused review round 82 (2026-10-16)
+
+Reviewed the stateful-versus-stateless AWS explanation twice with Claude Opus
+5.5 read-only. The cart example now traces a browser-held identifier through
+two replaceable replicas to a shared store. It shows why memory-only cart
+state can fail without a crash, and why a healthy shared store still needs
+conflict detection and an idempotent retry design for some writes. The
+second review corrected the version-check explanation: the write must carry
+the version the browser tab originally read, and a retry must reapply its
+change to the latest cart. Current AWS Well-Architected, Lambda, DynamoDB,
+Builders' Library, and OWASP guidance was checked; two static retrieval
+cases were added. The cart is invented; no AWS deployment, failover drill,
+independent domain review, or novice reader task ran. The page remains
+`draft`.
 
 ### Candidates for the next wave
 

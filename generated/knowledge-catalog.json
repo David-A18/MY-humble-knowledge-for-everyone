@@ -477,7 +477,10 @@
       "path": "knowledge/cloud/aws/architecture/stateful-vs-stateless.md",
       "source_ids": [
         "aws-stateless",
-        "aws-lambda-design"
+        "aws-lambda-design",
+        "aws-dynamodb-concurrent-updates",
+        "aws-idempotent-apis",
+        "owasp-session-management"
       ],
       "stale_after": null,
       "status": "draft",

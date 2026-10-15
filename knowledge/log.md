@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-16
+
+- **Stateful-cart request trace**: Added a browser-to-replica-to-store walkthrough, a cart-ID security boundary, and concrete lost-update and lost-reply cases to the stateful-versus-stateless explanation. Claude Opus 5.5 reviewed it twice read-only; current AWS and OWASP primary guidance was checked, and two static retrieval cases were added. The scenario is illustrative; no AWS run, independent domain review, or novice reader task occurred. The page remains `draft`.
+
 ## 2026-10-15
 
 - **Bootstrapping dependency-order review**: Reworked the explanation around a local Node import and the separate S3 backend foundation, with a rendered two-path diagram, correct local-state-first alternative, bootstrap-state ownership, migration flags, and shared-state protection. A disposable Node v22.23.2/npm 10.9.8 fixture failed with `ERR_MODULE_NOT_FOUND` before offline `npm ci` and printed `Hello, Ada!` afterward. Claude Opus 5.5 reviewed the page read-only twice; current npm and HashiCorp official documentation was checked, and three static retrieval cases were added. No Terraform CLI, AWS resource, independent technical review, or novice task ran; the page remains `draft`.

@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: stateless-cart-identifier-and-replica-switch
+    question: If a shopper's second cart request reaches a different web replica, how does that replica find the same cart, and what happens if the first replica kept the cart only in memory?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-vs-stateless.md]
+    required_source_ids: [aws-stateless, owasp-session-management]
+  - id: shared-cart-store-lost-update-and-retry
+    question: How can two tabs lose a cart item even with one healthy shared store, and why can retrying an add after a lost reply create a duplicate?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-vs-stateless.md]
+    required_source_ids: [aws-dynamodb-concurrent-updates, aws-idempotent-apis]
   - id: bootstrap-node-missing-package-and-clean-install
     question: A cloned Node app declares a local package, but npm start says ERR_MODULE_NOT_FOUND. What has to happen before the import works, and what does npm ci require?
     expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
