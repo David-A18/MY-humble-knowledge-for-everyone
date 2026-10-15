@@ -1058,7 +1058,7 @@ Kubernetes-to-gateway configuration change.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [APISIX on EKS](knowledge/cross-topic-guides/apisix-on-eks.md) | Rewritten with a limited venue analogy, invented lesson API, two-path diagram, ownership and failure tables, TLS placement, plugin boundaries, and understanding checks. A later focused review corrected the backend request path and added NLB target and client-IP decisions. | Keyed Apache APISIX and Amazon EKS/NLB documentation; Claude Opus 5.5 reviewed the focused revision read-only. No cluster, gateway, route, plugin, load balancer, client request, or reader test ran. | Independent APISIX/EKS security review; controlled route, policy, TLS, and failure checks; reader test; freshness decision. |
+| [APISIX on EKS](knowledge/cross-topic-guides/apisix-on-eks.md) | Rewritten with a limited venue analogy, invented lesson API, two-path diagram, ownership and failure tables, TLS placement, plugin boundaries, and understanding checks. Focused reviews aligned the request with the APISIX series, made TCP pass-through and IP targets explicit, separated NLB health from route health, and showed the private GatewayProxy/Admin API handoff and client-IP quota risk. | Keyed Apache APISIX and Amazon EKS/NLB documentation; Claude Opus 5.5 reviewed the focused revision read-only. No cluster, gateway, route, plugin, load balancer, client request, or reader test ran. | Independent APISIX/EKS security review; controlled route, policy, TLS, and failure checks; reader test; freshness decision. |
 
 ### Wave 49 (2026-10-02)
 
@@ -3413,6 +3413,28 @@ diagram rendered and was inspected, and two static retrieval cases were
 added. No gateway, backend, multiple-replica quota, identity provider,
 canary, collector, independent APISIX review, or novice reader task ran.
 The page remains `draft`.
+
+### Focused review round 73 (2026-10-15)
+
+Reviewed APISIX on EKS with Claude Opus 5.5 read-only twice. The invented
+lesson request now matches the APISIX series: a trusted client sends an
+API key over HTTPS, the NLB passes TCP 443 to gateway Pod IPs, and
+APISIX terminates TLS. The diagram shows the private GatewayProxy and
+Admin API configuration path beside the user request. The page also
+separates NLB provisioning from unhealthy targets and explains why a
+healthy TCP target proves neither TLS, a loaded route, nor backend
+health. A client-IP example connects NLB address preservation to
+APISIX's default `remote_addr` quota key. A follow-up audit prompted
+clearer controller ownership and exposure checks, backend NetworkPolicy
+enforcement, TLS target choices, and a readiness question for a
+restarted standalone gateway Pod.
+
+Current official AWS NLB and EKS, APISIX Admin API, controller, and
+limit-count documentation was checked against the Opus findings. The
+revised Mermaid diagram rendered and was inspected, and two static
+retrieval cases were added. No EKS cluster, gateway, load
+balancer, client request, independent APISIX/EKS security review, or
+novice reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

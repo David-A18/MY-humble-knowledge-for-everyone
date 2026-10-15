@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: apisix-eks-healthy-target-no-route
+    question: If the EKS NLB reports a healthy APISIX target but HTTPS fails or APISIX returns no route, what did the TCP health check actually prove and which configuration handoff should I inspect?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [aws-nlb-health, apisix-resources, apisix-configuration-troubleshooting]
+  - id: apisix-eks-tls-and-client-ip
+    question: For a trusted lesson request through an NLB TCP 443 listener to APISIX Pod IPs, who terminates TLS and why might an IP-keyed APISIX quota group unrelated clients together?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [aws-nlb-listeners, aws-nlb-target-groups, apisix-limit-count]
   - id: apisix-consumer-quota-and-invalid-key
     question: A trusted lesson client uses an APISIX API key. How do I count requests per Consumer across gateway replicas, and why does that quota not itself protect against invalid-key attempts?
     expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md]

@@ -2,6 +2,7 @@
 
 ## 2026-10-15
 
+- **APISIX on EKS request-path review**: Aligned the invented HTTPS and API-key request with the APISIX series, made NLB TCP pass-through and IP targets explicit, and showed the private GatewayProxy/Admin API configuration path. Split NLB provisioning, target health, and route health; explained the default TCP health check's limit and how client-IP translation can collapse IP-keyed quotas. Clarified controller ownership, backend network isolation, TLS target choices, and gateway readiness. Claude Opus 5.5 reviewed the page read-only twice; current official AWS and APISIX sources were checked, the diagram rendered and was inspected, and two static retrieval cases were added. No cluster, gateway, load balancer, live request, independent security review, or novice task ran; the page remains `draft`.
 - **APISIX policy beginner review**: Aligned the invented lesson request with the trusted-client example, clarified Consumer-keyed and per-replica quota scope, invalid-key protection, stable/canary weights, request-ID trust, gateway metrics, and OpenTelemetry's unsampled default. Claude Opus 5.5 reviewed the page read-only twice; current official sources were checked, the diagram rendered and was inspected, and two static retrieval cases were added. No gateway, backend, canary, collector, independent APISIX review, or novice task ran; the page remains `draft`.
 
 ## 2026-10-13
