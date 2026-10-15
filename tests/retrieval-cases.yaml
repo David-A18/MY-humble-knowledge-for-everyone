@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: bootstrap-grid-breakpoint-and-viewport
+    question: Why do two Bootstrap col-12 col-md-6 cards stack below 768 px but sit side by side at 768 px and wider, and what viewport tag does the page need?
+    expected_paths: [knowledge/programming-languages/bootstrap-frontend-toolkit.md]
+    required_source_ids: [bootstrap-introduction, bootstrap-grid]
+  - id: bootstrap-modal-css-without-behavior
+    question: If a Bootstrap modal trigger button looks styled but clicking it never opens the dialog, which loaded file and dialog labeling should I check?
+    expected_paths: [knowledge/programming-languages/bootstrap-frontend-toolkit.md]
+    required_source_ids: [bootstrap-introduction, bootstrap-modal]
   - id: gitops-pending-revision-vs-live-drift
     question: If a new GitOps configuration commit is waiting to apply, how is that different from someone changing the live Deployment by hand, even though Argo CD can report OutOfSync for both?
     expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]

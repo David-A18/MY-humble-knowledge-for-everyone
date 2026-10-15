@@ -559,7 +559,7 @@ two focused explanations carry the detail. All three pages remain drafts.
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [Bootstrap and bootstrapping](knowledge/programming-languages/bootstrap-and-bootstrapping.md) | Rewritten as a term disambiguation with a bounded example and next routes. | Keyed citations to Bootstrap and Terraform documentation; the team sentence is illustrative. | Independent editorial review; reader test. |
-| [Bootstrap frontend toolkit](knowledge/programming-languages/bootstrap-frontend-toolkit.md) | New explanation of CSS classes, optional JavaScript, and a responsive grid with a text sketch. | Keyed Bootstrap 5.3 citations; HTML and visual expectation are illustrative and were not browser-tested. | Browser check of the sample; accessibility review; reader test; freshness decision. |
+| [Bootstrap frontend toolkit](knowledge/programming-languages/bootstrap-frontend-toolkit.md) | Explains CSS classes, optional JavaScript, and a responsive grid with rendered narrow and wide examples. | Keyed Bootstrap 5.3 citations; the pinned 5.3.8 fixture was rendered in the local browser, and the 767/768 px breakpoint was measured. The content remains an illustrative dashboard. | Independent accessibility and browser review; reader test; freshness decision. |
 | [Bootstrapping a system](knowledge/programming-languages/bootstrapping-a-system.md) | New explanation of dependency order with project and Terraform backend examples and a diagram. | Keyed npm and HashiCorp citations; no npm install, Terraform run, or AWS change was performed. | Technical review; a safe first-run check; reader test; freshness decision. |
 
 The Bootstrap 5.3, npm CLI v11, and current Terraform documentation were
@@ -3549,6 +3549,20 @@ Current official OpenGitOps, Argo CD, and Flux documentation was checked.
 The diagram rendered and was inspected; three static retrieval cases were
 added. No cluster, incident, independent technical review, or novice reader
 task ran. The page remains `draft`.
+
+### Focused review round 80 (2026-10-15)
+
+Reviewed the Bootstrap frontend toolkit explanation twice with Claude Opus
+5.5 read-only and checked current official Bootstrap 5.3 getting-started, grid,
+modal, and download documentation. The dashboard example now names the
+viewport tag and 768 px medium breakpoint, distinguishes grid columns from
+card styling, and gives a direct CSS-versus-JavaScript troubleshooting path.
+The complete fixture pins Bootstrap CSS 5.3.8. Local browser renderings at
+390 px and 900 px were added to the knowledge bundle, and DOM measurements
+showed the cards on separate rows at 767 px and the same row at 768 px. Two
+static retrieval cases were added. This is evidence for one browser's sample
+layout only; no independent accessibility or cross-browser review or novice
+reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

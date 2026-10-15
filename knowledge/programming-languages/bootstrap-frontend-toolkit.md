@@ -35,14 +35,16 @@ the exact files and version used by your project.
 ## What it is
 
 Bootstrap is a frontend toolkit. Its CSS supplies prepared layout, spacing,
-and visual styles that your HTML selects with class names. Its optional
-JavaScript supplies behavior for components such as modals and
+and visual styles that your HTML selects with class names. Its base styles
+also adjust ordinary elements such as the page body and headings. Its
+optional JavaScript supplies behavior for components such as modals and
 dropdowns.[^bootstrap-introduction]
 
 A class such as `btn` does not create a new HTML element. It is a label on an
 ordinary element that Bootstrap's stylesheet matches. In the same way,
 `data-bs-toggle` attributes can tell Bootstrap's JavaScript to operate a
-component, but the JavaScript bundle must be loaded first.
+component, but the JavaScript bundle must also be loaded on the page. The
+official guide places its script just before `</body>`.
 
 Imagine a set of reusable building parts. A Bootstrap class selects a part;
 the HTML still says what the part is and contains. The analogy stops at
@@ -51,46 +53,67 @@ accessibility and meaning: a styled `div` does not become a semantic
 
 ## One small layout
 
-This is illustrative markup, not a claim that the repository rendered it.
-Assume the Bootstrap 5.3 CSS is loaded using an official installation method
-and the HTML page has the viewport meta tag described in the
-[getting-started guide](https://getbootstrap.com/docs/5.3/getting-started/introduction/).
+Imagine a small learner dashboard with two cards. Bootstrap decides their
+width, but the same HTML supplies both the content and the reading order.
+Start the HTML file with `<!doctype html>`, load the Bootstrap 5.3 CSS using the
+[official getting-started guide](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+and include this viewport tag in the page's `<head>`:
 
 ```html
-<div class="container">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+Then put this markup in the `<body>`:
+
+```html
+<main class="container py-4">
+  <h1 class="h3">Learner dashboard</h1>
   <div class="row g-3">
     <section class="col-12 col-md-6">
-      <h2>Profile</h2>
-      <p>About this learner.</p>
+      <div class="p-3 border rounded bg-body-tertiary">
+        <h2 class="h4">Profile</h2>
+        <p>About this learner.</p>
+      </div>
     </section>
     <section class="col-12 col-md-6">
-      <h2>Activity</h2>
-      <p>What they studied recently.</p>
+      <div class="p-3 border rounded bg-body-tertiary">
+        <h2 class="h4">Activity</h2>
+        <p>What they studied recently.</p>
+      </div>
     </section>
   </div>
-</div>
+</main>
 ```
 
-`container` limits and centers the content width; `row` holds grid
-columns; `g-3` adds a gutter. Each `col-12` takes the full row by default,
-while `col-md-6` gives it half the row from the medium breakpoint
-upwards.[^bootstrap-grid]
+`container` centers the content, adds side padding, and caps its width from
+the small breakpoint upward; `row` holds grid columns; `g-3` adds space
+between columns and between cards that wrap onto new lines. Each `col-12`
+occupies all 12 grid columns below the medium breakpoint. At a viewport
+width of **768 px or more**,
+`col-md-6` assigns each section six of the 12 columns, so the cards sit
+side by side. The inner `p-3 border rounded bg-body-tertiary` classes add
+padding, a border, rounded corners, and a subtle background (pale in the
+default light color mode); the grid classes alone do not draw a card.[^bootstrap-grid]
 
-Visual expectation:
+A preview page containing this grid markup, plus an introductory sentence
+and a width label, was rendered in one local browser with Bootstrap CSS
+5.3.8. The [complete preview file](../../tests/bootstrap-grid-5.3.8.html)
+pins that stylesheet and needs no Bootstrap JavaScript. The screenshots
+record that local rendering:
 
-```text
-Narrow screen:       Medium and wider:
-+---------------+    +---------+---------+
-| Profile       |    | Profile | Activity|
-+---------------+    +---------+---------+
-| Activity      |
-+---------------+
-```
+![At 390 px, Profile appears above Activity; each card fills its grid row.](../assets/images/bootstrap-grid-narrow-390.jpg)
 
-This sketch shows the relationship, not measured browser output. If both
-sections stay unstyled, first check whether the Bootstrap CSS actually
-loaded. If they do not change columns at the expected width, check the
-viewport meta tag, grid classes, and the version's breakpoint definitions.
+![At 900 px, Profile and Activity appear side by side in equal-width grid columns.](../assets/images/bootstrap-grid-wide-900.jpg)
+
+The browser check also measured separate rows at 767 px and the same row at
+768 px. This verifies this sample's CSS layout in one browser; device and
+assistive-technology behavior still needs independent review. If the boxes
+stay unstyled, inspect the stylesheet request in the browser's Network
+panel. If styled boxes never share a row, check that the viewport is at least
+768 CSS pixels wide (browser zoom can change this), each `col-md-6` is a
+direct child of the `row`, and the class names are spelled correctly. If a
+phone shows both cards side by side in a zoomed-out page, check for a missing
+viewport tag.
 
 ## CSS and JavaScript have different jobs
 
@@ -98,12 +121,21 @@ viewport meta tag, grid classes, and the version's breakpoint definitions.
 | --- | --- | --- |
 | A styled button | CSS for `btn` and a variant such as `btn-primary`. | A real `<button>`, its label, and what clicking it does. |
 | A responsive grid | Grid classes and breakpoint styles. | The content order, meaningful headings, and a layout that works for your users. |
-| A modal | Component styles and JavaScript behavior, when the required bundle or plugin is loaded. | The dialog content, an accessible trigger, and application action after confirmation.[^bootstrap-modal] |
+| A modal | Component styles and JavaScript behavior, when the required bundle or plugin is loaded. | The dialog content, a `<button>` trigger, an accessible dialog label, and application action after confirmation.[^bootstrap-modal] |
 
 The official quick start shows CDN files with version-specific integrity
 hashes. Copy the exact CSS and JavaScript links for the version you choose;
-do not reuse an old integrity hash with a new file. Projects with a build
-pipeline can install Bootstrap through a package manager instead.[^bootstrap-introduction][^bootstrap-download]
+do not reuse an old integrity hash with a new file. A mismatched hash makes
+the browser refuse that file; the Console reports an integrity error.
+Projects with a build pipeline can install Bootstrap through a package
+manager instead.[^bootstrap-introduction][^bootstrap-download]
+
+For a modal that looks styled but does not open, check that the JavaScript
+bundle loaded without errors, the trigger has `data-bs-toggle="modal"`, and
+its `data-bs-target` is `#` followed by the modal's exact `id`. Separately,
+give the modal `aria-labelledby` pointing to its title so assistive
+technology can announce it. The grid example above needs the CSS but no
+Bootstrap JavaScript.[^bootstrap-modal]
 
 ## Decide whether to use it
 
@@ -118,9 +150,16 @@ you.
 
 - Which part styles a `btn` class: the browser alone or the loaded
   Bootstrap CSS?
-- Why can a modal look styled but fail to open?
-- What is the smallest browser check that would tell you whether the CSS file
-  loaded?
+- Why can a modal's trigger button look styled even when the modal never
+  opens?
+- At 900 px, the cards have borders and padding but still stack. Is the
+  stylesheet missing, or is something else wrong?
+
+**Answers:** (1) The loaded Bootstrap CSS; a browser has no built-in `btn`
+style. (2) The button's look comes from CSS; opening the modal needs
+JavaScript, and the trigger must target the correct modal. (3) The visible
+border and padding show that the stylesheet loaded. Check browser zoom,
+whether each column is a direct child of `row`, and the class spelling.
 
 ## Official documentation for deeper study
 
