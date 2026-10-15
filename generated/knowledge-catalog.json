@@ -2563,7 +2563,9 @@
         "flux-helm-guide",
         "flux-gitrepository",
         "flux-helmrepository",
-        "flux-troubleshooting"
+        "flux-troubleshooting",
+        "flux-cli-chart",
+        "flux-multitenancy"
       ],
       "stale_after": null,
       "status": "draft",
@@ -2644,11 +2646,20 @@
         "github-protected-branches",
         "argo-projects",
         "argo-declarative",
+        "argo-application-namespaces",
+        "argo-security",
+        "argo-sync-impersonation",
+        "argo-cluster-bootstrapping",
         "flux-multitenancy",
         "flux-kustomization",
         "flux-helmrelease",
+        "flux-gitrepository",
+        "flux-helmrepository",
         "flux-secrets",
-        "kubernetes-rbac"
+        "kubernetes-rbac",
+        "kubernetes-images",
+        "kubernetes-pod-security-admission",
+        "kubernetes-network-policy"
       ],
       "stale_after": null,
       "status": "draft",

@@ -1445,7 +1445,7 @@ separate chart-source path explains where the package comes from.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [How Flux applies a HelmRelease from Git](knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Request-and-installer analogy with limits, two-path diagram and text alternative, invented Git/chart example, minimal manifests, source-to-reconciler status table, explicit health-check and pruning implications, focused official source routes. | Current official Flux Kustomization, HelmRelease, Helm-repository, Helm guide, and troubleshooting documentation checked. Mermaid rendered and inspected. No Flux or Helm binary, chart fetch, cluster run, or Opus review occurred. | Independent Flux/Helm and Opus review; disposable chart/release exercise including fetch and health-check failures; novice controller-handoff task; freshness decision. |
+| [How Flux applies a HelmRelease from Git](knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md) | Request-and-installer analogy with limits, two-path diagram and text alternative, invented Git/chart example, minimal manifests, source-to-reconciler status table, explicit health-check and pruning implications, focused official source routes. The linked security review now labels the example as platform-owned or single-team, because it omits scoped apply accounts in both stages and uses a cross-namespace chart source. | Current official Flux Kustomization, HelmRelease, Helm-repository, Helm guide, multi-tenancy, and troubleshooting documentation checked. Mermaid rendered and inspected. No Flux or Helm binary, chart fetch, cluster run, or focused Opus review of this page occurred. | Independent Flux/Helm and Opus review; disposable chart/release exercise including fetch and health-check failures; novice controller-handoff task; freshness decision. |
 
 ### Wave 84 (2026-10-03)
 
@@ -1458,7 +1458,7 @@ workload access, and secret delivery.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [GitOps security and multi-tenancy](knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md) | Delivery-desk analogy with limits, four-gate diagram and text alternative, invented payments/catalog boundary, Argo CD and Flux control explanations, secret and workload-access boundaries, understanding checks, official routes. Removed incomplete security YAML and untested incident mutations. | Current official GitHub branch protection, Argo CD Projects and declarative setup, Flux tenancy/Kustomization/HelmRelease/secrets, and Kubernetes RBAC documentation checked. Mermaid rendered and inspected. No cluster, denied request, or Opus review occurred. | Independent GitOps/Kubernetes security and Opus review; disposable allowed/denied tenant exercise including a HelmRelease; novice identity-boundary task; freshness decision. |
+| [GitOps security and multi-tenancy](knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md) | Four-gate analogy and diagram now show direct API and chart/image inputs, separate Flux Helm apply identity, Argo project choice and underlying or impersonated credential, protected Git ref and source-object ownership, Pod/Secret/network/node risk, and an invented missing-account escape path. | Two Claude Opus 5.5 read-only reviews and current official Argo CD, Flux, Kubernetes, and GitHub documentation checked; diagram rendered and inspected. No cluster, denied request, independent security review, or novice task occurred. | Independent GitOps/Kubernetes security review; disposable allowed/denied tenant exercise including a HelmRelease; novice identity-boundary task; freshness decision. |
 
 ### Wave 85 (2026-10-03)
 
@@ -3456,6 +3456,30 @@ documentation was checked. The diagram rendered and was inspected. Two static
 retrieval cases were added. No cluster,
 storage driver, forced deletion, restore, independent Kubernetes review, or
 novice reader task ran. The page remains `draft`.
+
+### Focused review round 75 (2026-10-15)
+
+Reviewed GitOps security and multi-tenancy twice with Claude Opus 5.5
+read-only.
+The revised explanation now separates Git review, Argo CD `AppProject`
+policy and actual cluster credential, Flux source lockdown and both apply
+accounts, and Kubernetes workload permissions. A bounded payments example
+shows why a scoped Flux `Kustomization` can still hand a `HelmRelease` to a
+broad helm-controller when its account is unset. The diagram includes direct
+API writers and external chart and image sources, and the text explains that
+namespace placement does not block Secret mounts, Pod privilege, or traffic.
+The follow-up review clarified the first-to-second apply-stage arrow,
+protected Git ref, control-plane `Application` project choice, optional Argo
+sync impersonation, Flux source URL ownership, and the difference between
+Pod Security and Secret-mount restrictions. The linked Flux HelmRelease
+example now names its single-team/platform-owned scope, both omitted apply
+accounts, cross-namespace source requirement, and HelmChart status command.
+
+Current official Argo CD, Flux, Kubernetes, and GitHub documentation was
+checked; the diagram rendered and was inspected. Three static retrieval
+cases were added. No shared cluster, controller, chart fetch, denied
+request, independent security review, or novice reader task ran. Both pages
+remain `draft`.
 
 ### Candidates for the next wave
 

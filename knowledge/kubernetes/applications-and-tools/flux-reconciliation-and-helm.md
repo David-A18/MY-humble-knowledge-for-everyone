@@ -26,6 +26,12 @@ sources:
   - id: flux-troubleshooting
     resource: https://fluxcd.io/flux/cheatsheets/troubleshooting/
     title: Flux troubleshooting cheatsheet
+  - id: flux-cli-chart
+    resource: https://fluxcd.io/flux/cmd/flux_get_sources_chart/
+    title: Flux CLI - get sources chart
+  - id: flux-multitenancy
+    resource: https://fluxcd.io/flux/installation/configuration/multitenancy/
+    title: Flux multi-tenancy lockdown
 ---
 
 # How Flux applies a HelmRelease from Git
@@ -94,6 +100,16 @@ The team stores a `HelmRepository` and `HelmRelease` under
 `./clusters/demo/releases` in Git. A Flux `Kustomization` points to that
 path. The chart comes from a separate Helm repository, not from that Git
 path.[^flux-helm-guide]
+
+This is a platform-owned or single-team flow, not a tenant lockdown example.
+Neither the `Kustomization` nor the `HelmRelease` below names a scoped apply
+account. Unless the platform enforces default accounts, each uses its
+controller's identity. The `HelmRelease` in `apps` also refers to a
+`HelmRepository` in `flux-system`.
+That cross-namespace reference would be denied with Flux's
+`--no-cross-namespace-refs` lockdown. For a shared-cluster boundary, read
+[GitOps security and multi-tenancy](gitops-security-and-multitenancy.md)
+before adapting these manifests.[^flux-multitenancy]
 
 ```yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -189,11 +205,15 @@ troubleshooting guide uses this source-then-reconciler order.[^flux-troubleshoot
 flux get sources git -n flux-system
 flux get kustomizations -n flux-system
 flux get sources helm -n flux-system
+flux get sources chart -n flux-system
 flux get helmreleases -n apps
 ```
 
-These commands only read status. Use the names and namespaces in *your*
+These commands only read status. The `sources chart` command lists
+`HelmChart` artifacts, while `sources helm` lists `HelmRepository` objects.
+Use the names and namespaces in *your*
 installation, then inspect the failing object's conditions and message.
+[^flux-cli-chart]
 
 | First failing signal | What it narrows down | What to check next |
 | --- | --- | --- |
@@ -255,3 +275,5 @@ secret handling, and removal behavior before applying any configuration.
 [^flux-gitrepository]: [Flux, GitRepository](https://fluxcd.io/flux/components/source/gitrepositories/), source record `flux-gitrepository`.
 [^flux-helmrepository]: [Flux, HelmRepository](https://fluxcd.io/flux/components/source/helmrepositories/), source record `flux-helmrepository`.
 [^flux-troubleshooting]: [Flux, troubleshooting cheatsheet](https://fluxcd.io/flux/cheatsheets/troubleshooting/), source record `flux-troubleshooting`.
+[^flux-cli-chart]: [Flux CLI, get sources chart](https://fluxcd.io/flux/cmd/flux_get_sources_chart/), source record `flux-cli-chart`.
+[^flux-multitenancy]: [Flux, multi-tenancy lockdown](https://fluxcd.io/flux/installation/configuration/multitenancy/), source record `flux-multitenancy`.

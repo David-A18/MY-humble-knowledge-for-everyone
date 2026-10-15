@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified GitOps tenant security across Argo project and cluster credentials, Flux's two apply identities, unreviewed charts and images, Pod and network access, and three retrieval cases; labeled the linked Flux Helm example's security scope.
 - Clarified StatefulSet failed-node identity, headless DNS and readiness, storage ownership, PVC retention versus PV reclaim, and zonal placement; corrected the linked fundamentals eviction timing and added two static retrieval cases.
 - Clarified APISIX on EKS with a consistent HTTPS and API-key request, NLB TCP/IP-target example, private Admin API handoff, health-check limits, client-IP quota risk, backend isolation, TLS choices, and two static retrieval cases.
 - Clarified APISIX policy boundaries for a trusted key-auth client, Consumer quotas, canary weights, invalid-key protection, telemetry scope, and two static retrieval cases.
