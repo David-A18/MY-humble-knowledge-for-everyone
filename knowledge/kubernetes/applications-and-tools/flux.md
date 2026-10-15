@@ -1,7 +1,7 @@
 ---
 type: "Explanation"
 title: "Flux"
-description: "Understand the Flux chain: source-controller fetches a revision into an artifact, kustomize-controller or helm-controller reconciles it, and notification and image automation are separate, optional capabilities."
+description: "Understand how Flux passes manifest and chart artifacts to different reconcilers, what their Ready conditions prove, and which capabilities are optional."
 tags: [kubernetes, applications-and-tools, flux]
 status: draft
 maturity: draft
@@ -26,6 +26,9 @@ sources:
   - id: flux-helmrelease
     resource: https://fluxcd.io/flux/components/helm/helmreleases/
     title: Flux - HelmRelease
+  - id: flux-multitenancy
+    resource: https://fluxcd.io/flux/installation/configuration/multitenancy/
+    title: Flux - Multi-tenancy lockdown
   - id: flux-optional-components
     resource: https://fluxcd.io/flux/installation/configuration/optional-components/
     title: Flux - Optional components
@@ -79,45 +82,65 @@ Git, and that every Flux installation sends alerts and updates image tags.
 ## The chain
 
 ```mermaid
-flowchart LR
-  origin["Origin<br/>Git, OCI registry,<br/>Helm repository, or bucket"]
-  sc["source-controller<br/>fetch and package"]
-  artifact["Artifact<br/>labelled with a revision"]
-  kc["kustomize-controller<br/>build and apply manifests"]
-  hc["helm-controller<br/>install or upgrade a release"]
-  api["Kubernetes API<br/>objects in the cluster"]
-  origin --> sc --> artifact
-  artifact --> kc --> api
-  artifact --> hc --> api
+flowchart TB
+  config["Configuration source<br/>Git, OCI, or bucket"]
+  sc1["source-controller<br/>fetch configuration"]
+  manifests["Manifest artifact"]
+  kc["kustomize-controller<br/>build and apply"]
+  hr["HelmRelease object"]
+  generatedChart["Generated HelmChart"]
+  existingSource["Existing chart source<br/>OCIRepository or HelmChart"]
+  sc2["source-controller<br/>fetch chart"]
+  chart["Chart artifact"]
+  hc["helm-controller<br/>render and install or upgrade"]
+  api["Kubernetes API"]
+  config --> sc1 --> manifests --> kc --> api
+  kc -. "may apply" .-> hr
+  hr --> hc
+  hr -. "spec.chart creates" .-> generatedChart
+  hr -. "spec.chartRef points to" .-> existingSource
+  generatedChart --> sc2
+  existingSource --> sc2 --> chart --> hc --> api
 ```
 
-Text alternative: an origin, which can be a Git repository, an OCI registry,
-a Helm repository, or a bucket, is read by source-controller.
-source-controller packages what it fetched as an artifact labelled with a
-revision. From the artifact the flow splits into two parallel branches:
-kustomize-controller builds and applies manifests, and helm-controller
-installs or upgrades a Helm release. Both branches end at the Kubernetes API.
-The reconcilers never read the origin themselves.
+Text alternative: source-controller fetches configuration from Git, OCI, or
+a bucket and produces a manifest artifact. kustomize-controller builds and
+applies it. In a common Git-to-Helm setup, that step also applies a
+`HelmRelease` object. helm-controller acts on the `HelmRelease`: `spec.chart`
+creates a `HelmChart`, while `spec.chartRef` points to an existing
+`HelmChart` or `OCIRepository`. source-controller supplies the separate
+chart artifact. helm-controller renders it with the declared values, then
+installs or upgrades the release through the Kubernetes API. The diagram
+shows source-controller twice to distinguish the two artifacts; it is the
+same controller.[^flux-kustomization][^flux-helmrelease]
 
-The diagram helps you decide which half a problem belongs to. Left of the
-artifact is fetching. Right of it is applying.
+The diagram is one common path, not a required order for every release.
+A `HelmRelease` can also be created without a Flux `Kustomization`. Most
+reconcilers consume source artifacts rather than fetching origins themselves;
+remote Kustomize bases are an exception unless disabled. See
+[GitOps security and multi-tenancy](gitops-security-and-multitenancy.md#flux-apply-identities-for-both-stages).[^flux-multitenancy]
 
 | Part | Its resources | Its job |
 | --- | --- | --- |
-| source-controller | `GitRepository`, `OCIRepository`, `HelmRepository`, `HelmChart`, `Bucket` | Authenticate to an origin, detect a new version, fetch it, and make it available inside the cluster as an artifact.[^flux-source-controller] |
+| source-controller | `GitRepository`, `OCIRepository`, `HelmRepository`, `HelmChart`, and `Bucket` | Fetch a source version and make its artifact available to a reconciler. An OCI-type `HelmRepository` is an exception: it does not produce an artifact.[^flux-source-controller] |
 | kustomize-controller | `Kustomization` | Build the manifests at a path in an artifact, apply them, and correct drift on each interval.[^flux-kustomization] |
 | helm-controller | `HelmRelease` | Run Helm actions such as install, upgrade, test, rollback, and uninstall to keep a Helm release matching its declaration.[^flux-helmrelease] |
 
-Three things to understand about the hand-off:
+Four things to understand about the hand-off:
 
-- **A source is a Kubernetes object.** It records where the origin is and
-  how to reach it. Each time a newer matching version appears, the source
+- **A source is a Kubernetes object.** It records where an origin is and
+  how to reach it. For artifact-producing kinds, a new matching version
   produces a new artifact.[^flux-concepts]
 - **An artifact carries a revision.** For a `GitRepository`, the revision
   combines the branch and the commit it resolved to, and is reported in the
   object's status.[^flux-gitrepository]
 - **One source can feed several reconcilers.**[^flux-concepts] Two
   `Kustomization` objects can apply different paths of the same artifact.
+- **Each apply step has its own identity.** A `Kustomization` and a
+  `HelmRelease` it creates can use different service accounts. Both run
+  with broad controller permissions by default, so scope each stage before
+  allowing untrusted configuration.[^flux-kustomization][^flux-helmrelease][^flux-multitenancy]
+  See [Flux apply identities](gitops-security-and-multitenancy.md#flux-apply-identities-for-both-stages).
 
 ### Git is one origin among several
 
@@ -129,10 +152,14 @@ while people still use Git to author changes.[^flux-concepts]
 
 ### Where Helm fits
 
-A `HelmRelease` needs a chart. It gets one through the same chain: the chart
-arrives as an artifact from a source object, and helm-controller consumes
-it.[^flux-helmrelease] Helm is a second reconciler beside kustomize-controller,
-not a separate system. [How Helm turns a chart into a release](helm.md) explains
+A `HelmRelease` needs a packaged chart. With `spec.chart`, helm-controller
+creates a `HelmChart` object and source-controller fetches or packages that
+chart. With `spec.chartRef`, the `HelmRelease` points at an existing
+`OCIRepository` or `HelmChart` whose artifact contains the chart.
+helm-controller renders the chart's templates with the declared values and
+installs or upgrades the release.[^flux-helmrelease] It is a second
+reconciler, often downstream of a `Kustomization`, but the two do not consume
+the same artifact. [How Helm turns a chart into a release](helm.md) explains
 charts and releases.
 
 ## Example: one commit through the chain
@@ -158,9 +185,10 @@ A team has two Flux objects in a cluster:
 | 6 | kustomize-controller | One interval later, with no new revision, compares again and finds nothing to correct. | Unchanged. |
 
 What to notice: the person's last action was the merge. Steps 2 and 3 are two
-controllers. If step 2 had failed, for example because a credential expired,
-`shop-prod` would keep the previous revision applied and the place to look
-would be `shop-config`. Step 4 is ordinary Kubernetes behaviour, explained in
+controllers. If step 2 had failed after an earlier successful release, for
+example because a credential expired, `shop-prod` would still have the
+previous revision applied and the place to look would be `shop-config`.
+Step 4 is ordinary Kubernetes behaviour, explained in
 [Kubernetes fundamentals](../fundamentals/kubernetes-fundamentals.md).
 
 ## What a revision and a Ready condition prove
@@ -172,7 +200,7 @@ that object only.
 | --- | --- | --- |
 | `GitRepository` is ready | The controller reached the repository, the artifact is in storage, and it matches the latest revision the reference resolves to.[^flux-gitrepository] | That anything was applied, or that the content is valid Kubernetes configuration. |
 | `Kustomization` is ready | The source was fetched, the manifests were built and applied, and the health checks it runs are passing.[^flux-kustomization] | That resources you did not ask it to check are healthy, or that users are served. |
-| `HelmRelease` is ready | The release is installed and up to date with the declared chart and values, and any enabled Helm tests passed.[^flux-helmrelease] | That resources changed by hand since the release still match it, unless drift detection is enabled, or that users are served. |
+| `HelmRelease` is ready | The release is installed and up to date with the declared chart and values. Enabled Helm tests passed unless configured so test failures do not affect Ready.[^flux-helmrelease] | That resources changed by hand since the release still match it, unless drift detection is enabled, or that users are served. |
 | Applied revision | Which version of the source was last applied successfully.[^flux-kustomization] | That this is the version you meant to release. |
 
 Health checking on a `Kustomization` is opt-in. `healthChecks` and `wait` are
@@ -186,9 +214,10 @@ explains that gap.
 
 ## Separate and optional capabilities
 
-Reconciliation needs only source-controller and kustomize-controller; those
-two are the minimum Flux requires.[^flux-optional-components] Everything else
-adds a capability.
+Bootstrapping needs only source-controller and kustomize-controller; those
+are the minimum components Flux requires for that path.[^flux-optional-components]
+`HelmRelease` reconciliation also needs helm-controller. Other controllers
+add capabilities.
 
 | Capability | Controllers | What it adds | Installed by the default commands? |
 | --- | --- | --- | --- |
@@ -203,16 +232,18 @@ Two consequences:
   can reconcile with no alerts set up, in which case a failure is recorded in
   object status and events but nobody is told. Alerting is a decision you
   make.
-- Image automation is the one part of Flux that **writes** to a repository.
+- Image automation can **commit and push file changes** to a repository.
   It needs write credentials to Git, and its commits then travel the normal
-  chain. Treat turning it on as a security decision; see
+  chain. Notification providers can also need write-capable credentials for
+  actions such as commit statuses.[^flux-notification-controller] Treat
+  these permissions as a security decision; see
   [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md).
 
 ## An analogy: a goods-in clerk and a fitter
 
 In a workshop, a goods-in clerk collects deliveries from suppliers, seals
 each one in a crate, and writes the batch number on the label. A fitter
-builds only from sealed crates on the shelf and never contacts a supplier.
+builds from sealed crates on the shelf.
 
 Where the analogy stops being accurate:
 
@@ -222,9 +253,11 @@ Where the analogy stops being accurate:
   was fetched. It does not say the contents are right.
 - **One crate can serve many fitters.** A single source artifact can be used
   by several reconcilers at once.
+- **A Flux fitter can use an outside part.** A `Kustomization` can fetch a
+  remote base unless the platform disables it.[^flux-multitenancy]
 - **The clerk works to a timer and can be nudged.** source-controller checks
-  on an interval; a webhook received by notification-controller can prompt an
-  earlier check.
+  on an interval; a webhook handled by a notification-controller `Receiver`
+  can prompt an earlier check.
 - **There may be no one announcing arrivals.** Reporting outward is a
   separate capability that has to be configured.
 
@@ -245,8 +278,8 @@ Where the analogy stops being accurate:
   succeeded?
 - A `Kustomization` is ready and shows the revision you expected. Name one
   thing that is now established and one thing that is not.
-- Which Flux capability writes to a Git repository, and is it present after a
-  default installation?
+- Which optional Flux capability commits and pushes file changes to a Git
+  repository, and is it present after a default installation?
 - Why can two `Kustomization` objects share one `GitRepository`?
 
 ## Next steps
@@ -267,6 +300,7 @@ Where the analogy stops being accurate:
 - Pruning, intervals, health checks, dependencies, and conditions: [Flux - Kustomization](https://fluxcd.io/flux/components/kustomize/kustomizations/).
 - Chart references, remediation, and drift detection: [Flux - HelmRelease](https://fluxcd.io/flux/components/helm/helmreleases/).
 - Which controllers an installation includes: [Flux - Optional components](https://fluxcd.io/flux/installation/configuration/optional-components/).
+- Apply identities and remote-base restrictions: [Flux - Multi-tenancy lockdown](https://fluxcd.io/flux/installation/configuration/multitenancy/).
 - Alerts and webhook receivers: [Flux - Notification Controller](https://fluxcd.io/flux/components/notification/).
 - Image scanning and Git updates: [Flux - Image reflector and automation controllers](https://fluxcd.io/flux/components/image/).
 - Selecting images by policy: [Flux - Image Policies](https://fluxcd.io/flux/components/image/imagepolicies/).
@@ -286,6 +320,7 @@ Where the analogy stops being accurate:
 [^flux-gitrepository]: [Flux - GitRepository](https://fluxcd.io/flux/components/source/gitrepositories/), source record `flux-gitrepository`.
 [^flux-kustomization]: [Flux - Kustomization](https://fluxcd.io/flux/components/kustomize/kustomizations/), source record `flux-kustomization`.
 [^flux-helmrelease]: [Flux - HelmRelease](https://fluxcd.io/flux/components/helm/helmreleases/), source record `flux-helmrelease`.
+[^flux-multitenancy]: [Flux - Multi-tenancy lockdown](https://fluxcd.io/flux/installation/configuration/multitenancy/), source record `flux-multitenancy`.
 [^flux-optional-components]: [Flux - Optional components](https://fluxcd.io/flux/installation/configuration/optional-components/), source record `flux-optional-components`.
 [^flux-notification-controller]: [Flux - Notification Controller](https://fluxcd.io/flux/components/notification/), source record `flux-notification-controller`.
 [^flux-image-automation]: [Flux - Image reflector and automation controllers](https://fluxcd.io/flux/components/image/), source record `flux-image-automation`.

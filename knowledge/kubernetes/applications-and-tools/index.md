@@ -28,7 +28,7 @@ Kubernetes workloads. Each article shows its own status and sources.
 | --- | --- |
 | Understand GitOps as a pulled, continuously reconciled operating model and what a green sync does not prove. | [GitOps](gitops.md) |
 | Compare Argo CD and Flux on documented differences and defaults, or split ownership between them. | [Argo CD vs. Flux](argo-cd-vs-flux.md) |
-| Understand the Flux chain from source to artifact to reconciler, and what `Ready` proves. | [Flux](flux.md) |
+| Understand the Flux paths for manifest and chart artifacts, and what each `Ready` condition proves. | [Flux](flux.md) |
 | Follow a HelmRelease declaration from Git to an installed chart. | [How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md) |
 | Follow Git writers, GitOps policy, apply identity, and Kubernetes permissions before trusting a tenant boundary. | [GitOps security and multi-tenancy](gitops-security-and-multitenancy.md) |
 | Operate GitOps on Amazon EKS. | [GitOps on EKS](../../cross-topic-guides/gitops-on-eks.md) |

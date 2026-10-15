@@ -1,5 +1,13 @@
 version: "1"
 cases:
+  - id: flux-manifest-vs-chart-artifact
+    question: Does a Flux Kustomization and HelmRelease consume the same source artifact, and how does a HelmRelease get a chart through spec.chart or spec.chartRef?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux.md]
+    required_source_ids: [flux-kustomization, flux-helmrelease]
+  - id: flux-ready-and-optional-controllers
+    question: If a Flux GitRepository and Kustomization are Ready, does that prove users can reach the app, and are alerts and image-tag commits automatic after a default installation?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux.md]
+    required_source_ids: [flux-gitrepository, flux-kustomization, flux-optional-components, flux-notification-controller, flux-image-automation]
   - id: argocd-flux-default-hand-edit-and-prune
     question: With no automated sync or self-heal configured, how does Argo CD report a hand edit or removed manifest, and how does a Flux Kustomization treat drift and pruning by default?
     expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]

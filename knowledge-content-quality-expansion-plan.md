@@ -501,14 +501,15 @@ All three remain `status: draft` and `maturity: draft`. No `verified`,
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
 | [GitOps](knowledge/kubernetes/applications-and-tools/gitops.md) | Rewritten to the standard. Focused review round 62 clarified that Flux's default `MirrorPrune` deletion policy deletes managed resources only when `prune: true`. | Keyed citations to the OpenGitOps principles and glossary and to Flux and Argo CD documentation; the service walk-through is labelled illustrative. Current Flux Kustomization documentation checked for the deletion-policy correction. The statement that an unreconciled hand edit can later be overwritten is reasoning, not a quoted claim. | Independent technical review; reader test; freshness decision. |
-| [Flux](knowledge/kubernetes/applications-and-tools/flux.md) | Rewritten to the standard. | Keyed citations to Flux component, source, Kustomization, HelmRelease, and installation documentation; the commit walk-through is conceptual, with invented revisions, no YAML, and no cluster run. The statement that a failed fetch leaves the previous revision applied is reasoning from the documented chain. | Independent technical review; a check against a running Flux installation; reader test; freshness decision. |
+| [Flux](knowledge/kubernetes/applications-and-tools/flux.md) | Rewritten to the standard. Focused review round 78 separated manifest and chart artifact paths, chart source options, apply identities, and Ready boundaries. | Two Claude Opus 5.5 read-only reviews; current official Flux documentation checked; revised diagram rendered and inspected; two static retrieval cases added. The commit walk-through is conceptual, with invented revisions, no YAML, and no cluster run. The failed-fetch outcome is reasoning from the documented chain. | Independent technical review; a check against a running Flux installation; reader test; freshness decision. |
 | [Argo CD vs. Flux](knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md) | The comparison now has a pull-path diagram, a same-event defaults table, and a Tidewater choice that separates plain-manifest pruning, chart upgrades, controller deletion, team permissions, and visibility. It distinguishes Argo CD's Helm rendering from Flux's Helm release lifecycle and labels overlapping ownership as a reasoned risk. | Two Claude Opus 5.5 read-only reviews; current official Argo CD and Flux sources checked for sync, health, Helm, tenancy, installation, and deletion. The diagram rendered and was inspected; three static retrieval cases were added. No installation, cluster, application, independent dual-operator review, or novice task ran. | Independent technical review by someone who has operated both tools; staging comparison; reader task; freshness decision. |
 
 The cited pages were read on 2026-09-30 from the Argo CD `stable`
 documentation and the current Flux documentation. The links are not pinned to
 a version, so defaults described in the three pages can change when either
 project releases; that is a reason for a freshness decision, which has not
-been made.
+been made. The focused Flux and comparison reviews also checked current
+official sources on 2026-10-15; this did not establish a freshness deadline.
 
 Supporting changes in the same wave: the applications-and-tools index and the
 Kubernetes index fast path now describe the three pages, and one golden
@@ -3512,6 +3513,22 @@ Current official Argo CD and Flux documentation was checked. The diagram
 rendered and was inspected. Three static retrieval cases were added. No
 installation, cluster, Helm upgrade, independent review by operators of both
 tools, or novice task ran. The page remains `draft`.
+
+### Focused review round 78 (2026-10-15)
+
+Reviewed the Flux overview twice with Claude Opus 5.5 read-only. The revised
+diagram separates configuration manifests from chart artifacts and shows
+that `spec.chart` creates a HelmChart while `spec.chartRef` points at an
+existing chart source. The page now explains that a Git-managed
+Kustomization may create the HelmRelease first, the two apply stages can use
+different identities, and a Ready condition belongs to one object rather
+than the user journey. It also distinguishes the minimum bootstrap
+controllers, default-installed controllers, and optional image automation.
+
+Current official Flux documentation was checked, and the revised diagram
+rendered and was inspected. Two static retrieval cases were added. No Flux
+installation, cluster, chart fetch, independent technical review, or novice
+reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

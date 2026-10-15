@@ -2589,7 +2589,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Understand the Flux chain: source-controller fetches a revision into an artifact, kustomize-controller or helm-controller reconciles it, and notification and image automation are separate, optional capabilities.",
+      "description": "Understand how Flux passes manifest and chart artifacts to different reconcilers, what their Ready conditions prove, and which capabilities are optional.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/flux.md",
@@ -2600,6 +2600,7 @@
         "flux-gitrepository",
         "flux-kustomization",
         "flux-helmrelease",
+        "flux-multitenancy",
         "flux-optional-components",
         "flux-notification-controller",
         "flux-image-automation",

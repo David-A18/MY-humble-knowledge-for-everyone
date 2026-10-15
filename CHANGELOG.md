@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified Flux's separate manifest and chart artifact paths, HelmRelease chart source choices, two apply identities, Ready scope, and optional automation; added two static retrieval cases.
 - Clarified Argo CD and Flux pull paths, sync and health defaults, Helm lifecycles, tenant authority, and deletion scope with a diagram, event table, and three static retrieval cases.
 - Clarified the Flux HelmRelease path through Git and chart artifacts, generated HelmChart namespace, health-check timeout, status boundaries, and pruning risk; added two static retrieval cases.
 - Clarified GitOps tenant security across Argo project and cluster credentials, Flux's two apply identities, unreviewed charts and images, Pod and network access, and three retrieval cases; labeled the linked Flux Helm example's security scope.
