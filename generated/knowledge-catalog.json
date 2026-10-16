@@ -460,8 +460,7 @@
         "openai-function-calling",
         "anthropic-prompt-injection",
         "anthropic-agent-security",
-        "anthropic-agent-evals",
-        "openai-agent-guide"
+        "anthropic-agent-evals"
       ],
       "stale_after": null,
       "status": "draft",

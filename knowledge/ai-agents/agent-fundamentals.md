@@ -26,9 +26,6 @@ sources:
   - id: anthropic-agent-evals
     resource: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
     title: Anthropic - Demystifying evals for AI agents
-  - id: openai-agent-guide
-    resource: https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/
-    title: OpenAI - A practical guide to building agents
 ---
 
 # How AI agents use tools
@@ -213,7 +210,7 @@ If one were added, a permission check alone would still be insufficient:
 an injected page could request an export that the reader *could* perform
 but never asked for. A consequential action needs confirmation tied to
 the reader's actual request, with the exact action and arguments visible
-to the reader.[^anthropic-prompt-injection][^anthropic-agent-security][^openai-agent-guide]
+to the reader.[^anthropic-prompt-injection][^anthropic-agent-security]
 
 Even a read-only tool needs care. Its query could send private context
 to a search service, and a poisoned result could lead the model to give
@@ -299,4 +296,3 @@ examples, not results from an implemented agent or novice-reader study.
 [^anthropic-prompt-injection]: [Claude Platform - Mitigate jailbreaks and prompt injections](https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks).
 [^anthropic-agent-security]: [Claude Platform - Security risks and sandbox boundaries](https://platform.claude.com/docs/en/managed-agents/secure-deployment-risks).
 [^anthropic-agent-evals]: [Anthropic - Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents).
-[^openai-agent-guide]: [OpenAI - A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/).
