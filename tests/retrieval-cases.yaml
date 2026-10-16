@@ -1,5 +1,17 @@
 version: "1"
 cases:
+  - id: stateful-recovery-rto-rpo-observed-timeline
+    question: If an order database fails at 10:12, its latest recovered marker is 10:10, orders are readable at 10:40, and traffic resumes after reconciliation at 10:55, which times measure the observed RPO gap and RTO in that drill?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md]
+    required_source_ids: [aws-objectives, aws-recovery-test, aws-rpo-validation]
+  - id: stateful-recovery-replica-vs-corruption
+    question: Why might a live database replica help after a zone failure but not after a bad write copied hours ago, and which recovery point and evidence should the team examine?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md]
+    required_source_ids: [aws-recovery-strategy, aws-secure-backups]
+  - id: stateful-recovery-provider-side-reconciliation
+    question: If a paid order row disappears after database recovery, why is reading only the surviving orders insufficient, and where can the team start looking for a charge that has no order row?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md]
+    required_source_ids: [stripe-list-events]
   - id: stateless-photo-new-key-and-record-handoff
     question: Why should a profile-photo replacement use a new S3 object key before updating the user record, and what remains if the app crashes between those writes?
     expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]

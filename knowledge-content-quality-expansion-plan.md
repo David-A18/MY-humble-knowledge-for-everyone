@@ -708,7 +708,7 @@ failure scope, recovery targets, and evidence before choosing a mechanism.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Stateful design decision checklist](knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md) | Rewritten with a bounded order-store example, a limited shop analogy, separate replica and backup paths, RTO/RPO explanations, and application-level verification questions. | Keyed AWS Well-Architected recovery-objective and restore-test guidance, plus the Kubernetes StatefulSet documentation. The scenario is invented; no AWS resource or recovery test ran. | Independent resilience and database review; a real failure and restore exercise; reader test; freshness decision. |
+| [Stateful design decision checklist](knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md) | Rewritten with a bounded order-store example, a limited shop analogy, separate replica and backup paths, RTO/RPO explanations, and application-level verification questions. The focused review below adds a timed recovery drill, a provider-side reconciliation boundary, and evidence separated by failure path. | Claude Opus 5.5 reviewed the revision twice read-only. Current AWS recovery, backup, RPO-validation, Kubernetes, and Stripe event-listing documentation was checked; the revised vertical diagram rendered and was inspected, and three static retrieval cases were added. The scenario is invented; no AWS resource, provider payment, or recovery test ran. | Independent resilience and database review; a real failure and restore exercise; reader test; freshness decision. |
 
 The AWS and Kubernetes documentation was consulted on 2026-09-30. The page
 does not assert that any deployed workload meets its recovery targets.
@@ -3615,6 +3615,27 @@ Current AWS S3, SQS, Lambda, Stripe, and OWASP primary guidance was checked;
 the diagram rendered and was inspected, and three static retrieval cases
 were added. No AWS upload, worker, payment, independent domain review, or
 novice reader task ran. The page remains `draft`.
+
+### Focused review round 84 (2026-10-16)
+
+Reviewed the stateful-design decision checklist twice with Claude Opus 5.5
+read-only. The revised order-store example sets illustrative one-hour RTO
+and five-minute RPO targets, traces acknowledged marker orders through a
+zone-failure drill, and stops the recovery clock when traffic resumes after
+payment reconciliation. It separates one observed drill from worst-case
+RPO evidence and other failure scopes. The replica and protected-backup
+diagram now shows application and provider checks before resuming traffic;
+it uses a vertical layout for readability. The review corrected a provider
+lookup trap: a lost order row cannot supply its own payment ID, so the
+procedure must enumerate provider-side success records from a retained
+source and match them to recovered orders.
+
+Current AWS recovery-objective, DR strategy, backup, restore-test and
+RPO-validation guidance, Kubernetes StatefulSet documentation, and Stripe
+event-listing documentation was checked. The diagram rendered and was
+inspected; three static retrieval cases were added. No live AWS or payment
+system, actual recovery exercise, independent domain review, or novice
+reader task ran. The page remains `draft`.
 
 ### Candidates for the next wave
 

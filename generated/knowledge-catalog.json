@@ -457,6 +457,11 @@
       "source_ids": [
         "aws-objectives",
         "aws-recovery-test",
+        "aws-recovery-strategy",
+        "aws-secure-backups",
+        "aws-dr-test",
+        "stripe-list-events",
+        "aws-rpo-validation",
         "k8s-statefulset"
       ],
       "stale_after": null,

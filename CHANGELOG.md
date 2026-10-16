@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified stateful recovery decisions with an illustrative RTO/RPO timeline, provider-side payment reconciliation, failure-scope evidence, a vertical diagram, and three static retrieval cases.
 - Clarified stateless application handoffs with a separate record/S3/queue diagram, new-key upload failure cases, SQS redelivery, provider idempotency limits, and three static retrieval cases.
 - Clarified stateful versus stateless compute with a cart-ID walkthrough, two-tab lost-update and retry boundaries, and two static retrieval cases.
 - Clarified system bootstrapping with a rendered Node-versus-S3 dependency diagram, an offline local import demonstration, careful backend-migration guidance, and three static retrieval cases.

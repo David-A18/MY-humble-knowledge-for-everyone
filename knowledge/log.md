@@ -2,6 +2,7 @@
 
 ## 2026-10-16
 
+- **Stateful recovery decision walkthrough**: Added an illustrative timed RTO/RPO drill, distinguished observed marker loss from worst-case design evidence, reconciled lost orders from provider-side payment records, and revised the replica/backup diagram. Claude Opus 5.5 reviewed the page twice read-only; current AWS, Kubernetes, and Stripe documentation was checked, and three static retrieval cases were added. No recovery exercise, payment, independent domain review, or novice reader task ran. The page remains `draft`.
 - **Stateless application handoffs**: Separated record, object, and queue ownership in the diagram and clarified new-key photo replacement, uncertain writes, SQS redelivery, and payment-provider idempotency limits. Claude Opus 5.5 reviewed the page twice read-only; current AWS, Stripe, and OWASP guidance was checked, and three static retrieval cases were added. The examples are illustrative; no live service or novice reader task ran. The page remains `draft`.
 - **Stateful-cart request trace**: Added a browser-to-replica-to-store walkthrough, a cart-ID security boundary, and concrete lost-update and lost-reply cases to the stateful-versus-stateless explanation. Claude Opus 5.5 reviewed it twice read-only; current AWS and OWASP primary guidance was checked, and two static retrieval cases were added. The scenario is illustrative; no AWS run, independent domain review, or novice reader task occurred. The page remains `draft`.
 
