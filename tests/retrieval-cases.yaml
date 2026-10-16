@@ -350,6 +350,18 @@ cases:
     question: Does measured service mean an idle virtual machine is free, and when should I set a spending alert for a traffic event?
     expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
     required_source_ids: [nist-cloud-definition, aws-ec2-on-demand, aws-budgets-costs]
+  - id: aws-stateful-networking-reply-port
+    question: For an internet client using TCP source port 49152 to reach an EC2 server on 443, which destination port does the server-subnet ACL check on the request and on the reply?
+    expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
+    required_source_ids: [aws-sg, aws-nacl-custom]
+  - id: aws-stateful-networking-default-versus-custom-acl
+    question: If an EC2 HTTPS request arrives but the reply fails, should I assume every subnet ACL needs a new outbound rule, and how do default and custom ACLs start?
+    expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
+    required_source_ids: [aws-default-nacl, aws-nacl-custom]
+  - id: aws-stateful-networking-tracked-versus-untracked
+    question: Does a security group always track every allowed flow, and will removing a rule immediately end an existing tracked connection?
+    expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
+    required_source_ids: [aws-connection-tracking]
   - id: ai-first-terms-and-trust
     question: As a beginner, how do AI, machine learning, generative AI, LLMs, assistants, and agents differ, and why should I check a generated answer?
     expected_paths: [knowledge/ai/ai-fundamentals.md]

@@ -720,7 +720,7 @@ from application data and follows the request and reply separately.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Stateful networking](knowledge/cloud/aws/networking/stateful-networking.md) | Rewritten with a request-and-reply model, bounded HTTPS scenario, limited door-attendant analogy, packet-path diagram, and diagnosis questions. | Keyed Amazon VPC security-group, network ACL, custom ACL, and VPC security documentation. No AWS network or traffic test ran. | Independent VPC and network-security review; a real packet-path test; reader test; freshness decision. |
+| [Stateful networking](knowledge/cloud/aws/networking/stateful-networking.md) | Rewritten with a request-and-reply model, bounded HTTPS scenario, limited door-attendant analogy, packet-path diagram, and diagnosis questions. Focused round 92 adds an explicit destination-port table, default-versus-custom ACL and group behavior, internet-gateway routing, tracked-flow limits, Flow Logs limits, and answers to the beginner checks. | Claude Opus 5.5 reviewed the page twice read-only. Current AWS VPC, EC2 connection-tracking, internet-gateway, default-rule, and Flow Logs documentation was checked. The final sequence diagram rendered and was inspected; three static retrieval cases were added. No AWS network or traffic test ran. | Independent VPC and network-security review; a real packet-path test; novice request-and-reply task; freshness decision. |
 
 The Amazon VPC documentation was consulted on 2026-09-30. The example is not
 an authorization to open any particular public port or ephemeral range.
@@ -3804,6 +3804,19 @@ rollback limits. Current Google production-ML guidance was checked, the
 final diagram rendered and was inspected, and four static retrieval cases
 were added. No classifier or service ran, no independent domain review or
 novice reader task occurred, and the page remains `draft`.
+
+### Focused review round 92 (2026-10-16)
+
+Re-reviewed the AWS stateful-networking explanation twice with Claude Opus
+5.5. The first review found that the page hid default-versus-custom ACL
+behavior, destination-port direction on the reply, the route and host
+firewall, and exceptions to security-group tracking. The second review
+corrected the internet gateway's inbound translation versus the subnet
+route's outbound role and clarified Flow Log fields and delay. Current AWS
+primary documentation was checked separately. The sequence diagram
+rendered and was inspected, and three static retrieval cases were added.
+No VPC, packet capture, independent network-security review, or novice
+reader task ran; the explanation remains `draft`.
 
 ### Candidates for the next wave
 

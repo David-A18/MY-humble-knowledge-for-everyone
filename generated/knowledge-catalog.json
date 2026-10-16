@@ -831,7 +831,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Understand why AWS security groups allow reply traffic while network ACLs must evaluate both directions of a connection.",
+      "description": "Trace one HTTPS request and reply through routing, a stateful AWS security group, and both directions of a subnet network ACL.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/stateful-networking.md",
@@ -839,7 +839,13 @@
         "aws-sg",
         "aws-nacl",
         "aws-nacl-custom",
-        "aws-vpc-security"
+        "aws-connection-tracking",
+        "aws-default-nacl",
+        "aws-default-sg",
+        "aws-new-sg",
+        "aws-internet-gateway",
+        "aws-flow-log-examples",
+        "aws-flow-log-records"
       ],
       "stale_after": null,
       "status": "draft",
