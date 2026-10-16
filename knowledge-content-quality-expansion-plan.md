@@ -905,8 +905,8 @@ gate. Both pages remain `draft` with an unassigned maintainer and no
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [EKS human identity and Kubernetes RBAC](knowledge/security/identity-federation/eks-human-identity-and-rbac.md) | Rewritten around IAM authentication, the access entry, and two additive authorization methods: scoped EKS access policies and group names used by RBAC bindings. Adds a limited workshop analogy, an authorization-flow diagram, an invented developer who has console access but no Pod read access until either method grants it, the documented `kubectl auth can-i --list` and impersonation limits, and scoped external OIDC sign-in. Standalone state-changing AWS CLI commands and the unexecuted RoleBinding manifest were replaced by a field table and official how-to links. | Keyed citations to the current Amazon EKS access entry, access policy, access policy permissions, create access entry, Kubernetes API access, and external OIDC pages, plus Kubernetes RBAC and authorization documentation. No cluster, access entry, or `kubectl` check ran. | Independent EKS security review; controlled access-entry exercise that confirms the documented `kubectl auth can-i` behaviour; reader test; freshness decision. |
-| [EKS workload identity](knowledge/cross-topic-guides/eks-workload-identity.md) | Rewritten around the service account as the shared starting point and two credential paths: IRSA token to STS `AssumeRoleWithWebIdentity`, and Pod Identity association to agent to EKS Auth. Adds a limited hotel-and-gym analogy, a two-path diagram, a condition-based choice table covering environment, agent, SDK, trust reuse, session tags, and cross-account roles, narrow-boundary habits including the IMDS caveat, and an invented two-workload example. Kubernetes RBAC is kept separate. | Keyed citations to the current Amazon EKS service-account comparison, Pod Identity overview, how-it-works, association, and target-role pages, IRSA overview, Pod configuration, SDK and cross-account pages, the EKS Best Practices IAM chapter, and Kubernetes RBAC good practices. No cluster, association, role, or credential exchange ran. | Independent EKS/IAM security review; controlled exercise of both paths; reader test; freshness decision. |
+| [EKS human identity and Kubernetes RBAC](knowledge/security/identity-federation/eks-human-identity-and-rbac.md) | Rewritten around IAM authentication, the access entry, and two additive authorization methods: scoped EKS access policies and group names used by RBAC bindings. Adds a limited workshop analogy, an authorization-flow diagram, an invented developer who has console access but no Pod read access until either method grants it, the documented `kubectl auth can-i --list` and impersonation limits, and scoped external OIDC sign-in. Standalone state-changing AWS CLI commands and the unexecuted RoleBinding manifest were replaced by a field table and official how-to links. Round 86 distinguishes a specific `can-i` action check from `--list` and the effect of impersonation. | Keyed citations to the current Amazon EKS access entry, access policy, access policy permissions, create access entry, Kubernetes API access, and external OIDC pages, plus Kubernetes RBAC and authorization documentation. No cluster, access entry, or `kubectl` check ran. | Independent EKS security review; controlled access-entry exercise that confirms the documented `kubectl auth can-i` behaviour; reader test; freshness decision. |
+| [EKS workload identity](knowledge/cross-topic-guides/eks-workload-identity.md) | Rewritten around the service account as the shared starting point and two credential paths: IRSA token to STS `AssumeRoleWithWebIdentity`, and Pod Identity association to agent to EKS Auth. Adds a limited hotel-and-gym analogy, a two-path diagram, a condition-based choice table covering environment, agent, SDK, trust reuse, session tags, and cross-account roles, narrow-boundary habits including the IMDS caveat, and an invented two-workload example. Kubernetes RBAC is kept separate. Round 86 distinguishes IRSA annotation from trust, EKS association from a Kubernetes object, normal SDK selection from direct IMDS access, and role policy from effective AWS permissions. | Keyed citations to the current Amazon EKS service-account comparison, Pod Identity overview, how-it-works, association, and target-role pages, IRSA overview, Pod configuration, SDK and cross-account pages, the EKS Best Practices IAM chapter, and Kubernetes RBAC good practices. No cluster, association, role, or credential exchange ran. | Independent EKS/IAM security review; controlled exercise of both paths; reader test; freshness decision. |
 
 The official AWS and Kubernetes pages were consulted on 2026-10-01. The
 cluster, roles, namespaces, workloads, and people in both examples are
@@ -3657,6 +3657,28 @@ primary documentation was checked. The review's proposed universal hybrid
 three static retrieval cases were added. No real token, provider, AWS role,
 independent security review, or novice reader task ran. The pages remain
 `draft`.
+
+### Focused review round 86 (2026-10-16)
+
+Reviewed the EKS workload-identity and human-access explanations as a
+connected pair twice with Claude Opus 5.5 read-only. The workload page
+now distinguishes an IRSA annotation from the IAM trust decision and an
+EKS Pod Identity association from a Kubernetes object. Its diagram and
+example show that resource policies and other IAM controls affect the
+final AWS request. The IMDS warning separates the SDK's normal credential
+choice from code reaching the node role directly, and the analogy names
+workload creation and association administration as separate ways access
+can expand. The human-access page now distinguishes a specific `kubectl
+auth can-i list pods` query from the `--list` option and from impersonation.
+
+Current AWS EKS Pod Identity, IRSA, access-policy, IAM evaluation, and
+Kubernetes RBAC and authorization documentation was checked. One Claude
+suggestion that Pod Identity session tags cannot restrict role assumption
+was rejected because the AWS association guide explicitly documents
+trust-policy conditions on those tags. Four static retrieval cases were
+added and the revised diagram rendered and was inspected. No cluster,
+credential exchange, controlled IAM test, independent security review, or
+novice reader task ran. Both pages remain `draft`.
 
 ### Candidates for the next wave
 

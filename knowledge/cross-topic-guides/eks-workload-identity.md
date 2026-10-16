@@ -41,6 +41,12 @@ sources:
   - id: k8s-rbac-good-practices
     resource: https://kubernetes.io/docs/concepts/security/rbac-good-practices/
     title: Kubernetes Documentation - Role Based Access Control Good Practices
+  - id: k8s-rbac
+    resource: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    title: Kubernetes Documentation - Using RBAC Authorization
+  - id: aws-policy-evaluation
+    resource: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
+    title: AWS IAM - Policy evaluation logic
 ---
 
 # EKS workload identity
@@ -76,17 +82,25 @@ exposed node instance profile, discussed below.[^aws-eks-pod-identities][^aws-ek
 
 ## Why it matters
 
-Every AWS API request must be signed with AWS credentials. Without workload
-identity, teams tend to copy long-lived access keys into containers, or let
-every Pod rely on the node's IAM role, which gives all Pods on the node the
-same permissions. Both IRSA and EKS Pod Identity replace that with a role per
-service account.[^aws-eks-pod-identities]
+To write private S3 objects or use most AWS service operations, an
+application signs requests with AWS credentials. IRSA's initial STS token
+exchange is an exception: it presents a service-account token without
+pre-existing AWS credentials.[^aws-eks-irsa] Without workload identity,
+teams tend to copy long-lived access keys into containers, or let every Pod
+rely on the node's IAM role. Both IRSA and EKS Pod Identity map a role to a
+service account, so Pods need not share the node role by default.
+[^aws-eks-pod-identities]
 
-Keep this separate from human access to the cluster. Kubernetes RBAC decides
-what a person or a service account may do **through the Kubernetes API**. The
-IAM role decides what the Pod may do **through AWS APIs**. A Pod can have full
-access to an Amazon S3 bucket and no Kubernetes permissions at all, or the
-reverse. For people, see [EKS human identity and Kubernetes
+Keep this separate from human access to the cluster. Kubernetes authorization
+decides what a person or service account may do **through the Kubernetes
+API**. On EKS, RBAC can grant this access, and an EKS access policy can also
+grant it to a person using an IAM access entry. The workload's IAM role
+affects its **AWS API** requests. A Pod can have access to an Amazon S3
+bucket and no permission to read application objects
+through the Kubernetes API, or the reverse. Kubernetes still grants basic
+API discovery permissions to authenticated service accounts by default.
+[^k8s-rbac]
+For people, see [EKS human identity and Kubernetes
 RBAC](../security/identity-federation/eks-human-identity-and-rbac.md).
 
 ## The mental model: the same start, two credential paths
@@ -98,7 +112,7 @@ role is recorded.
 
 | Step | IRSA | EKS Pod Identity |
 | --- | --- | --- |
-| Where the service account is linked to a role | An annotation on the service account names the role ARN. The role's trust policy names the cluster's IAM OIDC provider and, ideally, the exact service account.[^aws-eks-irsa-pod-configuration][^aws-eks-bp-iam] | A Pod Identity **association** in the EKS API maps one service account in one namespace of one cluster to a role.[^aws-eks-pod-identities] |
+| Where the service account is linked to a role | An annotation on the service account names the role ARN for the Pod's SDK, but does not grant access. IAM decides whether the token may assume that role from its trust policy, which should name the cluster's OIDC provider and exact service-account subject.[^aws-eks-irsa-pod-configuration][^aws-eks-bp-iam] | A Pod Identity **association** in the EKS API maps one service account in one namespace of one cluster to a role; this is not a Kubernetes object.[^aws-eks-pod-identities][^aws-eks-pod-id-association] |
 | What trusts what | IAM trusts the cluster's OIDC issuer. EKS publishes a discovery endpoint with the signing keys so IAM can validate the tokens.[^aws-eks-irsa] | The role trusts the service principal `pods.eks.amazonaws.com`, with `sts:AssumeRole` and `sts:TagSession`.[^aws-eks-pod-id-association] |
 | What the Pod receives | Environment variables such as `AWS_ROLE_ARN` and `AWS_WEB_IDENTITY_TOKEN_FILE`, and a token file.[^aws-eks-irsa-pod-configuration] | Environment variables pointing to the agent, and a token with audience `pods.eks.amazonaws.com`.[^aws-eks-pod-id-how-it-works] |
 | Who exchanges the token | The SDK in the Pod calls STS `AssumeRoleWithWebIdentity`.[^aws-eks-irsa-sdk] | The Pod Identity Agent on the node calls the EKS Auth API's `AssumeRoleForPodIdentity`, then hands the credentials to the SDK.[^aws-eks-pod-id-how-it-works] |
@@ -124,7 +138,7 @@ flowchart TB
     agent -- "agent presents Pod token" --> eksauth
   end
   creds["Temporary credentials<br/>for the IAM role"]
-  aws["AWS API call<br/>checked against role permissions"]
+  aws["AWS API call<br/>all applicable policies evaluated"]
   pod -- "SDK sends service<br/>account token" --> sts
   pod -- "SDK asks the agent" --> agent
   sts --> creds
@@ -139,8 +153,10 @@ credentials. On the EKS Pod Identity path, the SDK asks the Pod Identity Agent
 on the same node; the agent presents the Pod's token to the EKS Auth API,
 which uses the association to choose the role and return temporary
 credentials. Either way, the resulting credentials sign the AWS API call, and
-the role's permissions policies decide whether it succeeds. Use the diagram
+AWS evaluates the role's policy together with applicable resource policies,
+boundaries, and organization guardrails. Use the diagram
 to see which component must be present and trusted for each option.
+[^aws-policy-evaluation]
 
 ## An analogy: a hotel guest and a partner gym
 
@@ -158,11 +174,13 @@ Where the analogy breaks, and what is true instead:
 
 - **The pass is a bearer credential.** Anyone who copies the temporary
   credentials can use them until they expire. Do not log them.
-- **The hotel master key may be lying around.** If access to IMDS is not
-  restricted, containers can reach the node's IAM role and may be able to get
-  credentials of other Pods' roles on the same node. Pods with
-  `hostNetwork: true` always have IMDS
-  access.[^aws-eks-pod-identities][^aws-eks-irsa]
+- **The hotel master key may be lying around.** If IMDS is reachable, code
+  in a container can ask it for the **node** role's credentials directly,
+  even when the SDK normally chooses its mapped Pod role. AWS also warns
+  that Pods on the same node may be able to reach other Pods' credentials.
+  A Pod with `hostNetwork: true` can reach IMDS when it is enabled on that
+  node, so ordinary Pod network restrictions are not enough for it.
+  [^aws-eks-pod-identities][^aws-eks-irsa]
 - **Rooms are not vaults.** Containers are not a security boundary. Pods on
   the same node share a kernel, and neither mechanism changes
   that.[^aws-eks-pod-identities]
@@ -170,11 +188,15 @@ Where the analogy breaks, and what is true instead:
   already has credentials earlier in the SDK credential chain, such as access
   keys in environment variables, the SDK keeps using them even after an
   association is added.[^aws-eks-pod-id-how-it-works]
-- **Anyone who can check in as a guest gets that guest's pass.** Kubernetes
-  notes that permission to create workloads in a namespace effectively grants
-  the access of any service account there.[^k8s-rbac-good-practices] This page
-  concludes that the same holds for the AWS role mapped to that service
-  account, so RBAC over Pod creation protects the AWS role too.
+- **Someone else may check in as a guest.** A person who can create or
+  change workloads to run under a mapped service account may let those Pods
+  use its AWS role. For IRSA, a caller who can request a service-account
+  token with the role's expected audience may also exchange it with STS if
+  its issuer and subject satisfy the role trust policy; the token is a
+  bearer credential, not tied to the Pod's node. Protect workload creation
+  and token requests. Separately, protect who can create a Pod Identity
+  association or change IAM trust; Kubernetes RBAC does not control those
+  AWS API operations.[^k8s-rbac-good-practices][^aws-eks-irsa][^aws-eks-pod-id-association]
 
 ## Choose by conditions, not by a universal winner
 
@@ -188,7 +210,7 @@ Check each row for the specific workload:
 | The workload runs on AWS Fargate, Windows EC2 nodes, AWS Outposts, EKS Anywhere, or self-managed Kubernetes on EC2. | Check IRSA support for the exact environment. | Pod Identity is not available there. IRSA supports several Kubernetes environments, but its own prerequisites still need checking.[^aws-eks-pod-identities][^aws-eks-service-accounts][^aws-eks-irsa] |
 | You cannot run the Pod Identity Agent DaemonSet on the nodes. | IRSA. | The agent is required for Pod Identity. EKS Auto Mode clusters do not need the separate agent setup.[^aws-eks-pod-identities] |
 | The application's AWS SDK, or a third-party controller, is older than the listed minimum for a mechanism. | The mechanism the SDK supports, or upgrade first. | Each mechanism needs a supported SDK version that uses the default credential chain.[^aws-eks-pod-identities][^aws-eks-irsa-sdk] |
-| The same role must be used by many clusters. | Pod Identity. | Its trust policy trusts one service principal. IRSA needs the trust policy updated for each new cluster's OIDC provider.[^aws-eks-service-accounts] |
+| The same role must be used by many clusters. | Pod Identity. | Its trust policy trusts one service principal. IRSA needs the trust policy updated for each new cluster's OIDC provider. With Pod Identity, restrict who can create associations and pass that reusable role.[^aws-eks-service-accounts][^aws-eks-pod-id-association] |
 | The account has, or will have, more than 100 clusters. | Pod Identity. | IRSA needs one IAM OIDC provider per cluster, and IAM's default limit is 100 per account.[^aws-eks-service-accounts] |
 | One role should serve several service accounts with different access through tags. | Pod Identity. | Its credentials carry session tags such as cluster, namespace, and service account name. IRSA does not support session tags.[^aws-eks-service-accounts] |
 | The role is in a different AWS account from the cluster. | Either, with different mechanics. | IRSA can use an OIDC provider in the other account or chained `AssumeRole` calls.[^aws-eks-irsa-cross-account] Pod Identity's association role must be in the cluster's account; an optional target IAM role in another account is then assumed by role chaining.[^aws-eks-pod-id-target-role] |
@@ -202,10 +224,18 @@ Check each row for the specific workload:
 - **Scope IRSA trust to the exact service account.** Without a `sub`
   condition, any service account in the cluster can assume the role. The
   subject has the form `system:serviceaccount:NAMESPACE:NAME`.[^aws-eks-irsa-cross-account][^aws-eks-bp-iam]
+- **Control Pod Identity associations.** A caller who creates an association
+  needs permission to create it in EKS and `iam:PassRole` for the role. Review
+  both permissions when a role is reused across clusters. The role's trust
+  policy can additionally use the Pod Identity session tags to restrict which
+  clusters, namespaces, and service accounts may assume it; that does not
+  replace control over who can create associations.[^aws-eks-pod-id-association]
 - **Restrict the node role.** Both mechanisms are placed ahead of the node's
-  instance profile in the Pod's credential chain, but a Pod can still inherit
-  the instance profile's permissions. Block IMDS for Pods that do not need it; AWS warns that doing so
-  also cuts off Pods that rely on the node role.[^aws-eks-bp-iam]
+  instance profile in the SDK's default credential chain. That order is not
+  a security boundary: code can call reachable IMDS directly for the node
+  role. Keep the node role minimal and block IMDS for Pods that do not need
+  it; this also cuts off Pods that intentionally rely on the node role.
+  [^aws-eks-bp-iam][^aws-eks-pod-identities]
 - **Plan for delays.** Pod Identity associations are eventually consistent,
   and the agent caches credentials. Changing an association does not clear
   that cache immediately; the official target-role guide gives the current
@@ -231,26 +261,31 @@ account of its own and uses whatever the node role allows.
    role. When the new Pods start, EKS injects the agent settings. The SDK
    asks the agent, the agent calls the EKS Auth API, and the SDK receives
    role credentials.
-4. **Test the boundary in thought.** An upload to `exports/` is allowed by the
-   role. A delete in the same bucket is denied, because the role never granted
-   it. A different Pod in `billing` that runs as the `default` service account
-   receives nothing from this association.
+4. **Test the boundary in thought.** The role's identity policy permits an
+   upload to `exports/` and does not itself permit a delete. Before claiming
+   that a delete is denied, also inspect the bucket policy and other
+   applicable policies: a same-account resource policy may add an allow, and
+   an explicit deny may override an allow. A different Pod in `billing`
+   that runs as the `default` service account receives nothing from this
+   association, although it may still find other credentials in its SDK
+   chain or through an exposed node role.[^aws-policy-evaluation]
 5. **A second workload changes the answer.** A `report-renderer` workload
    must run on AWS Fargate. Pod Identity is not available there, so the team
    would use IRSA for it, with a trust policy scoped to
    `system:serviceaccount:billing:report-renderer`.
 
-The example ends with each workload holding only its own role, and with the
-choice made from the workload's conditions rather than from a default.
+The intended path gives each workload its mapped role. Confirm that earlier
+SDK credentials and node-role access do not bypass that choice; the example
+does not establish credential isolation on a real node.
 
 ## Troubleshoot at the right boundary
 
 | Symptom | First question |
 | --- | --- |
-| The Pod acts with the node role's permissions. | Does the Pod actually run as the intended service account, and is there an association or IRSA annotation for it? Are older credentials earlier in the SDK chain? |
+| The Pod acts with the node role's permissions. | Does it run as the intended service account? Was it created before its association or IRSA annotation, so the expected environment variables and token mount were never injected? Are other credentials earlier in the SDK chain, or is code calling IMDS directly?[^aws-eks-pod-id-how-it-works][^aws-eks-irsa-pod-configuration] |
 | STS denies the IRSA role assumption. | Does the role trust the cluster's OIDC provider, with the expected audience and the exact service account subject? |
 | Pod Identity requests fail before reaching AWS. | Is the agent running on that node? If the Pod uses a proxy, are the agent's link-local addresses excluded through `NO_PROXY`?[^aws-eks-pod-identities] |
-| Credentials arrive, but the AWS call is denied. | Do the role's permissions policies allow that action on that resource? |
+| Credentials arrive, but the AWS call is denied. | Which policy or condition blocked the exact action and resource: role identity policy, bucket or KMS key policy, permissions boundary, session policy, or organization guardrail?[^aws-policy-evaluation] |
 | A role change does not take effect. | Is the Pod Identity Agent still serving cached credentials?[^aws-eks-pod-id-target-role] |
 
 Do not broaden a trust policy or a permissions policy only to clear an error.
@@ -258,8 +293,8 @@ Confirm which workload needs which action first.
 
 ## Check your understanding
 
-1. Which Kubernetes object decides which IAM role a Pod can obtain, under both
-   mechanisms?
+1. Under IRSA, what selects the role and what authorizes assuming it? Where
+   is the mapping recorded under EKS Pod Identity?
 2. In IRSA, which component calls AWS STS? In EKS Pod Identity, which
    component obtains the credentials?
 3. Name two workload conditions that would rule out EKS Pod Identity.
@@ -316,3 +351,5 @@ Confirm which workload needs which action first.
 [^aws-eks-irsa-cross-account]: [Amazon EKS User Guide - Authenticate to another account with IRSA](https://docs.aws.amazon.com/eks/latest/userguide/cross-account-access.html), source record `aws-eks-irsa-cross-account`.
 [^aws-eks-bp-iam]: [Amazon EKS Best Practices Guide - Identity and Access Management](https://docs.aws.amazon.com/eks/latest/best-practices/identity-and-access-management.html), source record `aws-eks-bp-iam`.
 [^k8s-rbac-good-practices]: [Kubernetes Documentation - Role Based Access Control Good Practices](https://kubernetes.io/docs/concepts/security/rbac-good-practices/), source record `k8s-rbac-good-practices`.
+[^k8s-rbac]: [Kubernetes Documentation - Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/), source record `k8s-rbac`.
+[^aws-policy-evaluation]: [AWS IAM - Policy evaluation logic](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html), source record `aws-policy-evaluation`.

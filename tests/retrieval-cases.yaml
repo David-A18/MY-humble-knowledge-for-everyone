@@ -502,6 +502,22 @@ cases:
     question: Can a Fargate Pod use EKS Pod Identity and mount an EBS volume for shared photo storage?
     expected_paths: [knowledge/cross-topic-guides/kubernetes-on-aws.md]
     required_source_ids: [eks-pod-identity, eks-ebs-csi]
+  - id: eks-workload-role-binding
+    question: Does an IRSA service-account annotation grant its IAM role, and where is the role mapping for EKS Pod Identity stored?
+    expected_paths: [knowledge/cross-topic-guides/eks-workload-identity.md]
+    required_source_ids: [aws-eks-irsa-pod-configuration, aws-eks-pod-id-association]
+  - id: eks-pod-node-role-exposure
+    question: If a Pod uses IRSA or EKS Pod Identity, can code still request the node role directly through reachable IMDS?
+    expected_paths: [knowledge/cross-topic-guides/eks-workload-identity.md]
+    required_source_ids: [aws-eks-pod-identities, aws-eks-bp-iam]
+  - id: eks-s3-effective-permission
+    question: Does an S3 upload role with no identity-policy delete grant prove that a same-account Pod cannot delete from that bucket?
+    expected_paths: [knowledge/cross-topic-guides/eks-workload-identity.md]
+    required_source_ids: [aws-policy-evaluation]
+  - id: eks-access-policy-can-i
+    question: Why can kubectl auth can-i list pods show access from an EKS access policy when kubectl auth can-i --list omits it?
+    expected_paths: [knowledge/security/identity-federation/eks-human-identity-and-rbac.md]
+    required_source_ids: [aws-eks-access-policies, k8s-authorization]
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]

@@ -74,7 +74,7 @@ up produces both lockouts and over-broad access:
 | --- | --- | --- |
 | May this person use AWS APIs and the AWS console? | IAM permissions of the person's IAM role. | [IAM OIDC provider and STS web identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md) for federation basics. |
 | May this person read or change objects through the Kubernetes API? | The cluster's access entries, EKS access policies, and Kubernetes RBAC. | This page. |
-| May a Pod call AWS APIs? | IAM roles for service accounts (IRSA) or EKS Pod Identity. | [EKS workload identity](../../cross-topic-guides/eks-workload-identity.md). |
+| May a Pod call AWS APIs? | The credentials it uses may come from a mapped IRSA or EKS Pod Identity role, an earlier SDK source, or reachable node IMDS; AWS then evaluates the policies that apply to those credentials and the request. | [EKS workload identity](../../cross-topic-guides/eks-workload-identity.md). |
 
 An EKS access policy can authorize Kubernetes requests without any RBAC
 object in the cluster, so a review that inspects only RoleBindings can
@@ -230,8 +230,12 @@ names.
 ## Checking access: the limits of `kubectl auth can-i`
 
 `kubectl auth can-i` asks the cluster's authorization layer whether the
-current identity may perform an action.[^k8s-rbac] With EKS access
-policies, AWS documents two important limits:[^aws-eks-access-policies]
+current identity may perform an action.[^k8s-authorization] A specific check
+as Sam's real identity, such as `kubectl auth can-i list pods -n payments`,
+asks whether that **one action** is currently allowed across the configured
+authorizers. The verb `list` here differs from the `--list` option, which
+tries to summarize many rules. With EKS access policies, AWS documents two
+important limits:[^aws-eks-access-policies]
 
 - **`kubectl auth can-i --list` does not show permissions from access
   policies.** It shows only permissions granted through Roles or ClusterRoles
@@ -242,9 +246,11 @@ policies, AWS documents two important limits:[^aws-eks-access-policies]
   authorization, so access policy permissions do not apply. Asking "what can
   this group do?" by impersonation therefore answers only the RBAC half.
 
-The AWS page does not describe other forms of the check. Treat any
-`kubectl auth can-i` answer as one signal, and review the access entry's
-associated access policies alongside the RBAC bindings for its groups.
+A specific `can-i` answer is a useful point-in-time authorization check for
+the identity that runs it. It does not explain which rule granted access,
+predict future policy changes, or replace reviewing the entry's access
+policies and RBAC bindings. Run it without impersonation when checking an
+EKS access-policy grant.[^k8s-authorization][^aws-eks-access-policies]
 
 ## External OIDC sign-in for people
 

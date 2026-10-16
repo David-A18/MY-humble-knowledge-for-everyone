@@ -1289,7 +1289,9 @@
         "aws-eks-irsa-sdk",
         "aws-eks-irsa-cross-account",
         "aws-eks-bp-iam",
-        "k8s-rbac-good-practices"
+        "k8s-rbac-good-practices",
+        "k8s-rbac",
+        "aws-policy-evaluation"
       ],
       "stale_after": null,
       "status": "draft",

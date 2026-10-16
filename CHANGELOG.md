@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified EKS identity boundaries between Kubernetes authorization, IRSA trust, Pod Identity associations, IMDS, and effective AWS permissions; revised the diagram and added four static retrieval cases.
 - Clarified OIDC identity mapping, token-purpose boundaries, metadata-path rules, and GitHub-to-AWS environment claims with a revised diagram and three static retrieval cases.
 - Clarified stateful recovery decisions with an illustrative RTO/RPO timeline, provider-side payment reconciliation, failure-scope evidence, a vertical diagram, and three static retrieval cases.
 - Clarified stateless application handoffs with a separate record/S3/queue diagram, new-key upload failure cases, SQS redelivery, provider idempotency limits, and three static retrieval cases.
