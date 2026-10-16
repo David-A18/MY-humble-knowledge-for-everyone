@@ -19,6 +19,7 @@ growing; topic indexes distinguish published pages from planned coverage.
 | Understand cloud computing before choosing a provider | [Cloud computing fundamentals](cloud/cloud-computing-fundamentals.md) | Explain the provider's role, your responsibilities, scaling, reliability, and usage-based cost. |
 | Understand AI before choosing a tool | [AI fundamentals](ai/ai-fundamentals.md) | Separate ML, generative AI, language models, assistants, and agents; check outputs against sources. |
 | Understand how a model learns from examples | [How supervised classification learns from examples](ml/supervised-classification-fundamentals.md) | Trace labels, training, held-out checks, and a new prediction. |
+| Understand what happens after an ML model is released | [How an ML model stays useful after deployment](mlops/mlops-fundamentals.md) | Trace approval, serving, monitoring, error review, and a checked next version. |
 | Understand how an LLM produces text | [How a large language model produces a response](llm/llm-fundamentals.md) | Follow context and tokens through one answer, then check a claim against its source. |
 | Understand how an AI agent uses tools | [How AI agents use tools](ai-agents/agent-fundamentals.md) | Trace a read-only tool request, its result, and the choice between a fixed workflow and an agent. |
 | Understand how a program runs | [Programming fundamentals](programming-languages/programming-fundamentals.md) | Trace source code, input, a function and condition, and output in a small Python example. |
@@ -64,7 +65,7 @@ growing; topic indexes distinguish published pages from planned coverage.
 - [AI agents](ai-agents/index.md) - Beginner tool-loop explanation and links to deeper workflow, retrieval, and evaluation guidance.
 - [LLM](llm/index.md) - Beginner text-generation explanation and links to deeper context and retrieval guidance.
 - [ML](ml/index.md) - Beginner supervised-classification explanation and links to deeper model and evaluation guidance.
-- [MLOps](mlops/index.md) - Planned route for operating ML systems; begin with the ML explanation and AI fundamentals.
+- [MLOps](mlops/index.md) - Beginner release-and-monitoring explanation with deeper operations coverage planned.
 - [Solutions architect](solutions-architect/index.md) - Design trade-offs, proofs of concept, and architecture reviews.
 - [Cross-topic guides](cross-topic-guides/index.md) - End-to-end workflows across technologies.
 

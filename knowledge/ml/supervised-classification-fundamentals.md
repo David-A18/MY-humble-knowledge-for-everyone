@@ -239,6 +239,9 @@ guide explains accuracy, precision, and recall in detail.[^google-classification
 
 ## Go deeper
 
+- [How an ML model stays useful after deployment](../mlops/mlops-fundamentals.md)
+  follows a tested candidate into versioned release, monitoring, and
+  human-reviewed correction.
 - [AI fundamentals](../ai/ai-fundamentals.md) distinguishes ML, language
   models, training, and inference.
 - [How a large language model produces a response](../llm/llm-fundamentals.md)

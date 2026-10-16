@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 173,
+  "concept_count": 174,
   "concepts": [
     {
       "audience": "Curious learners and beginning engineers",
@@ -4084,6 +4084,32 @@
         "beginner"
       ],
       "title": "How supervised classification learns from examples",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Curious learners and beginning engineers",
+      "description": "Follow a versioned classifier from reviewed examples to release, monitoring, error review, and a gated next version.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/mlops/mlops-fundamentals.md",
+      "source_ids": [
+        "google-production-systems",
+        "google-deployment-testing",
+        "google-monitoring",
+        "google-training-frequency",
+        "google-rules-of-ml",
+        "google-productionization"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "mlops",
+        "model-deployment",
+        "monitoring",
+        "evaluation",
+        "beginner"
+      ],
+      "title": "How an ML model stays useful after deployment",
       "type": "Explanation"
     },
     {

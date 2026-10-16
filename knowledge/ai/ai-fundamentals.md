@@ -267,6 +267,8 @@ or a human review step.
 
 - [How supervised classification learns from examples](../ml/supervised-classification-fundamentals.md)
   follows labeled messages through training, held-out checks, and inference.
+- [How an ML model stays useful after deployment](../mlops/mlops-fundamentals.md)
+  follows a classifier through a versioned release, live review, and correction.
 - [How a large language model produces a response](../llm/llm-fundamentals.md)
   follows one text answer through context, tokens, and a source check.
 - [How AI agents use tools](../ai-agents/agent-fundamentals.md) traces a

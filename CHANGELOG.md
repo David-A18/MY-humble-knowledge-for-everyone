@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Added a first ML beginner explanation of labeled examples, training, validation and test roles, inference, simple baselines, and shortcut failures; linked it from the beginner routes and added three retrieval cases.
+- Added a first MLOps beginner explanation of versioned release, delayed-label monitoring, changed policy versus skew or application bugs, and rollback limits; linked it from the beginner routes and added four retrieval cases.
 - Added a first LLM beginner explanation of context, token-by-token text generation, retrieval versus training, and source checking; linked it from the beginner routes and added three retrieval cases.
 - Added the first AI agents explanation, connecting a model-directed tool loop to application execution, fixed-workflow choices, untrusted results, and measurable task outcomes; linked it from the beginner routes and added four retrieval cases.
 - Tightened the Velero one-ConfigMap exercise with exact-name preflight, a target-absence check, restore provenance labels, safer named-resource cleanup, and three static retrieval cases.

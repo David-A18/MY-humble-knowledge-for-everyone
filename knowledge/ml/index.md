@@ -10,6 +10,10 @@ and inference are new to you. Then read [How supervised classification
 learns from examples](supervised-classification-fundamentals.md) to trace
 labeled examples, held-out checks, and a new prediction.
 
+Next read [How an ML model stays useful after
+deployment](../mlops/mlops-fundamentals.md) to see what happens when a
+versioned classifier is released and its live results need review.
+
 ## Article
 
 - [How supervised classification learns from examples](supervised-classification-fundamentals.md):

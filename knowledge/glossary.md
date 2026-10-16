@@ -150,7 +150,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [MCP host](ai/ai-tooling/model-context-protocol.md) | The AI application or environment that the user interacts with, such as an agent app, IDE, or chat product. |
 | [MCP server](ai/ai-tooling/model-context-protocol.md) | An integration process or service that exposes tools, resources, and prompts to an MCP host through an MCP client. |
 | [ML](ml/supervised-classification-fundamentals.md) | Machine Learning; methods that train models from data to make predictions or generate content. |
-| MLOps | Operational practices for deploying, monitoring, governing, and maintaining machine learning systems. |
+| [MLOps](mlops/mlops-fundamentals.md) | The work of releasing and maintaining an ML system, including its data, model, software, monitoring, and correction path. |
 | [Model (AI)](ai/ai-fundamentals.md) | Learned patterns that an AI system uses to make predictions or generate content from new input. |
 | [Model parameters (weights)](ai/ai-fundamentals.md) | Values adjusted during training that a model uses during inference; a normal request usually does not change them. |
 | [MongoDB](databases/mongodb/index.md) | Document database that stores JSON-like BSON documents and supports flexible document modeling. |

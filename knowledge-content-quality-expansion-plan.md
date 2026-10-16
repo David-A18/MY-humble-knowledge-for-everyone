@@ -2021,11 +2021,24 @@ root, Start here, glossary, ML, and MLOps routes.
 | --- | --- | --- | --- |
 | [How supervised classification learns from examples](knowledge/ml/supervised-classification-fundamentals.md) | Plain definitions, limited sorting-tray analogy, fictional library router, training/validation/test diagram and text alternative, two-label inference, keyword baseline, shortcut and out-of-scope cases, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and draft review. Current Google and scikit-learn primary sources were checked. The diagram rendered and was inspected; three static retrieval cases were added. No model was trained, no real dataset was evaluated, and no novice reader task ran. | Independent ML education review, representative dataset and baseline evaluation, novice split-and-shortcut task, and maintainer/freshness decision. |
 
+### Wave 126 (2026-10-16)
+
+The MLOps section had only an outline. Its first beginner concept continues
+the fictional library router from the ML explanation through a versioned
+release, live signals, later confirmed outcomes, error repair, and a gated
+next candidate. It distinguishes new inputs, changed labels, training-serving
+skew, and an application defect. The page is linked from the AI, root,
+Start here, glossary, ML, and MLOps routes.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How an ML model stays useful after deployment](knowledge/mlops/mlops-fundamentals.md) | Plain definitions, limited handbook-edition analogy, fictional versioned library router, release-and-review diagram with text alternative, delayed-label monitoring, four-cause diagnosis table, rollback limits, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and draft review. Current Google primary sources were checked; its two priority findings corrected the diagram and split the diagnosis table. The final diagram rendered and was inspected; four static retrieval cases were added. No model or service was operated and no novice reader task ran. | Independent MLOps review, representative live-outcome and fallback exercise, novice monitoring-and-policy-change task, and maintainer/freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 173 concepts, all marked `draft`. Every
+The generated catalog records 174 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 125. This accounting does **not** mean that every explanation
+waves 1 to 126. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -2040,6 +2053,7 @@ demonstration, so most teaching elements do not apply there.
 | AI agents | 1 | 1 | 0 |
 | LLM | 1 | 1 | 0 |
 | ML | 1 | 1 | 0 |
+| MLOps | 1 | 1 | 0 |
 | Cloud | 22 | 22 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -2054,7 +2068,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **173** | **173** | **0** |
+| **Total** | **174** | **174** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
@@ -3779,6 +3793,18 @@ three static retrieval cases were added. Google and scikit-learn primary
 documentation was checked. No classifier, real dataset, independent
 technical review, or novice reader task ran; the page is `draft`.
 
+### Focused review round 91 (2026-10-16)
+
+Added the first MLOps beginner concept after a read-only Claude Opus 5.5
+outline and draft review. The review exposed a diagram that would have
+returned to the old model after approving the next one and a diagnosis row
+that conflated new inputs with changed policy. Those were corrected, along
+with release records, preprocessing terminology, ambiguous examples, and
+rollback limits. Current Google production-ML guidance was checked, the
+final diagram rendered and was inspected, and four static retrieval cases
+were added. No classifier or service ran, no independent domain review or
+novice reader task occurred, and the page remains `draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
@@ -3845,9 +3871,9 @@ common workload failures; Terraform modules, providers, backends, variables,
 and workspaces; AWS IAM and networking; and cross-topic deployment examples.
 
 Treat deeper AI agent patterns, LLM, ML, MLOps, programming languages,
-Azure, and Google Cloud as planned coverage until a focused brief establishes a reader need,
-scope, official-source set, and maintainer path. Do not fill an index with
-thin summaries merely to make a category look complete.
+Azure, and Google Cloud as partial coverage until a focused brief establishes
+a reader need, scope, official-source set, and maintainer path. Do not fill
+an index with thin summaries merely to make a category look complete.
 
 **Exit criterion:** each new page has a primary outcome, the correct Diátaxis
 type, a parent-index link, related links, and an evidence plan before its first

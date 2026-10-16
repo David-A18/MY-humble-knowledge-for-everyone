@@ -386,6 +386,22 @@ cases:
     question: If a classifier gets two held-out library messages right, does that prove it beats a keyword rule or will route card-access requests that mention a room?
     expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
     required_source_ids: [google-overfitting, google-classification-metrics]
+  - id: mlops-versioned-release-versus-automatic-learning
+    question: After a library classifier is deployed, do incoming messages retrain it automatically, and which checks and versions matter before a new model serves?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-deployment-testing, google-training-frequency]
+  - id: mlops-live-signals-versus-confirmed-quality
+    question: If the share of room-booking predictions rises but staff have not yet confirmed the correct queues, does that prove the model is wrong, and what should be reviewed?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-monitoring]
+  - id: mlops-policy-change-versus-skew-versus-app-defect
+    question: How do I distinguish a new facility-access routing policy, different training and serving preprocessing, and a bug that sends a membership prediction to the wrong queue?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-monitoring, google-rules-of-ml]
+  - id: mlops-rollback-does-not-repair-past-routes
+    question: If a library message classifier is rolled back today, are messages it misrouted last week fixed, and what records help identify them?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-productionization]
   - id: agent-workflow-versus-model-directed-loop
     question: If an assistant always searches one page before answering, is that already an AI agent, and what changes when the model chooses another search after seeing a version mismatch?
     expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
