@@ -374,6 +374,18 @@ cases:
     question: Can a fluent language-model answer contradict a documentation excerpt supplied in its context, and what should the reader check?
     expected_paths: [knowledge/llm/llm-fundamentals.md]
     required_source_ids: [nist-genai-profile]
+  - id: ml-feature-label-and-inference
+    question: In a library message classifier, what is the difference between input features and the known label, and what does the model receive during inference?
+    expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
+    required_source_ids: [google-supervised-learning]
+  - id: ml-validation-versus-final-test
+    question: Why should I choose a classifier using validation messages but keep test messages out of those choices, including any learned text preprocessing?
+    expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
+    required_source_ids: [google-dividing-datasets, sklearn-common-pitfalls]
+  - id: ml-tiny-test-baseline-shortcut
+    question: If a classifier gets two held-out library messages right, does that prove it beats a keyword rule or will route card-access requests that mention a room?
+    expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
+    required_source_ids: [google-overfitting, google-classification-metrics]
   - id: agent-workflow-versus-model-directed-loop
     question: If an assistant always searches one page before answering, is that already an AI agent, and what changes when the model chooses another search after seeing a version mismatch?
     expected_paths: [knowledge/ai-agents/agent-fundamentals.md]

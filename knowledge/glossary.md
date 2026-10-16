@@ -25,7 +25,7 @@ not yet have a dedicated explanation.
 | How a small program runs | [Source code](programming-languages/programming-fundamentals.md), [Interpreter](programming-languages/programming-fundamentals.md), [Variable](programming-languages/programming-fundamentals.md), [Function](programming-languages/programming-fundamentals.md) |
 | How Kubernetes keeps apps running | [Desired state](kubernetes/fundamentals/kubernetes-fundamentals.md), [Current state](kubernetes/fundamentals/kubernetes-fundamentals.md), [Reconciliation](kubernetes/fundamentals/kubernetes-fundamentals.md), [Deployment](kubernetes/fundamentals/kubernetes-fundamentals.md) |
 | How infrastructure changes are planned | [Terraform](terraform/fundamentals/terraform-fundamentals.md), [Plan (Terraform)](terraform/fundamentals/terraform-fundamentals.md), [Terraform state](terraform/fundamentals/state-management.md) |
-| How AI models produce answers | [Model](ai/ai-fundamentals.md), [Training](ai/ai-fundamentals.md), [Inference](ai/ai-fundamentals.md), [LLM](llm/llm-fundamentals.md), [Token (AI)](llm/llm-fundamentals.md) |
+| How AI models produce answers | [Model](ai/ai-fundamentals.md), [Training](ai/ai-fundamentals.md), [Inference](ai/ai-fundamentals.md), [ML](ml/supervised-classification-fundamentals.md), [LLM](llm/llm-fundamentals.md), [Token (AI)](llm/llm-fundamentals.md) |
 | How AI finds knowledge | [RAG](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md), [Provenance](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) |
 | How AI applications act | [AI agent](ai-agents/agent-fundamentals.md), [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) |
 
@@ -105,6 +105,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | External name | Crossplane annotation that maps a Kubernetes managed resource to its real external resource identifier. |
 | Fargate | AWS serverless container compute option for running ECS tasks or EKS pods without managing servers. |
 | [Fetch (Git)](git/git-fundamentals.md) | Download commits and update your local record of remote branches without changing your current branch or working files. |
+| [Feature (ML)](ml/supervised-classification-fundamentals.md) | Input information a model uses to make a prediction, such as which words occur in a message. |
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |
 | [FinOps](finops/cost-allocation-basics.md) | A cloud financial management discipline focused on cost visibility, accountability, and optimization. |
 | [Function (programming)](programming-languages/programming-fundamentals.md) | A named block of instructions that runs when called and can return a value. |
@@ -137,6 +138,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | KRaft | Kafka's Raft-based metadata mode that replaces ZooKeeper for Kafka cluster metadata management. |
 | [Kubernetes](kubernetes/fundamentals/kubernetes-fundamentals.md) | A system for running containerized applications across a cluster and reconciling them toward declared state. |
 | [Label (Kubernetes)](kubernetes/core-objects/how-a-service-selects-pods.md) | A key-value tag on an object; many objects can share the same label. |
+| [Label (ML)](ml/supervised-classification-fundamentals.md) | The known answer for a supervised training example, such as the team that should receive a message. |
 | Least privilege | Granting only the permissions needed to perform a task. |
 | [LLM](llm/llm-fundamentals.md) | Large Language Model; a model trained at large scale on language data, commonly used to read input as tokens and produce a response as tokens. |
 | Machine-owned region | In this knowledge base's workflow, a page region generated from a structured source and protected from manual changes. |
@@ -147,7 +149,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [MCP client](ai/ai-tooling/model-context-protocol.md) | The MCP connection inside an AI host that sends requests to MCP servers and receives their responses. |
 | [MCP host](ai/ai-tooling/model-context-protocol.md) | The AI application or environment that the user interacts with, such as an agent app, IDE, or chat product. |
 | [MCP server](ai/ai-tooling/model-context-protocol.md) | An integration process or service that exposes tools, resources, and prompts to an MCP host through an MCP client. |
-| [ML](ai/ai-fundamentals.md) | Machine Learning; methods that train models from data to make predictions or generate content. |
+| [ML](ml/supervised-classification-fundamentals.md) | Machine Learning; methods that train models from data to make predictions or generate content. |
 | MLOps | Operational practices for deploying, monitoring, governing, and maintaining machine learning systems. |
 | [Model (AI)](ai/ai-fundamentals.md) | Learned patterns that an AI system uses to make predictions or generate content from new input. |
 | [Model parameters (weights)](ai/ai-fundamentals.md) | Values adjusted during training that a model uses during inference; a normal request usually does not change them. |

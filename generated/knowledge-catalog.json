@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 172,
+  "concept_count": 173,
   "concepts": [
     {
       "audience": "Curious learners and beginning engineers",
@@ -4059,6 +4059,32 @@
       ],
       "title": "Find why a Velero restore has no application data",
       "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Curious learners and beginning engineers",
+      "description": "Follow labeled examples through training and held-out checks to a new prediction, and recognize when the result is weak evidence.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ml/supervised-classification-fundamentals.md",
+      "source_ids": [
+        "google-what-is-ml",
+        "google-supervised-learning",
+        "google-dividing-datasets",
+        "google-overfitting",
+        "google-classification-metrics",
+        "sklearn-common-pitfalls"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ml",
+        "supervised-learning",
+        "classification",
+        "evaluation",
+        "beginner"
+      ],
+      "title": "How supervised classification learns from examples",
+      "type": "Explanation"
     },
     {
       "audience": "Engineering learners and practitioners",

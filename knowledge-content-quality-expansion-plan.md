@@ -2008,11 +2008,24 @@ the AI, root, Start here, glossary, and parent routes.
 | --- | --- | --- | --- |
 | [How a large language model produces a response](knowledge/llm/llm-fundamentals.md) | Plain definitions, limited mosaic analogy, invented documentation-answer mismatch, token-generation diagram and text alternative, training/retrieval/context table, misconceptions, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and draft review. Current Google, OpenAI, Anthropic, and NIST primary sources were checked. The diagram rendered and was inspected; three static retrieval cases were added. No model run, live search, independent technical review, or novice reader task occurred. | Independent AI education review, novice token/context/source task, a real answer-quality exercise, and maintainer/freshness decision. |
 
+### Wave 125 (2026-10-16)
+
+The ML section had only an outline. Its first beginner concept traces a
+supervised classifier from labeled examples to training, held-out checks,
+and a new prediction. It shows why a tiny apparently perfect result and a
+simple keyword baseline are weak evidence, and it identifies a shortcut
+that the illustrative test set would miss. The page is linked from the AI,
+root, Start here, glossary, ML, and MLOps routes.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How supervised classification learns from examples](knowledge/ml/supervised-classification-fundamentals.md) | Plain definitions, limited sorting-tray analogy, fictional library router, training/validation/test diagram and text alternative, two-label inference, keyword baseline, shortcut and out-of-scope cases, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and draft review. Current Google and scikit-learn primary sources were checked. The diagram rendered and was inspected; three static retrieval cases were added. No model was trained, no real dataset was evaluated, and no novice reader task ran. | Independent ML education review, representative dataset and baseline evaluation, novice split-and-shortcut task, and maintainer/freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 172 concepts, all marked `draft`. Every
+The generated catalog records 173 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 124. This accounting does **not** mean that every explanation
+waves 1 to 125. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -2026,6 +2039,7 @@ demonstration, so most teaching elements do not apply there.
 | AI, including the embedded OKF example | 21 | 21 | 0 |
 | AI agents | 1 | 1 | 0 |
 | LLM | 1 | 1 | 0 |
+| ML | 1 | 1 | 0 |
 | Cloud | 22 | 22 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -2040,7 +2054,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **172** | **172** | **0** |
+| **Total** | **173** | **173** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
@@ -3753,6 +3767,17 @@ beside the questions. Google, OpenAI, Anthropic, and NIST primary pages were
 checked. The diagram rendered and was inspected, and three static retrieval
 cases were added. No model run, live search, independent domain review, or
 novice reader task occurred; the page is `draft`.
+
+### Focused review round 90 (2026-10-16)
+
+Added the first ML beginner concept after a Claude Opus 5.5 read-only
+outline and draft review. The review corrected overfitting and held-out
+set wording, made the illustrative test a gate before use, exposed the
+keyword rule that matches every toy row, and tied the possible *room*
+shortcut to a test-set gap. The diagram rendered and was inspected;
+three static retrieval cases were added. Google and scikit-learn primary
+documentation was checked. No classifier, real dataset, independent
+technical review, or novice reader task ran; the page is `draft`.
 
 ### Candidates for the next wave
 

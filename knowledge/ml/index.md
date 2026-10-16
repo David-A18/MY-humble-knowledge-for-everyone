@@ -2,11 +2,19 @@
 
 Machine learning knowledge for core concepts, model development, evaluation, and practical workflows.
 
-Status: Initial outline
+Status: Early coverage. One beginner explanation is published; the deeper
+guides listed below remain planned.
 
-No ML articles are published in this section yet. Start with
-[AI fundamentals](../ai/ai-fundamentals.md) for a first explanation of
-machine learning and how it differs from other AI systems.
+Start with [AI fundamentals](../ai/ai-fundamentals.md) if models, training,
+and inference are new to you. Then read [How supervised classification
+learns from examples](supervised-classification-fundamentals.md) to trace
+labeled examples, held-out checks, and a new prediction.
+
+## Article
+
+- [How supervised classification learns from examples](supervised-classification-fundamentals.md):
+  follow a fictional library-message router and learn why a good-looking
+  training or tiny test result is not enough evidence.
 
 ## Expected content
 

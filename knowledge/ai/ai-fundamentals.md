@@ -265,6 +265,8 @@ or a human review step.
 
 ## Next steps
 
+- [How supervised classification learns from examples](../ml/supervised-classification-fundamentals.md)
+  follows labeled messages through training, held-out checks, and inference.
 - [How a large language model produces a response](../llm/llm-fundamentals.md)
   follows one text answer through context, tokens, and a source check.
 - [How AI agents use tools](../ai-agents/agent-fundamentals.md) traces a
