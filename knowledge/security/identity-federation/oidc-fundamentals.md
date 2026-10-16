@@ -14,6 +14,9 @@ sources:
   - id: openid-connect-discovery
     resource: https://openid.net/specs/openid-connect-discovery-1_0.html
     title: OpenID Connect Discovery 1.0
+  - id: jwt-best-practices
+    resource: https://www.rfc-editor.org/rfc/rfc8725.html
+    title: RFC 8725 - JSON Web Token Best Current Practices
   - id: github-actions-oidc
     resource: https://docs.github.com/en/actions/concepts/security/openid-connect
     title: GitHub Docs - OpenID Connect
@@ -41,9 +44,11 @@ Actions.
 
 > [!IMPORTANT]
 > This page is a conceptual introduction to a security-sensitive subject. It
-> is not an implementation or validation procedure. When you write code or
-> policy that accepts tokens, follow [OIDC token validation](oidc-token-validation.md)
-> and the official specifications and provider documentation linked below.
+> is not an implementation or validation procedure. For sign-in code, read
+> [OIDC token validation](oidc-token-validation.md) and the provider's
+> instructions. For AWS workload trust policies, follow [IAM OIDC provider
+> and STS web identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md)
+> and GitHub's current OIDC claims documentation.
 
 The page keeps two uses apart, because mixing them causes real mistakes:
 
@@ -362,9 +367,10 @@ Where the analogy stops being accurate:
   there instead of fixing one key forever.[^openid-connect-core]
 - **A badge is not a room key.** An ID token's audience is the relying party
   it names, and the specification has clients use an access token, not the ID
-  token, to call the UserInfo endpoint.[^openid-connect-core] From that, this
-  page concludes that an ID token should not be sent to other APIs as a
-  credential. The conclusion is this page's reasoning, not a quoted rule.
+  token, to call the UserInfo endpoint.[^openid-connect-core] An API should
+  not accept a sign-in ID token as its access token: JWT Best Current
+  Practices calls for mutually exclusive validation rules when tokens have
+  different purposes.[^jwt-best-practices]
 
 ## Common misconceptions
 
@@ -434,6 +440,7 @@ Where the analogy stops being accurate:
 
 [^openid-connect-core]: [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html), source record `openid-connect-core`.
 [^openid-connect-discovery]: [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html), source record `openid-connect-discovery`.
+[^jwt-best-practices]: [RFC 8725 - JSON Web Token Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html), source record `jwt-best-practices`.
 [^github-actions-oidc]: [GitHub Docs - OpenID Connect](https://docs.github.com/en/actions/concepts/security/openid-connect), source record `github-actions-oidc`.
 [^github-actions-oidc-aws]: [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws), source record `github-actions-oidc-aws`.
 [^github-actions-oidc-reference]: [GitHub Docs - OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc), source record `github-actions-oidc-reference`.

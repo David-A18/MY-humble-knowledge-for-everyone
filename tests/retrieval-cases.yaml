@@ -398,6 +398,18 @@ cases:
     question: Does HTTP 200 from an OAuth token introspection endpoint mean an opaque access token is valid for my API?
     expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
     required_source_ids: [oauth-token-introspection]
+  - id: oidc-local-account-identity
+    question: After validating an ID token, should a wiki map its user account by sub alone, by email, or by issuer and subject together?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [openid-core]
+  - id: oauth-metadata-issuer-path
+    question: For an issuer URL with a path, does RFC 8414 put the well-known metadata path in the same place as OIDC Discovery?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [oauth-server-metadata, openid-discovery]
+  - id: github-environment-versus-aws-claims
+    question: Does AWS STS enforce GitHub's production environment branch and reviewer rules, or only the claims in the job's OIDC token?
+    expected_paths: [knowledge/git/github-actions/aws-oidc-federation.md]
+    required_source_ids: [github-oidc-reference, github-deployment-environments]
   - id: green-pipeline-is-not-working-deployment
     question: If CI passed and the Kubernetes rollout completed, does that prove the deployment works for users?
     expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cross-topic-guides/github-actions-with-kubernetes.md]

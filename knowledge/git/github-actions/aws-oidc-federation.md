@@ -54,19 +54,23 @@ explains the token vocabulary first.[^github-oidc-aws]
 
 ```mermaid
 flowchart TB
-  gate["GitHub production environment<br/>main allowed, review complete"]
-  job["GitHub Actions deploy job"]
-  token["GitHub OIDC token<br/>job identity"]
-  trust["AWS IAM provider<br/>and role trust policy"]
-  sts["AWS STS<br/>AssumeRoleWithWebIdentity"]
-  creds["Temporary role credentials"]
-  api["AWS API<br/>applicable policies evaluated"]
-  gate -- "rules pass" --> job
-  job -- "requests" --> token
-  token -- "presented to" --> sts
-  trust -- "STS checks against" --> sts
-  sts -- "if claims match, returns" --> creds
-  creds -- "sign requests to" --> api
+  subgraph github["GitHub boundary"]
+    gate["Production environment<br/>main allowed, review complete"]
+    job["Actions deploy job"]
+    token["OIDC token<br/>job identity claims"]
+    gate -- "rules pass" --> job
+    job -- "requests" --> token
+  end
+  subgraph aws["AWS boundary"]
+    trust["IAM provider<br/>and role trust policy"]
+    sts["STS<br/>AssumeRoleWithWebIdentity"]
+    creds["Temporary role credentials"]
+    api["AWS API<br/>applicable policies evaluated"]
+    trust -- "STS checks against" --> sts
+    sts -- "if claims match, returns" --> creds
+    creds -- "sign requests to" --> api
+  end
+  token -- "signed token, including environment sub" --> sts
 ```
 
 Text alternative: GitHub checks the deploy job's `production` environment
@@ -75,6 +79,11 @@ the token's issuer, audience, and subject against the IAM identity provider
 and the chosen role's trust policy. If the role can be assumed, STS returns
 temporary role credentials. The job then signs AWS API requests with those
 credentials, and AWS evaluates the policies that apply to those requests.
+AWS receives the token claims, not the GitHub environment's branch and
+reviewer rules; GitHub enforces those before the job runs. The role trust
+policy can match the environment-shaped `sub` claim, which identifies the
+job's named environment but does not encode its protection rules.
+[^github-oidc-reference][^github-deployment-environments]
 
 Think of the GitHub token as an identity badge checked at the AWS entrance.
 The role trust policy decides which badges may enter; the role's permissions

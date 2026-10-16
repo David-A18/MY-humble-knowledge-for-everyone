@@ -452,7 +452,7 @@ decision has happened.
 | [MongoDB fundamentals](knowledge/databases/mongodb/fundamentals.md) | Rewritten to the standard and given a focused beginner review in round 38. | Keyed current MongoDB manual citations and Atlas backup guidance; the ticket document is illustrative JSON, not database output. Claude Opus 5.5 reviewed the revision twice read-only; both diagrams rendered and were inspected. | Independent technical review; reader test; freshness decision. |
 | [Kafka topic and event design](knowledge/databases/kafka/topic-and-event-design.md) | Rewritten to the standard and given a focused beginner review in round 39. | Keyed citations to current Apache Kafka 4.3 documentation and the Apache Avro specification; partition and offset examples are invented. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
 | [Custom resources and CRDs](knowledge/kubernetes/core-objects/custom-resources-and-crds.md) | Rewritten to the standard; focused beginner review in round 41. | Keyed Kubernetes and Crossplane citations; the invented platform API has an illustrative instance manifest, not a complete CRD or cluster run. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. | Independent technical review; reader test; freshness decision. |
-| [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard; focused beginner review in round 42. | Keyed citations to OpenID Connect Core and Discovery, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. Claude Opus 5.5 reviewed the revised page read-only; both diagrams rendered and were inspected. | Independent security review before anyone relies on it; reader test; freshness decision. |
+| [OIDC fundamentals](knowledge/security/identity-federation/oidc-fundamentals.md) | Rewritten to the standard; focused beginner review in round 42. Round 85 directs sign-in code and AWS trust-policy readers to the matching guides and clarifies why an ID token is not an API access token. | Keyed citations to OpenID Connect Core and Discovery, RFC 8725, GitHub, and AWS STS documentation; both examples use placeholder claims and show no token. Claude Opus 5.5 reviewed the revised page read-only; both diagrams rendered and were inspected. | Independent security review before anyone relies on it; reader test; freshness decision. |
 | [CDN and edge fundamentals](knowledge/cloud/edge/cdn-and-edge-fundamentals.md) | Rewritten to the standard; focused beginner review in round 43. | Keyed RFC 9111, CloudFront, and Akamai citations; the cache-key example is invented, not a recorded request. Claude Opus 5.5 reviewed the page twice read-only; the revised diagram rendered and was inspected. | Independent CDN/security review; reader test; freshness decision. |
 
 Supporting changes in the same wave: parent index descriptions for the six
@@ -861,7 +861,7 @@ lead to a failed or overly broad trust policy.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [AWS OIDC federation](knowledge/git/github-actions/aws-oidc-federation.md) | Rewritten around one GitHub job, a token-to-credential diagram, bounded badge analogy, invented deployment, and failure-boundary checks. Focused review in round 47 made the example's `production` environment, allowed `main` ref, and AWS environment-subject trust one coherent path; it now explains job-wide token requests and effective AWS policy checks. | Current GitHub OIDC and AWS IAM, STS, and credentials-action documentation checked. Claude Opus 5.5 reviewed the page read-only; the revised diagram rendered and was inspected. No deployment or token exchange ran. | Independent GitHub/AWS security review; controlled role-assumption exercise; reader test; freshness decision. |
+| [AWS OIDC federation](knowledge/git/github-actions/aws-oidc-federation.md) | Rewritten around one GitHub job, a token-to-credential diagram, bounded badge analogy, invented deployment, and failure-boundary checks. Focused review in round 47 made the example's `production` environment, allowed `main` ref, and AWS environment-subject trust one coherent path; round 85 separates GitHub's gate from AWS's token-claim decision in the diagram. | Current GitHub OIDC and AWS IAM, STS, and credentials-action documentation checked. Claude Opus 5.5 reviewed the page read-only twice; the revised diagram rendered and was inspected. No deployment or token exchange ran. | Independent GitHub/AWS security review; controlled role-assumption exercise; reader test; freshness decision. |
 | [IAM OIDC provider and STS web identity](knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md) | Rewritten around provider registration, role trust, STS exchange, and effective permissions, with a bounded example and diagram. Round 47 aligned the API-denial path with AWS identity, resource, session, boundary, and organization policy evaluation. | Current AWS IAM provider, role, policy-evaluation, and STS documentation checked. No AWS role, provider, or workload ran. | Independent IAM review; controlled federation exercise; reader test; freshness decision. |
 
 The OIDC fundamentals page received a targeted correction to label its
@@ -875,7 +875,7 @@ offering a single pseudocode recipe for ID and access tokens.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [OIDC token validation](knowledge/security/identity-federation/oidc-token-validation.md) | Rewritten with a trust-boundary diagram, limited signed-letter analogy, invented token-rejection examples, and separate ID-token, JWT access-token, and opaque-token paths. The focused review below clarifies login-session binding, exact issuer matching, introspection's `active` result, and trusted key discovery. | OpenID Connect Core and Discovery and RFC 7662, 8414, 8725, 9068, and 9700 are cited; Claude Opus 5.5 reviewed the page read-only and the material corrections were checked against the published specifications. No application or token was tested. | Independent identity-security review; test with the selected provider and library; reader test; freshness decision. |
+| [OIDC token validation](knowledge/security/identity-federation/oidc-token-validation.md) | Rewritten with a trust-boundary diagram, limited signed-letter analogy, invented token-rejection examples, and separate ID-token, JWT access-token, and opaque-token paths. Round 85 adds issuer-plus-subject account identity, the direct-token-endpoint signature exception, workload-token distinctions, and the RFC 8414 metadata-path difference. | OpenID Connect Core and Discovery, AWS IAM, and RFC 7662, 8414, 8725, 9068, and 9700 are cited; Claude Opus 5.5 reviewed the connected pages twice read-only and the material corrections were checked against the published specifications. No application or token was tested. | Independent identity-security review; test with the selected provider and library; reader test; freshness decision. |
 
 ### Wave 31 (2026-10-01)
 
@@ -3636,6 +3636,27 @@ event-listing documentation was checked. The diagram rendered and was
 inspected; three static retrieval cases were added. No live AWS or payment
 system, actual recovery exercise, independent domain review, or novice
 reader task ran. The page remains `draft`.
+
+### Focused review round 85 (2026-10-16)
+
+Reviewed the OIDC token-validation, fundamentals, GitHub-to-AWS federation,
+and AWS STS explanations as a connected set twice with Claude Opus 5.5
+read-only. The token-validation page now identifies a signed-in account by
+the issuer-and-subject pair, explains the narrow direct-token-endpoint TLS
+exception, distinguishes workload tokens from sign-in and access tokens,
+and shows how RFC 8414 and OIDC Discovery place metadata paths differently.
+The fundamentals page routes sign-in code and AWS trust-policy readers to
+their matching guides. The GitHub federation diagram separates GitHub's
+environment gate from AWS's claim-based role decision and names the
+environment-shaped subject link.
+
+Current OpenID Connect Core, RFC 8414 and 8725, GitHub OIDC, and AWS IAM
+primary documentation was checked. The review's proposed universal hybrid
+`nonce` requirement was rejected after Core section 3.3.2.1 confirmed that
+`code token` may omit it. The revised diagram rendered and was inspected;
+three static retrieval cases were added. No real token, provider, AWS role,
+independent security review, or novice reader task ran. The pages remain
+`draft`.
 
 ### Candidates for the next wave
 

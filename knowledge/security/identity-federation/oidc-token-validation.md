@@ -29,6 +29,9 @@ sources:
   - id: oauth-security-bcp
     resource: https://www.rfc-editor.org/rfc/rfc9700.html
     title: RFC 9700 - Best Current Practice for OAuth 2.0 Security
+  - id: aws-oidc-role
+    resource: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html
+    title: AWS IAM - Create a role for OpenID Connect federation
 ---
 
 # OIDC token validation
@@ -123,7 +126,12 @@ a JWT. If the provider issues **RFC 9068 profile JWT access tokens**, the
 resource server checks the `at+jwt` or `application/at+jwt` type, issuer,
 its own audience, signature, and expiry under that profile. It can find
 the authorization server's expected issuer and keys through trusted OAuth
-metadata or OIDC Discovery, as supported by that server.[^jwt-access-token-profile][^oauth-server-metadata]
+metadata or OIDC Discovery, as supported by that server. For an issuer with
+a path, RFC 8414 puts its well-known metadata path **before** the issuer
+path, while OIDC Discovery appends its well-known path **after** it. In
+either case, the metadata's `issuer` must exactly match the configured
+issuer; do not work around a mismatch by trusting a key URL from the
+unverified token.[^jwt-access-token-profile][^oauth-server-metadata][^openid-discovery]
 
 An opaque access token can instead be checked through the authorization
 server's supported token introspection endpoint. The resource server must
@@ -133,7 +141,18 @@ An active result still needs the provider's applicable audience, scope,
 and local authorization checks. Cached introspection results can delay
 recognition of a revoked token. A receiver must use the contract of its
 provider and token type; it must not apply ID-token rules to an arbitrary
-access token or treat an ID token as an API access token.[^oauth-token-introspection]
+access token. An API should not accept an ID token as its access token:
+the token purposes and validation rules differ.[^oauth-token-introspection][^jwt-best-practices][^jwt-access-token-profile]
+
+An OIDC token issued to a **workload**, such as a GitHub Actions job, has
+another purpose. Do not copy browser sign-in checks such as `nonce`, or
+reuse a sign-in app's client ID as this token's audience. The receiving
+service must use the issuer's documented workload claims and its own
+expected audience and subject. In AWS, the IAM OIDC provider registers
+expected audience values as client IDs. STS checks the token against that
+provider and the role's trust policy; for GitHub, the policy must narrowly
+restrict the `aud` and `sub` claims to the intended job context. See
+[IAM OIDC provider and STS web identity](../../cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md).[^aws-oidc-role]
 
 For a JWT checked locally, the main checks rule out different mistakes:
 
@@ -153,13 +172,21 @@ library/provider integration, not in a copy-pasted universal algorithm.
 
 ## An invented two-token example
 
-Suppose Team Wiki expects ID tokens from `https://login.example.com` for
-client `team-wiki` during its own sign-in flow. An attacker tries to
-substitute a JWT whose decoded claims say `iss: https://login.example.com`,
+Suppose Team Wiki's browser-side sign-in code sends an ID token to its
+server, which expects `https://login.example.com` as issuer and `team-wiki`
+as client. The server did **not** receive this token directly from the
+provider's token endpoint. An attacker submits a JWT whose decoded claims
+say `iss: https://login.example.com`,
 `aud: team-wiki`, and `sub: editor-7`, but it is signed with the attacker's
 key. The text looks right; signature verification against **Team Wiki's
 configured issuer keys** fails. Team Wiki rejects it before mapping
-`editor-7` to any account.
+`editor-7` to any account. Core lets a client skip signature checking only
+when it received the ID token directly from the token endpoint over TLS;
+this one came through the browser, so its signature must be checked.
+After a real ID token passes every applicable check, including a matching
+`nonce` if Team Wiki sent one for that login, Team Wiki identifies a local
+account by the pair (`iss`, `sub`), not `sub` alone or a changeable claim such as
+`email`.[^openid-core]
 
 Now suppose a genuine token from the expected issuer is signed correctly
 but says `aud: payroll-app`. Team Wiki rejects that token too: its issuer
@@ -205,3 +232,4 @@ application was tested.[^openid-core]
 [^oauth-token-introspection]: [RFC 7662 - OAuth 2.0 Token Introspection](https://www.rfc-editor.org/rfc/rfc7662.html), source record `oauth-token-introspection`.
 [^oauth-server-metadata]: [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/rfc/rfc8414.html), source record `oauth-server-metadata`.
 [^oauth-security-bcp]: [RFC 9700 - Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html), source record `oauth-security-bcp`.
+[^aws-oidc-role]: [AWS IAM - Create a role for OpenID Connect federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html), source record `aws-oidc-role`.

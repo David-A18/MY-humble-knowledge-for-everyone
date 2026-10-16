@@ -4137,6 +4137,7 @@
       "source_ids": [
         "openid-connect-core",
         "openid-connect-discovery",
+        "jwt-best-practices",
         "github-actions-oidc",
         "github-actions-oidc-aws",
         "github-actions-oidc-reference",
@@ -4166,7 +4167,8 @@
         "jwt-access-token-profile",
         "oauth-token-introspection",
         "oauth-server-metadata",
-        "oauth-security-bcp"
+        "oauth-security-bcp",
+        "aws-oidc-role"
       ],
       "stale_after": null,
       "status": "draft",
