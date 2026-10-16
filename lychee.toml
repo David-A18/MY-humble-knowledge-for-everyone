@@ -14,6 +14,9 @@ exclude = [
   # Crossplane docs are valid official references, but GitHub-hosted lychee
   # runners intermittently fail to connect to this Netlify-backed domain.
   "^https://docs\\.crossplane\\.io(/.*)?$",
+  # The official OWASP page loads normally in a browser but returns 403 to
+  # GitHub-hosted lychee runners. Keep the citation and check it manually.
+  "^https://genai\\.owasp\\.org/llmrisk/llm01-prompt-injection/?$",
 ]
 
 # Check public sources without overwhelming a single host. GitHub served
