@@ -362,6 +362,22 @@ cases:
     question: When an AI agent asks to edit a booking, does the model itself change the record, and why must the application check the tool request?
     expected_paths: [knowledge/ai/ai-fundamentals.md]
     required_source_ids: [anthropic-tool-use]
+  - id: agent-workflow-versus-model-directed-loop
+    question: If an assistant always searches one page before answering, is that already an AI agent, and what changes when the model chooses another search after seeing a version mismatch?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-effective-agents]
+  - id: agent-client-tool-request-versus-execution
+    question: When a model asks for search_docs, who executes that client tool, returns the result, and enforces the allowed operation?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-tool-use, openai-function-calling]
+  - id: agent-retrieved-instruction-boundary
+    question: If a retrieved documentation page tells an agent to export private notes, does that page authorize the action, and which boundary prevents it?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-prompt-injection]
+  - id: agent-evaluation-against-fixed-workflow
+    question: How can I tell whether a multi-step documentation agent improves on a fixed search-and-summarize workflow rather than merely producing one fluent answer?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-agent-evals]
   - id: cdn-cache-key-personalized-leak
     question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
     expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]

@@ -16,22 +16,15 @@ import re
 WAVE = re.compile(r"^### Wave \d+ \(", re.MULTILINE)
 CONCEPT_LINK = re.compile(r"^\| \[[^]]+\]\((knowledge/[^)]+\.md)\) \|", re.MULTILINE)
 SUMMARY_ROW = re.compile(r"^\| ([^|]+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$", re.MULTILINE)
-AREAS = {
+AREA_LABELS = {
     "ai": "AI, including the embedded OKF example",
-    "cloud": "Cloud",
+    "ai-agents": "AI agents",
     "cross-topic-guides": "Cross-topic guides",
-    "databases": "Databases",
-    "decision-records": "Decision records",
     "devops": "DevOps",
     "finops": "FinOps",
-    "git": "Git",
-    "kubernetes": "Kubernetes",
-    "migrations": "Migrations",
-    "programming-languages": "Programming languages",
-    "security": "Security",
-    "solutions-architect": "Solutions architect",
-    "templates": "Templates",
-    "terraform": "Terraform",
+    "llm": "LLM",
+    "ml": "ML",
+    "mlops": "MLOps",
 }
 ROOT_AREA = "Bundle root (Start here, glossary)"
 
@@ -42,10 +35,8 @@ def area_for(path: str) -> str:
         return ROOT_AREA
     if len(parts) < 3 or parts[0] != "knowledge":
         raise ValueError(f"not a knowledge concept path: {path}")
-    try:
-        return AREAS[parts[1]]
-    except KeyError as error:
-        raise ValueError(f"unclassified knowledge area: {path}") from error
+    section = parts[1]
+    return AREA_LABELS.get(section, section.replace("-", " ").capitalize())
 
 
 def authored_paths(plan: str) -> list[str]:

@@ -265,6 +265,9 @@ or a human review step.
 
 ## Next steps
 
+- [How AI agents use tools](../ai-agents/agent-fundamentals.md) traces a
+  model's tool request through the application and compares an agent
+  with a fixed workflow.
 - [AI tooling](ai-tooling/index.md) maps applications, tools, skills, and
   knowledge bases.
 - [Model Context Protocol](ai-tooling/model-context-protocol.md) explains one

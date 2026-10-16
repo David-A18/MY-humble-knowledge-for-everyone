@@ -1984,11 +1984,23 @@ points to the official Python and MDN learning routes.
 | --- | --- | --- | --- |
 | [Programming fundamentals](knowledge/programming-languages/programming-fundamentals.md) | Plain definitions, a limited museum-guide analogy, a three-input Python trace, a flow diagram and text alternative, misconceptions, understanding questions, and official next steps. Linked from the topic index, root, Start here, and glossary. | Claude Opus 5.5 drafted and reviewed it read-only; Codex corrected its Python execution model and verified claims against current official Python and MDN documentation. The exact code block ran on Python 3.14.4 with inputs `30`, `12`, and `warm`; the two valid inputs succeeded and invalid text raised `ValueError`. The diagram rendered and was inspected; two static retrieval cases were added. | Independent programming-education review, a novice trace-and-error task, and a maintained beginner exercise before treating this as a complete programming course. |
 
+### Wave 123 (2026-10-16)
+
+The AI agents section had only an outline. This first page teaches the
+model-directed tool loop, the application's execution and permission
+boundary, the choice of a simpler fixed workflow, and an outcome-based
+way to test whether an agent helped. It is linked from the AI, root,
+Start here, glossary, and parent indexes.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How AI agents use tools](knowledge/ai-agents/agent-fundamentals.md) | Plain definitions, limited dispatcher analogy, invented versioned-document search, tool-request/result example, sequence diagram and text alternative, workflow-versus-agent decision, prompt-injection boundary, baseline evaluation cases, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and two draft reviews. Current Anthropic and OpenAI tool, agent-design, prompt-injection, and evaluation references were checked. The diagram rendered and was inspected; four static retrieval cases were added. No agent, tool call, data export, evaluation run, independent security review, or novice reader task occurred. | Independent agent/security review, a real baseline-versus-agent task study, novice tool-boundary task, and maintainer/freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 170 concepts, all marked `draft`. Every
+The generated catalog records 171 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 122. This accounting does **not** mean that every explanation
+waves 1 to 123. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -2000,6 +2012,7 @@ demonstration, so most teaching elements do not apply there.
 | --- | --- | --- | --- |
 | Bundle root (Start here, glossary) | 2 | 2 | 0 |
 | AI, including the embedded OKF example | 21 | 21 | 0 |
+| AI agents | 1 | 1 | 0 |
 | Cloud | 22 | 22 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -2014,7 +2027,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **170** | **170** | **0** |
+| **Total** | **171** | **171** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
@@ -3701,6 +3714,20 @@ No live cluster,
 backup storage, backup, restore, independent Velero review, or novice
 reader task was available; the guide remains `draft`.
 
+### Focused review round 88 (2026-10-16)
+
+Added the first beginner concept in AI agents after a read-only Claude Opus
+5.5 outline review and two draft reviews. The page traces a fictional
+documentation search through model, application, and tool; distinguishes
+client and provider-run server tools; explains when a fixed workflow is
+enough; and shows the trust boundary around retrieved text. Its evaluation
+examples now include a case where a bounded agent might improve on a
+one-search baseline, a prompt-injection case that checks tool arguments and
+the final answer, and a failed-search case. The sequence diagram rendered
+and was inspected. Four static retrieval cases were added. No agent was
+run, no evaluation or novice reader task took place, and the page remains
+`draft`.
+
 ### Candidates for the next wave
 
 - Run independent technical and security review of the priority operational
@@ -3766,8 +3793,8 @@ existing routes: Kubernetes services, DNS, storage, scheduling, ingress, and
 common workload failures; Terraform modules, providers, backends, variables,
 and workspaces; AWS IAM and networking; and cross-topic deployment examples.
 
-Treat AI agents, LLM, ML, MLOps, programming languages, Azure, and Google
-Cloud as planned coverage until a focused brief establishes a reader need,
+Treat deeper AI agent patterns, LLM, ML, MLOps, programming languages,
+Azure, and Google Cloud as planned coverage until a focused brief establishes a reader need,
 scope, official-source set, and maintainer path. Do not fill an index with
 thin summaries merely to make a category look complete.
 

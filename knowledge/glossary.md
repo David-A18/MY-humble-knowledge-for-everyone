@@ -27,7 +27,7 @@ not yet have a dedicated explanation.
 | How infrastructure changes are planned | [Terraform](terraform/fundamentals/terraform-fundamentals.md), [Plan (Terraform)](terraform/fundamentals/terraform-fundamentals.md), [Terraform state](terraform/fundamentals/state-management.md) |
 | How AI models produce answers | [Model](ai/ai-fundamentals.md), [Training](ai/ai-fundamentals.md), [Inference](ai/ai-fundamentals.md), [LLM](ai/ai-fundamentals.md) |
 | How AI finds knowledge | [RAG](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md), [Provenance](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) |
-| How AI applications act | [AI agent](ai/ai-fundamentals.md), [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) |
+| How AI applications act | [AI agent](ai-agents/agent-fundamentals.md), [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) |
 
 ## All terms
 
@@ -41,7 +41,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [ADR](decision-records/index.md) | Architecture Decision Record; a short document that captures context, decision, and consequences. |
 | [Agent knowledge base](ai/ai-tooling/knowledge-bases/reference-architecture.md) | An organized collection of pages that a person or AI agent can search, read, cite, and keep up to date with clear source and review information. |
 | [AI](ai/ai-fundamentals.md) | Artificial Intelligence; systems that use inputs to produce predictions, recommendations, decisions, or content for a goal. |
-| [AI agent](ai/ai-fundamentals.md) | In one common meaning, an application where a model chooses its next steps and tool calls within the tools and permissions it is given. |
+| [AI agent](ai-agents/agent-fundamentals.md) | In one common meaning, an application where a model chooses its next steps and tool calls within the tools and permissions it is given. |
 | API | Application Programming Interface; a defined way for one program to request information or actions from another. |
 | [API gateway](kubernetes/applications-and-tools/apache-apisix.md) | A traffic entry point that routes API requests and can apply configured policies such as authentication or rate limits. |
 | API product | Apigee bundle of API resources exposed to developers with access, quota, approval, and credential behavior. |

@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 170,
+  "concept_count": 171,
   "concepts": [
     {
       "audience": "Curious learners and beginning engineers",
@@ -446,6 +446,33 @@
         "model-context-protocol"
       ],
       "title": "Model Context Protocol",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Curious learners and beginning engineers",
+      "description": "Understand an AI agent's tool loop, who actually runs a tool, when a simpler workflow is enough, and how to check an agent's result.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/ai-agents/agent-fundamentals.md",
+      "source_ids": [
+        "anthropic-effective-agents",
+        "anthropic-tool-use",
+        "openai-function-calling",
+        "anthropic-prompt-injection",
+        "anthropic-agent-security",
+        "anthropic-agent-evals",
+        "openai-agent-guide"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "ai-agents",
+        "tools",
+        "workflows",
+        "evaluation",
+        "beginner"
+      ],
+      "title": "How AI agents use tools",
       "type": "Explanation"
     },
     {

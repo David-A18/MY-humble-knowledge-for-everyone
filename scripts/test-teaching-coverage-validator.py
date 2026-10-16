@@ -19,6 +19,16 @@ PLAN = Path("knowledge-content-quality-expansion-plan.md").read_text(encoding="u
 
 
 class TeachingCoverageTests(unittest.TestCase):
+    def test_new_topic_area_uses_a_readable_label(self) -> None:
+        self.assertEqual(
+            MODULE.area_for("knowledge/observability/fundamentals.md"),
+            "Observability",
+        )
+        self.assertEqual(
+            MODULE.area_for("knowledge/ai-agents/agent-fundamentals.md"),
+            "AI agents",
+        )
+
     def test_current_accounting(self) -> None:
         self.assertEqual(MODULE.validate(CATALOG, PLAN), [])
 
