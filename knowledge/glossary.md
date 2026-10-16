@@ -25,7 +25,7 @@ not yet have a dedicated explanation.
 | How a small program runs | [Source code](programming-languages/programming-fundamentals.md), [Interpreter](programming-languages/programming-fundamentals.md), [Variable](programming-languages/programming-fundamentals.md), [Function](programming-languages/programming-fundamentals.md) |
 | How Kubernetes keeps apps running | [Desired state](kubernetes/fundamentals/kubernetes-fundamentals.md), [Current state](kubernetes/fundamentals/kubernetes-fundamentals.md), [Reconciliation](kubernetes/fundamentals/kubernetes-fundamentals.md), [Deployment](kubernetes/fundamentals/kubernetes-fundamentals.md) |
 | How infrastructure changes are planned | [Terraform](terraform/fundamentals/terraform-fundamentals.md), [Plan (Terraform)](terraform/fundamentals/terraform-fundamentals.md), [Terraform state](terraform/fundamentals/state-management.md) |
-| How AI models produce answers | [Model](ai/ai-fundamentals.md), [Training](ai/ai-fundamentals.md), [Inference](ai/ai-fundamentals.md), [LLM](ai/ai-fundamentals.md) |
+| How AI models produce answers | [Model](ai/ai-fundamentals.md), [Training](ai/ai-fundamentals.md), [Inference](ai/ai-fundamentals.md), [LLM](llm/llm-fundamentals.md), [Token (AI)](llm/llm-fundamentals.md) |
 | How AI finds knowledge | [RAG](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md), [Provenance](ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md) |
 | How AI applications act | [AI agent](ai-agents/agent-fundamentals.md), [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) |
 
@@ -138,7 +138,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | [Kubernetes](kubernetes/fundamentals/kubernetes-fundamentals.md) | A system for running containerized applications across a cluster and reconciling them toward declared state. |
 | [Label (Kubernetes)](kubernetes/core-objects/how-a-service-selects-pods.md) | A key-value tag on an object; many objects can share the same label. |
 | Least privilege | Granting only the permissions needed to perform a task. |
-| [LLM](ai/ai-fundamentals.md) | Large Language Model; a model trained at large scale on language data, commonly used to read input as tokens and produce a response as tokens. |
+| [LLM](llm/llm-fundamentals.md) | Large Language Model; a model trained at large scale on language data, commonly used to read input as tokens and produce a response as tokens. |
 | Machine-owned region | In this knowledge base's workflow, a page region generated from a structured source and protected from manual changes. |
 | Managed Resource | Crossplane provider-defined Kubernetes object that represents an external resource. |
 | Managed Resource Activation Policy | Crossplane v2 policy that activates selected managed-resource APIs from a provider. |
@@ -221,7 +221,7 @@ Jump to [A to F](#a-to-f), [G to M](#g-to-m), [N to S](#n-to-s), or
 | Task role | IAM role associated with an ECS task that grants application containers permission to call AWS APIs. |
 | [Terraform](terraform/fundamentals/terraform-fundamentals.md) | An Infrastructure as Code tool that uses state to find managed objects, compares their current condition with configuration, and can apply approved changes. |
 | [Terraform state](terraform/fundamentals/state-management.md) | A record mapping resource addresses to managed object identities and attributes; it may contain secrets. |
-| [Token (AI)](ai/ai-fundamentals.md) | A small piece of text, or other encoded content, that a language model reads or produces. |
+| [Token (AI)](llm/llm-fundamentals.md) | A small piece of text, or other encoded content, that a language model reads or produces. |
 | [Tool (AI agent)](ai/ai-tooling/model-context-protocol.md) | A callable capability exposed to an AI model or agent so it can query data, perform computation, or take an action. |
 | [Tooling cluster](kubernetes/applications-and-tools/tooling-clusters.md) | A Kubernetes cluster chosen to host shared platform services; target clusters still keep their own control planes and local requirements. |
 | [Training (AI)](ai/ai-fundamentals.md) | A process that uses data to build or adjust a model before it is used on new input. |

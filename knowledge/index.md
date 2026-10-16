@@ -18,6 +18,7 @@ growing; topic indexes distinguish published pages from planned coverage.
 | Understand how Git tracks and shares changes | [Git fundamentals](git/git-fundamentals.md) | Picture the working tree, index, commits, branches, and remotes before running recovery commands. |
 | Understand cloud computing before choosing a provider | [Cloud computing fundamentals](cloud/cloud-computing-fundamentals.md) | Explain the provider's role, your responsibilities, scaling, reliability, and usage-based cost. |
 | Understand AI before choosing a tool | [AI fundamentals](ai/ai-fundamentals.md) | Separate ML, generative AI, language models, assistants, and agents; check outputs against sources. |
+| Understand how an LLM produces text | [How a large language model produces a response](llm/llm-fundamentals.md) | Follow context and tokens through one answer, then check a claim against its source. |
 | Understand how an AI agent uses tools | [How AI agents use tools](ai-agents/agent-fundamentals.md) | Trace a read-only tool request, its result, and the choice between a fixed workflow and an agent. |
 | Understand how a program runs | [Programming fundamentals](programming-languages/programming-fundamentals.md) | Trace source code, input, a function and condition, and output in a small Python example. |
 | Understand Kubernetes before running commands | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | See how desired state, controllers, Pods, and Services fit together. |
@@ -60,7 +61,7 @@ growing; topic indexes distinguish published pages from planned coverage.
 
 - [AI](ai/index.md) - Beginner AI concepts, tooling, MCP, knowledge bases, and safe engineering use.
 - [AI agents](ai-agents/index.md) - Beginner tool-loop explanation and links to deeper workflow, retrieval, and evaluation guidance.
-- [LLM](llm/index.md) - Planned LLM route; begin with AI fundamentals, then explore current retrieval material in AI tooling.
+- [LLM](llm/index.md) - Beginner text-generation explanation and links to deeper context and retrieval guidance.
 - [ML](ml/index.md) and [MLOps](mlops/index.md) - Outlines only, with no articles yet; begin with AI fundamentals.
 - [Solutions architect](solutions-architect/index.md) - Design trade-offs, proofs of concept, and architecture reviews.
 - [Cross-topic guides](cross-topic-guides/index.md) - End-to-end workflows across technologies.

@@ -1996,11 +1996,23 @@ Start here, glossary, and parent indexes.
 | --- | --- | --- | --- |
 | [How AI agents use tools](knowledge/ai-agents/agent-fundamentals.md) | Plain definitions, limited dispatcher analogy, invented versioned-document search, tool-request/result example, sequence diagram and text alternative, workflow-versus-agent decision, prompt-injection boundary, baseline evaluation cases, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and two draft reviews. Current Anthropic and OpenAI tool, agent-design, prompt-injection, and evaluation references were checked. The diagram rendered and was inspected; four static retrieval cases were added. No agent, tool call, data export, evaluation run, independent security review, or novice reader task occurred. | Independent agent/security review, a real baseline-versus-agent task study, novice tool-boundary task, and maintainer/freshness decision. |
 
+### Wave 124 (2026-10-16)
+
+The LLM section had only an outline. Its first beginner concept shows how
+one supplied request becomes a text response through context and token
+generation. It distinguishes current evidence from training and makes the
+reader check a fluent answer against its source. The page is reachable from
+the AI, root, Start here, glossary, and parent routes.
+
+| Concept | Teaching pass | Evidence actually recorded | Still needed |
+| --- | --- | --- | --- |
+| [How a large language model produces a response](knowledge/llm/llm-fundamentals.md) | Plain definitions, limited mosaic analogy, invented documentation-answer mismatch, token-generation diagram and text alternative, training/retrieval/context table, misconceptions, self-check, and official next steps. | Claude Opus 5.5 gave a read-only outline and draft review. Current Google, OpenAI, Anthropic, and NIST primary sources were checked. The diagram rendered and was inspected; three static retrieval cases were added. No model run, live search, independent technical review, or novice reader task occurred. | Independent AI education review, novice token/context/source task, a real answer-quality exercise, and maintainer/freshness decision. |
+
 ### Not yet reviewed against the teaching standard
 
-The generated catalog records 171 concepts, all marked `draft`. Every
+The generated catalog records 172 concepts, all marked `draft`. Every
 catalog concept now has an initial teaching or format-integrity pass in
-waves 1 to 123. This accounting does **not** mean that every explanation
+waves 1 to 124. This accounting does **not** mean that every explanation
 has passed independent technical review, novice reader tasks, or live
 operational tests. Selected waves received Opus review, but none completed
 the full independent domain-review and reader-task gates.
@@ -2013,6 +2025,7 @@ demonstration, so most teaching elements do not apply there.
 | Bundle root (Start here, glossary) | 2 | 2 | 0 |
 | AI, including the embedded OKF example | 21 | 21 | 0 |
 | AI agents | 1 | 1 | 0 |
+| LLM | 1 | 1 | 0 |
 | Cloud | 22 | 22 | 0 |
 | Cross-topic guides | 16 | 16 | 0 |
 | Databases | 11 | 11 | 0 |
@@ -2027,7 +2040,7 @@ demonstration, so most teaching elements do not apply there.
 | Solutions architect | 1 | 1 | 0 |
 | Templates | 5 | 5 | 0 |
 | Terraform | 5 | 5 | 0 |
-| **Total** | **171** | **171** | **0** |
+| **Total** | **172** | **172** | **0** |
 
 All five Terraform and all 17 Git concepts have now received an initial
 teaching pass. Their drafts still need independent review and reader tasks
@@ -3727,6 +3740,19 @@ the final answer, and a failed-search case. The sequence diagram rendered
 and was inspected. Four static retrieval cases were added. No agent was
 run, no evaluation or novice reader task took place, and the page remains
 `draft`.
+
+### Focused review round 89 (2026-10-16)
+
+Added the first LLM beginner concept after a Claude Opus 5.5 read-only
+outline and a draft review. The page follows a fictional documentation
+question from application-supplied context through token generation to a
+source check. The review corrected the context-window and conversation-state
+explanations, scoped its claims about tool search to the example, clarified
+why a supplied source can still be misread, and moved the answer guide
+beside the questions. Google, OpenAI, Anthropic, and NIST primary pages were
+checked. The diagram rendered and was inspected, and three static retrieval
+cases were added. No model run, live search, independent domain review, or
+novice reader task occurred; the page is `draft`.
 
 ### Candidates for the next wave
 

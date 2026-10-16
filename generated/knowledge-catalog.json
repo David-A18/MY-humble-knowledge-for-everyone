@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 171,
+  "concept_count": 172,
   "concepts": [
     {
       "audience": "Curious learners and beginning engineers",
@@ -3804,6 +3804,31 @@
       ],
       "title": "Diagnose a local image pull in kind",
       "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Curious learners and beginning engineers",
+      "description": "Follow one text response from supplied context through tokens to output, and learn why a fluent answer still needs checking.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/llm-fundamentals.md",
+      "source_ids": [
+        "google-llm-introduction",
+        "openai-key-concepts",
+        "openai-conversation-state",
+        "anthropic-context-windows",
+        "nist-genai-profile"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "tokens",
+        "context-window",
+        "inference",
+        "beginner"
+      ],
+      "title": "How a large language model produces a response",
+      "type": "Explanation"
     },
     {
       "audience": "Beginning EKS platform and application teams",

@@ -362,6 +362,18 @@ cases:
     question: When an AI agent asks to edit a booking, does the model itself change the record, and why must the application check the tool request?
     expected_paths: [knowledge/ai/ai-fundamentals.md]
     required_source_ids: [anthropic-tool-use]
+  - id: llm-token-sequence-versus-whole-answer
+    question: Does a large language model write an entire answer at once or extend a sequence token by token, and is each token always a whole word?
+    expected_paths: [knowledge/llm/llm-fundamentals.md]
+    required_source_ids: [google-llm-introduction, openai-key-concepts]
+  - id: llm-context-history-versus-training
+    question: If an assistant includes an earlier message or a retrieved page in the current context, did that retrain the model, and does API-managed history avoid the context-window limit?
+    expected_paths: [knowledge/llm/llm-fundamentals.md]
+    required_source_ids: [openai-conversation-state, anthropic-context-windows]
+  - id: llm-fluent-answer-source-check
+    question: Can a fluent language-model answer contradict a documentation excerpt supplied in its context, and what should the reader check?
+    expected_paths: [knowledge/llm/llm-fundamentals.md]
+    required_source_ids: [nist-genai-profile]
   - id: agent-workflow-versus-model-directed-loop
     question: If an assistant always searches one page before answering, is that already an AI agent, and what changes when the model chooses another search after seeing a version mismatch?
     expected_paths: [knowledge/ai-agents/agent-fundamentals.md]

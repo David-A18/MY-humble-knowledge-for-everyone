@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a first LLM beginner explanation of context, token-by-token text generation, retrieval versus training, and source checking; linked it from the beginner routes and added three retrieval cases.
 - Added the first AI agents explanation, connecting a model-directed tool loop to application execution, fixed-workflow choices, untrusted results, and measurable task outcomes; linked it from the beginner routes and added four retrieval cases.
 - Tightened the Velero one-ConfigMap exercise with exact-name preflight, a target-absence check, restore provenance labels, safer named-resource cleanup, and three static retrieval cases.
 - Clarified EKS identity boundaries between Kubernetes authorization, IRSA trust, Pod Identity associations, IMDS, and effective AWS permissions; revised the diagram and added four static retrieval cases.

@@ -40,6 +40,7 @@ later is needed only if you choose the hands-on local route.
 | How an outside web request reaches a service | [Gateway API and Ingress](kubernetes/applications-and-tools/gateway-api-and-ingress.md) | A route describes traffic; an implementation serves it. |
 | How cloud costs get an owner | [Cost allocation basics](finops/cost-allocation-basics.md) | Direct, shared, and still unallocated cost need different decisions. |
 | What AI, ML, language models, and agents mean | [AI fundamentals](ai/ai-fundamentals.md) | Tell a trained model from the application around it, and explain why an answer needs checking. |
+| How a language model produces a text answer | [How a large language model produces a response](llm/llm-fundamentals.md) | Trace supplied context, tokens, and the source check without confusing them with training. |
 | How an AI agent chooses and uses a tool | [How AI agents use tools](ai-agents/agent-fundamentals.md) | Tell a model's tool request from the application that executes it; decide when a fixed workflow is enough. |
 | How a knowledge search finds evidence for an AI answer | [Retrieval and context efficiency](ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md) | Search finds candidates; fetching and checking sources support an answer. Read [AI fundamentals](ai/ai-fundamentals.md) first if AI tooling is new to you. |
 | What “Bootstrap” means in web work | [Bootstrap and bootstrapping](programming-languages/bootstrap-and-bootstrapping.md) | The UI toolkit and first-time system setup are separate ideas. |
