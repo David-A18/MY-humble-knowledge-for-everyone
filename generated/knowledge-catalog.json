@@ -3820,6 +3820,8 @@
         "velero-restore-reference",
         "velero-how",
         "velero-locations",
+        "velero-minio",
+        "velero-resource-filtering",
         "k8s-service-accounts"
       ],
       "stale_after": null,

@@ -1791,7 +1791,7 @@ Those are separate, more advanced tasks with their own official docs.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Back up and restore one ConfigMap with Velero](knowledge/migrations/velero/backup-restore-workflows.md) | One-note archive analogy, object path diagram and text alternative, guarded preflight, narrow object backup, mapped restore, value check, and conditional cleanup. | Opus 5.5 read-only review of the prior command catalog identified live-production and PVC-data risks; Velero v1.18 backup, restore, and how-it-works docs checked. Shell blocks parsed with `bash -n`; diagram rendered and inspected. No live Velero server, backup location, Kubernetes cluster, backup, restore, or reader task was available. | Run in disposable cluster with real backup storage and record output; independent Velero review; novice task; freshness decision. |
+| [Back up and restore one ConfigMap with Velero](knowledge/migrations/velero/backup-restore-workflows.md) | One-note archive analogy, server-mediated object path diagram and text alternative, exact-name preflight, one-object backup list, target-absence check, mapped restore, value and provenance-label checks, named-resource cleanup, and conditional isolated-cluster namespace cleanup. | Two Opus 5.5 read-only reviews identified unsafe namespace deletion, weak restore evidence, and an inaccurate data-flow diagram; Velero v1.18 backup, restore, location, filtering, and Minio docs and Kubernetes ServiceAccount guidance checked. No live Velero server, backup location, Kubernetes cluster, backup, restore, or reader task was available. | Run in disposable cluster with real backup storage and record output; independent Velero review; novice task; freshness decision. |
 
 ### Wave 110 (2026-10-05)
 
@@ -3679,6 +3679,27 @@ trust-policy conditions on those tags. Four static retrieval cases were
 added and the revised diagram rendered and was inspected. No cluster,
 credential exchange, controlled IAM test, independent security review, or
 novice reader task ran. Both pages remain `draft`.
+
+### Focused review round 87 (2026-10-16)
+
+Revisited the beginner Velero ConfigMap backup-and-restore guide with
+Claude Opus 5.5 read-only. Its preflight now checks the exact backup and
+restore names; the backup gate requires a completed phase, the chosen
+storage location, and clean result counts. The prepared target is checked
+for the absence of the named ConfigMap before restore. The outcome check
+compares the value and Velero's backup and restore provenance labels,
+instead of trusting the Restore phase alone. Cleanup removes the two
+named ConfigMaps and Velero records. Namespace deletion is shown for an
+isolated disposable cluster or after an owner checks all resources. The
+diagram distinguishes Backup and Restore requests from the server's
+reads and writes, and three static
+retrieval cases cover the new safety and evidence questions.
+
+The Velero v1.18 backup, restore, filtering, storage-location, and Minio
+references and Kubernetes ServiceAccount documentation were checked.
+No live cluster,
+backup storage, backup, restore, independent Velero review, or novice
+reader task was available; the guide remains `draft`.
 
 ### Candidates for the next wave
 

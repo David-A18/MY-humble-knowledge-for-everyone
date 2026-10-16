@@ -594,6 +594,18 @@ cases:
     question: How do I create and inspect a Velero restore?
     expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
     required_source_ids: [velero-restore-reference]
+  - id: velero-restore-target-absent
+    question: Before restoring one ConfigMap into a prepared namespace, why must I confirm the named target ConfigMap is absent, and is the namespace itself expected to be empty?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
+  - id: velero-restore-provenance
+    question: After a Velero namespace-mapped ConfigMap restore reports Completed, what value and labels should I check before concluding Velero recreated the note?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
+  - id: velero-exercise-cleanup-scope
+    question: How do I clean up a Velero ConfigMap backup-and-restore exercise without deleting unrelated resources that may now be in its namespaces?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
   - id: crossplane-components
     question: What are Crossplane providers, managed resources, XRDs, compositions, and XRs?
     expected_paths: [knowledge/kubernetes/crossplane/component-model.md]
