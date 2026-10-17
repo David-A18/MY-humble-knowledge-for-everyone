@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-10-17
+
+- **AWS security groups beginner review**: Replaced the one-sided web-to-database diagram with outbound and inbound checks and a tracked reply through both groups. Explained dynamic private-address group references, AWS and Terraform starting rules, combined allow rules across multiple associated groups, and why a database permission error needs application identity checks. Claude Opus 5.5 reviewed the original and revised page read-only; current AWS and HashiCorp primary guidance was checked separately, the diagram rendered and was inspected, and three static retrieval cases were added. No EC2 path, database, independent network-security review, or novice task ran; the page remains `draft`.
+
 ## 2026-10-16
 
 - **AWS stateful networking beginner review**: Replaced the abstract packet path with one internet-client HTTPS sequence and explicit destination ports for inbound and return ACL checks. Distinguished the default ACL from a custom ACL, the internet gateway's inbound translation from the subnet route used by replies, group connection-tracking exceptions, host firewall scope, and Flow Logs evidence limits. Claude Opus 5.5 reviewed the page twice read-only; current AWS primary documentation was checked, the revised diagram rendered and was inspected, and three static retrieval cases were added. No VPC, live packet, independent network-security review, or novice task ran; the page remains `draft`.

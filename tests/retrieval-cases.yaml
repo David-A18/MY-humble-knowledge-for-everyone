@@ -362,6 +362,18 @@ cases:
     question: Does a security group always track every allowed flow, and will removing a rule immediately end an existing tracked connection?
     expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
     required_source_ids: [aws-connection-tracking]
+  - id: aws-security-groups-new-web-to-database-request
+    question: For a web EC2 instance to start a PostgreSQL connection on TCP 5432, which outbound and inbound security-group checks matter, and does the tracked reply need reverse rules?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [aws-sg-rules, aws-connection-tracking]
+  - id: aws-security-groups-reference-versus-database-permission
+    question: Does referencing the web security group in a database inbound rule copy its rules or grant database-user access, and what should I do if the database returns permission denied?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [aws-sg-rules]
+  - id: aws-security-groups-no-egress-versus-tracked-reply
+    question: If a Terraform-created web security group has no outbound rules and is the only associated group, can the instance start a database connection or answer a separately allowed tracked inbound request, and what if another group permits egress?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [terraform-aws-sg, aws-connection-tracking]
   - id: ai-first-terms-and-trust
     question: As a beginner, how do AI, machine learning, generative AI, LLMs, assistants, and agents differ, and why should I check a generated answer?
     expected_paths: [knowledge/ai/ai-fundamentals.md]

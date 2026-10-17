@@ -808,14 +808,14 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Understand how an AWS security group allows traffic to a resource, how group references work, and what to check when access fails.",
+      "description": "Follow a web-to-database request through both AWS security groups, then distinguish network permission from application access.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/security-groups.md",
       "source_ids": [
         "aws-sg",
         "aws-sg-rules",
-        "aws-vpc-security",
+        "aws-connection-tracking",
         "aws-default-sg",
         "terraform-aws-sg"
       ],

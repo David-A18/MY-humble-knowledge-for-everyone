@@ -732,7 +732,7 @@ resource and explains what a source-group reference does and does not do.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [Security groups](knowledge/cloud/aws/networking/security-groups.md) | Rewritten with a web-to-database model, bounded group-reference example, limited guest-list analogy, direction and association questions, and a separate return-path route. | Keyed Amazon VPC security-group, rule, and VPC security documentation. The scenario is invented; no AWS rule or packet test ran. | Independent AWS network-security review; a real path and rule test; reader test; freshness decision. |
+| [Security groups](knowledge/cloud/aws/networking/security-groups.md) | Rewritten with a web-to-database model, bounded group-reference example, limited guest-list analogy, direction and association questions, and a separate return-path route. Focused round 93 shows the outbound and inbound checks and tracked reply through both groups, dynamic private-address membership, provider-specific egress defaults, combined-group behavior, and the boundary between a network allow and database authorization. | Claude Opus 5.5 reviewed the original and revised page read-only; current Amazon VPC, EC2 tracking, and HashiCorp provider documentation was checked separately. The revised diagram rendered and was inspected; three static retrieval cases were added. The scenario is invented; no AWS rule or packet test ran. | Independent AWS network-security review; a real path and rule test; novice reader test; freshness decision. |
 
 The Amazon VPC documentation was consulted on 2026-09-30. This page does
 not certify a specific security-group configuration or application access.
@@ -3817,6 +3817,21 @@ primary documentation was checked separately. The sequence diagram
 rendered and was inspected, and three static retrieval cases were added.
 No VPC, packet capture, independent network-security review, or novice
 reader task ran; the explanation remains `draft`.
+
+### Focused review round 93 (2026-10-17)
+
+Re-reviewed the AWS security-groups explanation twice with Claude Opus 5.5.
+The first review found that the diagram omitted the web group's outbound
+check and skipped both groups on the reply. It also identified missing
+definitions for tracking, dynamic group membership, private-address scope,
+and the difference between no egress for a new request and a tracked reply.
+The second review found a more important combined-group error: a second
+associated group can allow egress even when the named web group has none.
+The page, diagnosis, and answer guide now check all associated groups.
+Current AWS and HashiCorp primary documentation was checked separately;
+the revised sequence diagram rendered and was inspected, and three static
+retrieval cases were added. No EC2 or database path, independent network
+security review, or novice reader task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 
