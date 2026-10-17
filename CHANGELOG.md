@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified CloudFront's ordered behavior matching, public asset caching versus signed-in API forwarding, zero-TTL privacy boundary, and separate S3 and ALB origin protection; added three retrieval cases.
 - Added a first ML beginner explanation of labeled examples, training, validation and test roles, inference, simple baselines, and shortcut failures; linked it from the beginner routes and added three retrieval cases.
 - Added a first MLOps beginner explanation of versioned release, delayed-label monitoring, changed policy versus skew or application bugs, and rollback limits; linked it from the beginner routes and added four retrieval cases.
 - Clarified AWS stateful networking with an IPv4 request-and-reply sequence, destination-port rule table, default ACL behavior, connection-tracking exceptions, and Flow Logs limits; added three retrieval cases.

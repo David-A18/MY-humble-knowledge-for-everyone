@@ -781,7 +781,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Understand how a CloudFront distribution routes site requests to origins, applies edge policies, and exposes AWS applications safely.",
+      "description": "Trace an asset cache hit and a signed-in API request through CloudFront's ordered routes, cache policies, and separate origin controls.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/cloudfront.md",
@@ -790,9 +790,13 @@
         "cloudfront-cache-behaviors",
         "cloudfront-cache-policy",
         "cloudfront-origin-request-policy",
+        "cloudfront-managed-cache-policies",
+        "cloudfront-authorization-header",
         "cloudfront-alternate-domain",
         "cloudfront-origin-protocol",
+        "cloudfront-origin-settings",
         "cloudfront-s3-oac",
+        "cloudfront-restrict-alb",
         "cloudfront-waf",
         "cloudfront-logging"
       ],

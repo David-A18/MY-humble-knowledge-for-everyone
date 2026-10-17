@@ -458,6 +458,18 @@ cases:
     question: Does a CDN TTL force a cached response to be discarded, and do CloudFront origin-request functions run on a cache hit?
     expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md]
     required_source_ids: [rfc-9111-http-caching, cloudfront-edge-events]
+  - id: cloudfront-first-path-rule-and-asset-hit
+    question: For /assets/logo-v3.svg, which ordered CloudFront behavior handles the request, and when can the edge answer without contacting the private S3 origin?
+    expected_paths: [knowledge/cloud/aws/networking/cloudfront.md]
+    required_source_ids: [cloudfront-cache-behaviors, cloudfront-how-it-works]
+  - id: cloudfront-private-api-identity-and-cache
+    question: For a signed-in GET /api/orders request through CloudFront, how do I disable response reuse and still send the Authorization header to the ALB application?
+    expected_paths: [knowledge/cloud/aws/networking/cloudfront.md]
+    required_source_ids: [cloudfront-managed-cache-policies, cloudfront-authorization-header]
+  - id: cloudfront-s3-oac-versus-public-alb
+    question: If CloudFront OAC keeps the S3 bucket private, does it also stop someone reaching the public ALB directly, and what origin-access control needs separate review?
+    expected_paths: [knowledge/cloud/aws/networking/cloudfront.md]
+    required_source_ids: [cloudfront-s3-oac, cloudfront-restrict-alb]
   - id: oidc-signin-versus-workload-federation
     question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
     expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]

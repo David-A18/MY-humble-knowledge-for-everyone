@@ -940,7 +940,7 @@ general caching lesson.
 
 | Concept | Teaching pass | Evidence actually recorded | Still needed |
 | --- | --- | --- | --- |
-| [CloudFront](knowledge/cloud/aws/networking/cloudfront.md) | Rewritten with a limited reception-desk analogy, ordered path-rule example, routing diagram, separate viewer and origin TLS, S3 OAC, WAF, logging limits, and understanding checks. | Keyed current Amazon CloudFront documentation for delivery, behaviours, policies, domains, origin protocol, OAC, WAF, and logging. The site and requests are invented; no distribution was configured or queried. | Independent CloudFront/security review; controlled routing, TLS, cache, and direct-origin checks; reader test; freshness decision. |
+| [CloudFront](knowledge/cloud/aws/networking/cloudfront.md) | Rewritten with a limited reception-desk analogy, ordered path-rule example, routing diagram, separate viewer and origin TLS, S3 OAC, WAF, logging limits, and understanding checks. Focused round 94 adds a cached public asset versus signed-in API trace, a first-match counterexample, a zero-TTL privacy boundary, and distinct S3 and ALB origin protection. | Claude Opus 5.5 reviewed the original and revised page read-only; current AWS CloudFront cache, authorization-header, behavior, S3, ALB, and origin-certificate documentation was checked separately. The revised diagram rendered and was inspected; three static retrieval cases were added. The site and requests are invented; no distribution was configured or queried. | Independent CloudFront/security review; controlled routing, TLS, cache, and direct-origin checks; reader test; freshness decision. |
 
 ### Wave 36 (2026-10-01)
 
@@ -3832,6 +3832,23 @@ Current AWS and HashiCorp primary documentation was checked separately;
 the revised sequence diagram rendered and was inspected, and three static
 retrieval cases were added. No EC2 or database path, independent network
 security review, or novice reader task ran; the page remains `draft`.
+
+### Focused review round 94 (2026-10-17)
+
+Re-reviewed the CloudFront explanation twice with Claude Opus 5.5. The first review found
+that the original page hid the risk of forwarding identity outside the cache
+key, did not show a first-match collision, and treated the S3 and ALB origin
+boundaries too similarly. The revision traces a public asset and a signed-in
+API request, states the positive-minimum-TTL privacy trap, and separates OAC
+from ALB direct-access controls. The second review caught a first-match
+wording error and an incomplete origin-certificate name rule. Current AWS
+primary documentation was checked separately; in particular, AWS currently
+documents forwarding the viewer's
+`Authorization` header through an origin request policy while disabling
+caching for origin-authorized responses. The diagram rendered and was inspected,
+and three static retrieval cases were added. No CloudFront distribution,
+application, ALB, or S3 request, independent security review, or novice reader
+task ran; the page remains `draft`.
 
 ### Candidates for the next wave
 

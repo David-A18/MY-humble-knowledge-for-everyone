@@ -2,6 +2,7 @@
 
 ## 2026-10-17
 
+- **CloudFront beginner review**: Traced an invented public asset and signed-in API through ordered behaviors, cache or origin request, and separate S3 and ALB protections. Added a path-rule collision, positive-minimum-TTL warning, revised diagram, and three static retrieval cases. Claude Opus 5.5 reviewed the original and revised page read-only; current AWS documentation was checked separately, and the revised diagram rendered and was inspected. No distribution, origin request, independent security review, or novice task ran; the page remains `draft`.
 - **AWS security groups beginner review**: Replaced the one-sided web-to-database diagram with outbound and inbound checks and a tracked reply through both groups. Explained dynamic private-address group references, AWS and Terraform starting rules, combined allow rules across multiple associated groups, and why a database permission error needs application identity checks. Claude Opus 5.5 reviewed the original and revised page read-only; current AWS and HashiCorp primary guidance was checked separately, the diagram rendered and was inspected, and three static retrieval cases were added. No EC2 path, database, independent network-security review, or novice task ran; the page remains `draft`.
 
 ## 2026-10-16
