@@ -1,221 +1,172 @@
 ---
 type: "Explanation"
 title: "Amazon ECS"
-description: "Use this guide to understand Amazon Elastic Container Service (Amazon ECS), what runs there, how its main components fit together, and which operational patterns are practical in real AWS environments."
+description: "Understand how Amazon ECS turns a container definition into running tasks, keeps a service available, and chooses compute capacity."
 tags: [cloud, aws, compute]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: ecs-task-definitions
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html
+    title: Amazon ECS Developer Guide - Task definitions
+  - id: ecs-services
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html
+    title: Amazon ECS Developer Guide - Services
+  - id: ecs-capacity
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html
+    title: Amazon ECS Developer Guide - Launch types and capacity providers
+  - id: ecs-task-role
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
+    title: Amazon ECS Developer Guide - Task IAM role
+  - id: ecs-execution-role
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
+    title: Amazon ECS Developer Guide - Task execution IAM role
+  - id: ecs-task-networking
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html
+    title: Amazon ECS Developer Guide - Allocate a task network interface
+  - id: ecs-load-balancing
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html
+    title: Amazon ECS Developer Guide - Use load balancing for service traffic
+  - id: ecs-storage
+    resource: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html
+    title: Amazon ECS Developer Guide - Storage options for tasks
 ---
 
 # Amazon ECS
 
 ## Purpose
 
-Use this guide to understand Amazon Elastic Container Service (Amazon ECS), what runs there, how its main components fit together, and which operational patterns are practical in real AWS environments.
+Amazon Elastic Container Service (ECS) runs and manages containers on AWS.
+You describe what should run; ECS starts **tasks** and, for a long-running
+application, keeps the requested number running through a **service**. A
+container image supplies the application files, while a task definition
+describes how ECS should run them.[^ecs-task-definitions]
 
-Amazon ECS is AWS-native container orchestration. You define containers, networking, IAM, storage, scaling, and deployment behavior in ECS and adjacent AWS services instead of operating a Kubernetes API, controllers, add-ons, and cluster-level abstractions.
+This page gives the first mental model. It does not tell you to run a live
+deployment. For the later platform choice, use [ECS vs. EKS](ecs-vs-eks.md).
 
-## When to use ECS
+## Why it matters
 
-| Situation | ECS fit | Why |
+A container can stop, a host can disappear, or a new application version can
+be released. ECS separates four questions that people often mix together:
+what to run, which copies are running now, how many should stay running, and
+what compute can host them. A running task does not by itself mean there is
+an ECS service to replace it when it stops.[^ecs-task-definitions][^ecs-services]
+
+Think of a **help desk with two staffed seats**. The task definition is the
+work instruction, each running task is one staffed seat, the service asks for
+two seats to stay staffed, and the capacity provider supplies the space to
+run them. The analogy stops there: a task is software, not a person; it may
+have several containers, its network address can change, and local files do
+not automatically follow its replacement.
+
+| ECS part | Simple meaning | In the help-desk example |
 | --- | --- | --- |
-| Public web application or API | Strong fit | Run an ECS service behind an Application Load Balancer or Network Load Balancer. |
-| Internal microservices | Strong fit | Use Service Connect or AWS Cloud Map for service discovery and service-to-service traffic. |
-| Background workers | Strong fit | Run queue consumers as ECS services and scale from CPU, memory, queue depth, or custom CloudWatch metrics. |
-| Scheduled processing | Strong fit | Use EventBridge Scheduler to run ECS tasks on one-time, rate, or cron schedules. |
-| One-off jobs | Strong fit | Use standalone ECS tasks for migrations, maintenance, and batch-style commands. |
-| Windows containers | Good fit | ECS supports Windows containers on supported Fargate or EC2 options. |
-| GPU workloads | Good fit with managed or EC2 capacity | Use ECS Managed Instances or EC2 GPU capacity when tasks need NVIDIA GPUs. |
-| Durable databases | Usually not the first choice | Prefer managed databases such as RDS, DynamoDB, DocumentDB, ElastiCache, or MSK unless you have a strong reason to run state inside containers. |
+| Cluster | A regional logical place that groups ECS services and tasks. | The desk's operating area. |
+| Task definition | A versioned description of images, CPU, memory, roles, networking, logs, and storage. | The instructions for one seat. |
+| Task | A running instance of a task definition. | One staffed seat now. |
+| Service | Keeps a desired number of tasks running and deploys replacements. | The staffing rule: keep two seats open. |
+| Capacity provider | Chooses the compute strategy used to place tasks. | How the desk gets space and equipment. |
 
-## Mental model
+AWS calls a task definition a blueprint. It can contain one or more
+containers. A task is one instance of that definition; a service maintains
+the desired number of task instances. A standalone task can also be run for
+finite work, but the service scheduler does not replace such a task after it
+finishes.[^ecs-task-definitions][^ecs-services]
 
-| ECS concept | What it means | Kubernetes rough equivalent |
-| --- | --- | --- |
-| Cluster | Regional logical boundary where ECS runs tasks and services on configured capacity. | Cluster, but without a Kubernetes API surface. |
-| Task definition | Versioned JSON blueprint for one or more containers, resources, IAM roles, networking mode, logging, secrets, and volumes. | Pod template plus selected parts of Deployment, ConfigMap, Secret, and volume configuration. |
-| Task | A running instance of a task definition. | Pod. |
-| Service | Keeps a desired number of tasks running and replaces failed or unhealthy tasks. | Deployment or ReplicaSet controller behavior. |
-| Standalone task | A task run directly for finite work. | Job-like one-off Pod, but without Kubernetes Job semantics. |
-| Capacity provider | Strategy for where tasks run and how infrastructure capacity is managed. | Node group, Fargate profile, or autoscaler boundary. |
-| Launch type | Older direct selection of `FARGATE`, `EC2`, or `EXTERNAL`; still useful for task compatibility. | Runtime target, not a direct Kubernetes equivalent. |
-| Service Connect | ECS-managed service discovery, connectivity, and traffic telemetry. | Service discovery plus service-mesh-like connectivity for ECS services. |
-
-## Core components
-
-### Cluster and capacity
-
-An ECS cluster groups services and tasks. It is Regional and can use different infrastructure capacity choices:
-
-| Capacity option | Use when | Operational notes |
-| --- | --- | --- |
-| ECS Managed Instances | You want AWS to manage EC2 provisioning, scaling, patching, and lifecycle while keeping EC2-style flexibility. | AWS currently recommends this for many new workloads because it balances control and operational simplicity. |
-| Fargate | You want serverless container compute with no host management. | Best for variable workloads, simple operations, and teams that do not need host customization. |
-| Fargate Spot | Tasks tolerate interruption. | Good for workers, development, staging, and batch jobs. Design for a two-minute interruption notice. |
-| EC2 Auto Scaling group capacity provider | You need custom AMIs, instance families, GPUs, daemon processes, or host-level control. | You manage more of the instance lifecycle, but ECS can manage cluster scaling through the capacity provider. |
-| External instances | You need ECS to schedule containers on infrastructure outside normal AWS managed capacity. | Useful for hybrid or edge patterns, but adds operational ownership. |
-
-> [!TIP]
-> Prefer capacity providers for launching services and tasks. Use launch types mainly to declare task-definition compatibility.
-
-### Task definitions
-
-A task definition is the deployable contract for a containerized workload. It defines:
-
-- Container images and commands.
-- CPU and memory at task or container level.
-- Linux or Windows platform settings.
-- Network mode, usually `awsvpc`.
-- Port mappings and health checks.
-- Log drivers and destinations.
-- Environment variables and secrets.
-- Task role and task execution role.
-- Volumes such as EBS, EFS, or FSx where supported.
-
-After a task definition revision is registered, ECS can run it as an ECS service or a standalone task.
-
-### Tasks and services
-
-Use an ECS service for long-running applications. The service scheduler maintains the desired task count and replaces tasks that fail container health checks or load balancer target health checks.
-
-Use standalone tasks for finite work such as:
-
-- Data backfills.
-- Database migrations.
-- Report generation.
-- Image processing.
-- Maintenance commands.
-- Operational smoke tests.
-
-Use EventBridge Scheduler when that finite work needs a one-time, rate-based, or cron-based schedule.
-
-## Networking and traffic
-
-### Task networking
-
-For most workloads, use `awsvpc` network mode. In this mode, ECS gives each task its own elastic network interface and private IP address. Security groups can be applied at the task boundary, and containers in the same task can communicate over `localhost`.
-
-| Need | ECS pattern |
-| --- | --- |
-| Internet-facing HTTP or HTTPS | ECS service behind an Application Load Balancer. |
-| TCP or UDP traffic | ECS service behind a Network Load Balancer. |
-| Private service-to-service traffic | Service Connect or AWS Cloud Map. |
-| Private outbound AWS API access | Private subnets with NAT gateway or VPC endpoints. |
-| Task-level firewalling | Security groups attached to task ENIs. |
-
-> [!IMPORTANT]
-> With `awsvpc`, target groups for ECS services normally use target type `ip`, because traffic is sent to task ENIs rather than instance IDs.
-
-### Service discovery
-
-Use Service Connect when you want ECS to manage service discovery, connection behavior, and traffic metrics. Applications can call short service names and standard ports instead of tracking task IPs directly.
-
-Use AWS Cloud Map service discovery when you need DNS-based discovery without the Service Connect proxy behavior.
-
-## Identity, secrets, and security
-
-| Need | ECS control |
-| --- | --- |
-| Application access to AWS APIs | Task role. |
-| ECS agent access to pull images and write logs | Task execution role. |
-| Human or pipeline access to ECS APIs | IAM policies scoped to clusters, services, task definitions, and tags. |
-| Secrets in containers | Secrets Manager or Systems Manager Parameter Store references in task definitions. |
-| Network isolation | VPC subnets, route tables, security groups, private endpoints, and load balancer placement. |
-
-> [!WARNING]
-> Do not put passwords, tokens, or database credentials in plaintext environment variables. Store sensitive values in Secrets Manager or Systems Manager Parameter Store and reference them from the task definition.
-
-## Storage
-
-| Storage option | Use it for | Notes |
-| --- | --- | --- |
-| Ephemeral task storage | Temporary files, caches, scratch space. | Data disappears when the task stops. |
-| Amazon EFS | Shared persistent files for Linux tasks. | Good for content, shared uploads, and horizontally scaled services that need file semantics. |
-| Amazon EBS | Block storage for data-intensive tasks. | Persistence depends on task type and service usage; design carefully for replacement and failure. |
-| FSx for Windows File Server | Windows shared file workloads on EC2. | Use for Windows applications that need SMB-backed shared storage. |
-| FSx for NetApp ONTAP | Enterprise file workloads with NFS/SMB requirements. | Native mounting is EC2-oriented; Fargate can access data through S3 Access Points for FSx where appropriate. |
-| Managed AWS data services | Databases, queues, caches, streams, object storage. | Usually the safest durability boundary for production state. |
-
-## Deployment and scaling
-
-| Capability | ECS approach |
-| --- | --- |
-| Rolling deployment | Update the ECS service to a new task definition revision. |
-| Safer release with traffic validation | ECS blue/green deployment with managed traffic shifting through a load balancer or Service Connect. |
-| Rollback | Revert the service to a previous task definition revision or use blue/green rollback behavior. |
-| Service scaling | ECS Service Auto Scaling through Application Auto Scaling and CloudWatch metrics. |
-| Cluster capacity scaling | Capacity providers, Fargate capacity, ECS Managed Instances, or Auto Scaling group capacity providers. |
-| Scheduled scale changes | Scheduled actions for ECS service scaling. |
-
-### Deploy a new image revision
-
-```bash
-aws ecs register-task-definition --cli-input-json file://task-definition.json
-aws ecs update-service \
-  --cluster production \
-  --service web \
-  --task-definition web:42
+```mermaid
+flowchart LR
+  definition["Task definition revision"] --> service["ECS service: desired 2"]
+  service --> tasks["Running Task A + Task B"]
+  capacity["Capacity provider"] -- "places them" --> tasks
+  alb["Application Load Balancer"] -- "HTTP traffic" --> tasks
 ```
 
-What it does: registers a new task definition revision and asks ECS to deploy that revision to the `web` service.
+Text alternative: one task definition revision tells the ECS service what to
+run. The service maintains two tasks, and the capacity provider supplies
+places to run them. An Application Load Balancer can route HTTP requests to
+both tasks. The diagram distinguishes the desired count from the two actual
+running copies; it does not show a real deployment.
 
-> [!WARNING]
-> `update-service` changes live desired state. Confirm the AWS account, Region, cluster, service, image tag, and rollback revision before running it in production.
+## Example: a photo API
 
-### Run a one-off task
+This application, its task count, and the events below are invented. No AWS
+cluster, task, or request was run.
 
-```bash
-aws ecs run-task \
-  --cluster production \
-  --task-definition maintenance:7 \
-  --capacity-provider-strategy capacityProvider=FARGATE,weight=1 \
-  --network-configuration "awsvpcConfiguration={subnets=[subnet-abc123],securityGroups=[sg-abc123],assignPublicIp=DISABLED}"
-```
+1. A team builds a photo API image and records it in a task definition along
+   with the command, CPU and memory, log settings, and application IAM role.
+2. The ECS service requests **two tasks** from that definition on Fargate.
+   Fargate provides compute without the team managing the underlying hosts.
+3. An Application Load Balancer sends HTTP requests to the tasks. The tasks
+   write durable photos to S3, rather than relying on their local task files.
+4. One task stops. ECS starts a replacement to restore the service's desired
+   count. The new task may have a different network address; the photos
+   remain in S3.[^ecs-services][^ecs-storage]
 
-What it does: starts a standalone Fargate task in selected subnets and security groups for finite maintenance work.
+Fargate is one capacity choice. ECS can also use EC2 Auto Scaling group
+capacity providers and ECS Managed Instances. AWS recommends capacity
+providers to choose where tasks run; task-definition launch-type
+compatibility is a separate setting. Capacity choices change who manages
+hosts and which workload features are available, so they are not merely a
+price switch.[^ecs-capacity]
 
-## Real-life ECS scenarios
+## Boundaries around a running task
 
-| Scenario | ECS solution | Key design choices |
-| --- | --- | --- |
-| Public API | ECS service on Fargate behind ALB. | Private subnets, ALB health checks, task role for AWS access, target tracking on CPU or request count. |
-| Internal microservices | ECS services with Service Connect. | Shared namespace, service-specific task roles, CloudWatch metrics and logs, private traffic only. |
-| Queue workers | ECS service consuming SQS, MSK, or another queue. | Scale from backlog metrics, make processing idempotent, use Fargate Spot only when interruption is acceptable. |
-| Scheduled jobs | EventBridge Scheduler invoking `RunTask`. | Execution role, dead-letter queue where needed, private networking, clear retry behavior. |
-| Image or media processing | ECS tasks on Fargate or EC2. | Use S3 for input/output, EFS for shared intermediate files only when needed, tune CPU and memory per task. |
-| GPU inference | ECS Managed Instances or EC2 GPU capacity provider. | GPU task definition requirements, GPU-capable AMI or managed capacity, model artifact storage outside the container. |
-| Legacy Windows service | Windows containers on supported ECS capacity. | Confirm Windows support for chosen capacity, logging, storage, and image lifecycle. |
+- **Network.** With `awsvpc` networking, a task receives its own network
+  interface and can have task-level security groups. Fargate tasks use this
+  network mode. An ALB is an optional way to send public HTTP requests to an
+  ECS service; the service itself is not automatically internet-facing.
+  [^ecs-task-networking][^ecs-load-balancing]
+- **AWS identity.** A **task role** grants permissions to the application
+  code in the containers, such as reading a specific S3 bucket. A separate
+  **task execution role** lets ECS pull an image or send logs on the task's
+  behalf. Giving the execution role S3 access does not grant that permission
+  to application code.[^ecs-task-role][^ecs-execution-role]
+- **Data.** Task-local files may disappear when a task stops. ECS supports
+  storage choices such as EFS and, under documented conditions, EBS, but
+  durability and replacement behaviour differ by volume and task type.
+  Choose where authoritative data lives before relying on task replacement.
+  [^ecs-storage]
+- **Health.** A service maintains a number of tasks, not a proven user
+  outcome. Container or load-balancer health checks can trigger replacement,
+  but a healthy task can still serve a wrong response. Verify the user path
+  separately.[^ecs-services]
 
-## Practical design checklist
+## Check your understanding
 
-- Choose ECS Managed Instances, Fargate, or EC2 capacity before writing task definitions.
-- Use one ECS service per independently deployable long-running application.
-- Keep task definitions small and versioned through IaC or a deployment pipeline.
-- Use task roles per application permission boundary.
-- Put services in private subnets unless the task itself must have a public IP.
-- Use ALB for HTTP and HTTPS; use NLB for TCP, UDP, static IP, or low-level network requirements.
-- Use Service Connect for ECS-native service-to-service discovery and metrics.
-- Externalize durable state to managed data services where possible.
-- Turn on CloudWatch logs and consider Container Insights for production services.
-- Define rollback and scaling behavior before the first production deployment.
+1. Which object says what to run, and which object asks ECS to keep two
+   copies running?
+2. Why will a one-off task that finishes not be replaced by a service?
+3. Which IAM role does application code use to call S3?
+4. If one photo-API task stops, which data must have been stored outside its
+   local files?
 
-## Official documentation
+## Deeper study
 
-- [Amazon ECS documentation](https://docs.aws.amazon.com/ecs/)
-- [Amazon ECS clusters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html)
-- [Amazon ECS task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)
-- [Amazon ECS services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
-- [ECS launch types and capacity providers](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html)
-- [Interconnect Amazon ECS services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/interconnecting-services.html)
-- [Amazon ECS task networking](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html)
-- [Amazon ECS storage options](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html)
+- [Task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)
+  and [services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
+  for the core ECS objects.
+- [Capacity providers and launch types](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html)
+  for Fargate, ECS Managed Instances, and EC2 choices.
+- [Task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html)
+  and [task execution IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html)
+  for the two permission boundaries.
+- [Task networking](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html),
+  [service load balancing](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html),
+  and [task storage](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html)
+  for connections and data lifetime.
 
-## Related links
+Continue to [ECS vs. EKS](ecs-vs-eks.md) to compare orchestration APIs,
+or [Amazon ECR](amazon-ecr.md) to see where an image can be stored.
+[Back to AWS compute](index.md) | [Back to AWS index](../index.md)
 
-- [ECS vs. EKS](ecs-vs-eks.md)
-- [EKS to ECS migration](eks-to-ecs-migration.md)
-- [AWS compute](index.md)
-- [AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+[^ecs-task-definitions]: [Amazon ECS - Task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html).
+[^ecs-services]: [Amazon ECS - Services](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html).
+[^ecs-capacity]: [Amazon ECS - Launch types and capacity providers](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity-launch-type-comparison.html).
+[^ecs-task-role]: [Amazon ECS - Task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html).
+[^ecs-execution-role]: [Amazon ECS - Task execution IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html).
+[^ecs-task-networking]: [Amazon ECS - Allocate a task network interface](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html).
+[^ecs-load-balancing]: [Amazon ECS - Use load balancing for service traffic](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html).
+[^ecs-storage]: [Amazon ECS - Storage options for tasks](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html).

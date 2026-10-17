@@ -2,6 +2,14 @@
 
 Practical Terraform notes for infrastructure as code, module design, commands, state, troubleshooting, and examples.
 
+Start with [Terraform fundamentals](fundamentals/terraform-fundamentals.md)
+to understand configuration, state, plan, and apply. If variables, locals,
+resources, and outputs are new to you, read
+[how values move through Terraform configuration](language/how-values-move-through-terraform.md)
+next. Then use the
+[local state lifecycle tutorial](examples/local-state-lifecycle/local-state-lifecycle.md)
+to see those ideas without a cloud account.
+
 ## Index
 
 | Section | Focus |
@@ -19,4 +27,4 @@ Practical Terraform notes for infrastructure as code, module design, commands, s
 - [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
 - [Terraform CLI documentation](https://developer.hashicorp.com/terraform/cli)
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

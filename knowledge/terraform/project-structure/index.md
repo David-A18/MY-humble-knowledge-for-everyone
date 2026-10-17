@@ -12,4 +12,4 @@ Patterns for organizing Terraform repositories, modules, environments, and share
 - Backend configuration placement.
 - Review and ownership guidelines.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

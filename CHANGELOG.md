@@ -8,6 +8,59 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Clarified CloudFront's ordered behavior matching, public asset caching versus signed-in API forwarding, zero-TTL privacy boundary, and separate S3 and ALB origin protection; added three retrieval cases.
+- Added a first ML beginner explanation of labeled examples, training, validation and test roles, inference, simple baselines, and shortcut failures; linked it from the beginner routes and added three retrieval cases.
+- Added a first MLOps beginner explanation of versioned release, delayed-label monitoring, changed policy versus skew or application bugs, and rollback limits; linked it from the beginner routes and added four retrieval cases.
+- Clarified AWS stateful networking with an IPv4 request-and-reply sequence, destination-port rule table, default ACL behavior, connection-tracking exceptions, and Flow Logs limits; added three retrieval cases.
+- Clarified AWS security groups with a web-to-database request-and-reply sequence through both groups, dynamic private-address references, combined-group egress, and the network-versus-database permission boundary; added three retrieval cases.
+- Added a first LLM beginner explanation of context, token-by-token text generation, retrieval versus training, and source checking; linked it from the beginner routes and added three retrieval cases.
+- Added the first AI agents explanation, connecting a model-directed tool loop to application execution, fixed-workflow choices, untrusted results, and measurable task outcomes; linked it from the beginner routes and added four retrieval cases.
+- Tightened the Velero one-ConfigMap exercise with exact-name preflight, a target-absence check, restore provenance labels, safer named-resource cleanup, and three static retrieval cases.
+- Clarified EKS identity boundaries between Kubernetes authorization, IRSA trust, Pod Identity associations, IMDS, and effective AWS permissions; revised the diagram and added four static retrieval cases.
+- Clarified OIDC identity mapping, token-purpose boundaries, metadata-path rules, and GitHub-to-AWS environment claims with a revised diagram and three static retrieval cases.
+- Clarified stateful recovery decisions with an illustrative RTO/RPO timeline, provider-side payment reconciliation, failure-scope evidence, a vertical diagram, and three static retrieval cases.
+- Clarified stateless application handoffs with a separate record/S3/queue diagram, new-key upload failure cases, SQS redelivery, provider idempotency limits, and three static retrieval cases.
+- Clarified stateful versus stateless compute with a cart-ID walkthrough, two-tab lost-update and retry boundaries, and two static retrieval cases.
+- Clarified system bootstrapping with a rendered Node-versus-S3 dependency diagram, an offline local import demonstration, careful backend-migration guidance, and three static retrieval cases.
+- Rendered the Bootstrap 5.3.8 grid example at narrow and wide widths, clarified its 768 px breakpoint and CSS-versus-JavaScript checks, and added two static retrieval cases.
+- Clarified GitOps's pending-revision and live-drift causes, sync versus health signals, CI and controller permissions, emergency reconciliation owners, and an illustrative hand-edit recovery; added three static retrieval cases.
+- Clarified Flux's separate manifest and chart artifact paths, HelmRelease chart source choices, two apply identities, Ready scope, and optional automation; added two static retrieval cases.
+- Clarified Argo CD and Flux pull paths, sync and health defaults, Helm lifecycles, tenant authority, and deletion scope with a diagram, event table, and three static retrieval cases.
+- Clarified the Flux HelmRelease path through Git and chart artifacts, generated HelmChart namespace, health-check timeout, status boundaries, and pruning risk; added two static retrieval cases.
+- Clarified GitOps tenant security across Argo project and cluster credentials, Flux's two apply identities, unreviewed charts and images, Pod and network access, and three retrieval cases; labeled the linked Flux Helm example's security scope.
+- Clarified StatefulSet failed-node identity, headless DNS and readiness, storage ownership, PVC retention versus PV reclaim, and zonal placement; corrected the linked fundamentals eviction timing and added two static retrieval cases.
+- Clarified APISIX on EKS with a consistent HTTPS and API-key request, NLB TCP/IP-target example, private Admin API handoff, health-check limits, client-IP quota risk, backend isolation, TLS choices, and two static retrieval cases.
+- Clarified APISIX policy boundaries for a trusted key-auth client, Consumer quotas, canary weights, invalid-key protection, telemetry scope, and two static retrieval cases.
+- Clarified APISIX architecture with the GatewayProxy-to-Admin-API handoff, Gateway API status limits, mode-specific restart behavior, and two static retrieval cases.
+- Clarified the APISIX introduction with a consistent key-auth client, Consumer credential, rejection branch, TLS and path-rewrite limits, GatewayProxy handoff, and two static retrieval cases.
+- Clarified APISIX 404 diagnosis across entry, route attachment, unexpected matches, backend responses, controller handoff, and listener-port matching; added two static retrieval cases.
+- Clarified K9s Pod inspection with a branching symptom path, an invented image-pull event, previous-log and readiness checks, current command citations, and two static retrieval cases.
+- Clarified Helm's chart, values, manifest, and release boundaries with an invented production diagnosis, revision and CRD limits, a rendered diagram, and two static retrieval cases.
+- Clarified the EKS change-path guide with an invented Pending-Pod diagnosis, quota-versus-scheduling distinction, compute-owner decision, safer read-only commands, and two static retrieval cases.
+- Clarified Kubernetes API-field inspection with a schema/live/proposal example, server dry-run mode and outcome checks, a branching diagram, and two static retrieval cases.
+- Clarified Kubernetes resource-pressure diagnosis with a Pod-state decision diagram, request-budget arithmetic, OOM-versus-eviction evidence, illustrative output, and two static retrieval cases.
+- Clarified Kubernetes first-boundary troubleshooting with separate selector and readiness paths, illustrative EndpointSlice output, caller-path checks, and two static retrieval cases.
+- Clarified the reviewed Kubernetes manifest-change path with cluster, release-owner, file-revision, and HPA checks; illustrative command output, stop branches, source-file recovery, a Flux pruning correction, and two static retrieval cases.
+- Clarified the opening kubectl inspection guide with example output, empty-list and permission checks, general versus kind image-pull routes, a branching diagram, and two static retrieval cases.
+- Clarified the beginner Deployment inspection path from context through ReplicaSet to Pod, with example output, ownership checks, a no-Pod route, and two static retrieval cases.
+- Clarified Crossplane on AWS account and region selection, credential references, Pod Identity cross-account roles, and deletion flow; updated its diagram and added two static retrieval cases.
+- Clarified the kind cluster and image path across three linked guides, including node image inspection, pull-policy errors, retry timing, NodePort routing, and three static retrieval cases.
+- Clarified Git troubleshooting outputs for upstream divergence, ignored files, conflicts, and object health; added a diagram and three static retrieval cases.
+- Clarified the local Kubernetes learning path's live-cluster versus Git recovery, intermediate file state, rollout diagram, prerequisites, and test evidence; added two static retrieval cases.
+- Clarified the proof-of-concept example's test setting, time limit, revise-once and stop rules, and diagram; added one static retrieval case.
+- Clarified AWS cost tag activation, reporting delay, backfill boundaries, and Cost Categories split-report scope; simplified the linked allocation guide and added three static retrieval cases.
+- Clarified blue-green full and staged traffic moves, configured test paths, shared-data rollback limits, and the linked delivery chain's rolling-update scope; added three static retrieval cases.
+- Clarified the Terraform local-state tutorial's known versus after-apply plan values, one-time override, synthetic ID, official CLI references, and guarded cleanup; added two static retrieval cases.
+- Clarified Git branch review and recovery: divergent-base checks, diff versus log ranges, stash restoration, staged-only content, and the first response to a pushed secret; added three static retrieval cases.
+- Clarified Terraform state, command, CI, and AWS guides around S3 locking, empty-state stop signals, sensitive saved plans, isolated PR validation, and comparable verification; added two static retrieval cases.
+- Clarified Terraform-on-AWS account, Region, backend, and state boundaries and the end-to-end path from PR checks through a tested merged-commit image to user checks and recovery; added two static retrieval cases.
+- Clarified the GitHub Actions with Terraform and Kubernetes learning paths, including post-merge saved-plan review, cluster identity mapping, rollout recovery limits, and two static retrieval cases.
+- Clarified GitHub Actions PR and deployment credential boundaries and the AWS OIDC environment-subject example; aligned the linked IAM denial path and added two static retrieval cases.
+- Clarified GitHub Actions run inspection and troubleshooting, including failed-job rerun direction, pending versus skipped required checks, fork approval, token and OIDC boundaries, runner queues, and concurrency; added two static retrieval cases.
+- Added a focused review of the GitHub Actions workflow-choice and action-selection pages, correcting PR merge checks, required merge rules, fork limitations, reusable-workflow secret scope, and the topic learning path.
+- Added a focused beginner review of the GitHub Actions concept and workflow-structure pages, with corrected pull-request checkout, token, state-sharing, and event-data explanations plus two static retrieval cases.
+- Added an AI fundamentals entry page that separates AI, ML, generative AI, language models, assistants, and agents, and routes beginners into the existing AI tooling guides.
+- Added a provider-neutral cloud computing fundamentals explanation and linked it from the cloud and first-visit indexes.
 - Added ADR-0005 and a source-side website specification for a separate static reading site built from a reviewed, pinned knowledge-base revision.
 - Added a content quality and expansion plan with page-level precision and
   explanation standards, phased coverage priorities, evidence rules, and
@@ -98,6 +151,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified CDN cache keys versus origin forwarding, `Vary`, TTL and revalidation, edge-function triggers, and private account responses; added Akamai comparison and three retrieval cases.
+- Clarified OIDC authorization-code sign-in, trusted issuer discovery, app sessions, and GitHub-to-AWS audience and subject boundaries; added two retrieval cases.
+- Check two pinned GitHub source files through their raw URLs in Lychee after repeated CI 503 responses, while keeping the published source links readable.
+- Clarified the CRD, custom-resource, and controller handoff with an illustrative object, accurate status and deletion checks, Crossplane XRD boundaries, and two retrieval cases.
+- Clarified observability signals, trace correlation and sampling, SLO error budgets, alert pace, and user-path blind spots in the incident example; added two retrieval cases.
+- Clarified Kafka topic and event design with accurate append-order and key boundaries, a fulfillment replay example, two-direction Avro compatibility, retention and compaction limits, a revised diagram, current Kafka 4.3 sources, and two retrieval cases.
+- Clarified MongoDB fundamentals with one ticket's embedded snapshot and reference boundary, accurate atomicity and validation scope, a query/index example, corrected replica and sharding explanations, two diagrams, numbered answers, and two retrieval cases.
+- Clarified relational versus document databases with the order write boundary, correct cross-order item totals, a revised diagram and decision table, numbered answer checks, current official sources, and two retrieval cases.
+- Added a beginner programming fundamentals explanation with a verified three-input Python example, source-to-output diagram, official references, first-visit links, glossary terms, and two retrieval cases.
+- Reworked the knowledge-base first-visit route, clarified local practice prerequisites and review evidence, linked beginner paths from topic indexes, and added two navigation retrieval cases.
+- Clarified Terraform fundamentals with external versus state-only resources, resource addresses, saved-plan approval and staleness, provider reads, partial applies, and sensitive-output limits; linked its local tutorial and added two retrieval cases.
+- Clarified Kubernetes fundamentals with selector and owner-reference boundaries, scheduler and kubelet handoffs, Pod deletion and node-failure timing, and rolling-update stall and rollback behavior; added two retrieval cases.
+- Clarified Git fundamentals with inspection commands, tracked and untracked states, `HEAD` pointers, `git restore` directions, branch-switch behavior, and a revised local-versus-remote diagram; added two retrieval cases.
+- Clarified cloud computing fundamentals with NIST's exact characteristics, IaaS/PaaS/SaaS network and identity duties, availability versus durability, backup limits, region and zone choices, quotas, and budget alerts; added two retrieval cases.
+- Clarified AI fundamentals with context-versus-training, classification, tool-execution, and prompt-injection explanations; corrected the library diagram and added two retrieval cases.
+- Routed 90 knowledge-bundle return-to-home links to the knowledge index instead of the repository README, removed a governance link from the beginner Start here page, and clarified the authoring rule for future pages.
+- Clarified OIDC ID-token login-session checks, HTTPS issuer-key discovery, and OAuth introspection's `active` result; added two targeted retrieval cases.
+- Clarified Kafka fundamentals and Amazon MSK with poll-based diagrams, offset and retention examples, MSK broker-type and connection decisions, and three targeted retrieval cases; aligned and corrected the linked EKS-to-MSK example.
+- Clarified the EKS-to-MSK beginner guide's broker discovery, authentication methods, IAM actions, producer acknowledgments, offset and shipment outcomes, and the database-to-event gap; added three targeted retrieval cases.
+- Corrected the APISIX-on-EKS request path, NLB target and client-IP decisions, TLS and listener-port guidance, the linked 404 diagnosis, and Gateway versus route status; added four targeted retrieval cases.
+- Clarified EKS tooling-cluster choices, managed Argo CD target access, central credential scope, outage and recovery behavior, and two related GitOps explanations.
+- Clarified Kubernetes on AWS with accurate ALB target paths, standard and Auto Mode ownership, Fargate identity and storage limits, and two targeted retrieval cases.
+- Clarified CrashLoopBackOff diagnosis for clean exits, init containers, missing logs, memory and probe evidence, and recovery checks across restart delays.
+- Clarified EKS incident diagnosis for available Deployments with empty Services, operator access failures, image-pull identity, workload IAM, and Auto Mode component ownership.
+- Clarified the Git command map's index model, runnable staged-status example, and command effects; improved the Git topic routes and added retrieval cases.
+- Clarified the knowledge article to website release path, the MCP host and server roles, and OpenAPI's JSON Schema relationship in three beginner explanations; added targeted retrieval cases.
+- Corrected the search proof-of-concept decision example, security group defaults across AWS and Terraform, and bootstrapping meanings; added source records and retrieval cases for those beginner questions.
+- Expanded the glossary with first-visit Git, Kubernetes, Terraform, and AI
+  terms and aligned shared definitions with their current explanations.
+- Corrected the first-visit Terraform value flow and Kubernetes Service
+  explanation, including plan versus apply state timing and the distinction
+  between port-forward and normal Service routing.
+- Clarified Git, Kubernetes, and Terraform fundamentals with source-backed
+  corrections to remote-tracking branches, Pod replacement and endpoints,
+  provider refresh, and secrets in Terraform state.
 - Expanded the stable Git undo-and-recovery guide with official Git source
   records, safer decision paths, expected results, untracked cleanup guidance,
   reflog recovery, and updated maintenance evidence.

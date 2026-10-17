@@ -18,4 +18,4 @@ Status: Initial outline
 - Detection, logging, incident response, and recovery notes.
 - Supply-chain and CI/CD security practices.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

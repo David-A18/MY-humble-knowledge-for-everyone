@@ -47,6 +47,8 @@ python3 scripts/validate-command-paths.py knowledge
 python3 scripts/build-knowledge-catalog.py --check
 python3 scripts/test-retrieval-case-validator.py
 python3 scripts/validate-retrieval-cases.py
+python3 scripts/test-teaching-coverage-validator.py
+python3 scripts/validate-teaching-coverage.py
 python3 scripts/test-issue-template-validator.py
 python3 scripts/validate-issue-templates.py
 python3 scripts/check-github-labels.py --repo David-A18/MY-humble-knowledge-for-everyone

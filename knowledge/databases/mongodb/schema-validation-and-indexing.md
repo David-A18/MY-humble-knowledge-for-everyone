@@ -1,186 +1,175 @@
 ---
 type: "Explanation"
 title: "MongoDB schema validation and indexing"
-description: "Use this guide to combine MongoDB's flexible document model with enough schema discipline and indexing to keep applications correct and queries predictable."
+description: "Understand why a MongoDB collection needs separate rules for accepted document shapes and efficient query access."
 tags: [databases, mongodb, schema-validation-and-indexing]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: mongodb-schema-validation
+    resource: https://www.mongodb.com/docs/manual/core/schema-validation/
+    title: MongoDB manual - Schema Validation
+  - id: mongodb-invalid-documents
+    resource: https://www.mongodb.com/docs/manual/core/schema-validation/handle-invalid-documents/
+    title: MongoDB manual - Choose How to Handle Invalid Documents
+  - id: mongodb-existing-documents
+    resource: https://www.mongodb.com/docs/manual/core/schema-validation/use-json-schema-query-conditions/
+    title: MongoDB manual - Query for Valid or Invalid Documents
+  - id: mongodb-query-optimization
+    resource: https://www.mongodb.com/docs/manual/core/query-optimization/
+    title: MongoDB manual - Query Optimization
+  - id: mongodb-compound-index
+    resource: https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/create-compound-index/
+    title: MongoDB manual - Create a Compound Index
+  - id: mongodb-explain
+    resource: https://www.mongodb.com/docs/manual/reference/explain-results/
+    title: MongoDB manual - Explain Results
 ---
 
 # MongoDB schema validation and indexing
 
-## Purpose
+## Why these are two different tools
 
-Use this guide to combine MongoDB's flexible document model with enough schema discipline and indexing to keep applications correct and queries predictable.
+MongoDB can accept documents with different fields in one collection. That
+flexibility helps a design evolve, but an application still needs to know
+which fields it can rely on. **Schema validation** checks whether a write
+produces an allowed document. An **index** helps MongoDB find documents for a
+read without examining every one. An index does not decide whether a document
+has the right shape, and a validator does not speed up a query.
+[^mongodb-schema-validation][^mongodb-query-optimization]
 
-## How it works
+This page continues the invented support-ticket example in [MongoDB data
+modeling](data-modeling.md). The primary question is: after choosing a ticket
+document's shape, how do you protect that shape and support the ticket list?
 
-MongoDB stores BSON documents in collections. The server does not require every document in a collection to have the same shape, but it can enforce validation rules and indexes.
+## A small mental model
 
-```text
-application write
-  -> driver sends BSON document
-  -> collection validator checks accepted shape
-  -> indexes update for indexed fields
-  -> write concern determines acknowledgement
+Imagine a library with two separate aids:
+
+- An **intake rule** says that every new book record needs a title and a valid
+  category. That resembles a validator.
+- A **catalog sorted by category and date** helps a reader find the newest
+  books in one category. That resembles an index.
+
+The analogy stops at the mechanism: a database validates updates as well as
+inserts, maintains indexes when indexed data changes, and chooses an access
+plan for each query. Neither aid proves that the *meaning* of the data is
+correct or that a person is authorized to read it.
+
+```mermaid
+flowchart TB
+  subgraph write["Write path"]
+    aw["Application write"] --> val["Validator:<br/>allowed shape?"]
+    val --> wd["Ticket document stored"]
+    wd --> wi["Affected index entries updated"]
+  end
+  subgraph read["Read path"]
+    ar["Application read"] --> plan["Query planner"]
+    plan -- "use index" --> ri["Index entries"]
+    plan -- "or scan collection" --> rd
+    ri --> rd["Matching ticket documents"]
+    rd --> result["Results returned"]
+  end
 ```
 
-Validation protects basic structure. Indexes make query access paths efficient. They solve different problems and should be designed together.
+Text alternative: on a write, the application sends a document to the
+validator; accepted data goes into the ticket collection, and affected index
+entries are updated. On a read, the query planner may use an index to locate
+matching ticket documents before returning results. The index is a possible
+path, not a promise that every query will use it. The two paths show the same
+ticket collection and index, duplicated only to make the flow easier to read.
 
-## Components
+## Example: protect the ticket shape
 
-| Component | What it does |
-| --- | --- |
-| Collection | Stores related documents. |
-| BSON document | Record with typed fields and nested structures. |
-| Validator | Enforces database-side rules for accepted documents. |
-| Index | Data structure that speeds reads and can enforce uniqueness. |
-| Query planner | Chooses how MongoDB executes a query. |
-| Explain plan | Shows whether a query used an index and how much work it did. |
-| Schema version | Field that helps applications migrate document shapes safely. |
-
-## Flexible schema does not mean no schema
-
-MongoDB collections can accept documents with different shapes, but production applications still need a documented contract.
-
-| Tool | Use it for |
-| --- | --- |
-| Application validation | Fast feedback before a write reaches the database. |
-| JSON Schema validation | Database-side guardrails for required fields and types. |
-| Unique indexes | Enforce identity or uniqueness rules. |
-| Partial indexes | Index only documents matching a filter. |
-| TTL indexes | Expire documents based on a date field. |
-| Schema version field | Support gradual document evolution. |
-
-## Validation strategy
-
-| Situation | Suggested approach |
-| --- | --- |
-| New collection | Start with required identity, ownership, and lifecycle fields. |
-| Existing messy collection | Add validation in warning mode or validate in application first. |
-| Multi-version documents | Add `schemaVersion` and migration logic. |
-| Compliance-sensitive data | Validate required classification and retention fields. |
-| Expiring records | Pair TTL index expectations with date-field validation. |
-
-### Create a collection with validation
+Suppose every ticket must have a string `subject` and a `status` of `open` or
+`closed`. A MongoDB JSON Schema validator can express those rules:
 
 ```javascript
-db.createCollection("orders", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["orderId", "customerId", "status", "createdAt"],
-      properties: {
-        orderId: { bsonType: "string" },
-        customerId: { bsonType: "string" },
-        status: { enum: ["created", "paid", "cancelled"] },
-        createdAt: { bsonType: "date" }
-      }
+{
+  $jsonSchema: {
+    bsonType: "object",
+    required: ["subject", "status"],
+    properties: {
+      subject: { bsonType: "string" },
+      status: { enum: ["open", "closed"] }
     }
   }
-})
-```
-
-What it does: rejects documents that miss required fields or use an unsupported order status.
-
-### Example schema version field
-
-```json
-{
-  "_id": "ORD-7842",
-  "schemaVersion": 2,
-  "customerId": "CUST-52",
-  "status": "paid",
-  "createdAt": "2026-07-18T09:30:00Z"
 }
 ```
 
-What it does: lets readers and migration code understand which document contract the record follows.
+This is an **illustrative validator definition**, not a command to run. With
+the default `validationAction: "error"`, an insert or update that produces a
+ticket without `subject`, or with `status: "waiting"`, is rejected. If the
+collection instead uses `validationAction: "warn"`, MongoDB records the
+violation but allows that write.[^mongodb-invalid-documents]
 
-## Index design
+Adding a validator to an existing collection does **not** prove all old
+documents are valid. Check the existing documents against the rule and plan
+any migration before assuming application code can rely on it.
+[^mongodb-existing-documents] Application validation still helps give a user
+an immediate, understandable error; the database rule protects the shared
+collection boundary.
 
-Design indexes from access patterns, not from every field name.
+## Example: support the ticket list
 
-| Query pattern | Candidate index |
+Suppose the support screen repeatedly asks for **open tickets, newest
+first**. The query filters `status: "open"` and sorts by `createdAt`
+descending. A candidate compound index is:
+
+```javascript
+{ status: 1, createdAt: -1 }
+```
+
+The first field groups tickets by status; within each status, the second
+orders them by creation time. Field order matters in a compound index: an
+index can help with its first field or a matching prefix, but a query on only
+`createdAt` is not served by this index's prefix.[^mongodb-compound-index]
+Whether it improves *this* screen depends on the real collection and query.
+MongoDB must also update the index when indexed fields change, so an extra
+index has a write cost.[^mongodb-query-optimization]
+
+On a representative data set, inspect the plan for the actual query. The
+`executionStats` output can show `nReturned`, `totalDocsExamined`, and whether
+the winning plan scanned an index or the collection.[^mongodb-explain] If a
+query returns 20 tickets but examines nearly every ticket, investigate the
+filter, sort, data distribution, and index before calling the design fast.
+This is a **check to perform**, not a measured result for this repository.
+
+## Choose the next check
+
+| Reader question | Check |
 | --- | --- |
-| Find one tenant's order by ID | `{ tenantId: 1, orderId: 1 }` unique if order IDs are tenant-scoped. |
-| List recent orders for a customer | `{ customerId: 1, createdAt: -1 }` |
-| Expire login sessions | TTL index on `expiresAt`. |
-| Query array values | Multikey index on the array field. |
-| Filter active records only | Partial index with active-status filter. |
+| Can an invalid status enter the collection? | Inspect the validator and its validation action; test an invalid write in a safe environment. |
+| Are existing tickets valid? | Query for documents that violate the proposed schema before relying on it. |
+| Does the ticket list avoid unnecessary work? | Inspect the real query's explain plan and documents examined. |
+| Is the index worth its cost? | Compare the important read with the write and storage cost on representative data. |
 
-> [!IMPORTANT]
-> Indexes improve reads but add write cost. High-write collections need fewer, more intentional indexes.
+These checks have not been run here. The examples do not establish a live
+MongoDB configuration, measured performance, or a reviewed production schema.
 
-### Create compound and unique indexes
+## Check your understanding
 
-```javascript
-db.orders.createIndex(
-  { tenantId: 1, orderId: 1 },
-  { unique: true }
-)
+1. Would adding `{ status: 1, createdAt: -1 }` stop a ticket with no subject
+   from being written? Why?
+2. Would a validator on `status` make the newest-open-tickets query fast?
+3. Why might an existing ticket still violate a rule added today?
 
-db.orders.createIndex(
-  { customerId: 1, createdAt: -1 }
-)
-```
+## Continue learning
 
-What it does: the first index enforces tenant-scoped order uniqueness; the second supports listing a customer's recent orders.
+- [MongoDB data modeling](data-modeling.md) explains what belongs inside a
+  ticket document before choosing validation and indexes.
+- [MongoDB operations](operations.md) covers broader performance and
+  operational checks.
+- [MongoDB schema validation](https://www.mongodb.com/docs/manual/core/schema-validation/)
+  and [query optimization](https://www.mongodb.com/docs/manual/core/query-optimization/)
+  provide the official detail.
+- [Back to MongoDB index](index.md)
 
-### Create a TTL index
-
-```javascript
-db.sessions.createIndex(
-  { expiresAt: 1 },
-  { expireAfterSeconds: 0 }
-)
-```
-
-What it does: expires session documents after the timestamp stored in `expiresAt`.
-
-## Explain-plan checks
-
-Use explain plans when a query is slow, expensive, or new.
-
-```javascript
-db.orders.find({
-  customerId: "CUST-52",
-  createdAt: { $gte: ISODate("2026-07-01T00:00:00Z") }
-}).sort({ createdAt: -1 }).explain("executionStats")
-```
-
-What it does: shows whether MongoDB can use an index and how many documents are examined.
-
-## Common mistakes
-
-| Mistake | Consequence |
-| --- | --- |
-| Treating every flexible document shape as acceptable. | Application code fills with special cases. |
-| Creating indexes for every field. | Writes slow down and memory pressure rises. |
-| Ignoring compound index order. | Sorts or filters cannot use the index effectively. |
-| Relying on unique indexes without migration planning. | Existing duplicates can block rollout. |
-| Using TTL without validating the date field. | Records may not expire as expected. |
-
-## Review checklist
-
-- Does every collection have documented access patterns?
-- Are required fields enforced by application and database validation where appropriate?
-- Are indexes tied to real queries?
-- Are unique constraints enforced where identity requires them?
-- Are large arrays and unbounded embedded documents avoided?
-- Are explain plans reviewed for high-traffic queries?
-- Are indexes monitored for size and write overhead?
-
-## Related links
-
-- Official documentation: [MongoDB schema validation](https://www.mongodb.com/docs/manual/core/schema-validation/)
-- Official documentation: [MongoDB indexes](https://www.mongodb.com/docs/manual/indexes/)
-- Official documentation: [MongoDB TTL indexes](https://www.mongodb.com/docs/manual/core/index-ttl/)
-- [MongoDB fundamentals](fundamentals.md)
-- [MongoDB data modeling](data-modeling.md)
-- [MongoDB operations](operations.md)
-- [Back to MongoDB](index.md)
-- [Back to databases index](../index.md)
-- [Back to root index](../../../README.md)
+[^mongodb-schema-validation]: [MongoDB manual: Schema Validation](https://www.mongodb.com/docs/manual/core/schema-validation/).
+[^mongodb-invalid-documents]: [MongoDB manual: Choose How to Handle Invalid Documents](https://www.mongodb.com/docs/manual/core/schema-validation/handle-invalid-documents/).
+[^mongodb-existing-documents]: [MongoDB manual: Query for Valid or Invalid Documents](https://www.mongodb.com/docs/manual/core/schema-validation/use-json-schema-query-conditions/).
+[^mongodb-query-optimization]: [MongoDB manual: Query Optimization](https://www.mongodb.com/docs/manual/core/query-optimization/).
+[^mongodb-compound-index]: [MongoDB manual: Create a Compound Index](https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/create-compound-index/).
+[^mongodb-explain]: [MongoDB manual: Explain Results](https://www.mongodb.com/docs/manual/reference/explain-results/).

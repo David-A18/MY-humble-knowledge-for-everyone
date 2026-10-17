@@ -1,259 +1,242 @@
 ---
-type: "Troubleshooting Guide"
-title: "Velero troubleshooting and operations"
-description: "Use this page to diagnose Velero backup, restore, storage, snapshot, node-agent, and data movement issues."
-tags: [migrations, velero, troubleshooting-and-operations]
+type: Troubleshooting Guide
+title: Find why a Velero restore has no application data
+description: Trace a missing or unusable restored PVC through the backup, volume copy, target storage, and application check without changing resources.
+tags: [migrations, velero, troubleshooting, restore, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Operators investigating a Velero restore
+maintainer: unassigned
+sources:
+  - id: velero-troubleshooting
+    resource: https://velero.io/docs/v1.18/troubleshooting/
+    title: Velero v1.18 - Troubleshooting
+  - id: velero-restore
+    resource: https://velero.io/docs/v1.18/restore-reference/
+    title: Velero v1.18 - Restore Reference
+  - id: velero-fsb
+    resource: https://velero.io/docs/v1.18/file-system-backup/
+    title: Velero v1.18 - File System Backup
+  - id: velero-data-movement
+    resource: https://velero.io/docs/v1.18/csi-snapshot-data-movement/
+    title: Velero v1.18 - CSI Snapshot Data Movement
+  - id: velero-csi
+    resource: https://velero.io/docs/v1.18/csi/
+    title: Velero v1.18 - CSI Snapshot Support
 ---
 
-# Velero troubleshooting and operations
+# Find why a Velero restore has no application data
 
-## Purpose
+## Start with the symptom
 
-Use this page to diagnose Velero backup, restore, storage, snapshot, node-agent, and data movement issues.
+A Velero Restore may finish while an application still cannot read its
+old files. The missing piece could be the **PVC object**, the **volume
+bytes**, a **target storage binding**, or the **application's own
+startup and data check**. Investigate those boundaries in order before
+changing a backup, deleting a namespace, or retrying a restore.
 
-## Contents
+Think of a parcel delivery: the address label may arrive, but the box
+can be missing, undeliverable, or full of the wrong contents. The
+analogy stops at application consistency: a box of files can exist
+while a database inside it is unusable.
 
-- [First checks](#first-checks)
-- [Decision flow](#decision-flow)
-- [Symptom guide](#symptom-guide)
-- [Inspect Velero resources](#inspect-velero-resources)
-- [Inspect node-agent and data movement](#inspect-node-agent-and-data-movement)
-- [Troubleshoot backup storage](#troubleshoot-backup-storage)
-- [Troubleshoot CSI snapshots](#troubleshoot-csi-snapshots)
-- [Troubleshoot File System Backup](#troubleshoot-file-system-backup)
-- [Troubleshoot restore collisions and PVCs](#troubleshoot-restore-collisions-and-pvcs)
-- [Operational habits](#operational-habits)
+This guide is a read-only investigation. Replace the names in the
+first command block with names from **your** backup and restore; run
+all blocks in the same shell. No live incident or Velero server was
+used to validate these commands in this review. For the distinction
+between object archives and volume copies, read [where Velero keeps
+volume data](storage-and-volume-backups.md) first.
 
-## First checks
+```mermaid
+flowchart LR
+  backup["Backup selected<br/>objects and volume?"] --> copy["Volume method<br/>finished and accessible?"]
+  copy --> restore["Restore created<br/>or skipped objects?"]
+  restore --> pvc["PVC bound to<br/>usable storage?"]
+  pvc --> app["Application reads<br/>expected data?"]
+```
+
+Text alternative: confirm what the source backup selected, then
+whether the selected volume method completed and remains accessible.
+Next inspect what the restore created or skipped, whether its PVC
+bound to usable storage, and finally whether the application can read
+the expected data.
+
+## 1. Confirm the target and operation
 
 ```bash
-kubectl get pods -n velero
+backup_name='REPLACE_WITH_BACKUP_NAME'
+restore_name='REPLACE_WITH_RESTORE_NAME'
+target_namespace='REPLACE_WITH_TARGET_NAMESPACE'
+pvc_name='REPLACE_WITH_PVC_NAME'
+velero_ns='velero' # replace if Velero was installed elsewhere
+kubectl config current-context
 velero version
-velero backup-location get
-velero snapshot-location get
-velero backup get
-velero restore get
+velero backup describe "$backup_name" --details
+velero restore describe "$restore_name" --details
 ```
 
-What it does: checks component health, version visibility, storage location status, and recent backup or restore outcomes.
+Stop if the context, version, backup, or restore is not the one you
+intend to diagnose. Record the `Backup` and `Restore` phases plus
+warnings and errors. `Completed`, `PartiallyFailed`, and `Failed`
+are examples of terminal results; validation failures and in-progress
+phases can also appear. `--wait` on an earlier command did not prove
+the application recovered. The Velero CLI must also be configured for
+the installation namespace named by `velero_ns`; otherwise its backup
+and restore commands may inspect a different installation.
+[^velero-troubleshooting]
 
-## Decision flow
+If the **Kubernetes object** was never in the backup, investigate its
+namespace, resource, or label filter before inspecting storage.
+If Velero reports that the object **already existed** in the target,
+remember that the default restore leaves it unchanged; an existing
+PVC may be unrelated to the backup's volume bytes. Do not use
+`--existing-resource-policy update` as a blind repair: Velero says
+that updating a PVC object does not overwrite its volume data.
+[^velero-restore]
+The restore description and logs report skipped existing resources.
+For a created object, Velero adds `velero.io/restore-name` and
+`velero.io/backup-name` labels. Labels alone are not conclusive if an
+earlier restore or an `update` policy labeled an existing object; read
+them together with this Restore's logs.[^velero-restore]
 
-Use this order so you do not chase volume errors when the real problem is storage access or a failed backup.
+## 2. Find the intended volume path
 
-1. Confirm the Velero server is running.
-2. Confirm the backup storage location is `Available`.
-3. Confirm the backup or restore phase is not `Failed` or `PartiallyFailed` without review.
-4. Inspect operation logs.
-5. If Kubernetes resources are missing, inspect filters and restore warnings.
-6. If PVCs are missing or pending, inspect storage class, snapshots, and volume restore objects.
-7. If file or data movement is stuck, inspect node-agent, repositories, and `DataUpload` or `DataDownload`.
-8. If resources already exist, decide whether to restore into a new namespace, delete the test namespace, or use an existing-resource policy.
+```bash
+velero backup logs "$backup_name"
+velero restore logs "$restore_name"
+kubectl -n "$velero_ns" get podvolumebackups \
+  -l "velero.io/backup-name=$backup_name"
+kubectl -n "$velero_ns" get datauploads \
+  -l "velero.io/backup-name=$backup_name"
+```
 
-## Symptom guide
+If `velero backup logs` or `velero restore logs` cannot read the
+backup location, inspect the Velero server log for the storage or
+credential error instead:
+`kubectl -n "$velero_ns" logs deploy/velero`.
+An unavailable log archive should not hide a storage failure.
 
-| Symptom | Check | Likely cause |
+Read the native snapshots, CSI snapshots, and Pod volume backups
+sections of the backup details, then check the logs to identify
+whether this PVC used a provider snapshot, CSI snapshot, File System
+Backup (FSB), or CSI
+snapshot data movement. `PodVolumeBackup` records point to FSB;
+`DataUpload` records point to CSI snapshot data movement. Check
+`spec.datamover` in a `DataUpload` to distinguish Velero's built-in
+mover from a custom one. Their
+absence alone is **not** an error if the selected path was a plain
+snapshot. An object-only backup can contain the PVC definition while
+protecting none of its file data.[^velero-fsb][^velero-data-movement]
+If a label selector returns nothing but the details say a copy ran,
+list those records without a selector and inspect their specs; a
+record's label can differ from a long operation name.
+
+| If the intended path was... | Look for | What a gap may mean |
 | --- | --- | --- |
-| Backup location unavailable | `velero backup-location get` | S3 endpoint, region, credentials, bucket policy, or network issue. |
-| Backup has warnings | `velero backup describe <name> --details` | Skipped resources, hook issues, or volume backup failures. |
-| Restore does not create PVC data | `velero restore logs <name>` and `kubectl describe pvc` | Missing snapshot access, missing StorageClass, CSI mismatch, or data mover failure. |
-| CSI snapshots are not created | `kubectl get volumesnapshotclass` | Missing snapshot controller, CRDs, driver support, or Velero CSI feature flag. |
-| File System Backup does not run | `kubectl get podvolumebackups -n velero` | Missing node-agent, missing pod volume annotation, or unsupported host path layout. |
-| Data movement is slow | `kubectl get datauploads,datadownloads -n velero` | Low node-agent concurrency, large data set, resource throttling, or repository/cache limits. |
-| Restore objects already exist | `velero restore describe <name> --details` | Restoring into a namespace with existing resources. |
+| Provider or CSI snapshot | Snapshot evidence in backup/restore details and an accessible underlying storage snapshot. | The snapshot was not created, expired, or cannot be used in the target storage boundary. |
+| FSB | A completed `PodVolumeBackup` and ready repository; later a `PodVolumeRestore`. | The mounted Pod volume was not selected, node-agent could not read it, or the repository is unavailable. |
+| CSI data movement | Completed `DataUpload` and later `DataDownload` plus repository access. | A plain CSI snapshot was taken without movement, or transfer/staging failed. |
+| None | No recorded volume method for this PVC. | The backup may only restore object definitions, not prior files. |
 
-## Inspect Velero server logs
+Velero's FSB path reads volumes mounted by running Pods; it cannot
+read an orphan PVC directly. CSI data movement needs explicit
+selection and a node-agent for its built-in mover. Do not infer that
+files reached object storage merely because S3 contains the Kubernetes
+object archive.[^velero-fsb][^velero-data-movement]
 
-```bash
-kubectl logs -n velero deploy/velero
-kubectl logs -n velero deploy/velero --previous
-kubectl describe deployment velero -n velero
-```
-
-What it does: shows current and previous Velero server logs and deployment configuration, including plugin init containers and server arguments.
-
-## Inspect Velero resources
+## 3. Inspect the destination volume
 
 ```bash
-kubectl get backups,restores,schedules,backupstoragelocations,volumesnapshotlocations -n velero
-kubectl describe backup <backup-name> -n velero
-kubectl describe restore <restore-name> -n velero
-kubectl get backup <backup-name> -n velero -o yaml
+kubectl -n "$target_namespace" get pvc "$pvc_name" -o wide
+kubectl -n "$target_namespace" get pvc "$pvc_name" --show-labels
+kubectl -n "$target_namespace" describe pvc "$pvc_name"
+kubectl -n "$target_namespace" get pods
+kubectl -n "$target_namespace" get events \
+  --sort-by=.metadata.creationTimestamp
+kubectl -n "$velero_ns" get podvolumerestores \
+  -l "velero.io/restore-name=$restore_name"
+kubectl -n "$velero_ns" get datadownloads \
+  -l "velero.io/restore-name=$restore_name"
 ```
 
-What it does: inspects Velero custom resources directly through Kubernetes.
+If the PVC is **absent**, inspect the restore filters, logs, API
+availability, and existing-object messages. If it is **Pending**,
+inspect its StorageClass, storage driver, zone or topology, and events.
+With a `WaitForFirstConsumer` StorageClass, Pending can be expected
+until a Pod that uses the claim is scheduled; check that condition
+before treating it as a provisioning failure. For CSI data movement,
+also check whether its `DataDownload` is still running before treating
+Pending as a storage failure. Events can expire, so no events now does
+not prove there was no earlier problem.[^velero-data-movement]
+If it is **Bound**, a PV was provisioned or matched to the claim; this
+does not show that the volume is attached or that the old bytes are
+there. The relevant restore object
+(`PodVolumeRestore`, `DataDownload`, or snapshot path) must match the
+method found in step 2.[^velero-restore][^velero-fsb]
+[^velero-data-movement]
 
-## Inspect node-agent and data movement
+For FSB, inspect the restored workload Pod as well as the claim. The
+Pod must be scheduled and run Velero's restore helper init container
+before its `PodVolumeRestore` can copy files into the mounted volume.
+If the Pod is Pending, use
+`kubectl -n "$target_namespace" describe pod POD_NAME` to find the
+scheduling or mount reason; a Bound claim
+by itself does not mean the FSB restore finished.[^velero-fsb]
 
-```bash
-kubectl get daemonset node-agent -n velero
-kubectl get pods -n velero -l name=node-agent
-kubectl get podvolumebackups,podvolumerestores,datauploads,datadownloads -n velero
-kubectl logs -n velero daemonset/node-agent
-```
+For a CSI snapshot restore, the target also needs a compatible CSI
+driver and access to the underlying snapshot. Kubernetes
+`VolumeSnapshot` objects may have been cleaned up after a completed
+backup, so their absence **now** is not enough to say no snapshot was
+taken. Use the backup record and provider or storage-backend evidence
+for that conclusion.[^velero-csi]
 
-What it does: checks whether node-agent exists, whether volume operations are progressing, and what node-agent logged.
+## 4. Check the application result
 
-## Troubleshoot backup storage
+Ask the application owner to read one known item from the restored
+workload, such as a file name and content or an application record.
+If authorized, compare a checksum or known version with the source's
+recorded recovery point. A directory listing alone is weak evidence:
+empty files, stale data, or a broken database can still look present.
 
-Check the configured bucket, prefix, region, and access mode:
+| Evidence found | Next investigation |
+| --- | --- |
+| Backup never selected the PVC or its data | This recovery point has no copy of those bytes. Change backup scope or volume method for future backups, then prove it with a restore into a disposable target. |
+| Data copy failed or is inaccessible | Follow the method-specific repository, snapshot, identity, and storage logs before attempting another restore. |
+| PVC cannot bind | Resolve target StorageClass, topology, and driver compatibility before judging application data. |
+| PVC bound and copy completed, app still fails | Check mount path, permissions, consistency, external dependencies, and application logs with its owner. |
 
-```bash
-velero backup-location get
-kubectl describe backupstoragelocation default -n velero
-kubectl get backupstoragelocation default -n velero -o yaml
-```
+Do not delete target PVCs, change storage-class mappings, or update
+existing resources solely because a restore says `PartiallyFailed`.
+Those actions may destroy the only good copy or hide the original
+failure. A fresh restore into a disposable target should be planned
+with the application owner and the [restore reference](https://velero.io/docs/v1.18/restore-reference/).
 
-What it does: shows whether the backup location is available, read-only, or failing validation.
+## Check your understanding
 
-If the location is read-only during disaster recovery, backups and deletion may fail by design. Switch to read-write only when the cluster should resume writing backups.
+1. Why can `kubectl get pvc` show `Bound` while old files are missing?
+2. What does an empty `DataUpload` list mean if the backup used an EBS
+   snapshot without data movement?
+3. Which evidence distinguishes a skipped existing PVC from one
+   created by the Restore?
+4. What application check would prove more than a directory listing?
 
-Common checks:
-
-- Bucket or container name is correct.
-- Prefix matches the source cluster or copied backup layout.
-- Region and endpoint match the provider.
-- Velero pod identity or credentials can list, read, write, and delete the expected objects.
-- Network policy, proxy, private endpoint, or firewall allows access.
-- Object lifecycle rules have not deleted repository or backup archive data unexpectedly.
-
-## Troubleshoot CSI snapshots
-
-```bash
-kubectl get volumesnapshotclass
-kubectl get volumesnapshot -A
-kubectl get volumesnapshotcontent
-kubectl describe volumesnapshot <snapshot-name> -n <namespace>
-```
-
-What it does: checks snapshot class selection, snapshot object status, and provider binding details.
-
-Common fixes:
-
-- Install or repair the CSI snapshot controller.
-- Install the provider CSI driver with snapshot support.
-- Create a `VolumeSnapshotClass` for the correct driver.
-- Ensure only one Velero default snapshot class label exists per driver.
-- Confirm the destination cluster uses the same CSI driver name for CSI snapshot restore.
-
-### Check snapshot class selection
-
-```bash
-kubectl get volumesnapshotclass -o yaml
-kubectl get pvc -n <namespace> <claim-name> -o yaml
-```
-
-What it does: compares the PVC storage driver and the available `VolumeSnapshotClass` objects. The snapshot class driver must match the PVC's CSI driver.
-
-## Troubleshoot File System Backup
-
-```bash
-kubectl get podvolumebackups -n velero
-kubectl describe podvolumebackup <name> -n velero
-kubectl get backuprepositories -n velero
-kubectl describe backuprepository <name> -n velero
-```
-
-What it does: checks file-system backup objects and backup repository readiness.
-
-Common fixes:
-
-- Install node-agent with `--use-node-agent`.
-- Add the required pod volume annotations or use the default file-system backup setting.
-- Verify node-agent can access kubelet pod volume paths.
-- Configure resource requests, limits, and cache PVCs for large restores.
-
-> [!WARNING]
-> Increasing data movement concurrency can improve throughput but may overload storage, network, or nodes. Change concurrency with measured tests.
-
-### Check pod volume annotations
-
-```bash
-kubectl get pod <pod-name> -n <namespace> -o yaml | grep -A5 backup.velero.io
-kubectl describe backup <backup-name> -n velero
-```
-
-What it does: confirms whether the pod volume was selected for File System Backup and whether the backup recorded volume work.
-
-### Troubleshoot data mover slowness
-
-```bash
-kubectl get datauploads -n velero -o wide
-kubectl get datadownloads -n velero -o wide
-kubectl describe dataupload <name> -n velero
-kubectl describe datadownload <name> -n velero
-kubectl top pods -n velero
-kubectl top nodes
-```
-
-What it does: checks data movement status, node placement, errors, and resource pressure.
-
-Common causes:
-
-- Large files or many small files.
-- Low node-agent concurrency.
-- Slow object storage endpoint.
-- Throttled node CPU, memory, disk, or network.
-- Repository cache pressure or insufficient ephemeral storage.
-- Storage backend taking too long to provision temporary volumes.
-
-## Troubleshoot restore collisions and PVCs
-
-```bash
-velero restore describe <restore-name> --details
-velero restore logs <restore-name>
-kubectl get pvc,pv -n <namespace>
-kubectl describe pvc <claim-name> -n <namespace>
-kubectl get events -n <namespace> --sort-by=.lastTimestamp
-```
-
-What it does: combines restore details with Kubernetes storage events so you can separate Velero restore problems from scheduler or CSI provisioning problems.
-
-If restore logs say resources already exist:
-
-- Restore into a temporary namespace with `--namespace-mappings`.
-- Delete only the failed test namespace and restore again.
-- Use `--existing-resource-policy update` only after confirming updates are safe.
-- Avoid restoring old GitOps-managed resources over actively reconciled objects unless ownership is clear.
-
-If PVCs stay pending:
-
-- Confirm the destination StorageClass exists.
-- Confirm topology and `WaitForFirstConsumer` behavior can schedule the restored pods.
-- Use a storage-class mapping ConfigMap when source and destination names differ.
-- Confirm snapshots are accessible or File System Backup/data movement restored the data path.
-
-## Verify a restore
-
-```bash
-kubectl get all,pvc -n <namespace>
-kubectl describe pvc <claim-name> -n <namespace>
-kubectl exec -n <namespace> <pod-name> -- ls -la /data
-```
-
-What it does: checks restored resources, PVC binding, and whether expected files exist inside a restored workload.
-
-## Operational habits
-
-- Run scheduled restore tests into isolated namespaces.
-- Alert on failed and partially failed backups.
-- Track backup age against RPO.
-- Review S3 lifecycle and EBS snapshot cost regularly.
-- Keep Velero, plugins, and Kubernetes versions compatible.
-- Document who can restore Secrets and production data.
-- Keep restore runbooks with the application, not only with the platform team.
-- Review backup storage IAM quarterly and after team changes.
-- Test one representative File System Backup and one snapshot restore before declaring a cluster protected.
-
-## Related links
+## Official documentation for deeper study
 
 - [Velero troubleshooting](https://velero.io/docs/v1.18/troubleshooting/)
-- [Velero File System Backup](https://velero.io/docs/v1.18/file-system-backup/)
-- [Velero restore reference](https://velero.io/docs/v1.18/restore-reference/)
-- [Back to Velero index](index.md)
-- [Back to migrations index](../index.md)
-- [Back to root index](../../../README.md)
+  for debug bundles and server/plugin logs.
+- [Restore reference](https://velero.io/docs/v1.18/restore-reference/)
+  for existing-object behavior and PVC restoration.
+- [File System Backup](https://velero.io/docs/v1.18/file-system-backup/)
+  for `PodVolumeBackup` and `PodVolumeRestore`.
+- [CSI snapshot data movement](https://velero.io/docs/v1.18/csi-snapshot-data-movement/)
+  for `DataUpload`, `DataDownload`, and repository checks.
+- [CSI snapshot support](https://velero.io/docs/v1.18/csi/)
+  for snapshot class and driver prerequisites.
+
+[Back to Velero index](index.md)
+
+[^velero-troubleshooting]: [Velero v1.18 - Troubleshooting](https://velero.io/docs/v1.18/troubleshooting/).
+[^velero-restore]: [Velero v1.18 - Restore Reference](https://velero.io/docs/v1.18/restore-reference/).
+[^velero-fsb]: [Velero v1.18 - File System Backup](https://velero.io/docs/v1.18/file-system-backup/).
+[^velero-data-movement]: [Velero v1.18 - CSI Snapshot Data Movement](https://velero.io/docs/v1.18/csi-snapshot-data-movement/).
+[^velero-csi]: [Velero v1.18 - CSI Snapshot Support](https://velero.io/docs/v1.18/csi/).

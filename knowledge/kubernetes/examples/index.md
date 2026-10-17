@@ -17,4 +17,4 @@ Practical Kubernetes examples and walkthroughs.
 - Ingress examples.
 - Job and CronJob examples.
 
-[Back to Kubernetes index](../index.md) | [Back to root index](../../../README.md)
+[Back to Kubernetes index](../index.md) | [Back to knowledge index](../../index.md)

@@ -13,4 +13,4 @@ Expected content:
 
 Use descriptive filenames such as `aws-three-tier-reference-architecture.png`.
 
-[Back to assets index](../index.md) | [Back to root index](../../../README.md)
+[Back to assets index](../index.md) | [Back to knowledge index](../../index.md)

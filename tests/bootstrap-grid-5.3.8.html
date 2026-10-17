@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap responsive grid learning preview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  </head>
+  <body>
+    <main class="container py-4">
+      <h1 class="h3">Learner dashboard</h1>
+      <p class="text-secondary">The same HTML at two viewport widths.</p>
+      <p>
+        <span class="d-md-none">Below 768px: one card per row</span>
+        <span class="d-none d-md-inline">768px and wider: two cards per row</span>
+      </p>
+      <div class="row g-3">
+        <section class="col-12 col-md-6">
+          <div class="p-3 border rounded bg-body-tertiary">
+            <h2 class="h4">Profile</h2>
+            <p>About this learner.</p>
+          </div>
+        </section>
+        <section class="col-12 col-md-6">
+          <div class="p-3 border rounded bg-body-tertiary">
+            <h2 class="h4">Activity</h2>
+            <p>What they studied recently.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

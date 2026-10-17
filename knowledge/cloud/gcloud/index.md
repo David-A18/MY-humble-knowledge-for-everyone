@@ -16,7 +16,7 @@ Status: Initial outline
 
 | Article | Purpose |
 | --- | --- |
-| [Apigee API management](apigee.md) | Understand Apigee API proxies, environments, policies, API products, developer apps, hybrid runtime placement, and operational checks. |
+| [Apigee API management](apigee.md) | Follow a request through a proxy and see how products, app keys, policies, and runtime placement fit. |
 
 ## Official documentation
 
@@ -24,4 +24,4 @@ Status: Initial outline
 - [Google Cloud Architecture Framework](https://cloud.google.com/architecture/framework)
 - [Apigee documentation](https://cloud.google.com/apigee/docs)
 
-[Back to cloud index](../index.md) | [Back to root index](../../../README.md)
+[Back to cloud index](../index.md) | [Back to knowledge index](../../index.md)

@@ -1,125 +1,201 @@
 ---
-type: "How-to Guide"
-title: "Kubernetes daily usage commands"
-description: "Collect the kubectl commands used most often during daily Kubernetes and EKS work: checking context, inspecting resources, reading logs, entering containers, and temporarily forwarding traffic."
-tags: [kubernetes, daily-usage]
+type: How-to Guide
+title: Begin a safe kubectl inspection session
+description: Confirm the cluster and namespace, scan workload state, and choose the next investigation without changing resources.
+tags: [kubernetes, kubectl, daily-usage, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform engineer
+maintainer: unassigned
+sources:
+  - id: current-context
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_current-context/
+    title: kubectl config current-context
+  - id: get-contexts
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_get-contexts/
+    title: kubectl config get-contexts
+  - id: kubeconfig-files
+    resource: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
+    title: Organizing Cluster Access Using kubeconfig Files
+  - id: kubectl-get
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+    title: kubectl get
+  - id: kubectl-describe
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+    title: kubectl describe
+  - id: kubectl-logs
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+    title: kubectl logs
+  - id: debug-pods
+    resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/
+    title: Debug Pods
+  - id: kubernetes-rbac
+    resource: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    title: Using RBAC Authorization
 ---
 
-# Kubernetes daily usage commands
+# Begin a safe kubectl inspection session
 
-## Purpose
+## What you will do
 
-Collect the `kubectl` commands used most often during daily Kubernetes and EKS work: checking context, inspecting resources, reading logs, entering containers, and temporarily forwarding traffic.
+Use a short, repeatable sequence to answer: **Am I looking at the
+right cluster, and which workload needs a closer look?** You will
+read the current context, use an explicit namespace, list workloads
+and Pods, and inspect one Pod only if its summary points to a
+problem. These commands do not apply, delete, scale, restart, or
+enter a workload.[^current-context][^kubectl-get]
 
-## Context and namespace
+A kubeconfig **context** selects a cluster and an identity, and may
+include a default namespace. Treat it like the address on an
+envelope: if the address is wrong, even a perfect message goes to
+the wrong place. The analogy has a limit: a context name is just
+a local label, so confirm which cluster it maps to rather than
+trusting a familiar-sounding name.[^kubeconfig-files][^get-contexts]
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Show current context | `kubectl config current-context` | Before touching a cluster. |
-| List known contexts | `kubectl config get-contexts` | When switching between local, staging, and production clusters. |
-| Switch context | `kubectl config use-context <context>` | When moving to another cluster. |
-| Set default namespace | `kubectl config set-context --current --namespace=<namespace>` | When most commands target one namespace. |
-| Check API access | `kubectl auth can-i <verb> <resource> -n <namespace>` | Before running an operation that may be blocked by RBAC. |
+```mermaid
+flowchart TB
+  context["Current context and cluster"] --> namespace["Explicit namespace"]
+  context -. "target uncertain" .-> stopTarget["Stop and confirm target"]
+  namespace --> overview["Deployment and Pod summaries"]
+  overview -. "nothing suspicious" .-> stopOverview["Stop this inspection"]
+  overview -- "clue needs detail" --> detail["One Pod's state, events, logs"]
+  overview -- "no affected Pod exists" --> next["Choose a focused next step"]
+  detail --> next["Choose a focused next step"]
+```
 
-### Confirm the active context
+Text alternative: first confirm the context and its cluster; stop if
+the target is uncertain. Use the intended namespace explicitly and
+scan Deployment and Pod summaries. If a clue needs more detail,
+inspect one affected Pod and choose a focused next guide. If no
+affected Pod exists, choose the next guide from the summaries.
+Otherwise, stop this inspection.
+
+## Before you start
+
+- Know the intended environment and namespace from your team or
+  exercise instructions. This page uses `shop` as an **invented
+  example**.
+- Have `kubectl` configured with permission to read the target
+  namespace. A `Forbidden` result is an access signal, not a
+  reason to try another cluster at random.
+- Handle logs as potentially sensitive application output. Read
+  only what you need and avoid posting secrets into a ticket.
+
+### 1. Confirm the target
 
 ```bash
 kubectl config current-context
-kubectl config view --minify --output 'jsonpath={..namespace}{"\n"}'
+kubectl config get-contexts
 ```
 
-What it does: prints the active cluster context and the namespace configured on that context.
+The first command names the active context. In the context list,
+find the `*` in the **CURRENT** column and compare that row's
+**CLUSTER** with your team's expected kubeconfig mapping. The
+cluster name is another local label; if it is ambiguous, confirm
+its server address through your trusted environment instructions.
+Stop if the target is uncertain. **NAMESPACE** shows the context's
+default, but this guide uses `-n shop` on each namespaced command so
+the target is visible at the point of use.
+[^current-context][^get-contexts][^kubeconfig-files]
 
-> [!IMPORTANT]
-> Always confirm context before applying, deleting, scaling, or draining resources, especially when your kubeconfig contains production EKS clusters.
+> [!WARNING]
+> Reading from the wrong cluster can expose data. Before any later
+> change, repeat this target check and follow the review process
+> for that environment.
 
-## Inspect resources
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| List namespaces | `kubectl get namespaces` | Discover available environments or tenancy boundaries. |
-| List pods | `kubectl get pods -n <namespace>` | Check workload health. |
-| List pods with node/IP details | `kubectl get pods -n <namespace> -o wide` | Debug scheduling, node, or networking issues. |
-| Describe a pod | `kubectl describe pod <pod> -n <namespace>` | Inspect events, probes, mounts, and container state. |
-| List all common workload resources | `kubectl get deploy,rs,sts,ds,job,cronjob -n <namespace>` | Build a quick workload inventory. |
-| List services and ingress | `kubectl get svc,ingress -n <namespace>` | Check application entry points. |
-
-### Inspect pods in a namespace
+### 2. Scan the namespace
 
 ```bash
-kubectl get pods -n app
-kubectl get pods -n app -o wide
-kubectl describe pod web-7c9d8f9d6b-xm2ql -n app
+kubectl get deployments -n shop
+kubectl get pods -n shop -o wide
 ```
 
-What it does: lists pod status, adds placement details, then opens the detailed pod view with events and container state.
+The Deployment list shows desired and available replica summaries.
+The Pod list shows readiness, status, restart counts, and, with
+`-o wide`, placement. Here is **abridged illustrative output** from
+an invented two-replica Deployment; no cluster was inspected for it:
 
-## Logs and events
+```text
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+web    1/2     2            1           5m
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Show pod logs | `kubectl logs <pod> -n <namespace>` | Read the current container log. |
-| Follow pod logs | `kubectl logs -f <pod> -n <namespace>` | Watch startup or live traffic behavior. |
-| Show previous container logs | `kubectl logs <pod> -n <namespace> --previous` | Diagnose a restarted container. |
-| Show deployment logs | `kubectl logs deployment/<deployment> -n <namespace>` | Read logs without selecting a pod manually. |
-| Show sorted events | `kubectl get events -n <namespace> --sort-by=.lastTimestamp` | See recent scheduling, pull, probe, and restart events. |
+NAME                      READY   STATUS    RESTARTS   AGE   IP          NODE
+web-7c8d9f-a1b2c          1/1     Running   0          5m    10.0.1.11   worker-a
+web-7c8d9f-d3e4f          0/1     Running   0          5m    10.0.2.12   worker-b
+```
 
-### Follow logs from a deployment
+In the Deployment's **READY** value, the first number is ready and
+the second is desired. The `0/1` Pod is the first one to inspect;
+`Running` does not mean its container is ready. `Pending`,
+`CrashLoopBackOff`, `ErrImagePull`, and `ImagePullBackOff` are other
+clues. A rising restart count requires comparing observations over
+time. These are clues, not diagnoses; a ready Pod also does not
+prove that a user request succeeds.[^kubectl-get][^debug-pods]
+
+The Deployment list does not include StatefulSets, DaemonSets, or
+Jobs. Their Pods can still appear in the Pod list, so do not assume
+every Pod must have a Deployment above it.
+
+If a named resource returns `NotFound`, check the spelling, context,
+and namespace. An empty list also needs a target check before you
+conclude that nothing runs there. If your access allows it,
+`kubectl get namespace shop` can confirm that the namespace exists;
+otherwise confirm its name through your team. If the API returns
+`Forbidden`, ask for appropriate read access; changing context to
+evade a permission error is not a fix.[^kubectl-get][^kubernetes-rbac]
+
+### 3. Inspect one affected Pod
+
+Copy an exact Pod name from the list:
 
 ```bash
-kubectl logs -f deployment/web -n app --tail=100
+kubectl describe pod <pod-name> -n shop
+kubectl logs <pod-name> -n shop --tail=100
 ```
 
-What it does: follows recent logs from pods selected by the `web` Deployment.
+The description shows container states, conditions, and related
+events. Logs show what one container wrote, if it has started. For
+a Pod with several containers, choose the relevant container from
+the description and add `-c <container-name>` to the log command. If the
+container restarted, the [CrashLoopBackOff guide](../troubleshooting/crashloopbackoff.md)
+explains when to request `--previous` logs.
+[^kubectl-describe][^kubectl-logs][^debug-pods]
 
-### Check recent namespace events
+Events and logs can be incomplete or absent. Record what they
+actually say and the time you observed it; do not infer a root
+cause from a status word alone.
 
-```bash
-kubectl get events -n app --sort-by=.lastTimestamp
-```
+## Choose a next path
 
-What it does: sorts namespace events by timestamp so recent failures are easier to find.
+| Observation | Next route |
+| --- | --- |
+| Deployment has missing or unready replicas | [Inspect a Deployment with kubectl](kubectl-basics.md) to follow its ReplicaSet to candidate Pods and confirm ownership. |
+| Pod is `Pending` or `Running` but not Ready | [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md) to read conditions and events before choosing a fix. |
+| Pod repeatedly restarts | [Diagnose CrashLoopBackOff](../troubleshooting/crashloopbackoff.md) to read the last exit and previous logs. |
+| Pod shows `ErrImagePull` or `ImagePullBackOff` | [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md) to separate image reference, credentials, and network causes. |
+| A Pod in kind cannot find a locally built image | [Diagnose a local image pull in kind](../troubleshooting/kind.md) for the host-versus-node image path. |
+| Pods appear ready but requests fail | [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md) to follow the request path. |
+| A read returns `Forbidden` | [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md) for the access route; do not bypass the denied permission. |
+| Workload needs a reviewed change | [Review and apply a manifest change](common-commands.md); do not use a diagnostic symptom alone as the proposed fix. |
 
-## Exec and port-forward
+This routine is an opening check. It is not a complete incident
+response, a security audit, or proof of application health.
+For a broader command lookup, use the
+[official kubectl quick reference](https://kubernetes.io/docs/reference/kubectl/quick-reference/).
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Open a shell in a pod | `kubectl exec -it <pod> -n <namespace> -- sh` | Inspect files, environment, or network from inside the container. |
-| Run one command in a pod | `kubectl exec <pod> -n <namespace> -- <command>` | Check a specific value without opening a shell. |
-| Forward a pod port | `kubectl port-forward pod/<pod> <local>:<remote> -n <namespace>` | Test a pod from your workstation. |
-| Forward a service port | `kubectl port-forward svc/<service> <local>:<remote> -n <namespace>` | Test service routing without exposing it externally. |
+## Explore further
 
-### Open a shell
+- [kubectl get](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/)
+  covers selectors and output formats.[^kubectl-get]
+- [Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/)
+  covers conditions, events, and container evidence.[^debug-pods]
+- [Back to Kubernetes commands](index.md).
 
-```bash
-kubectl exec -it web-7c9d8f9d6b-xm2ql -n app -- sh
-```
-
-What it does: starts an interactive shell in the target pod.
-
-> [!TIP]
-> Some minimal images do not include `bash`. Try `sh` first unless you know the image includes another shell.
-
-### Forward a service locally
-
-```bash
-kubectl port-forward svc/web 8080:80 -n app
-```
-
-What it does: maps `localhost:8080` on your machine to port `80` on the Kubernetes Service.
-
-## Official documentation
-
-- [kubectl quick reference](https://kubernetes.io/docs/reference/kubectl/quick-reference/)
-- [kubectl command overview](https://kubernetes.io/docs/reference/kubectl/)
-- [Organizing cluster access using kubeconfig files](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
-
-## Related links
-
-- [Back to Kubernetes commands](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^current-context]: [Kubernetes, kubectl config current-context](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_current-context/), source record `current-context`.
+[^get-contexts]: [Kubernetes, kubectl config get-contexts](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_get-contexts/), source record `get-contexts`.
+[^kubeconfig-files]: [Kubernetes, Organizing Cluster Access Using kubeconfig Files](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/), source record `kubeconfig-files`.
+[^kubectl-get]: [Kubernetes, kubectl get](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/), source record `kubectl-get`.
+[^kubectl-describe]: [Kubernetes, kubectl describe](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/), source record `kubectl-describe`.
+[^kubectl-logs]: [Kubernetes, kubectl logs](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/), source record `kubectl-logs`.
+[^debug-pods]: [Kubernetes, Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/), source record `debug-pods`.
+[^kubernetes-rbac]: [Kubernetes, Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/), source record `kubernetes-rbac`.

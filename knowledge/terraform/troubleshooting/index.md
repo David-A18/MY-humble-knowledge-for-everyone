@@ -19,4 +19,4 @@ Diagnostic workflows for Terraform failures and unexpected plans.
 - [ ] Run `terraform fmt -check` and `terraform validate`.
 - [ ] Inspect provider and module changes.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

@@ -1,349 +1,211 @@
 ---
-type: "Explanation"
-title: "Velero AWS S3 and EBS installation"
-description: "Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots."
-tags: [migrations, velero, aws-s3-ebs-installation]
+type: Explanation
+title: How Velero on EKS uses S3 and EBS
+description: Follow the backup archive, EBS snapshot, and AWS identity paths before choosing an installation method.
+tags: [migrations, velero, aws, eks, backup, beginner]
 status: draft
 maturity: draft
-audience: "Platform engineers installing Velero on EKS"
+audience: Beginning EKS platform and application teams
 maintainer: unassigned
 sources:
   - id: velero-aws-plugin
-    resource: https://github.com/vmware-tanzu/velero-plugin-for-aws
-    title: Velero AWS plugin
+    resource: https://github.com/velero-io/velero-plugin-for-aws
+    title: Velero - AWS Plugin
+  - id: velero-install
+    resource: https://velero.io/docs/v1.18/customize-installation/
+    title: Velero v1.18 - Customize Installation
+  - id: velero-csi
+    resource: https://velero.io/docs/v1.18/csi/
+    title: Velero v1.18 - CSI Snapshot Support
+  - id: velero-data-movement
+    resource: https://velero.io/docs/v1.18/csi-snapshot-data-movement/
+    title: Velero v1.18 - CSI Snapshot Data Movement
+  - id: velero-fsb
+    resource: https://velero.io/docs/v1.18/file-system-backup/
+    title: Velero v1.18 - File System Backup
+  - id: velero-locations
+    resource: https://velero.io/docs/v1.18/locations/
+    title: Velero v1.18 - Backup and Snapshot Locations
   - id: eks-ebs-csi
     resource: https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html
-    title: Amazon EBS CSI driver for Amazon EKS
-stale_after: 2026-12-19
+    title: Amazon EKS - EBS CSI Driver
+  - id: eks-snapshot-controller
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/csi-snapshot-controller.html
+    title: Amazon EKS - CSI Snapshot Controller
+  - id: eks-pod-identity
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/pod-id-association.html
+    title: Amazon EKS - Assign an IAM Role to a Service Account
 ---
 
-# Velero AWS S3 and EBS installation
+# How Velero on EKS uses S3 and EBS
 
-## Purpose
+## The idea in one minute
 
-Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots.
+A Velero installation on Amazon EKS may use **S3 for the backup
+archive** and **EBS for volume snapshots**. Those are different copies
+with different AWS API callers. S3 can hold Kubernetes object
+metadata, logs, and a file or data-mover repository. An ordinary
+provider or CSI EBS snapshot remains with EBS; the S3 archive does not
+contain its volume bytes. To copy volume bytes to object storage,
+choose File System Backup or CSI snapshot data movement explicitly.
+[^velero-aws-plugin][^velero-csi]
 
-Status: Draft
-Audience: Platform engineers installing Velero on EKS
-Page type: Installation guide
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Velero v1.18 documentation; official Velero AWS plugin repository; Amazon EKS snapshot controller documentation
-Validation evidence: Source reviewed against official Velero provider, backup, and AWS plugin documentation plus Amazon EKS guidance
-Known limitations: Not executed against a live EKS cluster, S3 bucket, EBS CSI driver, or AWS IAM role during this review
-Next review: After a successful sandbox EKS installation or by 2026-12-19
+Think of two workers with different keys. One files records in an
+archive; another copies the storage disk. Giving the archivist the
+archive key does not give the disk worker the right identity or prove
+a disk copy exists. The analogy stops at restore behavior: a snapshot
+and its application may need more preparation than a physical disk
+copy suggests.
 
-## Contents
+This is an Explanation of the installation's moving parts, not a
+ready-to-apply IAM policy or install command. The prior page included
+unrun bucket creation, add-on installation, Helm values, and cloud
+permissions that depended on the exact EKS and Velero setup. Use the
+linked official procedures after choosing the path and verifying the
+versions in your environment. No EKS cluster, S3 bucket, IAM role,
+EBS volume, or Velero server was created or tested for this page.
 
-- [Prerequisites](#prerequisites)
-- [Create backup storage](#create-backup-storage)
-- [Prepare IAM](#prepare-iam)
-- [Install the EKS snapshot controller](#install-the-eks-snapshot-controller)
-- [Create an EBS VolumeSnapshotClass](#create-an-ebs-volumesnapshotclass)
-- [Install Velero with the AWS plugin](#install-velero-with-the-aws-plugin)
-- [Enable node-agent when needed](#enable-node-agent-when-needed)
-- [Example Velero locations after install](#example-velero-locations-after-install)
-- [Validate the installation](#validate-the-installation)
+## Follow one invented photo app
 
-## Prerequisites
+Suppose a photo API runs in EKS. Its Deployment and Service are
+Kubernetes objects; its PVC uses an EBS-backed StorageClass. The
+platform team wants Velero to protect both the objects and photo
+files. The team must make two decisions:
 
-| Requirement | Why it matters |
+1. **Where will object backups live?** Configure a
+   `BackupStorageLocation` (BSL) for an S3 bucket and a cluster-owned
+   prefix. The Velero server, through the AWS object-store plugin,
+   needs an AWS identity that can use that location.
+2. **How will volume bytes be protected?** Choose a provider-native
+   EBS snapshot, a Kubernetes CSI snapshot, CSI snapshot data
+   movement, or File System Backup. Each has different prerequisites
+   and restore reachability.[^velero-aws-plugin][^velero-locations]
+
+```mermaid
+flowchart LR
+  api["EKS API<br/>Deployment, Service, PVC"] --> velero["Velero server<br/>AWS plugin"]
+  velero -- "object archive via Velero IAM" --> s3["S3 bucket and prefix"]
+  pvc["EBS-backed PVC"] --> choice{"Choose volume path"}
+  choice -- "provider-native" --> native["Velero AWS snapshotter<br/>EBS snapshot"]
+  choice -- "CSI snapshot" --> csi["Snapshot controller + EBS CSI driver<br/>EBS snapshot"]
+  choice -- "FSB or CSI data mover" --> repo["S3 backup repository<br/>volume bytes"]
+```
+
+Text alternative: Velero reads selected Kubernetes objects through
+the EKS API and stores their archive in S3 with the Velero workload's
+AWS identity. The EBS-backed PVC has a separate volume-data choice.
+A provider-native snapshot uses the Velero AWS plugin; a CSI snapshot
+uses the snapshot controller and EBS CSI driver; File System Backup
+or CSI data movement copies volume bytes to an S3-backed repository.
+These are alternatives, not three proofs from one backup.
+
+## Match each component to its job
+
+| Component | Its job | What it does not prove |
+| --- | --- | --- |
+| Velero server and AWS plugin | Read selected Kubernetes objects, write the archive to S3, and optionally use the provider-native EBS snapshotter. | A successful S3 write does not mean any PVC data was protected. |
+| `BackupStorageLocation` | Select the S3 bucket, prefix, and access settings for backups. | It does not put an EBS snapshot's bytes in S3. |
+| `VolumeSnapshotLocation` | Supply region and other provider settings for Velero's **provider-native** snapshot path. | It is not the selection mechanism for Kubernetes CSI snapshots.[^velero-locations] |
+| CSI snapshot controller | Reconcile Kubernetes `VolumeSnapshot` API objects. | The add-on itself does not supply EBS IAM permissions.[^eks-snapshot-controller] |
+| EBS CSI driver and `VolumeSnapshotClass` | Create and restore CSI snapshots for supported EBS volumes. | A class name alone does not prove that a snapshot was created or is usable.[^eks-ebs-csi] |
+| Velero node-agent, if selected | Run File System Backup or Velero's built-in CSI data mover. | Merely installing it does not enable or complete a copy to S3; the transfer Pods also need usable repository access. |
+
+The node-agent's two paths are documented separately: [File System
+Backup](https://velero.io/docs/v1.18/file-system-backup/) reads a mounted
+Pod volume, while [CSI snapshot data movement](https://velero.io/docs/v1.18/csi-snapshot-data-movement/)
+uses a snapshot as its source and needs an explicit backup choice.
+
+The AWS plugin's published compatibility table pairs plugin
+**v1.14.x** with Velero **v1.18.x**. That is a compatibility
+statement, not proof that an arbitrary Helm chart, EKS add-on,
+StorageClass, or IAM policy has been tested together. Pin and check
+the installed versions against the official table before a sandbox
+run.[^velero-aws-plugin]
+
+## Separate the AWS identities
+
+| Path | AWS caller to identify | Permission category to verify |
+| --- | --- | --- |
+| Object archive in S3 | Velero server's workload identity. | S3 access to the intended bucket and prefix, including read, write, and backup deletion according to retention policy. |
+| FSB or CSI data-mover repository in S3 | Node-agent and data-mover Pods; inspect their actual service accounts and credential path. | Access to the repository prefix and any required KMS permissions; a successful object archive alone does not verify this path. |
+| Provider-native EBS snapshot | Velero server through the AWS snapshotter plugin. | EC2 snapshot and volume APIs, plus KMS access if the workflow needs an encrypted snapshot or volume. |
+| CSI EBS snapshot | EBS CSI driver controller's workload identity. | Its own EC2 and any required KMS permissions. The snapshot controller add-on does not replace this identity.[^eks-ebs-csi][^eks-snapshot-controller] |
+
+EKS supports Pod Identity associations and IAM Roles for Service
+Accounts (IRSA). A Pod Identity association maps an IAM role to a
+service account **outside** the Kubernetes service-account object;
+IRSA uses an annotation on that object and a different trust path.
+Do not copy an IRSA annotation into a Pod Identity setup and assume
+the role is bound. Inspect the actual service account, association or
+annotation, role trust, and effective permissions for the caller you
+chose.[^eks-pod-identity]
+
+A single role may cover more than one path in a small lab, but the
+important check remains **which Pod makes the AWS API call**. S3
+success through Velero does not prove the EBS CSI controller can
+create a snapshot. An EBS snapshot does not prove Velero can read its
+S3 backup archive.
+
+## Choose the EBS snapshot path deliberately
+
+For a CSI-backed PVC, the **CSI path** needs a snapshot-capable EBS
+CSI driver, the CSI snapshot controller and its CRDs, and Velero's
+`EnableCSI` feature flag. It also needs a `VolumeSnapshotClass` for
+the matching driver that Velero can select: the v1.18 documentation
+describes a default-class annotation, Velero's
+`velero.io/csi-volumesnapshot-class: "true"` label, and per-backup or
+per-PVC selection. Check which method your installation uses rather
+than assuming that any class will be picked.[^velero-csi]
+The EKS snapshot controller can be an EKS managed add-on;
+AWS also documents a self-managed alternative.[^velero-csi]
+[^eks-snapshot-controller]
+
+The **provider-native path** uses Velero's AWS snapshotter and
+`VolumeSnapshotLocation`. The AWS plugin documentation says its
+snapshotter can handle volumes provisioned by `ebs.csi.aws.com`.
+That does not make the native and CSI workflows interchangeable:
+they have different Kubernetes objects and potentially different
+AWS callers. On EKS Auto Mode, AWS documents a different provisioner,
+`ebs.csi.eks.amazonaws.com`; inspect the actual StorageClass and
+supported snapshot path instead of assuming a standard-driver name.
+[^velero-aws-plugin][^eks-ebs-csi]
+
+For a move outside the snapshot's usable account, region, or storage
+boundary, plan a supported snapshot-copy step or an object-storage
+volume-data method. [Where Velero keeps volume data](storage-and-volume-backups.md)
+compares those choices. A database or write-heavy photo metadata
+store may need application-native consistency steps as well.
+
+## Evidence before calling installation successful
+
+| Check | Evidence that matters |
 | --- | --- |
-| EKS cluster access | Velero installs CRDs, a deployment, service account, and optional node-agent. |
-| AWS CLI and kubectl | Needed to create AWS resources and verify Kubernetes state. |
-| Helm or Velero CLI | Velero server can be installed with either method. |
-| S3 bucket | Stores backup metadata, logs, and repository data. |
-| EBS CSI driver | Required for EBS CSI-provisioned persistent volumes. |
-| CSI snapshot controller | Required for Kubernetes `VolumeSnapshot` workflows on EKS. |
-| IAM role for Velero | Allows S3 and EBS snapshot API calls without static long-lived credentials. |
+| Version and cluster target | Recorded Velero server, AWS plugin, Kubernetes context, EBS driver, and snapshot-controller versions. |
+| S3 path | BSL available; a bounded backup completes; expected object is visible in a restored disposable namespace. Use the [ConfigMap exercise](backup-restore-workflows.md) for this first check. |
+| Chosen EBS path | A snapshot for a disposable EBS PVC reaches its documented ready state; its AWS snapshot exists under the intended identity and retention policy. |
+| Data recovery | Restore the test PVC and read known content through the application or a controlled test Pod. Record failures and cleanup evidence. |
 
-> [!WARNING]
-> S3 storage, EBS snapshots, restored EBS volumes, and EKS clusters can create ongoing AWS cost. Add lifecycle, retention, and cleanup checks before production rollout.
+The first two checks do not replace the last two. No such EBS test
+was run here, so this page remains draft. For exact setup commands,
+start with the [Velero AWS plugin](https://github.com/velero-io/velero-plugin-for-aws),
+[Velero installation options](https://velero.io/docs/v1.18/customize-installation/),
+[EKS EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html),
+and [EKS snapshot controller](https://docs.aws.amazon.com/eks/latest/userguide/csi-snapshot-controller.html).
 
-## Create backup storage
+## Check your understanding
 
-```bash
-export AWS_REGION=eu-west-1
-export BUCKET_NAME=my-velero-backups
+1. If a Velero Backup is stored in S3 and an EBS snapshot was used,
+   where are the photo bytes?
+2. Which AWS identity would you inspect if the S3 archive succeeds but
+   a CSI EBS snapshot receives `AccessDenied`?
+3. Why does creating a `VolumeSnapshotClass` not prove an EBS backup?
+4. What test shows that the chosen EBS path can restore usable files?
 
-aws s3 mb s3://${BUCKET_NAME} --region ${AWS_REGION}
-```
+[Back to Velero index](index.md)
 
-What it does: creates the S3 bucket Velero will use for backup objects and logs.
-
-> [!IMPORTANT]
-> Use a bucket and prefix strategy that avoids multiple clusters accidentally deleting or overwriting each other's backups. For production, configure encryption, access logging where required, bucket policy, lifecycle, and object retention intentionally.
-
-## Prepare IAM
-
-Velero needs permissions for the S3 bucket and, when using EBS snapshots, EC2 snapshot APIs. On EKS, prefer EKS Pod Identity where available or IRSA where that is the cluster standard.
-
-Minimum policy design should include:
-
-- `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, `s3:ListBucket`, and multipart upload permissions scoped to the Velero bucket and prefix.
-- `ec2:CreateSnapshot`, `ec2:DeleteSnapshot`, `ec2:DescribeSnapshots`, `ec2:DescribeVolumes`, and `ec2:CreateTags` for EBS snapshot workflows.
-- Trust policy limited to the `velero` namespace and `velero` service account.
-
-> [!WARNING]
-> The default chart or install examples may grant broad Kubernetes permissions. Review RBAC before production use and reduce access where your restore scope permits it.
-
-### Example IAM policy shape
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:ListBucket"
-      ],
-      "Resource": "arn:aws:s3:::my-velero-backups"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:DeleteObject",
-        "s3:AbortMultipartUpload",
-        "s3:ListMultipartUploadParts"
-      ],
-      "Resource": "arn:aws:s3:::my-velero-backups/*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:CreateSnapshot",
-        "ec2:DeleteSnapshot",
-        "ec2:DescribeSnapshots",
-        "ec2:DescribeVolumes",
-        "ec2:CreateTags"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
-
-What it does: shows the permission categories Velero needs for S3 backup storage and EBS snapshot workflows. Scope this further to the account, region, bucket, tags, and snapshot ownership model used by your environment.
-
-### Service account identity example
-
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: velero
-  namespace: velero
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::<account-id>:role/velero-backup-role
-```
-
-What it does: shows the IRSA-style annotation that connects the Velero service account to an IAM role. If your platform uses EKS Pod Identity instead, bind the role through that mechanism and keep the service account name consistent.
-
-## Install the EKS snapshot controller
-
-```bash
-aws eks create-addon \
-  --cluster-name my-eks-cluster \
-  --addon-name snapshot-controller \
-  --region ${AWS_REGION}
-```
-
-What it does: installs the managed EKS snapshot controller add-on so CSI snapshot resources can be reconciled.
-
-## Create an EBS VolumeSnapshotClass
-
-```yaml
-apiVersion: snapshot.storage.k8s.io/v1
-kind: VolumeSnapshotClass
-metadata:
-  name: ebs-csi-snapclass
-  labels:
-    velero.io/csi-volumesnapshot-class: "true"
-  annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
-driver: ebs.csi.aws.com
-deletionPolicy: Delete
-```
-
-What it does: defines the snapshot class Velero can use for EBS CSI-backed PVC snapshots.
-
-> [!NOTE]
-> Some EKS modes or examples may use a different EBS CSI driver name. Match the driver name used by your cluster's StorageClass and EBS CSI installation.
-
-## Install Velero with the AWS plugin
-
-The exact command depends on whether you use Helm or `velero install`. The important settings are the AWS plugin image, S3 backup storage location, AWS region, EBS snapshot location, and CSI feature flag.
-
-### Install with Helm values
-
-```yaml
-serviceAccount:
-  server:
-    create: true
-    name: velero
-    annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::<account-id>:role/velero-backup-role
-configuration:
-  backupStorageLocation:
-  - name: default
-    provider: aws
-    bucket: my-velero-backups
-    prefix: clusters/prod-eks
-    config:
-      region: eu-west-1
-  volumeSnapshotLocation:
-  - name: default
-    provider: aws
-    config:
-      region: eu-west-1
-  features: EnableCSI
-credentials:
-  useSecret: false
-deployNodeAgent: true
-nodeAgent:
-  podVolumePath: /var/lib/kubelet/pods
-initContainers:
-- name: velero-plugin-for-aws
-  image: velero/velero-plugin-for-aws:v1.14.0
-  volumeMounts:
-  - mountPath: /target
-    name: plugins
-```
-
-What it does: configures the Helm chart to use AWS S3 for backups, AWS EBS snapshots for volume snapshots, the AWS plugin, and workload identity instead of a static credentials secret.
-
-### Install the chart
-
-```bash
-helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
-helm repo update
-helm install velero vmware-tanzu/velero \
-  --namespace velero \
-  --create-namespace \
-  --values velero-values.yaml
-```
-
-What it does: installs Velero into the `velero` namespace with the prepared values.
-
-### Equivalent CLI install shape
-
-```bash
-velero install \
-  --provider aws \
-  --plugins velero/velero-plugin-for-aws:v1.14.0 \
-  --bucket my-velero-backups \
-  --prefix clusters/prod-eks \
-  --backup-location-config region=eu-west-1 \
-  --snapshot-location-config region=eu-west-1 \
-  --features EnableCSI \
-  --use-node-agent \
-  --no-secret
-```
-
-What it does: installs Velero with the AWS plugin, S3 backup location, AWS snapshot location, CSI support, node-agent, and workload identity instead of a credentials file.
-
-> [!NOTE]
-> `--no-secret` assumes the Velero pod receives AWS credentials from workload identity such as IRSA or EKS Pod Identity. If you use a credentials file for a lab, keep it out of Git and rotate it after testing.
-
-## Enable node-agent when needed
-
-Install or enable node-agent when using File System Backup or Velero built-in data mover.
-
-```bash
-velero install --use-node-agent --features=EnableCSI
-```
-
-What it does: shows the Velero CLI flags that enable the node-agent DaemonSet and CSI feature support.
-
-> [!WARNING]
-> Node-agent may require privileged or host filesystem access in some environments. Review cluster security policy before enabling file-system backup or data movement.
-
-## Example Velero locations after install
-
-```yaml
-apiVersion: velero.io/v1
-kind: BackupStorageLocation
-metadata:
-  name: default
-  namespace: velero
-spec:
-  provider: aws
-  objectStorage:
-    bucket: my-velero-backups
-    prefix: clusters/prod-eks
-  config:
-    region: eu-west-1
-  accessMode: ReadWrite
----
-apiVersion: velero.io/v1
-kind: VolumeSnapshotLocation
-metadata:
-  name: default
-  namespace: velero
-spec:
-  provider: aws
-  config:
-    region: eu-west-1
-```
-
-What it does: shows the two location resources Velero uses: object storage for backup archives and provider configuration for EBS snapshots.
-
-## Validate the installation
-
-```bash
-kubectl get pods -n velero
-velero backup-location get
-velero snapshot-location get
-kubectl get volumesnapshotclass
-kubectl get daemonset node-agent -n velero
-```
-
-What it does: checks that Velero pods are running, backup and snapshot locations are available, and Kubernetes has a snapshot class.
-
-### Run a smoke-test backup
-
-```bash
-kubectl create namespace velero-smoke-test
-kubectl create configmap smoke-test \
-  --from-literal=created-by=velero-docs \
-  -n velero-smoke-test
-
-velero backup create velero-smoke-test \
-  --include-namespaces velero-smoke-test \
-  --snapshot-volumes=false \
-  --wait
-
-velero backup describe velero-smoke-test --details
-```
-
-What it does: creates a tiny test namespace, backs up only Kubernetes resources, and shows whether Velero can write and describe a backup.
-
-### Run a smoke-test restore
-
-```bash
-velero restore create velero-smoke-restore \
-  --from-backup velero-smoke-test \
-  --namespace-mappings velero-smoke-test:velero-smoke-restore \
-  --wait
-
-kubectl get configmap smoke-test -n velero-smoke-restore
-velero restore describe velero-smoke-restore --details
-```
-
-What it does: restores the smoke-test ConfigMap into a different namespace so you can verify restore behavior without touching production workloads.
-
-> [!WARNING]
-> Clean up only the smoke-test namespaces you created. Do not run namespace deletion commands against production namespaces.
-
-## Related links
-
-- [Velero AWS plugin](https://github.com/velero-io/velero-plugin-for-aws)
-- [Amazon EKS CSI snapshot controller](https://docs.aws.amazon.com/eks/latest/userguide/csi-snapshot-controller.html)
-- [Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html)
-- [Backup and restore workflows](backup-restore-workflows.md)
-- [Back to Velero index](index.md)
-- [Back to migrations index](../index.md)
-- [Back to root index](../../../README.md)
+[^velero-aws-plugin]: [Velero - AWS Plugin](https://github.com/velero-io/velero-plugin-for-aws).
+[^velero-locations]: [Velero v1.18 - Backup and Snapshot Locations](https://velero.io/docs/v1.18/locations/).
+[^velero-csi]: [Velero v1.18 - CSI Snapshot Support](https://velero.io/docs/v1.18/csi/).
+[^eks-ebs-csi]: [Amazon EKS - EBS CSI Driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html).
+[^eks-snapshot-controller]: [Amazon EKS - CSI Snapshot Controller](https://docs.aws.amazon.com/eks/latest/userguide/csi-snapshot-controller.html).
+[^eks-pod-identity]: [Amazon EKS - Assign an IAM Role to a Service Account](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-association.html).

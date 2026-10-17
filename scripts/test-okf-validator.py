@@ -43,6 +43,12 @@ with tempfile.TemporaryDirectory(prefix="okf-validator-") as temporary:
     write(root, "example.md", VALID_CONCEPT)
     assert MODULE.validate_bundle(root) == []
 
+    write(root, "example.md", VALID_CONCEPT.replace("title: Example", "title: REPLACE_WITH_TITLE"))
+    assert any("template placeholder remains" in error for error in MODULE.validate_bundle(root))
+
+    write(root, "example.md", VALID_CONCEPT.replace("maintainer: unassigned", "maintainer: unassigned\nsources:\n  - id: real-id\n    resource: https://REPLACE_WITH_URL\n    title: Source"))
+    assert any("template placeholder remains" in error for error in MODULE.validate_bundle(root))
+
     write(root, "example.md", "# Missing frontmatter\n")
     assert any("missing YAML frontmatter" in error for error in MODULE.validate_bundle(root))
 

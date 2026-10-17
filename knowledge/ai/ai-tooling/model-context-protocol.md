@@ -1,259 +1,175 @@
 ---
-type: "Explanation"
-title: "Model Context Protocol"
-description: "This guide explains what Model Context Protocol is and how to design MCP servers that expose useful, safe tools and context to AI applications."
+type: Explanation
+title: Model Context Protocol
+description: Understand how an AI application uses MCP to ask another program for information or an action, and where the protocol's responsibility ends.
 tags: [ai, ai-tooling, model-context-protocol]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Engineering learners and practitioners
+maintainer: unassigned
+sources:
+  - id: mcp-architecture
+    resource: https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture
+    title: MCP architecture overview
+  - id: mcp-base
+    resource: https://modelcontextprotocol.io/specification/2026-07-28/basic/index
+    title: MCP base protocol
+  - id: mcp-tools
+    resource: https://modelcontextprotocol.io/specification/2026-07-28/server/tools
+    title: MCP tools
+  - id: mcp-resources
+    resource: https://modelcontextprotocol.io/specification/2026-07-28/server/resources
+    title: MCP resources
+  - id: mcp-server-features
+    resource: https://modelcontextprotocol.io/specification/2026-07-28/server/index
+    title: MCP server features
+  - id: mcp-transports
+    resource: https://modelcontextprotocol.io/specification/2026-07-28/basic/transports
+    title: MCP transports
+  - id: mcp-typescript-sdk
+    resource: https://ts.sdk.modelcontextprotocol.io/v2/migration/upgrade-to-v2
+    title: MCP TypeScript SDK v2 migration guide
 ---
 
 # Model Context Protocol
 
-## Purpose
+## The simple idea
 
-This guide explains what Model Context Protocol is and how to design MCP servers that expose useful, safe tools and context to AI applications.
+**Model Context Protocol (MCP)** is a shared way for an AI application to
+request information or an action from another program. For example, an AI
+assistant could ask a knowledge server to search articles, then use the
+returned article to answer a reader's question. MCP defines the exchange
+between the programs; the server still decides where its information comes
+from and what a caller may access.[^mcp-architecture][^mcp-base]
 
-## When to use this
+Think of a library desk. You ask an assistant a question; the assistant
+may request a page from the desk, which returns what it can find and
+serve. That picture helps explain the direction of the request. It stops
+there: the desk does not guarantee the page is relevant or accurate,
+grant access to every collection, or decide how the assistant explains it.
 
-Use MCP when an AI host needs a reusable connection to live context, private systems, local files, product APIs, or controlled actions. Use direct function calling when the tools only exist inside one application runtime. Use a skill when the model mainly needs reusable instructions rather than a live integration.
+## The three participants
 
-## Core model
-
-| Component | Meaning |
-| --- | --- |
-| Host | The AI application the user interacts with, such as Claude, Claude Code, Codex, ChatGPT, an IDE, or a custom agent. |
-| Client | The MCP connection inside the host. It sends requests and receives responses. |
-| Server | The local process or remote service that exposes capabilities to the host. |
-| Tool | A callable operation for actions, queries, computations, or side effects. |
-| Resource | Readable context such as files, schemas, records, documents, or generated views. |
-| Prompt | A reusable prompt template exposed by the server. |
-
-MCP messages follow JSON-RPC 2.0. Current MCP guidance treats requests as stateless: servers should not infer user, task, protocol, capability, or conversation context from an earlier request on the same connection. If state needs to span requests, pass an explicit ID, handle, cursor, task ID, or resource URI.
-
-## Transports
-
-| Transport | Use it for | Notes |
+| Participant | Plain-language role | In the knowledge example |
 | --- | --- | --- |
-| `stdio` | Local servers launched by the host. | Read credentials from the local environment; keep logs out of stdout because stdout carries protocol messages. |
-| Streamable HTTP | Remote servers reached over the network. | Authenticate and authorize every request; do not rely on connection continuity. |
+| **Host** | The AI application you use. It coordinates its connections. | The assistant where you ask a question. |
+| **Client** | The part of that host that talks to one MCP server. | The connection that sends the assistant's search request. |
+| **Server** | A program that offers information or operations. It can run locally or remotely. | A service that searches the knowledge articles. |
 
-Transport changes how messages move. It does not change what a tool, resource, or prompt means.
+A host can have several clients, each connected to a different server.
+The server is the provider of the capability; it is not necessarily a
+large remote machine.[^mcp-architecture]
 
-## Server capabilities
-
-### Knowledge serving pattern
-
-For agent knowledge bases, treat MCP as an optional serving adapter over the retrieval layer. MCP should expose capability, not dictate whether the corpus uses plain Markdown, OKF, BM25, SQLite FTS, OpenSearch, pgvector, FAISS, a graph index, or a hybrid retriever.
-
-```text
-Git or OKF corpus
-  -> retrieval service
-  -> read-only knowledge operations
-  -> MCP server
-  -> agent
+```mermaid
+flowchart TB
+  person["Reader"] --> model
+  subgraph host["AI host"]
+    model["Model proposes a tool call"] --> gate["Host checks or asks approval"]
+    gate --> client["MCP client"]
+    client --> result["Host receives a result"]
+    result --> answer["Model and host prepare an answer"]
+  end
+  client <-->|"MCP messages"| server["MCP server"]
+  server --> corpus["Knowledge articles"]
+  answer --> person
 ```
 
-Useful knowledge-serving tools:
+Text alternative: a reader asks the AI host. Its model may propose a
+tool call; the host applies its controls and may ask for approval. The
+host's MCP client exchanges messages with a server that reads knowledge
+articles. The model and host use the result to prepare an answer. A tool
+call is therefore a decision by the host, not an automatic
+consequence of connecting to a server.
 
-| Tool | Behavior |
-| --- | --- |
-| `search_knowledge` | Returns bounded candidate concepts or sections with IDs, summaries, trust, freshness, authority, and corpus revision metadata. |
-| `fetch_knowledge_entry` | Fetches one authorized document or section by stable ID. |
-| `fetch_source_evidence` | Fetches related evidence only when authorized and needed. |
+## What a server can offer
 
-Keep normal knowledge serving read-only. Maintenance workflows may produce patches, branches, or PRs, but those operations should live behind a separate maintenance boundary with stronger authorization, validation, and audit logging.
+MCP groups common server capabilities into three useful kinds. A server
+may offer one, two, or all three.[^mcp-server-features] Clients also have
+optional capabilities such as elicitation; these are separate from what
+servers offer.[^mcp-architecture]
 
-### Tools
-
-Tools should represent user goals, not raw backend endpoints.
-
-Good examples:
-
-- `search_knowledge`
-- `fetch_knowledge_entry`
-- `github_list_pull_requests`
-- `jira_create_issue`
-- `run_readonly_query`
-
-Avoid a generic `execute` or `do_everything` tool. It hides risk and makes tool routing harder.
-
-Tool definitions should include:
-
-| Field | Good practice |
-| --- | --- |
-| Name | Stable, verb-object, and namespaced when the server has many domains. |
-| Title | Human-readable display name. |
-| Description | Explain what the tool does, when to use it, when not to use it, and what it returns. |
-| Input schema | Use JSON Schema, preferably 2020-12 when no explicit dialect is required. |
-| Output schema | Return predictable structured results where the host or model may continue from the output. |
-| Annotations | Mark read-only, destructive, or open-world behavior truthfully. |
-
-### Resources
-
-Resources are for context the host can read. Use resources when nothing needs to be computed or changed.
-
-Useful resources:
-
-- `file://` or `kb://` Markdown documents.
-- API schemas.
-- Database table definitions.
-- OKF concept documents.
-- Project metadata.
-- Runbook pages.
-
-Use stable resource URIs. They make citations, logs, cache entries, and troubleshooting easier.
-
-### Prompts
-
-Prompts are reusable templates exposed by a server. They are useful for compact, common flows such as "summarize this issue with linked PRs" or "prepare a release note from these commits." For larger workflows with references and scripts, use a skill and let the MCP server supply the live data.
-
-## Design workflow
-
-1. List the user jobs the integration should support.
-2. Separate read operations from write operations.
-3. Decide which data should be resources and which operations should be tools.
-4. Give each tool a precise name, description, input schema, and output shape.
-5. Add server-side auth checks for every request.
-6. Add allowlists for file paths, API scopes, resource IDs, and write targets.
-7. Add dry-run or propose-only tools before write tools.
-8. Test tool selection, schema validation, error handling, and approval boundaries.
-
-## Minimal TypeScript MCP server
-
-```bash
-npm install @modelcontextprotocol/sdk zod
-```
-
-What it does: installs the official TypeScript SDK and `zod` for schemas.
-
-```ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
-
-const server = new McpServer(
-  { name: "knowledge-tools", version: "1.0.0" },
-  {
-    instructions:
-      "Use search_knowledge before fetch_knowledge_entry. Write tools require explicit user intent.",
-  },
-);
-
-server.registerTool(
-  "search_knowledge",
-  {
-    title: "Search Knowledge",
-    description:
-      "Search curated Markdown knowledge entries. Use this before fetching a specific entry. Returns stable IDs, titles, paths, and short summaries.",
-    inputSchema: {
-      query: z.string().min(1),
-      limit: z.number().int().min(1).max(10).default(5),
-    },
-    outputSchema: {
-      results: z.array(
-        z.object({
-          id: z.string(),
-          title: z.string(),
-          path: z.string(),
-          summary: z.string(),
-        }),
-      ),
-    },
-    annotations: { readOnlyHint: true },
-  },
-  async ({ query, limit }) => {
-    const results = await searchMarkdownIndex(query, limit);
-
-    return {
-      content: [{ type: "text", text: JSON.stringify({ results }) }],
-      structuredContent: { results },
-    };
-  },
-);
-
-server.registerResource(
-  "mcp-guide",
-  "kb://ai/ai-tooling/model-context-protocol",
-  {
-    title: "Model Context Protocol",
-    description: "Guide to MCP concepts and server design.",
-    mimeType: "text/markdown",
-  },
-  async (uri) => ({
-    contents: [
-      {
-        uri: uri.href,
-        mimeType: "text/markdown",
-         text: await readKnowledgeEntry("knowledge/ai/ai-tooling/model-context-protocol.md"),
-      },
-    ],
-  }),
-);
-
-await server.connect(new StdioServerTransport());
-```
-
-What it does: exposes one read-only search tool and one Markdown resource over `stdio`. The helper functions are intentionally left as application code.
-
-## Minimal Python MCP server
-
-```python
-from mcp.server.fastmcp import FastMCP
-
-mcp = FastMCP("knowledge-tools", json_response=True)
-
-
-@mcp.tool()
-def search_knowledge(query: str, limit: int = 5) -> list[dict]:
-    """Search curated Markdown knowledge entries by query."""
-    return search_markdown_index(query=query, limit=limit)
-
-
-@mcp.resource("kb://entry/{entry_id}")
-def fetch_knowledge_entry(entry_id: str) -> str:
-    """Fetch a Markdown knowledge entry by stable ID."""
-    return read_knowledge_entry(entry_id)
-
-
-if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
-```
-
-What it does: creates a Python MCP server with a search tool and a dynamic resource URI over Streamable HTTP.
-
-## Safety rules
-
-> [!WARNING]
-> Never let a tool accept arbitrary file paths, shell commands, raw SQL, or raw patches from a model unless the server applies strict allowlists, validation, authorization, and audit logging.
-
-- Validate all inputs on the server, even if the host validates schemas.
-- Treat tool descriptions as routing hints, not security controls.
-- Split read-only tools from write tools.
-- Require explicit user intent for writes, deletes, external messages, purchases, permission changes, or public actions.
-- Return machine-readable errors such as `not_found`, `unauthorized`, `validation_failed`, and `conflict`.
-- Log who requested the action, the tool name, input IDs, output IDs, and whether a write occurred.
-
-## Troubleshooting
-
-| Symptom | Likely cause | Next step |
+| Capability | What you can ask for | Knowledge example |
 | --- | --- | --- |
-| Model calls the wrong tool | Names or descriptions overlap. | Add service prefixes and clearer "use when" guidance. |
-| Tool is overused | Description is too broad or system prompt says to always use tools. | Narrow the description and make tool use conditional. |
-| Tool is skipped | Missing instruction or weak description. | Add a task-specific instruction and stronger examples. |
-| Schema errors are frequent | Required fields or enums do not match user language. | Add descriptions, examples, defaults, and validation messages. |
-| Remote server behaves inconsistently | Server relies on connection state. | Pass explicit IDs and authenticate every request. |
+| **Tool** | Run a named operation with inputs and receive a result. | `search_knowledge` takes a query and returns matching titles, article IDs, and a source revision. |
+| **Resource** | Read content identified by a URI. | `kb://terraform/state` identifies a readable article. |
+| **Prompt** | Get a reusable prompt template. | A template could ask the host to explain an article for a beginner. |
 
-## Related links
+A tool can read or change something, depending on what the server
+implements. The word *tool* alone does not mean an operation is safe or
+read-only. A resource is content offered for reading; a prompt is a
+template, not an automatic answer. Typically the model proposes tool
+use, the application selects resources, and a user selects prompts;
+the host still controls what it actually sends.[^mcp-server-features]
 
-- Official documentation: [MCP overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/index)
-- Official documentation: [MCP tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools)
-- Official documentation: [MCP resources](https://modelcontextprotocol.io/specification/2026-07-28/server/resources)
-- Official documentation: [OpenAI MCP server guide](https://developers.openai.com/plugins/build/mcp-server)
-- [Create AI tools for Claude and Codex](create-ai-tools-for-claude-and-codex.md)
-- [Knowledge-base creation, management, and optimization](knowledge-bases-creation-management-and-optimization.md)
-- [Agent knowledge bases](knowledge-bases/index.md)
-- [Back to AI tooling](index.md)
-- [Back to AI index](../index.md)
-- [Back to root index](../../../README.md)
+## Follow one question
+
+Imagine a reader asking, “What does Terraform state do?” The following
+is an **illustrative design**, not a running server:
+
+1. The model proposes a `search_knowledge` call with
+   `{"query": "Terraform state"}`. The host may require approval and
+   decides whether to send it through its MCP client.
+2. The server searches its allowed articles and returns a few titles,
+   stable IDs, and the knowledge revision it searched.
+3. If the host chooses a result and the server exposes it as a resource,
+   the client requests that article through a URI such as
+   `kb://terraform/state`.
+4. The host uses the returned content to explain state and can cite the
+   article and its source revision.
+
+MCP carries those requests and responses. It does not prescribe Git,
+Markdown, a database, or any particular search algorithm behind the
+server. It also cannot guarantee that the selected article is correct
+or that the model will explain it well. Those need source review and
+answer evaluation.[^mcp-architecture][^mcp-tools][^mcp-resources]
+
+For this repository, [Terraform state management](../../terraform/fundamentals/state-management.md)
+is a real article. The sample URI and tool name above are only examples;
+this page does not claim that this repository has a live MCP server.
+
+## The boundaries that matter
+
+| Question | Short answer |
+| --- | --- |
+| How do messages travel? | A local server can use `stdio`; a remote server can use Streamable HTTP. The transport changes delivery, not the meaning of a tool or resource.[^mcp-transports] |
+| Where is the conversation? | The host manages it. The server sees only what the host sends in a request; a connection is not the chat history.[^mcp-architecture] |
+| Does the server remember earlier requests? | In MCP version 2026-07-28, a server must not infer request context from earlier calls on the same connection. For work that spans requests, the client passes an explicit identifier.[^mcp-base] |
+| Who checks access? | The server validates inputs and enforces access controls for what it serves or changes. Tool descriptions and annotations do not grant permission.[^mcp-tools] |
+| Who decides whether to use a result? | The host controls its user interaction and what context it gives the model. MCP does not define the model's reasoning or the final answer.[^mcp-architecture] |
+
+If a server offers both `search_knowledge` and `edit_article`,
+the write operation needs its own permission checks and a clear user
+decision. Returning an article through MCP never authorizes editing it.
+
+## Check your understanding
+
+- In the question example, which participant reads the knowledge
+  articles, and which participant prepares the final answer?
+- Would changing from local `stdio` to remote HTTP make an article
+  trustworthy by itself? Why?
+- If a tool description says it is read-only, what must the server
+  still check?
+
+## Explore further
+
+- Read the [MCP architecture overview](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture)
+  for the host, client, and server relationship.[^mcp-architecture]
+- Read the [base protocol](https://modelcontextprotocol.io/specification/2026-07-28/basic/index),
+  [tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools),
+  and [resources](https://modelcontextprotocol.io/specification/2026-07-28/server/resources)
+  specifications when designing an integration.[^mcp-base][^mcp-tools][^mcp-resources]
+- If updating older TypeScript examples, the [SDK v2 migration
+  guide](https://ts.sdk.modelcontextprotocol.io/v2/migration/upgrade-to-v2)
+  explains the split from `@modelcontextprotocol/sdk` to the v2 client
+  and server packages.[^mcp-typescript-sdk]
+- For this repository's design, continue to
+  [Agent knowledge bases](knowledge-bases/index.md) and
+  [Create AI tools for Claude and Codex](create-ai-tools-for-claude-and-codex.md).
+
+[^mcp-architecture]: [MCP architecture overview](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture), source record `mcp-architecture`.
+[^mcp-base]: [MCP base protocol, version 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/basic/index), source record `mcp-base`.
+[^mcp-tools]: [MCP tools specification](https://modelcontextprotocol.io/specification/2026-07-28/server/tools), source record `mcp-tools`.
+[^mcp-resources]: [MCP resources specification](https://modelcontextprotocol.io/specification/2026-07-28/server/resources), source record `mcp-resources`.
+[^mcp-server-features]: [MCP server features](https://modelcontextprotocol.io/specification/2026-07-28/server/index), source record `mcp-server-features`.
+[^mcp-transports]: [MCP transports overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports), source record `mcp-transports`.
+[^mcp-typescript-sdk]: [MCP TypeScript SDK v2 migration guide](https://ts.sdk.modelcontextprotocol.io/v2/migration/upgrade-to-v2), source record `mcp-typescript-sdk`.

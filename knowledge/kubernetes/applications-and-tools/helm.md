@@ -1,251 +1,317 @@
 ---
-type: "Explanation"
-title: "Helm for Kubernetes and Crossplane"
-description: "Use this page to understand Helm's chart and release model, safely inspect and"
-tags: [kubernetes, applications-and-tools, helm]
+type: Explanation
+title: How Helm turns a chart into a release
+description: Understand charts, values, rendered manifests, release revisions, and the checks needed beyond a successful Helm command.
+tags: [kubernetes, helm, charts, releases, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning Kubernetes learner
+maintainer: unassigned
+sources:
+  - id: helm-introduction
+    resource: https://helm.sh/docs/intro/introduction/
+    title: Introduction to Helm
+  - id: helm-intro
+    resource: https://helm.sh/docs/intro/using_helm/
+    title: Using Helm
+  - id: helm-charts
+    resource: https://helm.sh/docs/topics/charts/
+    title: Charts
+  - id: helm-values-files
+    resource: https://helm.sh/docs/chart_template_guide/values_files/
+    title: Values Files
+  - id: helm-template
+    resource: https://helm.sh/docs/helm/helm_template/
+    title: helm template
+  - id: helm-upgrade
+    resource: https://helm.sh/docs/helm/helm_upgrade/
+    title: helm upgrade
+  - id: helm-status
+    resource: https://helm.sh/docs/helm/helm_status/
+    title: helm status
+  - id: helm-get-values
+    resource: https://helm.sh/docs/helm/helm_get_values/
+    title: helm get values
+  - id: helm-get-manifest
+    resource: https://helm.sh/docs/helm/helm_get_manifest/
+    title: helm get manifest
+  - id: helm-history
+    resource: https://helm.sh/docs/helm/helm_history/
+    title: helm history
+  - id: helm-rollback
+    resource: https://helm.sh/docs/helm/helm_rollback/
+    title: helm rollback
+  - id: helm-install
+    resource: https://helm.sh/docs/helm/helm_install/
+    title: helm install
+  - id: helm-uninstall
+    resource: https://helm.sh/docs/helm/helm_uninstall/
+    title: helm uninstall
+  - id: helm4-overview
+    resource: https://helm.sh/docs/overview/
+    title: Helm 4 Overview
+  - id: argo-helm
+    resource: https://argo-cd.readthedocs.io/en/latest/user-guide/helm/
+    title: Helm in Argo CD
+  - id: helm-crds
+    resource: https://helm.sh/docs/chart_best_practices/custom_resource_definitions/
+    title: Helm custom resource definitions
+  - id: crossplane-install
+    resource: https://docs.crossplane.io/latest/get-started/install/
+    title: Install Crossplane
+  - id: crossplane-providers
+    resource: https://docs.crossplane.io/latest/packages/providers/
+    title: Crossplane providers
+  - id: kubernetes-crd-delete
+    resource: https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/
+    title: Extend the Kubernetes API with CustomResourceDefinitions
+  - id: kubernetes-hpa
+    resource: https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/
+    title: Horizontal Pod Autoscaling
+  - id: kubernetes-deployments
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    title: Deployments
 ---
 
-# Helm for Kubernetes and Crossplane
+# How Helm turns a chart into a release
 
-## Purpose
+## The idea in one minute
 
-Use this page to understand Helm's chart and release model, safely inspect and
-operate Helm deployments, and install or upgrade Crossplane in Kubernetes.
-It also explains where Helm ends and Crossplane package management begins.
+Helm packages related Kubernetes resources into a **chart**. A chart
+contains templates and default **values**. Chosen values fill in the
+templates to produce Kubernetes manifests. Installing them creates a
+named **release** in a namespace, starting at revision 1. An upgrade
+or rollback creates another revision of that release; the chart's own
+version is a separate number.[^helm-introduction][^helm-intro]
 
-## Key ideas
+A chart is like a reusable blueprint, values are choices for one
+building, and the release is Helm's record of an installation. The
+analogy stops there: Kubernetes controllers still have to make the
+objects run, and a working application still needs a user-level
+check. Helm also has special handling for custom resource definitions
+(CRDs), explained below.
 
-| Concept | Meaning | Why it matters |
-| --- | --- | --- |
-| Chart | Versioned package of Kubernetes resource templates and defaults. | Reuses an application or platform installation definition. |
-| Release | One installed instance of a chart in a Kubernetes namespace. | Helm tracks its revision and values for upgrade and rollback. |
-| Repository | Chart distribution location. | Traditional HTTP indexes and OCI registries are both supported paths. |
-| Values | Inputs merged into chart templates. | Keep environment-specific configuration reviewable and separate from chart source. |
-| Render | Turn a chart plus values into Kubernetes YAML. | Review the generated objects before changing a cluster. |
-| Helm | Installs Crossplane core and optionally initial packages. | It does not replace Crossplane's provider/package lifecycle after installation. |
-
-## Safe Helm workflow
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Inspect chart defaults | `helm show values` | Before writing a values file. |
-| Render locally | `helm template` | Before changing a cluster. |
-| Preview server interaction | `helm upgrade --install --dry-run --debug` | Before an install or upgrade. |
-| Install or upgrade | `helm upgrade --install` | Idempotent release management. |
-| Inspect release | `helm status` and `helm get values` | Before troubleshooting or changing it. |
-| Review revision history | `helm history` | Before rollback. |
-| Roll back | `helm rollback` | After a tested prior revision is known good. |
-
-### Add and inspect a chart repository
-
-```bash
-helm repo add <repository-alias> <chart-repository-url>
-helm repo update
-helm search repo <repository-alias>/<chart-name> --versions
-helm show values <repository-alias>/<chart-name> --version <reviewed-version>
+```mermaid
+flowchart TB
+  chart["Chart: templates and defaults"] --> render["Render with chosen values"]
+  values["Values for this installation"] --> render
+  render --> manifests["Kubernetes manifests"]
+  manifests --> preview["Default local preview:<br/>helm template"]
+  manifests --> install["Live Helm install or upgrade"]
+  install --> api["Kubernetes API objects"]
+  install --> record["Named release and revision"]
+  api --> check["Controller readiness<br/>and user-path checks"]
 ```
 
-What it does: adds a repository to the local Helm client, refreshes the chart
-index, lists available versions, and prints values for the exact chart version
-being considered. Pin a reviewed chart version in automation rather than
-silently adopting a later release.
+Text alternative: Helm combines a chart with chosen values to render
+manifests. By default, `helm template` produces a local preview. A
+live install or upgrade submits objects to the Kubernetes API and records a named
+release revision. Controllers then work toward readiness; an
+application request remains a separate check.
+Local rendering may differ from a cluster-connected operation when
+templates depend on the cluster's API capabilities or lookups.
+[^helm-template]
 
-### Render a chart before installation
+## One chart, two releases
 
-```bash
-helm template <release-name> <repository-alias>/<chart-name> \
-  --namespace <namespace> \
-  --version <reviewed-version> \
-  --values values.yaml > rendered.yaml
+The names and settings below are **invented**. No chart was built,
+rendered, or installed for this example.
 
-kubectl apply --dry-run=server -f rendered.yaml
-```
+Suppose a `lesson-api` chart contains templates for a Deployment
+and Service. The team installs it once as `lessons-dev` in the
+`development` namespace and again as `lessons-prod` in `production`.
+The installations can use different values from the same chart. This
+invented excerpt shows the relationship:
 
-What it does: renders the chart locally and asks the Kubernetes API to validate
-the generated resources without storing them. Review `rendered.yaml` carefully;
-some charts use hooks or resources that a static render cannot fully model.
-
-### Install or upgrade a release
-
-```bash
-helm upgrade --install <release-name> <repository-alias>/<chart-name> \
-  --namespace <namespace> \
-  --create-namespace \
-  --version <reviewed-version> \
-  --values values.yaml \
-  --dry-run --debug
-```
-
-What it does: previews the same idempotent command used for an installation or
-upgrade. Remove `--dry-run --debug` only after reviewing the rendered output,
-the selected values, and the scope of resources it can change.
-
-### Inspect, roll back, and uninstall
-
-```bash
-helm status <release-name> --namespace <namespace>
-helm get values <release-name> --namespace <namespace> --all
-helm history <release-name> --namespace <namespace>
-helm rollback <release-name> <revision> --namespace <namespace>
-```
-
-What it does: reads release state and values, lists known revisions, then rolls
-back to a selected revision. Test rollback behavior in a non-production cluster:
-some resource changes, CRD changes, hooks, and external side effects are not
-reversed merely because Helm restores an earlier release manifest.
-
-> [!WARNING]
-> `helm uninstall` deletes the release's tracked Kubernetes resources. Before
-> uninstalling a platform chart, identify CRDs, controllers, custom resources,
-> persistent data, and external resources that may outlive or be orphaned by the
-> removal. Do not use an uninstall as a generic repair action.
-
-## Install Crossplane with Helm
-
-Crossplane installs into an existing Kubernetes cluster through its official
-Helm chart. The chart installs Crossplane core, which then enables `Provider`,
-`Function`, and `Configuration` package objects.
-
-### Discover the chart and its values
-
-```bash
-helm repo add crossplane-stable https://charts.crossplane.io/stable
-helm repo update
-helm search repo crossplane-stable/crossplane --versions
-helm show values crossplane-stable/crossplane --version <reviewed-version>
-```
-
-What it does: uses the official stable repository, then lets the operator select
-and inspect a tested chart version. Consult the current [Crossplane installation documentation](https://docs.crossplane.io/latest/get-started/install/) for supported Kubernetes and Helm versions.
-
-### Use a reviewed values file
-
-```bash
-helm show values crossplane-stable/crossplane \
-  --version <reviewed-version> > crossplane-values.defaults.yaml
-
-cp crossplane-values.defaults.yaml crossplane-values.yaml
-```
-
-What it does: saves the defaults from the exact chart version under review and
-creates the values file that will be changed and committed. Remove irrelevant
-defaults and edit only keys that exist in that version. Keep reviewed non-secret
-values in Git. Do not assume a key exists merely because it appeared in another
-chart version, and keep cloud credentials out of Helm values; use an approved
-workload-identity or secret-delivery method for provider controllers.
-
-### Preview, install, and check Crossplane
-
-```bash
-helm upgrade --install crossplane crossplane-stable/crossplane \
-  --namespace crossplane-system \
-  --create-namespace \
-  --version <reviewed-version> \
-  --values crossplane-values.yaml \
-  --dry-run --debug
-
-helm upgrade --install crossplane crossplane-stable/crossplane \
-  --namespace crossplane-system \
-  --create-namespace \
-  --version <reviewed-version> \
-  --values crossplane-values.yaml
-
-kubectl get pods -n crossplane-system
-kubectl get crds | grep crossplane
-```
-
-What it does: previews and then installs the Crossplane chart, followed by a
-basic health and API check. A running Crossplane pod only confirms core is
-available; providers and their credentials still need separate installation and
-validation.
-
-## Helm-installed providers versus Provider objects
-
-Crossplane's Helm chart can install provider packages during the initial
-Crossplane installation through chart values. This is useful for a small,
-fully-controlled bootstrap. A separate `Provider` manifest is generally easier
-to review, promote, upgrade, and roll back independently from Crossplane core.
-
-| Choice | Best fit | Trade-off |
-| --- | --- | --- |
-| Chart value `provider.packages` | Initial lab or tightly coupled bootstrap. | Provider lifecycle is coupled to Helm chart configuration. |
-| Separate `Provider` manifests | Production GitOps and independent provider promotion. | Requires explicit ordering and package health checks. |
-| Configuration package dependency | Reusable platform API distribution. | Requires dependency/version management discipline. |
-
-### Declare a provider after Crossplane is healthy
-
-```yaml
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-aws-ecr
+```text
+# Chart template excerpt
 spec:
-  package: xpkg.upbound.io/upbound/provider-aws-ecr:<reviewed-version-or-digest>
-  revisionActivationPolicy: Manual
+  replicas: {{ .Values.replicaCount }}
+
+# development values: replicaCount: 1
+# production values: replicaCount: 3
 ```
 
-What it does: installs the ECR provider as an independently reviewed Crossplane
-package. The placeholder is intentional: copy the package location and version
-or digest from the [Upbound Marketplace](https://marketplace.upbound.io/providers/upbound/provider-aws-ecr) after checking compatibility.
+Rendering the development inputs produces `spec.replicas: 1` in its
+Deployment; production produces `spec.replicas: 3`. That is a change
+to a Kubernetes field, not just to a label in Helm. The actual chart
+must define that template and value key for this example to work.
+[^helm-values-files]
 
-```bash
-kubectl apply --dry-run=server -f provider-aws-ecr.yaml
-kubectl apply -f provider-aws-ecr.yaml
-kubectl get providers.pkg.crossplane.io -w
-kubectl get providerrevisions.pkg.crossplane.io
-```
+The chart's `version` in `Chart.yaml` identifies the package. Its
+optional `appVersion` describes the packaged application and is
+informational; inspect the actual image value or rendered manifest
+to learn which image will run. A release's revision records an
+install, upgrade, or rollback of that *one installation*.
+[^helm-charts][^helm-intro]
 
-What it does: validates the manifest, installs the package, waits for its
-health condition, and exposes package revision information. Do not create ECR
-managed resources until the provider is installed, healthy, and its schema is
-visible through Kubernetes discovery.
-
-> [!WARNING]
-> Do not remove a provider before the managed resources it controls have been
-> deliberately retained or deleted. Removing the controller can leave external
-> resources unmanaged and finalizers unable to complete.
-
-## Upgrade Crossplane safely
-
-1. Read the target chart release notes, Crossplane upgrade guidance, provider
-   compatibility, and any CRD migration notes.
-2. Render the exact upgrade with the production values file and review the
-   generated objects.
-3. Test core, provider, function, and Composition versions together in a
-   non-production control plane.
-4. Back up Crossplane objects and preserve external-name mappings.
-5. Upgrade Crossplane core separately from major provider or Composition
-   changes when that makes diagnosis and rollback clearer.
-6. Confirm core pods, package health, provider APIs, representative MRs, and
-   composition renders after the change.
-
-Helm's revision history covers the release manifest. It does not replace
-Crossplane `ProviderRevision`, `FunctionRevision`, or `CompositionRevision`.
-Each layer needs its own tested promotion and rollback strategy.
-
-## Troubleshooting
-
-| Symptom | Likely cause | First check |
+| Item | `lessons-dev` | `lessons-prod` |
 | --- | --- | --- |
-| Helm preview differs from the cluster | Values, capabilities, hooks, or chart version differ. | Exact chart version, values, and `helm get manifest`. |
-| Crossplane pods are not ready | Image pull, RBAC, resources, or cluster policy problem. | `kubectl describe pod` and namespace events. |
-| Provider is installed but unhealthy | Dependency, compatibility, package pull, or runtime failure. | `kubectl describe providerrevision` and provider logs. |
-| A Crossplane MR kind is unknown | Provider is not healthy or its APIs are not active. | `kubectl api-resources` and activation policy. |
-| Rollback did not restore external infrastructure | Helm only rolled back its own rendered objects. | Provider/MR status, CompositionRevision, and AWS audit trail. |
+| Chart package | `lesson-api` version 1.4.0 | `lesson-api` version 1.4.0 |
+| Chosen values | `replicaCount: 1` | `replicaCount: 3` |
+| Release record | `lessons-dev` in `development` | `lessons-prod` in `production` |
+| Rendered Deployment field | `spec.replicas: 1` | `spec.replicas: 3` |
 
-## Related links
+Now imagine production has only one desired replica after an upgrade.
+The reader's first question is **where did the three-replica intent
+change?** `helm history lessons-prod -n production` shows the chart
+version and release revisions. Compare the last good and current
+revision with `helm get values lessons-prod -n production --revision N`:
+without `--all`, this shows supplied values; adding `--all` shows
+computed values including chart defaults. Replace `N` with each
+retained revision number.[^helm-get-values][^helm-history]
 
-- [Amazon ECR and Helm OCI charts](../../cloud/aws/compute/amazon-ecr.md)
-- [Providers, managed resources, and compositions](../crossplane/providers-compositions-and-managed-resources.md)
-- [Application delivery platform API](../crossplane/application-delivery-platform-api.md)
-- [Crossplane AWS resource workflow](../crossplane/aws-resource-workflow.md)
-- [Helm documentation](https://helm.sh/docs/intro/using_helm/)
-- [Crossplane installation documentation](https://docs.crossplane.io/latest/get-started/install/)
-- [Crossplane providers documentation](https://docs.crossplane.io/latest/packages/providers/)
-- [Back to Kubernetes applications and tools](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+Next compare three things: the **current computed value**, the
+Deployment's `spec.replicas` in `helm get manifest lessons-prod -n production`,
+and the live Deployment's `spec.replicas` in Kubernetes.
+The manifest command also accepts `--revision N` for an earlier
+retained revision.
+If the value is 3 but the Helm manifest says 1 or omits the field,
+inspect the chart template and any autoscaling value that changes its
+rendering. Kubernetes defaults an omitted Deployment `spec.replicas`
+to 1, so an omitted field needs investigation too. If Helm's manifest
+says 3 but the live field says 1, check `kubectl get hpa -n production`
+and who last changed the field before
+editing either source. An HPA can set a Deployment's replica count.
+If the supplied production override disappeared, restore it in the
+reviewed deployment source and preview the result. The manifest and
+live field decide the next investigation; computed values alone do
+not prove what Helm submitted.[^helm-get-manifest][^kubernetes-hpa]
+[^kubernetes-deployments]
+
+An upgrade can reuse or reset prior release values according to its
+flags and supplied overrides. Check the installed Helm version and
+its `--reuse-values` or `--reset-values` behavior before assuming a
+production override survived; newer releases also document
+`--reset-then-reuse-values`. A values file sitting in Git does not
+change a release until the team's deployment controller or Helm
+operation uses it.[^helm-upgrade]
+
+## What each check can tell you
+
+| Check | What it answers | What it cannot prove |
+| --- | --- | --- |
+| Read the chart and values | Which templates and defaults are in the reviewed chart version? | That the generated objects fit this cluster or application. |
+| Render locally with `helm template` | Which manifests result from these chart inputs on the client? | That the cluster accepts them; cluster lookups and API capabilities may differ. `crds/` files need `--include-crds` to appear in this output. |
+| Use a Helm server dry run where appropriate | What does Helm render when connected to the cluster, without persisting the operation? | That all admission rules, a later live operation, controller rollout, or a user request will succeed. |
+| Read Helm release status | What did Helm record for this installation and revision? | That every Pod is ready or the application works. `deployed` alone is not an end-to-end health check.[^helm-status] |
+| Read Kubernetes and application evidence | Did controllers make the desired objects ready, and can a user complete a request? | That every future request or dependent service will work. |
+
+Helm's `helm template` documentation says local rendering does no
+server-side API support test. The upgrade reference distinguishes
+client and server dry runs; server mode requires cluster access.
+Neither mode proves that Pods become ready or users can complete a
+request. Rendered output, dry runs, and release values may expose
+Secrets or other sensitive settings, so review where output is stored
+or shared.[^helm-template][^helm-upgrade][^helm-get-values]
+
+Helm command details can differ between Helm 3 and 4. Check
+`helm version` and the matching command reference before using a flag
+or relying on a default waiting behavior. A live install may return
+before all resources are ready unless an appropriate wait strategy is
+used; even then, check the application's own path. Helm 4 defaults
+new releases to server-side apply, while upgrades of existing
+releases normally retain their prior apply method. That can affect
+which writer owns a field such as replicas.[^helm-install]
+[^helm4-overview]
+
+If a release is managed by Flux or another controller, change its
+reviewed source rather than running a separate manual upgrade.
+[How Flux applies a HelmRelease from Git](flux-reconciliation-and-helm.md)
+shows the additional source and controller handoffs. Argo CD uses
+Helm to render charts, then manages the resulting application itself;
+in that path, `helm list` and `helm history` do not show an installed
+Helm release. Inspect the Argo CD application and its Git source
+instead.[^argo-helm]
+
+## Revisions are not time travel
+
+Helm records release revisions. `helm history` lists retained
+revisions; `helm rollback` can target one of them. If revision 3
+is rolled back to revision 1, Helm creates revision 4 using the
+selected earlier release configuration; it does not move the
+revision number backward. History retention can limit which older
+revisions remain available.[^helm-intro][^helm-history]
+[^helm-rollback][^helm-upgrade]
+A rollback changes Kubernetes resources again. It
+does not reverse a database migration, an external API call, or user
+data. Verify the workload and user path after a rollback as you
+would after an upgrade.
+
+Custom Resource Definitions need extra care. Helm documents a
+special `crds/` install path: those CRDs are installed before
+templates if absent, but Helm does not upgrade, roll back, or delete them with
+ordinary release changes. `helm template` needs `--include-crds` to
+show these files. A dry run cannot install a new CRD, so it cannot
+fully check custom resources that need the newly registered API.
+Do not assume the special protection applies to a CRD placed under
+`templates/`: as a managed release resource, it may follow the
+release's uninstall path. Deleting any CRD removes all custom objects
+of that type across the cluster. Inspect the chart and its CRD owner
+before an operator upgrade or uninstall.[^helm-crds][^helm-template]
+[^helm-uninstall][^kubernetes-crd-delete]
+
+## Crossplane is a second controller layer
+
+Crossplane is a useful example of Helm's boundary. The official
+Crossplane installation guide uses Helm to install **Crossplane
+core** into an existing Kubernetes cluster. Crossplane's own
+`Provider`, `Function`, and `Configuration` packages then have separate
+health, compatibility, and upgrade questions. A Helm release saying
+core was installed does not prove that an AWS provider package has
+installed its resource types, that
+its `ProviderConfig` can authenticate, or that it has reconciled a
+managed resource.[^crossplane-install][^crossplane-providers]
+
+For an installation, use the current
+[official Crossplane install procedure](https://docs.crossplane.io/latest/get-started/install/)
+and [provider guidance](https://docs.crossplane.io/latest/packages/providers/).
+The [Crossplane section](../crossplane/index.md) explains
+the package and external-resource model. Review the exact chart
+version, values, CRDs, and recovery path in your environment
+before making a live change.
+
+## Check your understanding
+
+1. Production has one desired replica after an upgrade; its reviewed
+   values file says three. Which release, values, chart, and
+   Kubernetes evidence would you compare before changing anything?
+2. If `helm template` succeeds, what must still be checked against
+   the cluster?
+3. Why would a healthy Helm release not prove a Crossplane
+   provider can create an AWS resource?
+
+## Explore further
+
+- [Using Helm](https://helm.sh/docs/intro/using_helm/)
+  introduces charts, values, releases, and revision history.
+  [^helm-intro]
+- [helm template](https://helm.sh/docs/helm/helm_template/)
+  describes local rendering and its limits.[^helm-template]
+- [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/)
+  documents dry-run modes and output sensitivity.[^helm-upgrade]
+- [Helm and CRDs](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/)
+  describes their separate lifecycle.[^helm-crds]
+- [Back to Kubernetes applications and tools](index.md).
+
+[^helm-introduction]: [Helm, Introduction to Helm](https://helm.sh/docs/intro/introduction/), source record `helm-introduction`.
+[^helm-intro]: [Helm, Using Helm](https://helm.sh/docs/intro/using_helm/), source record `helm-intro`.
+[^helm-charts]: [Helm, Charts](https://helm.sh/docs/topics/charts/), source record `helm-charts`.
+[^helm-values-files]: [Helm, Values Files](https://helm.sh/docs/chart_template_guide/values_files/), source record `helm-values-files`.
+[^helm-template]: [Helm, helm template](https://helm.sh/docs/helm/helm_template/), source record `helm-template`.
+[^helm-upgrade]: [Helm, helm upgrade](https://helm.sh/docs/helm/helm_upgrade/), source record `helm-upgrade`.
+[^helm-status]: [Helm, helm status](https://helm.sh/docs/helm/helm_status/), source record `helm-status`.
+[^helm-get-values]: [Helm, helm get values](https://helm.sh/docs/helm/helm_get_values/), source record `helm-get-values`.
+[^helm-get-manifest]: [Helm, helm get manifest](https://helm.sh/docs/helm/helm_get_manifest/), source record `helm-get-manifest`.
+[^helm-history]: [Helm, helm history](https://helm.sh/docs/helm/helm_history/), source record `helm-history`.
+[^helm-rollback]: [Helm, helm rollback](https://helm.sh/docs/helm/helm_rollback/), source record `helm-rollback`.
+[^helm-install]: [Helm, helm install](https://helm.sh/docs/helm/helm_install/), source record `helm-install`.
+[^helm-uninstall]: [Helm, helm uninstall](https://helm.sh/docs/helm/helm_uninstall/), source record `helm-uninstall`.
+[^helm4-overview]: [Helm, Helm 4 Overview](https://helm.sh/docs/overview/), source record `helm4-overview`.
+[^argo-helm]: [Argo CD, Helm](https://argo-cd.readthedocs.io/en/latest/user-guide/helm/), source record `argo-helm`.
+[^helm-crds]: [Helm, Custom Resource Definitions](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/), source record `helm-crds`.
+[^crossplane-install]: [Crossplane, Install Crossplane](https://docs.crossplane.io/latest/get-started/install/), source record `crossplane-install`.
+[^crossplane-providers]: [Crossplane, Providers](https://docs.crossplane.io/latest/packages/providers/), source record `crossplane-providers`.
+[^kubernetes-crd-delete]: [Kubernetes, Extend the Kubernetes API with CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/), source record `kubernetes-crd-delete`.
+[^kubernetes-hpa]: [Kubernetes, Horizontal Pod Autoscaling](https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/), source record `kubernetes-hpa`.
+[^kubernetes-deployments]: [Kubernetes, Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), source record `kubernetes-deployments`.

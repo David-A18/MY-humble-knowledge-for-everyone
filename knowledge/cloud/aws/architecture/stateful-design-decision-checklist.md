@@ -1,130 +1,257 @@
 ---
 type: "Explanation"
 title: "Stateful design decision checklist"
-description: "Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS."
+description: "Decide what a stateful AWS workload must preserve, which failure it must survive, and what recovery evidence is still missing."
 tags: [cloud, aws, architecture]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: aws-objectives
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_objective_defined_recovery.html
+    title: AWS Well-Architected - Define recovery objectives for downtime and data loss
+  - id: aws-recovery-test
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_backing_up_data_periodic_recovery_testing_data.html
+    title: AWS Well-Architected - Perform periodic recovery of the data
+  - id: aws-recovery-strategy
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_disaster_recovery.html
+    title: AWS Well-Architected - Use defined recovery strategies
+  - id: aws-secure-backups
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_backing_up_data_secured_backups_data.html
+    title: AWS Well-Architected - Secure and encrypt backups
+  - id: aws-dr-test
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_dr_tested.html
+    title: AWS Well-Architected - Test disaster recovery implementation
+  - id: stripe-list-events
+    resource: https://docs.stripe.com/api/events/list
+    title: Stripe API - List events
+  - id: aws-rpo-validation
+    resource: https://docs.aws.amazon.com/wellarchitected/latest/financial-services-industry-lens/fsirel07.html
+    title: AWS Well-Architected - Monitor and validate RPO and RTO
+  - id: k8s-statefulset
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+    title: Kubernetes - StatefulSets
 ---
 
 # Stateful design decision checklist
 
-## Purpose
+## The idea in plain language
 
-Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS.
+A workload is **stateful** when the next piece of work depends on information
+kept from earlier work. Before calling it ready for production, ask where
+that information lives, which failures it must survive, and how you would
+show that recovery works. A second running replica is useful, but it does
+not answer every data-loss question.
 
-## How state changes the design
+Think of a shop's order book. Two cashiers can keep serving customers if
+they both use a shared record, but a second cashier cannot restore an order
+that was deleted from the record. The analogy has limits: real systems may
+have several state stores and replicas; a backup may contain an earlier
+version; and correctness can require application-specific checks.
 
-Stateful components must recover specific information after failure. That changes scaling, deployment, backup, networking, and security decisions.
+AWS frames recovery around two targets. **Recovery time objective (RTO)** is
+the maximum acceptable delay from service interruption to restored service.
+**Recovery point objective (RPO)** is the maximum acceptable time between
+the last recoverable data and the interruption: the window of recent work
+that could be lost. Owners choose both from the impact of downtime and
+lost data. They are targets; a recovery exercise measures one path under
+its test conditions, not a permanent guarantee.[^aws-objectives][^aws-dr-test]
 
-```text
-stateless replica failure
-  -> stop routing
-  -> replace replica
+## Follow the state and the failure
 
-stateful replica failure
-  -> protect data
-  -> preserve quorum or leadership
-  -> reattach or rebuild state
-  -> verify consistency
-  -> then resume traffic
+```mermaid
+flowchart TB
+  request["New order"] --> app["Replaceable app worker"]
+  app --> store["Authoritative order store"]
+  store -- "ongoing copy; may include bad writes" --> replica["Replica outside named failure scope"]
+  store -- "retained earlier recovery point" --> backup["Protected backup"]
+  replica -- "failover" --> check["Check orders through the app"]
+  backup -- "restore" --> check
+  check --> reconcile["Reconcile payment records"]
+  reconcile --> decision{"Order and payment state correct?"}
+  decision -- "yes" --> resume["Consider resuming traffic"]
+  decision -- "no" --> stop["Stop and investigate"]
 ```
 
-## Components to identify
+Text alternative: an app worker writes an order to the authoritative store.
+A replica receives ongoing changes and may help after a failure in a scope
+it sits outside, but it may copy a bad write too. A protected backup retains
+an earlier recovery point. After detecting the incident and choosing a path,
+the team must fail over or restore, check orders through the application,
+and reconcile them with payment records. If the result is wrong, stop and
+investigate before resuming traffic. The diagram identifies possible paths; it does
+not prove either is configured or meets a recovery target.[^aws-recovery-strategy]
 
-| Component | Questions to answer |
+For each important state item, write down four things:
+
+| Question | Why the answer changes the design |
 | --- | --- |
-| State owner | Which service or process is authoritative? |
-| Storage layer | Where does the state physically live? |
-| Replication layer | How many copies exist and where? |
-| Backup layer | What separate recovery copy exists? |
-| Coordination layer | How are leaders, locks, or partitions assigned? |
-| Network path | Do stateful network devices need symmetric flow routing? |
-| Runbook | Who can fail over, restore, replay, or scale down safely? |
+| What is the authoritative copy? | A cache can be rebuilt; the only copy of a customer order cannot. |
+| Where are its live and recovery copies? | Name where failure could hit: one process, host, Availability Zone, Region, or account. Also name causes such as accidental deletion or bad application writes. |
+| What is the acceptable outage and data gap? | RTO and RPO guide the choice between restore, failover, and other recovery paths. |
+| What observation proves recovery? | A green backup job does not show that the application can read the right data. |
 
-## Classification questions
+Replication and backup serve different questions. A live replica may shorten
+recovery from one component failure, but a bad write can also be copied to
+it. A retained backup can offer an earlier recovery point, but restoring it
+takes time and may lose work since that point. These are design
+possibilities, not guarantees of an AWS product or configuration.
+[^aws-recovery-strategy]
 
-| Question | Why it matters |
-| --- | --- |
-| What exact state exists? | Avoid vague labels such as "the app is stateful." |
-| Where is the state stored? | Recovery depends on the storage boundary. |
-| Is the state authoritative or rebuildable? | Authoritative state needs stronger durability. |
-| Is the state local or shared? | Local state makes replicas harder to replace. |
-| Which failure must it survive? | Process, host, AZ, Region, and operator error require different designs. |
-| What are RPO and RTO? | Backup and failover choices need measurable targets. |
-| How is split brain prevented? | Stateful leaders require fencing or quorum discipline. |
+## One illustrative review
 
-## Stateful AWS examples
+Imagine an online shop with two app workers and a database of paid orders.
+This is an invented workload, not an AWS deployment or recovery test.
 
-| Area | Example | Design concern |
+1. The app workers are replaceable only if a paid order is committed to the
+   database rather than kept in one worker's memory. That commit can
+   survive a worker crash. It might still be absent from a lagging replica
+   after a database failover, so a confirmed order can fall inside the
+   chosen RPO window.
+2. The team names the database as the authoritative **order** store and
+   asks what happens if its instance or Availability Zone fails, if the
+   Region is unavailable, or if an operator deletes orders. A replica in
+   another zone might help with a zone failure, but an asynchronous copy
+   may lag. A retained, protected recovery point may be needed after
+   deletion or corruption. A Region failure requires copies and a procedure
+   outside that Region; this example's zone drill does not test that path.
+   [^aws-recovery-strategy][^aws-secure-backups]
+3. The owners set illustrative targets of **at most one hour of outage**
+   and **at most five minutes of lost orders** for the zone-failure path.
+   A path relying only on snapshots every 15 minutes could lose roughly
+   15 minutes of writes, or more if a snapshot failed. It cannot support
+   the five-minute RPO without another recovery mechanism. Snapshot
+   schedules alone also do not prove any restore will work.
+   [^aws-objectives][^aws-recovery-test]
+4. The team would inject a failure in an isolated exercise, restore or
+   fail over by its documented procedure, and verify marker orders through
+   the application. Start the clock at the simulated interruption and stop
+   it when the owners would resume customer traffic after data checks and
+   payment reconciliation. Include detection, decision, connection changes,
+   and application validation in the measured time. An announced drill may
+   detect failure faster than a real incident.[^aws-recovery-test][^aws-dr-test]
+
+Suppose the team writes numbered marker orders every minute and records
+which writes were acknowledged. In one imagined zone-failure drill, the
+interruption occurs at **10:12**. The recovered copy contains every earlier
+marker through **10:10**, but the acknowledged **10:11** marker is missing.
+The app can read orders at **10:40**. After resolving the missing-order
+payment, reconciliation finishes at **10:52**, and the team resumes customer
+traffic at **10:55**. Measured service recovery is **43 minutes** from
+interruption to resumed traffic; the marker-based data gap is about
+**two minutes**. Both fit the invented targets in this one drill. The team
+should also check actual acknowledged
+orders, a common clock or clock skew, and any restored log position;
+markers alone sample the data path.[^aws-rpo-validation]
+
+The missing 10:11 order might still have a charge at the external payment
+provider. The team needs a link created before failure, such as an order ID
+recorded with the provider's payment, so it can find charges even if the
+order row is gone. It would enumerate successful provider payments around
+the data-gap window, allow for in-flight requests and clock skew, and match
+them to recovered orders. It must investigate unmatched charges and orders
+marked paid without a matching successful payment before declaring the shop's
+state correct. For a recent incident, Stripe's Events API can list
+payment-success events by event time and type, but its event-list window is
+limited; the real provider's data model, retention, and reconciliation
+procedure need their own review.[^stripe-list-events]
+
+A single drill can show one observed gap, not the worst case for every
+failure time. To judge whether the design can meet RPO, consider the
+maximum backup interval or replication lag, monitor it, and exercise
+failures at different points in the cycle. An outage in another zone or
+Region, or a failure of payment reconciliation, needs its own evidence.
+[^aws-rpo-validation][^aws-objectives]
+
+For accidental deletion or corruption, the newest *safe* recovery point
+may be older than the latest backup. If a bad write is copied to the replica
+and noticed hours later, choosing an earlier clean point can lose legitimate
+work written since then unless the team can selectively repair or replay it.
+That is a different failure path from losing one database instance; it may
+miss the five-minute RPO unless the team can repair or replay those writes.
+[^aws-recovery-strategy]
+
+If the database runs on Kubernetes, a StatefulSet can give Pods stable
+identity and associated storage. It does not perform the database's
+replication, choose a valid recovery point, or prove queries work after
+failover.[^k8s-statefulset] See [stateful workloads in
+Kubernetes](../../../kubernetes/core-objects/stateful-workloads.md) for that
+boundary.
+
+## Review questions before approval
+
+- **State:** List authoritative records, derived data, caches, files,
+  messages, and external services. Which can be rebuilt, and from what?
+- **Failure:** Name the failure scope you are designing for. Is the copy
+  outside that scope and protected from unintended deletion? Who can run a
+  restore if the primary account or operator is unavailable?[^aws-secure-backups]
+- **Recovery:** Record the chosen RTO and RPO and the procedure intended to
+  meet them. Which dependencies must be restored before workers reconnect?
+- **Correctness:** Define an application-level check, such as reading a
+  known paid order. Also start from the payment provider's records to find
+  charges whose order rows disappeared. What result would make you stop
+  rather than resume traffic?
+- **Evidence:** For each actual exercise, record the date, environment,
+  simulated failure, recovery path, interruption and traffic-resumption
+  times, acknowledged and recovered markers, reconciliation result, and
+  unresolved gaps. Re-run after relevant changes; older evidence may no
+  longer apply.
+
+| Claim | Useful evidence | Insufficient by itself |
 | --- | --- | --- |
-| Networking | NAT Gateway, Security Group tracking, Network Firewall stateful engine. | Flow state and symmetric routing. |
-| Storage | EBS, EFS, S3. | Durability, backup, access mode, and deletion protection. |
-| Databases | RDS, Aurora, DynamoDB, self-managed MongoDB. | Replication, backup, failover, and consistency. |
-| Streaming | Amazon MSK. | Partitions, offsets, broker health, and replay. |
-| Workflows | Step Functions. | Execution history, retries, and timeout behavior. |
-| Kubernetes | StatefulSet with PVC. | Stable identity does not replace application-level replication. |
+| Recovery points exist and are retained | Inventory of recovery points and access from the recovery environment | A configured backup schedule |
+| One drill's data gap fit the RPO | Acknowledged writes and recovered markers compared with the interruption time | A backup interval alone |
+| RPO path has support beyond one drill | An upper-bound argument from backup or log intervals or monitored replication lag, plus drills at different failure times | One favorable drill |
+| One drill's RTO was met | Time from interruption to validated data, reconciliation, and resumed traffic | A restore job marked complete |
+| Recovered state is correct | Orders matched in both directions with provider payment records | One readable order |
 
-## Network-state checklist
+Network flow state needs a different review. For security groups, network
+ACLs, and inspection appliances, use [stateful
+networking](../networking/stateful-networking.md). For the simpler
+compute-versus-data model, start with [stateful vs.
+stateless](stateful-vs-stateless.md).
 
-- Security Groups are stateful and allow tracked return traffic.
-- Network ACLs are stateless and need both directions permitted.
-- Stateful firewalls must see both directions of a flow.
-- Transit Gateway appliance mode and Gateway Load Balancer stickiness can help preserve flow path.
-- VPC Flow Logs can show accept/reject decisions but do not replace route, firewall, and app logs.
+## Check your understanding
 
-### NACL return traffic example
+- Why does a second app worker not protect an order stored only in the first
+  worker's memory?
+- What different failures might a live replica and a retained backup address?
+- Why can one drill meet an RPO target even if its backup-only design could
+  lose more data at another failure time?
+- If a 10:11 order was charged but a restore reaches only 10:10, what
+  provider-side check can find it even though the order row is missing?
 
-```text
-Inbound:
-allow TCP 443 from client
+## Official documentation for deeper study
 
-Outbound:
-allow TCP ephemeral ports to client
-```
+- [Define recovery objectives for downtime and data loss](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_objective_defined_recovery.html)
+  explains how business impact shapes RTO and RPO.
+- [Perform periodic recovery of data](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_backing_up_data_periodic_recovery_testing_data.html)
+  explains why backup integrity and restoration require a recovery test.
+- [Define a recovery strategy](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_disaster_recovery.html)
+  compares replica and backup paths and explains why a copied bad write
+  still needs an earlier recovery point.
+- [Secure backups](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_backing_up_data_secured_backups_data.html)
+  covers protection from unauthorized deletion and tampering.
+- [Test the disaster recovery implementation](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_dr_tested.html)
+  explains exercising the complete recovery path.
+- [List Stripe events](https://docs.stripe.com/api/events/list)
+  illustrates one provider's recent event-listing window, time filter, and
+  event-type filter for reconciliation.
+- [Monitor and validate RPO and RTO](https://docs.aws.amazon.com/wellarchitected/latest/financial-services-industry-lens/fsirel07.html)
+  describes synthetic records, replication lag, and timed recovery checks.
+- [Kubernetes StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+  explains stable Pod identity and storage association.
 
-What it does: permits both directions for a stateless Network ACL. A Security Group would track the connection, but a NACL evaluates each direction independently.
+Next, use [stateless application
+patterns](stateless-application-patterns.md) to see how replaceable compute
+depends on shared state, or return to the [AWS architecture index](index.md).
 
-## Data-state checklist
-
-- Backups are separate from replication.
-- Restore procedures are tested, not assumed.
-- Encryption and access policies cover the state store.
-- Lifecycle policies do not delete required recovery points.
-- Scale-in procedures protect leaders, partitions, and attached volumes.
-- Monitoring covers replication lag, disk, quorum, and failed backups.
-
-## Kubernetes-state checklist
-
-- StatefulSet identity is required and understood.
-- The StorageClass topology mode matches the workload.
-- EBS volumes and Pods land in compatible Availability Zones.
-- Operators or application logic handle replication and failover.
-- Pod disruption budgets and maintenance windows protect quorum.
-- PVC deletion and reclaim policies are intentional.
-
-> [!WARNING]
-> A StatefulSet gives Pods stable names and storage association. It does not automatically make PostgreSQL, Kafka, MongoDB, or another database highly available.
-
-## Production readiness evidence
-
-- Restore was tested from backup into an isolated environment.
-- Failover was tested without creating two writers.
-- Monitoring covers lag, quorum, disk saturation, and backup failures.
-- Scale-in has a drain or decommission procedure.
-- Security policy covers snapshots, backups, logs, and replicas.
-- RPO and RTO are written down and accepted by the service owner.
-
-## Related links
-
-- Official documentation: [Kubernetes StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
-- Official documentation: [Amazon EBS volume attachment](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-attaching-volume.html)
-- [Stateful vs. stateless](stateful-vs-stateless.md)
-- [Stateless application patterns](stateless-application-patterns.md)
-- [Stateful networking](../networking/stateful-networking.md)
-- [Stateful workloads](../../../kubernetes/core-objects/stateful-workloads.md)
-- [Back to AWS architecture](index.md)
-- [Back to AWS index](../index.md)
-- [Back to root index](../../../../README.md)
+[^aws-objectives]: [AWS Well-Architected: Define recovery objectives](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_objective_defined_recovery.html).
+[^aws-recovery-test]: [AWS Well-Architected: Perform periodic recovery of the data](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_backing_up_data_periodic_recovery_testing_data.html).
+[^aws-recovery-strategy]: [AWS Well-Architected: Use defined recovery strategies](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_disaster_recovery.html).
+[^aws-secure-backups]: [AWS Well-Architected: Secure and encrypt backups](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_backing_up_data_secured_backups_data.html).
+[^aws-dr-test]: [AWS Well-Architected: Test disaster recovery implementation](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_planning_for_recovery_dr_tested.html).
+[^stripe-list-events]: [Stripe API: List events](https://docs.stripe.com/api/events/list).
+[^aws-rpo-validation]: [AWS Well-Architected: Monitor and validate RPO and RTO](https://docs.aws.amazon.com/wellarchitected/latest/financial-services-industry-lens/fsirel07.html).
+[^k8s-statefulset]: [Kubernetes: StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).

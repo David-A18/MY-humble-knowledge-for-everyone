@@ -1,28 +1,27 @@
 ---
 type: "Source Reference"
-title: "kube-state-metrics project"
-description: "Use this source when a knowledge concept references Kubernetes object state metrics exposed for Prometheus-style querying."
+title: "kube-state-metrics Pod metrics"
+description: "Locate the official Pod metric name and labels before writing a PromQL example."
 tags: [ai, ai-tooling, knowledge-bases]
-status: stable
-maturity: maintained
+status: draft
+maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
-resource: https://github.com/kubernetes/kube-state-metrics
-generated: { by: process:example-renderer, at: 2026-08-08T11:05:00Z }
-verified:
-  - { by: human:kb-reviewer, at: 2026-08-08T11:15:00Z }
-stale_after: 2026-11-08
+resource: https://github.com/kubernetes/kube-state-metrics/blob/4057c6d6f3fce76ae122dc9dfa44000abc164968/docs/metrics/workload/pod-metrics.md
 ---
 
-# kube-state-metrics project
+# kube-state-metrics Pod metrics
 
-Use this source when a knowledge concept references Kubernetes object state metrics exposed for Prometheus-style querying.
+This project documents the `kube_pod_container_status_restarts_total`
+counter and its `namespace`, `pod`, `container`, and `uid` labels. It tells
+you what the metric represents; it does not prove that a particular cluster
+scrapes the metric or that a sample query ran.
 
 ## Use in this bundle
 
-- Supports [Pod restart rate](../../concepts/pod-restart-rate.md).
+- Supports [Pod restarts in a time window](../../concepts/pod-restart-rate.md).
 
 ## Related links
 
-- External source: [kube-state-metrics project](https://github.com/kubernetes/kube-state-metrics)
+- External source: [official Pod metrics list, pinned revision](https://github.com/kubernetes/kube-state-metrics/blob/4057c6d6f3fce76ae122dc9dfa44000abc164968/docs/metrics/workload/pod-metrics.md)
 - [Back to source references](index.md)

@@ -12,4 +12,4 @@ Study and review notes for AWS architecture topics.
 - Migration strategies.
 - Service selection trade-offs.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

@@ -1,35 +1,33 @@
 ---
 type: "Playbook"
 title: "Source schema extraction"
-description: "Use deterministic parsers for machine-readable facts. HTTP API operations should come from OpenAPI descriptions, and JSON shape constraints should come from JSON Schema where those producers exist.[^openapi-3-2][^json-schema-2020-12]"
+description: "Shows why software should parse API schemas before an assistant explains them."
 tags: [ai, ai-tooling, knowledge-bases]
-status: stable
-maturity: maintained
+status: draft
+maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
-generated: { by: process:example-renderer, at: 2026-08-08T10:00:00Z }
-verified:
-  - { by: human:kb-reviewer, at: 2026-08-08T10:30:00Z }
-stale_after: 2026-11-08
-usage_window: 2026-08
 sources:
   - id: openapi-3-2
-    resource: references/sources/openapi-3-2.md
+    resource: ../references/sources/openapi-3-2.md
     title: OpenAPI Specification v3.2.0
-    author: process:openapi-initiative
-    usage_count: 12
-    last_modified: 2025-09-19
   - id: json-schema-2020-12
-    resource: references/sources/json-schema-2020-12.md
+    resource: ../references/sources/json-schema-2020-12.md
     title: JSON Schema Draft 2020-12
-    author: process:json-schema-project
-    usage_count: 9
-    last_modified: 2022-06-16
 ---
 
 # Source schema extraction
 
-Use deterministic parsers for machine-readable facts. HTTP API operations should come from OpenAPI descriptions, and JSON shape constraints should come from JSON Schema where those producers exist.[^openapi-3-2][^json-schema-2020-12]
+When an API already has a machine-readable description, a parser can copy
+exact paths and field constraints. An assistant can then explain **why** a
+reader would use an operation. This divides exact extraction from teaching:
+the assistant should not guess a field the parser can read.
+
+OpenAPI describes HTTP operations, while JSON Schema defines validation
+rules for JSON data.[^openapi-3-2][^json-schema-2020-12] Imagine a made-up
+`POST /lessons` endpoint: a parser finds its required `title` field and
+response code; a writer explains how a learner creates a lesson. The
+endpoint and its schema are illustrative and do not exist in this bundle.
 
 ## Machine-owned region
 
@@ -40,7 +38,9 @@ renderer: schema-summary-renderer/1.0.0
 generated_region_policy: renderer-only
 ```
 
-What it does: records the boundary that must be regenerated from source instead of edited by a model.
+What it does: illustrates a boundary that would be regenerated from source
+instead of edited by a model. `public-example-api`, `openapi.yaml`, and the
+renderer name are invented placeholders, not a working pipeline.
 
 ## Agent-owned explanation
 
@@ -52,6 +52,10 @@ An agent may explain when an endpoint should be used, how it relates to adjacent
 - Compare the machine-owned region byte-for-byte or by structured output.
 - Reject hand edits inside protected generated regions.
 - Require citations for claims that depend on external specifications.
+
+Check your understanding: If an API description changes a required field,
+which part should be regenerated? Which part still needs an explanation for
+the learner?
 
 [^openapi-3-2]: OpenAPI Specification v3.2.0.
 [^json-schema-2020-12]: JSON Schema Draft 2020-12.

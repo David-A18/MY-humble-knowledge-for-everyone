@@ -1,146 +1,137 @@
 ---
 type: "Explanation"
 title: "SonarQube GitHub integration"
-description: "Use this page to set the right mental model for SonarQube Server and GitHub integration: repository import and binding, GitHub Actions analysis, pull request decoration, required checks, and security alert reporting."
+description: "Understand how code moves from a GitHub pull request to SonarQube analysis and how the result returns to reviewers."
 tags: [devops, code-quality, sonarqube-github-integration]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: sonar-github-actions
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/ci-integration/github-actions
+    title: SonarQube Server - GitHub Actions
+  - id: sonar-github-binding
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/project-administration/creating-project/github/configure-binding
+    title: SonarQube Server - Configuring GitHub project binding
+  - id: sonar-pr-analysis
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/setting-up-the-pull-request-analysis
+    title: SonarQube Server - Setting up the pull request analysis
+  - id: sonar-github-app
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/instance-administration/devops-platforms/github/setting-up-github-app
+    title: SonarQube Server - Setting up a GitHub App
+  - id: sonar-security-alerts
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/instance-administration/devops-platforms/github/report-security-alerts
+    title: SonarQube Server - Setting up the report of security alerts
 ---
 
 # SonarQube GitHub integration
 
-## Purpose
+## The idea in plain language
 
-Use this page to set the right mental model for SonarQube Server and GitHub integration: repository import and binding, GitHub Actions analysis, pull request decoration, required checks, and security alert reporting.
+GitHub holds the code and pull request. A GitHub Actions job can run a
+SonarScanner against that checked-out code and send analysis to SonarQube
+Server. When the SonarQube project is bound to the GitHub repository and pull
+request analysis is configured, SonarQube can return a quality gate result
+and findings to the pull request.[^sonar-github-actions][^sonar-github-binding]
 
-In SonarQube documentation this is usually called GitHub integration or DevOps platform integration. In team conversations, "GitHub sync" often means one of several different behaviors, so clarify which one is needed before implementation.
+Think of GitHub as the workshop and SonarQube as a specialist inspection
+bench. A worker takes a copy of a proposed change to the bench; the bench
+reports what it found. Connecting the workshop to the bench does not send
+every code change automatically: a configured analysis job still has to run.
 
-## What sync can mean
+## Three connections, three jobs
 
-| Team phrase | Actual capability | Direction |
+| Connection | What it does | What it does not do |
 | --- | --- | --- |
-| Import GitHub repositories | Create SonarQube projects from GitHub repositories. | GitHub to SonarQube. |
-| Bind project to repository | Associate an existing or imported SonarQube project with a GitHub repository. | Configuration link. |
-| Analyze with GitHub Actions | Run SonarScanner from a GitHub Actions workflow and send results to SonarQube. | GitHub Actions to SonarQube. |
-| Pull request decoration | Show quality gate, metrics, and annotations in GitHub pull requests. | SonarQube to GitHub. |
-| Required status check | Block merge when the SonarQube quality gate check fails. | GitHub branch protection. |
-| Code scanning alerts | Report security issues into GitHub code scanning alerts when configured and licensed. | SonarQube to GitHub, with status synchronization for supported alerts. |
-| User authentication | Let users sign in to SonarQube with GitHub. | GitHub identity to SonarQube. |
+| GitHub App and project binding | Let SonarQube associate a project with a GitHub repository and report back to it.[^sonar-github-app][^sonar-github-binding] | Analyze the code by itself. |
+| GitHub Actions and scanner | Check out code and submit analysis to SonarQube.[^sonar-github-actions] | Guarantee a quality gate passes. |
+| Pull request decoration | Display analysis summary, gate status, and supported findings in GitHub after a valid pull request analysis.[^sonar-github-binding] | Replace human review or a required-check policy. |
 
-> [!IMPORTANT]
-> SonarQube does not continuously mirror repository contents like a file sync tool. Code reaches SonarQube through scanner analysis. Integration metadata lets SonarQube associate analysis with the correct repository, pull request, checks, and alerts.
+These are distinct steps. A successful scanner job without repository binding
+can leave a result visible in SonarQube but absent from the GitHub pull
+request. A bound project without a working scanner has no fresh analysis to
+report.[^sonar-github-binding][^sonar-pr-analysis]
 
-## Prerequisites
+## Follow one pull request
 
-- Global `Administer System` permission in SonarQube Server for global GitHub integration setup.
-- A reachable SonarQube Server base URL for GitHub-hosted or self-hosted runners that perform analysis.
-- A GitHub App configured for the GitHub organization or GitHub Enterprise instance.
-- Repository access in GitHub and `Create Projects` permission in SonarQube for importing repositories.
-- `SONAR_TOKEN` stored as a GitHub secret and `SONAR_HOST_URL` stored as a GitHub variable or secret.
-- Full Git checkout in CI when pull request, branch, blame, or new-code detection depends on SCM data.
+Suppose a developer opens pull request `#42` to add a validation function.
+This is an illustrative sequence, not an observed run.
 
-## Setup sequence
-
-1. Configure the SonarQube Server base URL.
-2. Create and install the GitHub App for the target GitHub organization or instance.
-3. Add the GitHub App configuration to SonarQube global DevOps platform integration settings.
-4. Import GitHub repositories into SonarQube or bind existing SonarQube projects to repositories.
-5. Add SonarQube analysis to GitHub Actions.
-6. Run analysis on the main branch at least once.
-7. Run analysis on pull requests.
-8. Confirm pull request decoration appears in GitHub Checks, Conversation, and inline annotations where supported.
-9. Add the SonarQube quality gate status as a required check in GitHub branch protection when the team is ready to enforce it.
-10. Configure security alert reporting if the edition and GitHub security setup support it.
-
-## GitHub Actions workflow
-
-```yaml
-name: code-quality
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-
-permissions:
-  contents: read
-  pull-requests: read
-
-jobs:
-  sonarqube:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v7
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+```mermaid
+flowchart LR
+  pr["GitHub pull request #42"] --> action["GitHub Actions checks out branch"]
+  action --> scan["Scanner sends analysis"]
+  scan --> sonar["SonarQube computes gate"]
+  sonar --> github["GitHub shows result if bound"]
+  github --> team["Reviewers decide with other checks"]
 ```
 
-What it does: runs analysis on pushes to `main` and on pull request updates, sends results to SonarQube Server, and gives SonarQube enough Git metadata to detect new code and pull request context.
+Text alternative: the pull request triggers a workflow; the scanner sends
+the checked-out code's analysis to SonarQube; SonarQube computes the gate and
+reports it to the bound GitHub repository; reviewers consider the result with
+tests and code review. GitHub Actions can supply pull request parameters
+automatically in supported SonarQube Server editions.[^sonar-github-actions][^sonar-pr-analysis]
 
-> [!NOTE]
-> Build-wrapper, Maven, Gradle, .NET, JavaScript, TypeScript, and coverage setup can require language-specific scanner configuration. Keep the workflow example minimal, then add build and coverage steps before the scan.
+The job needs a SonarQube token, kept in GitHub Actions secrets, and the
+server URL. SonarQube recommends a full Git checkout so it can find the
+target branch and source history for pull request analysis. The runner also
+needs network access to the SonarQube Server.[^sonar-github-actions][^sonar-pr-analysis]
 
-## Pull request decoration and merge control
+## What a required check changes
 
-For bound projects, SonarQube can report quality gate status and analysis details back to GitHub pull requests after pull request analysis is working. GitHub branch protection can then require the SonarQube status check before merge.
+Pull request decoration makes the gate *visible*. A GitHub ruleset or branch
+protection rule can make that reported check *required* before merge. That is
+a separate GitHub policy choice; a failing gate alone does not necessarily
+block a merge.[^sonar-github-binding]
 
-Recommended rollout:
+Before requiring the check, run it on a representative pull request and
+confirm that it reports for the expected repository and revision. Then check
+whether the team's gate conditions match its policy. A missing check can
+otherwise block merging for reasons unrelated to the proposed code. This is
+operational advice based on how required checks work, not a claim that any
+repository here has been configured.
 
-1. Run the scan without blocking merges.
-2. Confirm that pull request decoration appears and findings are actionable.
-3. Fix false configuration issues such as missing coverage or generated-code scope.
-4. Agree on quality gate policy with maintainers.
-5. Add the SonarQube check to branch protection.
+## Security alerts are another path
 
-> [!WARNING]
-> Do not make the SonarQube check required until scanner reliability is stable. A broken scanner, unreachable server, missing secret, or bad coverage path can block all merges even when the code itself is fine.
+SonarQube can also report supported security issues as GitHub code scanning
+alerts when a bound project and the additional alert integration are set up.
+This is separate from the quality gate summary on the pull request. The
+SonarQube Server documentation identifies the alert feature as available
+starting in Developer Edition; check the installed edition and current
+GitHub App permissions before planning around it.[^sonar-security-alerts]
 
-## Security alert reporting
+## If a result is missing
 
-SonarQube Server can report supported security issues into GitHub code scanning alerts when the GitHub integration and security alert reporting are configured. This is separate from normal pull request decoration.
+| What you see | First question to answer |
+| --- | --- |
+| No SonarQube analysis | Did the workflow run, reach the server, and authenticate? |
+| Analysis in SonarQube but no pull request result | Is this project bound to the right GitHub repository, and was it recognized as pull request analysis? |
+| Wrong changed-code findings | Did CI check out the source and target branches with usable Git history? |
+| Gate result appears but merge is not blocked | Is the SonarQube check required by the target branch's ruleset or protection rule? |
 
-Operational checks:
+Start at the first missing step in the path instead of changing the quality
+gate to compensate for an integration problem. See [SonarQube](sonarqube.md)
+for the difference between analysis, profiles, and gates.
 
-- Confirm the SonarQube edition supports the desired GitHub security alert behavior.
-- Confirm the GitHub App has the permissions required by the SonarQube setup guide.
-- Confirm the repository has GitHub code scanning enabled where required.
-- Decide whether security alert triage status should be managed in SonarQube, GitHub, or both.
-- Test status synchronization with a non-critical finding before relying on it for governance reporting.
+## Check your understanding
 
-## Troubleshooting
+- What does the scanner send, and what does project binding enable?
+- Why can a gate be visible in a pull request without blocking merge?
+- Why are GitHub code scanning alerts a separate setup decision?
 
-| Symptom | Likely cause | Next step |
-| --- | --- | --- |
-| Repository cannot be imported | GitHub App is not installed on the organization or lacks repository access. | Check GitHub App installation scope and SonarQube global integration settings. |
-| Project is analyzed but not decorated in GitHub | Project is not bound to the GitHub repository or PR analysis is not detected. | Import or bind the project and verify pull request analysis parameters. |
-| PR analysis misses changed-code context | Shallow clone, missing target branch, or modified checkout state. | Use `fetch-depth: 0` and avoid synthetic merge previews that confuse SCM data. |
-| Required check never appears | No successful analysis has reported that check name yet. | Run the workflow on a branch or PR and then select the SonarQube check in branch protection. |
-| GitHub-hosted runner cannot reach SonarQube | Server base URL is private or blocked by network rules. | Use a reachable URL, self-hosted runner, VPN path, or firewall allowlist. |
-| Scanner cannot trust SonarQube TLS certificate | Private CA certificate is not available to the runner. | Configure the runner trust store or scanner certificate environment according to SonarQube docs. |
+## Official documentation for deeper study
 
-## Related links
+- [GitHub Actions analysis](https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/ci-integration/github-actions) covers tokens, checkout, and scanner choices.
+- [GitHub App setup](https://docs.sonarsource.com/sonarqube-server/2026.1/instance-administration/devops-platforms/github/setting-up-github-app) explains the global integration and permissions.
+- [Project binding](https://docs.sonarsource.com/sonarqube-server/2026.1/project-administration/creating-project/github/configure-binding) explains pull request reporting and required checks.
+- [Pull request analysis](https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/setting-up-the-pull-request-analysis) lists the repository and branch prerequisites.
+- [Security alert reporting](https://docs.sonarsource.com/sonarqube-server/2026.1/instance-administration/devops-platforms/github/report-security-alerts) describes its separate configuration.
 
-- [Official SonarQube GitHub integration documentation](https://docs.sonarsource.com/sonarqube-server/2026.1/devops-platform-integration/github-integration/introduction)
-- [Global GitHub integration setup](https://docs.sonarsource.com/sonarqube-server/2026.1/devops-platform-integration/github-integration/setting-up-at-global-level/introduction)
-- [Importing GitHub repositories](https://docs.sonarsource.com/sonarqube-server/2026.1/devops-platform-integration/github-integration/importing-github-repositories)
-- [Adding analysis to GitHub Actions workflow](https://docs.sonarsource.com/sonarqube-server/2026.1/devops-platform-integration/github-integration/adding-analysis-to-github-actions-workflow)
-- [Pull request analysis setup](https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/pull-request-analysis/setting-up-the-pull-request-analysis)
-- [Issues reported in GitHub](https://docs.sonarsource.com/sonarqube-server/2026.1/user-guide/issues/in-devops-platform/github)
-- [SonarQube](sonarqube.md)
-- [GitHub Actions](../../git/github-actions/index.md)
-- [Back to code quality index](index.md)
-- [Back to DevOps index](../index.md)
-- [Back to root index](../../../README.md)
+See the [code quality index](index.md) or the [DevOps index](../index.md).
+
+[^sonar-github-actions]: [GitHub Actions analysis](https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/ci-integration/github-actions).
+[^sonar-github-binding]: [Configuring GitHub project binding](https://docs.sonarsource.com/sonarqube-server/2026.1/project-administration/creating-project/github/configure-binding).
+[^sonar-pr-analysis]: [Setting up the pull request analysis](https://docs.sonarsource.com/sonarqube-server/2026.1/analyzing-source-code/setting-up-the-pull-request-analysis).
+[^sonar-github-app]: [Setting up a GitHub App](https://docs.sonarsource.com/sonarqube-server/2026.1/instance-administration/devops-platforms/github/setting-up-github-app).
+[^sonar-security-alerts]: [Setting up the report of security alerts](https://docs.sonarsource.com/sonarqube-server/2026.1/instance-administration/devops-platforms/github/report-security-alerts).

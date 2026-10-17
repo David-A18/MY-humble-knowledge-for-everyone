@@ -1,31 +1,701 @@
 version: "1"
 cases:
+  - id: stateful-recovery-rto-rpo-observed-timeline
+    question: If an order database fails at 10:12, its latest recovered marker is 10:10, orders are readable at 10:40, and traffic resumes after reconciliation at 10:55, which times measure the observed RPO gap and RTO in that drill?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md]
+    required_source_ids: [aws-objectives, aws-recovery-test, aws-rpo-validation]
+  - id: stateful-recovery-replica-vs-corruption
+    question: Why might a live database replica help after a zone failure but not after a bad write copied hours ago, and which recovery point and evidence should the team examine?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md]
+    required_source_ids: [aws-recovery-strategy, aws-secure-backups]
+  - id: stateful-recovery-provider-side-reconciliation
+    question: If a paid order row disappears after database recovery, why is reading only the surviving orders insufficient, and where can the team start looking for a charge that has no order row?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-design-decision-checklist.md]
+    required_source_ids: [stripe-list-events]
+  - id: stateless-photo-new-key-and-record-handoff
+    question: Why should a profile-photo replacement use a new S3 object key before updating the user record, and what remains if the app crashes between those writes?
+    expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]
+    required_source_ids: [aws-s3]
+  - id: stateless-sqs-visibility-and-worker-retry
+    question: If an SQS worker crashes or exceeds the visibility timeout before deleting a message, when can another worker receive it and why must processing tolerate duplicates?
+    expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]
+    required_source_ids: [aws-sqs-visibility, aws-sqs-delivery]
+  - id: stateless-payment-idempotency-boundary
+    question: Why can a local already-charged check still double-charge after SQS redelivery, and what must a payment provider's idempotency key represent?
+    expected_paths: [knowledge/cloud/aws/architecture/stateless-application-patterns.md]
+    required_source_ids: [stripe-idempotent-requests]
+  - id: stateless-cart-identifier-and-replica-switch
+    question: If a shopper's second cart request reaches a different web replica, how does that replica find the same cart, and what happens if the first replica kept the cart only in memory?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-vs-stateless.md]
+    required_source_ids: [aws-stateless, owasp-session-management]
+  - id: shared-cart-store-lost-update-and-retry
+    question: How can two tabs lose a cart item even with one healthy shared store, and why can retrying an add after a lost reply create a duplicate?
+    expected_paths: [knowledge/cloud/aws/architecture/stateful-vs-stateless.md]
+    required_source_ids: [aws-dynamodb-concurrent-updates, aws-idempotent-apis]
+  - id: bootstrap-node-missing-package-and-clean-install
+    question: A cloned Node app declares a local package, but npm start says ERR_MODULE_NOT_FOUND. What has to happen before the import works, and what does npm ci require?
+    expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
+    required_source_ids: [npm-ci, npm-install]
+  - id: bootstrap-npm-install-script-scope
+    question: If I use npm ci --ignore-scripts to prepare an unfamiliar project, what installation scripts are skipped and what does a successful import still not prove?
+    expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
+    required_source_ids: [npm-scripts, npm-ci]
+  - id: bootstrap-terraform-state-bucket-order
+    question: Why must an S3 bucket exist before a Terraform configuration enables it as its backend, where can a separate bootstrap configuration keep state, and which init flag moves existing state rather than reconfiguring without migration?
+    expected_paths: [knowledge/programming-languages/bootstrapping-a-system.md]
+    required_source_ids: [terraform-backend, terraform-init, terraform-s3-backend]
+  - id: bootstrap-grid-breakpoint-and-viewport
+    question: Why do two Bootstrap col-12 col-md-6 cards stack below 768 px but sit side by side at 768 px and wider, and what viewport tag does the page need?
+    expected_paths: [knowledge/programming-languages/bootstrap-frontend-toolkit.md]
+    required_source_ids: [bootstrap-introduction, bootstrap-grid]
+  - id: bootstrap-modal-css-without-behavior
+    question: If a Bootstrap modal trigger button looks styled but clicking it never opens the dialog, which loaded file and dialog labeling should I check?
+    expected_paths: [knowledge/programming-languages/bootstrap-frontend-toolkit.md]
+    required_source_ids: [bootstrap-introduction, bootstrap-modal]
+  - id: gitops-pending-revision-vs-live-drift
+    question: If a new GitOps configuration commit is waiting to apply, how is that different from someone changing the live Deployment by hand, even though Argo CD can report OutOfSync for both?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]
+    required_source_ids: [opengitops-glossary, argo-cd-core-concepts]
+  - id: gitops-sync-health-user-request
+    question: If Argo CD says Synced and Healthy or a Flux Kustomization says Ready, what has each status checked and why might the real customer request still fail?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]
+    required_source_ids: [argo-cd-core-concepts, argo-cd-resource-health, flux-kustomization]
+  - id: gitops-emergency-edit-reconciler-owners
+    question: During a GitOps incident, why might suspending a Flux Kustomization leave a HelmRelease active, or changing an ApplicationSet-generated Argo CD Application fail to pause its automatic sync?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md]
+    required_source_ids: [flux-kustomization, flux-helmrelease, argo-cd-automated-sync]
+  - id: flux-manifest-vs-chart-artifact
+    question: Does a Flux Kustomization and HelmRelease consume the same source artifact, and how does a HelmRelease get a chart through spec.chart or spec.chartRef?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux.md]
+    required_source_ids: [flux-kustomization, flux-helmrelease]
+  - id: flux-ready-and-optional-controllers
+    question: If a Flux GitRepository and Kustomization are Ready, does that prove users can reach the app, and are alerts and image-tag commits automatic after a default installation?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux.md]
+    required_source_ids: [flux-gitrepository, flux-kustomization, flux-optional-components, flux-notification-controller, flux-image-automation]
+  - id: argocd-flux-default-hand-edit-and-prune
+    question: With no automated sync or self-heal configured, how does Argo CD report a hand edit or removed manifest, and how does a Flux Kustomization treat drift and pruning by default?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-automated-sync, flux-kustomization]
+  - id: argocd-flux-helm-lifecycle-choice
+    question: When both tools consume a Helm chart, which one renders with helm template and which one manages Helm release install and upgrade actions?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-helm, flux-helmrelease]
+  - id: argocd-flux-tenant-default-boundaries
+    question: If an application team may deploy only into its namespace, why are a permissive Argo CD default project and a Flux object with no scoped apply account both unsafe defaults?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-projects, argo-cd-sync-impersonation, flux-multitenancy]
+  - id: flux-helmchart-creation-and-namespace
+    question: A HelmRelease lives in apps but refers to a HelmRepository in flux-system. Which controller creates its HelmChart, where does that object appear, and which controller fetches its chart artifact?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md]
+    required_source_ids: [flux-helm-guide, flux-helmchart, flux-helmrelease]
+  - id: flux-kustomization-ready-versus-helmrelease
+    question: A Flux Kustomization applied a HelmRelease whose chart is unavailable. Why can its health check report Ready=False after timeout, and what would Kustomization Ready mean without that check?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/flux-reconciliation-and-helm.md]
+    required_source_ids: [flux-kustomization, flux-helmrelease]
+  - id: flux-helmrelease-unset-identity
+    question: A scoped Flux Kustomization creates a HelmRelease whose chart requests a ClusterRoleBinding. Why can an unset HelmRelease serviceAccountName still be dangerous, and which controller must be locked down?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md]
+    required_source_ids: [flux-multitenancy, flux-kustomization, flux-helmrelease]
+  - id: argocd-project-choice-vs-cluster-credential
+    question: In a shared Argo CD setup, why must the platform protect a parent app's source and each child's spec.project even when an AppProject limits destinations, and does that project narrow the controller's Kubernetes credential?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md]
+    required_source_ids: [argo-projects, argo-cluster-bootstrapping, argo-security]
+  - id: tenant-namespace-vs-pod-and-network-access
+    question: If a payments team may create Pods only in its namespace, can those Pods mount payments Secrets, use a powerful service account, reach catalog over the network, or reach a node?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops-security-and-multitenancy.md]
+    required_source_ids: [kubernetes-rbac, kubernetes-pod-security-admission, kubernetes-network-policy]
+  - id: statefulset-unreachable-node-identity
+    question: A node running store-1 is unreachable and its StatefulSet Pod remains Terminating. Why is there no immediate replacement, and what must be established before force deletion?
+    expected_paths: [knowledge/kubernetes/core-objects/stateful-workloads.md]
+    required_source_ids: [kubernetes-statefulset, kubernetes-force-delete-statefulset-pod]
+  - id: statefulset-pvc-retain-vs-pv-reclaim
+    question: If I scale a StatefulSet from three Pods to two and back, which claim and data return by default, and how does PV reclaim differ if the claim is deleted?
+    expected_paths: [knowledge/kubernetes/core-objects/stateful-workloads.md]
+    required_source_ids: [kubernetes-statefulset, kubernetes-pv, kubernetes-storageclass]
+  - id: apisix-eks-healthy-target-no-route
+    question: If the EKS NLB reports a healthy APISIX target but HTTPS fails or APISIX returns no route, what did the TCP health check actually prove and which configuration handoff should I inspect?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [aws-nlb-health, apisix-resources, apisix-configuration-troubleshooting]
+  - id: apisix-eks-tls-and-client-ip
+    question: For a trusted lesson request through an NLB TCP 443 listener to APISIX Pod IPs, who terminates TLS and why might an IP-keyed APISIX quota group unrelated clients together?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [aws-nlb-listeners, aws-nlb-target-groups, apisix-limit-count]
+  - id: apisix-consumer-quota-and-invalid-key
+    question: A trusted lesson client uses an APISIX API key. How do I count requests per Consumer across gateway replicas, and why does that quota not itself protect against invalid-key attempts?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md]
+    required_source_ids: [apisix-key-auth, apisix-limit-count, apisix-plugin]
+  - id: apisix-canary-and-missing-traces
+    question: If a 1-to-9 APISIX canary has unexpected traffic and no trace appears, what do traffic-split weights, request IDs, Prometheus metrics, and the OpenTelemetry sampler actually show?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-security-traffic-and-observability.md]
+    required_source_ids: [apisix-traffic-split, apisix-request-id, apisix-prometheus, apisix-opentelemetry]
+  - id: apisix-gatewayproxy-accepted-but-not-applied
+    question: If an HTTPRoute is Accepted but the intended APISIX gateway has no matching route, what GatewayProxy, controller-to-Admin-API, and applied-configuration checks separate these handoffs?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]
+    required_source_ids: [apisix-resources, apisix-controller-examples, apisix-config-troubleshoot]
+  - id: apisix-config-restart-by-mode
+    question: After an APISIX gateway instance restarts, how does recovery differ between an etcd-backed mode, file-driven standalone, and API-driven standalone?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]
+    required_source_ids: [apisix-deployment-modes, apisix-controller-architecture]
+  - id: apisix-key-auth-client-versus-person
+    question: If someone opens a protected lesson URL in a browser address bar without an API key, does APISIX send the request to the lesson API, and does a valid client key prove that person may see lesson 42?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apache-apisix.md]
+    required_source_ids: [apisix-key-auth, apisix-plugin]
+  - id: apisix-route-versus-controller-handoff
+    question: If an HTTPRoute exists in Kubernetes but APISIX has not applied it, which path should I inspect before debugging the lesson API, and does the controller handle each live request?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apache-apisix.md]
+    required_source_ids: [apisix-gateway-api, apisix-config-troubleshoot, apisix-resources]
+  - id: apisix-404-cross-namespace-attachment
+    question: A lessons HTTPRoute references a Gateway in gateway-system, but GET /lessons returns 404. What allows the cross-namespace route attachment, and why is ReferenceGrant a different check?
+    expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]
+    required_source_ids: [gateway-traffic-matching, gateway-referencegrant, gateway-status]
+  - id: apisix-404-answering-layer
+    question: A request through APISIX returns 404. How do I tell whether an entry layer, unmatched route, different matched route, or backend application produced it?
+    expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]
+    required_source_ids: [apisix-config-troubleshoot, apisix-variables, gateway-httproute]
+  - id: k9s-empty-pod-view
+    question: K9s shows no Pod in the expected namespace. How do I distinguish a wrong target or active filter from a Deployment or ReplicaSet that failed to create a Pod?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/k9s.md]
+    required_source_ids: [k9s-commands, k8s-debug-pods, k8s-deployments]
+  - id: k9s-image-pull-vs-restart-logs
+    question: In K9s, why should I read Pod events for ImagePullBackOff but previous container logs after a restart, and how do I avoid assuming Pending means unscheduled?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/k9s.md]
+    required_source_ids: [k9s-upstream, k8s-pod-lifecycle, k8s-images, k8s-debug-running]
+  - id: helm-chart-versus-release-revision
+    question: If development and production install the same Helm chart at version 1.4.0, why can their replicas and release revision numbers differ?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/helm.md]
+    required_source_ids: [helm-introduction, helm-charts, helm-values-files]
+  - id: helm-prod-replicas-after-upgrade
+    question: A Helm production release now wants one replica, although its reviewed values file says three. Which values and revision evidence should I inspect, and will a rollback undo a database migration?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/helm.md]
+    required_source_ids: [helm-get-values, helm-get-manifest, helm-history, helm-rollback, kubernetes-hpa]
+  - id: eks-pending-pod-versus-quota
+    question: In EKS, four Pods exist but two are Pending with FailedScheduling and insufficient CPU; should I change namespace quota or inspect scheduling capacity?
+    expected_paths: [knowledge/kubernetes/commands/eksctl-commands.md]
+    required_source_ids: [kubernetes-debug-pods, kubernetes-quotas]
+  - id: eks-managed-group-at-max-owner
+    question: An EKS Pod cannot schedule for insufficient CPU and its managed node group is at the configured maximum. How do I choose who changes capacity, and what if the cluster uses Fargate or Auto Mode?
+    expected_paths: [knowledge/kubernetes/commands/eksctl-commands.md]
+    required_source_ids: [eks-describe-nodegroup, eks-autoscaling, eks-compute, eks-fargate, eksctl-auto-mode]
+  - id: kubernetes-explain-versus-dry-run
+    question: Why can kubectl explain list maxUnavailable and maxSurge while a Deployment dry run rejects setting both to zero?
+    expected_paths: [knowledge/kubernetes/commands/advanced-commands.md]
+    required_source_ids: [explain, dry-run, deployments]
+  - id: kubernetes-client-dry-run-boundary
+    question: Does kubectl apply --dry-run=server without --server-side check field ownership conflicts or create the Deployment's Pods?
+    expected_paths: [knowledge/kubernetes/commands/advanced-commands.md]
+    required_source_ids: [apply, dry-run, server-side-apply]
+  - id: kubernetes-pending-vs-low-live-usage
+    question: Why is a 2Gi Pod still Pending with FailedScheduling when a node uses only 3Gi of its 7.5Gi allocatable memory?
+    expected_paths: [knowledge/kubernetes/commands/workflows.md]
+    required_source_ids: [resource-management]
+  - id: kubernetes-oom-vs-evicted-evidence
+    question: How can I tell a container restart marked OOMKilled from a Pod evicted for node memory pressure, and where should I look first?
+    expected_paths: [knowledge/kubernetes/commands/workflows.md]
+    required_source_ids: [node-pressure, pod-lifecycle, memory-task]
+  - id: aws-cost-tag-missing-next-day
+    question: I tagged an EC2 instance application=checkout on Monday; why is Cost Explorer still blank on Tuesday, and which usage may need backfill?
+    expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]
+    required_source_ids: [aws-activate-tags, aws-cost-explorer-enable, aws-tag-backfill]
+  - id: aws-cost-tag-backfill-before-assignment
+    question: A resource got application=checkout in June. Can a cost allocation tag backfill produce checkout values for March usage before it was tagged?
+    expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]
+    required_source_ids: [aws-tag-backfill]
+  - id: aws-cost-category-split-report-scope
+    question: If AWS Cost Categories split a shared charge between teams, will that calculated split appear in Cost Explorer or the Cost and Usage Report?
+    expected_paths: [knowledge/cloud/aws/finops/cost-allocation-tags.md]
+    required_source_ids: [aws-split-charges]
+  - id: blue-green-classic-and-staged-traffic
+    question: Does blue-green always shift every request at once, or can an ECS deployment use canary increments between blue and green?
+    expected_paths: [knowledge/cloud/solutions/blue-green-deployment.md]
+    required_source_ids: [aws-ecs-codedeploy]
+  - id: blue-green-shared-data-rollback-limit
+    question: If green changed shared order data and checkout fails, will routing traffic back to blue undo those writes?
+    expected_paths: [knowledge/cloud/solutions/blue-green-deployment.md]
+    required_source_ids: [aws-blue-green-data]
+  - id: delivery-chain-blue-green-traffic-step
+    question: In a blue-green release, does bringing up green mean users are already reaching it, and can blue still run after traffic moves?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cloud/solutions/blue-green-deployment.md]
+    required_source_ids: [aws-ecs-blue-green]
+  - id: terraform-local-plan-known-after-apply
+    question: In the local Terraform tutorial, why does input.version have a value while terraform_data.release.output and release_summary say known after apply?
+    expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md, knowledge/terraform/language/how-values-move-through-terraform.md]
+    required_source_ids: [terraform-data]
+  - id: terraform-local-var-override-next-plan
+    question: After applying the local tutorial's saved plan with release_version=1.1.0, why does a plain plan propose version 1.0.0 again?
+    expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
+    required_source_ids: [terraform-plan]
+  - id: git-staged-only-version-before-unstaging
+    question: I staged draft A, edited the file again to draft B, and now want to unstage it. Which version can be lost from the index?
+    expected_paths: [knowledge/git/commands/solve-issues.md]
+    required_source_ids: [git-restore]
+  - id: git-pushed-secret-revert-limit
+    question: If a pushed commit exposed a credential, does reverting it remove the secret from Git history, and what must happen first?
+    expected_paths: [knowledge/git/commands/solve-issues.md, knowledge/git/troubleshooting/undo-and-recovery.md]
+    required_source_ids: [github-sensitive-data-removal]
+  - id: git-review-diff-versus-log-ranges
+    question: Why does git diff origin/develop...HEAD compare from the common ancestor while git log origin/develop..HEAD lists only topic commits?
+    expected_paths: [knowledge/git/commands/common-use-cases.md]
+    required_source_ids: [git-diff, git-revisions]
+  - id: terraform-s3-state-lock-and-empty-state
+    question: If my Terraform S3 backend has a bucket but no lock file configured and my state looks empty, is a create plan safe to apply?
+    expected_paths: [knowledge/terraform/fundamentals/state-management.md]
+    required_source_ids: [terraform-s3-backend, terraform-import]
+  - id: terraform-public-plan-artifact-and-follow-up
+    question: Can I put a Terraform production plan in a public GitHub Actions artifact, and what must match when checking the result after apply?
+    expected_paths: [knowledge/terraform/commands/core-workflow.md]
+    required_source_ids: [terraform-plan, github-artifact-download]
+  - id: kubernetes-crd-type-versus-controller
+    question: If I install a CRD and create a valid ApplicationNetwork object, why might no network appear, and what did the API server do with the object?
+    expected_paths: [knowledge/kubernetes/core-objects/custom-resources-and-crds.md]
+    required_source_ids: [kubernetes-custom-resources, kubernetes-crd-task]
+  - id: kubernetes-crd-status-and-deletion
+    question: Does old status prove my latest custom-resource change succeeded, and why might an object stay visible after I ask to delete it?
+    expected_paths: [knowledge/kubernetes/core-objects/custom-resources-and-crds.md]
+    required_source_ids: [crossplane-api-reference, kubernetes-finalizers]
+  - id: observability-error-budget-versus-slo-breach
+    question: Can an alert fire because booking failures are using the 30-day error budget quickly before the full 30-day SLO is missed?
+    expected_paths: [knowledge/cross-topic-guides/observability-stack.md]
+    required_source_ids: [google-sre-workbook-alerting]
+  - id: observability-trace-local-versus-provider-time
+    question: If a payment client span times out, how can logs with the same trace ID help distinguish a local connection-pool wait from a slow external provider?
+    expected_paths: [knowledge/cross-topic-guides/observability-stack.md]
+    required_source_ids: [opentelemetry-context-propagation, opentelemetry-traces]
+  - id: programming-first-program-flow
+    question: How does a tiny program move from source code and typed input through a function and condition to printed output?
+    expected_paths: [knowledge/programming-languages/programming-fundamentals.md]
+    required_source_ids: [python-interpreter, python-control-flow, python-builtins]
+  - id: programming-return-versus-print
+    question: In a Python function, why is returning a value different from printing it, and what happens if a typed value cannot become an integer?
+    expected_paths: [knowledge/programming-languages/programming-fundamentals.md]
+    required_source_ids: [python-control-flow, python-builtins]
+  - id: first-visit-single-topic-or-local-route
+    question: Can I learn one topic without installing tools, and where is the no-cloud Git, Kubernetes, and Terraform practice route?
+    expected_paths: [knowledge/start-here.md]
+  - id: first-visit-unfamiliar-term
+    question: Where can I quickly find the meaning of an unfamiliar term before reading a longer guide?
+    expected_paths: [knowledge/glossary.md]
   - id: git-undo-unstaged-edit
     question: How do I discard an unstaged edit without rewriting shared history?
     expected_paths: [knowledge/git/troubleshooting/undo-and-recovery.md]
     required_source_ids: [git-restore]
+  - id: git-edit-stage-commit-push
+    question: As a beginner, what happens to my change between editing a file, staging it, committing it, and pushing it in Git?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-reset-demystified]
+  - id: git-origin-main-last-known-position
+    question: Does Git saying my branch is up to date with origin/main prove that nobody has pushed to the remote since my last fetch?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-remote-branches]
+  - id: git-head-pointer-versus-snapshot
+    question: Is HEAD itself a copy of my project files, and what does Pro Git mean by calling HEAD one of the three trees?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [pro-git-reset-demystified]
+  - id: git-restore-working-versus-staged
+    question: What is the difference between git restore file and git restore --staged file, and which uncommitted edits can I lose?
+    expected_paths: [knowledge/git/git-fundamentals.md]
+    required_source_ids: [git-restore]
+  - id: git-rejected-push-left-right
+    question: After a rejected Git push, what do the less-than and greater-than markers in git log HEAD...@{upstream} tell me, and can my upstream differ from the push target?
+    expected_paths: [knowledge/git/commands/troubleshooting-commands.md]
+    required_source_ids: [git-fetch, git-log, git-branch]
+  - id: git-tracked-file-ignore-rule
+    question: Why does build/output.txt still appear in Git status even though build/ is in .gitignore, and what does check-ignore --no-index prove?
+    expected_paths: [knowledge/git/commands/troubleshooting-commands.md]
+    required_source_ids: [git-ls-files, git-check-ignore]
+  - id: git-fsck-dangling-versus-corrupt
+    question: Does a dangling blob from git fsck mean my repository is corrupt, and what should I preserve if fsck reports a missing object?
+    expected_paths: [knowledge/git/commands/troubleshooting-commands.md]
+    required_source_ids: [git-fsck, git-gc]
+  - id: actions-pr-merge-checkout
+    question: When a GitHub Actions pull_request workflow uses checkout without a ref, does its test run against the proposed branch alone or the temporary merge with its base branch?
+    expected_paths: [knowledge/git/github-actions/workflow-structure.md]
+    required_source_ids: [github-events, github-checkout]
+  - id: actions-job-and-step-state
+    question: If one GitHub Actions job builds a file and another job needs it, will needs share the file, and will a shell export persist into the next step of the same job?
+    expected_paths: [knowledge/git/github-actions/components-and-concepts.md]
+    required_source_ids: [github-artifacts, github-variables]
+  - id: actions-pr-example-check-and-merge-gate
+    question: Does a passing pull_request test automatically allow a merge, and which revision does checkout test in the example workflow?
+    expected_paths: [knowledge/git/github-actions/examples-and-use-cases.md]
+    required_source_ids: [github-events, github-required-checks]
+  - id: actions-reusable-workflow-secret-scope
+    question: If I call a reusable GitHub Actions workflow with secrets inherit, which secrets and token permissions can it receive?
+    expected_paths: [knowledge/git/github-actions/actions-and-uses-catalog.md]
+    required_source_ids: [github-reusable-workflows, github-token]
+  - id: actions-failed-job-rerun-direction
+    question: If a GitHub Actions test job fails, will a failed-jobs rerun repeat its successful upstream setup job or the publish job that depends on it, and will it include a later fix?
+    expected_paths: [knowledge/git/github-actions/commands.md]
+    required_source_ids: [github-rerun-api, github-rerun]
+  - id: actions-pr-required-check-triage
+    question: For a pull request into main, why can a required GitHub Actions check remain pending after a branch filter skips its workflow while a job skipped by if can appear successful?
+    expected_paths: [knowledge/git/github-actions/common-solutions.md]
+    required_source_ids: [actions-events, actions-required-checks]
+  - id: actions-same-repository-pr-credential-boundary
+    question: Does a GitHub Actions pull_request check from a branch in the same repository get the same automatic secret and token restrictions as a fork PR, and can the contributor change its workflow?
+    expected_paths: [knowledge/git/github-actions/security-secrets-and-permissions.md]
+    required_source_ids: [github-actions-workflow-syntax, github-actions-pull-request-target]
+  - id: actions-aws-oidc-environment-subject
+    question: If an AWS deployment job uses a GitHub production environment, does its default OIDC subject still prove the run came from main, and which system must restrict the branch?
+    expected_paths: [knowledge/git/github-actions/aws-oidc-federation.md]
+    required_source_ids: [github-oidc-reference, github-oidc-aws, aws-github-role]
+  - id: cloud-provider-versus-customer
+    question: What does a cloud provider operate, what must I configure, and will my application scale and recover automatically?
+    expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
+    required_source_ids: [nist-cloud-definition, azure-shared-responsibility]
+  - id: cloud-replication-versus-backup
+    question: If my cloud photo site has several application copies or redundant storage, can I recover an accidentally deleted photo without choosing backup settings?
+    expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
+    required_source_ids: [azure-reliability-responsibility]
+  - id: cloud-metered-service-versus-bill
+    question: Does measured service mean an idle virtual machine is free, and when should I set a spending alert for a traffic event?
+    expected_paths: [knowledge/cloud/cloud-computing-fundamentals.md]
+    required_source_ids: [nist-cloud-definition, aws-ec2-on-demand, aws-budgets-costs]
+  - id: aws-stateful-networking-reply-port
+    question: For an internet client using TCP source port 49152 to reach an EC2 server on 443, which destination port does the server-subnet ACL check on the request and on the reply?
+    expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
+    required_source_ids: [aws-sg, aws-nacl-custom]
+  - id: aws-stateful-networking-default-versus-custom-acl
+    question: If an EC2 HTTPS request arrives but the reply fails, should I assume every subnet ACL needs a new outbound rule, and how do default and custom ACLs start?
+    expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
+    required_source_ids: [aws-default-nacl, aws-nacl-custom]
+  - id: aws-stateful-networking-tracked-versus-untracked
+    question: Does a security group always track every allowed flow, and will removing a rule immediately end an existing tracked connection?
+    expected_paths: [knowledge/cloud/aws/networking/stateful-networking.md]
+    required_source_ids: [aws-connection-tracking]
+  - id: aws-security-groups-new-web-to-database-request
+    question: For a web EC2 instance to start a PostgreSQL connection on TCP 5432, which outbound and inbound security-group checks matter, and does the tracked reply need reverse rules?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [aws-sg-rules, aws-connection-tracking]
+  - id: aws-security-groups-reference-versus-database-permission
+    question: Does referencing the web security group in a database inbound rule copy its rules or grant database-user access, and what should I do if the database returns permission denied?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [aws-sg-rules]
+  - id: aws-security-groups-no-egress-versus-tracked-reply
+    question: If a Terraform-created web security group has no outbound rules and is the only associated group, can the instance start a database connection or answer a separately allowed tracked inbound request, and what if another group permits egress?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [terraform-aws-sg, aws-connection-tracking]
+  - id: ai-first-terms-and-trust
+    question: As a beginner, how do AI, machine learning, generative AI, LLMs, assistants, and agents differ, and why should I check a generated answer?
+    expected_paths: [knowledge/ai/ai-fundamentals.md]
+    required_source_ids: [oecd-ai-principles, nist-genai-profile]
+  - id: ai-memory-versus-training
+    question: If an AI assistant remembers an earlier message, did my question retrain the model?
+    expected_paths: [knowledge/ai/ai-fundamentals.md]
+    required_source_ids: [google-what-is-ml]
+  - id: ai-agent-tool-execution-boundary
+    question: When an AI agent asks to edit a booking, does the model itself change the record, and why must the application check the tool request?
+    expected_paths: [knowledge/ai/ai-fundamentals.md]
+    required_source_ids: [anthropic-tool-use]
+  - id: llm-token-sequence-versus-whole-answer
+    question: Does a large language model write an entire answer at once or extend a sequence token by token, and is each token always a whole word?
+    expected_paths: [knowledge/llm/llm-fundamentals.md]
+    required_source_ids: [google-llm-introduction, openai-key-concepts]
+  - id: llm-context-history-versus-training
+    question: If an assistant includes an earlier message or a retrieved page in the current context, did that retrain the model, and does API-managed history avoid the context-window limit?
+    expected_paths: [knowledge/llm/llm-fundamentals.md]
+    required_source_ids: [openai-conversation-state, anthropic-context-windows]
+  - id: llm-fluent-answer-source-check
+    question: Can a fluent language-model answer contradict a documentation excerpt supplied in its context, and what should the reader check?
+    expected_paths: [knowledge/llm/llm-fundamentals.md]
+    required_source_ids: [nist-genai-profile]
+  - id: ml-feature-label-and-inference
+    question: In a library message classifier, what is the difference between input features and the known label, and what does the model receive during inference?
+    expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
+    required_source_ids: [google-supervised-learning]
+  - id: ml-validation-versus-final-test
+    question: Why should I choose a classifier using validation messages but keep test messages out of those choices, including any learned text preprocessing?
+    expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
+    required_source_ids: [google-dividing-datasets, sklearn-common-pitfalls]
+  - id: ml-tiny-test-baseline-shortcut
+    question: If a classifier gets two held-out library messages right, does that prove it beats a keyword rule or will route card-access requests that mention a room?
+    expected_paths: [knowledge/ml/supervised-classification-fundamentals.md]
+    required_source_ids: [google-overfitting, google-classification-metrics]
+  - id: mlops-versioned-release-versus-automatic-learning
+    question: After a library classifier is deployed, do incoming messages retrain it automatically, and which checks and versions matter before a new model serves?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-deployment-testing, google-training-frequency]
+  - id: mlops-live-signals-versus-confirmed-quality
+    question: If the share of room-booking predictions rises but staff have not yet confirmed the correct queues, does that prove the model is wrong, and what should be reviewed?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-monitoring]
+  - id: mlops-policy-change-versus-skew-versus-app-defect
+    question: How do I distinguish a new facility-access routing policy, different training and serving preprocessing, and a bug that sends a membership prediction to the wrong queue?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-monitoring, google-rules-of-ml]
+  - id: mlops-rollback-does-not-repair-past-routes
+    question: If a library message classifier is rolled back today, are messages it misrouted last week fixed, and what records help identify them?
+    expected_paths: [knowledge/mlops/mlops-fundamentals.md]
+    required_source_ids: [google-productionization]
+  - id: agent-workflow-versus-model-directed-loop
+    question: If an assistant always searches one page before answering, is that already an AI agent, and what changes when the model chooses another search after seeing a version mismatch?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-effective-agents]
+  - id: agent-client-tool-request-versus-execution
+    question: When a model asks for search_docs, who executes that client tool, returns the result, and enforces the allowed operation?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-tool-use, openai-function-calling]
+  - id: agent-retrieved-instruction-boundary
+    question: If a retrieved documentation page tells an agent to export private notes, does that page authorize the action, and which boundary prevents it?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-prompt-injection]
+  - id: agent-evaluation-against-fixed-workflow
+    question: How can I tell whether a multi-step documentation agent improves on a fixed search-and-summarize workflow rather than merely producing one fluent answer?
+    expected_paths: [knowledge/ai-agents/agent-fundamentals.md]
+    required_source_ids: [anthropic-agent-evals]
+  - id: cdn-cache-key-personalized-leak
+    question: Why can a CDN serve one logged-in user's page to a different user, and what part of the cache configuration causes it?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-cache-key]
+  - id: cdn-forwarded-session-not-in-key
+    question: If CloudFront forwards a session cookie on a miss but leaves it out of the cache key, what happens when a personalized response is stored?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md, knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-origin-request-policy]
+  - id: cdn-private-account-response
+    question: Which CloudFront path patterns, cache policy, and origin request policy let an account page receive its session cookie without storing one visitor's private response for another?
+    expected_paths: [knowledge/cloud/edge/cdn-caching-and-origin-protection.md]
+    required_source_ids: [cloudfront-behavior-settings, cloudfront-managed-cache-policies, cloudfront-origin-request-policy, rfc-9111-http-caching]
+  - id: cdn-stale-versus-edge-trigger
+    question: Does a CDN TTL force a cached response to be discarded, and do CloudFront origin-request functions run on a cache hit?
+    expected_paths: [knowledge/cloud/edge/cdn-and-edge-fundamentals.md]
+    required_source_ids: [rfc-9111-http-caching, cloudfront-edge-events]
+  - id: cloudfront-first-path-rule-and-asset-hit
+    question: For /assets/logo-v3.svg, which ordered CloudFront behavior handles the request, and when can the edge answer without contacting the private S3 origin?
+    expected_paths: [knowledge/cloud/aws/networking/cloudfront.md]
+    required_source_ids: [cloudfront-cache-behaviors, cloudfront-how-it-works]
+  - id: cloudfront-private-api-identity-and-cache
+    question: For a signed-in GET /api/orders request through CloudFront, how do I disable response reuse and still send the Authorization header to the ALB application?
+    expected_paths: [knowledge/cloud/aws/networking/cloudfront.md]
+    required_source_ids: [cloudfront-managed-cache-policies, cloudfront-authorization-header]
+  - id: cloudfront-s3-oac-versus-public-alb
+    question: If CloudFront OAC keeps the S3 bucket private, does it also stop someone reaching the public ALB directly, and what origin-access control needs separate review?
+    expected_paths: [knowledge/cloud/aws/networking/cloudfront.md]
+    required_source_ids: [cloudfront-s3-oac, cloudfront-restrict-alb]
+  - id: oidc-signin-versus-workload-federation
+    question: Is GitHub Actions federation to AWS the same thing as OpenID Connect user sign-in, and which claim restricts which workflow can assume a role?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [openid-connect-core, github-actions-oidc-aws]
+  - id: oidc-browser-code-versus-token
+    question: In an OIDC authorization-code sign-in, what returns through the browser, when does the app receive the ID token, and who creates the session?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [openid-connect-core]
+  - id: oidc-github-audience-versus-subject
+    question: If a GitHub Actions job asks for the AWS STS audience, does that alone restrict which repository and workflow can assume an IAM role?
+    expected_paths: [knowledge/security/identity-federation/oidc-fundamentals.md]
+    required_source_ids: [github-actions-oidc-reference, github-actions-oidc-aws]
+  - id: oidc-id-token-login-session
+    question: Is a validly signed ID token addressed to my app enough to sign in a user if it came from another login session?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [openid-core]
+  - id: opaque-token-introspection-active
+    question: Does HTTP 200 from an OAuth token introspection endpoint mean an opaque access token is valid for my API?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [oauth-token-introspection]
+  - id: oidc-local-account-identity
+    question: After validating an ID token, should a wiki map its user account by sub alone, by email, or by issuer and subject together?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [openid-core]
+  - id: oauth-metadata-issuer-path
+    question: For an issuer URL with a path, does RFC 8414 put the well-known metadata path in the same place as OIDC Discovery?
+    expected_paths: [knowledge/security/identity-federation/oidc-token-validation.md]
+    required_source_ids: [oauth-server-metadata, openid-discovery]
+  - id: github-environment-versus-aws-claims
+    question: Does AWS STS enforce GitHub's production environment branch and reviewer rules, or only the claims in the job's OIDC token?
+    expected_paths: [knowledge/git/github-actions/aws-oidc-federation.md]
+    required_source_ids: [github-oidc-reference, github-deployment-environments]
+  - id: green-pipeline-is-not-working-deployment
+    question: If CI passed and the Kubernetes rollout completed, does that prove the deployment works for users?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md, knowledge/cross-topic-guides/github-actions-with-kubernetes.md]
+    required_source_ids: [kubernetes-deployments]
+  - id: terraform-saved-plan-artifact-sensitivity
+    question: Is it safe to store a saved Terraform plan file as a CI artifact, and why must apply in CI sit behind an approval gate?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-terraform.md]
+    required_source_ids: [terraform-plan, terraform-apply]
+  - id: terraform-pr-plan-after-merge
+    question: Can the Terraform plan made on a pull request be approved and applied after that pull request merges?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-terraform.md]
+    required_source_ids: [terraform-automation]
+  - id: actions-eks-identity-chain
+    question: If a GitHub Actions job successfully assumes an AWS role, can it already change a Kubernetes Deployment in EKS?
+    expected_paths: [knowledge/cross-topic-guides/github-actions-with-kubernetes.md]
+    required_source_ids: [eks-access-entries, kubernetes-rbac]
+  - id: terraform-s3-backend-locking-default
+    question: Does the Terraform S3 backend lock state by default, and is DynamoDB locking still the recommended approach?
+    expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
+    required_source_ids: [terraform-s3-backend]
+  - id: terraform-wrong-account-empty-state
+    question: If my AWS credentials point to production but I have an empty local Terraform state, can a plan create another network instead of finding sandbox resources?
+    expected_paths: [knowledge/cross-topic-guides/terraform-on-aws.md]
+    required_source_ids: [terraform-aws-provider, terraform-import]
+  - id: deployment-merged-image-tested
+    question: Does a green pull-request check and deploying an image by digest prove the running image was tested from the merged commit?
+    expected_paths: [knowledge/cross-topic-guides/end-to-end-deployment.md]
+    required_source_ids: [kubernetes-container-images]
+  - id: gitops-prune-and-self-heal-defaults
+    question: If I delete a manifest from Git or edit a resource by hand, will Argo CD or Flux delete or revert it by default?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gitops.md, knowledge/kubernetes/applications-and-tools/argo-cd-vs-flux.md]
+    required_source_ids: [argo-cd-automated-sync, flux-kustomization]
   - id: local-kubernetes-learning
     question: What local Kubernetes route can I complete without an AWS account?
     expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md, knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
     required_source_ids: [kubernetes-concepts]
+  - id: local-rollout-git-boundary
+    question: After I patch and undo a failed Kubernetes rollout, why does git status still show no change, and what does git restore recover in the local lesson?
+    expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md]
+    required_source_ids: [kubernetes-deployment, git-restore]
+  - id: local-rollout-ready-endpoints
+    question: During the local bad-image rollout, why can two older Pods stay ready while the new Pod fails, and what does a Service port-forward actually check?
+    expected_paths: [knowledge/cross-topic-guides/local-deployment-learning-path.md]
+    required_source_ids: [kubernetes-deployment, kubernetes-endpointslices, kubernetes-port-forward]
+  - id: kind-host-node-image-auth-message
+    question: My kind Pod says its unprefixed local image does not exist or may require authorization. How can I check the host and node image stores before changing credentials?
+    expected_paths: [knowledge/kubernetes/troubleshooting/kind.md, knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md]
+    required_source_ids: [kind-quick-start, kubernetes-images, docker-image-inspect]
+  - id: kind-same-tag-no-rollout
+    question: If I rebuild and load the same image tag into kind, why do existing Pods keep the old application until I change the workload reference?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/kind-images-and-local-registries.md]
+    required_source_ids: [kind-quick-start, kubernetes-images]
+  - id: kind-mapped-node-worker-pod
+    question: Can a kind host port mapped to the control-plane node reach a Pod on a worker through NodePort, and when would Local traffic policy stop it?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md]
+    required_source_ids: [kind-configuration, kubernetes-service, kubernetes-source-ip]
+  - id: kubernetes-service-ready-endpoints
+    question: How does a Kubernetes Service choose Pods, and why might a matching Pod not receive normal traffic?
+    expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
+    required_source_ids: [kubernetes-service, kubernetes-endpointslices]
+  - id: kubernetes-port-forward-versus-service-route
+    question: If kubectl port-forward to a Service works, does that prove a client Pod can reach its ClusterIP through normal Service routing?
+    expected_paths: [knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
+    required_source_ids: [kubernetes-port-forward, kubernetes-virtual-ips]
+  - id: kubernetes-replacement-endpoints
+    question: When a Deployment Pod is deleted, does its Service endpoint disappear only after termination, and must the new Pod wait for that removal?
+    expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-endpointslices, kubernetes-pod-lifecycle]
+  - id: kubernetes-selector-versus-owner
+    question: Does a Kubernetes Service own the Pods it sends traffic to, and could it select an unrelated Pod with matching labels?
+    expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-owners-dependents, kubernetes-replicasets, kubernetes-services]
+  - id: kubernetes-rollout-stall-versus-rollback
+    question: If a new Kubernetes Deployment image cannot start, will Kubernetes automatically roll back, and what does rollback restore?
+    expected_paths: [knowledge/kubernetes/fundamentals/kubernetes-fundamentals.md]
+    required_source_ids: [kubernetes-deployments]
+  - id: kubernetes-crashloop-clean-exit
+    question: Why does a Deployment container show CrashLoopBackOff when its last exit code was zero, and how can I avoid mistaking a brief Running state for recovery?
+    expected_paths: [knowledge/kubernetes/troubleshooting/crashloopbackoff.md]
+    required_source_ids: [pod-lifecycle]
+  - id: kubernetes-init-crashloop
+    question: If a Pod shows Init:CrashLoopBackOff, which container's state and previous logs should I inspect?
+    expected_paths: [knowledge/kubernetes/troubleshooting/crashloopbackoff.md]
+    required_source_ids: [debug-init-containers]
+  - id: eks-alb-instance-versus-ip-targets
+    question: Does an EKS ALB always send traffic directly to a Pod, and what does the Service do in instance and IP target modes?
+    expected_paths: [knowledge/cross-topic-guides/kubernetes-on-aws.md]
+    required_source_ids: [eks-alb-targets]
+  - id: eks-pod-identity-fargate-and-ebs
+    question: Can a Fargate Pod use EKS Pod Identity and mount an EBS volume for shared photo storage?
+    expected_paths: [knowledge/cross-topic-guides/kubernetes-on-aws.md]
+    required_source_ids: [eks-pod-identity, eks-ebs-csi]
+  - id: eks-workload-role-binding
+    question: Does an IRSA service-account annotation grant its IAM role, and where is the role mapping for EKS Pod Identity stored?
+    expected_paths: [knowledge/cross-topic-guides/eks-workload-identity.md]
+    required_source_ids: [aws-eks-irsa-pod-configuration, aws-eks-pod-id-association]
+  - id: eks-pod-node-role-exposure
+    question: If a Pod uses IRSA or EKS Pod Identity, can code still request the node role directly through reachable IMDS?
+    expected_paths: [knowledge/cross-topic-guides/eks-workload-identity.md]
+    required_source_ids: [aws-eks-pod-identities, aws-eks-bp-iam]
+  - id: eks-s3-effective-permission
+    question: Does an S3 upload role with no identity-policy delete grant prove that a same-account Pod cannot delete from that bucket?
+    expected_paths: [knowledge/cross-topic-guides/eks-workload-identity.md]
+    required_source_ids: [aws-policy-evaluation]
+  - id: eks-access-policy-can-i
+    question: Why can kubectl auth can-i list pods show access from an EKS access policy when kubectl auth can-i --list omits it?
+    expected_paths: [knowledge/security/identity-federation/eks-human-identity-and-rbac.md]
+    required_source_ids: [aws-eks-access-policies, k8s-authorization]
   - id: terraform-local-state
     question: How can I practice Terraform state safely without creating cloud resources?
     expected_paths: [knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md]
-    required_source_ids: [terraform-cli, terraform-state]
+    required_source_ids: [terraform-data, terraform-state]
+  - id: terraform-provider-returned-secrets-in-state
+    question: Can Terraform state contain secrets even if there are no passwords in my configuration, and does a plan detect changes made outside Terraform?
+    expected_paths: [knowledge/terraform/fundamentals/terraform-fundamentals.md]
+    required_source_ids: [terraform-sensitive-data, terraform-plan]
+  - id: terraform-saved-plan-approval-and-secrets
+    question: If I reviewed a Terraform plan and saved it to a file, will apply ask me to approve it again, and could that file expose secrets?
+    expected_paths: [knowledge/terraform/fundamentals/terraform-fundamentals.md]
+    required_source_ids: [terraform-plan, terraform-apply, terraform-sensitive-data]
+  - id: terraform-data-versus-cloud-object
+    question: Does changing a terraform_data resource deploy my application, and why can Terraform show a resource update without changing cloud infrastructure?
+    expected_paths: [knowledge/terraform/fundamentals/terraform-fundamentals.md]
+    required_source_ids: [terraform-data, terraform-state-purpose]
+  - id: terraform-variable-override-state-timing
+    question: Does a saved Terraform plan with a variable override change state immediately, and why might a later plan propose the default again?
+    expected_paths: [knowledge/terraform/language/how-values-move-through-terraform.md]
+    required_source_ids: [terraform-variables, terraform-plan, terraform-apply]
+  - id: terraform-values-through-configuration
+    question: How do a Terraform input variable and local value reach a resource and then a root output?
+    expected_paths: [knowledge/terraform/language/how-values-move-through-terraform.md]
+    required_source_ids: [terraform-variables, terraform-outputs]
   - id: crossplane-provider-authentication
     question: How do Crossplane providers authenticate to external APIs?
     expected_paths: [knowledge/kubernetes/crossplane/providers-and-authentication.md]
+    required_source_ids: [crossplane-providers]
+  - id: crossplane-aws-account-region
+    question: If a Crossplane bucket appears in the wrong AWS account or region, which setting selects the credentials and which setting selects the region?
+    expected_paths: [knowledge/cross-topic-guides/crossplane-on-aws.md]
+    required_source_ids: [crossplane-providers]
+  - id: crossplane-aws-default-provider-config
+    question: What happens if an AWS managed resource omits providerConfigRef, and why must a platform restrict cluster-wide credential references?
+    expected_paths: [knowledge/cross-topic-guides/crossplane-on-aws.md]
     required_source_ids: [crossplane-providers]
   - id: eks-deployment
     question: How do I update kubeconfig and validate permissions before deploying to EKS?
     expected_paths: [knowledge/cross-topic-guides/deploying-to-eks.md]
     required_source_ids: [eks-update-kubeconfig]
+  - id: eks-available-deployment-empty-service
+    question: If an EKS Deployment is available but users cannot reach the app, how do I check Service selectors, endpoints, and the user route before changing IAM or nodes?
+    expected_paths: [knowledge/cross-topic-guides/eks-operations.md]
+    required_source_ids: [k8s-debug-services, eks-access-entries]
+  - id: eks-tooling-cluster-managed-argo-private-target
+    question: Does EKS-managed Argo CD need the same VPC connection to a private target cluster as a self-managed controller, and what target permission is still required?
+    expected_paths: [knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md]
+    required_source_ids: [eks-managed-argo-targets, eks-endpoint]
+  - id: eks-tooling-cluster-broad-target-access
+    question: If an Argo CD Project limits destinations, can the central controller's default remote-cluster credential still have broad Kubernetes permissions?
+    expected_paths: [knowledge/cross-topic-guides/eks-tooling-cluster-architecture.md]
+    required_source_ids: [argo-getting-started, argo-projects]
+  - id: apisix-eks-service-reference-vs-request-hop
+    question: When an APISIX route on EKS names a backend Kubernetes Service, does every request travel through its cluster IP, or can APISIX proxy directly to Pods?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [apisix-resources]
+  - id: apisix-eks-nlb-client-ip
+    question: Why might APISIX see an NLB node address instead of the original client IP when the NLB targets gateway Pod IPs?
+    expected_paths: [knowledge/cross-topic-guides/apisix-on-eks.md]
+    required_source_ids: [aws-nlb-target-groups]
+  - id: apisix-404-behind-nlb
+    question: If APISIX is behind only an AWS Network Load Balancer, can the NLB itself produce an HTTP 404, and which layer should I inspect?
+    expected_paths: [knowledge/kubernetes/troubleshooting/apisix.md]
+    required_source_ids: [aws-nlb, apisix-config-troubleshoot]
+  - id: apisix-gateway-versus-route-status
+    question: Should I expect Programmed on an APISIX HTTPRoute, or check the route Accepted and ResolvedRefs conditions alongside the Gateway Programmed condition?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/apisix-architecture-and-deployment.md]
+    required_source_ids: [gateway-api-implementation, gateway-api-gateway]
   - id: kafka-duplicate-effects
     question: When can at-least-once Kafka processing cause duplicate side effects?
     expected_paths: [knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md]
-    required_source_ids: [apache-kafka-documentation]
+    required_source_ids: [kafka-design]
   - id: velero-restore
     question: How do I create and inspect a Velero restore?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
+  - id: velero-restore-target-absent
+    question: Before restoring one ConfigMap into a prepared namespace, why must I confirm the named target ConfigMap is absent, and is the namespace itself expected to be empty?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
+  - id: velero-restore-provenance
+    question: After a Velero namespace-mapped ConfigMap restore reports Completed, what value and labels should I check before concluding Velero recreated the note?
+    expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
+    required_source_ids: [velero-restore-reference]
+  - id: velero-exercise-cleanup-scope
+    question: How do I clean up a Velero ConfigMap backup-and-restore exercise without deleting unrelated resources that may now be in its namespaces?
     expected_paths: [knowledge/migrations/velero/backup-restore-workflows.md]
     required_source_ids: [velero-restore-reference]
   - id: crossplane-components
@@ -42,7 +712,147 @@ cases:
     question: How do I confirm my Kubernetes context and inspect Pods, logs, and events safely?
     expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
     required_source_ids: [kubectl-reference]
+  - id: kubectl-empty-namespace-list
+    question: If kubectl get deployments returns an empty list, how do I confirm the namespace and context before concluding nothing runs there?
+    expected_paths: [knowledge/kubernetes/commands/daily-usage.md]
+    required_source_ids: [get-contexts, kubectl-get]
+  - id: kubectl-image-pull-general-versus-kind
+    question: Where should I start when a Pod shows ImagePullBackOff, and when is the local kind image guide the right route?
+    expected_paths: [knowledge/kubernetes/commands/daily-usage.md, knowledge/kubernetes/troubleshooting/common-solutions.md]
+    required_source_ids: [debug-pods]
+  - id: kubectl-deployment-selector-versus-owner
+    question: If kubectl get pods with my Deployment selector lists two Pods, how do I confirm they belong to that Deployment during a rollout?
+    expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
+    required_source_ids: [deployments, owners-dependents]
+  - id: kubectl-deployment-no-pods
+    question: If a Deployment wants replicas but its selector finds no Pods, where should I look for ReplicaSet creation failures?
+    expected_paths: [knowledge/kubernetes/commands/kubectl-basics.md]
+    required_source_ids: [deployments, kubectl-describe]
+  - id: kubectl-direct-apply-ownership-check
+    question: Before applying a reviewed Deployment manifest, how do I confirm the live target and determine whether GitOps or another release tool owns it?
+    expected_paths: [knowledge/kubernetes/commands/common-commands.md]
+    required_source_ids: [kubectl-get, recommended-labels]
+  - id: kubectl-apply-noop-and-user-check
+    question: If kubectl apply reports unchanged or rollout status succeeds, does that prove my new release works for users, and how should I recover if a request fails?
+    expected_paths: [knowledge/kubernetes/commands/common-commands.md]
+    required_source_ids: [kubectl-apply, deployments, rollout-undo]
+  - id: kubernetes-service-no-endpoints-two-paths
+    question: If my Service has no EndpointSlice endpoints, how do I tell a selector mismatch from a matching Pod that has no IP yet?
+    expected_paths: [knowledge/kubernetes/troubleshooting/common-solutions.md]
+    required_source_ids: [service, debug-services, endpointslices]
+  - id: kubernetes-ready-endpoint-caller-path
+    question: If a Service has a ready endpoint but users still fail, what should I check, and why does a working port-forward not prove the ClusterIP route?
+    expected_paths: [knowledge/kubernetes/troubleshooting/common-solutions.md, knowledge/kubernetes/core-objects/how-a-service-selects-pods.md]
+    required_source_ids: [kubectl-port-forward, debug-services]
   - id: cloud-cost-allocation
     question: How do I establish cloud cost ownership and a shared-cost allocation policy?
     expected_paths: [knowledge/finops/cost-allocation-basics.md]
     required_source_ids: [finops-allocation]
+  - id: relational-or-document-order-model
+    question: Should I store an order and its line items in relational tables or one document, and how do transactions and product queries affect the choice?
+    expected_paths: [knowledge/databases/relational-vs-document-databases.md]
+    required_source_ids: [postgresql-transactions, mongodb-atomicity, mongodb-multikey-embedded]
+  - id: relational-document-order-write-boundary
+    question: If creating an order takes three table inserts or one document insert, which writes are atomic and when do I need a transaction?
+    expected_paths: [knowledge/databases/relational-vs-document-databases.md]
+    required_source_ids: [postgresql-transactions, mongodb-atomicity]
+  - id: relational-document-cross-order-total
+    question: Can both PostgreSQL tables and MongoDB documents total units sold for one SKU, and what do indexes and aggregation each do?
+    expected_paths: [knowledge/databases/relational-vs-document-databases.md]
+    required_source_ids: [postgresql-indexes, mongodb-unwind, mongodb-group]
+  - id: mongodb-ticket-snapshot-vs-reference
+    question: If a ticket stores a requester's name and userId, which value is an embedded snapshot, and does MongoDB check that the referenced user exists?
+    expected_paths: [knowledge/databases/mongodb/fundamentals.md]
+    required_source_ids: [mongodb-referencing, mongodb-data-consistency]
+  - id: mongodb-primary-read-and-failover
+    question: Can a replica set secondary lag or a primary-only acknowledged write roll back during failover, and how are read preference and write concern different?
+    expected_paths: [knowledge/databases/mongodb/fundamentals.md]
+    required_source_ids: [mongodb-read-preference, mongodb-write-concern, mongodb-rollbacks]
+  - id: kafka-key-append-order-boundary
+    question: If OrderPlaced and OrderPaid use the same Kafka key, does Kafka guarantee business order, and what happens if partitions or key encoding change?
+    expected_paths: [knowledge/databases/kafka/topic-and-event-design.md]
+    required_source_ids: [apache-kafka-introduction, apache-kafka-operations, apache-kafka-producer-configs]
+  - id: kafka-schema-replay-and-compaction
+    question: When a Kafka consumer replays old OrderPaid events, how do Avro reader defaults and topic compaction affect what it can read?
+    expected_paths: [knowledge/databases/kafka/topic-and-event-design.md]
+    required_source_ids: [apache-avro-specification, apache-kafka-design]
+  - id: gateway-route-attachment-vs-backend-reference
+    question: Why can an HTTPRoute fail to attach to a Gateway in another namespace, or attach but fail to use a Service in another namespace?
+    expected_paths: [knowledge/kubernetes/applications-and-tools/gateway-api-and-ingress.md]
+    required_source_ids: [gateway-api-overview, gateway-api-referencegrant]
+  - id: finops-shared-cost-decision-coverage
+    question: If a shared cloud bill is centrally funded, does it count as direct cost allocation, and how should I measure unresolved shared cost?
+    expected_paths: [knowledge/finops/cost-allocation-basics.md]
+    required_source_ids: [finops-allocation, finops-cost-allocation-guide]
+  - id: retrieval-candidates-versus-reranking
+    question: Can a reranker find a relevant knowledge page that the first search never returned, and how should I diagnose that miss?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/retrieval-and-context-efficiency.md]
+    required_source_ids: [sqlite-fts5]
+  - id: hostile-page-private-note-boundary
+    question: If a retrieved public page tells an AI assistant to reveal a private note, what stops the assistant from fetching or exposing it?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/security-and-governance.md]
+    required_source_ids: [owasp-prompt-injection, azure-document-access]
+  - id: website-source-versus-derived-search
+    question: Does Pagefind search come directly from the knowledge Git files, and which repository owns corrections to article text?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/reference-architecture.md]
+    required_source_ids: [pagefind-docs, okf-spec]
+  - id: poc-predeclared-search-decision
+    question: How do I define a proof-of-concept success rule for knowledge-site search before testing, including a question with no answer?
+    expected_paths: [knowledge/solutions-architect/proof-of-concept.md]
+    required_source_ids: [google-poc, aws-poc]
+  - id: poc-stop-or-revise-boundary
+    question: If a proof-of-concept search test misses its target, when should I revise and retest, and when should I stop the approach?
+    expected_paths: [knowledge/solutions-architect/proof-of-concept.md]
+    required_source_ids: [google-poc, aws-poc]
+  - id: security-group-defaults-and-terraform
+    question: Why does a VPC default security group allow members to reach each other, and why might a new Terraform-managed group lack outbound access?
+    expected_paths: [knowledge/cloud/aws/networking/security-groups.md]
+    required_source_ids: [aws-default-sg, terraform-aws-sg]
+  - id: bootstrap-meaning-by-context
+    question: Does bootstrapping a compiler or running cdk bootstrap mean adding the Bootstrap web toolkit or creating a Terraform state backend?
+    expected_paths: [knowledge/programming-languages/bootstrap-and-bootstrapping.md]
+    required_source_ids: [bootstrap-introduction, rust-compiler-bootstrap, aws-cdk-bootstrap]
+  - id: website-pin-versus-source-correction
+    question: If the website still shows an outdated knowledge article, how do I tell whether its source Markdown needs a correction or the website needs a newer pinned commit?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases-creation-management-and-optimization.md]
+    required_source_ids: [pagefind-docs, okf-spec]
+  - id: mcp-host-tool-decision
+    question: When an AI assistant searches knowledge through MCP, who proposes the tool call, who can require approval, and who enforces access to articles?
+    expected_paths: [knowledge/ai/ai-tooling/model-context-protocol.md]
+    required_source_ids: [mcp-architecture, mcp-tools]
+  - id: openapi-json-schema-boundary
+    question: Does an OpenAPI 3.2 document need a separate JSON Schema for every request body, or do its Schema Objects already use JSON Schema concepts?
+    expected_paths: [knowledge/ai/ai-tooling/knowledge-bases/knowledge-standards-landscape.md]
+    required_source_ids: [openapi-spec, json-schema]
+  - id: git-short-status-comparison
+    question: In Git short status, what do the first and second columns compare, and why does staging change lesson.md from second-column M to first-column M?
+    expected_paths: [knowledge/git/commands/complete-command-catalog.md]
+    required_source_ids: [git-status, git-diff]
+  - id: git-switch-merge-rebase-choice
+    question: Do git switch, merge, and rebase all do the same thing to my current branch and uncommitted files?
+    expected_paths: [knowledge/git/commands/complete-command-catalog.md]
+    required_source_ids: [git-switch, git-merge, git-rebase]
+  - id: eks-msk-iam-versus-scram-identity
+    question: Does an EKS Pod's IAM role authorize Kafka topic access when its MSK client uses SASL/SCRAM instead of MSK IAM?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [msk-iam, msk-acls, msk-iam-clients]
+  - id: eks-msk-bootstrap-versus-broker-path
+    question: If an EKS Pod reaches one MSK bootstrap broker, why might its Kafka client still time out after connecting?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [msk-bootstrap, msk-client-access]
+  - id: eks-msk-ack-versus-shipment
+    question: Does a completed Kafka producer send with acks=0 prove a broker accepted OrderPaid, and would any Kafka acknowledgment prove a shipment was created?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [kafka-producer-config, kafka-producer-api]
+  - id: kafka-polled-versus-committed-position
+    question: If a Kafka consumer polls records at offsets 0 and 1 but crashes before committing, why can its group receive them again?
+    expected_paths: [knowledge/databases/kafka/fundamentals.md]
+    required_source_ids: [kafka-consumer-api]
+  - id: msk-bootstrap-and-client-authentication
+    question: Why might an MSK client reach a bootstrap broker but still fail to publish, and how do IAM and SASL/SCRAM client identities differ?
+    expected_paths: [knowledge/cloud/aws/databases/amazon-msk.md]
+    required_source_ids: [msk-bootstrap, msk-iam, msk-acls]
+  - id: eks-msk-auto-commit-and-external-result
+    question: When can a Kafka consumer's automatic offset commits stay behind an external shipment result, and when can unfinished work be skipped?
+    expected_paths: [knowledge/cross-topic-guides/eks-to-msk-applications.md]
+    required_source_ids: [kafka-consumer-api, kafka-consumer-config]

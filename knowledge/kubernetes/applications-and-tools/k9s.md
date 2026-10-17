@@ -1,409 +1,270 @@
 ---
-type: "Explanation"
-title: "K9s"
-description: "Use this page to understand what K9s is, how to move around in it, and how to inspect common Kubernetes resources without typing every kubectl command manually."
-tags: [kubernetes, applications-and-tools, k9s]
+type: How-to Guide
+title: Inspect a failing Pod with K9s
+description: Select the right cluster and use K9s to separate missing Pods, scheduling, startup, restart, and readiness failures before choosing a troubleshooting path.
+tags: [kubernetes, k9s, pods, troubleshooting, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning Kubernetes learner
+maintainer: unassigned
+sources:
+  - id: k9s-overview
+    resource: https://k9scli.io/
+    title: K9s overview
+  - id: k9s-commands
+    resource: https://k9scli.io/topics/commands/
+    title: K9s commands
+  - id: k9s-upstream
+    resource: https://github.com/derailed/k9s
+    title: K9s upstream README
+  - id: k8s-debug-pods
+    resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/
+    title: Debug Pods
+  - id: k8s-pod-lifecycle
+    resource: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
+    title: Pod lifecycle
+  - id: k8s-images
+    resource: https://kubernetes.io/docs/concepts/containers/images/
+    title: Images
+  - id: k8s-debug-running
+    resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/
+    title: Debug Running Pods
+  - id: k8s-debug-init
+    resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-init-containers/
+    title: Debug Init Containers
+  - id: k8s-events
+    resource: https://kubernetes.io/docs/reference/kubernetes-api/events/
+    title: Events
+  - id: k8s-deployments
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    title: Deployments
+  - id: k8s-probes
+    resource: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+    title: Configure Liveness, Readiness and Startup Probes
 ---
 
-# K9s
+# Inspect a failing Pod with K9s
 
-## Purpose
+## What you will do
 
-Use this page to understand what K9s is, how to move around in it, and how to inspect common Kubernetes resources without typing every `kubectl` command manually.
+K9s is a terminal interface that **watches Kubernetes resources**
+and lets you move between views, details, and logs. It shows
+information from the cluster; it is not another source of truth.
+Its shortcuts can also change resources when your identity has
+permission, so start by confirming the target.[^k9s-overview]
 
-## What K9s is
+This guide follows one task: find a Pod that is not serving an
+application, inspect its evidence, and choose a focused next step.
+The example uses an **invented** `lesson-api` Pod in namespace
+`lessons`. No cluster or K9s session was used to create this page.
 
-K9s is a terminal UI for Kubernetes. It uses the same kubeconfig, current context, namespaces, and RBAC permissions that `kubectl` uses, but presents resources in interactive tables with shortcuts for common actions.
-
-It is useful for daily cluster inspection, workload debugging, log reading, context switching, namespace navigation, and quick operational checks. It does not replace Kubernetes fundamentals: each K9s view still maps back to Kubernetes API resources such as Pods, Deployments, Services, ConfigMaps, Secrets, Nodes, Events, and custom resources.
-
-```text
-kubeconfig context
-  -> K9s terminal UI
-  -> Kubernetes API resources
-  -> interactive views, logs, describes, edits, shells, and dashboards
+```mermaid
+flowchart TB
+  target["Confirm context and namespace"] --> pods["Open Pod view"]
+  pods --> exists{"Affected Pod exists?"}
+  exists -- No --> owner["Inspect owner status and events"]
+  exists -- Yes --> assigned{"Node assigned?"}
+  assigned -- No --> schedule["Inspect scheduling events"]
+  assigned -- Yes --> state["Describe container state and events"]
+  state --> init["Init failure: inspect init container"]
+  state --> waiting["Waiting without restart:<br/>image, config, or volume"]
+  state --> restarted["CrashLoop or restart:<br/>previous logs"]
+  state --> unready["Running but unready:<br/>readiness evidence"]
+  state --> ready["Ready: follow Service and user request"]
 ```
 
-## When to use it
+Text alternative: confirm the target, then ask whether the Pod exists.
+If not, inspect its owning workload. If it exists but has no node,
+inspect scheduling. For a Pod on a node, read the container state and
+events: a failed init container, a startup wait without a restart, a
+crash or restart, an unready running container, and a Ready Pod lead
+to different next checks.
 
-- You want a fast view of Pods, Deployments, Services, Nodes, and Events.
-- You need to move between namespaces or contexts repeatedly.
-- You want to follow logs or describe resources without copying long names.
-- You are learning how Kubernetes resources relate to each other.
-- You need a read-only operational view for production inspection.
+## 1. Confirm the target
 
-## Prerequisites
+A kubeconfig context names a cluster, user, and optional namespace
+choice. Check which context you intend to use, and verify its
+cluster mapping if the name is ambiguous. The
+[safe kubectl inspection guide](../commands/daily-usage.md)
+walks through that check.
 
-- A working kubeconfig for the target cluster.
-- Kubernetes RBAC permissions to list, get, watch, and optionally modify the resources you need.
-- A terminal that supports 256-color output.
-- `EDITOR` or `KUBE_EDITOR` set if you plan to edit resources from K9s.
-
-> [!IMPORTANT]
-> K9s can only show and modify what your Kubernetes identity is allowed to access. If a view is empty or an action fails, check your active context, namespace, and RBAC permissions before assuming the cluster is broken.
-
-## Contents
-
-- [Start K9s](#start-k9s)
-- [Screen model](#screen-model)
-- [Move around](#move-around)
-- [Simple resource commands](#simple-resource-commands)
-- [Inspect and see things](#inspect-and-see-things)
-- [Filtering and searching](#filtering-and-searching)
-- [Common workflows](#common-workflows)
-- [Special views](#special-views)
-- [Risky actions](#risky-actions)
-- [Configuration that helps daily use](#configuration-that-helps-daily-use)
-- [Troubleshooting](#troubleshooting)
-- [Official documentation](#official-documentation)
-- [Related links](#related-links)
-
-## Start K9s
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Open K9s with the current kubeconfig context | `k9s` | Start from your default context and namespace. |
-| Show CLI help | `k9s help` | Check the options supported by your installed version. |
-| Show runtime information | `k9s info` | Find config paths, log paths, and runtime details. |
-| Start in one namespace | `k9s -n <namespace>` | Focus on one application or team namespace. |
-| Start in a specific view | `k9s -c pod` | Open directly in a resource view. |
-| Start with a specific context | `k9s --context <context>` | Avoid changing context after launch. |
-| Start in read-only mode | `k9s --readonly` | Inspect production while disabling modification commands. |
-
-### Start safely in production
+For an illustrative context named `learning-lab` and namespace
+`lessons`, launch K9s this way:
 
 ```bash
-k9s --context prod --readonly
+k9s --context learning-lab -n lessons --readonly
 ```
 
-What it does: opens K9s against the `prod` kubeconfig context and disables modification commands such as edit, delete, and kill.
+Replace both names with your actual target. K9s documents
+`--context`, `-n`, and `--readonly`; the last flag disables
+K9s modification commands for this session.[^k9s-commands]
+It does not remove your Kubernetes permissions or make the
+cluster itself read only. Confirm the context and namespace
+shown in K9s before reading or acting on a row.
 
-## Screen model
+For the invented example, the target check is **context
+`learning-lab`, namespace `lessons`, Pod view**. Check those
+labels in your running K9s before interpreting its rows. A similar
+name in a different cluster is a different target.
 
-| Area | What it means | How to use it |
+> [!NOTE]
+> An empty Pod view may reflect the wrong namespace, an active filter,
+> unavailable API access, or missing permission. An owning workload,
+> such as a Deployment's ReplicaSet, Job, or StatefulSet, might also be
+> failing to create a Pod. Check its status and events before
+> concluding that no workload was requested.[^k8s-deployments]
+
+## 2. Open the Pod view and select one Pod
+
+Inside K9s, type `:pod` and press Enter. K9s command mode
+also accepts a resource name with a namespace, such as
+`:pod lessons`; `?` shows the active help and available
+keys in your installed version. The namespace form is useful when
+switching targets; recheck the displayed namespace afterward.
+[^k9s-commands]
+
+Look at the **Pod name, displayed namespace, readiness, status, and
+restart count**. If there are many rows, `/lesson-api` filters the
+current view; remember that an active filter can hide other Pods.
+Select the affected row with the keyboard before using an action
+key. A displayed `STATUS` is a clue, not the Pod's exact API phase:
+`ImagePullBackOff` is a container waiting reason and the Pod can still
+be in phase `Pending`. Read its details before choosing a fix.
+[^k8s-pod-lifecycle]
+
+For example, an invented row might show `lesson-api-abc12` as `0/1`
+Ready with `ImagePullBackOff` and zero restarts. The kubelet's image
+pull failed and it is backing off before retrying. The row does not
+say whether the image reference, platform, registry credentials,
+pull policy, or network path is responsible.[^k8s-images]
+
+## 3. Read the evidence for the selected Pod
+
+The current upstream K9s key table documents `d` for describe,
+`l` for logs, `p` for previous logs, and `y` for YAML. Key bindings
+can depend on the active view and local configuration, so use `?`
+in your installed version before relying on one.[^k9s-upstream]
+
+Start with `d` on the selected Pod. Read its **Node** assignment,
+`PodScheduled` condition, container **State** or **Last State**, and
+recent **Events**. Open logs only for a container that has run.
+
+| First clue | Read next | Why |
 | --- | --- | --- |
-| Header | Current cluster, context, namespace, and view state. | Confirm you are in the right cluster before taking action. |
-| Resource table | Rows from the current Kubernetes API resource. | Move the cursor to the resource you want to inspect. |
-| Status and menu area | Available shortcuts for the current view. | Use it as the first source for resource-specific actions. |
-| Command mode | Resource, filter, and special-view commands. | Press `:` and type a command such as `pod`, `svc`, or `ctx`. |
-| Filter mode | Search and narrowing inside a view. | Press `/` and type a filter. |
+| No Pod appears for the expected workload | Inspect the owning workload's status and events; for a Deployment, inspect its ReplicaSet too. | Admission, replica count, or controller failure may prevent Pod creation. |
+| Pod exists but has no node | `d` for `PodScheduled` and scheduling events. | Placement can fail because of requests, selectors, taints, or volume binding. |
+| An init container fails (`Init:` status) | `d` for its state, then that init container's logs if it ran. | Main-container logs may not exist yet. |
+| Container crashes or restarts (`CrashLoopBackOff` or restart count above zero) | `d` for its last termination reason, then `p` for that container's previous logs. | A crash loop is a waiting reason, but its previous run is the first evidence to inspect. |
+| Container waits without a previous run | `d` for that container's waiting reason and events. | Image, configuration, or volume setup can fail before application logs exist. |
+| Container runs but is not Ready | `d` for readiness conditions and any probe events, then its logs. | A running process may still fail a probe or another readiness condition. |
+| Pod is Ready but users still fail | Follow Service, entry path, and application response evidence. | Pod readiness alone does not prove the user request. |
+| Pod is Evicted, Error, or stuck Terminating | `d` for the Pod reason, message, and events. | These need a cause-specific route rather than an image or crash-loop guess. |
 
-> [!TIP]
-> Press `?` inside K9s whenever you are unsure. K9s actions can be view-specific, so the help screen is the safest way to confirm available keys in the current version and resource view.
+For Pods with several containers, identify the container named in the
+waiting or termination status before reading logs. With the Pod
+selected, Enter opens its child/container view in common K9s builds;
+select the affected container there and use `l` or `p`. Check `?`
+for your installed version's bindings.[^k9s-upstream]
+Kubernetes also has a separate [init-container debugging guide](https://kubernetes.io/docs/tasks/debug/debug-application/debug-init-containers/).
+Recent events are useful but not a permanent record; an empty Events
+section on an older Pod does not prove that nothing failed.
+[^k8s-debug-init][^k8s-debug-running][^k8s-events]
 
-## Move around
-
-| Action | Key or command | What it does |
-| --- | --- | --- |
-| Show help | `?` | Opens the active keyboard shortcuts and view-specific actions. |
-| Show resource aliases | `Ctrl-A` | Lists available resource aliases and API resources. |
-| Open command mode | `:` | Lets you jump to resources and special views. |
-| Leave command, filter, or current panel | `Esc` | Backs out of the active mode or returns to the previous view. |
-| Quit K9s | `:q` or `Ctrl-C` | Exits K9s. |
-| Move selection | Arrow keys or Vim-style movement keys | Moves through rows in the active table. |
-| Select a row | `Space` | Marks a row for multi-resource actions where supported. |
-| Select a range | `Space`, move, `Ctrl-Space` | Selects a range between the first selected row and current row. |
-
-### Jump to Pods
-
-```text
-:pod
-```
-
-What it does: opens the Pod view. Press `Enter` after typing the command.
-
-### Go back
+For the invented image-pull case, select the row and press `d`.
+The following **illustrative** signals show why the detail matters;
+they are not output captured from K9s or a cluster:
 
 ```text
-Esc
+K9s row: lesson-api-abc12    Ready: 0/1        Status: ImagePullBackOff
+Describe Pod: lesson-api-abc12                Status: Pending
+Container: app               State: Waiting    Reason: ImagePullBackOff
+                             Ready: False
+Image: registry.team.internal/lesson-api:1.4.0
+Event: Failed to pull image ... manifest for tag 1.4.0 not found
 ```
 
-What it does: exits the current command or filter mode, or returns to the previous view when K9s has navigation history.
+The row says only that a pull failed. This invented event suggests
+the requested tag is missing; in a real cluster, read the **actual**
+event before deciding whether to check the reviewed image reference,
+registry tag or digest, credentials, platform, or network. The
+container in this example has not started, so it may have no
+application logs. Do not edit the Deployment merely because the row
+says `ImagePullBackOff`.[^k8s-debug-pods][^k8s-images]
+
+A full YAML view and logs may contain configuration, tokens,
+or customer data. Share only the evidence needed for a
+reviewed issue or incident.
+
+## 4. Follow the first failed boundary
+
+- If no Pod was created, inspect its expected owner. For a Deployment,
+  look for a `FailedCreate` event on its ReplicaSet and read Deployment
+  conditions before changing quota, policy, or replica count.
+  [^k8s-deployments]
+- For an image pull in a local kind cluster, follow
+  [Diagnose a local image pull in kind](../troubleshooting/kind.md).
+- For another image-pull failure, use the event to choose the next
+  check in the [Kubernetes images documentation](https://kubernetes.io/docs/concepts/containers/images/).
+- For repeated container restarts, follow
+  [Diagnose CrashLoopBackOff](../troubleshooting/crashloopbackoff.md).
+- For insufficient CPU or memory capacity, follow
+  [Investigate Kubernetes resource pressure](../commands/workflows.md).
+- For other scheduling or startup failures, use the
+  [official Pod debugging route](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/).
+- For a failed init container, use
+  [Debug Init Containers](https://kubernetes.io/docs/tasks/debug/debug-application/debug-init-containers/).
+- For a running but unready container, inspect its `Ready` condition
+  and any `Unhealthy` probe events, then compare the configured probe
+  with the application's actual response. The
+  [Kubernetes probe guide](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+  explains the check. A missing probe event does not rule out another
+  readiness condition.[^k8s-probes]
+- For a Ready Pod with a failing user request, follow
+  [Find the first failing Kubernetes boundary](../troubleshooting/common-solutions.md).
+- For an evicted Pod, begin with
+  [resource-pressure evidence](../commands/workflows.md). For another
+  terminal or stuck status, read the Pod reason and use the
+  [official Pod debugging guide](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/).
+
+K9s is a convenient way to **read** those signals. A
+restart, edit, delete, port forward, or shell is a separate
+operation with its own target, permission, and side effects.
+The official K9s command reference lists deletion and
+immediate-kill keys; do not use them as generic repair
+shortcuts.[^k9s-commands]
+
+Use `:q` or Ctrl-C to exit K9s when you are done.[^k9s-upstream]
+
+## Check your understanding
+
+1. Why should you check the owning workload and any active filter
+   before trusting an empty Pod table?
+2. An `ImagePullBackOff` row appears. What extra evidence tells you
+   whether the image reference, credentials, or network caused it?
+3. A container restarted, but current logs are blank. Which state
+   and log instance should you inspect?
+4. If a Pod is Ready but the website fails, which boundary comes next?
+
+## Explore further
 
-## Simple resource commands
-
-K9s accepts Kubernetes resource names, plural names, short names, and K9s aliases in command mode. Use `Ctrl-A` to see the exact aliases available in your cluster and K9s version.
-
-| Need | K9s command | Comparable `kubectl` idea |
-| --- | --- | --- |
-| Pods | `:pod` or `:po` | `kubectl get pods` |
-| Deployments | `:deploy` or `:dp` | `kubectl get deployments` |
-| ReplicaSets | `:rs` | `kubectl get replicasets` |
-| StatefulSets | `:sts` | `kubectl get statefulsets` |
-| DaemonSets | `:ds` | `kubectl get daemonsets` |
-| Services | `:svc` | `kubectl get services` |
-| Ingresses | `:ing` | `kubectl get ingress` |
-| ConfigMaps | `:cm` | `kubectl get configmaps` |
-| Secrets | `:sec` | `kubectl get secrets` |
-| Namespaces | `:ns` | `kubectl get namespaces` |
-| Nodes | `:node` or `:no` | `kubectl get nodes` |
-| PersistentVolumeClaims | `:pvc` | `kubectl get pvc` |
-| PersistentVolumes | `:pv` | `kubectl get pv` |
-| Jobs | `:job` | `kubectl get jobs` |
-| CronJobs | `:cj` | `kubectl get cronjobs` |
-| CustomResourceDefinitions | `:crd` | `kubectl get crd` |
-| Events | `:events` | `kubectl get events` |
-| Contexts | `:ctx` | `kubectl config get-contexts` |
-
-### Open Pods in one namespace
-
-```text
-:pod app
-```
-
-What it does: opens the Pod view scoped to the `app` namespace.
-
-### Open Pods by label
-
-```text
-:pod app=web,env=prod
-```
-
-What it does: opens Pods matching the labels `app=web` and `env=prod`.
-
-### Open Pods in another context
-
-```text
-:pod @staging
-```
-
-What it does: opens Pods in the `staging` context and switches the active K9s context.
-
-> [!IMPORTANT]
-> Context switching inside K9s changes the target cluster for later actions. Confirm the header before deleting, editing, scaling, restarting, or opening a shell.
-
-## Inspect and see things
-
-| Task | Shortcut or command | Use it when |
-| --- | --- | --- |
-| Describe selected resource | `d` | You need events, conditions, mounts, probes, image pull errors, or scheduler messages. |
-| View selected resource YAML | `v` | You need to inspect the live API object without editing it. |
-| Edit selected resource | `e` | You need an emergency live edit and have permission. |
-| Show logs | `l` | You need container logs for the selected Pod or workload. |
-| Open shell | `s` | You need an interactive shell in a selected Pod or enabled NodeShell context. |
-| Toggle wide columns | `Ctrl-W` | You need extra columns similar to `kubectl get -o wide`. |
-| Show error resources | `Ctrl-Z` | You want a focused error-state view. |
-| Show saved screen dumps | `:screendump` or `:sd` | You need previously saved resource snapshots. |
-
-### Describe a failing Pod
-
-```text
-:pod
-d
-```
-
-What it does: opens the Pod view, then describes the selected Pod so you can inspect events, restart reasons, pull failures, scheduling problems, volume mounts, and probe failures.
-
-### View live YAML
-
-```text
-v
-```
-
-What it does: opens the selected Kubernetes object as live YAML for inspection.
-
-### Follow logs
-
-```text
-l
-```
-
-What it does: opens logs for the selected Pod or supported workload. If the Pod has multiple containers, K9s may prompt you to choose one.
-
-> [!TIP]
-> For crash loops, inspect both `d` for events and `l` for logs. Events often explain scheduling, image, probe, or volume failures that application logs cannot show.
-
-## Filtering and searching
-
-| Need | Command | Example |
-| --- | --- | --- |
-| Text filter | `/<filter>` | `/api` |
-| Regex filter | `/<regex>` | `/api\|worker` |
-| Inverse filter | `/! <filter>` | `/! completed` |
-| Label filter | `/-l <selector>` | `/-l app=web` |
-| Fuzzy find | `/-f <filter>` | `/-f paymn` |
-| Filter from command mode | `:<resource> /<filter>` | `:pod /api` |
-
-### Filter Pods by name
-
-```text
-/api
-```
-
-What it does: narrows the current resource table to rows matching `api`.
-
-### Filter by label
-
-```text
-/-l app=web
-```
-
-What it does: narrows the current resource view to resources matching the `app=web` label selector.
-
-## Common workflows
-
-### Daily namespace check
-
-```text
-:ns
-:pod app
-:svc app
-:events app
-```
-
-What it does: checks namespaces, Pods, Services, and Events around the `app` namespace.
-
-### Deployment health check
-
-```text
-:dp app
-d
-:rs app
-:pod app
-```
-
-What it does: starts from Deployments, describes the selected Deployment, then checks ReplicaSets and Pods in the same namespace.
-
-### Application failure check
-
-```text
-:pod app
-/! Running
-d
-l
-```
-
-What it does: filters out running Pods, describes a failing selected Pod, then opens its logs.
-
-### Service routing check
-
-```text
-:svc app
-d
-:ep app
-:pod app
-```
-
-What it does: inspects a Service, checks its Endpoints, then checks the backing Pods.
-
-### Cluster pressure check
-
-```text
-:node
-:pod all
-Ctrl-W
-:events all
-```
-
-What it does: checks Nodes, all Pods with wider columns, and all namespace events for pressure, scheduling, or eviction signals.
-
-## Special views
-
-| View | Command | What it helps with |
-| --- | --- | --- |
-| Pulses | `:pulses` or `:pu` | High-level dashboard of cluster health and resource state. |
-| XRay | `:xray <resource> [namespace]` | Relationship view for resources such as Pods, Services, Deployments, ReplicaSets, StatefulSets, and DaemonSets. |
-| RBAC views | `:role`, `:rolebinding`, `:clusterrole`, `:clusterrolebinding` | Permission and binding inspection. |
-
-### Inspect deployment relationships
-
-```text
-:xray deploy app
-```
-
-What it does: opens an XRay view for Deployments in the `app` namespace so you can inspect related resources from one screen.
-
-## Risky actions
-
-| Action | Shortcut | Risk |
-| --- | --- | --- |
-| Edit resource | `e` | Changes live cluster state immediately after save. |
-| Delete resource | `Ctrl-D` | Deletes the selected resource after confirmation. |
-| Kill resource | `Ctrl-K` | Deletes immediately without the normal graceful path. |
-| Open shell | `s` | Gives interactive access inside a container or, with NodeShell enabled, through a temporary node shell Pod. |
-
-> [!WARNING]
-> Prefer `k9s --readonly` for production inspection when you do not intend to change anything. Do not use `Ctrl-K` unless you understand that it is equivalent to an immediate delete path.
-
-## Configuration that helps daily use
-
-| Feature | File or command | Use it for |
-| --- | --- | --- |
-| Main config | `k9s info` then `config.yaml` | Find and tune K9s config locations and behavior. |
-| Aliases | `$XDG_CONFIG_HOME/k9s/aliases.yaml` | Define short commands for frequently used resources or filtered views. |
-| Context aliases | `$XDG_DATA_HOME/k9s/clusters/<cluster>/<context>/aliases.yaml` | Define aliases only for one cluster context. |
-| Hotkeys | `$XDG_DATA_HOME/k9s/hotkeys.yaml` | Bind favorite views to shortcuts. |
-| Plugins | `$XDG_CONFIG_HOME/k9s/plugins.yaml` | Add custom commands that run against selected resources. |
-| Read-only mode | `k9s --readonly` or config | Disable modification commands for safer browsing. |
-
-### Alias example
-
-```yaml
-aliases:
-  pp: v1/pods
-  dep: apps/v1/deployments
-  apppods: pod app app=web
-```
-
-What it does: adds `:pp`, `:dep`, and `:apppods` as command-mode shortcuts.
-
-### Hotkey example
-
-```yaml
-hotKeys:
-  shift-0:
-    shortCut: Shift-0
-    description: View app Pods
-    command: pod app app=web
-  shift-1:
-    shortCut: Shift-1
-    description: View Deployments
-    command: dp
-```
-
-What it does: creates shortcuts for a filtered Pod view and the Deployment view. Custom hotkeys appear in K9s help with `?`.
-
-## Troubleshooting
-
-| Symptom | Likely cause | Next step |
-| --- | --- | --- |
-| K9s opens the wrong cluster | Active kubeconfig context is not what you expected. | Start with `k9s --context <context>` or switch with `:ctx`. |
-| A namespace or resource view is empty | Wrong namespace, filter still active, or RBAC does not allow list/watch. | Press `Esc`, clear filters, check `:ns`, and verify access with `kubectl auth can-i`. |
-| Logs do not open | The selected resource has no logs, the Pod is gone, or container selection is needed. | Reopen `:pod`, select the current Pod, and use `d` to inspect restart state. |
-| Edit does not work | `EDITOR` or `KUBE_EDITOR` is missing, or RBAC denies update/patch. | Set an editor and confirm permissions before retrying. |
-| Metrics columns are empty | Metrics Server or metrics API is unavailable. | Check Metrics Server and use `kubectl top` as a second signal. |
-| Shell does not open | The image has no shell, RBAC denies exec, or NodeShell is not enabled for node access. | Try another container, inspect permissions, or configure NodeShell only when needed. |
-
-### Confirm access outside K9s
-
-```bash
-kubectl auth can-i list pods -n app
-kubectl auth can-i get pods/log -n app
-kubectl auth can-i update deployments -n app
-```
-
-What it does: checks whether your identity can list Pods, read Pod logs, and update Deployments in the `app` namespace.
-
-## Official documentation
-
-- [K9s documentation](https://k9scli.io/)
 - [K9s commands](https://k9scli.io/topics/commands/)
-- [K9s installation](https://k9scli.io/topics/install/)
-- [K9s aliases](https://k9scli.io/topics/aliases/)
-- [K9s hotkeys](https://k9scli.io/topics/hotkeys/)
-- [K9s plugins](https://k9scli.io/topics/plugins/)
-- [K9s configuration](https://k9scli.io/topics/config/)
-- [K9s RBAC](https://k9scli.io/topics/rbac/)
+  documents launch flags, navigation, filters, and action keys.
+  [^k9s-commands]
+- [K9s overview](https://k9scli.io/)
+  shows the Pod, logs, and relationship views.[^k9s-overview]
+- [Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/)
+  explains the Kubernetes evidence behind these screens.
+  [^k8s-debug-pods]
+- [Back to Kubernetes applications and tools](index.md).
 
-## Related links
-
-- [Kubernetes daily usage commands](../commands/daily-usage.md)
-- [Kubernetes common commands](../commands/common-commands.md)
-- [Kubernetes troubleshooting](../troubleshooting/index.md)
-- [Back to Kubernetes applications and tools](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^k9s-overview]: [K9s, Overview](https://k9scli.io/), source record `k9s-overview`.
+[^k9s-commands]: [K9s, Commands](https://k9scli.io/topics/commands/), source record `k9s-commands`.
+[^k9s-upstream]: [K9s, upstream README](https://github.com/derailed/k9s), source record `k9s-upstream`.
+[^k8s-debug-pods]: [Kubernetes, Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/), source record `k8s-debug-pods`.
+[^k8s-pod-lifecycle]: [Kubernetes, Pod lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/), source record `k8s-pod-lifecycle`.
+[^k8s-images]: [Kubernetes, Images](https://kubernetes.io/docs/concepts/containers/images/), source record `k8s-images`.
+[^k8s-debug-running]: [Kubernetes, Debug Running Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/), source record `k8s-debug-running`.
+[^k8s-debug-init]: [Kubernetes, Debug Init Containers](https://kubernetes.io/docs/tasks/debug/debug-application/debug-init-containers/), source record `k8s-debug-init`.
+[^k8s-events]: [Kubernetes, Events](https://kubernetes.io/docs/reference/kubernetes-api/events/), source record `k8s-events`.
+[^k8s-deployments]: [Kubernetes, Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), source record `k8s-deployments`.
+[^k8s-probes]: [Kubernetes, Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/), source record `k8s-probes`.

@@ -25,4 +25,4 @@ Practical migration guidance for infrastructure, Kubernetes platforms, workloads
 - Kubernetes upgrade and cluster replacement runbooks.
 - Storage migration and disaster recovery decision guides.
 
-[Back to root index](../../README.md)
+[Back to knowledge index](../index.md)

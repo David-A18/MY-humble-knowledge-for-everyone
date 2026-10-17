@@ -3,20 +3,19 @@ type: "Source Reference"
 title: "JSON Schema Draft 2020-12"
 description: "Use this source when a knowledge concept needs deterministic JSON validation rules or schema metadata."
 tags: [ai, ai-tooling, knowledge-bases]
-status: stable
-maturity: maintained
+status: draft
+maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 resource: https://json-schema.org/draft/2020-12
-generated: { by: process:example-renderer, at: 2026-08-08T11:03:00Z }
-verified:
-  - { by: human:kb-reviewer, at: 2026-08-08T11:13:00Z }
-stale_after: 2026-11-08
 ---
 
 # JSON Schema Draft 2020-12
 
-Use this source when a knowledge concept needs deterministic JSON validation rules or schema metadata.
+JSON Schema defines keywords for describing and validating JSON values.
+Use the published Draft 2020-12 documents to understand those keywords.
+To know whether a **specific** API field is required, inspect that API's
+schema; this standard does not define the API's own fields.
 
 ## Use in this bundle
 

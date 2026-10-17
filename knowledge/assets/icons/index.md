@@ -9,4 +9,4 @@ Expected content:
 - Service icons used in diagrams.
 - Small visual markers for reusable documentation assets.
 
-[Back to assets index](../index.md) | [Back to root index](../../../README.md)
+[Back to assets index](../index.md) | [Back to knowledge index](../../index.md)

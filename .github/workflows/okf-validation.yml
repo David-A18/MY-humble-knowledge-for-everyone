@@ -36,6 +36,7 @@ jobs:
         run: |
           python scripts/test-command-path-validator.py
           python scripts/test-retrieval-case-validator.py
+          python scripts/test-teaching-coverage-validator.py
 
       - name: Validate canonical command paths
         run: python scripts/validate-command-paths.py knowledge
@@ -44,3 +45,4 @@ jobs:
         run: |
           python scripts/build-knowledge-catalog.py --check
           python scripts/validate-retrieval-cases.py
+          python scripts/validate-teaching-coverage.py

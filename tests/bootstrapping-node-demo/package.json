@@ -1,0 +1,12 @@
+{
+  "name": "bootstrapping-node-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "dependencies": {
+    "learning-greeting": "file:./learning-greeting"
+  }
+}

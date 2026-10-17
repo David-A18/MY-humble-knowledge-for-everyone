@@ -1,19 +1,24 @@
 # Terraform language
 
-Status: Initial outline
+Status: Draft
 
-Notes for writing clear Terraform configuration in HCL.
+Start here to read how values move through a Terraform configuration. The
+remaining language topics below are planned, not complete guides.
 
-## Expected content
+## Articles
 
-- Variables, locals, and outputs.
-- Type constraints.
+| Article | What you will understand |
+| --- | --- |
+| [How values move through Terraform configuration](how-values-move-through-terraform.md) | Trace variables, locals, a resource, and a root output through one no-cloud example. |
+
+## Planned content
+
 - Expressions and functions.
 - Dynamic blocks.
-- Validation rules.
+- More on type constraints and validation rules.
 
 ## Official documentation
 
 - [Terraform language documentation](https://developer.hashicorp.com/terraform/language)
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform index](../index.md) | [Back to knowledge index](../../index.md)

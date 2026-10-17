@@ -1,60 +1,103 @@
 ---
 type: Template
 title: Command reference template
-description: Start a safe, scannable command reference with context checks, expected results, and recovery guidance.
+description: Copy a scoped command lookup with version, context, side effects, expected results, and official command sources.
 tags: [templates, command-reference]
 status: draft
 maturity: draft
-audience: Engineering learners and practitioners
+audience: Knowledge-base contributors
 maintainer: unassigned
 ---
 
 # Command reference template
 
-> [!IMPORTANT]
-> Replace the frontmatter and command placeholders. A command reference is a `Reference`, not a tutorial; keep it precise and task-oriented.
+A Reference helps a reader **look up a precise command or option**.
+Keep the scope narrow and consistent. Put a task journey in a How-to
+Guide and the underlying model in an Explanation.
 
-## Purpose
+## Before you copy
 
-State which tool, command family, or operational task this reference covers.
+Copy only the fenced skeleton into a new lowercase kebab-case file.
+Replace every `REPLACE_WITH_` value.
+Check the tool version against official documentation; do not guess
+that a command works in older or newer releases. State whether an
+output is captured from a real run or illustrative.
 
-## Before running commands
+## Copyable Reference skeleton
 
-- State the required tools, versions, permissions, account, cluster, or working directory.
-- Show a harmless context check before a command can alter data or infrastructure.
-- Link to the related tutorial or troubleshooting guide when the task needs more explanation.
+````markdown
+---
+type: Reference
+title: "REPLACE_WITH_COMMAND_FAMILY_TITLE"
+description: "REPLACE_WITH_ONE_SENTENCE_LOOKUP_SCOPE"
+tags: [REPLACE_WITH_TOPIC, commands]
+status: draft
+maturity: initial-outline
+audience: REPLACE_WITH_READER_AUDIENCE
+maintainer: unassigned
+---
 
-## Quick reference
+# REPLACE_WITH_COMMAND_FAMILY_TITLE
 
-| Task | Command | Success signal |
-| --- | --- | --- |
-| Describe the task | `tool command --flag` | State what confirms the result. |
+## Scope
+
+REPLACE_WITH_TOOL_COMMAND_FAMILY_PLATFORM_AND_CHECKED_VERSION
+
+Read the [matching Explanation](REPLACE_WITH_EXPLANATION_LINK.md)
+first if these commands are unfamiliar.
+
+## Context before commands
+
+- Required access: REPLACE_WITH_ROLES_AND_PERMISSIONS.
+- Target: REPLACE_WITH_CONTEXT_TO_CHECK.
+- Stop if: REPLACE_WITH_UNSAFE_CONDITION.
+
+## Quick lookup
+
+| Need | Detail below | Changes state? | Success signal |
+| --- | --- | --- | --- |
+| REPLACE_WITH_LOOKUP_NEED | REPLACE_WITH_COMMAND_NAME | REPLACE_WITH_YES_OR_NO | REPLACE_WITH_SUCCESS_SIGNAL |
 
 ## Command details
 
-### Command name
+### REPLACE_WITH_COMMAND_NAME
 
-Use this when: describe the exact condition.
+Use when: REPLACE_WITH_EXACT_CONDITION_AND_VERSION.
 
 > [!WARNING]
-> Explain destructive, irreversible, credential-sensitive, or production-impacting behavior before the affected command.
+> REPLACE_WITH_SIDE_EFFECT_AND_REVIEW_OR_REMOVE_CALLOUT
 
 ```bash
-tool command --flag value
+REPLACE_WITH_COMMAND_AND_SAFE_PLACEHOLDERS
 ```
 
-What it does: explain the command in plain language.
+Inputs: REPLACE_WITH_FLAGS_PATHS_PERMISSIONS_AND_DEFAULTS.
 
-Expected result: show a short expected output or observable invariant.
+Expected result: REPLACE_WITH_REAL_OUTPUT_OR_LABELLED_ILLUSTRATIVE_INVARIANT.
 
-If it fails: name the first diagnostic command or link to a troubleshooting guide.
+Failure signal: REPLACE_WITH_READ_ONLY_DIAGNOSTIC_OR_TROUBLESHOOTING_LINK.
 
-## Evidence and freshness
+Undo or recovery: REPLACE_WITH_REVERSAL_OR_IRREVERSIBLE_LIMIT.
 
-Use official command documentation in frontmatter `sources`. Record the version or review scope in the page only when it is real.
+## Official command documentation
+
+- [Specific official command page](https://REPLACE_WITH_OFFICIAL_SOURCE)
+  for the syntax and version described above.
 
 ## Related links
 
-- [Writing instructions](../../instructions.md)
-- [Back to templates index](index.md)
-- [Back to knowledge index](../index.md)
+- [Matching Explanation](REPLACE_WITH_EXPLANATION_LINK.md)
+- [Troubleshooting or How-to Guide](REPLACE_WITH_RELATED_LINK.md)
+- [Back to parent index](index.md)
+````
+
+## Before you publish
+
+Replace every placeholder. Link specific official command pages and
+add matching `sources` records only after checking them. Record
+`verified` for a real run, not for illustrative output. Put warnings
+before commands with side effects. List the page in its parent
+`index.md`, rebuild the catalog, and run the [required
+checks](../../AGENTS.md#validation-and-publication).
+
+[Back to templates index](index.md) | [Back to knowledge index](../index.md)

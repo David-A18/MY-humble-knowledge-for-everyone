@@ -19,4 +19,4 @@ Diagnostic runbooks for AWS service and architecture issues.
 - [ ] Review CloudTrail or service logs where available.
 - [ ] Capture exact error messages.
 
-[Back to AWS index](../index.md) | [Back to root index](../../../../README.md)
+[Back to AWS index](../index.md) | [Back to knowledge index](../../../index.md)

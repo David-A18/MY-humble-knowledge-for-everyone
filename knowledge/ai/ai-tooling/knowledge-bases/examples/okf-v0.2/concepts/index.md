@@ -4,9 +4,9 @@ This directory contains OKF v0.2 concept documents. Each non-reserved Markdown f
 
 ## Concepts
 
-- [Source schema extraction](source-schema-extraction.md)
-- [Retrieval budget](retrieval-budget.md)
-- [Pod restart rate](pod-restart-rate.md)
+- [Source schema extraction](source-schema-extraction.md) - separate parsed API facts from human explanation.
+- [Retrieval budget](retrieval-budget.md) - decide how much source material to fetch for an answer.
+- [Pod restart count](pod-restart-rate.md) - inspect a sample computation and its evidence limits.
 
 ## Related links
 

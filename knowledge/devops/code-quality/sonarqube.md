@@ -1,132 +1,126 @@
 ---
 type: "Explanation"
 title: "SonarQube"
-description: "Use this page to understand SonarQube Server as a code quality and security analysis platform, how analysis reaches the server, and how teams should use quality gates in delivery workflows."
+description: "Understand what SonarQube Server checks, how a quality gate works, and why a passing gate is only one part of code review."
 tags: [devops, code-quality, sonarqube]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: sonar-analysis-process
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/discovering/analysis-overview/process-steps
+    title: SonarQube Server - SonarQube analysis process
+  - id: sonar-new-code
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/user-guide/about-new-code
+    title: SonarQube Server - Quality standards and new code
+  - id: sonar-quality-gates
+    resource: https://docs.sonarsource.com/sonarqube-server/2026.1/quality-standards-administration/managing-quality-gates/introduction-to-quality-gates
+    title: SonarQube Server - Understanding quality gates
 ---
 
 # SonarQube
 
-## Purpose
+## The idea in plain language
 
-Use this page to understand SonarQube Server as a code quality and security analysis platform, how analysis reaches the server, and how teams should use quality gates in delivery workflows.
+SonarQube Server reads code and reports patterns that deserve attention. It
+can highlight reliability, security, and maintainability issues and combine
+selected measures into a **quality gate**: a pass or fail result for the
+conditions a team chose.[^sonar-analysis-process][^sonar-quality-gates]
 
-SonarQube does not replace tests, reviews, threat modeling, or dependency scanning. It provides repeatable static analysis, issue tracking, quality gates, and pull request feedback so teams can keep new code clean while improving existing code over time.
+Imagine an editor checking a draft. The editor can flag repeated phrases and
+possible mistakes, but cannot know whether the story answers its readers'
+real question. SonarQube plays a similar supporting role for code. Its
+findings and gate help reviewers focus; they do not prove that software works
+for users or that it is secure.
 
-## When to use this
+## Four pieces to keep separate
 
-- You need consistent static analysis across repositories and languages.
-- You want a quality gate before merging or releasing code.
-- You want pull request feedback focused on new code.
-- You need a central place for code smells, bugs, vulnerabilities, security hotspots, coverage, duplication, and maintainability metrics.
-
-## Core model
-
-| Concept | Meaning | Why it matters |
+| Piece | Simple meaning | What to ask |
 | --- | --- | --- |
-| Project | SonarQube representation of one analyzed codebase or component. | Holds analysis history, issues, metrics, quality gate status, and settings. |
-| SonarScanner | Build-time tool that reads source code and sends analysis results to SonarQube Server. | Analysis normally runs from CI so results match reviewed code. |
-| Quality profile | Set of analysis rules for a language. | Controls which rules detect issues during analysis. |
-| Quality gate | Conditions that decide whether analysis passes or fails. | Converts analysis results into an enforceable delivery signal. |
-| New code | Code recently added or changed according to the configured new-code definition. | Keeps teams focused on preventing new problems instead of trying to clean all legacy code at once. |
-| Issue | Finding raised by a rule. | Represents something to review, fix, accept, or mark false positive according to policy. |
-| Security hotspot | Security-sensitive code that requires review. | Helps ensure risky constructs are inspected even when they are not confirmed vulnerabilities. |
-| Pull request analysis | Analysis of changed code in a pull request. | Reports issues and quality gate status before merge. |
+| Scanner | A tool run during a build or CI job that analyzes checked-out code and sends results to the server.[^sonar-analysis-process] | Did it analyze the code we intend to merge? |
+| Quality profile | The set of language rules used to find issues.[^sonar-new-code] | Which rules are active for this project? |
+| New code definition | The boundary for recently added or changed code. In a pull request, SonarQube compares the branch with its target.[^sonar-new-code] | Which changes count as new here? |
+| Quality gate | Conditions on analysis measures that decide pass or fail.[^sonar-quality-gates] | Which measures and thresholds decide the result? |
 
-## Analysis flow
+A rule can raise an **issue**. A quality gate then checks its configured
+conditions against the analysis result. The gate is a policy decision, not a
+second independent analysis. SonarQube's built-in *Sonar way* gate focuses on
+new code, including new issues, reviewed security hotspots, coverage, and
+duplication.[^sonar-quality-gates]
 
-```text
-developer pushes code
-  -> CI checks out full repository history
-  -> build and tests run
-  -> SonarScanner analyzes source, coverage, and SCM data
-  -> SonarQube Server stores issues and measures
-  -> quality gate is computed
-  -> CI and pull request receive pass or fail signal
+## Follow one change
+
+Suppose a team adds a new function to a service. This is an invented example;
+no repository or SonarQube instance was analyzed for this page.
+
+```mermaid
+flowchart LR
+  change["Pull request changes code"] --> ci["CI checks out code and runs scanner"]
+  ci --> server["SonarQube computes issues and measures"]
+  server --> gate["Configured quality gate passes or fails"]
+  gate --> review["Team reviews result alongside tests and behavior"]
 ```
 
-What it does: makes code analysis part of the same delivery path as build and test validation.
+Text alternative: a pull request triggers CI; the scanner sends its analysis
+to SonarQube; SonarQube calculates the gate; the team considers that result
+with other evidence before merging. The gate result can be reported back to
+CI or a pull request when integration is configured.[^sonar-analysis-process][^sonar-quality-gates]
 
-> [!IMPORTANT]
-> SonarQube analysis depends on accurate source control metadata. For GitHub Actions, use a full checkout with `fetch-depth: 0` when SonarQube needs blame, branch, or pull request context.
+If the new function contains a pattern forbidden by an active rule, the
+scanner may report an issue. If that issue meets a failing gate condition,
+the gate fails. A reviewer should inspect the specific finding and either
+fix it or follow the team's documented triage policy. Changing the gate just
+to make this one pull request pass would hide the signal.
 
-## Quality gate strategy
+If the gate passes, the team still needs tests, human review, and any
+domain-specific checks. The scanner cannot infer that a user journey is
+correct, and coverage is a measure of executed code, not proof of useful
+assertions. This is a limit of what static analysis and its metrics can show,
+not a claim about a particular project.
 
-| Situation | Recommended approach | Reason |
+## Why teams focus on new code
+
+A mature repository may contain years of findings. Trying to clear all of
+them before the next change can make a gate unusable. A new-code gate asks a
+smaller question: **did this change introduce a problem under our current
+policy?** SonarQube distinguishes new-code results from overall-code
+results; pull request gates apply new-code conditions.[^sonar-new-code][^sonar-quality-gates]
+
+That approach does not erase older problems. Teams still need to prioritize
+old issues by risk and improve them deliberately. Also inspect the actual
+gate definition: a custom gate can use different measures and thresholds
+from *Sonar way*.
+
+## Where confusion usually starts
+
+| Observation | Likely explanation | First check |
 | --- | --- | --- |
-| New project | Start with the built-in recommended gate unless policy requires stricter controls. | Gives a known baseline without inventing rules too early. |
-| Legacy project | Enforce the gate on new code first. | Prevents new debt while allowing planned remediation of old issues. |
-| Regulated or security-sensitive service | Add explicit security, hotspot review, and coverage expectations. | Aligns merge policy with the service risk profile. |
-| Monorepo | Decide whether one SonarQube project or multiple projects match ownership boundaries. | Keeps issue assignment, quality gates, and metrics meaningful. |
-| Generated code | Exclude generated paths or configure analysis scope intentionally. | Avoids wasting review effort on code people do not maintain. |
+| Scanner job failed | Analysis may not have completed. | Look at the scanner error before interpreting any prior gate result. |
+| Analysis completed; gate failed | A configured condition was not met. | Open the failing condition and the underlying findings. |
+| Gate passed; tests failed | The checks answer different questions. | Fix the failed test; do not treat the gate as a substitute. |
+| New-code results look wrong | The target branch, new-code definition, or Git history may be wrong. | Check the analyzed revision and the checkout metadata. |
 
-## Minimal GitHub Actions scanner example
+For GitHub Actions, SonarQube recommends a full checkout (`fetch-depth: 0`)
+so analysis has the Git history needed for blame and new-code context.[^sonar-analysis-process]
+See [GitHub integration](sonarqube-github-integration.md) for how a result
+reaches a pull request.
 
-```yaml
-name: code-quality
+## Check your understanding
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+- What does a quality profile decide, and what does a quality gate decide?
+- If a gate passes but a user flow is broken, which additional evidence is
+  missing?
+- Why should a team check the analyzed revision before trusting a gate?
 
-jobs:
-  sonar:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
+## Official documentation for deeper study
 
-      - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v7
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-```
+- [Analysis process](https://docs.sonarsource.com/sonarqube-server/2026.1/discovering/analysis-overview/process-steps) follows code from CI checkout through scanner submission and gate calculation.
+- [Quality standards and new code](https://docs.sonarsource.com/sonarqube-server/2026.1/user-guide/about-new-code) explains profiles, new-code boundaries, and the default gate approach.
+- [Understanding quality gates](https://docs.sonarsource.com/sonarqube-server/2026.1/quality-standards-administration/managing-quality-gates/introduction-to-quality-gates) details gate conditions and pull request behavior.
 
-What it does: checks out the repository with full history and runs the SonarQube scan action using a token stored as a secret and the server URL stored as a variable.
+See the [code quality index](index.md) or the [DevOps index](../index.md).
 
-> [!WARNING]
-> Do not hardcode SonarQube tokens in workflow files, scanner properties, Docker images, or repository scripts. Store tokens in CI secrets and scope them to the smallest practical project or organization boundary.
-
-## Operating practices
-
-- Run analysis on pull requests and on the main branch.
-- Keep the quality gate visible in branch protection or merge rules when the team intends to enforce it.
-- Treat quality profile changes like production policy changes: review them, announce impact, and avoid surprise rule churn.
-- Keep coverage reports generated before the scan and pass the expected report paths to the scanner.
-- Exclude vendored, generated, build-output, and dependency directories intentionally.
-- Review false positives and accepted risks in SonarQube instead of hiding broad paths from analysis.
-- Monitor scanner failures separately from quality gate failures; one means analysis did not complete, the other means analysis completed and failed policy.
-
-## Common failure modes
-
-| Symptom | Likely cause | Next step |
-| --- | --- | --- |
-| Analysis fails with authentication errors | Missing, expired, or incorrectly scoped `SONAR_TOKEN`. | Regenerate the token and update the CI secret. |
-| Missing blame information | Shallow clone or missing `.git` metadata. | Use full checkout history and do not remove Git metadata before scanning. |
-| Coverage is `0%` | Test coverage report was not generated or path is wrong. | Generate coverage before scan and configure the language-specific report property. |
-| Quality gate fails only on pull requests | New-code conditions are catching changed-code issues. | Review the PR findings and gate conditions before adjusting policy. |
-| Issues appear on code the team does not own | Analysis scope includes generated, vendored, or third-party paths. | Tune inclusions and exclusions carefully. |
-
-## Related links
-
-- [Official SonarQube Server documentation](https://docs.sonarsource.com/sonarqube-server/)
-- [Project analysis setup](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/overview)
-- [Quality standards and new code](https://docs.sonarsource.com/sonarqube-server/2026.1/user-guide/about-new-code)
-- [Understanding quality gates](https://docs.sonarsource.com/sonarqube-server/2026.1/quality-standards-administration/managing-quality-gates/introduction-to-quality-gates)
-- [SonarQube GitHub integration](sonarqube-github-integration.md)
-- [GitHub Actions](../../git/github-actions/index.md)
-- [Back to code quality index](index.md)
-- [Back to DevOps index](../index.md)
-- [Back to root index](../../../README.md)
+[^sonar-analysis-process]: [SonarQube Server analysis process](https://docs.sonarsource.com/sonarqube-server/2026.1/discovering/analysis-overview/process-steps).
+[^sonar-new-code]: [Quality standards and new code](https://docs.sonarsource.com/sonarqube-server/2026.1/user-guide/about-new-code).
+[^sonar-quality-gates]: [Understanding quality gates](https://docs.sonarsource.com/sonarqube-server/2026.1/quality-standards-administration/managing-quality-gates/introduction-to-quality-gates).

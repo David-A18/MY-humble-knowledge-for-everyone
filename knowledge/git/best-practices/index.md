@@ -19,4 +19,4 @@ Guidance for keeping repository history understandable and reviewable.
 - [ ] Avoid mixing formatting-only changes with behavior changes.
 - [ ] Keep secrets and local configuration out of commits.
 
-[Back to Git index](../index.md) | [Back to root index](../../../README.md)
+[Back to Git index](../index.md) | [Back to knowledge index](../../index.md)

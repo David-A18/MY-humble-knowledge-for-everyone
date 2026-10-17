@@ -1,175 +1,134 @@
 ---
 type: "Explanation"
 title: "Kafka consumer groups, lag, and replay"
-description: "Use this guide to reason about Kafka consumer progress, scaling, lag, and safe replay."
+description: "Understand how a consumer group divides partitions, what lag can and cannot tell you, and why replay needs a side-effect plan."
 tags: [databases, kafka, consumer-groups-lag-and-replay]
 status: draft
 maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
+sources:
+  - id: kafka-design
+    resource: https://kafka.apache.org/41/design/design/
+    title: Apache Kafka 4.1 - Design
+  - id: kafka-ops
+    resource: https://kafka.apache.org/41/operations/basic-kafka-operations/
+    title: Apache Kafka 4.1 - Basic Kafka Operations
+  - id: kafka-topic-configs
+    resource: https://kafka.apache.org/41/configuration/topic-configs/
+    title: Apache Kafka 4.1 - Topic Configs
 ---
 
 # Kafka consumer groups, lag, and replay
 
-## Purpose
+## The idea in plain language
 
-Use this guide to reason about Kafka consumer progress, scaling, lag, and safe replay.
+A **consumer group** is one application reading a Kafka topic, possibly
+through several consumer processes. Kafka assigns each topic partition to
+one member of that group at a time. A different group has its own reading
+position and can read the same stored events independently.[^kafka-design]
 
-## Components
+Imagine two teams reading several numbered paper strips. Members of one
+team split the strips so they do not each read the same strip, while a
+second team can read all the strips for its own job. Each team keeps a
+bookmark per strip. The analogy has limits: real assignments change when
+members join or leave, old events may expire, and a bookmark says where
+the reader intends to resume, not whether a payment or email succeeded.
 
-| Component | What it does |
+Read [Kafka fundamentals](fundamentals.md) first if producer, topic,
+partition, or offset is new. This page starts with their relationship.
+
+## Follow one group's assignment
+
+```mermaid
+flowchart LR
+  p0["orders.events<br/>partition 0"] --> a["Billing group: consumer A"]
+  p1["orders.events<br/>partition 1"] --> b["Billing group: consumer B"]
+  p0 --> analytics["Analytics group<br/>own offsets"]
+  p1 --> analytics
+```
+
+Text alternative: the `orders.events` topic has two partitions. Within the
+billing group, consumer A reads partition `0` and consumer B reads partition
+`1`. A separate analytics group reads both partitions with its own offsets.
+The assignment is illustrative and may change. The diagram explains why
+adding a third billing consumer does not create a third partition or make
+these two partitions process three ways at once.[^kafka-design]
+
+An **offset** identifies a position in one partition. A group stores
+committed offsets to remember where it should resume. If a billing member
+stops, another member can take its partition after assignment changes;
+the new member's starting point depends on the committed position and the
+consumer's configuration. Work done in an external system may not match
+that position after a crash.[^kafka-design]
+
+## What lag measures
+
+**Consumer lag** compares a group's committed position with the end of a
+partition's log. Apache Kafka's consumer-group tool shows the committed
+offset, log-end offset, and lag for each partition.[^kafka-ops]
+
+Suppose an illustrative row shows `CURRENT-OFFSET 91`, `LOG-END-OFFSET
+100`, and `LAG 9` for one partition. The group is nine offset positions
+behind the log end in that snapshot. This is invented output, not a real
+cluster measurement. It does **not** establish that exactly nine business
+orders remain unpaid: records may not map one-to-one to business actions,
+and a committed offset does not prove an external side effect succeeded.
+
+| Lag pattern | First question |
 | --- | --- |
-| Topic | Named event log that stores records. |
-| Partition | Ordered slice of a topic and the unit of consumer parallelism. |
-| Offset | Position of a record inside one partition. |
-| Consumer | Process that reads records from assigned partitions. |
-| Consumer group | Logical application that shares partition assignments across consumers. |
-| Group coordinator | Broker-side coordinator for membership, assignments, and committed offsets. |
-| Lag | Distance between the latest available offset and the group's committed offset. |
+| All partitions fall behind | Are incoming events faster than processing or a shared dependency? |
+| One partition falls behind | Is one key or partition carrying more work, or is its consumer stalled? |
+| Lag remains after adding members | Are there more members than partitions, or is processing blocked elsewhere? |
 
-## Consumer group model
+These are hypotheses to investigate, not diagnoses. For one topic in a
+traditional group, useful partition parallelism cannot exceed its
+partition count. More members can be idle; a single hot partition still
+has one active member in that group.[^kafka-design]
 
-A consumer group is one logical application made of one or more consumer instances.
+## Why replay needs care
 
-```text
-Topic: orders.v1 with 6 partitions
+**Replay** means reading retained events again from an earlier position.
+Kafka lets a consumer move its position backward, but it does not undo
+the effects of the first read in a database, payment provider, or email
+service.[^kafka-design]
 
-consumer group: payment-service
-  pod-a -> partitions 0, 3
-  pod-b -> partitions 1, 4
-  pod-c -> partitions 2, 5
-```
+For the invented billing group, replaying `OrderPaid` might rebuild a
+report, or it might charge a customer twice if the consumer repeats a
+payment action without an idempotency check. Before an offset reset, decide
+which topic and group are in scope, confirm that the needed events still
+exist, stop active members when resetting the group's committed offsets,
+and decide how downstream effects will be handled. Kafka's operations
+guide documents the reset tool and requires inactive consumer instances
+for a group reset.[^kafka-ops]
 
-Within one group, a partition is assigned to one active consumer at a time. Different groups read the same topic independently.
+Retention sets another boundary: a reset cannot recover events already
+removed by the topic's retention or compaction policy.[^kafka-topic-configs]
+For the processing and duplicate-effect boundary, continue to [delivery
+guarantees and failure
+handling](delivery-guarantees-and-failure-handling.md). For the actual
+version-specific command, use [Kafka basic operations](https://kafka.apache.org/41/operations/basic-kafka-operations/)
+with the running cluster's version and authorization.
 
-## How it works
+## Check your understanding
 
-1. A consumer subscribes to one or more topics with a `group.id`.
-2. The group coordinator assigns partitions to active group members.
-3. Consumers poll records from their assigned partitions.
-4. The application processes the records.
-5. The group commits offsets after the chosen safety point.
-6. If a consumer joins, leaves, crashes, or stalls, the group rebalances.
+- Why can two billing consumers divide two partitions while analytics
+  reads the same topic independently?
+- What does a lag value tell you, and what business outcome does it not prove?
+- Why can moving a group offset backward repeat an external side effect?
 
-Rebalancing is normal, but repeated rebalancing reduces useful processing time and often appears as rising lag.
+## Official documentation for deeper study
 
-## Scaling rule
+- [Kafka 4.1 design](https://kafka.apache.org/41/design/design/) explains
+  partition assignment, offsets, and replay semantics.
+- [Kafka 4.1 basic operations](https://kafka.apache.org/41/operations/basic-kafka-operations/)
+  explains how to inspect group position and reset offsets.
+- [Kafka 4.1 topic configuration](https://kafka.apache.org/41/configuration/topic-configs/)
+  explains the retention and compaction boundary.
 
-| Situation | Result |
-| --- | --- |
-| Consumers fewer than partitions | Some consumers process multiple partitions. |
-| Consumers equal partitions | Each consumer may process one partition. |
-| Consumers more than partitions | Extra consumers are idle for that topic. |
-| Hot partition exists | Adding consumers may not reduce lag enough. |
+Next, use [Kafka operations](operations.md) for health signals, or return
+to the [Kafka index](index.md).
 
-> [!IMPORTANT]
-> For a single topic in one consumer group, useful parallelism is bounded by partition count. Scaling a Kubernetes Deployment past that count does not create more partition workers.
-
-## Offset commits
-
-Offsets are progress markers for a group and partition.
-
-| Commit style | Use when | Risk |
-| --- | --- | --- |
-| Auto commit | Low-risk learning or simple consumers. | Can commit before processing is durable. |
-| Manual commit after processing | Side effects must finish first. | A crash after side effect but before commit can duplicate work. |
-| Transactional processing | Kafka read-process-write boundary is transactional. | External systems are not automatically included. |
-
-### Describe group lag
-
-```bash
-bin/kafka-consumer-groups.sh \
-  --bootstrap-server "$BOOTSTRAP_SERVERS" \
-  --command-config client.properties \
-  --describe \
-  --group payment-service-v1
-```
-
-What it does: shows committed offsets, log-end offsets, and lag by partition for the target consumer group.
-
-Expected output includes columns similar to:
-
-```text
-GROUP              TOPIC      PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG
-payment-service-v1 orders.v1  0          18423           18510           87
-```
-
-What it means: partition `0` has 87 records available that this consumer group has not committed yet.
-
-## Lag diagnosis
-
-| Symptom | Check | Likely cause |
-| --- | --- | --- |
-| Lag grows on every partition | Consumer throughput and downstream dependencies. | Consumers are slower than producers. |
-| Lag grows on one partition | Key distribution and partition traffic. | Hot key or hot tenant. |
-| Lag remains after scaling pods | Partition count and assignment. | More pods than useful partitions or repeated rebalances. |
-| Consumers rebalance repeatedly | Poll loop, probes, and deployment churn. | Pods restart or exceed poll interval. |
-| Lag falls then rises during releases | Deployment strategy. | Rolling updates repeatedly revoke assignments. |
-
-## Replay workflow
-
-Replay means intentionally reading older retained records again. It is useful for rebuilding projections, repairing failed consumers, or validating a new consumer version.
-
-1. Confirm the records are still retained.
-2. Decide whether to reuse a group or create a new replay group.
-3. Confirm downstream operations are idempotent.
-4. Stop active consumers if resetting an existing group.
-5. Run a dry run.
-6. Execute the reset.
-7. Monitor lag, errors, and downstream side effects.
-
-### Dry-run offset reset
-
-```bash
-bin/kafka-consumer-groups.sh \
-  --bootstrap-server "$BOOTSTRAP_SERVERS" \
-  --command-config client.properties \
-  --group payment-service-replay \
-  --topic orders.v1 \
-  --reset-offsets \
-  --to-earliest \
-  --dry-run
-```
-
-What it does: previews the offset change without applying it.
-
-### Execute offset reset
-
-```bash
-bin/kafka-consumer-groups.sh \
-  --bootstrap-server "$BOOTSTRAP_SERVERS" \
-  --command-config client.properties \
-  --group payment-service-replay \
-  --topic orders.v1 \
-  --reset-offsets \
-  --to-earliest \
-  --execute
-```
-
-What it does: moves the selected group offsets so records can be consumed again from the chosen point.
-
-> [!WARNING]
-> Never reset offsets for a production group casually. Reprocessing can repeat payments, emails, inventory reservations, or other side effects unless consumers are idempotent.
-
-## Kubernetes operating notes
-
-| Kubernetes behavior | Kafka effect |
-| --- | --- |
-| Pod restart | Consumer leaves and rejoins the group. |
-| Rolling deployment | Partition assignments move during rollout. |
-| CPU throttling | Poll loop can slow down and trigger lag. |
-| Liveness probe too aggressive | Healthy but slow consumers may be killed. |
-| Horizontal Pod Autoscaler | Scaling events can trigger rebalances. |
-
-For long processing, tune consumer poll settings and probes together. A consumer that blocks the poll loop for too long can be treated as unhealthy by Kafka even if the Pod is still running.
-
-## Related links
-
-- Official documentation: [Apache Kafka consumer groups and offsets](https://kafka.apache.org/documentation/)
-- Official documentation: [Kafka basic operations](https://kafka.apache.org/42/operations/basic-kafka-operations/)
-- [Kafka fundamentals](fundamentals.md)
-- [Kafka operations](operations.md)
-- [Delivery guarantees and failure handling](delivery-guarantees-and-failure-handling.md)
-- [Back to Kafka](index.md)
-- [Back to databases index](../index.md)
-- [Back to root index](../../../README.md)
+[^kafka-design]: [Apache Kafka 4.1: Design](https://kafka.apache.org/41/design/design/).
+[^kafka-ops]: [Apache Kafka 4.1: Basic Kafka Operations](https://kafka.apache.org/41/operations/basic-kafka-operations/).
+[^kafka-topic-configs]: [Apache Kafka 4.1: Topic Configs](https://kafka.apache.org/41/configuration/topic-configs/).

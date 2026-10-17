@@ -1,428 +1,275 @@
 ---
-type: "How-to Guide"
-title: "Velero backup and restore workflows"
-description: "Use this page for the day-to-day Velero commands that create backups, schedules, restores, namespace mappings, and inspection output."
-tags: [migrations, velero, backup-restore-workflows]
+type: How-to Guide
+title: Back up and restore one ConfigMap with Velero
+description: Use one disposable Kubernetes object to see Velero's backup, inspection, namespace-mapped restore, and cleanup path.
+tags: [migrations, velero, backup, restore, beginner]
 status: draft
 maturity: draft
-audience: "Operators running Velero backup, schedule, and restore workflows"
+audience: Operators learning Velero in a disposable Kubernetes environment
 maintainer: unassigned
 sources:
   - id: velero-backup-reference
     resource: https://velero.io/docs/v1.18/backup-reference/
-    title: Velero backup reference
+    title: Velero v1.18 - Backup Reference
   - id: velero-restore-reference
     resource: https://velero.io/docs/v1.18/restore-reference/
-    title: Velero restore reference
-stale_after: 2026-12-19
+    title: Velero v1.18 - Restore Reference
+  - id: velero-how
+    resource: https://velero.io/docs/v1.18/how-velero-works/
+    title: Velero v1.18 - How Velero Works
+  - id: velero-locations
+    resource: https://velero.io/docs/v1.18/locations/
+    title: Velero v1.18 - Backup and Snapshot Locations
+  - id: velero-minio
+    resource: https://velero.io/docs/v1.18/contributions/minio/
+    title: Velero v1.18 - Quick Start Evaluation Install with Minio
+  - id: velero-resource-filtering
+    resource: https://velero.io/docs/v1.18/resource-filtering/
+    title: Velero v1.18 - Resource Filtering
+  - id: k8s-service-accounts
+    resource: https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+    title: Kubernetes - Managing Service Accounts
 ---
 
-# Velero backup and restore workflows
+# Back up and restore one ConfigMap with Velero
 
-## Purpose
+## What you will do
 
-Use this page for the day-to-day Velero commands that create backups, schedules, restores, namespace mappings, and inspection output.
+Create one disposable ConfigMap, back it up, restore a copy into a
+second namespace, and read its value. This small exercise
+proves that Velero can select, store, and recreate **that Kubernetes object** in
+this environment. It does **not** test a persistent volume, a database,
+an application, a schedule, or disaster recovery.[^velero-backup]
+[^velero-restore]
 
-Status: Draft
-Audience: Operators running Velero backup, schedule, and restore workflows
-Page type: Command workflow guide
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Velero v1.18 documentation and current backup and restore references
-Validation evidence: Source reviewed against official Velero backup, schedule, restore, hook, and restore-modifier documentation
-Known limitations: Commands were not executed against a live Velero server, backup storage location, or Kubernetes cluster during this review
-Next review: After a successful cluster-backed restore drill or by 2026-12-19
+Imagine putting one labeled note in an archive and asking a clerk to
+place a copy in a second room. The note is our ConfigMap. The archive
+receipt is the Velero backup; the copy in the second room is the
+restore. A receipt alone does not prove the copy has the right words.
+Velero also stamps the restored copy with the backup and restore names.
 
-## Contents
-
-- [Create backups](#create-backups)
-- [Schedule recurring backups](#schedule-recurring-backups)
-- [Filter what Velero backs up](#filter-what-velero-backs-up)
-- [Use backup hooks](#use-backup-hooks)
-- [Restore backups](#restore-backups)
-- [Change resources during restore](#change-resources-during-restore)
-- [Cleanup test restores](#cleanup-test-restores)
-
-## Create backups
-
-| Task | Command pattern | When to use it |
-| --- | --- | --- |
-| Back up a namespace | `velero backup create <name> --include-namespaces <namespace>` | Protect one application boundary. |
-| Back up by label | `velero backup create <name> --selector app=web` | Protect resources across namespaces with consistent labels. |
-| Exclude a namespace | `velero backup create <name> --exclude-namespaces kube-system` | Avoid system or generated resources. |
-| Wait for completion | `velero backup create <name> --wait` | Useful in runbooks and CI checks. |
-
-### Back up one namespace
-
-```bash
-velero backup create app-prod-manual --include-namespaces app-prod --wait
+```mermaid
+flowchart TB
+  backup["Backup request<br/>select one ConfigMap"] -->|"starts"| backupRun["Velero server<br/>backup run"]
+  source["Source ConfigMap"] -->|"read via Kubernetes API"| backupRun
+  backupRun -->|"uploads archive"| storage["Backup storage location"]
+  storage -->|"downloads archive"| restoreRun["Velero server<br/>restore run"]
+  restore["Restore request<br/>namespace mapping"] -->|"starts"| restoreRun
+  restoreRun -->|"creates via Kubernetes API"| target["Target ConfigMap"]
 ```
 
-What it does: backs up Kubernetes resources in `app-prod` and waits for Velero to finish.
+Text alternative: A Backup request tells the Velero server to read the
+source ConfigMap through the Kubernetes API and upload its archive to
+the backup storage location. A Restore request tells that same server
+to download the archive and create the ConfigMap in the mapped target
+namespace. The reader then checks its value and restore labels.[^velero-how]
 
-### Back up one namespace with YAML
+This guide follows the Velero v1.18 references below. The exercise has
+not been run in a live cluster for this page; check your installed
+version's help if a command or output differs.
 
-```yaml
-apiVersion: velero.io/v1
-kind: Backup
-metadata:
-  name: app-prod-manual
-  namespace: velero
-spec:
-  includedNamespaces:
-  - app-prod
-  ttl: 168h0m0s
-  snapshotVolumes: false
-```
+## Before you begin
 
-What it does: declares the same backup as a Kubernetes custom resource. This is useful when backups are created by GitOps or automation instead of an operator shell.
+You need a disposable Kubernetes cluster, a working `kubectl` context,
+a Velero v1.18 installation, a Velero CLI that matches the server, and
+an available BackupStorageLocation in `ReadWrite` mode. You must be allowed to
+create two namespaces and ConfigMaps in this cluster. Use the same
+shell and cluster context for every step. Do not run this against a
+production cluster merely to follow the example.
 
-### Inspect backup details
-
-```bash
-velero backup describe app-prod-manual --details
-velero backup logs app-prod-manual
-```
-
-What it does: shows included resources, volume backup details, warnings, errors, and controller logs for the backup.
-
-### Back up by label
+The names below are reserved for this exercise:
+`kb-velero-source`, `kb-velero-target`, `kb-velero-note`,
+`kb-velero-note-backup`, and `kb-velero-note-restore`. First confirm
+that none already exists. If any does, choose a different consistent
+set of names; do not overwrite or delete someone else's resource.
 
 ```bash
-velero backup create web-prod \
-  --selector app=web,environment=prod \
+kubectl config current-context
+velero version
+velero backup-location get
+kubectl get namespaces kb-velero-source kb-velero-target
+velero backup get kb-velero-note-backup
+velero restore get kb-velero-note-restore
+```
+
+The namespace check should report `NotFound` for both names. Each Velero
+check should report a **not-found error for its exact record name**; the
+wording may differ from `kubectl`. A permission or connection error is
+not evidence that a name is free.
+`velero version` must show a server version; stop if it cannot reach the
+server. These commands assume Velero runs in its default `velero`
+namespace; if yours differs, pass `-n <velero-namespace>` to each Velero
+command. The chosen backup location must show `Available` and
+`ReadWrite`. Its `DEFAULT` column needs to be `true` when the backup
+command omits `--storage-location`. If another location is intended, add
+`--storage-location <name>` to the backup command after confirming its
+bucket and prefix. Review the context and location rather than assuming
+that the CLI targets the cluster you intended.[^velero-locations]
+
+## 1. Create the small source
+
+```bash
+kubectl create namespace kb-velero-source
+kubectl create namespace kb-velero-target
+kubectl -n kb-velero-source create configmap kb-velero-note \
+  --from-literal=message='This note came from the source namespace.'
+kubectl -n kb-velero-source label configmap kb-velero-note \
+  kb-velero-exercise=note
+kubectl -n kb-velero-source get configmap kb-velero-note \
+  -o jsonpath='{.data.message}'
+```
+
+The final output should be `This note came from the source namespace.`
+It may appear beside the next shell prompt because JSONPath does not add
+a newline. Keep both namespaces dedicated to this exercise. Kubernetes
+commonly creates a
+`kube-root-ca.crt` ConfigMap in each namespace, so the label selects
+only our note for backup.[^k8s-service-accounts] A ConfigMap stores
+configuration data, not a persistent volume.
+
+## 2. Back up the ConfigMap
+
+```bash
+velero backup create kb-velero-note-backup \
+  --include-namespaces kb-velero-source \
+  --include-resources configmaps \
+  --selector kb-velero-exercise=note \
+  --snapshot-volumes=false \
   --wait
+velero backup describe kb-velero-note-backup --details
+velero backup logs kb-velero-note-backup
 ```
 
-What it does: backs up resources with both labels, regardless of namespace, unless other filters limit the backup.
+The namespace, resource, and label filters limit this backup to the
+labeled ConfigMap in the source namespace. The volume-snapshot flag
+makes the object-only scope explicit.[^velero-resource-filtering] In
+`describe`, check that `Phase` is `Completed`, the storage location is
+the one you chose, and warnings and errors are zero. Its `Resource List`
+should show only `v1/ConfigMap` with
+`kb-velero-source/kb-velero-note`; neither `kube-root-ca.crt` nor other
+objects belong in this backup. If the phase, location, result counts,
+or resource list differ, stop and investigate. A failed validation may
+not have an uploaded log.
+`--wait` alone is not an application recovery check.[^velero-backup]
 
-### Back up selected resource kinds
+The CLI downloads logs and detailed resource lists through a signed
+storage URL. If `logs` or that part of `describe` fails with a URL or
+DNS error, the download may have failed even when `Phase` is
+`Completed`. Check the phase and counts separately; fix client access
+to the backup location before claiming the resource-list check passed.
+Velero's Minio guide explains this case.[^velero-minio]
+
+## 3. Restore into the prepared target
+
+First prove that this namespace does not already have the exercise note:
 
 ```bash
-velero backup create app-prod-workloads \
-  --include-namespaces app-prod \
-  --include-resources deployments,statefulsets,services,configmaps,secrets,persistentvolumeclaims \
+kubectl -n kb-velero-target get configmap kb-velero-note
+```
+
+Expect `NotFound`. Stop on any other result, including a permission
+error. The namespace itself is not empty: Kubernetes may have created
+default objects in it. The important condition is that **this ConfigMap**
+is absent before Velero recreates it.[^velero-restore]
+
+```bash
+velero restore create kb-velero-note-restore \
+  --from-backup kb-velero-note-backup \
+  --namespace-mappings kb-velero-source:kb-velero-target \
   --wait
+velero restore describe kb-velero-note-restore --details
+velero restore logs kb-velero-note-restore
+kubectl -n kb-velero-target get configmap kb-velero-note \
+  -o jsonpath='{.data.message}'
+kubectl -n kb-velero-target get configmap kb-velero-note --show-labels
 ```
 
-What it does: backs up only the listed resource types in `app-prod`. Use this when you want a narrow restore set and have checked that omitted resources are recreated elsewhere.
+The value should match the source note. The labels should include
+`velero.io/backup-name=kb-velero-note-backup` and
+`velero.io/restore-name=kb-velero-note-restore`. Check that `describe`
+shows `Completed` with zero errors and warnings. Its `Resource List`
+should show `kb-velero-target/kb-velero-note(created)` if the details
+download succeeds. The before check, matching value, and restore labels
+together are stronger evidence than a `Completed` status alone. Velero
+normally skips a destination object that already exists.[^velero-restore]
 
-### Include cluster-scoped dependencies
+If the restore's detailed list or logs cannot be downloaded, use its
+phase and error counts plus the target-object checks separately. Do not
+call the detailed-list check complete until the CLI can reach the
+storage URL.[^velero-minio]
+
+If the Restore did not complete cleanly, the object is absent, the
+value differs, or a label is missing, leave the namespaces and Velero
+records in place for diagnosis. A namespace mapping changes where
+namespaced objects are created; it cannot make an incompatible API or
+unavailable volume data usable.[^velero-restore] After diagnosis, use
+the named-resource cleanup below when you are ready to discard this
+exercise.
+
+## 4. Clean up this exercise
+
+Only after recording the backup, restore, and value results, confirm
+the cluster context and exact names again. This conservative cleanup
+deletes the named note in each namespace and the two Velero records:
 
 ```bash
-velero backup create app-prod-with-crds \
-  --include-namespaces app-prod \
-  --include-cluster-resources=true \
-  --wait
+kubectl config current-context
+kubectl -n kb-velero-source delete configmap kb-velero-note
+kubectl -n kb-velero-target delete configmap kb-velero-note
+velero restore delete kb-velero-note-restore
+velero backup delete kb-velero-note-backup
+velero restore get kb-velero-note-restore
+velero backup get kb-velero-note-backup
+kubectl -n kb-velero-source get configmap kb-velero-note
+kubectl -n kb-velero-target get configmap kb-velero-note
 ```
 
-What it does: includes cluster-scoped resources along with the namespace backup. Review this carefully because cluster roles, storage classes, webhooks, and CRDs can affect the whole destination cluster.
-
-> [!WARNING]
-> Do not restore cluster-scoped resources into a shared cluster without review. Old CRDs, admission webhooks, or RBAC can break unrelated workloads.
-
-## Schedule recurring backups
+Check each Velero delete prompt's exact name before confirming it.
+The two `kubectl` checks should report `NotFound`; the Velero checks
+should report not-found errors for the exact names. Backup deletion can
+finish after its command returns. If its phase is still `Deleting`, wait
+and repeat the check before concluding it is gone.
+Deleting the backup removes its stored data and this test recovery
+point, while deleting a Restore record does not undo restored objects.
+The two namespaces remain. If this is **your isolated disposable
+cluster**, you created both namespaces in step 1, and no other actor
+has used them, remove them too:
 
 ```bash
-velero schedule create app-prod-daily \
-  --schedule "0 3 * * *" \
-  --include-namespaces app-prod \
-  --ttl 168h
+kubectl delete namespace kb-velero-source
+kubectl delete namespace kb-velero-target
+kubectl get namespaces kb-velero-source kb-velero-target
 ```
 
-What it does: creates a daily 03:00 backup schedule for `app-prod` and keeps each backup for seven days.
-
-> [!IMPORTANT]
-> Align `--ttl`, S3 lifecycle, snapshot retention, and compliance retention. A mismatch can leave stale cost or remove recovery points earlier than expected.
-
-### Schedule with timezone
-
-```bash
-velero schedule create app-prod-daily-madrid \
-  --schedule "CRON_TZ=Europe/Madrid 0 3 * * *" \
-  --include-namespaces app-prod \
-  --ttl 168h
-```
-
-What it does: creates a schedule that runs at 03:00 Madrid time instead of relying on the controller's default timezone.
-
-### Schedule with YAML
-
-```yaml
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: app-prod-daily
-  namespace: velero
-spec:
-  schedule: "0 3 * * *"
-  template:
-    includedNamespaces:
-    - app-prod
-    ttl: 168h0m0s
-    snapshotVolumes: true
-```
-
-What it does: declares a recurring backup template in Kubernetes. Velero creates timestamped `Backup` objects from this schedule.
-
-### Trigger a schedule manually
-
-```bash
-velero backup create app-prod-manual-from-schedule \
-  --from-schedule app-prod-daily \
-  --wait
-```
-
-What it does: creates an immediate backup using the schedule template without changing the future schedule.
-
-## Filter what Velero backs up
-
-Velero filtering controls what Kubernetes resources are included in backup or restore. Start narrow when learning, then add cluster-scoped resources only when the dependency is understood.
-
-| Filter | Example | Use |
-| --- | --- | --- |
-| Namespace include | `--include-namespaces app-prod` | Back up one application boundary. |
-| Namespace exclude | `--exclude-namespaces kube-system` | Avoid generated platform namespaces. |
-| Resource include | `--include-resources deployments,services` | Back up selected kinds. |
-| Resource exclude | `--exclude-resources events,events.events.k8s.io` | Skip noisy or generated resources. |
-| Label selector | `--selector app=web` | Select resources across namespaces by labels. |
-| Cluster resources | `--include-cluster-resources=true` | Include CRDs, RBAC, StorageClasses, and other cluster-scoped objects. |
-
-## Exclude specific objects
-
-```bash
-kubectl label -n app-prod secret/generated-token velero.io/exclude-from-backup=true
-```
-
-What it does: labels one object so Velero excludes it even if the namespace or selector matches the backup.
-
-### Use a resource-policy ConfigMap
-
-```yaml
-version: v1
-includeExcludePolicy:
-  includedClusterScopedResources:
-  - crd
-  excludedClusterScopedResources: []
-  includedNamespaceScopedResources:
-  - deployment
-  - service
-  - configmap
-  - secret
-  - persistentvolumeclaim
-  excludedNamespaceScopedResources:
-  - event
-```
-
-What it does: defines reusable include/exclude rules for backups.
-
-```bash
-kubectl create configmap app-prod-resource-policy \
-  --from-file=resource-policies.yaml \
-  -n velero
-
-velero backup create app-prod-policy-backup \
-  --include-namespaces app-prod \
-  --resource-policies-configmap app-prod-resource-policy \
-  --wait
-```
-
-What it does: stores the policy in the Velero namespace and creates a backup that uses it.
-
-## Use backup hooks
-
-Hooks run commands in containers before or after backup. Use them to quiesce an application, flush buffers, or pause writes when the application supports it.
-
-```bash
-kubectl annotate pod database-0 -n app-prod \
-  pre.hook.backup.velero.io/command='["/bin/sh","-c","sync"]'
-```
-
-What it does: adds a simple pre-backup hook to run `sync` in a pod before Velero backs it up.
-
-> [!WARNING]
-> Hooks can affect live workloads. Test hook commands in a non-production namespace before adding them to production backups.
-
-### Hook annotation on a workload template
-
-```yaml
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: database
-  namespace: app-prod
-spec:
-  template:
-    metadata:
-      annotations:
-        pre.hook.backup.velero.io/container: database
-        pre.hook.backup.velero.io/command: '["/bin/sh","-c","sync"]'
-        pre.hook.backup.velero.io/timeout: 30s
-```
-
-What it does: places the hook on the pod template so replacement pods keep the annotation.
-
-> [!IMPORTANT]
-> `sync` is only an illustrative file-system flush. Real database consistency needs a database-specific backup, lock, checkpoint, snapshot, or replication procedure.
-
-## Restore backups
-
-### Restore into the original namespace
-
-```bash
-velero restore create app-prod-restore --from-backup app-prod-manual --wait
-```
-
-What it does: restores resources from `app-prod-manual` into their original namespaces.
-
-> [!WARNING]
-> Restoring into an active namespace can collide with existing objects or reintroduce old configuration. Prefer a test namespace first unless this is a deliberate recovery action.
-
-### Restore into a different namespace
-
-```bash
-velero restore create app-prod-restore-test \
-  --from-backup app-prod-manual \
-  --namespace-mappings app-prod:app-restore \
-  --wait
-```
-
-What it does: restores resources backed up from `app-prod` into `app-restore`.
-
-### Restore with YAML
-
-```yaml
-apiVersion: velero.io/v1
-kind: Restore
-metadata:
-  name: app-prod-restore-test
-  namespace: velero
-spec:
-  backupName: app-prod-manual
-  includedNamespaces:
-  - app-prod
-  namespaceMapping:
-    app-prod: app-restore
-```
-
-What it does: declares a restore as a Kubernetes custom resource instead of using only the CLI.
-
-### Restore with existing-resource update policy
-
-```bash
-velero restore create app-prod-update \
-  --from-backup app-prod-manual \
-  --include-namespaces app-prod \
-  --existing-resource-policy update \
-  --wait
-```
-
-What it does: asks Velero to update existing resources where possible instead of skipping every existing object.
-
-> [!WARNING]
-> Existing-resource update is best-effort and does not overwrite PVC data. Use it only after reviewing which resources already exist in the target namespace.
-
-### Inspect restore output
-
-```bash
-velero restore describe app-prod-restore-test --details
-velero restore logs app-prod-restore-test
-kubectl get all,pvc -n app-restore
-```
-
-What it does: checks restore warnings and errors, then verifies restored application and PVC objects.
-
-## Change resources during restore
-
-Use restore-time changes when source and destination clusters differ. Common examples are namespace mapping, StorageClass mapping, image registry changes, and annotation cleanup.
-
-### Map StorageClasses during restore
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: change-storage-class-config
-  namespace: velero
-  labels:
-    velero.io/plugin-config: ""
-    velero.io/change-storage-class: RestoreItemAction
-data:
-  gp2: gp3
-  managed-premium: gp3
-```
-
-What it does: maps source StorageClass names to destination StorageClass names during restore.
-
-```bash
-kubectl apply -f change-storage-class-config.yaml
-
-velero restore create app-prod-storage-map \
-  --from-backup app-prod-manual \
-  --namespace-mappings app-prod:app-restore \
-  --wait
-```
-
-What it does: applies the mapping ConfigMap and starts a restore that can bind PVCs to destination storage classes.
-
-### Use restore resource modifiers
-
-```yaml
-version: v1
-resourceModifierRules:
-- conditions:
-    groupResource: deployments.apps
-    namespaces:
-    - app-prod
-  patches:
-  - operation: replace
-    path: "/spec/template/spec/nodeSelector"
-    value:
-      kubernetes.io/os: linux
-- conditions:
-    groupResource: services
-    namespaces:
-    - app-prod
-  patches:
-  - operation: remove
-    path: "/metadata/annotations/service.beta.kubernetes.io~1azure-load-balancer-internal"
-```
-
-What it does: defines restore-time JSON patches for selected resources. This is useful when moving between clusters with different node labels, ingress annotations, or cloud provider annotations.
-
-```bash
-kubectl create configmap app-prod-restore-modifiers \
-  --from-file=restore-resource-modifiers.yaml \
-  -n velero
-
-velero restore create app-prod-modified-restore \
-  --from-backup app-prod-manual \
-  --resource-modifier-configmap app-prod-restore-modifiers \
-  --wait
-```
-
-What it does: stores restore modifiers and references them from a restore.
-
-## Cleanup test restores
-
-```bash
-kubectl delete namespace app-restore
-velero restore delete app-prod-restore-test
-```
-
-What it does: removes the temporary namespace and Velero restore object after validation.
-
-> [!WARNING]
-> Deleting a namespace deletes namespaced workloads and PVCs. Confirm you are cleaning up a test namespace before running this command.
-
-## Related links
-
-- [Velero backup reference](https://velero.io/docs/v1.18/backup-reference/)
-- [Velero restore reference](https://velero.io/docs/v1.18/restore-reference/)
-- [Velero resource filtering](https://velero.io/docs/v1.18/resource-filtering/)
-- [Velero backup hooks](https://velero.io/docs/v1.18/backup-hooks/)
-- [Velero restore resource modifiers](https://velero.io/docs/v1.18/restore-resource-modifiers/)
-- [Cluster migration and disaster recovery](cluster-migration-and-disaster-recovery.md)
-- [Back to Velero index](index.md)
-- [Back to migrations index](../index.md)
-- [Back to root index](../../../README.md)
+The final check should report `NotFound` for both names after namespace
+deletion finishes. On a shared cluster, first have the namespace owner
+review every namespaced resource, including custom resources, before
+deleting either namespace. `kubectl get all` is not a complete inventory:
+it omits ConfigMaps, Secrets, and most custom resources. If ownership
+or contents are uncertain, leave the namespace in place. If any cleanup
+command fails, inspect what remains rather than assuming it finished.
+
+## What this exercise did not prove
+
+| Next question | Follow this route |
+| --- | --- |
+| Where do PVC data and snapshots live? | [Where a Velero backup keeps objects and volume data](storage-and-volume-backups.md). |
+| How do schedules, filters, hooks, and restore changes work? | [Velero backup reference](https://velero.io/docs/v1.18/backup-reference/), [restore reference](https://velero.io/docs/v1.18/restore-reference/), and [resource filtering](https://velero.io/docs/v1.18/resource-filtering/). |
+| Will an application recover in another cluster? | [Cluster migration and disaster recovery](cluster-migration-and-disaster-recovery.md) and an authorized restore drill with application data checks. |
+
+## Check your understanding
+
+1. Why must the target lack `kb-velero-note` before the restore?
+2. What do the restored value and Velero labels prove beyond `Completed`?
+3. Why would this exercise be insufficient for the notes app with a PVC
+   from the [storage comparison](storage-and-volume-backups.md)?
+
+[Back to Velero index](index.md)
+
+[^velero-backup]: [Velero v1.18 - Backup Reference](https://velero.io/docs/v1.18/backup-reference/).
+[^velero-restore]: [Velero v1.18 - Restore Reference](https://velero.io/docs/v1.18/restore-reference/).
+[^velero-how]: [Velero v1.18 - How Velero Works](https://velero.io/docs/v1.18/how-velero-works/).
+[^velero-locations]: [Velero v1.18 - Backup and Snapshot Locations](https://velero.io/docs/v1.18/locations/).
+[^velero-minio]: [Velero v1.18 - Quick Start Evaluation Install with Minio](https://velero.io/docs/v1.18/contributions/minio/).
+[^velero-resource-filtering]: [Velero v1.18 - Resource Filtering](https://velero.io/docs/v1.18/resource-filtering/).
+[^k8s-service-accounts]: [Kubernetes - Managing Service Accounts](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/).

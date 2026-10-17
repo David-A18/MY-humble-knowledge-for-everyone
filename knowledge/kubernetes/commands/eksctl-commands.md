@@ -1,408 +1,294 @@
 ---
-type: "How-to Guide"
-title: "eksctl commands for Amazon EKS"
-description: "Collect eksctl commands that are specific to Amazon EKS operations and different from normal kubectl work."
-tags: [kubernetes, eksctl-commands]
+type: How-to Guide
+title: Choose the right control path for an EKS change
+description: Identify whether an EKS task belongs to a Kubernetes object, AWS cluster infrastructure, or IAM before choosing a tool or procedure.
+tags: [kubernetes, eks, eksctl, operations, beginner]
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Beginning platform engineer
+maintainer: unassigned
+sources:
+  - id: eksctl-overview
+    resource: https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html
+    title: What is eksctl?
+  - id: eksctl-nodegroups
+    resource: https://docs.aws.amazon.com/eks/latest/eksctl/general-nodegroups.html
+    title: Work with node groups
+  - id: eksctl-auto-mode
+    resource: https://docs.aws.amazon.com/eks/latest/eksctl/auto-mode.html
+    title: EKS Auto Mode with eksctl
+  - id: eks-compute
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/eks-compute.html
+    title: Compute options for Amazon EKS
+  - id: eks-auto-compute
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/auto-configure-compute.html
+    title: Configure compute and scaling
+  - id: eks-managed-node-labels
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/managed-node-update-behavior.html
+    title: Understand each phase of node updates
+  - id: eks-describe-nodegroup
+    resource: https://docs.aws.amazon.com/cli/latest/reference/eks/describe-nodegroup.html
+    title: describe-nodegroup command reference
+  - id: eks-describe-cluster
+    resource: https://docs.aws.amazon.com/cli/latest/reference/eks/describe-cluster.html
+    title: describe-cluster command reference
+  - id: eks-autoscaling
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html
+    title: Scale cluster compute with Karpenter and Cluster Autoscaler
+  - id: eks-fargate
+    resource: https://docs.aws.amazon.com/eks/latest/eksctl/fargate.html
+    title: EKS Fargate support with eksctl
+  - id: eks-human-access
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html
+    title: Grant access to Kubernetes APIs
+  - id: eksctl-pod-identity
+    resource: https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html
+    title: EKS Pod Identity associations with eksctl
+  - id: eksctl-dry-run
+    resource: https://docs.aws.amazon.com/eks/latest/eksctl/dry-run.html
+    title: eksctl dry run
+  - id: kubernetes-deployments
+    resource: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    title: Kubernetes Deployments
+  - id: kubernetes-hpa
+    resource: https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/
+    title: Horizontal Pod Autoscaling
+  - id: kubernetes-debug-pods
+    resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/
+    title: Debug Running Pods
+  - id: kubernetes-quotas
+    resource: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+    title: Resource Quotas
+  - id: kubernetes-resources
+    resource: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    title: Resource Management for Pods and Containers
+  - id: kubernetes-apply
+    resource: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_apply/
+    title: kubectl apply command reference
 ---
 
-# eksctl commands for Amazon EKS
+# Choose the right control path for an EKS change
 
-## Purpose
+## What you will do
 
-Collect `eksctl` commands that are specific to Amazon EKS operations and different from normal `kubectl` work.
+Before changing an Amazon EKS application, collect evidence for the
+problem, identify **which object needs to change**, then find **who
+sets its desired state**. A command that can reach an object is not
+necessarily the right way to change it. A team's reviewed application
+repository may set Deployment replicas; an HPA may set replicas, and
+a compute autoscaler may add nodes within its configured limits.
+Check the actual owner before editing either value.
+[^kubernetes-deployments][^kubernetes-hpa][^eks-autoscaling]
 
-`kubectl` manages Kubernetes API objects such as Pods, Deployments, Services, and ConfigMaps. `eksctl` manages AWS-side EKS resources such as clusters, node groups, Fargate profiles, EKS add-ons, IAM access, Pod Identity, VPC endpoint access, CloudWatch control plane logging, and CloudFormation-backed infrastructure.
+```mermaid
+flowchart TB
+  goal["Requested outcome"] --> evidence["Inspect current object<br/>and failure evidence"]
+  evidence --> change{"What needs to change?"}
+  change -->|Replicas or Pod spec| k8s["Workload or HPA"]
+  change -->|Scheduling capacity| eks["Node group, Fargate<br/>profile, or Auto Mode"]
+  change -->|Access| iam["EKS access or<br/>workload IAM"]
+  k8s --> owner["Find who sets desired state"]
+  eks --> owner
+  iam --> owner
+  owner --> source["Change reviewed source;<br/>verify the outcome"]
+```
 
-## When to use eksctl instead of kubectl
+Text alternative: begin with the requested outcome and inspect the
+current object and failure evidence. Decide whether a workload,
+compute path, or access path needs to change. Identify the system
+that sets its desired state, change that reviewed source, and verify
+the outcome. `kubectl` talks to the Kubernetes API; `eksctl` can
+manage EKS and related AWS resources.[^eksctl-overview] Neither
+tool proves that an application works for a user.
 
-| Need | Use | Why |
+## Map the request to its owner
+
+| Request | First object or boundary | Where to learn the procedure |
 | --- | --- | --- |
-| Inspect or change Kubernetes resources | `kubectl` | Talks to the Kubernetes API server. |
-| Create or delete an EKS cluster | `eksctl` | Provisions AWS resources and EKS control plane configuration. |
-| Manage EKS node groups | `eksctl` | Uses EKS, EC2 Auto Scaling, and CloudFormation behavior. |
-| Manage EKS add-ons | `eksctl` | Talks to EKS add-on APIs and can manage related IAM. |
-| Grant IAM principals cluster access | `eksctl` | Manages EKS access entries or legacy `aws-auth` mappings. |
-| Grant pods AWS permissions | `eksctl` | Creates Pod Identity associations or IRSA resources. |
-| Change EKS endpoint or control plane logging | `eksctl` | Updates AWS-side cluster configuration. |
+| Run more copies of one application | A Deployment's replicas or autoscaling configuration, plus Pod scheduling evidence. | [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) and [inspect a Deployment](kubectl-basics.md). |
+| Add EC2 worker capacity | The cluster's node-group and autoscaling design, if it uses node groups. | [eksctl node groups](https://docs.aws.amazon.com/eks/latest/eksctl/general-nodegroups.html). |
+| Investigate missing managed node groups | First identify whether this cluster uses EKS Auto Mode, Fargate, or another compute path. | [EKS Auto Mode](https://docs.aws.amazon.com/eks/latest/eksctl/auto-mode.html) and [Kubernetes on AWS](../../cross-topic-guides/kubernetes-on-aws.md). |
+| Let a person use `kubectl` | EKS authentication and authorization, which may include an access entry and Kubernetes RBAC. | [EKS human identity and RBAC](../../security/identity-federation/eks-human-identity-and-rbac.md). |
+| Let a Pod call an AWS API | The Pod's service account, the selected Pod Identity or IRSA path, and IAM permission. | [EKS workload identity](../../cross-topic-guides/eks-workload-identity.md). |
+| Change an EKS add-on or the control plane | EKS-managed component and its compatibility with the cluster and workloads. | [eksctl add-ons](https://docs.aws.amazon.com/eks/latest/eksctl/addons.html) or [cluster upgrades](https://docs.aws.amazon.com/eks/latest/eksctl/cluster-upgrade.html). |
 
-> [!IMPORTANT]
-> `eksctl` can create, update, and delete AWS infrastructure. Always confirm AWS account, Region, cluster name, and config file before running mutating commands.
+`eksctl` can create clusters, manage node groups, and configure
+several EKS capabilities, sometimes creating related CloudFormation
+or IAM resources. It is not the universal owner of every EKS
+installation. The cluster or component may instead be declared
+through another infrastructure system; follow that system's review
+and deployment path.[^eksctl-overview] A kubeconfig entry lets
+`kubectl` locate a cluster and obtain credentials; it is not itself
+a grant of authorization to change it. Human cluster access and
+Pod-to-AWS credentials solve different problems.[^eks-human-access]
+[^eksctl-pod-identity]
 
-## Daily discovery
+## Example: lesson Pods are Pending
 
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Show `eksctl` version | `eksctl version` | Confirm the local tool version. |
-| Show command help | `eksctl help` | Discover available command groups. |
-| Show subcommand help | `eksctl <command> --help` | Check flags before a risky operation. |
-| Confirm AWS identity | `aws sts get-caller-identity` | Verify the AWS account and role used by `eksctl`. |
-| List clusters | `eksctl get cluster --region <region>` | Find EKS clusters visible to the current AWS identity. |
-| Write kubeconfig | `eksctl utils write-kubeconfig --cluster <cluster> --region <region>` | Configure `kubectl` access through `eksctl`. |
-| Show CloudFormation stacks | `eksctl utils describe-stacks --cluster <cluster> --region <region>` | Inspect stacks managed by `eksctl`. |
+This is an **invented** incident. No AWS account, EKS cluster,
+node group, Pod, or user request was inspected.
 
-### Confirm identity and list clusters
+A reviewed application change raises the `lesson-api` Deployment's
+desired replicas from two to four. Four Pods exist, but two are
+Pending. Pending alone does not identify a capacity shortage: first
+check whether a Pod has a node and read its events.
+[^kubernetes-debug-pods]
+
+### Read the target before proposing a change
+
+For the invented cluster `learning-lab` in `eu-west-1`, first verify
+the target with these **read-only** commands. Replace the values with
+the environment you have permission to inspect:
 
 ```bash
 aws sts get-caller-identity
 eksctl get cluster --region eu-west-1
-```
-
-What it does: confirms the AWS caller and lists EKS clusters in the selected Region.
-
-### Write kubeconfig with eksctl
-
-```bash
-eksctl utils write-kubeconfig --cluster production-platform --region eu-west-1
+aws eks describe-cluster --name learning-lab --region eu-west-1 --query 'cluster.endpoint'
 kubectl config current-context
+kubectl config view --minify
 ```
 
-What it does: writes kubeconfig for the EKS cluster, then checks the active Kubernetes context.
+The `eksctl` listing must include `learning-lab` in the intended
+Region. Compare the AWS-reported API endpoint with the server shown
+by `kubectl config view --minify`.[^eks-describe-cluster] The tools can
+use different credentials and targets;
+an empty regional cluster listing can simply mean the wrong Region.
+If a read is denied, resolve identity, access, and network
+reachability before interpreting the result. Do not paste account
+identifiers or full output into a public issue.
 
-> [!TIP]
-> `aws eks update-kubeconfig` and `eksctl utils write-kubeconfig` both prepare kubeconfig. Use whichever is standard in your team, then verify the active context before running `kubectl`.
-
-## Cluster lifecycle
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Create default cluster | `eksctl create cluster --name <cluster> --region <region>` | Quick test or learning cluster. |
-| Create from config | `eksctl create cluster -f cluster.yaml` | Reproducible cluster creation. |
-| Dry-run config | `eksctl create cluster -f cluster.yaml --dry-run` | Inspect generated config before creation. |
-| Get cluster details | `eksctl get cluster --name <cluster> --region <region>` | Confirm cluster presence and metadata. |
-| Upgrade control plane plan | `eksctl upgrade cluster --name <cluster> --region <region>` | Preview next supported Kubernetes minor upgrade. |
-| Upgrade control plane | `eksctl upgrade cluster --name <cluster> --region <region> --approve` | Apply a planned control plane upgrade. |
-| Delete from config | `eksctl delete cluster -f cluster.yaml --wait` | Tear down a config-managed cluster. |
-| Delete by name | `eksctl delete cluster --name <cluster> --region <region> --wait` | Tear down a named cluster. |
-
-### Dry-run cluster config
+Next inspect the workload. Replace `POD_NAME` with one of the Pending
+names returned by the Pod listing:
 
 ```bash
-eksctl create cluster -f cluster.yaml --dry-run
+kubectl get deployment lesson-api -n lessons
+kubectl get hpa -n lessons
+kubectl get pods -n lessons -o wide
+kubectl describe pod POD_NAME -n lessons
 ```
 
-What it does: validates and expands cluster settings without creating AWS resources.
+In this invented result, no HPA targets `lesson-api`. The Deployment
+wants four replicas, and four Pods exist. The two Pending Pods show
+`<none>` in the `NODE` column. The
+[safe kubectl inspection guide](daily-usage.md) explains these
+views in more detail. `kubectl describe pod` can expose environment
+values, so review its output before sharing it.
 
-### Create a cluster from config
+Suppose the invented Pending Pod has **no node assigned** and its
+`kubectl describe pod` events include this **abbreviated** signal:
+
+```text
+Warning  FailedScheduling  0/2 nodes are available: 2 Insufficient cpu.
+```
+
+`Insufficient cpu` is about the Pod's **requested CPU** versus what
+each eligible node can still allocate after existing requests; low
+live CPU use alone would not disprove it.[^kubernetes-resources]
+If one Pod's request exceeds what a fresh node of this size can
+allocate, review the workload request or node type first. Adding
+more same-size nodes would not fit that Pod.
+
+Here the team checks the Pod's requests in `kubectl describe pod` and
+compares them with node allocatable and existing Pod requests in
+`kubectl describe node NODE_NAME`, replacing `NODE_NAME` with a name
+from `kubectl get nodes`. They confirm that one more node of
+the same type could fit the Pod after system Pods' requests. A node
+label then points to the managed group; a missing label needs more
+investigation before choosing it.[^kubernetes-resources]
+
+These **read-only** commands identify the nodes and managed-group
+limits. Replace `NODEGROUP_NAME` with the observed label value:
 
 ```bash
-eksctl create cluster -f cluster.yaml
+kubectl get nodes -L eks.amazonaws.com/nodegroup,eks.amazonaws.com/compute-type
+eksctl get nodegroup --cluster learning-lab --region eu-west-1
+aws eks describe-nodegroup --cluster-name learning-lab --nodegroup-name NODEGROUP_NAME --region eu-west-1 --query 'nodegroup.scalingConfig'
 ```
 
-What it does: creates the EKS cluster and related AWS resources described by `cluster.yaml`.
-
-> [!WARNING]
-> Cluster creation creates billable AWS resources such as the EKS control plane, EC2 capacity, load balancer-related infrastructure, CloudFormation stacks, and networking resources.
-
-### Delete a cluster
-
-```bash
-eksctl delete cluster -f cluster.yaml --wait
-```
-
-What it does: deletes the cluster and waits for the CloudFormation-backed teardown to complete.
-
-> [!WARNING]
-> Cluster deletion removes infrastructure and can interrupt every workload on the cluster. Use `--wait` so deletion failures are surfaced, and check external dependencies such as load balancers, PVCs, and PodDisruptionBudgets.
-
-## Node groups
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Create node group | `eksctl create nodegroup --cluster <cluster> --name <nodegroup>` | Add EC2 capacity to a cluster. |
-| Create from config | `eksctl create nodegroup --config-file cluster.yaml` | Create declared node groups. |
-| List node groups | `eksctl get nodegroup --cluster <cluster> --region <region>` | Inspect worker capacity groups. |
-| Get node group as YAML | `eksctl get nodegroup --cluster <cluster> --name <nodegroup> --output yaml` | Review detailed node group state. |
-| Scale node group | `eksctl scale nodegroup --cluster <cluster> --name <nodegroup> --nodes <count> --wait` | Change desired EC2 node count. |
-| Drain node group | `eksctl drain nodegroup --cluster <cluster> --name <nodegroup>` | Evict pods from all nodes in a node group. |
-| Undo drain | `eksctl drain nodegroup --cluster <cluster> --name <nodegroup> --undo` | Uncordon a drained node group. |
-| Delete node group | `eksctl delete nodegroup --cluster <cluster> --name <nodegroup>` | Remove EC2 worker capacity. |
-| Upgrade node group | `eksctl upgrade nodegroup --cluster <cluster> --name <nodegroup>` | Upgrade supported node group components. |
-| Check node group health | `eksctl utils nodegroup-health --cluster <cluster> --name <nodegroup>` | Diagnose EKS node group health issues. |
-| Set node labels | `eksctl set labels --cluster <cluster> --nodegroup <nodegroup> --labels <key=value>` | Apply labels at the managed node group level. |
-| Remove node labels | `eksctl unset labels --cluster <cluster> --nodegroup <nodegroup> --labels <key>` | Remove labels at the managed node group level. |
-
-### Scale a node group
-
-```bash
-eksctl scale nodegroup --cluster production-platform --name workers-a --nodes 5 --wait
-```
-
-What it does: changes desired capacity for the node group and waits for the scaling operation.
-
-> [!IMPORTANT]
-> Scaling down with `eksctl scale nodegroup` changes AWS capacity and does not replace a careful workload drain plan. Check workload disruption risk before reducing nodes.
-
-### Drain a node group
-
-```bash
-eksctl drain nodegroup --cluster production-platform --name workers-a
-```
-
-What it does: cordons and evicts pods from nodes in the selected node group.
-
-> [!WARNING]
-> Draining can disrupt workloads. Check PodDisruptionBudgets, replica counts, and maintenance windows first.
-
-### Delete a node group
-
-```bash
-eksctl delete nodegroup --cluster production-platform --name workers-a
-```
-
-What it does: drains eligible pods and removes the selected node group.
-
-> [!WARNING]
-> Node group deletion removes compute capacity. Confirm replacement capacity exists before deleting production node groups.
-
-## EKS add-ons
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Create add-on | `eksctl create addon --cluster <cluster> --name <addon>` | Install an EKS-managed add-on. |
-| Create add-ons from config | `eksctl create addon -f cluster.yaml` | Apply add-on declarations. |
-| List add-ons | `eksctl get addon --cluster <cluster>` | See enabled add-ons and versions. |
-| Discover add-on versions | `eksctl utils describe-addon-versions --cluster <cluster>` | Find compatible add-on versions. |
-| Discover by Kubernetes version | `eksctl utils describe-addon-versions --kubernetes-version <version>` | Plan add-ons before cluster creation. |
-| Show add-on config schema | `eksctl utils describe-addon-configuration --name <addon> --version <version>` | Inspect configurable fields. |
-| Update add-on | `eksctl update addon --cluster <cluster> --name <addon> --version <version>` | Upgrade or reconfigure an add-on. |
-| Update from config | `eksctl update addon -f cluster.yaml` | Reconcile declared add-on config. |
-| Delete add-on | `eksctl delete addon --cluster <cluster> --name <addon>` | Remove an EKS-managed add-on. |
-
-### Discover add-on versions
-
-```bash
-eksctl utils describe-addon-versions --cluster production-platform
-```
-
-What it does: discovers compatible EKS add-ons and versions for the cluster Kubernetes version.
-
-### Update an add-on
-
-```bash
-eksctl update addon --cluster production-platform --name vpc-cni --version latest
-```
-
-What it does: updates the VPC CNI EKS add-on to the resolved latest compatible version.
-
-> [!WARNING]
-> Add-on changes can affect networking, DNS, proxying, storage, and observability. Test version and configuration changes outside production first.
-
-### Delete an add-on
-
-```bash
-eksctl delete addon --cluster production-platform --name aws-ebs-csi-driver
-```
-
-What it does: removes the selected EKS add-on and IAM roles associated with it when they are managed by `eksctl`.
-
-> [!WARNING]
-> Deleting storage, networking, or DNS add-ons can break workloads. Confirm impact before removing add-ons.
-
-## Access entries and legacy aws-auth
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Update auth mode | `eksctl utils update-authentication-mode --cluster <cluster> --authentication-mode API_AND_CONFIG_MAP` | Prepare a cluster to use EKS access entries. |
-| Create access entry | `eksctl create accessentry -f access.yaml` | Grant an IAM principal Kubernetes access through EKS APIs. |
-| List access entries | `eksctl get accessentry --cluster <cluster>` | Review IAM principals with EKS access entries. |
-| Get one access entry | `eksctl get accessentry --cluster <cluster> --principal-arn <arn>` | Inspect one IAM principal. |
-| Delete access entry | `eksctl delete accessentry --cluster <cluster> --principal-arn <arn>` | Remove an IAM principal's EKS access entry. |
-| Migrate from aws-auth | `eksctl utils migrate-to-access-entry --cluster <cluster> --target-authentication-mode API_AND_CONFIG_MAP` | Move legacy identity mappings to access entries. |
-| Get legacy mappings | `eksctl get iamidentitymapping --cluster <cluster> --region <region>` | Inspect `aws-auth` ConfigMap mappings. |
-| Create legacy mapping | `eksctl create iamidentitymapping --cluster <cluster> --region <region> --arn <arn> --group <group> --username <name>` | Add an `aws-auth` mapping when access entries are not used. |
-| Delete legacy mapping | `eksctl delete iamidentitymapping --cluster <cluster> --region <region> --arn <arn>` | Remove an `aws-auth` mapping. |
-
-### List access entries
-
-```bash
-eksctl get accessentry --cluster production-platform
-```
-
-What it does: lists EKS access entries associated with the cluster.
-
-### Migrate legacy aws-auth mappings
-
-```bash
-eksctl utils migrate-to-access-entry --cluster production-platform --target-authentication-mode API_AND_CONFIG_MAP
-```
-
-What it does: plans or performs migration from `aws-auth` identity mappings to EKS access entries, depending on command behavior and flags.
-
-> [!WARNING]
-> Cluster access changes can lock out users or automation. Keep a tested admin break-glass path before changing authentication mode, access entries, or `aws-auth`.
-
-## Workload AWS permissions
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Install Pod Identity agent | `eksctl create addon --cluster <cluster> --name eks-pod-identity-agent` | Enable EKS Pod Identity support on worker nodes. |
-| Create Pod Identity association | `eksctl create podidentityassociation --cluster <cluster> --namespace <namespace> --service-account-name <name> --permission-policy-arns <arns>` | Grant a service account AWS permissions with EKS Pod Identity. |
-| List Pod Identity associations | `eksctl get podidentityassociation --cluster <cluster>` | Review workload AWS identity mappings. |
-| Get one association | `eksctl get podidentityassociation --cluster <cluster> --namespace <namespace> --service-account-name <name>` | Inspect one service account mapping. |
-| Update association role | `eksctl update podidentityassociation --cluster <cluster> --namespace <namespace> --service-account-name <name> --role-arn <arn>` | Point a service account at a different IAM role. |
-| Delete association | `eksctl delete podidentityassociation --cluster <cluster> --namespace <namespace> --service-account-name <name>` | Remove pod access to an IAM role. |
-| Migrate IRSA to Pod Identity | `eksctl utils migrate-to-pod-identity --cluster <cluster> --approve` | Convert supported IRSA and add-on roles to Pod Identity. |
-| Associate OIDC provider | `eksctl utils associate-iam-oidc-provider --cluster <cluster>` | Prepare cluster for IRSA. |
-| Create IRSA service account | `eksctl create iamserviceaccount --cluster <cluster> --namespace <namespace> --name <name> --attach-policy-arn <arn>` | Create IAM role plus Kubernetes ServiceAccount annotation. |
-| Update IRSA service account | `eksctl update iamserviceaccount -f cluster.yaml` | Reconcile IAM service account permissions from config. |
-| Delete IRSA service account | `eksctl delete iamserviceaccount --cluster <cluster> --namespace <namespace> --name <name>` | Delete an `eksctl` IAM service account pair. |
-
-### Create Pod Identity association
-
-```bash
-eksctl create podidentityassociation \
-  --cluster production-platform \
-  --namespace app \
-  --service-account-name s3-reader \
-  --permission-policy-arns arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
-```
-
-What it does: creates or configures a Pod Identity association so pods using the `app/s3-reader` service account can access AWS APIs allowed by the policy.
-
-> [!IMPORTANT]
-> Only grant the AWS permissions the workload needs. Avoid broad managed policies for application service accounts unless the risk is understood and accepted.
-
-### Create an IRSA service account
-
-```bash
-eksctl utils associate-iam-oidc-provider --cluster production-platform
-eksctl create iamserviceaccount \
-  --cluster production-platform \
-  --namespace app \
-  --name s3-reader \
-  --attach-policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
-```
-
-What it does: ensures the cluster has an IAM OIDC provider, then creates an IAM role and service account annotation for IRSA.
-
-> [!WARNING]
-> `eksctl delete iamserviceaccount` can delete Kubernetes ServiceAccounts, including ones not originally created by `eksctl`. Review ownership before deleting.
-
-## Fargate profiles
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Create cluster with Fargate | `eksctl create cluster --fargate` | Create a cluster with default Fargate support. |
-| Create Fargate profile | `eksctl create fargateprofile --cluster <cluster> --namespace <namespace>` | Schedule matching pods onto Fargate. |
-| Create profiles from config | `eksctl create fargateprofile -f cluster.yaml` | Manage more complex selectors. |
-| List profiles | `eksctl get fargateprofile --cluster <cluster>` | Inspect Fargate selectors and execution roles. |
-| Show profiles as YAML | `eksctl get fargateprofile --cluster <cluster> -o yaml` | Review detailed profile configuration. |
-| Delete profile | `eksctl delete fargateprofile --cluster <cluster> --name <profile> --wait` | Remove a Fargate scheduling profile. |
-
-### Create a Fargate profile
-
-```bash
-eksctl create fargateprofile --cluster production-platform --namespace batch --name fp-batch
-```
-
-What it does: creates a Fargate profile that schedules matching pods in the `batch` namespace onto Fargate.
-
-> [!IMPORTANT]
-> Fargate profiles are immutable. To change selectors, create a replacement profile and delete the old one after workloads are safe.
-
-## EKS Auto Mode and Karpenter setup
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Create Auto Mode cluster | `eksctl create cluster -f auto-mode-cluster.yaml` | Create a cluster with `autoModeConfig.enabled: true`. |
-| Enable Auto Mode | `eksctl update auto-mode-config -f cluster.yaml` | Turn on Auto Mode for an existing cluster. |
-| Disable Auto Mode | `eksctl update auto-mode-config -f cluster.yaml` | Turn Auto Mode off with `autoModeConfig.enabled: false`. |
-| Create Karpenter-ready cluster | `eksctl create cluster -f karpenter-cluster.yaml` | Install Karpenter prerequisites from cluster config. |
-
-### Enable Auto Mode from config
-
-```bash
-eksctl update auto-mode-config -f cluster.yaml
-```
-
-What it does: updates EKS Auto Mode settings from the cluster config file.
-
-> [!WARNING]
-> Auto Mode changes AWS-managed compute, storage, networking, and load balancing behavior for the cluster. Review subnet placement and workload assumptions before enabling it.
-
-## Networking, endpoint access, and logging
-
-| Task | Command | When to use it |
-| --- | --- | --- |
-| Update endpoint access | `eksctl utils update-cluster-vpc-config --cluster <cluster> --private-access=true --public-access=false` | Change public/private Kubernetes API endpoint access. |
-| Update endpoint config from file | `eksctl utils update-cluster-vpc-config -f cluster.yaml --approve` | Apply endpoint and CIDR settings from config. |
-| Set public access CIDRs | `eksctl utils update-cluster-vpc-config --cluster <cluster> --public-access-cidrs <cidrs>` | Restrict public API endpoint sources. |
-| Enable all control plane logs | `eksctl utils update-cluster-logging --cluster <cluster> --enable-types all --approve` | Send EKS control plane logs to CloudWatch Logs. |
-| Enable one log type | `eksctl utils update-cluster-logging --cluster <cluster> --enable-types audit --approve` | Turn on a specific control plane log stream. |
-| Disable all logs | `eksctl utils update-cluster-logging --cluster <cluster> --disable-types all --approve` | Stop control plane log ingestion. |
-
-### Restrict public API endpoint access
-
-```bash
-eksctl utils update-cluster-vpc-config \
-  --cluster production-platform \
-  --public-access=true \
-  --private-access=true \
-  --public-access-cidrs 203.0.113.10/32
-```
-
-What it does: keeps public and private endpoint access enabled while restricting public endpoint access to the listed CIDR.
-
-> [!WARNING]
-> Endpoint changes can break `kubectl`, `eksctl`, nodes joining the cluster, and automation. Confirm private access paths and allowed CIDRs before applying.
-
-### Enable audit logs
-
-```bash
-eksctl utils update-cluster-logging \
-  --cluster production-platform \
-  --enable-types audit \
-  --approve
-```
-
-What it does: enables EKS control plane audit logs in CloudWatch Logs.
-
-> [!WARNING]
-> Control plane logging can create CloudWatch ingestion and storage costs. Enable the log types you need and set retention where appropriate.
-
-## Upgrade workflow
-
-Use `eksctl` for the AWS/EKS side of the upgrade and `kubectl` for workload validation.
-
-```bash
-eksctl upgrade cluster --name production-platform --region eu-west-1
-eksctl upgrade cluster --name production-platform --region eu-west-1 --approve
-eksctl get nodegroup --cluster production-platform --region eu-west-1
-eksctl update addon --cluster production-platform --name vpc-cni --version latest
-kubectl get nodes
-kubectl get pods -A --field-selector=status.phase!=Running
-```
-
-What it does: previews and applies the control plane upgrade, reviews node groups, updates an add-on, and validates cluster health with `kubectl`.
-
-> [!IMPORTANT]
-> EKS control plane upgrades are one minor version at a time. Review AWS upgrade guidance and test add-on, node group, and workload compatibility before production upgrades.
-
-## Official documentation
+The invented scaling configuration reports `desiredSize: 2` and
+`maxSize: 2`. The team's platform inventory and current deployment
+show that Cluster Autoscaler covers this group and is healthy. It
+can change desired size within the group's bounds, but cannot raise
+its maximum. The team also checks the Pod's placement rules and
+other compute paths before concluding that this group is the
+eligible one.[^eks-managed-node-labels][^eks-describe-nodegroup]
+[^eks-autoscaling]
+
+Search the team's infrastructure source for the exact cluster and
+node-group names. In this invented case, its reviewed configuration
+sets `maxSize: 2`. That repository's owner should review a higher
+maximum and its cost and capacity limits. An `eksctl` listing or AWS
+tag can help locate the source, but does not prove which system owns
+it. If no autoscaler covers the group, a higher maximum alone adds
+no nodes: the reviewed desired-size setting or a different compute
+path must also be addressed. A direct `kubectl scale` would ask for
+more Pods, not fix their placement.[^eks-describe-nodegroup]
+[^eksctl-nodegroups]
+After the approved change, check `kubectl get pods -n lessons -o wide`
+for node assignment, `kubectl get deployment lesson-api -n lessons`
+for four available replicas, and the application's own health check.
+These are example decisions, not observed cluster results.
+
+The same request can lead elsewhere. If fewer than four Pod objects
+exist, inspect `kubectl describe deployment lesson-api -n lessons`
+and its ReplicaSet events; a namespace quota can reject Pod creation
+rather than leave an existing Pod unscheduled.[^kubernetes-quotas]
+If an HPA owns replicas, review its target and limits rather than
+repeatedly setting the Deployment's replica count.[^kubernetes-hpa]
+If a managed group is below its maximum, check its autoscaler and
+why it did not add capacity before changing the maximum. If a Pod
+is already assigned to a node, investigate its startup events before
+adding capacity. EKS
+clusters can combine managed or self-managed nodes, Fargate, and
+Auto Mode; an empty managed node-group listing does not identify the
+Pod's compute path. For Fargate, inspect the profile's namespace and
+label selectors; for Auto Mode, inspect its NodePool and capacity
+rules. Follow the reviewed owner for that path.[^eks-compute]
+[^eks-fargate][^eks-auto-compute][^eksctl-auto-mode] For a workload-source change, use
+the [manifest-change guide](common-commands.md). The
+[resource-pressure guide](workflows.md) explains other scheduling
+signals.
+
+## What a dry run can tell you
+
+`eksctl create cluster --dry-run` produces a `ClusterConfig` from
+CLI options or a supplied config file. It helps you inspect the
+configuration that `eksctl` would use; it is **not** a preview of
+every AWS resource change, bill, permission outcome, or workload
+effect. It also differs from
+[`kubectl apply --dry-run=server`](advanced-commands.md), which
+submits a Kubernetes API request without persisting it.
+[^eksctl-dry-run][^kubernetes-apply] Use the review mechanism of the actual
+infrastructure owner before creation, deletion, or upgrade.
+
+## Explore further
 
 - [What is eksctl?](https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html)
+  lists the tool's EKS management capabilities.[^eksctl-overview]
 - [Creating and managing clusters](https://docs.aws.amazon.com/eks/latest/eksctl/creating-and-managing-clusters.html)
-- [Work with node groups](https://docs.aws.amazon.com/eks/latest/eksctl/general-nodegroups.html)
-- [Add-ons](https://docs.aws.amazon.com/eks/latest/eksctl/addons.html)
-- [EKS access entries](https://docs.aws.amazon.com/eks/latest/eksctl/access-entries.html)
-- [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/eksctl/iamserviceaccounts.html)
-- [EKS Pod Identity associations](https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html)
-- [EKS Fargate support](https://docs.aws.amazon.com/eks/latest/eksctl/fargate.html)
-- [EKS Auto Mode](https://docs.aws.amazon.com/eks/latest/eksctl/auto-mode.html)
-- [Cluster access](https://docs.aws.amazon.com/eks/latest/eksctl/vpc-cluster-access.html)
-- [CloudWatch logging](https://docs.aws.amazon.com/eks/latest/eksctl/cloudwatch-cluster-logging.html)
-- [Cluster upgrades](https://docs.aws.amazon.com/eks/latest/eksctl/cluster-upgrade.html)
-- [Non eksctl-created clusters](https://docs.aws.amazon.com/eks/latest/eksctl/unowned-clusters.html)
-
-## Related links
-
-- [Daily Kubernetes usage commands](daily-usage.md)
-- [Kubernetes command workflows](workflows.md)
+  covers creation, kubeconfig effects, and deletion considerations.
+- [Non-eksctl-created clusters](https://docs.aws.amazon.com/eks/latest/eksctl/unowned-clusters.html)
+  records which commands AWS documents for clusters made elsewhere.
 - [EKS operations](../../cross-topic-guides/eks-operations.md)
-- [Back to Kubernetes commands](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+  starts from a symptom rather than a proposed command.
+- [Back to Kubernetes commands](index.md).
+
+[^eksctl-overview]: [AWS, What is eksctl?](https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html), source record `eksctl-overview`.
+[^eksctl-nodegroups]: [AWS, Work with node groups](https://docs.aws.amazon.com/eks/latest/eksctl/general-nodegroups.html), source record `eksctl-nodegroups`.
+[^eksctl-auto-mode]: [AWS, EKS Auto Mode with eksctl](https://docs.aws.amazon.com/eks/latest/eksctl/auto-mode.html), source record `eksctl-auto-mode`.
+[^eks-compute]: [AWS, Compute options for Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/eks-compute.html), source record `eks-compute`.
+[^eks-auto-compute]: [AWS, Configure compute and scaling](https://docs.aws.amazon.com/eks/latest/userguide/auto-configure-compute.html), source record `eks-auto-compute`.
+[^eks-managed-node-labels]: [AWS, Understand each phase of node updates](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-update-behavior.html), source record `eks-managed-node-labels`.
+[^eks-describe-nodegroup]: [AWS CLI, describe-nodegroup](https://docs.aws.amazon.com/cli/latest/reference/eks/describe-nodegroup.html), source record `eks-describe-nodegroup`.
+[^eks-describe-cluster]: [AWS CLI, describe-cluster](https://docs.aws.amazon.com/cli/latest/reference/eks/describe-cluster.html), source record `eks-describe-cluster`.
+[^eks-autoscaling]: [AWS, Scale cluster compute with Karpenter and Cluster Autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html), source record `eks-autoscaling`.
+[^eks-fargate]: [AWS, EKS Fargate support with eksctl](https://docs.aws.amazon.com/eks/latest/eksctl/fargate.html), source record `eks-fargate`.
+[^eks-human-access]: [AWS, Grant access to Kubernetes APIs](https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html), source record `eks-human-access`.
+[^eksctl-pod-identity]: [AWS, EKS Pod Identity associations with eksctl](https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html), source record `eksctl-pod-identity`.
+[^eksctl-dry-run]: [AWS, eksctl dry run](https://docs.aws.amazon.com/eks/latest/eksctl/dry-run.html), source record `eksctl-dry-run`.
+[^kubernetes-deployments]: [Kubernetes, Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), source record `kubernetes-deployments`.
+[^kubernetes-hpa]: [Kubernetes, Horizontal Pod Autoscaling](https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/), source record `kubernetes-hpa`.
+[^kubernetes-debug-pods]: [Kubernetes, Debug Running Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/), source record `kubernetes-debug-pods`.
+[^kubernetes-quotas]: [Kubernetes, Resource Quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/), source record `kubernetes-quotas`.
+[^kubernetes-resources]: [Kubernetes, Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/), source record `kubernetes-resources`.
+[^kubernetes-apply]: [Kubernetes, kubectl apply](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_apply/), source record `kubernetes-apply`.

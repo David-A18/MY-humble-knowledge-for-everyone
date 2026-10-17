@@ -96,7 +96,7 @@ What it does: lets a platform team hide encryption, public-access blocking, logg
 
 ## Crossplane versus Terraform
 
-For the focused decision guide, read [Terraform vs Crossplane](terraform-vs-crossplane.md).
+For the focused decision guide, read [When to use Terraform or Crossplane](terraform-vs-crossplane.md).
 
 | Area | Terraform | Crossplane |
 | --- | --- | --- |
@@ -149,45 +149,45 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 
 | Article | Purpose |
 | --- | --- |
-| [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
-| [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
-| [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
-| [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
-| [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
-| [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
-| [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
-| [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
-| [Terraform vs Crossplane](terraform-vs-crossplane.md) | Compare run-based Terraform workflows with Crossplane reconciliation and platform APIs, including what Crossplane solves that Terraform does not solve naturally. |
-| [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
-| [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
-| [AWS resource workflow](aws-resource-workflow.md) | Follow the full workflow from Crossplane installation to AWS resource deployment and ongoing management. |
-| [Local AWS S3 lab](local-aws-s3-lab.md) | Practice installing Crossplane, creating a bucket, observing reconciliation, testing drift, and cleaning up safely. |
-| [AWS S3 lab validation template](aws-s3-lab-validation-template.md) | Record an authorized sandbox execution of the S3 lab without committing credentials or private account details. |
-| [Production, GitOps, and operations](production-gitops-and-operations.md) | Run Crossplane with GitOps, package promotion, observability, backups, upgrades, and operational workflows. |
-| [Troubleshooting](troubleshooting.md) | Diagnose providers, compositions, managed resources, auth failures, leaked resources, and deletion issues. |
-| [References](references.md) | Official and supporting references used for the Crossplane section. |
+| [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md) | See what the platform team defines, what one XR asks for, and which checks establish delivery. |
+| [How Crossplane's components turn a request into a resource](component-model.md) | Follow an invented bucket request from XRD and XR through Composition, managed resource, provider, and external API; then place advanced components around that path. |
+| [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md) | Follow desired state, provider observation, drift, import, pause, and deletion for one invented bucket. |
+| [How a Crossplane provider reaches an external API](providers-and-authentication.md) | Separate provider package health, provider configuration, Pod credentials, and external authorization for one invented bucket. |
+| [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md) | Compare direct provider-specific requests with a small XR and Composition backed by the same provider. |
+| [How a Crossplane Composition fulfills one application request](compositions.md) | Follow an invented WebApplication from XRD validation through function output, composed Deployment and Service, revision choice, and user-path check. |
+| [How one platform request reaches a running application](application-delivery-platform-api.md) | Follow repository creation, image publication, Kubernetes rollout, and application checks as separate handoffs. |
+| [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md) | Choose explicit objects, fixed templates, or a function loop, then connect dependent resources by provider reference. |
+| [When to use Terraform or Crossplane](terraform-vs-crossplane.md) | Use one invented network request to choose a reviewed plan/apply workflow, a continuously reconciled platform API, or both with clear ownership. |
+| [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md) | Follow a `PlatformNetwork` XR through VPC, subnet, routing, optional endpoint, and deletion decisions. |
+| [How a team operates a Crossplane platform API](professional-operating-model.md) | Follow an invented storage request through team ownership, change review, access boundaries, and outcome checks. |
+| [How an AWS resource request moves through Crossplane](aws-resource-workflow.md) | Follow one invented bucket request from API acceptance through provider reconciliation, AWS state, application use, and deletion. |
+| [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md) | Practice one authorized sandbox request, confirm provider and AWS state, and verify deletion before removing the cluster. |
+| [Record evidence from a Crossplane S3 sandbox lab](aws-s3-lab-validation-template.md) | Capture actual identity, version, condition, AWS, and cleanup evidence from an authorized lab run. |
+| [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md) | Follow an invented storage change through GitOps and Crossplane reconciliation, promotion, monitoring, and recovery. |
+| [Find the first failing Crossplane handoff](troubleshooting.md) | Follow one stuck deletion, distinguish conditions, and locate the first failed controller boundary. |
+| [Find the right Crossplane source for your question](references.md) | Choose an official source for API design, provider schemas, identity, or troubleshooting. |
 
 ## Related links
 
-- [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
-- [Component model](component-model.md)
-- [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
-- [Providers and authentication](providers-and-authentication.md)
-- [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
-- [Crossplane compositions](compositions.md)
-- [Application delivery platform API](application-delivery-platform-api.md)
-- [Deployment patterns and references](deployment-patterns-and-references.md)
-- [Terraform vs Crossplane](terraform-vs-crossplane.md)
-- [AWS VPC platform API](aws-vpc-platform-api.md)
-- [Professional operating model](professional-operating-model.md)
-- [AWS resource workflow](aws-resource-workflow.md)
-- [Local AWS S3 lab](local-aws-s3-lab.md)
-- [AWS S3 lab validation template](aws-s3-lab-validation-template.md)
-- [Production, GitOps, and operations](production-gitops-and-operations.md)
+- [How to request a Crossplane platform API](xrd-composition-and-xr-calls.md)
+- [How Crossplane's components turn a request into a resource](component-model.md)
+- [How a Crossplane managed resource changes over time](managed-resources-and-lifecycle.md)
+- [How a Crossplane provider reaches an external API](providers-and-authentication.md)
+- [When to use a managed resource or a Crossplane platform API](providers-compositions-and-managed-resources.md)
+- [How a Crossplane Composition fulfills one application request](compositions.md)
+- [How one platform request reaches a running application](application-delivery-platform-api.md)
+- [Choose how Crossplane repeats and connects resources](deployment-patterns-and-references.md)
+- [When to use Terraform or Crossplane](terraform-vs-crossplane.md)
+- [How one Crossplane request becomes an AWS network](aws-vpc-platform-api.md)
+- [How a team operates a Crossplane platform API](professional-operating-model.md)
+- [How an AWS resource request moves through Crossplane](aws-resource-workflow.md)
+- [Create and remove one S3 bucket with Crossplane](local-aws-s3-lab.md)
+- [Record evidence from a Crossplane S3 sandbox lab](aws-s3-lab-validation-template.md)
+- [How GitOps and Crossplane keep a platform request running](production-gitops-and-operations.md)
 - [Crossplane on AWS](../../cross-topic-guides/crossplane-on-aws.md)
-- [Crossplane troubleshooting](troubleshooting.md)
-- [Crossplane references](references.md)
+- [Find the first failing Crossplane handoff](troubleshooting.md)
+- [Find the right Crossplane source for your question](references.md)
 - [Crossplane v2 overview](https://docs.crossplane.io/latest/whats-new/)
 - [Crossplane documentation](https://docs.crossplane.io/latest/)
 - [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to knowledge index](../../index.md)
