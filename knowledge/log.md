@@ -1,5 +1,11 @@
 # Knowledge bundle log
 
+## 2026-10-29
+
+- **Topic expansion**: Added ten requested learning routes, official source records/citations, and executable teaching examples in the current OKF layout.
+- **Retrieval quality**: The RAG baseline retains repository citation paths and lifecycle labels and filters deprecated concepts.
+- **Evidence boundary**: Local/schema tests and pending live infrastructure checks are distinguished in the publication audit.
+
 ## 2026-09-26
 
 - **Publishing decision**: ADR-0005 accepts a separate static reading site built from pinned `main` revisions and moves reader testing to after the first release. The Markdown bundle remains canonical.

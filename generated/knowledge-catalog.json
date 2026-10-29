@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 162,
+  "concept_count": 218,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -401,6 +401,103 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Understand the object model before deploying infrastructure.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/cdk/apps-stacks-and-constructs.md",
+      "source_ids": [
+        "stacks",
+        "identifiers",
+        "context"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "cdk"
+      ],
+      "title": "CDK apps, stacks, constructs, and synthesis",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Test infrastructure intent before CloudFormation deployment.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/cdk/assertions-and-ci.md",
+      "source_ids": [
+        "cdk-assertions",
+        "cdk-cli-compatibility"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "cdk"
+      ],
+      "title": "CDK assertions and CI",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Review account changes and retain a recovery path before deploying.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/cdk/deployment-and-troubleshooting.md",
+      "source_ids": [
+        "cdk-bootstrap",
+        "cdk-troubleshooting",
+        "cloudformation-rollback-recovery"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "cdk"
+      ],
+      "title": "CDK deployment, updates, and troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand why code-based infrastructure still requires declarative lifecycle review.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/cdk/fundamentals-and-comparisons.md",
+      "source_ids": [
+        "aws-cdk-v2",
+        "cdk-constructs"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "cdk"
+      ],
+      "title": "AWS CDK fundamentals and comparisons",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Synthesize the same encrypted, private, versioned S3 bucket in both languages.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/cdk/typescript-and-python-labs.md",
+      "source_ids": [
+        "cdk-testing",
+        "s3-bucket-construct"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "cdk"
+      ],
+      "title": "Equivalent TypeScript and Python CDK labs",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Use this page to understand Amazon Elastic Container Registry (ECR), secure",
       "maintainer": "unassigned",
       "maturity": "draft",
@@ -601,6 +698,65 @@
         "security"
       ],
       "title": "IAM OIDC provider and STS web identity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand how a Kubernetes workload obtains temporary AWS credentials through IAM Roles for Service Accounts.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/irsa-fundamentals.md",
+      "source_ids": [
+        "aws-irsa",
+        "sdk-credential-compatibility"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "security"
+      ],
+      "title": "IRSA fundamentals and credential flow",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Find credential-source, trust, and AWS authorization failures without exposing tokens.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/irsa-troubleshooting.md",
+      "source_ids": [
+        "irsa-benefits-and-caveats",
+        "eks-pod-identity",
+        "aws-sdk-support"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "security"
+      ],
+      "title": "IRSA troubleshooting and operational security",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Separate who may assume a role from what an assumed role may do.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/irsa-trust-and-permissions.md",
+      "source_ids": [
+        "associate-service-account-and-iam-role",
+        "sts-web-identity",
+        "iam-policy-evaluation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cloud",
+        "security"
+      ],
+      "title": "IRSA trust and permission policies",
       "type": "Explanation"
     },
     {
@@ -824,7 +980,11 @@
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/eks-workload-identity.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-irsa",
+        "aws-pod-identity",
+        "aws-pod-identity-association"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
@@ -900,6 +1060,43 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Grant one Pod read access to a synthetic S3 prefix and prove that other actions and service accounts are rejected.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/irsa-s3-access-on-eks.md",
+      "source_ids": [
+        "aws-service-account-role-procedure",
+        "eksctl-iam-service-accounts"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides"
+      ],
+      "title": "IRSA S3 access on EKS: positive and negative tests",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Calculate minute-level order totals while handling duplicates, late events, and restarts.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/kubernetes-data-aggregation.md",
+      "source_ids": [
+        "kafka-docker-guide",
+        "kafka-delivery-semantics",
+        "kafka-python-consumer"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "cross-topic-guides"
+      ],
+      "title": "Kafka data aggregation on Kubernetes",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Collect guidance for running Kubernetes workloads on AWS infrastructure.",
       "maintainer": "unassigned",
       "maturity": "draft",
@@ -960,6 +1157,24 @@
         "terraform-on-aws"
       ],
       "title": "Terraform on AWS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Distinguish collecting records from calculating summaries and preserving stream-processing correctness.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/databases/data-aggregation.md",
+      "source_ids": [
+        "kafka-design-and-delivery",
+        "kafka-streams-concepts"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "databases"
+      ],
+      "title": "Data aggregation fundamentals",
       "type": "Explanation"
     },
     {
@@ -1264,6 +1479,105 @@
         "sonarqube"
       ],
       "title": "SonarQube",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Translate legacy environment behavior without assuming old configuration remains current.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/development-environments/gitpod-classic-migration.md",
+      "source_ids": [
+        "2025-migration-guidance",
+        "current-dev-container-configuration",
+        "current-task-service-schema"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "development-environments"
+      ],
+      "title": "Gitpod Classic configuration migration",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Validate a portable environment without a hosted account.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/development-environments/local-dev-container-lab.md",
+      "source_ids": [
+        "dev-container-cli",
+        "dev-container-specification"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "development-environments"
+      ],
+      "title": "Local Dev Container lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand the evolution from cloud development environments to the current Ona platform.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/development-environments/ona-and-gitpod.md",
+      "source_ids": [
+        "current-ona-overview",
+        "classic-payg-sunset",
+        "classic-migration-history"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "development-environments"
+      ],
+      "title": "Ona and Gitpod explained",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use existing-organization environments and background workflows with explicit boundaries.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/development-environments/ona-workflows-security-and-operations.md",
+      "source_ids": [
+        "current-ona-overview",
+        "automations",
+        "secrets",
+        "runner-infrastructure"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "development-environments"
+      ],
+      "title": "Ona workflows, security, and operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Make a repository's toolchain and startup behavior explicit.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/devops/development-environments/reproducible-environments.md",
+      "source_ids": [
+        "dev-container-specification",
+        "ona-container-configuration"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "development-environments"
+      ],
+      "title": "Reproducible development environments",
       "type": "Explanation"
     },
     {
@@ -1744,6 +2058,122 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Explain what Istio adds to Kubernetes and when mesh authentication is useful.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/istio/fundamentals.md",
+      "source_ids": [
+        "istio-security",
+        "istio-architecture"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "istio"
+      ],
+      "title": "Istio security fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Validate end-user tokens and combine them with workload identity.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/istio/jwt-and-authorization.md",
+      "source_ids": [
+        "requestauthentication-api",
+        "authorizationpolicy-api"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "istio"
+      ],
+      "title": "JWT authentication and Istio authorization",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Reproduce workload authorization, mandatory JWTs, and plaintext rejection on a disposable cluster.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/istio/security-lab.md",
+      "source_ids": [
+        "istio-install",
+        "supported-releases",
+        "jwt-authentication-task"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "istio"
+      ],
+      "title": "Istio mTLS and JWT security lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Locate the enforcing proxy before writing authentication and authorization policy.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/istio/sidecar-and-ambient.md",
+      "source_ids": [
+        "ambient-security",
+        "waypoint-configuration",
+        "peerauthentication-reference"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "istio"
+      ],
+      "title": "Sidecar and ambient security enforcement",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Move from a failed request to the enforcing component and introduce restrictions safely.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/istio/troubleshooting-and-rollout.md",
+      "source_ids": [
+        "istio-security-problems",
+        "istio-configuration-analysis"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "istio"
+      ],
+      "title": "Istio security troubleshooting and rollout",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Follow how a Kubernetes service account becomes a mesh identity.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/istio/workload-identity-and-mtls.md",
+      "source_ids": [
+        "peerauthentication",
+        "identity-and-certificates"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "istio"
+      ],
+      "title": "Istio workload identity and mutual TLS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Use this page to understand what K9s is, how to move around in it, and how to inspect common Kubernetes resources without typing every kubectl command manually.",
       "maintainer": "unassigned",
       "maturity": "draft",
@@ -1790,6 +2220,422 @@
         "applications-and-tools"
       ],
       "title": "kind images and local registries",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Create and operate a WebApp API that composes a Deployment and Service.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kro/application-lab.md",
+      "source_ids": [
+        "pinned-kro-installation-instructions",
+        "kro-v0-9-4-examples"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kro"
+      ],
+      "title": "Local kro application-composition lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand how a resource graph becomes a reusable Kubernetes API.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kro/fundamentals.md",
+      "source_ids": [
+        "kro-0-9-4-overview",
+        "kro-v0-9-4-source"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kro"
+      ],
+      "title": "kro fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Separate definition validation, instance reconciliation, and child-resource health.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kro/lifecycle-and-troubleshooting.md",
+      "source_ids": [
+        "kro-access-control",
+        "kro-v0-9-4-implementation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kro"
+      ],
+      "title": "kro lifecycle and troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Design schemas and dependencies that are understandable and observable.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kro/resource-graphs-and-cel.md",
+      "source_ids": [
+        "resourcegraphdefinition-concepts",
+        "cel-in-kro",
+        "kro-source-for-pinned-release"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kro"
+      ],
+      "title": "kro resource graphs and CEL",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Choose the smallest abstraction that fits the platform requirement.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/kro/tool-comparison.md",
+      "source_ids": [
+        "kro-overview",
+        "crossplane-documentation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kro"
+      ],
+      "title": "kro versus Helm, Kustomize, Crossplane, and operators",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Choose the check that answers the actual operational question.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/manifest-validation/concepts-and-tool-selection.md",
+      "source_ids": [
+        "kubectl-diff",
+        "dyff",
+        "helm-diff"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "manifest-validation"
+      ],
+      "title": "Manifest comparison and regression concepts",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Compare the prospective apply result with live state and interpret reconciliation ownership.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/manifest-validation/live-drift.md",
+      "source_ids": [
+        "kubectl-diff-contract",
+        "server-side-apply",
+        "argo-cd-diff-customization"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "manifest-validation"
+      ],
+      "title": "Detect desired-versus-live Kubernetes drift",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Prove why a valid Service manifest still needs an end-to-end request test.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md",
+      "source_ids": [
+        "helm-chart-tests",
+        "chainsaw-project",
+        "kind"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "manifest-validation"
+      ],
+      "title": "Kubernetes routing regression lab and CI",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Inspect semantic changes before making API calls.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/manifest-validation/rendered-yaml-comparison.md",
+      "source_ids": [
+        "dyff-documentation",
+        "helm-diff-documentation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "manifest-validation"
+      ],
+      "title": "Compare rendered Kubernetes YAML",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Reject malformed objects and organization-specific violations before deployment.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/manifest-validation/schema-and-policy.md",
+      "source_ids": [
+        "kubeconform",
+        "conftest",
+        "kubernetes-api-deprecation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "manifest-validation"
+      ],
+      "title": "Schema and policy validation",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Automate certificate issuance and renewal while understanding trust and private-key handling.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/cert-manager.md",
+      "source_ids": [
+        "certificate-resource",
+        "issuers",
+        "acme-troubleshooting"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "cert-manager",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Place naming, edge routing, and service-to-service controls in the correct layer.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/dns-and-gateways.md",
+      "source_ids": [
+        "gateway-api",
+        "externaldns",
+        "service-dns"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "DNS, gateways, and service meshes",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Synchronize an external secret into a Kubernetes Secret with explicit ownership and refresh behavior.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/external-secrets-operator.md",
+      "source_ids": [
+        "eso-overview",
+        "externalsecret-api",
+        "aws-provider"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "External Secrets Operator",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Keep encrypted values in Git while retaining a recoverable decryption boundary.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/gitops-secrets.md",
+      "source_ids": [
+        "sops",
+        "sealed-secrets",
+        "flux-sops"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "SOPS and Sealed Secrets",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Choose and inspect how Kubernetes configuration becomes deployable manifests.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/helm-and-kustomize.md",
+      "source_ids": [
+        "helm-template",
+        "kustomize"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Helm and Kustomize",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Select controls by what they observe or change, and understand their failure boundaries.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/policy-security-and-scaling.md",
+      "source_ids": [
+        "kyverno",
+        "gatekeeper",
+        "trivy",
+        "falco",
+        "keda",
+        "karpenter",
+        "hubble"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Policy, security, and scaling tools",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Separate secret storage, access control, delivery, rotation, and application reload.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/secret-management.md",
+      "source_ids": [
+        "secret-good-practices",
+        "secrets-and-mounted-volumes"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Kubernetes secret-management patterns",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Mount external-store values as files without embedding provider SDK calls in each application.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/secrets-store-csi-driver.md",
+      "source_ids": [
+        "driver-introduction",
+        "rotation",
+        "providers"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Secrets Store CSI Driver",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Distinguish application storage, secret delivery, snapshots, and recoverable backups.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/storage-and-snapshots.md",
+      "source_ids": [
+        "persistent-volumes",
+        "volume-snapshots",
+        "ebs-csi"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Kubernetes storage and snapshots",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Build a small, supportable platform around operational requirements.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/tool-selection.md",
+      "source_ids": [
+        "cncf-landscape",
+        "kubernetes-controllers"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Choose Kubernetes platform tools",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand authentication, policies, leases, and the responsibility of operating a secrets platform.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/applications-and-tools/platform-tooling/vault.md",
+      "source_ids": [
+        "kubernetes-auth",
+        "kubernetes-integrations",
+        "vault-policies"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "platform-tooling"
+      ],
+      "title": "Vault on Kubernetes",
       "type": "Explanation"
     },
     {
@@ -2275,6 +3121,148 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Send a synthetic span through a pinned gateway and observe failure.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/collector-lab.md",
+      "source_ids": [
+        "collector-configuration",
+        "resiliency",
+        "otlp"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "OpenTelemetry Collector delivery and failure lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand what eBPF enables and the constraints of operating tools built on it.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/ebpf.md",
+      "source_ids": [
+        "ebpf-introduction",
+        "linux-bpf",
+        "pixie-ebpf"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "eBPF architecture and Kubernetes uses",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use evidence to explain system behavior and user impact.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/fundamentals-and-signals.md",
+      "source_ids": [
+        "opentelemetry-signals",
+        "prometheus-naming",
+        "sre-monitoring"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "Observability fundamentals and signals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Choose collection and storage according to the operational question.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/instrumentation-and-tool-selection.md",
+      "source_ids": [
+        "instrumentation",
+        "prometheus-overview",
+        "grafana",
+        "hubble"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "Instrumentation and observability tool selection",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use automatically collected telemetry for focused Kubernetes debugging.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/pixie-architecture-and-queries.md",
+      "source_ids": [
+        "pixie-overview",
+        "pixie-faq",
+        "pxl-tutorial"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "Pixie architecture and queries",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Check prerequisites and investigate synthetic HTTP traffic.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/pixie-lab-and-troubleshooting.md",
+      "source_ids": [
+        "requirements",
+        "install-choices",
+        "cli"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "Pixie deployment lab and troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Separate collection, processing, routing, and durable storage.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/observability/telemetry-aggregation.md",
+      "source_ids": [
+        "agent-pattern",
+        "gateway-pattern",
+        "fluent-bit",
+        "vector"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "observability"
+      ],
+      "title": "Telemetry collection and aggregation",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Diagnose Apache APISIX and APISIX Ingress Controller failures in Kubernetes.",
       "maintainer": "unassigned",
       "maturity": "draft",
@@ -2340,6 +3328,120 @@
       ],
       "title": "kind troubleshooting",
       "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Measure retrieval and answer quality independently and protect the full evidence path.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/rag/evaluation-security-and-operations.md",
+      "source_ids": [
+        "fts5",
+        "owasp-llm-prompt-injection"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "rag"
+      ],
+      "title": "RAG evaluation, security, and operations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Convert retrieved evidence into an answer with explicit limits.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/rag/grounded-generation.md",
+      "source_ids": [
+        "ollama-chat-api"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "rag"
+      ],
+      "title": "Grounded generation and citations",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Turn reviewed source documents into reproducible evidence units.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/rag/ingestion-and-chunking.md",
+      "source_ids": [
+        "sqlite-fts5-indexing",
+        "git-revision-identifiers"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "rag"
+      ],
+      "title": "RAG ingestion and chunking",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand retrieval-augmented generation before choosing a vector database.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/rag/purpose-and-use-cases.md",
+      "source_ids": [
+        "original-rag-paper",
+        "sqlite-fts5"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "rag"
+      ],
+      "title": "RAG purpose and use cases",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Retrieve cited evidence from this Markdown knowledge base without a vector service.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/rag/repository-lab.md",
+      "source_ids": [
+        "python-sqlite3",
+        "sqlite-fts5",
+        "ollama-api"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "rag"
+      ],
+      "title": "Repository-based RAG lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Choose retrieval techniques from measured failure cases.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/llm/rag/retrieval-and-reranking.md",
+      "source_ids": [
+        "fts5-bm25",
+        "original-retrieval-grounded-generation-research"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "llm",
+        "rag"
+      ],
+      "title": "RAG retrieval and reranking",
+      "type": "Explanation"
     },
     {
       "audience": "Platform engineers installing Velero on EKS",

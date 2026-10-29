@@ -4,6 +4,14 @@ DevOps knowledge for delivery workflows, automation, code quality, reliability p
 
 Status: Initial outline
 
+## Platform quality checks
+
+Use [manifest validation and regression tests](../kubernetes/applications-and-tools/manifest-validation/index.md) alongside code-quality checks.
+
+## Added learning guides
+
+- [Development environments: Ona, Gitpod, and Dev Containers](development-environments/index.md) - Focused learning material and supporting examples.
+
 ## Index
 
 | Section | Focus |

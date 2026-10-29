@@ -8,6 +8,21 @@ This directory is the canonical Open Knowledge Format v0.2 bundle for this
 repository. Start with a subject area, then follow its index to focused
 concepts, procedures, references, and learning paths.
 
+## Expanded learning paths
+
+| Learning path | Outcome |
+| --- | --- |
+| [Istio authentication and authorization](kubernetes/applications-and-tools/istio/index.md) | Workload identities, mTLS, JWTs, sidecar/ambient policy, and access tests. |
+| [Kubernetes platform tooling](kubernetes/applications-and-tools/platform-tooling/index.md) | Secrets, certificates, storage, DNS, policy, scaling, and tool selection. |
+| [Manifest validation and regressions](kubernetes/applications-and-tools/manifest-validation/index.md) | Semantic YAML differences, live drift, schemas, policy, and behavior tests. |
+| [IRSA](cloud/aws/security/irsa-fundamentals.md) | EKS credential flow, IAM trust, least privilege, and S3 access tests. |
+| [kro](kubernetes/applications-and-tools/kro/index.md) | Resource graphs, CEL, generated APIs, and lifecycle. |
+| [Observability, eBPF, and Pixie](kubernetes/observability/index.md) | Signals, kernel visibility, telemetry collection, and debugging. |
+| [AWS CDK v2](cloud/aws/cdk/index.md) | Equivalent TypeScript/Python labs, assertions, synthesis, and deployment. |
+| [Data aggregation](databases/data-aggregation.md) | Windows, deduplication, late events, durable state, and Kafka. |
+| [RAG](llm/rag/index.md) | Retrieval, citations, grounded generation, evaluation, and a Python lab. |
+| [Ona and Gitpod](devops/development-environments/index.md) | Current product availability, reproducible environments, and migration. |
+
 ## Start by goal
 
 | Goal | Start here | Outcome |

@@ -2,6 +2,10 @@
 
 AI knowledge for concepts, systems, workflows, tools, knowledge bases, and practical engineering use.
 
+## Retrieval-augmented generation
+
+Use the [RAG learning series](../llm/rag/index.md) for retrieval and generation implementation, and [agent knowledge bases](ai-tooling/knowledge-bases/index.md) for source governance and serving architecture.
+
 ## Guides
 
 | Guide | Use it for |

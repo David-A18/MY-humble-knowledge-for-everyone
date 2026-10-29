@@ -158,6 +158,8 @@ When the corpus SHA changes, derived cache state should be invalidatable or rebu
 
 ## Related links
 
+- [RAG implementation series and executable baseline](../../../llm/rag/index.md)
+
 - [Retrieval and context efficiency](retrieval-and-context-efficiency.md)
 - [Provenance, trust, and freshness](provenance-trust-and-freshness.md)
 - [Security and governance](security-and-governance.md)

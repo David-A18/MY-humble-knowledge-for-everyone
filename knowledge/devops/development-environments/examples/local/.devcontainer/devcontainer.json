@@ -1,0 +1,6 @@
+{
+  "name": "Knowledge-base Python lab",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.13-bookworm",
+  "remoteUser": "vscode",
+  "postCreateCommand": "python verify.py"
+}

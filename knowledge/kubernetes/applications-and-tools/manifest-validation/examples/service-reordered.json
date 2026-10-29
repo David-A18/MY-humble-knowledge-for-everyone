@@ -1,0 +1,21 @@
+{
+    "spec": {
+        "selector": {
+            "app": "web"
+        },
+        "ports": [
+            {
+                "port": 80,
+                "targetPort": 80
+            }
+        ]
+    },
+    "metadata": {
+        "name": "web",
+        "labels": {
+            "team": "platform"
+        }
+    },
+    "kind": "Service",
+    "apiVersion": "v1"
+}

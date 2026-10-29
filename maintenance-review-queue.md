@@ -1,5 +1,18 @@
 # Maintenance review queue
 
+## Requested topic-series upkeep
+
+The user requested weekly upkeep on 2026-10-29. Start each review from current `main`; use [the publication audit](knowledge-base-audit.md) to distinguish actual checks from pending runtime evidence.
+
+| Priority | Review target | Next useful evidence |
+| --- | --- | --- |
+| High | [Istio](knowledge/kubernetes/applications-and-tools/istio/index.md), [IRSA](knowledge/cloud/aws/security/irsa-fundamentals.md) | Current security/API behavior, supported versions, and allowed/denied tests. |
+| High | [Platform tools](knowledge/kubernetes/applications-and-tools/platform-tooling/index.md), [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md), [kro](knowledge/kubernetes/applications-and-tools/kro/index.md) | Release/schema changes, controller ownership, and reproducible examples. |
+| Normal | [Observability](knowledge/kubernetes/observability/index.md), [aggregation](knowledge/databases/data-aggregation.md) | Supported nodes/protocols, collector delivery, data privacy, and replay/recovery. |
+| Normal | [CDK](knowledge/cloud/aws/cdk/index.md), [RAG](knowledge/llm/rag/index.md), [Ona/Gitpod](knowledge/devops/development-environments/index.md) | Dependency/availability changes, cross-language contracts, retrieval/citation quality, and actual runtime boundaries. |
+
+Prefer one coherent improvement per run. Rebuild the catalog after metadata changes, run all required checks, and publish only intended changes. Do not update review dates, promote drafts, or claim runtime verification merely because links still return HTTP 200. Notify only on a meaningful update, failed validation/publication, or required user action.
+
 ## Purpose
 
 Track priority article reviews, optional validation follow-ups, and reader-task testing for the knowledge base.

@@ -132,5 +132,30 @@ Common terms used across the knowledge base.
 | VolumeSnapshotLocation | Velero custom resource that defines provider-specific volume snapshot configuration. |
 | XR | Composite Resource; an instance of an XRD-defined platform API. |
 | XRD | Composite Resource Definition; the Crossplane object that defines a platform API schema. |
+| Ambient mesh | Istio deployment model using ztunnel for secure L4 transport and optional waypoint proxies for L7 processing. |
+| BM25 | Lexical relevance-ranking function used by search engines such as SQLite FTS5. |
+| CDK | AWS Cloud Development Kit; programming-language constructs that synthesize CloudFormation infrastructure. |
+| CEL | Common Expression Language; bounded expressions used by systems such as kro to connect resource inputs and outputs. |
+| cert-manager | Kubernetes certificate controller managing issuance and renewal through Certificate and Issuer APIs. |
+| Data aggregation | Combining records into summaries such as grouped counts, sums, or time-window results. |
+| Dev Container | Portable development-environment configuration using the Dev Container specification. |
+| Drift | Difference between actual state and the declared intended state. |
+| eBPF | Technology for executing verified programs at supported hook points, commonly in the Linux kernel. |
+| ESO | External Secrets Operator; reconciles external-store values into Kubernetes Secrets. |
+| FTS5 | SQLite full-text-search extension supporting indexed lexical queries and BM25 ranking. |
+| Gitpod | Cloud development-environment product lineage that evolved into Ona; distinguish Gitpod Classic configuration from current Ona workflows. |
+| Istio | Service mesh providing workload identity, transport security, traffic policy, and telemetry. |
+| kro | Kube Resource Orchestrator; composes resources into reusable Kubernetes APIs using ResourceGraphDefinitions. |
+| mTLS | Mutual TLS; both connection peers authenticate using certificates while transport is encrypted. |
+| o11y | Numeronym for observability: eleven letters between the initial o and final y. |
+| Ona | Platform evolved from Gitpod for reproducible environments and software-engineering agent workflows; availability is version-sensitive. |
+| OTLP | OpenTelemetry Protocol for transporting telemetry signals. |
+| Pixie | Kubernetes debugging/observability project using eBPF and other sources to collect supported telemetry. |
+| Regression | Previously working behavior broken by a change; configuration comparison alone cannot rule it out. |
+| Reranking | Reordering a retrieved candidate set using an additional relevance model or scoring step. |
+| ResourceGraphDefinition | kro definition containing a generated API schema and resource graph. |
+| SOPS | Tool for encrypting selected values in supported configuration/document formats. |
+| Watermark | Stream-processing estimate of event-time progress used to decide when a window is complete. |
+| Waypoint | Istio ambient proxy providing supported L7 processing for enrolled traffic. |
 
 [Back to root index](../README.md)

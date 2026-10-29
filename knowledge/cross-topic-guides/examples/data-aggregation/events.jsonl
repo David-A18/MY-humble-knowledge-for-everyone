@@ -1,0 +1,5 @@
+{"id": "a", "ts": 10, "region": "eu", "amount_cents": 100}
+{"id": "b", "ts": 20, "region": "eu", "amount_cents": 250}
+{"id": "a", "ts": 10, "region": "eu", "amount_cents": 100}
+{"id": "c", "ts": 120, "region": "eu", "amount_cents": 400}
+{"id": "late", "ts": 30, "region": "eu", "amount_cents": 999}

@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Ported the requested Istio, Kubernetes platform tools, manifest validation, IRSA, kro, observability/eBPF/Pixie, CDK, aggregation, RAG, and Ona/Gitpod learning series into the current OKF bundle, preserving newer Git/Terraform learning content.
+- Added OKF source citations, catalog/discovery coverage, educational CI workflows, and lifecycle-aware RAG retrieval that preserves draft labels and excludes deprecated concepts.
+- Added a tested read-only REST fallback for GitHub label checks, plus a publication audit and weekly maintenance priorities.
 - Added ADR-0005 and a source-side website specification for a separate static reading site built from a reviewed, pinned knowledge-base revision.
 - Added a content quality and expansion plan with page-level precision and
   explanation standards, phased coverage priorities, evidence rules, and

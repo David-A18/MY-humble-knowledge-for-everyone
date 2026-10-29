@@ -2,6 +2,10 @@
 
 Apache Kafka knowledge for event streaming architecture, topic design, operations, and cloud deployment.
 
+## Aggregation practice
+
+Apply Kafka delivery/replay concepts in the [Kubernetes aggregation lab](../../cross-topic-guides/kubernetes-data-aggregation.md), starting with [aggregation fundamentals](../data-aggregation.md).
+
 ## Articles
 
 | Article | Purpose |

@@ -2,6 +2,19 @@
 
 Practical Kubernetes notes for workloads, core objects, kubectl workflows, application tooling, troubleshooting, and operations.
 
+## Security and operations learning paths
+
+- [Istio security](applications-and-tools/istio/index.md) - Workload authentication and authorization.
+- [Manifest validation](applications-and-tools/manifest-validation/index.md) - Differences, drift, and regressions.
+- [kro](applications-and-tools/kro/index.md) - Kubernetes platform APIs.
+- [Common platform tools](applications-and-tools/platform-tooling/index.md) - Tool selection and integrations.
+- [IRSA S3 lab](../cross-topic-guides/irsa-s3-access-on-eks.md) - AWS workload permissions.
+- [Kafka aggregation lab](../cross-topic-guides/kubernetes-data-aggregation.md) - Stateful event processing.
+
+## Added learning guides
+
+- [Kubernetes observability](observability/index.md) - Focused learning material and supporting examples.
+
 ## Index
 
 | Section | Focus |

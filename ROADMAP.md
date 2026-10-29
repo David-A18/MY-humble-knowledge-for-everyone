@@ -2,6 +2,21 @@
 
 This roadmap tracks the intended growth of `engineering-knowledge-base`.
 
+## 2026-10-29 topic expansion
+
+The [new learning paths](knowledge/index.md#expanded-learning-paths) now document all ten requested topic groups in the canonical OKF bundle. Local example checks, source provenance, and unexecuted runtime boundaries are recorded in the [publication audit](knowledge-base-audit.md).
+
+| Follow-up | Completion evidence |
+| --- | --- |
+| Review draft concepts and assign ownership | A real maintainer, official sources, review scope, and a justified freshness deadline; keep drafts visible until then. |
+| Istio/IRSA/kro/manifest labs | Disposable-environment runs recording actual versions, positive/negative behavior, and cleanup. |
+| Collector/Pixie/Kafka deployment labs | Delivery/capture, outage/recovery, and persistent-state results on supported infrastructure. |
+| RAG answer quality | A selected model digest, grounded/cited answers, paraphrases, conflicts, and insufficient-evidence results. |
+| Dev Container/Ona runtime | Container startup/rebuild and, where access exists, hosted workflow evidence. |
+| Weekly quality and freshness | Focused source reviews, full validators, reproducible catalog, and validated publication to `main`. |
+
+These are follow-up evidence improvements, not claims that live cloud or reader testing occurred during authoring. Preserve the already-completed Git/Terraform/local-learning improvements when selecting further work.
+
 ## Current improvement sequence
 
 Use the [knowledge-base improvement plan](knowledge-base-improvement-plan.md) to implement the findings in the [2026-09-18 review](knowledge-base-review.md). It provides task dependencies, affected files, validation instructions, and completion criteria.

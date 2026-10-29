@@ -2,6 +2,14 @@
 
 Practical AWS knowledge for cloud architecture, networking, compute, storage, security, governance, FinOps, troubleshooting, and certification study.
 
+## Workload identity learning path
+
+Start with [IRSA fundamentals](security/irsa-fundamentals.md), [trust and permissions](security/irsa-trust-and-permissions.md), and [troubleshooting](security/irsa-troubleshooting.md); apply them in the [EKS S3 lab](../../cross-topic-guides/irsa-s3-access-on-eks.md).
+
+## Added learning guides
+
+- [AWS CDK v2](cdk/index.md) - Focused learning material and supporting examples.
+
 ## Index
 
 | Section | Focus |

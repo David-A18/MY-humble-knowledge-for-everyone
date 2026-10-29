@@ -99,6 +99,8 @@ Knowledge-base architecture supports governance through:
 
 ## Related links
 
+- [RAG implementation series and executable baseline](../../../llm/rag/index.md)
+
 - Official guidance: [OWASP GenAI Security Project](https://genai.owasp.org/)
 - Official guidance: [OWASP Top 10 for LLM and GenAI Apps 2025](https://genai.owasp.org/llm-top-10/)
 - Official guidance: [NIST AI RMF 1.0](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10)

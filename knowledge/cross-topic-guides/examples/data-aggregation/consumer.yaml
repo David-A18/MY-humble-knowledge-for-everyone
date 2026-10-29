@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: aggregate-state
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aggregator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: aggregator
+  template:
+    metadata:
+      labels:
+        app: aggregator
+    spec:
+      containers:
+        - name: aggregator
+          image: kb-aggregator:lab
+          imagePullPolicy: Never
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: kafka:9092
+          volumeMounts:
+            - name: state
+              mountPath: /state
+      volumes:
+        - name: state
+          persistentVolumeClaim:
+            claimName: aggregate-state

@@ -35,7 +35,7 @@ Use this page to choose how MongoDB-style workloads should run in or near AWS.
 - [MongoDB fundamentals](../../../databases/mongodb/fundamentals.md)
 - [MongoDB data modeling](../../../databases/mongodb/data-modeling.md)
 - [DocumentDB vs. MongoDB Atlas](documentdb-vs-mongodb-atlas.md)
-- [MongoDB documentation](https://www.mongodb.com/docs/)
+- [MongoDB database manual](https://www.mongodb.com/docs/manual/)
 - [Amazon DocumentDB documentation](https://docs.aws.amazon.com/documentdb/)
 - [Back to AWS databases](index.md)
 - [Back to AWS index](../index.md)

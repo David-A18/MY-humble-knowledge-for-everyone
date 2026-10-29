@@ -1,0 +1,39 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: service-routing
+spec:
+  steps:
+    - name: deploy-and-probe
+      try:
+        - apply:
+            file: app.yaml
+        - apply:
+            file: service.json
+        - assert:
+            resource:
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: web
+              status:
+                availableReplicas: 1
+        - command:
+            entrypoint: kubectl
+            args:
+              - --namespace
+              - ($namespace)
+              - run
+              - probe
+              - --image=curlimages/curl:8.12.1
+              - --restart=Never
+              - --attach=true
+              - --rm=true
+              - --pod-running-timeout=60s
+              - --
+              - --fail
+              - --connect-timeout
+              - "5"
+              - --max-time
+              - "10"
+              - http://web

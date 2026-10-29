@@ -4,6 +4,13 @@ Status: Initial outline
 
 Notes for tools commonly used to package, deploy, and operate Kubernetes workloads.
 
+## Added learning guides
+
+- [Kubernetes platform tooling](platform-tooling/index.md) - Focused learning material and supporting examples.
+- [Manifest comparison, drift, and regression testing](manifest-validation/index.md) - Focused learning material and supporting examples.
+- [Istio authentication and authorization](istio/index.md) - Focused learning material and supporting examples.
+- [kro: Kube Resource Orchestrator](kro/index.md) - Focused learning material and supporting examples.
+
 ## Quick path: APISIX
 
 | Need | Read |

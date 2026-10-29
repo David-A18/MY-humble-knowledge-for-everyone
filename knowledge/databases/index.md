@@ -2,6 +2,10 @@
 
 Database and data-platform knowledge for modeling, operations, reliability, performance, and cloud integration.
 
+## Added learning guides
+
+- [Data aggregation fundamentals](data-aggregation.md) - Focused learning material and supporting examples.
+
 ## Index
 
 | Section | Focus |

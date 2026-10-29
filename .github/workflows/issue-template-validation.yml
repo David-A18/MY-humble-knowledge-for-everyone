@@ -31,3 +31,6 @@ jobs:
 
       - name: Validate GitHub issue templates
         run: python scripts/validate-issue-templates.py
+
+      - name: Test GitHub label validation
+        run: python scripts/test-github-label-validator.py

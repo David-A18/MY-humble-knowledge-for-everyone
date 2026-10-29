@@ -5,6 +5,12 @@ corpus is an [Open Knowledge Format v0.2 bundle](knowledge/index.md): portable
 Markdown with structured metadata, clear navigation, and visible lifecycle
 status.
 
+## New topic series
+
+The [expanded learning paths](knowledge/index.md#expanded-learning-paths) cover Istio security, common Kubernetes tools, manifest differences and regressions, IRSA, kro, observability/eBPF/Pixie, AWS CDK, aggregation, RAG, and Ona/Gitpod. Runnable examples remain educational until their stated runtime checks are recorded.
+
+See the [publication audit](knowledge-base-audit.md) and [maintenance queue](maintenance-review-queue.md) for validation and follow-up work.
+
 ## Start reading
 
 - [Browse the knowledge base](knowledge/index.md)

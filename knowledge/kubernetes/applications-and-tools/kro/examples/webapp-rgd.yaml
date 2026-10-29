@@ -1,0 +1,51 @@
+apiVersion: kro.run/v1alpha1
+kind: ResourceGraphDefinition
+metadata:
+  name: webapp
+spec:
+  schema:
+    apiVersion: v1alpha1
+    kind: WebApp
+    scope: Namespaced
+    spec:
+      image: string | default=nginx:1.28.0-alpine
+      replicas: integer | default=1 minimum=1
+    status:
+      endpoint: ${service.spec.clusterIP}
+  resources:
+    - id: deployment
+      template:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: ${schema.metadata.name}
+        spec:
+          replicas: ${schema.spec.replicas}
+          selector:
+            matchLabels:
+              app: ${schema.metadata.name}
+          template:
+            metadata:
+              labels:
+                app: ${schema.metadata.name}
+            spec:
+              containers:
+                - name: web
+                  image: ${schema.spec.image}
+                  ports:
+                    - containerPort: 80
+                  readinessProbe:
+                    httpGet:
+                      path: /
+                      port: 80
+    - id: service
+      template:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: ${schema.metadata.name}
+        spec:
+          selector: ${deployment.spec.selector.matchLabels}
+          ports:
+            - port: 80
+              targetPort: 80

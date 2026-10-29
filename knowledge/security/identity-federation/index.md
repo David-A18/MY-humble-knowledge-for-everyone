@@ -2,6 +2,10 @@
 
 Identity federation knowledge for OIDC, token trust, external identity providers, and cloud access.
 
+## AWS workload implementation
+
+Continue with [IRSA trust](../../cloud/aws/security/irsa-trust-and-permissions.md) and the [EKS S3 lab](../../cross-topic-guides/irsa-s3-access-on-eks.md).
+
 ## Articles
 
 | Article | Purpose |

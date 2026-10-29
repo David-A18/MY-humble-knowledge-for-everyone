@@ -1,0 +1,7 @@
+{
+  "name": "kb-cdk-lab",
+  "private": true,
+  "scripts": {"test": "tsx test.ts", "synth": "tsx app.ts"},
+  "dependencies": {"aws-cdk-lib": "2.275.0", "constructs": "10.8.1"},
+  "devDependencies": {"aws-cdk": "2.1146.1", "tsx": "4.23.15"}
+}

@@ -4,6 +4,10 @@ Large language model knowledge for model behavior, prompting, retrieval, evaluat
 
 Status: Initial outline
 
+## Added learning guides
+
+- [Retrieval-augmented generation (RAG)](rag/index.md) - Focused learning material and supporting examples.
+
 ## Expected content
 
 - Prompting and context design.

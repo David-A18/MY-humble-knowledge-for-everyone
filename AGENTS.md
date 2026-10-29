@@ -49,6 +49,7 @@ python3 scripts/test-retrieval-case-validator.py
 python3 scripts/validate-retrieval-cases.py
 python3 scripts/test-issue-template-validator.py
 python3 scripts/validate-issue-templates.py
+python3 scripts/test-github-label-validator.py
 python3 scripts/check-github-labels.py --repo David-A18/MY-humble-knowledge-for-everyone
 npx markdownlint-cli2 "**/*.md"
 node scripts/test-local-link-validator.mjs

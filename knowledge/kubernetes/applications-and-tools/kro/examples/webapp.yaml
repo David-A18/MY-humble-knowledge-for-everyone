@@ -1,0 +1,7 @@
+apiVersion: kro.run/v1alpha1
+kind: WebApp
+metadata:
+  name: demo
+spec:
+  image: nginx:1.28.0-alpine
+  replicas: 1

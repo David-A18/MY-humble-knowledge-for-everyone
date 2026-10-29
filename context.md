@@ -1,5 +1,9 @@
 # Repository context
 
+## Expanded topic routes
+
+The [new learning paths](knowledge/index.md#expanded-learning-paths) use the existing OKF bundle and generated catalog. Keep source/API review distinct from runtime evidence; see the [audit](knowledge-base-audit.md). Preserve newer local learning and Terraform material while improving related topics.
+
 ## Purpose
 
 `engineering-knowledge-base` is a public, Git-backed collection of practical
@@ -44,6 +48,7 @@ Use the official [OKF v0.2 specification](https://github.com/GoogleCloudPlatform
 - [`scripts/build-knowledge-catalog.py`](scripts/build-knowledge-catalog.py) derives a deterministic catalog for AI retrieval and maintenance tooling.
 - [`scripts/validate-command-paths.py`](scripts/validate-command-paths.py) rejects fenced examples that still reference pre-OKF root paths.
 - [`scripts/validate-retrieval-cases.py`](scripts/validate-retrieval-cases.py) keeps golden retrieval tasks aligned with real concepts and source IDs.
+- [`scripts/check-github-labels.py`](scripts/check-github-labels.py) compares declared labels with GitHub; when `gh` is absent it uses the read-only REST API. Its tests cover pagination and failure reporting without credentials.
 - [`scripts/validate-local-links.mjs`](scripts/validate-local-links.mjs) enforces valid internal links and reachability, a stricter rule than OKF consumer conformance.
 - Markdown lint, issue-template validation, GitHub label checks, link validation, Terraform format checks, and OKF validation run in CI on `develop` and `main`.
 

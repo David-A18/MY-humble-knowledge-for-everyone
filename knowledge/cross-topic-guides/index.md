@@ -2,6 +2,12 @@
 
 Guides that connect multiple engineering areas into practical workflows.
 
+## Added learning guides
+
+- [IRSA S3 access on EKS: positive and negative tests](irsa-s3-access-on-eks.md) - Focused learning material and supporting examples.
+- [Kafka data aggregation on Kubernetes](kubernetes-data-aggregation.md) - Focused learning material and supporting examples.
+- [Cross-topic runnable examples](examples/index.md) - Focused learning material and supporting examples.
+
 ## Quick paths
 
 | Topic | Start here | Related foundations |

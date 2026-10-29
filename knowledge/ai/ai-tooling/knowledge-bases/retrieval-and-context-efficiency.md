@@ -123,6 +123,8 @@ A useful target for this repository's example architecture is that the expected 
 
 ## Related links
 
+- [RAG implementation series and executable baseline](../../../llm/rag/index.md)
+
 - [Reference architecture](reference-architecture.md)
 - [Evaluation and quality](evaluation-and-quality.md)
 - [Security and governance](security-and-governance.md)

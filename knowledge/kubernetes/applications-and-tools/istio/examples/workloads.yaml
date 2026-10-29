@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: allowed
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: denied
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.28.0-alpine
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: allowed
+spec:
+  serviceAccountName: allowed
+  containers:
+    - name: client
+      image: curlimages/curl:8.12.1
+      command: [sh, -c, "sleep 3600"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: denied
+spec:
+  serviceAccountName: denied
+  containers:
+    - name: client
+      image: curlimages/curl:8.12.1
+      command: [sh, -c, "sleep 3600"]

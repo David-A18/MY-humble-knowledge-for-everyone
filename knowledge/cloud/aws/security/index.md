@@ -4,6 +4,12 @@ Status: Initial outline
 
 Security practices, detection, encryption, and operational controls on AWS.
 
+## Added learning guides
+
+- [IRSA fundamentals and credential flow](irsa-fundamentals.md) - Focused learning material and supporting examples.
+- [IRSA trust and permission policies](irsa-trust-and-permissions.md) - Focused learning material and supporting examples.
+- [IRSA troubleshooting and operational security](irsa-troubleshooting.md) - Focused learning material and supporting examples.
+
 ## Articles
 
 | Article | Purpose |

@@ -7,6 +7,9 @@ import argparse
 import json
 import subprocess
 import sys
+import os
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 try:
@@ -21,7 +24,7 @@ LABELS_FILE = ROOT / ".github" / "labels.yml"
 
 
 def load_declared_labels(path: Path) -> dict[str, dict[str, str]]:
-    data = yaml.safe_load(path.read_text())
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(data, list):
         raise SystemExit(f"{path.relative_to(ROOT)} must be a list")
 
@@ -36,6 +39,39 @@ def load_declared_labels(path: Path) -> dict[str, dict[str, str]]:
             raise SystemExit(f"{path.relative_to(ROOT)} labels need name, color, and description")
         labels[name] = {"color": color.lower(), "description": description}
     return labels
+
+
+def fetch_github_labels_rest(repo: str) -> dict[str, dict[str, str]]:
+    """Use GitHub's read-only REST API when the optional gh CLI is absent."""
+    labels: dict[str, dict[str, str]] = {}
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    for page in range(1, 11):
+        headers = {
+            "Accept": "application/vnd.github+json",
+            "User-Agent": "engineering-knowledge-base-label-validator",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        request = urllib.request.Request(
+            f"https://api.github.com/repos/{repo}/labels?per_page=100&page={page}",
+            headers=headers,
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                data = json.load(response)
+        except (urllib.error.URLError, json.JSONDecodeError) as exc:
+            raise SystemExit(f"GitHub label REST check failed: {exc}") from exc
+        if not isinstance(data, list):
+            raise SystemExit("GitHub labels response must be a list")
+        for item in data:
+            labels[item["name"]] = {
+                "color": item.get("color", "").lower(),
+                "description": item.get("description") or "",
+            }
+        if len(data) < 100:
+            return labels
+    raise SystemExit("GitHub label check exceeds the 1,000-label safety limit")
 
 
 def fetch_github_labels(repo: str) -> dict[str, dict[str, str]]:
@@ -57,9 +93,10 @@ def fetch_github_labels(repo: str) -> dict[str, dict[str, str]]:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
+            encoding="utf-8",
         )
-    except FileNotFoundError as exc:
-        raise SystemExit("GitHub CLI `gh` is required for live label checks.") from exc
+    except FileNotFoundError:
+        return fetch_github_labels_rest(repo)
     except subprocess.CalledProcessError as exc:
         raise SystemExit(exc.stderr.strip() or "gh label list failed") from exc
 
