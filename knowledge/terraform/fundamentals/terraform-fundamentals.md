@@ -58,6 +58,12 @@ Understand the Terraform model before using it to manage cloud or shared infrast
 
 Use [Terraform local state lifecycle](../examples/local-state-lifecycle/local-state-lifecycle.md). It uses the built-in `terraform_data` resource, so you can practice initialization, planning, state inspection, change review, and cleanup without cloud credentials.
 
+## Continue the learning path
+
+- [Inputs, locals, and outputs](../language/variables-locals-and-outputs.md) — design a clear module contract.
+- [Module and workspace lab](../examples/module-workspace-lab/index.md) — execute tests, stable-key changes, and an ID-preserving refactor locally.
+- [Provider dependencies](providers-and-dependency-locking.md) — distinguish package selection, aliases, and state locking.
+
 ## Related links
 
 - [Core Terraform workflow](../commands/core-workflow.md)

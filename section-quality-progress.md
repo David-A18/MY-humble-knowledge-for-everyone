@@ -2,7 +2,29 @@
 
 Review snapshot: 2026-10-29. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: AWS networking
+## Current batch: Terraform
+
+Reviewed all existing Terraform indexes and direct concepts, retained the workflow/state/fundamentals/local learning material, and added twelve focused concepts plus five code/lab indexes. The fourteen indexed Terraform directories now have explicit routes for language contracts, stable keys, modules, provider requirements/aliases, dependency locks, environment layout, workspaces, remote backends, diagnosis, review/CI, and practice. Reviewed means content/navigation/evidence assessment; the section is not uniformly runtime-verified production guidance.
+
+Executed locally with Python 3.13.17 and Terraform 1.17.1 on Windows amd64. The Terraform archive SHA256 matched HashiCorp's published HTTPS list; its detached checksum signature was not verified. The provider lab installed hashicorp/local 2.9.1 with Terraform reporting HashiCorp signing; dependency checksum preparation included Windows amd64 and Linux amd64. Hosted CI runs the two new labs on Linux for each published revision; do not infer that result from local execution.
+
+The module lab passes three Terraform contracts (one apply and two expected validation failures), rejects an invalid CLI plan with exit 1, observes changed/no-change outcomes 2/0, adds a stable key without replacing existing records, preserves two object IDs across address moves, separates default/preview state, and destroys both states' objects before deleting preview. The provider lab verifies its alias mapping, a local JSON artifact, locked installation, a no-change plan, destruction, and empty state. The original beginner lifecycle also passes init/validate/plan/apply/state/change/destroy with the new CLI baseline.
+
+All new concepts remain draft/unassigned. Remote backend migration, competing writers, cloud IAM/provider behavior, provider-specific imports, real drift/recovery, hosted credentials, and artifact permission/approval checks remain explicit follow-ups. S3 backend snippets are source reviewed, not deployed; current documentation's opt-in S3 lock files and deprecated DynamoDB locking are distinguished from provider dependency locks.
+
+### Terraform validation
+
+| Check | Recorded result |
+| --- | --- |
+| Repository checks | All fifteen required validator/test commands pass, including live GitHub label comparison. |
+| Markdown and navigation | 401 files lint cleanly; links, heading fragments, parent indexes, and reachability pass. |
+| Catalog and retrieval definitions | 244 concepts; reproducible catalog; 47 retrieval definitions validate. |
+| External URLs | All 490 checked unique URLs returned HTTP 200 after redirects; external fragments were not tested. |
+| Retrieval execution | All eleven Terraform questions retrieve their expected route among the top five chunks; a fresh absent token returns `NO_EVIDENCE`. This is lexical retrieval evidence, not model-answer quality. |
+| Local examples | Both new lab runners and the existing local state lifecycle pass with Terraform 1.17.1; provider installation, state/file cleanup, and no external resource creation are distinguished from remote acceptance. |
+| CI change | The Terraform workflow pins 1.17.1, disables the CLI wrapper, and runs both local labs. Hosted results must be inspected for the exact published commit. |
+
+## Previous batch: AWS networking
 
 Scope: reviewed all three prior direct concepts (security groups, stateful networking, CloudFront), replaced the outline index with a learning path, and added seven focused concepts. The ten-guide section now covers address planning, effective routes, zonal/regional NAT, endpoints and private DNS, security boundaries, VPC/hybrid connectivity selection, a read-only lab, and symptom-driven diagnostics.
 
@@ -53,7 +75,7 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 | Priority | Section / task | Completion criterion |
 | --- | --- | --- |
 | P2 | [AWS networking follow-up](knowledge/cloud/aws/networking/index.md) | Execute the authorized read-only lab and controlled traffic/failover drills; expand transit/hybrid deployment and endpoint-policy recovery procedures. |
-| P1 | [Terraform](knowledge/terraform/index.md) | Preserve the existing workflow/state/local lab; add focused module/provider/workspace guidance and remote-backend recovery boundaries instead of duplicating fundamentals. |
+| P2 | [Terraform follow-ups](knowledge/terraform/index.md) | Execute bounded remote lock/migration/restore, provider import/drift, and hosted credential/artifact drills; preserve the local lab contracts and cleanup evidence. |
 | P1 | [FinOps](knowledge/finops/index.md) | Build on cost allocation and AWS tagging; add budgets/anomaly response and a measured rightsizing example with explicit ownership and limits. |
 | P2 | [AWS security](knowledge/cloud/aws/security/index.md) | Review existing OIDC/IRSA material and EKS comparison; record trust/permission evidence gaps before adding more identity summaries. |
 | P2 | [Core reader journeys](knowledge/start-here.md) | Follow prerequisites and handoffs, record broken/confusing routes, and improve only evidenced gaps. |
@@ -155,15 +177,20 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [security](knowledge/security/index.md) | 0 | Pending |
 | [solutions-architect](knowledge/solutions-architect/index.md) | 1 | Pending |
 | [templates](knowledge/templates/index.md) | 5 | Pending |
-| [terraform/best-practices](knowledge/terraform/best-practices/index.md) | 0 | Pending |
-| [terraform/commands](knowledge/terraform/commands/index.md) | 1 | Pending |
-| [terraform/examples](knowledge/terraform/examples/index.md) | 0 | Pending |
-| [terraform/examples/local-state-lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md) | 1 | Pending |
-| [terraform/fundamentals](knowledge/terraform/fundamentals/index.md) | 2 | Pending |
-| [terraform](knowledge/terraform/index.md) | 0 | Pending |
-| [terraform/language](knowledge/terraform/language/index.md) | 0 | Pending |
-| [terraform/project-structure](knowledge/terraform/project-structure/index.md) | 0 | Pending |
-| [terraform/troubleshooting](knowledge/terraform/troubleshooting/index.md) | 0 | Pending |
+| [terraform/best-practices](knowledge/terraform/best-practices/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/commands](knowledge/terraform/commands/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples](knowledge/terraform/examples/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/local-state-lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/module-workspace-lab/child](knowledge/terraform/examples/module-workspace-lab/child/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/module-workspace-lab](knowledge/terraform/examples/module-workspace-lab/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/module-workspace-lab/tests](knowledge/terraform/examples/module-workspace-lab/tests/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/provider-alias-lab/child](knowledge/terraform/examples/provider-alias-lab/child/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/provider-alias-lab](knowledge/terraform/examples/provider-alias-lab/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/fundamentals](knowledge/terraform/fundamentals/index.md) | 5 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform](knowledge/terraform/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/language](knowledge/terraform/language/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/project-structure](knowledge/terraform/project-structure/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/troubleshooting](knowledge/terraform/troubleshooting/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
 
 ## Related planning
 

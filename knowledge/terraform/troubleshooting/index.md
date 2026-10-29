@@ -1,22 +1,15 @@
 # Terraform troubleshooting
 
-Status: Initial outline
+Preserve the exact error and selected context before changing dependencies, state, or locks.
 
-Diagnostic workflows for Terraform failures and unexpected plans.
+## Routes
 
-## Expected content
+| Guide | Outcome |
+| --- | --- |
+| [Failures and unexpected plans](failures-and-unexpected-plans.md) | Initialization, aliases, backend/workspace confusion, address changes, drift, and import ownership. |
 
-- Provider initialization failures.
-- State lock failures.
-- Drift investigation.
-- Failed imports.
-- Dependency graph surprises.
+## Evidence and follow-ups
 
-## First checks
+The section was reviewed on 2026-10-29. Local execution uses Terraform 1.17.1; cloud-backed imports, remote locks/migration, hosted CI credentials, and provider-specific failure drills remain follow-up evidence. The guides identify their individual scope and lifecycle status.
 
-- [ ] Confirm Terraform version.
-- [ ] Confirm backend and workspace.
-- [ ] Run `terraform fmt -check` and `terraform validate`.
-- [ ] Inspect provider and module changes.
-
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform](../index.md)

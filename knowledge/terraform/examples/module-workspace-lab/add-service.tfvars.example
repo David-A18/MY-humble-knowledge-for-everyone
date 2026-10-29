@@ -1,0 +1,5 @@
+services = {
+  api    = { version = "1.0.0", replicas = 2 }
+  worker = { version = "1.0.0", replicas = 1 }
+  batch  = { version = "1.0.0", replicas = 1 }
+}

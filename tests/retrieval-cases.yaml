@@ -214,3 +214,72 @@ cases:
   - knowledge/cloud/aws/networking/cloudfront.md
   required_source_ids:
   - cache-policy
+- id: terraform-module-contracts
+  question: How should Terraform roots compose child modules and preserve addresses
+    during refactoring?
+  expected_paths:
+  - knowledge/terraform/project-structure/modules-and-composition.md
+  required_source_ids:
+  - tf-moved
+- id: terraform-provider-aliases
+  question: How do provider requirements, root aliases, and child configuration_aliases
+    differ?
+  expected_paths:
+  - knowledge/terraform/fundamentals/providers-and-dependency-locking.md
+  required_source_ids:
+  - tf-module-providers
+- id: terraform-provider-lock
+  question: Does .terraform.lock.hcl lock module versions or state concurrency?
+  expected_paths:
+  - knowledge/terraform/fundamentals/providers-and-dependency-locking.md
+  required_source_ids:
+  - tf-lock-file
+- id: terraform-workspace-security
+  question: Do CLI workspaces create separate credentials or access-control boundaries
+    for production?
+  expected_paths:
+  - knowledge/terraform/fundamentals/cli-workspaces-and-environment-isolation.md
+  required_source_ids:
+  - tf-workspaces
+- id: terraform-backend-reconfigure
+  question: Does terraform init -reconfigure migrate existing state and how does S3
+    lockfile locking differ?
+  expected_paths:
+  - knowledge/terraform/fundamentals/remote-backends-and-locking.md
+  required_source_ids:
+  - tf-init
+- id: terraform-sensitive-values
+  question: Does marking a Terraform output sensitive keep it out of state and plan
+    files?
+  expected_paths:
+  - knowledge/terraform/language/variables-locals-and-outputs.md
+  required_source_ids:
+  - tf-sensitive
+- id: terraform-stable-keys
+  question: Why use stable non-sensitive for_each keys and when do check blocks only
+    warn?
+  expected_paths:
+  - knowledge/terraform/language/expressions-and-stable-instance-keys.md
+  required_source_ids:
+  - tf-validation
+- id: terraform-plan-status
+  question: How should CI handle terraform plan -detailed-exitcode statuses 0, 1, and
+    2?
+  expected_paths:
+  - knowledge/terraform/commands/plan-exit-codes-and-ci.md
+  required_source_ids:
+  - tf-plan
+- id: terraform-local-module-lab
+  question: Where can I test module contracts, moved addresses, and workspace separation
+    without cloud access?
+  expected_paths:
+  - knowledge/terraform/examples/module-workspace-lab/module-workspace-lab.md
+  required_source_ids:
+  - tf-tests
+- id: terraform-local-provider-lab
+  question: How can I exercise a provider alias and pinned lock file using a disposable
+    local artifact?
+  expected_paths:
+  - knowledge/terraform/examples/provider-alias-lab/provider-alias-lab.md
+  required_source_ids:
+  - local-file

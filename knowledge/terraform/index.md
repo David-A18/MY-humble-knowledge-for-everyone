@@ -2,6 +2,12 @@
 
 Practical Terraform notes for infrastructure as code, module design, commands, state, troubleshooting, and examples.
 
+## Suggested learning sequence
+
+Start with [fundamentals](fundamentals/terraform-fundamentals.md) and the [first local state lab](examples/local-state-lifecycle/index.md). Continue with [typed contracts](language/variables-locals-and-outputs.md), [modules](project-structure/modules-and-composition.md), and the [module/workspace lab](examples/module-workspace-lab/index.md). Then study [providers and dependency locks](fundamentals/providers-and-dependency-locking.md), run the [provider alias lab](examples/provider-alias-lab/index.md), and compare [backends](fundamentals/remote-backends-and-locking.md) with [environment boundaries](project-structure/environment-layouts.md).
+
+For operations, use [failure diagnosis](troubleshooting/failures-and-unexpected-plans.md), [plan exit codes](commands/plan-exit-codes-and-ci.md), and the [review checklist](best-practices/review-and-automation-checklist.md). Local checks use Terraform 1.17.1; live cloud/backend acceptance remains explicit follow-up evidence.
+
 ## Index
 
 | Section | Focus |

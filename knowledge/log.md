@@ -2,6 +2,10 @@
 
 ## 2026-10-29
 
+- **Terraform quality pass**: Added twelve focused concepts for language, modules, providers/locks, workspace isolation, backends, review/CI, troubleshooting, and two local labs. Updated every Terraform index and retained the existing workflow/state learning route.
+- **Executed Terraform evidence**: Terraform 1.17.1 local runs cover contracts and expected failures, plan statuses, stable keys, preserved IDs after moved blocks, workspace state separation, provider alias wiring, and cleanup; rechecked the original state lifecycle. Remote/cloud behavior remains explicit follow-up work.
+- **Terraform CI**: Pinned the CLI teaching baseline and added both local lab runners to the existing Terraform workflow.
+
 - **AWS networking quality pass**: Added VPC/subnet, effective-route, egress/NAT, endpoint/private-DNS, connectivity selection, diagnostics, and read-only inspection guides; expanded security groups, stateful controls, and CloudFront with official sources and practical verification boundaries.
 - **Current AWS behavior**: Distinguished regional/zonal NAT, gateway/interface endpoints, modeled reachability/live traffic, and CloudFront cache isolation. Recorded CLI output-skeleton limits without claiming cloud execution.
 

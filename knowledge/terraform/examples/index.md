@@ -1,20 +1,17 @@
 # Terraform examples
 
-Status: Draft
+Use disposable local copies. These examples practice state, modules, aliases, and files without cloud provisioning.
 
-Practical examples for Terraform configuration and operational workflows.
+## Routes
 
-## Examples
-
-| Example | Purpose |
+| Guide | Outcome |
 | --- | --- |
-| [Local state lifecycle](local-state-lifecycle/index.md) | Learn init, validate, plan, apply, state inspection, change, and destroy without a cloud account. |
+| [First local state lifecycle](local-state-lifecycle/index.md) | The beginner init/plan/apply/inspect/change/destroy route. |
+| [Modules and workspaces](module-workspace-lab/index.md) | Validated inputs, stable keys, tests, ID-preserving refactor, and two local states. |
+| [Provider aliases and lock file](provider-alias-lab/index.md) | Pinned local provider, explicit child mapping, a local artifact, and cleanup. |
 
-## Expected future content
+## Evidence and follow-ups
 
-- AWS networking examples.
-- S3 backend examples.
-- Module examples.
-- GitHub Actions validation examples.
+The section was reviewed on 2026-10-29. Local execution uses Terraform 1.17.1; cloud-backed imports, remote locks/migration, hosted CI credentials, and provider-specific failure drills remain follow-up evidence. The guides identify their individual scope and lifecycle status.
 
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform](../index.md)

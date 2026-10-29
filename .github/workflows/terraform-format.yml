@@ -20,6 +20,9 @@ jobs:
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.17.1
+          terraform_wrapper: false
 
       - name: Check Terraform formatting
         run: |
@@ -28,3 +31,9 @@ jobs:
             exit 0
           fi
           terraform fmt -recursive -check knowledge/terraform
+
+      - name: Exercise local module, refactor, and workspace contracts
+        run: python3 knowledge/terraform/examples/module-workspace-lab/validate-lab.py --terraform terraform
+
+      - name: Exercise local provider alias and dependency lock
+        run: python3 knowledge/terraform/examples/provider-alias-lab/validate-lab.py --terraform terraform

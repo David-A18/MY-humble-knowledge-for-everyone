@@ -31,7 +31,7 @@ This exercise does not require a cloud account. It uses Terraform's built-in `te
 - Git and a terminal.
 - A disposable local directory.
 
-This tutorial was previously executed with Terraform v1.13.1. It remains `draft` until a maintainer records a new structured verification entry.
+This tutorial was previously executed with Terraform v1.13.1. Its local init/validate/plan/apply/change/destroy lifecycle was rechecked on 2026-10-29 with Terraform 1.17.1 in a disposable directory. It remains `draft`; the local execution is not a maintainer approval or cloud/backend validation.
 
 ## Files
 
@@ -137,6 +137,11 @@ Expected condition: `terraform state list` prints no managed resources.
 - Which command showed the exact address `terraform_data.release`?
 - Why is state ignored even though this exercise has no secrets?
 - What does the plan report before apply, after the version change, and after destroy?
+
+## Next local exercises
+
+- [Module and workspace lab](../module-workspace-lab/index.md) — learn typed contracts, stable keys, tests, refactors, and separate local states.
+- [Provider alias lab](../provider-alias-lab/index.md) — learn an installed provider and child alias mapping with a local artifact.
 
 ## Related links
 

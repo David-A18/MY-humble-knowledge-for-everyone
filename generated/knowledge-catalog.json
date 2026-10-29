@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 232,
+  "concept_count": 244,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -4133,6 +4133,29 @@
       "type": "Template"
     },
     {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Apply concrete review gates to Terraform dependencies, operating context, plans, tests, secrets, and cleanup.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/best-practices/review-and-automation-checklist.md",
+      "source_ids": [
+        "tf-lock-file",
+        "tf-plan",
+        "tf-tests",
+        "tf-test-cli",
+        "tf-sensitive"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "ci",
+        "review"
+      ],
+      "title": "Review and automate Terraform changes",
+      "type": "How-to Guide"
+    },
+    {
       "audience": "Beginning platform engineer",
       "description": "Document the standard command flow for making and reviewing Terraform changes.",
       "maintainer": "unassigned",
@@ -4158,6 +4181,27 @@
       "type": "How-to Guide"
     },
     {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Handle Terraform plan result codes correctly and preserve the distinction between static validation, real plans, tests, and apply approval.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/commands/plan-exit-codes-and-ci.md",
+      "source_ids": [
+        "tf-plan",
+        "tf-tests",
+        "tf-test-cli"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "plan",
+        "ci"
+      ],
+      "title": "Plan exit codes and CI boundaries",
+      "type": "How-to Guide"
+    },
+    {
       "audience": "Beginning platform engineer",
       "description": "Learn Terraform initialization, validation, planning, local state inspection, change review, and cleanup without a cloud account.",
       "maintainer": "unassigned",
@@ -4177,6 +4221,116 @@
       ],
       "title": "Terraform local state lifecycle",
       "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Execute a provider-free Terraform module contract, reject invalid inputs, preserve IDs during a refactor, and compare isolated CLI states.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/examples/module-workspace-lab/module-workspace-lab.md",
+      "source_ids": [
+        "tf-tests",
+        "tf-for-each",
+        "tf-moved",
+        "tf-workspaces"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "lab",
+        "modules",
+        "workspaces"
+      ],
+      "title": "Local modules, keys, refactors, and workspaces lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Install a pinned signed provider, pass a declared alias into a child module, create one local artifact, and verify cleanup.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/examples/provider-alias-lab/provider-alias-lab.md",
+      "source_ids": [
+        "tf-providers",
+        "tf-module-providers",
+        "tf-lock-file",
+        "local-file"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "lab",
+        "providers",
+        "dependency-locking"
+      ],
+      "title": "Local provider alias and lock-file lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Choose CLI workspaces only when separate state fits the same trust boundary, and verify the selected state before operations.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/fundamentals/cli-workspaces-and-environment-isolation.md",
+      "source_ids": [
+        "tf-workspaces",
+        "tf-s3-backend"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "workspaces",
+        "state"
+      ],
+      "title": "CLI workspaces and environment isolation",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Distinguish provider requirements, configured aliases, module wiring, and reviewed dependency selections.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/fundamentals/providers-and-dependency-locking.md",
+      "source_ids": [
+        "tf-providers",
+        "tf-module-providers",
+        "tf-lock-file",
+        "local-file"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "providers",
+        "dependency-locking"
+      ],
+      "title": "Providers and dependency locking",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Design shared Terraform state storage and distinguish backend initialization, migration, locking, and recovery responsibilities.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/fundamentals/remote-backends-and-locking.md",
+      "source_ids": [
+        "tf-backends",
+        "tf-s3-backend",
+        "tf-init"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "backends",
+        "s3",
+        "locking"
+      ],
+      "title": "Remote backends and state locking",
+      "type": "Explanation"
     },
     {
       "audience": "Beginning platform engineer",
@@ -4229,6 +4383,115 @@
       ],
       "title": "Terraform fundamentals",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Choose Terraform collection expressions and resource keys that preserve identity across ordinary configuration changes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/language/expressions-and-stable-instance-keys.md",
+      "source_ids": [
+        "tf-for-each",
+        "tf-dynamic",
+        "tf-moved",
+        "tf-validation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "for-each",
+        "hcl"
+      ],
+      "title": "Expressions and stable instance keys",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Design typed Terraform module inputs, derived values, and useful outputs without confusing redaction with secret protection.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/language/variables-locals-and-outputs.md",
+      "source_ids": [
+        "tf-variables",
+        "tf-locals",
+        "tf-outputs",
+        "tf-sensitive"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "hcl",
+        "module-contracts"
+      ],
+      "title": "Variables, locals, and outputs",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Choose Terraform root, module, backend, and environment boundaries by credentials, ownership, blast radius, and release cadence.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/project-structure/environment-layouts.md",
+      "source_ids": [
+        "tf-workspaces",
+        "tf-backends",
+        "tf-modules"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "layout",
+        "environments"
+      ],
+      "title": "Environment layouts and state ownership",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Build focused Terraform module contracts, pass provider context deliberately, and refactor addresses without unintended replacement.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/project-structure/modules-and-composition.md",
+      "source_ids": [
+        "tf-modules",
+        "tf-module-sources",
+        "tf-moved",
+        "tf-module-providers"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "modules",
+        "composition"
+      ],
+      "title": "Modules and composition",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and platform practitioners",
+      "description": "Locate initialization, validation, state-context, dependency, and identity problems before using state-mutating recovery commands.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/terraform/troubleshooting/failures-and-unexpected-plans.md",
+      "source_ids": [
+        "tf-init",
+        "tf-plan",
+        "tf-moved",
+        "tf-module-providers"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "troubleshooting",
+        "plans"
+      ],
+      "title": "Terraform failures and unexpected plans",
+      "type": "Troubleshooting Guide"
     }
   ]
 }

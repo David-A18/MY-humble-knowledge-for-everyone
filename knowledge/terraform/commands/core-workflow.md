@@ -47,7 +47,7 @@ Page type: Reference
 Maintainer: Unassigned
 Last substantive review: 2026-09-21
 Applicable versions: Terraform CLI v1.16 fmt, init, validate, plan, apply, providers lock, and dependency lock documentation; linked local exercise previously executed with Terraform v1.13.1
-Validation evidence: Source reviewed against official HashiCorp Terraform documentation on 2026-09-21. Terraform CLI is not installed in this workspace, so this pass did not re-execute the local exercise.
+Validation evidence: Source reviewed against official HashiCorp Terraform documentation on 2026-09-21. Terraform CLI was unavailable during that 2026-09-21 pass. A separate 2026-10-29 local recheck used Terraform 1.17.1; see the executed local exercises and the section progress record. This is not remote backend or cloud execution evidence.
 Known limitations: This page describes the core command workflow and review gates. Provider-specific credentials, backend migration, remote execution, policy checks, and cloud-side permissions still require environment runbooks.
 Next review: 2026-12-21 or after a relevant Terraform CLI workflow, provider lock, plan, or apply behavior change
 
@@ -262,6 +262,13 @@ the review needs provider behavior, state refresh, or permission validation.
 ## Local practice exercise
 
 Use [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md) to run the command flow without a cloud account.
+
+## Expanded operational routes
+
+- [Provider dependencies](../fundamentals/providers-and-dependency-locking.md).
+- [CLI workspaces and isolation](../fundamentals/cli-workspaces-and-environment-isolation.md).
+- [Remote backends and locking](../fundamentals/remote-backends-and-locking.md).
+- [Failure diagnosis](../troubleshooting/failures-and-unexpected-plans.md).
 
 ## Related links
 

@@ -1,19 +1,16 @@
 # Terraform language
 
-Status: Initial outline
+Use typed contracts and clear expressions before adding resource-level complexity.
 
-Notes for writing clear Terraform configuration in HCL.
+## Routes
 
-## Expected content
+| Guide | Outcome |
+| --- | --- |
+| [Variables, locals, and outputs](variables-locals-and-outputs.md) | Typed inputs, validation, derived values, public contracts, and sensitive data. |
+| [Expressions and stable keys](expressions-and-stable-instance-keys.md) | Collections, for_each/count, unknowns, dynamic blocks, and refactor identity. |
 
-- Variables, locals, and outputs.
-- Type constraints.
-- Expressions and functions.
-- Dynamic blocks.
-- Validation rules.
+## Evidence and follow-ups
 
-## Official documentation
+The section was reviewed on 2026-10-29. Local execution uses Terraform 1.17.1; cloud-backed imports, remote locks/migration, hosted CI credentials, and provider-specific failure drills remain follow-up evidence. The guides identify their individual scope and lifecycle status.
 
-- [Terraform language documentation](https://developer.hashicorp.com/terraform/language)
-
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform](../index.md)

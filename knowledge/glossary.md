@@ -129,6 +129,9 @@ Common terms used across the knowledge base.
 | Tagging strategy | A consistent scheme for metadata used in ownership, cost allocation, automation, and governance. |
 | Task definition | Amazon ECS versioned blueprint that describes container images, CPU, memory, networking, IAM roles, logging, secrets, and volumes for a task. |
 | Task role | IAM role associated with an ECS task that grants application containers permission to call AWS APIs. |
+| Provider alias | Named Terraform provider configuration passed explicitly to resources/modules; see [provider requirements and wiring](terraform/fundamentals/providers-and-dependency-locking.md). |
+| State lock | Backend concurrency mechanism intended to prevent overlapping Terraform state writers; distinct from the [provider dependency lock file](terraform/fundamentals/remote-backends-and-locking.md). |
+| Terraform CLI workspace | Separate state selection for one configuration/backend; it does not establish a separate credential or access-control boundary. See [workspace isolation](terraform/fundamentals/cli-workspaces-and-environment-isolation.md). |
 | Tool | A callable capability exposed to an AI model or agent so it can query data, perform computation, or take an action. |
 | Tooling cluster | Kubernetes cluster dedicated to platform tools such as GitOps, observability, policy, CI/CD runners, or developer experience services. |
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |

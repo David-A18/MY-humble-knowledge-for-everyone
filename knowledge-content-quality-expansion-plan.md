@@ -24,7 +24,7 @@ content as a verified fact.
 
 The original 2026-09-21 baseline recorded 161 concepts: 151 draft and 10 stable, with 26 freshness deadlines and no assigned maintainer. That is historical evidence, not the current inventory.
 
-After the topic expansion, Kubernetes troubleshooting, and AWS networking passes, the catalog contains 232 concepts: 222 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 99 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
+After the topic, Kubernetes troubleshooting, AWS networking, and Terraform passes, the catalog contains 244 concepts: 234 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 104 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
 
 The repository already provides the foundations this plan will use:
 
@@ -276,23 +276,23 @@ For every checked section, confirm all of the following:
 
 ### Terraform
 
-- [ ] [Terraform](knowledge/terraform/index.md) — core workflow, state safety,
+- [x] [Terraform](knowledge/terraform/index.md) — core workflow, state safety,
   learning progression, and links to provider-specific material.
-  - [ ] [Terraform best practices](knowledge/terraform/best-practices/index.md)
+  - [x] [Terraform best practices](knowledge/terraform/best-practices/index.md)
     — scope, exceptions, policy, security, and collaboration practices.
-  - [ ] [Terraform commands](knowledge/terraform/commands/index.md) — command
+  - [x] [Terraform commands](knowledge/terraform/commands/index.md) — command
     state changes, plan review, permissions, expected results, and recovery.
-  - [ ] [Terraform examples](knowledge/terraform/examples/index.md) — runnable
+  - [x] [Terraform examples](knowledge/terraform/examples/index.md) — runnable
     assumptions, local safety, validation, and cleanup.
-    - [ ] [Local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md)
+    - [x] [Local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md)
       — tutorial precision, state inspection, failure modes, and destroy proof.
-  - [ ] [Terraform fundamentals](knowledge/terraform/fundamentals/index.md) —
+  - [x] [Terraform fundamentals](knowledge/terraform/fundamentals/index.md) —
     providers, resources, state, modules, variables, and lifecycle model.
-  - [ ] [Terraform language](knowledge/terraform/language/index.md) — syntax,
+  - [x] [Terraform language](knowledge/terraform/language/index.md) — syntax,
     type behavior, expressions, and version-sensitive references.
-  - [ ] [Terraform project structure](knowledge/terraform/project-structure/index.md)
+  - [x] [Terraform project structure](knowledge/terraform/project-structure/index.md)
     — repository layout, module boundaries, environments, and ownership.
-  - [ ] [Terraform troubleshooting](knowledge/terraform/troubleshooting/index.md)
+  - [x] [Terraform troubleshooting](knowledge/terraform/troubleshooting/index.md)
     — diagnostics, state safety, drift, locking, and escalation paths.
 
 ### Data, migration, security, and operations

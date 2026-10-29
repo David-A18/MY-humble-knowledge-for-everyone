@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Expanded Terraform with twelve focused concepts, two executable local labs, typed contract tests, workspace/refactor checks, and a signed/pinned local-provider alias exercise. CI runs the new labs with Terraform 1.17.1.
+- Rechecked the original local Terraform lifecycle and replaced outline navigation with complete learning/operations routes while retaining remote/cloud evidence gaps.
+
 - Expanded AWS networking to ten source-backed guides, including a read-only inspection lab, current NAT availability modes, private endpoints/DNS, connected-network choices, diagnostics, and stronger CloudFront/security guidance.
 
 - Expanded Kubernetes troubleshooting to eleven source-backed guides covering Service/DNS, scheduling, images, persistent volumes, Gateway API/TLS, rollouts, crashes, APISIX, and kind.

@@ -1,22 +1,15 @@
 # Terraform best practices
 
-Status: Initial outline
+Review changes against their operating context and validate the specific claim each check supports.
 
-Maintainability and safety practices for Terraform projects.
+## Routes
 
-## Expected content
+| Guide | Outcome |
+| --- | --- |
+| [Review and automation](review-and-automation-checklist.md) | Dependency, static/test, plan, credential, artifact, apply, and cleanup gates. |
 
-- Module design principles.
-- Provider version pinning.
-- Plan review habits.
-- Remote state safety.
-- Secrets handling.
+## Evidence and follow-ups
 
-## Starter checklist
+The section was reviewed on 2026-10-29. Local execution uses Terraform 1.17.1; cloud-backed imports, remote locks/migration, hosted CI credentials, and provider-specific failure drills remain follow-up evidence. The guides identify their individual scope and lifecycle status.
 
-- [ ] Keep modules focused.
-- [ ] Prefer explicit inputs and outputs.
-- [ ] Review destructive changes carefully.
-- [ ] Keep generated provider lock files under version control when appropriate for the project.
-
-[Back to Terraform index](../index.md) | [Back to root index](../../../README.md)
+[Back to Terraform](../index.md)
