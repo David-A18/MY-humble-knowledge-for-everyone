@@ -10,6 +10,10 @@ Start with [IRSA fundamentals](security/irsa-fundamentals.md), [trust and permis
 
 Start with [VPC/subnets](networking/vpc-and-subnet-fundamentals.md), [effective routes](networking/route-tables-and-path-selection.md), and [NAT/egress](networking/internet-and-nat-egress.md). Continue with [private endpoints/DNS](networking/vpc-endpoints-and-private-dns.md), [security groups](networking/security-groups.md), and the [read-only inspection lab](networking/network-inspection-lab.md). Use the [network diagnostic guide](networking/network-connectivity-troubleshooting.md) for failures.
 
+## Cost ownership and optimization
+
+Use [AWS FinOps](finops/index.md) for tag activation, budgets/anomalies, Cost Explorer/Data Exports, and recommendation review. Start from the [shared FinOps learning path](../../finops/index.md) for allocation, forecasts, unit economics, and synthetic practice.
+
 ## Added learning guides
 
 - [AWS CDK v2](cdk/index.md) - Focused learning material and supporting examples.

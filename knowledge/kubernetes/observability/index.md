@@ -16,6 +16,10 @@ Read in order, or choose a task from the table.
 | [Telemetry collection and aggregation](telemetry-aggregation.md) | Design OTel, Fluent Bit, and Vector pipelines. |
 | [OpenTelemetry collector lab](collector-lab.md) | Observe delivery and failure. |
 
+## Cost allocation connection
+
+Use [Kubernetes cost allocation](../../finops/kubernetes-cost-allocation.md) to connect workload labels and metrics with bills, shared/idle pools, and operational headroom. Cost attribution and resource utilization are different signals.
+
 ## Related links
 
 - [Runnable example files](examples/index.md)

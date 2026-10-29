@@ -2,6 +2,10 @@
 
 ## 2026-10-29
 
+- **FinOps quality pass**: Added eleven concepts for budget/forecast/anomaly workflows, reporting/unit economics, rightsizing/rate evidence, Kubernetes allocation, four AWS implementation routes, and synthetic calculation practice; expanded existing allocation/tagging guides.
+- **Calculation evidence**: Thirteen local tests cover credits, exact-cent reconciliation, invalid data, zero units, quantity/rate overlap, normalized comparisons, and report side effects. Billing queries, notifications, purchases, production optimization, and realized savings are not claimed.
+- **FinOps CI**: Added Python 3.13 execution of the synthetic tests/report with no credentials or account access.
+
 - **Terraform quality pass**: Added twelve focused concepts for language, modules, providers/locks, workspace isolation, backends, review/CI, troubleshooting, and two local labs. Updated every Terraform index and retained the existing workflow/state learning route.
 - **Executed Terraform evidence**: Terraform 1.17.1 local runs cover contracts and expected failures, plan statuses, stable keys, preserved IDs after moved blocks, workspace state separation, provider alias wiring, and cleanup; rechecked the original state lifecycle. Remote/cloud behavior remains explicit follow-up work.
 - **Terraform CI**: Pinned the CLI teaching baseline and added both local lab runners to the existing Terraform workflow.

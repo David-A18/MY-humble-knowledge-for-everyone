@@ -24,7 +24,7 @@ content as a verified fact.
 
 The original 2026-09-21 baseline recorded 161 concepts: 151 draft and 10 stable, with 26 freshness deadlines and no assigned maintainer. That is historical evidence, not the current inventory.
 
-After the topic, Kubernetes troubleshooting, AWS networking, and Terraform passes, the catalog contains 244 concepts: 234 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 104 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
+After the topic, Kubernetes troubleshooting, AWS networking, Terraform, and FinOps passes, the catalog contains 255 concepts: 245 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 106 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
 
 The repository already provides the foundations this plan will use:
 
@@ -206,7 +206,7 @@ For every checked section, confirm all of the following:
       selection, operations, limits, and cost implications.
     - [ ] [AWS databases](knowledge/cloud/aws/databases/index.md) — workload
       fit, resilience, performance, and operational boundaries.
-    - [ ] [AWS FinOps](knowledge/cloud/aws/finops/index.md) — allocation,
+    - [x] [AWS FinOps](knowledge/cloud/aws/finops/index.md) — allocation,
       cost controls, ownership, and optimization evidence.
     - [ ] [AWS fundamentals](knowledge/cloud/aws/fundamentals/index.md) —
       account model, regions, identity, and foundational vocabulary.
@@ -311,7 +311,7 @@ For every checked section, confirm all of the following:
   security boundaries, and routes to authoritative guidance.
   - [ ] [Identity federation](knowledge/security/identity-federation/index.md)
     — trust relationships, credential lifecycle, permissions, and auditability.
-- [ ] [FinOps](knowledge/finops/index.md) — allocation, accountability, budgets,
+- [x] [FinOps](knowledge/finops/index.md) — allocation, accountability, budgets,
   anomalies, optimization, and decision criteria.
 - [ ] [DevOps](knowledge/devops/index.md) — delivery, reliability, automation,
   observability, and operational feedback loops.

@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Expanded FinOps and AWS FinOps with eleven source-backed concepts, stronger allocation/tagging guidance, and a tested synthetic calculation lab.
+- Added CI checks for exact cost reconciliation, credits, unit comparisons, and overlapping savings claims, while keeping real billing and workload acceptance explicit.
+
 - Expanded Terraform with twelve focused concepts, two executable local labs, typed contract tests, workspace/refactor checks, and a signed/pinned local-provider alias exercise. CI runs the new labs with Terraform 1.17.1.
 - Rechecked the original local Terraform lifecycle and replaced outline navigation with complete learning/operations routes while retaining remote/cloud evidence gaps.
 

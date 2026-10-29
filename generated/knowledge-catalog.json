@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 244,
+  "concept_count": 255,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -616,21 +616,116 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use consistent tags to support AWS cost allocation, ownership, and operational reporting.",
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Inspect AWS spending controls, delayed alert behavior, scope, and response ownership before configuring enforcement.",
       "maintainer": "unassigned",
       "maturity": "draft",
-      "path": "knowledge/cloud/aws/finops/cost-allocation-tags.md",
-      "source_ids": [],
+      "path": "knowledge/cloud/aws/finops/budgets-and-cost-anomaly-detection.md",
+      "source_ids": [
+        "aws-budgets",
+        "aws-budget-practices",
+        "aws-budget-actions",
+        "aws-anomalies"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cloud",
+        "finops",
         "aws",
-        "finops"
+        "budgets",
+        "anomalies"
+      ],
+      "title": "AWS budgets and cost anomaly detection",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Evaluate AWS recommendations against workload telemetry, operating risk, existing commitments, and verified financial outcomes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/finops/compute-optimizer-and-commitments.md",
+      "source_ids": [
+        "aws-optimizer",
+        "aws-optimizer-metrics",
+        "aws-optimizer-preferences",
+        "aws-plan-types"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "aws",
+        "rightsizing",
+        "savings-plans"
+      ],
+      "title": "AWS Compute Optimizer and commitment decisions",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud engineers and cost owners",
+      "description": "Apply and activate AWS ownership tags, understand historical backfill, and verify billing visibility without treating tags as authorization.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/finops/cost-allocation-tags.md",
+      "source_ids": [
+        "aws-cost-tags",
+        "aws-tag-activation",
+        "aws-tag-backfill"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "finops",
+        "tagging"
       ],
       "title": "Cost allocation tags",
-      "type": "Explanation"
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Choose a cost basis, query the intended billing scope, and build a reproducible export pipeline without treating delayed data as final invoices.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/finops/cost-explorer-and-data-exports.md",
+      "source_ids": [
+        "aws-cost-explorer",
+        "aws-cost-query",
+        "aws-cost-options",
+        "aws-data-exports"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "aws",
+        "reporting",
+        "billing"
+      ],
+      "title": "AWS Cost Explorer and Data Exports",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Investigate retention, unused capacity, lifecycle, and traffic-path costs while preserving data and operational requirements.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/finops/storage-and-network-costs.md",
+      "source_ids": [
+        "aws-s3-lifecycle",
+        "aws-s3-rules",
+        "finops-usage"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "aws",
+        "storage",
+        "networking"
+      ],
+      "title": "AWS storage and network cost investigations",
+      "type": "How-to Guide"
     },
     {
       "audience": "Cloud and platform engineering learners",
@@ -1765,6 +1860,68 @@
       "type": "Explanation"
     },
     {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Triage unexpected cost or usage, distinguish growth and data artifacts from waste, and verify an owned response.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/anomaly-response.md",
+      "source_ids": [
+        "finops-anomalies",
+        "aws-anomalies"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "anomalies",
+        "operations"
+      ],
+      "title": "Investigate a cost anomaly",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Set an owned spending plan, model expected demand, and define budget responses without treating alerts as a hard spending cap.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/budgets-forecasts-and-alerts.md",
+      "source_ids": [
+        "finops-budgeting",
+        "finops-forecasting",
+        "aws-budget-practices"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "budgeting",
+        "forecasting"
+      ],
+      "title": "Budgets, forecasts, and alerts",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Compare usage and rate changes without double-counting benefits, and make commitment exposure visible before a purchase.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/commitments-and-rate-optimization.md",
+      "source_ids": [
+        "finops-rate",
+        "aws-savings-plans",
+        "aws-plan-types"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "commitments",
+        "rate-optimization"
+      ],
+      "title": "Commitments and rate optimization",
+      "type": "Explanation"
+    },
+    {
       "audience": "Engineering learners and practitioners",
       "description": "Establish a practical cloud cost-allocation policy using ownership metadata, hierarchy, shared-cost rules, and measurable coverage.",
       "maintainer": "unassigned",
@@ -1783,6 +1940,91 @@
         "governance"
       ],
       "title": "Cost allocation basics",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Run deterministic cost reconciliation, shared allocation, demand normalization, and non-overlapping savings calculations without an account.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/examples/cost-analysis-lab/cost-analysis-lab.md",
+      "source_ids": [
+        "finops-allocation",
+        "finops-units",
+        "finops-rate"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "lab",
+        "decimal",
+        "synthetic-data"
+      ],
+      "title": "Synthetic FinOps calculation lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Map cluster costs to accountable workloads without double-counting node invoices or treating every idle resource as removable waste.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/kubernetes-cost-allocation.md",
+      "source_ids": [
+        "opencost",
+        "container-labels",
+        "finops-allocation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "kubernetes",
+        "opencost"
+      ],
+      "title": "Kubernetes cost allocation and idle capacity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Build reconciled cost reports with explicit metrics, freshness, ownership, and comparable business denominators.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/reporting-and-unit-economics.md",
+      "source_ids": [
+        "finops-reporting",
+        "finops-units",
+        "aws-cost-options"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "reporting",
+        "unit-economics"
+      ],
+      "title": "Reporting and unit economics",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Platform engineers and cloud cost owners",
+      "description": "Choose a workload-aware capacity change and distinguish recommendation estimates, normalized cost avoidance, and realized financial results.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/finops/rightsizing-and-savings-validation.md",
+      "source_ids": [
+        "finops-usage",
+        "finops-rate",
+        "aws-optimizer-preferences"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "finops",
+        "rightsizing",
+        "optimization"
+      ],
+      "title": "Rightsizing and savings validation",
       "type": "How-to Guide"
     },
     {

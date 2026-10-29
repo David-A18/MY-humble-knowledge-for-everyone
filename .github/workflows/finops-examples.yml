@@ -1,0 +1,30 @@
+name: FinOps example validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  finops-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Verify synthetic cost reconciliation and comparison contracts
+        run: python knowledge/finops/examples/cost-analysis-lab/test-cost-analysis.py
+
+      - name: Run the synthetic report
+        run: python knowledge/finops/examples/cost-analysis-lab/cost-analysis.py

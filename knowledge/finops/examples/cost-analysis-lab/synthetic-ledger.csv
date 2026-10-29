@@ -1,0 +1,7 @@
+line_id,period,currency,cost_basis,owner,scope,amount
+demo-001,2026-09,USD,synthetic-amortized,payments,direct,300.00
+demo-002,2026-09,USD,synthetic-amortized,data,direct,200.00
+demo-003,2026-09,USD,synthetic-amortized,payments,direct,50.00
+demo-004,2026-09,USD,synthetic-amortized,,direct,25.00
+demo-005,2026-09,USD,synthetic-amortized,platform,shared,120.01
+demo-006,2026-09,USD,synthetic-amortized,payments,direct,-20.00

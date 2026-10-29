@@ -2,7 +2,31 @@
 
 Review snapshot: 2026-10-29. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: Terraform
+## Current batch: FinOps and AWS FinOps
+
+Reviewed both existing FinOps concepts and indexes, added eleven focused concepts plus two example indexes, and connected allocation, budgets/forecasts, anomalies, reporting/units, usage/rate optimization, Kubernetes costs, and AWS implementation routes. The four indexed FinOps directories have explicit learning and operational outcomes. All new concepts remain draft/unassigned.
+
+FinOps Foundation, OpenCost, and AWS primary sources were reviewed on 2026-10-29. The guidance distinguishes delayed alerts from hard caps, resource tags from billing activation/backfill, recommendations from tested capacity changes, and modeled avoidance from realized financial results. The current Savings Plans type set and Data Exports options were checked rather than copied from older summaries.
+
+The synthetic Python 3.13.17 lab passes thirteen tests: source/shared totals and credits reconcile, fractional cents use a declared boundary, rounding is deterministic, unknown ownership stays visible, invalid/mixed/duplicate data is rejected, zero units remain undefined, and quantity/rate effects are not double-counted. Its before/after demand example explicitly allows a rising total with an improved unit cost. All figures are teaching inputs, not customer data, price quotes, or observed savings.
+
+AWS CLI 2.38.5 checked seven unique read-only examples offline: five output-skeleton validations and two input-parse-only checks. Budgets and anomaly subscriptions' generated outputs violated minimum-period/ARN constraints; no account-response or authentication result is inferred. Named profiles were omitted in offline checks. No AWS account call, export creation, notification, purchase, tag/backfill mutation, resource deletion, or workload optimization occurred.
+
+Follow-ups require authorized notification delivery, real billing/report reconciliation, a representative controlled capacity/SLO test, actual commitment/financial interpretation, and attributable measured results. Kubernetes cost-tool deployment and provider-data adapters also need versioned environment evidence. The local CSV is deliberately not CUR/FOCUS data.
+
+### FinOps validation
+
+| Check | Recorded result |
+| --- | --- |
+| Repository checks | All fifteen required validator/test commands pass, including live GitHub label comparison. |
+| Markdown and navigation | 414 files lint cleanly; links, heading fragments, parent indexes, and reachability pass. |
+| Catalog and retrieval definitions | 255 concepts; reproducible catalog; 59 retrieval definitions validate. |
+| External URLs | All 516 checked unique URLs returned HTTP 200 after redirects; external fragments were not tested. |
+| Retrieval execution | All twelve new FinOps questions retrieve their expected route among the top five chunks; a fresh absent token returns `NO_EVIDENCE`. This is lexical retrieval evidence, not model-answer quality. |
+| Local examples | The thirteen synthetic calculation tests pass with Python 3.13.17. Seven AWS CLI examples have the limited offline evidence described above; no account or production acceptance is inferred. |
+| CI change | A dedicated workflow runs the synthetic tests and report on Python 3.13 in Linux. Hosted results must be inspected for the exact published commit. |
+
+## Previous batch: Terraform
 
 Reviewed all existing Terraform indexes and direct concepts, retained the workflow/state/fundamentals/local learning material, and added twelve focused concepts plus five code/lab indexes. The fourteen indexed Terraform directories now have explicit routes for language contracts, stable keys, modules, provider requirements/aliases, dependency locks, environment layout, workspaces, remote backends, diagnosis, review/CI, and practice. Reviewed means content/navigation/evidence assessment; the section is not uniformly runtime-verified production guidance.
 
@@ -76,7 +100,7 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 | --- | --- | --- |
 | P2 | [AWS networking follow-up](knowledge/cloud/aws/networking/index.md) | Execute the authorized read-only lab and controlled traffic/failover drills; expand transit/hybrid deployment and endpoint-policy recovery procedures. |
 | P2 | [Terraform follow-ups](knowledge/terraform/index.md) | Execute bounded remote lock/migration/restore, provider import/drift, and hosted credential/artifact drills; preserve the local lab contracts and cleanup evidence. |
-| P1 | [FinOps](knowledge/finops/index.md) | Build on cost allocation and AWS tagging; add budgets/anomaly response and a measured rightsizing example with explicit ownership and limits. |
+| P2 | [FinOps follow-ups](knowledge/finops/index.md) | Validate real notification/billing/workload outcomes and data adapters; preserve synthetic calculations as a separate evidence level. |
 | P2 | [AWS security](knowledge/cloud/aws/security/index.md) | Review existing OIDC/IRSA material and EKS comparison; record trust/permission evidence gaps before adding more identity summaries. |
 | P2 | [Core reader journeys](knowledge/start-here.md) | Follow prerequisites and handoffs, record broken/confusing routes, and improve only evidenced gaps. |
 | P2 | [New learning series](knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
@@ -109,7 +133,7 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [cloud/aws/cdk](knowledge/cloud/aws/cdk/index.md) | 5 | Pending |
 | [cloud/aws/compute](knowledge/cloud/aws/compute/index.md) | 4 | Pending |
 | [cloud/aws/databases](knowledge/cloud/aws/databases/index.md) | 3 | Pending |
-| [cloud/aws/finops](knowledge/cloud/aws/finops/index.md) | 1 | Pending |
+| [cloud/aws/finops](knowledge/cloud/aws/finops/index.md) | 5 | Reviewed 2026-10-29; real billing/workload evidence open |
 | [cloud/aws/fundamentals](knowledge/cloud/aws/fundamentals/index.md) | 0 | Pending |
 | [cloud/aws/governance-and-access](knowledge/cloud/aws/governance-and-access/index.md) | 0 | Pending |
 | [cloud/aws](knowledge/cloud/aws/index.md) | 0 | Pending |
@@ -136,7 +160,9 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [devops/development-environments/examples/local](knowledge/devops/development-environments/examples/local/index.md) | 0 | Pending |
 | [devops/development-environments](knowledge/devops/development-environments/index.md) | 5 | Pending |
 | [devops](knowledge/devops/index.md) | 0 | Pending |
-| [finops](knowledge/finops/index.md) | 1 | Pending |
+| [finops/examples/cost-analysis-lab](knowledge/finops/examples/cost-analysis-lab/index.md) | 1 | Reviewed 2026-10-29; real billing/workload evidence open |
+| [finops/examples](knowledge/finops/examples/index.md) | 0 | Reviewed 2026-10-29; real billing/workload evidence open |
+| [finops](knowledge/finops/index.md) | 7 | Reviewed 2026-10-29; real billing/workload evidence open |
 | [git/best-practices](knowledge/git/best-practices/index.md) | 0 | Pending |
 | [git/commands](knowledge/git/commands/index.md) | 6 | Pending |
 | [git/github-actions](knowledge/git/github-actions/index.md) | 9 | Pending |

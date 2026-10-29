@@ -283,3 +283,86 @@ cases:
   - knowledge/terraform/examples/provider-alias-lab/provider-alias-lab.md
   required_source_ids:
   - local-file
+- id: finops-budgets
+  question: How do budgets, forecasts, notifications, and spending enforcement differ?
+  expected_paths:
+  - knowledge/finops/budgets-forecasts-and-alerts.md
+  required_source_ids:
+  - finops-budgeting
+- id: finops-anomaly
+  question: How do I distinguish a cost anomaly from legitimate demand growth or delayed
+    billing?
+  expected_paths:
+  - knowledge/finops/anomaly-response.md
+  required_source_ids:
+  - finops-anomalies
+- id: finops-rightsizing
+  question: Can total cost rise while cost per successful unit improves and what proves
+    realized savings?
+  expected_paths:
+  - knowledge/finops/rightsizing-and-savings-validation.md
+  required_source_ids:
+  - finops-usage
+- id: finops-unit-economics
+  question: How do I choose a consistent cost basis and a valid business denominator
+    for unit economics?
+  expected_paths:
+  - knowledge/finops/reporting-and-unit-economics.md
+  required_source_ids:
+  - finops-units
+- id: finops-commitments
+  question: Why must rightsizing and rate discount savings not be counted independently
+    against the same original spend?
+  expected_paths:
+  - knowledge/finops/commitments-and-rate-optimization.md
+  required_source_ids:
+  - finops-rate
+- id: finops-kubernetes
+  question: How should Kubernetes idle and shared costs be allocated without double-counting
+    the node invoice?
+  expected_paths:
+  - knowledge/finops/kubernetes-cost-allocation.md
+  required_source_ids:
+  - opencost
+- id: finops-aws-alerts
+  question: Are AWS budget alerts a real-time hard spending cap and what are anomaly
+    detection delays?
+  expected_paths:
+  - knowledge/cloud/aws/finops/budgets-and-cost-anomaly-detection.md
+  required_source_ids:
+  - aws-budget-practices
+- id: finops-aws-data
+  question: How do Cost Explorer and CUR 2.0 Data Exports differ and why must I track
+    estimated data and query cost?
+  expected_paths:
+  - knowledge/cloud/aws/finops/cost-explorer-and-data-exports.md
+  required_source_ids:
+  - aws-data-exports
+- id: finops-aws-optimizer
+  question: What memory and performance evidence should I inspect before acting on Compute
+    Optimizer recommendations?
+  expected_paths:
+  - knowledge/cloud/aws/finops/compute-optimizer-and-commitments.md
+  required_source_ids:
+  - aws-optimizer-preferences
+- id: finops-aws-storage
+  question: Why is an unattached volume or old S3 object not automatically safe to delete
+    for savings?
+  expected_paths:
+  - knowledge/cloud/aws/finops/storage-and-network-costs.md
+  required_source_ids:
+  - aws-s3-lifecycle
+- id: finops-aws-tag-backfill
+  question: Can AWS cost allocation tag backfill invent historical tag values that never
+    existed?
+  expected_paths:
+  - knowledge/cloud/aws/finops/cost-allocation-tags.md
+  required_source_ids:
+  - aws-tag-backfill
+- id: finops-local-lab
+  question: Where can I test shared-cost rounding, credits, and normalized cost avoidance
+    with synthetic data?
+  expected_paths:
+  - knowledge/finops/examples/cost-analysis-lab/cost-analysis-lab.md
+  required_source_ids:
+  - finops-allocation

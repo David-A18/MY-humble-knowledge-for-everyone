@@ -66,6 +66,8 @@ Common terms used across the knowledge base.
 | External name | Crossplane annotation that maps a Kubernetes managed resource to its real external resource identifier. |
 | First-consumer binding | StorageClass mode delaying volume provisioning/binding until a consuming Pod enables compatible placement; see [storage diagnosis](kubernetes/troubleshooting/persistent-volume-failures.md). |
 | Fargate | AWS serverless container compute option for running ECS tasks or EKS pods without managing servers. |
+| Cost avoidance | Modeled cost that would have occurred under a stated counterfactual; distinct from a demonstrated invoice reduction. See [savings validation](finops/rightsizing-and-savings-validation.md). |
+| Cost basis | The chosen accounting metric and charge scope, such as amortized versus cash-timed views; keep it consistent in [reports](finops/reporting-and-unit-economics.md). |
 | FinOps | A cloud financial management discipline focused on cost visibility, accountability, and optimization. |
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |
 | FunctionRevision | Crossplane package revision object for a concrete installed function version. |
@@ -132,6 +134,7 @@ Common terms used across the knowledge base.
 | Provider alias | Named Terraform provider configuration passed explicitly to resources/modules; see [provider requirements and wiring](terraform/fundamentals/providers-and-dependency-locking.md). |
 | State lock | Backend concurrency mechanism intended to prevent overlapping Terraform state writers; distinct from the [provider dependency lock file](terraform/fundamentals/remote-backends-and-locking.md). |
 | Terraform CLI workspace | Separate state selection for one configuration/backend; it does not establish a separate credential or access-control boundary. See [workspace isolation](terraform/fundamentals/cli-workspaces-and-environment-isolation.md). |
+| Unit economics | Relating a defined cost scope to comparable useful business output, with an explicit denominator and period. See [reporting guidance](finops/reporting-and-unit-economics.md). |
 | Tool | A callable capability exposed to an AI model or agent so it can query data, perform computation, or take an action. |
 | Tooling cluster | Kubernetes cluster dedicated to platform tools such as GitOps, observability, policy, CI/CD runners, or developer experience services. |
 | Usage | Crossplane resource that protects a depended-on resource from deletion or controls deletion ordering. |
