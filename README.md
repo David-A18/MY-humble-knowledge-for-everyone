@@ -44,4 +44,5 @@ configurations, and automation remain under the [MIT License](LICENSE).
 - [Generated knowledge catalog](generated/README.md)
 - [Knowledge-quality test data](tests/README.md)
 - [Raw source intake](sources/README.md)
+- [Section quality progress](section-quality-progress.md)
 - [Maintenance review queue](maintenance-review-queue.md)

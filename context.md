@@ -4,6 +4,8 @@
 
 The [new learning paths](knowledge/index.md#expanded-learning-paths) use the existing OKF bundle and generated catalog. Keep source/API review distinct from runtime evidence; see the [audit](knowledge-base-audit.md). Preserve newer local learning and Terraform material while improving related topics.
 
+The [section quality ledger](section-quality-progress.md) records reviewed sections, remaining evidence, and the next focused batches. Read it before selecting ongoing improvement work.
+
 ## Purpose
 
 `engineering-knowledge-base` is a public, Git-backed collection of practical

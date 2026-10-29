@@ -1,170 +1,81 @@
 ---
-type: "Troubleshooting Guide"
-title: "Kubernetes common solutions"
-description: "Diagnose frequent Kubernetes workload issues by moving from safe inspection commands to targeted fixes."
-tags: [kubernetes, troubleshooting, common-solutions]
+type: Troubleshooting Guide
+title: Kubernetes common solutions
+description: Choose the correct Kubernetes troubleshooting route from observed symptoms
+  and collect a minimal safe evidence set.
+tags:
+- kubernetes
+- troubleshooting
+- triage
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Platform engineers with basic kubectl knowledge
+maintainer: unassigned
+sources:
+- id: debug-pods
+  title: Debug Pods
+  resource: https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/
 ---
 
 # Kubernetes common solutions
 
-## Purpose
+Use this as the entry point when a workload is unhealthy and the failing layer is unclear. Start with scope and evidence, then follow one focused guide. Repeated restarts or broad policy changes can erase the useful symptom without fixing its cause.
 
-Diagnose frequent Kubernetes workload issues by moving from safe inspection commands to targeted fixes.
+## Establish the scope
 
-## First checks
-
-Run these before changing resources:
+You need permission to inspect the intended namespace. Confirm whether the environment is local, staging, or production. Inspect one affected workload before listing or exporting an entire cluster.
 
 ```bash
 kubectl config current-context
 kubectl get pods -n <namespace> -o wide
-kubectl get events -n <namespace> --sort-by=.lastTimestamp
 kubectl get deploy,rs,sts,ds,job -n <namespace>
+kubectl get events -n <namespace> --sort-by=.lastTimestamp
 ```
 
-What it does: confirms the active cluster, shows workload state, reviews recent events, and lists common workload controllers.
+What it does: confirms the target, workload/controller state, node placement, and recent namespace events. `describe` and events narrow the next diagnostic; events are temporary observations and not a durable audit trail.[^debug-pods]
 
-## Symptoms and checks
+Record when the failure began, the last relevant change, affected namespaces/nodes, image/revision, and whether all replicas or only some fail. Keep outputs private and redact sensitive arguments, environment values, and request data.
 
-| Symptom | First check | Likely cause |
+## Select a guide from evidence
+
+| Symptom | First useful distinction | Focused guide |
 | --- | --- | --- |
-| Pod is `Pending` | `kubectl describe pod <pod> -n <namespace>` | Insufficient resources, node selector, taint, PVC, or quota issue. |
-| Pod is `ImagePullBackOff` | `kubectl describe pod <pod> -n <namespace>` | Wrong image, missing tag, private registry auth, or registry outage. |
-| Pod is `CrashLoopBackOff` | `kubectl logs <pod> -n <namespace> --previous` | App exits, missing config, failed dependency, or aggressive probe. |
-| Service has no endpoints | `kubectl get endpoints,endpointslice -n <namespace>` | Selector mismatch or pods are not Ready. |
-| DNS fails from a pod | `kubectl exec <pod> -n <namespace> -- nslookup <service>` | Wrong service name, namespace, CoreDNS, or network policy issue. |
-| Rollout is stuck | `kubectl rollout status deployment/<name> -n <namespace>` | New pods failing readiness, image pull, scheduling, or quota. |
-| Permission denied | `kubectl auth can-i <verb> <resource> -n <namespace>` | RBAC or EKS access mapping does not allow the action. |
+| Pod repeatedly exits | Which container and termination/probe reason? | [CrashLoopBackOff](crashloopbackoff.md) |
+| Pod Pending / no new Pod | Unassigned, assigned but blocked, or rejected creation? | [Scheduling](pending-pods-and-scheduling.md) |
+| ImagePullBackOff | Exact registry error before startup | [Image pulls](image-pull-failures.md) |
+| Service cannot be reached | DNS, endpoint availability, application port, or network path? | [Service connectivity](service-connectivity.md) |
+| Name lookup fails | Namespace/search suffix, resolver response, or upstream? | [DNS resolution](dns-resolution.md) |
+| PVC Pending / failed mount | Binding, topology, attachment, mount, or permissions? | [Persistent volumes](persistent-volume-failures.md) |
+| External route or certificate fails | Listener, route acceptance, reference, TLS, or backend? | [Gateway route and TLS](gateway-route-and-tls.md) |
+| Deployment stalls | New ReplicaSet's admission, scheduling, or readiness? | [Rollout stalls](rollout-stalls.md) |
+| APISIX-specific behavior | Controller, delivered gateway config, or backend? | [APISIX](apisix.md) |
+| Local kind failure | Host runtime, selected context, cache, or node? | [kind](kind.md) |
 
-## Pending pods
-
-```bash
-kubectl describe pod <pod-name> -n app
-kubectl get nodes
-kubectl describe node <node-name>
-kubectl get resourcequota,limitrange -n app
-```
-
-What it does: checks scheduling events, node readiness, node capacity, taints, namespace quotas, and default limits.
-
-Common fixes:
-
-- Reduce or correct CPU and memory requests.
-- Add capacity or wait for cluster autoscaling.
-- Match node selectors, affinities, and tolerations to available nodes.
-- Create or fix the referenced PersistentVolumeClaim.
-
-## ImagePullBackOff
+## Separate API permissions from workload failure
 
 ```bash
-kubectl describe pod <pod-name> -n app
-kubectl get secret -n app
-kubectl get pod <pod-name> -n app -o jsonpath='{.spec.imagePullSecrets}{"\n"}'
+kubectl auth can-i get pods -n <namespace>
+kubectl auth can-i get pods --subresource=log -n <namespace>
+kubectl auth can-i update deployments.apps -n <namespace>
 ```
 
-What it does: reads image pull events, lists namespace Secrets, and checks whether the pod references image pull credentials.
+What it does: asks whether the current Kubernetes identity may perform each operation. A denied log request is an inspection-permission issue, not evidence that the application produced no logs. Request the narrow permission needed rather than broad administrative access.
 
-Common fixes:
+For EKS, use the [EKS deployment workflow](../../cross-topic-guides/deploying-to-eks.md) to distinguish AWS authentication, EKS access configuration, and Kubernetes authorization. A Pod's AWS identity is a separate concern; start with the [workload-identity comparison](../../cross-topic-guides/eks-workload-identity.md).
 
-- Correct the registry, repository, or tag.
-- Create or reference the correct image pull Secret.
-- Confirm the node can reach the registry.
-- Confirm the image exists in Amazon ECR or the selected registry.
+## Close the diagnosis
 
-## CrashLoopBackOff
+Capture a small redacted before/after record and fix the authoritative workload or platform configuration. Verify both recovery and the intended permission boundary. A green Pod phase, empty diff, or successful port-forward alone does not prove the user request succeeds. Remove temporary test resources, retain incident evidence privately, and add a regression check for the diagnosed failure where practical.
 
-```bash
-kubectl logs <pod-name> -n app --previous
-kubectl describe pod <pod-name> -n app
-kubectl get configmap,secret -n app
-```
+## Evidence and scope
 
-What it does: reads logs from the previous crashed container, checks events and probes, and confirms referenced configuration objects exist.
+Source review: 2026-10-29. Commands are adaptable diagnostic examples; replace angle-bracket placeholders before running. No live cluster walkthrough was executed for this revision. Record client/server and controller versions during reproduction. Keep diagnostic logs private and redact credentials, customer data, and internal addresses before sharing.
 
-Common fixes:
+## Related routes
 
-- Fix missing environment variables, files, or Secret keys.
-- Increase startup probe timing for slow-starting applications.
-- Correct liveness probe path, port, or initial delay.
-- Fix application startup errors or dependency connection strings.
+- [kubectl basics](../commands/kubectl-basics.md).
+- [Manifest validation and behavioral regression](../applications-and-tools/manifest-validation/index.md).
+- [Back to troubleshooting](index.md)
+- [Back to Kubernetes](../index.md)
 
-## Service or DNS issue
-
-```bash
-kubectl get svc,endpoints,endpointslice -n app
-kubectl describe svc web -n app
-kubectl get pods -n app --show-labels
-kubectl run dns-test --rm -it --restart=Never --image=busybox:1.36 -- nslookup web.app.svc.cluster.local
-```
-
-What it does: checks whether the Service selects Ready pods and tests cluster DNS from a temporary pod.
-
-Common fixes:
-
-- Align the Service selector with pod labels.
-- Fix readiness probe failures so pods become endpoints.
-- Use the full service DNS name across namespaces.
-- Review NetworkPolicies that may block traffic.
-
-## Failed rollout
-
-```bash
-kubectl rollout status deployment/web -n app
-kubectl describe deployment/web -n app
-kubectl get rs,pods -n app -l app.kubernetes.io/name=web
-kubectl get events -n app --sort-by=.lastTimestamp
-```
-
-What it does: checks Deployment progress, ReplicaSets, pods, and recent failures.
-
-### Roll back when needed
-
-```bash
-kubectl rollout history deployment/web -n app
-kubectl rollout undo deployment/web -n app
-kubectl rollout status deployment/web -n app
-```
-
-What it does: reviews rollout revisions, reverts to the previous revision, and waits for the rollback.
-
-> [!WARNING]
-> Rollback changes live workload behavior. Capture the failing revision, image, and error before rollback when incident time allows.
-
-## Permission errors in EKS
-
-```bash
-aws sts get-caller-identity
-kubectl auth can-i get pods -n app
-kubectl auth can-i update deployments -n app
-```
-
-What it does: confirms the AWS identity used for EKS authentication and asks Kubernetes whether that identity has the needed permissions.
-
-Common fixes:
-
-- Use the correct AWS profile or assumed role.
-- Update EKS access entries or Kubernetes RBAC bindings.
-- Confirm kubeconfig points to the intended EKS cluster.
-- Check whether the namespace is correct.
-
-> [!IMPORTANT]
-> EKS authentication and Kubernetes authorization are separate layers. Passing AWS authentication does not automatically grant in-cluster permissions.
-
-## Official documentation
-
-- [Debug pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/)
-- [Debug services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
-- [Pod lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
-- [Configure liveness, readiness, and startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
-- [Amazon EKS access entries](https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html)
-
-## Related links
-
-- [CrashLoopBackOff](crashloopbackoff.md)
-- [Back to Kubernetes troubleshooting](index.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+[^debug-pods]: [Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/)

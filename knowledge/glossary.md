@@ -55,12 +55,14 @@ Common terms used across the knowledge base.
 | DeploymentRuntimeConfig | Crossplane package-runtime configuration for provider or function pods. |
 | DevOps | Engineering practices that connect software delivery, automation, operations, and reliability work. |
 | Deterministic extraction | Parsing exact machine-readable facts from authoritative producers with code rather than asking a model to recreate them. |
+| EndpointSlice | Kubernetes resource publishing a group of Service backend addresses, ports, and conditions; inspect all matching slices during [Service troubleshooting](kubernetes/troubleshooting/service-connectivity.md). |
 | ECR | Amazon Elastic Container Registry; AWS managed registry for container images and OCI-compatible artifacts, including Helm charts. |
 | ECS | Amazon Elastic Container Service; AWS-native container orchestration for running, managing, and scaling containerized applications. |
 | ECS service | Amazon ECS resource that keeps a desired number of task definition instances running and replaces failed or unhealthy tasks. |
 | EKS | Amazon Elastic Kubernetes Service; AWS managed Kubernetes service for running Kubernetes clusters on AWS and supported hybrid environments. |
 | EnvironmentConfig | Crossplane composition data object that provides XR-specific in-memory environment values. |
 | External name | Crossplane annotation that maps a Kubernetes managed resource to its real external resource identifier. |
+| First-consumer binding | StorageClass mode delaying volume provisioning/binding until a consuming Pod enables compatible placement; see [storage diagnosis](kubernetes/troubleshooting/persistent-volume-failures.md). |
 | Fargate | AWS serverless container compute option for running ECS tasks or EKS pods without managing servers. |
 | FinOps | A cloud financial management discipline focused on cost visibility, accountability, and optimization. |
 | File System Backup | Velero volume backup method where node-agent reads mounted pod volumes and stores file data in object storage. |

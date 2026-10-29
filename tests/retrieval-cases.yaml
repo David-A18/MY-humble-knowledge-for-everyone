@@ -115,3 +115,51 @@ cases:
   question: What are Ona and Gitpod and who can currently use the hosted platform?
   expected_paths:
   - knowledge/devops/development-environments/ona-and-gitpod.md
+- id: kubernetes-service-connectivity
+  question: How do I inspect all EndpointSlices and distinguish a wrong targetPort from a
+    network policy failure?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/service-connectivity.md
+  required_source_ids:
+  - endpoint-slices
+- id: kubernetes-dns-resolution
+  question: How do I distinguish a namespace DNS search error from a cluster resolver or upstream
+    failure?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/dns-resolution.md
+  required_source_ids:
+  - dns-debugging
+- id: kubernetes-pending-pods-and-scheduling
+  question: Can a Pending Pod already have a node and how do I distinguish scheduling from
+    post-assignment failures?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/pending-pods-and-scheduling.md
+  required_source_ids:
+  - pod-lifecycle
+- id: kubernetes-persistent-volume-failures
+  question: Why is a PVC waiting for its first consumer and why should I not delete it to
+    retry?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/persistent-volume-failures.md
+  required_source_ids:
+  - storage-classes
+- id: kubernetes-rollout-stalls
+  question: Does ProgressDeadlineExceeded automatically roll back a Deployment and how should
+    I diagnose it?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/rollout-stalls.md
+  required_source_ids:
+  - deployments
+- id: kubernetes-gateway-route-and-tls
+  question: How do I compare Gateway API observedGeneration and separate allowedRoutes from
+    ReferenceGrant?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/gateway-route-and-tls.md
+  required_source_ids:
+  - gateway-status
+- id: kubernetes-image-pull-failures
+  question: How do I diagnose ImagePullBackOff without exposing registry credentials?
+  expected_paths:
+  - knowledge/kubernetes/troubleshooting/image-pull-failures.md
+  required_source_ids:
+  - private-images

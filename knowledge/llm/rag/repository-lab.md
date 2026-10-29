@@ -42,15 +42,15 @@ Run from the repository root:
 python knowledge/llm/rag/examples/rag.py ingest --root . --db /tmp/kb-rag.sqlite
 python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication'
 python knowledge/llm/rag/examples/rag.py ask --db /tmp/kb-rag.sqlite 'AssumeRoleWithWebIdentity'
-python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite 'zzzxmissingtopic987'
+python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite "$(python -c 'import secrets; print(secrets.token_hex(16))')"
 python knowledge/llm/rag/examples/test_rag.py
 ```
 
-What it does: builds a disposable index, returns ranked evidence with Markdown paths/anchors, shows evidence without generation, demonstrates no hits, and exercises exclusion/query/citation contracts. On Windows use a dedicated temporary-directory database path in place of `/tmp`.
+What it does: builds a disposable index, returns ranked evidence with Markdown paths/anchors, shows evidence without generation, tests a freshly generated random query, and exercises exclusion/query/citation contracts. The query-generation syntax works in Bash and PowerShell. On Windows use a dedicated temporary-directory database path in place of `/tmp`.
 
 ## Expected results
 
-Istio authentication sections should appear among the top five `PeerAuthentication` hits. IRSA/OIDC material should appear for the STS operation. A unique nonsense term returns an empty result and an explicit no-evidence outcome. Query timing and context size are measured separately from optional generation.
+Istio authentication sections should appear among the top five `PeerAuthentication` hits. IRSA/OIDC material should appear for the STS operation. A fresh random query should return no hits; `ask` with that same query returns `NO_EVIDENCE`. A fixed nonsense string printed in this tutorial can match the tutorial itself after ingestion, so generate it at runtime. Query timing and context size are measured separately from optional generation.
 
 ## Optional local generation
 

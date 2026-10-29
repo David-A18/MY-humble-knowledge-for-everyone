@@ -1,35 +1,27 @@
 # Kubernetes troubleshooting
 
-Symptom-driven guides for diagnosing Kubernetes workload and cluster issues.
+Start with [common solutions](common-solutions.md) to identify the failing layer, then choose a focused runbook. Confirm the cluster and namespace before every investigation.
 
-## Articles
+## Diagnostic routes
 
-| Article | Purpose |
+| Guide | Outcome |
 | --- | --- |
-| [CrashLoopBackOff](crashloopbackoff.md) | Diagnose pods that repeatedly crash and restart. |
-| [Common solutions](common-solutions.md) | Diagnose Pending pods, image pulls, service/DNS issues, failed rollouts, and permission errors. |
-| [APISIX troubleshooting](apisix.md) | Diagnose APISIX gateway, route, plugin, backend, and TLS issues. |
-| [kind troubleshooting](kind.md) | Diagnose local `kind` cluster, context, image, port, and scheduling issues. |
+| [Kubernetes common solutions](common-solutions.md) | Choose a diagnostic route and collect evidence. |
+| [CrashLoopBackOff](crashloopbackoff.md) | Find container exit, memory, initialization, and probe failures. |
+| [Pending Pods and scheduling failures](pending-pods-and-scheduling.md) | Distinguish admission, scheduling, and post-assignment waits. |
+| [Image pull failures](image-pull-failures.md) | Identify image, credential, registry, and cache failures. |
+| [Service connectivity failures](service-connectivity.md) | Trace selectors, EndpointSlices, application ports, and policy. |
+| [DNS resolution failures](dns-resolution.md) | Separate names/search paths, DNS service, and upstream failures. |
+| [Persistent-volume binding and mount failures](persistent-volume-failures.md) | Trace provisioning, topology, attachment, mount, and filesystem access. |
+| [Gateway route and TLS failures](gateway-route-and-tls.md) | Check Gateway API conditions, reference permissions, and certificates. |
+| [Deployment rollout stalls](rollout-stalls.md) | Diagnose a Deployment revision and choose compatible recovery. |
+| [APISIX troubleshooting](apisix.md) | Inspect APISIX controller and gateway behavior. |
+| [kind troubleshooting](kind.md) | Diagnose the local runtime, context, image cache, and host path. |
 
-## Common starting commands
+## Practice and evidence
 
-```bash
-kubectl get pods -n <namespace> -o wide
-kubectl describe pod <pod-name> -n <namespace>
-kubectl logs <pod-name> -n <namespace> --previous
-kubectl get events -n <namespace> --sort-by=.lastTimestamp
-```
-
-What it does: checks pod state, detailed events, previous container logs, and recent namespace events.
-
-## Official documentation
-
-- [Debug pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/)
-- [Debug services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
-- [Troubleshooting applications](https://kubernetes.io/docs/tasks/debug/debug-application/)
-
-## Related links
+Use the [local learning path](../../cross-topic-guides/local-deployment-learning-path.md) for prerequisites and the [manifest regression lab](../applications-and-tools/manifest-validation/regression-lab-and-ci.md) for a bounded Service-routing failure. These source-reviewed runbooks remain drafts; this section refresh did not execute a live cluster walkthrough. Each page states its evidence boundary.
 
 - [Kubernetes command workflows](../commands/workflows.md)
-- [Back to Kubernetes index](../index.md)
-- [Back to root index](../../../README.md)
+- [Back to Kubernetes](../index.md)
+- [Back to knowledge bundle](../../index.md)

@@ -30,6 +30,7 @@ outside that bundle.
 | Reader-facing technical knowledge | [Knowledge bundle](knowledge/index.md) |
 | Templates and page structures | [Templates](knowledge/templates/index.md) |
 | Shared terminology | [Glossary](knowledge/glossary.md) |
+| Ongoing section reviews | [Section quality progress](section-quality-progress.md) |
 | Architecture decisions | [Decision records](knowledge/decision-records/index.md) |
 | Upgrades, tools, skills, or MCP templates | [Upgrade hub](knowledge-base-upgrade/README.md) |
 | Raw source notes | [Sources](sources/README.md) |

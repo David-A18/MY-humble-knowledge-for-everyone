@@ -30,26 +30,25 @@ to select and review new content. It defines the precision standard,
 explanation model, evidence protocol, and reader- and AI-oriented measures for
 this roadmap's work.
 
-## Near term
+## Prioritized content backlog
 
-- Expand Git command references and recovery procedures.
-- Add Terraform state, module, provider, and workspace examples.
-- Add Kubernetes troubleshooting guides for pods, services, ingress, DNS, storage, and scheduling.
-- Add AWS networking and IAM practical guides.
-- Add FinOps examples for cost allocation, tagging, budgets, and rightsizing.
+This replaces the old broad bullets after checking the current articles and indexes. Reviewed documentation and executed infrastructure are distinct completion states. The [section ledger](section-quality-progress.md) tracks full section reviews; these entries identify concrete remaining deliverables.
 
-## Medium term
+| Priority / state | Existing coverage | Remaining task and completion criterion |
+| --- | --- | --- |
+| P1 / partial | [AWS networking](knowledge/cloud/aws/networking/index.md): security groups, CloudFront, stateful controls | Add VPC/subnet/route/NAT/endpoint learning sequence with path diagnostics, costs, and cleanup; review the existing three concepts. |
+| P1 / partial | [Terraform fundamentals/state](knowledge/terraform/fundamentals/index.md), [core workflow](knowledge/terraform/commands/core-workflow.md), and [executed local lab](knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Add focused modules, provider selection/aliases, workspace isolation, and remote-backend operations. Completion requires linked examples, failure boundaries, and honest execution evidence, not repeated introductory summaries. |
+| P1 / partial | [FinOps allocation](knowledge/finops/cost-allocation-basics.md) and [AWS tagging](knowledge/cloud/aws/finops/cost-allocation-tags.md) | Add budgets/anomaly response, measured rightsizing, and reporting examples with ownership, decision criteria, and verification. |
+| P1 / documentation complete; runtime open | [Kubernetes troubleshooting](knowledge/kubernetes/troubleshooting/index.md) | Eleven focused guides cover the requested diagnostic areas. Next evidence: disposable failure/recovery drills, actual versions, and redacted expected outputs. |
+| P2 / documentation complete; broader drills open | [Git undo/recovery](knowledge/git/troubleshooting/undo-and-recovery.md) | Preserve the source-reviewed and locally exercised guide. Add submodule/corruption/shared-history edge cases only as separate bounded recovery drills. |
+| P2 / partial | [AWS identity/security](knowledge/cloud/aws/security/index.md), [EKS workload comparison](knowledge/cross-topic-guides/eks-workload-identity.md) | Validate existing trust/permissions paths; add a general least-privilege IAM exercise with positive/negative evidence and cleanup. |
+| P2 / partial | [Cross-topic guides](knowledge/cross-topic-guides/index.md), including local, EKS, GitOps, and observability routes | Connect one GitHub Actions → Terraform → AWS → Kubernetes deployment journey with pinned inputs, rollback ownership, and recorded sandbox results. Reuse the existing focused guides. |
+| P2 / partial | [Decision records](knowledge/decision-records/index.md) and [diagram assets](knowledge/assets/diagrams/index.md) | Add a cloud trade-off decision and diagram only where it resolves a concrete reader choice; document consequences and reconsideration criteria. |
+| P2 / partial | [New topic series](knowledge/index.md#expanded-learning-paths) | Complete the runtime acceptance evidence listed above; retain draft labels where ownership/runtime review is missing. |
+| P3 / planned | [Operational troubleshooting](knowledge/kubernetes/troubleshooting/index.md) and [best practices](knowledge/kubernetes/best-practices/index.md) | Assemble an incident handbook with escalation, evidence capture, and readiness checklists after validating the component runbooks. |
+| P3 / planned | Existing [AWS and Kubernetes guides](knowledge/cross-topic-guides/index.md) | Add one reusable reference architecture with requirements, threat/failure model, costs, manifests, cleanup, and bounded execution evidence. |
 
-- Add end-to-end deployment walkthroughs that combine GitHub Actions, Terraform, AWS, and Kubernetes.
-- Add architecture decision examples for common cloud trade-offs.
-- Add diagrams under [assets/diagrams](knowledge/assets/diagrams/index.md).
-- Add command output examples and failure-mode screenshots where they improve comprehension.
-
-## Long term
-
-- Build a curated operating handbook for recurring production issues.
-- Add opinionated checklists for design reviews, incident response, and platform readiness.
-- Add reusable reference architectures for common AWS and Kubernetes workloads.
+Command-output captures and screenshots are supporting tasks for the selected guide, not a separate repository-wide rewrite. Keep unrelated improvements queued.
 
 ## Prioritization rules
 

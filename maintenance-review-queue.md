@@ -13,6 +13,12 @@ The user requested weekly upkeep on 2026-10-29. Start each review from current `
 
 Prefer one coherent improvement per run. Rebuild the catalog after metadata changes, run all required checks, and publish only intended changes. Do not update review dates, promote drafts, or claim runtime verification merely because links still return HTTP 200. Notify only on a meaningful update, failed validation/publication, or required user action.
 
+## Section quality cycle
+
+Use the [section quality ledger](section-quality-progress.md) for the actual directory inventory and next batches. The Kubernetes troubleshooting section has now been source reviewed and expanded to eleven focused guides. Cluster/controller execution, redacted diagnostic outputs, and real reader testing remain open evidence; no draft was promoted.
+
+Next: AWS networking, then targeted Terraform gaps and FinOps examples. Preserve existing completed Git recovery and Terraform workflow/state work. Publish through `develop`, wait for the required CI, and integrate into `main` only when checks pass, as required by [AGENTS.md](AGENTS.md#validation-and-publication).
+
 ## Purpose
 
 Track priority article reviews, optional validation follow-ups, and reader-task testing for the knowledge base.
@@ -21,11 +27,11 @@ Status: Draft
 Audience: Maintainers and contributors planning review work
 Page type: Maintenance queue
 Maintainer: Unassigned
-Last substantive review: 2026-09-21
+Last queue planning review: 2026-10-29; individual guide evidence remains recorded separately
 Applicable versions: Current repository state recorded in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 Validation evidence: Markdown lint and local link validation passed for the queue introduction and external-evidence checklist batches
 Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks remain optional evidence that needs suitable environments
-Next review: When KB-14 reader testing starts, another priority guide is updated, or by 2026-10-21
+Next queue review: Weekly upkeep, next scheduled 2026-11-02, or sooner after a relevant upstream change or reader report
 
 Use this queue with the [knowledge-base improvement plan](knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
 

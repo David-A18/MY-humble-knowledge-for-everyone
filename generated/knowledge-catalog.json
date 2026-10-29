@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 218,
+  "concept_count": 225,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -3262,71 +3262,238 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose Apache APISIX and APISIX Ingress Controller failures in Kubernetes.",
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Locate APISIX failures between Kubernetes reconciliation, gateway configuration, request matching, and backend delivery.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/apisix.md",
-      "source_ids": [],
+      "source_ids": [
+        "apisix-config",
+        "apisix-ready"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "troubleshooting",
-        "apisix"
+        "apisix",
+        "gateway"
       ],
       "title": "APISIX troubleshooting",
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose frequent Kubernetes workload issues by moving from safe inspection commands to targeted fixes.",
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Choose the correct Kubernetes troubleshooting route from observed symptoms and collect a minimal safe evidence set.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/common-solutions.md",
-      "source_ids": [],
+      "source_ids": [
+        "debug-pods"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "troubleshooting",
-        "common-solutions"
+        "triage"
       ],
       "title": "Kubernetes common solutions",
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose a pod that starts, exits, and is restarted repeatedly by Kubernetes.",
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Find the failing container, distinguish application exits from probe and memory failures, and verify a targeted recovery.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/troubleshooting/crashloopbackoff.md",
-      "source_ids": [],
+      "source_ids": [
+        "pod-lifecycle",
+        "probes"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "troubleshooting",
-        "crashloopbackoff"
+        "containers",
+        "probes"
       ],
       "title": "CrashLoopBackOff",
       "type": "Troubleshooting Guide"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Diagnose common local Kubernetes problems when using kind.",
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Separate namespace and resolver mistakes from cluster DNS, upstream resolution, and application connectivity failures.",
       "maintainer": "unassigned",
       "maturity": "draft",
-      "path": "knowledge/kubernetes/troubleshooting/kind.md",
-      "source_ids": [],
+      "path": "knowledge/kubernetes/troubleshooting/dns-resolution.md",
+      "source_ids": [
+        "dns-debugging",
+        "network-policies"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "kubernetes",
         "troubleshooting",
-        "kind"
+        "dns",
+        "coredns"
+      ],
+      "title": "DNS resolution failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Trace an external request through Gateway API acceptance, backend references, listener TLS, and application routing.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/gateway-route-and-tls.md",
+      "source_ids": [
+        "gateway-status",
+        "gateway-api"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "gateway-api",
+        "tls",
+        "ingress"
+      ],
+      "title": "Gateway route and TLS failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Distinguish image naming, authorization, registry connectivity, and local cache failures before a container starts.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/image-pull-failures.md",
+      "source_ids": [
+        "images",
+        "private-images"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "images",
+        "registry"
+      ],
+      "title": "Image pull failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Diagnose local kind runtime, context, image-cache, host-networking, and scheduling problems without losing cluster data.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/kind.md",
+      "source_ids": [
+        "kind-known",
+        "kind-start"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "kind",
+        "local-development"
       ],
       "title": "kind troubleshooting",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Determine whether a Pod is unscheduled, blocked after assignment, or absent because admission rejected its creation.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/pending-pods-and-scheduling.md",
+      "source_ids": [
+        "pod-lifecycle",
+        "debug-pods",
+        "assign-pods",
+        "storage-classes"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "scheduling",
+        "resources"
+      ],
+      "title": "Pending Pods and scheduling failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Trace a blocked stateful Pod through claim binding, topology, attachment, mounting, and application filesystem access.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/persistent-volume-failures.md",
+      "source_ids": [
+        "persistent-volumes",
+        "storage-classes"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "storage",
+        "pvc",
+        "csi"
+      ],
+      "title": "Persistent-volume binding and mount failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Find why a new Deployment revision cannot become available and choose a safe fix or compatible rollback.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/rollout-stalls.md",
+      "source_ids": [
+        "deployments",
+        "deployment-api"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "deployments",
+        "rollout"
+      ],
+      "title": "Deployment rollout stalls",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Platform engineers with basic kubectl knowledge",
+      "description": "Isolate Service routing failures across selectors, EndpointSlices, application ports, and network enforcement.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/kubernetes/troubleshooting/service-connectivity.md",
+      "source_ids": [
+        "debug-service",
+        "endpoint-slices",
+        "network-policies"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "troubleshooting",
+        "services",
+        "networking",
+        "endpoint-slices"
+      ],
+      "title": "Service connectivity failures",
       "type": "Troubleshooting Guide"
     },
     {

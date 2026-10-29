@@ -20,12 +20,11 @@ agent should be able to find the same evidence, distinguish a draft from a
 reviewed guide, and cite the relevant source without treating illustrative
 content as a verified fact.
 
-## Current baseline
+## Baseline and current progress
 
-The generated catalog records 161 concepts in `knowledge/`: 151 `draft` and
-10 `stable`. Twenty-six concepts have a freshness deadline, and no concept has
-an assigned maintainer. This is a strong structural starting point, but it
-means that breadth must not be presented as uniform technical authority.
+The original 2026-09-21 baseline recorded 161 concepts: 151 draft and 10 stable, with 26 freshness deadlines and no assigned maintainer. That is historical evidence, not the current inventory.
+
+After the ten-topic expansion and this Kubernetes troubleshooting pass, the catalog contains 225 concepts: 215 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 99 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
 
 The repository already provides the foundations this plan will use:
 
@@ -154,7 +153,7 @@ chosen reader outcome, evidence plan, and intended index route before drafting.
 
 ## Master section quality checklist
 
-This is the complete current checklist of indexed sections in `knowledge/`.
+This is the original planning checklist. Use the [section quality ledger](section-quality-progress.md) for the complete current on-disk inventory, including the newly added learning series.
 Each checkbox represents a section-level review, not an automatic assertion
 that every page is correct or `stable`. Tick a box only after the section's
 index, direct concepts, navigation, terminology, evidence gaps, and expansion
@@ -256,7 +255,7 @@ For every checked section, confirm all of the following:
     control-plane model, workload lifecycle, and links to applied routes.
   - [ ] [Tricks](knowledge/kubernetes/tricks/index.md) — correctness, scope,
     security implications, and when not to use a shortcut.
-  - [ ] [Troubleshooting](knowledge/kubernetes/troubleshooting/index.md) —
+  - [x] [Troubleshooting](knowledge/kubernetes/troubleshooting/index.md) —
     symptom-to-diagnosis paths for pods, services, DNS, storage, scheduling,
     ingress, and safe recovery.
 
@@ -501,8 +500,7 @@ learning, not grounds to label content complete prematurely.
 | AI discoverability | Every core task has a passing golden retrieval case with the intended guide in scope. | Retrieval-case validation and measured runner, when available. |
 | Freshness | No stable concept remains past its review deadline without a recorded decision. | Maintenance queue and OKF metadata. |
 
-Run page-level checks in every content change. Review the maintenance queue at
-least monthly, review coverage and reader feedback quarterly, and re-prioritize
+Run page-level checks in every content change. The requested weekly upkeep reviews the maintenance queue and selects one coherent quality/freshness improvement. Review coverage and reader feedback quarterly, and re-prioritize
 after upstream product changes or repeated reader failures. Adjust the cadence
 when the number of stable pages or contributor capacity makes a shorter cycle
 necessary.

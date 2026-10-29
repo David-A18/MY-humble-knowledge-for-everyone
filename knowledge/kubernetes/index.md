@@ -45,6 +45,10 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 | --- | --- | --- |
 | XRDs, Compositions, and XR calls | [XRDs, Compositions, and XR calls](crossplane/xrd-composition-and-xr-calls.md) | [Component model](crossplane/component-model.md), [Compositions](crossplane/compositions.md), [Terraform vs Crossplane](crossplane/terraform-vs-crossplane.md), [AWS VPC platform API](crossplane/aws-vpc-platform-api.md). |
 
+## Symptom-driven diagnostics
+
+Start with [troubleshooting triage](troubleshooting/common-solutions.md), then follow [Service connectivity](troubleshooting/service-connectivity.md), [DNS](troubleshooting/dns-resolution.md), [scheduling](troubleshooting/pending-pods-and-scheduling.md), [storage](troubleshooting/persistent-volume-failures.md), [gateway/TLS](troubleshooting/gateway-route-and-tls.md), or [rollouts](troubleshooting/rollout-stalls.md).
+
 ## AWS and EKS workflows
 
 | Guide | Focus |

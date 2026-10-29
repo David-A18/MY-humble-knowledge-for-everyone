@@ -2,6 +2,10 @@
 
 ## 2026-10-29
 
+- **Kubernetes troubleshooting quality pass**: Expanded four guides and added seven focused diagnostic routes with official sources, EndpointSlice checks, expected observations, safe recovery, and explicit unexecuted runtime boundaries.
+- **Ongoing quality tracking**: Added the complete indexed-section progress snapshot, reconciled broad roadmap tasks with existing coverage, and added source-backed retrieval cases for the new diagnostic routes.
+- **RAG no-evidence example**: Generate the test query at runtime so a literal nonsense string cannot match the tutorial that documents it.
+
 - **Topic expansion**: Added ten requested learning routes, official source records/citations, and executable teaching examples in the current OKF layout.
 - **Retrieval quality**: The RAG baseline retains repository citation paths and lifecycle labels and filters deprecated concepts.
 - **Evidence boundary**: Local/schema tests and pending live infrastructure checks are distinguished in the publication audit.
