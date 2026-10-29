@@ -2,6 +2,9 @@
 
 ## 2026-10-29
 
+- **AWS networking quality pass**: Added VPC/subnet, effective-route, egress/NAT, endpoint/private-DNS, connectivity selection, diagnostics, and read-only inspection guides; expanded security groups, stateful controls, and CloudFront with official sources and practical verification boundaries.
+- **Current AWS behavior**: Distinguished regional/zonal NAT, gateway/interface endpoints, modeled reachability/live traffic, and CloudFront cache isolation. Recorded CLI output-skeleton limits without claiming cloud execution.
+
 - **Kubernetes troubleshooting quality pass**: Expanded four guides and added seven focused diagnostic routes with official sources, EndpointSlice checks, expected observations, safe recovery, and explicit unexecuted runtime boundaries.
 - **Ongoing quality tracking**: Added the complete indexed-section progress snapshot, reconciled broad roadmap tasks with existing coverage, and added source-backed retrieval cases for the new diagnostic routes.
 - **RAG no-evidence example**: Generate the test query at runtime so a literal nonsense string cannot match the tutorial that documents it.

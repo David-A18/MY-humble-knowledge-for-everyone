@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Expanded AWS networking to ten source-backed guides, including a read-only inspection lab, current NAT availability modes, private endpoints/DNS, connected-network choices, diagnostics, and stronger CloudFront/security guidance.
+
 - Expanded Kubernetes troubleshooting to eleven source-backed guides covering Service/DNS, scheduling, images, persistent volumes, Gateway API/TLS, rollouts, crashes, APISIX, and kind.
 - Added a section quality ledger and prioritized completion criteria that preserve already-completed work and distinguish documentation from runtime evidence.
 - Corrected the RAG no-evidence walkthrough to generate a fresh query instead of retrieving its own documented test string.

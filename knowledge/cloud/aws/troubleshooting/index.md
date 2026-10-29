@@ -12,6 +12,10 @@ Diagnostic runbooks for AWS service and architecture issues.
 - VPC routing problems.
 - Unexpected cost spikes.
 
+## Available focused route
+
+- [AWS network connectivity](../networking/network-connectivity-troubleshooting.md) — separate DNS, routes, filtering, TLS, and API authorization, then choose the relevant evidence tool.
+
 ## First checks
 
 - [ ] Confirm account, region, and resource identifiers.

@@ -52,6 +52,7 @@ Common terms used across the knowledge base.
 | CRD | CustomResourceDefinition; a Kubernetes object that defines a custom API resource. |
 | Crossplane | Kubernetes-native control-plane framework for reconciling external infrastructure and custom platform APIs. |
 | CSI snapshot | Kubernetes snapshot workflow for CSI-backed persistent volumes using VolumeSnapshot, VolumeSnapshotContent, and VolumeSnapshotClass resources. |
+| CIDR | Classless Inter-Domain Routing; prefix notation for an IP address range, such as `10.40.0.0/16`. Start with [VPC address planning](cloud/aws/networking/vpc-and-subnet-fundamentals.md). |
 | DeploymentRuntimeConfig | Crossplane package-runtime configuration for provider or function pods. |
 | DevOps | Engineering practices that connect software delivery, automation, operations, and reliability work. |
 | Deterministic extraction | Parsing exact machine-readable facts from authoritative producers with code rather than asking a model to recreate them. |
@@ -60,6 +61,7 @@ Common terms used across the knowledge base.
 | ECS | Amazon Elastic Container Service; AWS-native container orchestration for running, managing, and scaling containerized applications. |
 | ECS service | Amazon ECS resource that keeps a desired number of task definition instances running and replaces failed or unhealthy tasks. |
 | EKS | Amazon Elastic Kubernetes Service; AWS managed Kubernetes service for running Kubernetes clusters on AWS and supported hybrid environments. |
+| ENI | Elastic Network Interface; a resource interface in an AWS subnet with addresses and security-group associations. |
 | EnvironmentConfig | Crossplane composition data object that provides XR-specific in-memory environment values. |
 | External name | Crossplane annotation that maps a Kubernetes managed resource to its real external resource identifier. |
 | First-consumer binding | StorageClass mode delaying volume provisioning/binding until a consuming Pod enables compatible placement; see [storage diagnosis](kubernetes/troubleshooting/persistent-volume-failures.md). |
@@ -95,6 +97,8 @@ Common terms used across the knowledge base.
 | MSK | Amazon Managed Streaming for Apache Kafka; AWS managed service for Kafka-compatible streaming workloads. |
 | MTTR | Mean Time To Recovery; a reliability metric for how quickly service is restored after failure. |
 | MVP | Minimum Viable Product; the smallest useful product version that can deliver value to real users and support learning from real usage. |
+| NACL | Network access control list; AWS subnet-boundary, ordered, stateless allow/deny rules. Check the [request and reply path](cloud/aws/networking/stateful-networking.md). |
+| NAT gateway | AWS managed network address translation for workload-initiated flows; [zonal and regional modes](cloud/aws/networking/internet-and-nat-egress.md) have different placement behavior. |
 | OIDC | OpenID Connect; identity protocol built on OAuth 2.0 that issues signed identity tokens with claims. |
 | Node-agent | Velero DaemonSet that runs file-system backup and data movement work on Kubernetes nodes. |
 | OKF | Open Knowledge Format; an open Markdown and YAML-frontmatter specification for portable human- and agent-readable knowledge bundles with structured metadata. |
@@ -103,6 +107,7 @@ Common terms used across the knowledge base.
 | PKCE | Proof Key for Code Exchange; an OAuth 2.0 extension used with authorization code flows to reduce authorization-code interception risk. |
 | Platform API | Stable internal API exposed by a platform team to hide implementation details behind a product-like request shape. |
 | PoC | Proof of Concept; a small, time-boxed effort used to prove whether an idea, technology, integration, architecture, or approach is feasible. |
+| PrivateLink | AWS private service/resource connectivity through supported endpoint types; [gateway endpoints use a different route-based mechanism](cloud/aws/networking/vpc-endpoints-and-private-dns.md). |
 | Prompt | Reusable instruction template that guides a model or agent for a specific interaction or workflow. |
 | Provenance | Metadata that records the sources a claim or knowledge document derives from. |
 | Prototype | Early model used to explore shape, interaction, behavior, or design before a full implementation. |

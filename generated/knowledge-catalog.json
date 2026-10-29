@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 225,
+  "concept_count": 232,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -633,54 +633,236 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to design Amazon CloudFront distributions for AWS applications, APIs, static sites, and EKS ingress paths.",
+      "audience": "Cloud and platform engineering learners",
+      "description": "Design CloudFront request paths, cache isolation, origin protection, and verification for AWS applications and EKS backends.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/cloudfront.md",
-      "source_ids": [],
+      "source_ids": [
+        "cache-key",
+        "cache-policy",
+        "s3-oac",
+        "viewer-tls",
+        "vpc-origins",
+        "cloudfront-cli",
+        "cloudfront-waf"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cloud",
         "aws",
-        "networking"
+        "networking",
+        "cloudfront",
+        "cdn",
+        "security"
       ],
       "title": "CloudFront",
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Document practical behavior and troubleshooting checks for AWS security groups.",
+      "audience": "Cloud and platform engineering learners",
+      "description": "Choose direct internet, zonal or regional NAT, IPv6 egress, or service endpoints with explicit availability and cost trade-offs.",
       "maintainer": "unassigned",
       "maturity": "draft",
-      "path": "knowledge/cloud/aws/networking/security-groups.md",
-      "source_ids": [],
+      "path": "knowledge/cloud/aws/networking/internet-and-nat-egress.md",
+      "source_ids": [
+        "internet-gateway",
+        "nat-types",
+        "regional-nat",
+        "nat-example"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cloud",
         "aws",
-        "networking"
+        "networking",
+        "nat",
+        "egress",
+        "ipv6"
+      ],
+      "title": "Internet gateways and NAT egress",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Move from a failing DNS, TCP, TLS, or API request to the responsible VPC path or policy without broad firewall changes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/network-connectivity-troubleshooting.md",
+      "source_ids": [
+        "flow-logs",
+        "flow-records",
+        "reachability",
+        "reachability-cost"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "diagnostics",
+        "flow-logs"
+      ],
+      "title": "Diagnose AWS network connectivity failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Build an evidence map of an existing authorized VPC and explain one dependency path without provisioning or changing its resources.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/network-inspection-lab.md",
+      "source_ids": [
+        "vpc-model",
+        "route-tables",
+        "dns-attributes",
+        "sts-identity"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "lab",
+        "aws-cli"
+      ],
+      "title": "Read-only VPC inspection lab",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Resolve explicit versus main route-table associations and select the destination-specific path before changing networking.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/route-tables-and-path-selection.md",
+      "source_ids": [
+        "route-tables"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "routes",
+        "diagnostics"
+      ],
+      "title": "Find the effective subnet route and next hop",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Understand ENI security-group rules, references, connection tracking, and a least-privilege verification sequence.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/security-groups.md",
+      "source_ids": [
+        "sg-rules",
+        "connection-tracking"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "security-groups",
+        "security"
       ],
       "title": "Security groups",
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand AWS networking features where connection state changes security, routing, and troubleshooting.",
+      "audience": "Cloud and platform engineering learners",
+      "description": "Explain why return traffic and symmetric paths matter when security groups, NACLs, NAT, and appliances interact.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/aws/networking/stateful-networking.md",
-      "source_ids": [],
+      "source_ids": [
+        "network-acls",
+        "connection-tracking",
+        "nat-types",
+        "network-firewall",
+        "gateway-load-balancer"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cloud",
         "aws",
-        "networking"
+        "networking",
+        "connection-tracking",
+        "network-acls"
       ],
-      "title": "Stateful networking",
+      "title": "Stateful networking and stateless subnet controls",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Understand AWS address space, subnet placement, exposure, and the boundaries between routing, filtering, and identity.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/vpc-and-subnet-fundamentals.md",
+      "source_ids": [
+        "vpc-model",
+        "subnets"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "vpc",
+        "subnets"
+      ],
+      "title": "VPC and subnet fundamentals",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Compare VPC peering, Transit Gateway, PrivateLink, VPN, and Direct Connect by reachability scope and operating responsibility.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/vpc-connectivity-options.md",
+      "source_ids": [
+        "peering",
+        "transit-gateway",
+        "site-vpn",
+        "direct-connect",
+        "private-link"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "transit-gateway",
+        "peering",
+        "hybrid"
+      ],
+      "title": "Choose VPC and hybrid connectivity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineering learners",
+      "description": "Distinguish gateway and interface endpoints and diagnose network, DNS, and authorization requirements for private AWS API access.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/networking/vpc-endpoints-and-private-dns.md",
+      "source_ids": [
+        "gateway-endpoints",
+        "private-link",
+        "interface-endpoints",
+        "interface-prerequisites",
+        "dns-attributes"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "privatelink",
+        "endpoints",
+        "dns"
+      ],
+      "title": "VPC endpoints and private DNS",
       "type": "Explanation"
     },
     {
@@ -799,7 +981,9 @@
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cloud/edge/cdn-caching-and-origin-protection.md",
-      "source_ids": [],
+      "source_ids": [
+        "cloudfront-cache-key"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [

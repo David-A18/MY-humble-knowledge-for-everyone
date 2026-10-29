@@ -1,12 +1,19 @@
 ---
-type: "Explanation"
-title: "CDN caching and origin protection"
-description: "Use this guide to design CDN cache behavior without exposing private data, overwhelming the origin, or leaving a bypass path around the edge layer."
-tags: [cloud, edge]
+type: Explanation
+title: CDN caching and origin protection
+description: Use this guide to design CDN cache behavior without exposing private
+  data, overwhelming the origin, or leaving a bypass path around the edge layer.
+tags:
+- cloud
+- edge
 status: draft
 maturity: draft
-audience: "Engineering learners and practitioners"
-maintainer: "unassigned"
+audience: Engineering learners and practitioners
+maintainer: unassigned
+sources:
+- id: cloudfront-cache-key
+  title: Control the CloudFront cache key
+  resource: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-the-cache-key.html
 ---
 
 # CDN caching and origin protection
@@ -23,7 +30,7 @@ Use this page when a public application, API, or static asset path sits behind A
 
 | Concept | Meaning | Why it matters |
 | --- | --- | --- |
-| Cache key | The request attributes that identify a cached response. | A broad key can leak or mix responses; a narrow key fragments cache. |
+| Cache key | The request attributes that identify a cached response. | Omitting representation-changing inputs can mix or leak responses; including unnecessary inputs fragments the cache.[^cloudfront-cache-key] |
 | TTL | How long an object can remain fresh at the edge. | Longer TTLs improve offload but increase stale-content risk. |
 | Origin offload | Traffic served by edge cache instead of the origin. | Higher offload reduces load on ALB, EKS, databases, and storage. |
 | Origin bypass | A path where clients can reach the origin directly. | Bypass can skip WAF, bot controls, rate limits, and cache protection. |
@@ -168,3 +175,5 @@ What it does: keeps routing simple, but it requires extra bypass controls such a
 - [Back to edge and CDN](index.md)
 - [Back to cloud index](../index.md)
 - [Back to root index](../../../README.md)
+
+[^cloudfront-cache-key]: [Control the CloudFront cache key](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-the-cache-key.html)

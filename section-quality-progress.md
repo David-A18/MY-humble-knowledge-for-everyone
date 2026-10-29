@@ -2,7 +2,30 @@
 
 Review snapshot: 2026-10-29. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: Kubernetes troubleshooting
+## Current batch: AWS networking
+
+Scope: reviewed all three prior direct concepts (security groups, stateful networking, CloudFront), replaced the outline index with a learning path, and added seven focused concepts. The ten-guide section now covers address planning, effective routes, zonal/regional NAT, endpoints and private DNS, security boundaries, VPC/hybrid connectivity selection, a read-only lab, and symptom-driven diagnostics.
+
+Official AWS sources reviewed on 2026-10-29. All ten concepts remain draft with unassigned ownership; no AWS account calls, infrastructure changes, or live packet/failover tests were performed. The section review is a content/navigation/evidence assessment, not a deployment attestation.
+
+CLI evidence: v2.38.5 was executed locally. Twenty-six documented command occurrences reduce to sixteen unique commands. Fourteen EC2 commands passed offline output-skeleton validation. STS caller identity and CloudFront configuration passed input-skeleton parsing only: generated output placeholders failed ARN-length and origin-group-member constraints. Named profiles were omitted from offline tests; actual credentials/account authorization were not tested. This limitation is recorded in the lab and CloudFront guide.
+
+Follow-ups: perform the read-only lab in an authorized account, record resolved DNS and actual path evidence, validate permitted/denied requests and planned failover, and add bounded Transit Gateway provisioning, hybrid DNS/BGP, and endpoint-policy lockout recovery procedures. No numeric cost estimate is asserted; current regional pricing and the actual traffic footprint are required for a deployment decision.
+
+### AWS networking validation
+
+| Check | Result |
+| --- | --- |
+| Repository profile and governance | All fifteen required validator/test commands passed, including the live GitHub label comparison. |
+| Markdown and navigation | 384 files lint cleanly; local links, heading fragments, parent indexes, and reachability pass. |
+| Catalog and retrieval cases | 232 concepts; reproducible catalog; 37 retrieval definitions validate. |
+| External URLs | All 475 checked unique URLs returned HTTP 200 after redirects; external fragments were not tested. |
+| Retrieval smoke checks | Eight targeted keyword queries retrieve their intended guide in the top five chunks; a fresh absent token returns `NO_EVIDENCE`. These are lexical smoke checks, not natural-language or model-answer quality evidence. |
+| CLI / cloud | AWS CLI 2.38.5: fourteen output-skeleton checks and two parse-only checks as explained above; no cloud execution. |
+
+A bounded correction in the linked CDN guide fixes the reversed cache-key explanation: missing representation-changing inputs risks mixed responses, while unnecessary inputs fragment cache. The edge section remains pending a full review.
+
+## Previous batch: Kubernetes troubleshooting
 
 Scope: the section index and all eleven direct guides. Four existing guides were expanded/refactored, seven focused guides added, and all direct routes connected. The symptom router now directs readers to DNS, Service routing, storage, scheduling, image pulls, rollouts, Gateway API/TLS, crashes, APISIX, or kind diagnostics.
 
@@ -29,7 +52,7 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 
 | Priority | Section / task | Completion criterion |
 | --- | --- | --- |
-| P1 | [AWS networking](knowledge/cloud/aws/networking/index.md) | Review all three existing concepts, add the missing VPC/subnet/route/NAT/endpoint learning sequence, and distinguish security groups from network ACLs with bounded verification and cost/cleanup guidance. |
+| P2 | [AWS networking follow-up](knowledge/cloud/aws/networking/index.md) | Execute the authorized read-only lab and controlled traffic/failover drills; expand transit/hybrid deployment and endpoint-policy recovery procedures. |
 | P1 | [Terraform](knowledge/terraform/index.md) | Preserve the existing workflow/state/local lab; add focused module/provider/workspace guidance and remote-backend recovery boundaries instead of duplicating fundamentals. |
 | P1 | [FinOps](knowledge/finops/index.md) | Build on cost allocation and AWS tagging; add budgets/anomaly response and a measured rightsizing example with explicit ownership and limits. |
 | P2 | [AWS security](knowledge/cloud/aws/security/index.md) | Review existing OIDC/IRSA material and EKS comparison; record trust/permission evidence gaps before adding more identity summaries. |
@@ -68,7 +91,7 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [cloud/aws/fundamentals](knowledge/cloud/aws/fundamentals/index.md) | 0 | Pending |
 | [cloud/aws/governance-and-access](knowledge/cloud/aws/governance-and-access/index.md) | 0 | Pending |
 | [cloud/aws](knowledge/cloud/aws/index.md) | 0 | Pending |
-| [cloud/aws/networking](knowledge/cloud/aws/networking/index.md) | 3 | Pending |
+| [cloud/aws/networking](knowledge/cloud/aws/networking/index.md) | 10 | Reviewed 2026-10-29; runtime and advanced procedures open |
 | [cloud/aws/security](knowledge/cloud/aws/security/index.md) | 4 | Pending |
 | [cloud/aws/solutions-architect](knowledge/cloud/aws/solutions-architect/index.md) | 0 | Pending |
 | [cloud/aws/storage](knowledge/cloud/aws/storage/index.md) | 0 | Pending |

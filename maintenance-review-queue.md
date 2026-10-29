@@ -15,9 +15,9 @@ Prefer one coherent improvement per run. Rebuild the catalog after metadata chan
 
 ## Section quality cycle
 
-Use the [section quality ledger](section-quality-progress.md) for the actual directory inventory and next batches. The Kubernetes troubleshooting section has now been source reviewed and expanded to eleven focused guides. Cluster/controller execution, redacted diagnostic outputs, and real reader testing remain open evidence; no draft was promoted.
+Use the [section quality ledger](section-quality-progress.md) for the actual directory inventory and next batches. Kubernetes troubleshooting now has eleven focused guides; AWS networking has ten connected guides, including a read-only inspection lab and the regional/zonal NAT distinction. Cluster/controller execution, redacted diagnostic outputs, and real reader testing remain open evidence; no draft was promoted.
 
-Next: AWS networking, then targeted Terraform gaps and FinOps examples. Preserve existing completed Git recovery and Terraform workflow/state work. Publish through `develop`, wait for the required CI, and integrate into `main` only when checks pass, as required by [AGENTS.md](AGENTS.md#validation-and-publication).
+Next: targeted Terraform gaps, then FinOps examples. AWS networking follow-ups include account-backed path checks and focused transit/hybrid procedures. Preserve existing completed Git recovery and Terraform workflow/state work. Publish through `develop`, wait for the required CI, and integrate into `main` only when checks pass, as required by [AGENTS.md](AGENTS.md#validation-and-publication).
 
 ## Purpose
 

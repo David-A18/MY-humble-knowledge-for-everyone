@@ -163,3 +163,54 @@ cases:
   - knowledge/kubernetes/troubleshooting/image-pull-failures.md
   required_source_ids:
   - private-images
+- id: aws-network-vpc-and-subnet-fundamentals
+  question: Does naming a subnet public make its instances internet reachable?
+  expected_paths:
+  - knowledge/cloud/aws/networking/vpc-and-subnet-fundamentals.md
+  required_source_ids:
+  - subnets
+- id: aws-network-route-tables-and-path-selection
+  question: Which route table does a subnet use without an explicit association?
+  expected_paths:
+  - knowledge/cloud/aws/networking/route-tables-and-path-selection.md
+  required_source_ids:
+  - route-tables
+- id: aws-network-internet-and-nat-egress
+  question: How do regional and zonal NAT gateways differ in public-subnet placement?
+  expected_paths:
+  - knowledge/cloud/aws/networking/internet-and-nat-egress.md
+  required_source_ids:
+  - regional-nat
+- id: aws-network-vpc-endpoints-and-private-dns
+  question: Are S3 gateway endpoints PrivateLink and how do interface endpoint private
+    DNS requirements differ?
+  expected_paths:
+  - knowledge/cloud/aws/networking/vpc-endpoints-and-private-dns.md
+  required_source_ids:
+  - gateway-endpoints
+- id: aws-network-stateful-networking
+  question: Why can a stateless NACL block a TCP reply even when port 443 is allowed?
+  expected_paths:
+  - knowledge/cloud/aws/networking/stateful-networking.md
+  required_source_ids:
+  - network-acls
+- id: aws-network-vpc-connectivity-options
+  question: How do transit gateway route association and propagation differ from VPC
+    subnet routes?
+  expected_paths:
+  - knowledge/cloud/aws/networking/vpc-connectivity-options.md
+  required_source_ids:
+  - transit-gateway
+- id: aws-network-network-connectivity-troubleshooting
+  question: Does Reachability Analyzer send packets or prove that TLS and the application
+    work?
+  expected_paths:
+  - knowledge/cloud/aws/networking/network-connectivity-troubleshooting.md
+  required_source_ids:
+  - reachability
+- id: aws-network-cloudfront
+  question: Can a CloudFront minimum TTL override private or no-store cache headers?
+  expected_paths:
+  - knowledge/cloud/aws/networking/cloudfront.md
+  required_source_ids:
+  - cache-policy
