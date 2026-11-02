@@ -68,7 +68,7 @@ A dedicated bundle claimed to conform to OKF v0.2 must satisfy the official conf
 2. Every concept frontmatter block contains a non-empty `type`.
 3. Every reserved `index.md` or `log.md` follows its defined structure when present.
 
-This engineering repository is not automatically an OKF bundle just because it documents OKF concepts. A safer pattern is to keep a dedicated conformant example or export bundle, such as [examples/okf-v0.2](examples/okf-v0.2/index.md), while the main repository remains an ordinary Markdown knowledge base.
+A repository is not automatically an OKF bundle just because it documents OKF concepts. Here, the [`knowledge/` directory](../../../index.md) is the conformant bundle, while root governance files stay outside it. The separate [examples/okf-v0.2](examples/okf-v0.2/index.md) bundle demonstrates the format with synthetic content, so retrieval excludes it.
 
 Consumers must be permissive. A consumer should not reject a bundle merely because it sees unknown `type` values, extra frontmatter keys, missing optional metadata, missing optional indexes, or tolerable broken knowledge links.
 

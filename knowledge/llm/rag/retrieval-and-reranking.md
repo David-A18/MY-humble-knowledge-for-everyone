@@ -51,7 +51,7 @@ What it does: executes the lab's safely quoted OR query over FTS5 and returns bo
 
 Build representative questions with expected source sections. Inspect misses: was the source absent, chunk malformed, query vocabulary different, or rank too low? Fix the responsible stage. Add semantic candidates/reranking only when the baseline's measured misses justify cost and latency.
 
-The sample removes common English question words and uses bounded lexical terms. It has no semantic fallback or calibrated relevance threshold; related-word matches can still be weak. Production systems need an evaluated evidence-sufficiency policy, not only a non-empty result list.
+The sample removes common English question words and uses bounded lexical terms. It groups chunks by concept, ranks on the best chunk's share of the question's rare-word weight, and reports whether the best concept reaches an evaluated coverage threshold. It has no semantic fallback, so related-word matches can still be weak. Coverage measures word overlap, not whether a page answers the question.
 
 Source references: [^fts5-bm25][^original-retrieval-grounded-generation-research]
 

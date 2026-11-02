@@ -50,6 +50,9 @@ Use the official [OKF v0.2 specification](https://github.com/GoogleCloudPlatform
 - [`scripts/build-knowledge-catalog.py`](scripts/build-knowledge-catalog.py) derives a deterministic catalog for AI retrieval and maintenance tooling.
 - [`scripts/validate-command-paths.py`](scripts/validate-command-paths.py) rejects fenced examples that still reference pre-OKF root paths.
 - [`scripts/validate-retrieval-cases.py`](scripts/validate-retrieval-cases.py) keeps golden retrieval tasks aligned with real concepts and source IDs.
+- [`scripts/evaluate-retrieval.py`](scripts/evaluate-retrieval.py) scores the [RAG lab](knowledge/llm/rag/repository-lab.md) against those tasks and unanswerable questions, and fails below agreed floors.
+- [`scripts/kb-mcp-server.py`](scripts/kb-mcp-server.py) serves read-only search and fetch to AI hosts over MCP.
+- [`scripts/report-knowledge-health.py`](scripts/report-knowledge-health.py) reports concept counts, trust, sourcing, and thin pages by area.
 - [`scripts/check-github-labels.py`](scripts/check-github-labels.py) compares declared labels with GitHub; when `gh` is absent it uses the read-only REST API. Its tests cover pagination and failure reporting without credentials.
 - [`scripts/validate-local-links.mjs`](scripts/validate-local-links.mjs) enforces valid internal links and reachability, a stricter rule than OKF consumer conformance.
 - Markdown lint, issue-template validation, GitHub label checks, link validation, Terraform format checks, and OKF validation run in CI on `develop` and `main`.

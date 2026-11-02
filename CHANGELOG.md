@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Upgraded the [RAG lab](knowledge/llm/rag/repository-lab.md) with paragraph-aware chunks, stemming, frontmatter and path search, concept-level ranking, OKF trust and freshness metadata, and an evidence-sufficiency check that makes `ask` refuse weak evidence.
+- Added `scripts/evaluate-retrieval.py` and `tests/unanswerable-questions.yaml`, which score the golden cases and refusal in CI for the first time.
+- Added the read-only `scripts/kb-mcp-server.py` with `.mcp.json`, and `scripts/report-knowledge-health.py` for area, trust, sourcing, and thin-page reporting.
+
 - Expanded FinOps and AWS FinOps with eleven source-backed concepts, stronger allocation/tagging guidance, and a tested synthetic calculation lab.
 - Added CI checks for exact cost reconciliation, credits, unit comparisons, and overlapping savings claims, while keeping real billing and workload acceptance explicit.
 
@@ -127,3 +131,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Linked maintenance-queue follow-up entries to the latest validated baseline comments on the KB-04 and KB-14 tracking issues.
 - Clarified validation and reader-test issue form commit placeholders so future evidence submitters record the current commit under test.
 - Updated the external link-check exclusions to skip the official Crossplane documentation domain after repeated GitHub runner connectivity failures, while keeping local link and fragment validation active.
+
+### Fixed
+
+- Retrieval now indexes `start-here.md` and decision records, and no longer indexes navigation-only pages, or the synthetic OKF example whose reviewers would have appeared as human-reviewed evidence.
+- Corrected the OKF guide's outdated statement that this repository is not an OKF bundle.

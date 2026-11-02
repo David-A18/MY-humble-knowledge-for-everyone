@@ -1,5 +1,11 @@
 # Knowledge bundle log
 
+## 2026-11-02
+
+- **RAG engine**: The lab now reports OKF trust and freshness on every hit, flags weak evidence, and covers `start-here.md` and decision records. Navigation pages and the synthetic OKF example left the index.
+- **Retrieval evidence**: Golden cases and unanswerable questions are scored in CI. A read-only MCP server exposes search and fetch to AI hosts.
+- **OKF guide**: Corrected the outdated statement about this repository's bundle status.
+
 ## 2026-10-29
 
 - **FinOps quality pass**: Added eleven concepts for budget/forecast/anomaly workflows, reporting/unit economics, rightsizing/rate evidence, Kubernetes allocation, four AWS implementation routes, and synthetic calculation practice; expanded existing allocation/tagging guides.
