@@ -44,3 +44,11 @@ jobs:
         run: |
           python scripts/build-knowledge-catalog.py --check
           python scripts/validate-retrieval-cases.py
+
+      - name: Test RAG engine and MCP server
+        run: |
+          python knowledge/llm/rag/examples/test_rag.py
+          python scripts/test-kb-mcp-server.py
+
+      - name: Score retrieval against golden cases
+        run: python scripts/evaluate-retrieval.py --unanswerable tests/unanswerable-questions.yaml --min-hit-at-3 0.9 --min-refused 0.8

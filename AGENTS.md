@@ -48,6 +48,9 @@ python3 scripts/validate-command-paths.py knowledge
 python3 scripts/build-knowledge-catalog.py --check
 python3 scripts/test-retrieval-case-validator.py
 python3 scripts/validate-retrieval-cases.py
+python3 knowledge/llm/rag/examples/test_rag.py
+python3 scripts/test-kb-mcp-server.py
+python3 scripts/evaluate-retrieval.py --unanswerable tests/unanswerable-questions.yaml --min-hit-at-3 0.9 --min-refused 0.8
 python3 scripts/test-issue-template-validator.py
 python3 scripts/validate-issue-templates.py
 python3 scripts/test-github-label-validator.py

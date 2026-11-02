@@ -18,11 +18,11 @@ Next review: Before merging `develop` into `main`
 
 | ID | Feature | Reader or maintainer outcome | First useful deliverable | Evidence needed |
 | --- | --- | --- | --- | --- |
-| KBU-F01 | Searchable local index | Readers can find guides by topic, command, provider, and task phrase. | Static JSON search index generated from Markdown headings, titles, and related links. | Local generation test and query examples. |
+| KBU-F01 | Searchable local index | Readers can find guides by topic, command, provider, and task phrase. | Implemented as the disposable SQLite index in the [RAG lab](../../knowledge/llm/rag/repository-lab.md). | `scripts/evaluate-retrieval.py` scores the golden cases in CI. |
 | KBU-F02 | Evidence registry | Maintainers can see source-reviewed, static-checked, locally executed, sandbox-executed, and reader-tested pages in one place. | Generated or manually maintained evidence table. | Link validation plus spot checks against article review blocks. |
 | KBU-F03 | Topic alias map | Common names, acronyms, tools, and provider names route to canonical pages. | `aliases.yml` or Markdown alias table linked from the root index. | Search tests for high-demand terms. |
 | KBU-F04 | Reader feedback intake | Readers can report missing prerequisites, confusing terms, and broken examples without leaking private data. | Issue form refinements and contributor triage guide. | Issue-template validation and privacy review. |
-| KBU-F05 | MCP read-only adapter | AI agents can search and fetch curated public knowledge without direct write access. | Public-safe server template with `search`, `fetch`, and `list_routes` tools. | Config review and local mock test. |
+| KBU-F05 | MCP read-only adapter | AI agents can search and fetch curated public knowledge without direct write access. | Implemented as [`scripts/kb-mcp-server.py`](../../scripts/kb-mcp-server.py), with `search_knowledge`, `fetch_page`, and `list_routes` tools. | `scripts/test-kb-mcp-server.py` runs it over stdio in CI. |
 | KBU-F06 | Skill pack for maintainers | AI agents can follow repeatable workflows for curation, source ingestion, and evidence recording. | Reviewed skill files under [skills](../skills/README.md). | Markdown lint and dry-run review against sample pages. |
 | KBU-F07 | Release checklist dashboard | Maintainers can see what must be validated before merging `develop` to `main`. | Checklist page or generated report. | Local validation and CI status evidence. |
 | KBU-F08 | Source freshness queue | Fast-changing topics have review triggers tied to upstream versions or dates. | Queue entries linked from priority operational guides. | Source review dates and official-reference links. |

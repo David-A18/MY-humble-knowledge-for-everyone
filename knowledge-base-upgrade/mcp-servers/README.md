@@ -11,7 +11,7 @@ Maintainer: Unassigned
 Last substantive review: 2026-09-20
 Applicable versions: Current repository structure on the `develop` branch
 Validation evidence: Markdown lint and local link validation must pass before publication
-Known limitations: Config files are templates only and are not connected to live hosts by this repository
+Known limitations: `.mcp.json` connects the read-only `scripts/kb-mcp-server.py`; the config files here remain templates
 Next review: Before connecting any MCP server to a real host
 
 ## MCP server index

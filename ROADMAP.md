@@ -11,7 +11,7 @@ The [new learning paths](knowledge/index.md#expanded-learning-paths) now documen
 | Review draft concepts and assign ownership | A real maintainer, official sources, review scope, and a justified freshness deadline; keep drafts visible until then. |
 | Istio/IRSA/kro/manifest labs | Disposable-environment runs recording actual versions, positive/negative behavior, and cleanup. |
 | Collector/Pixie/Kafka deployment labs | Delivery/capture, outage/recovery, and persistent-state results on supported infrastructure. |
-| RAG answer quality | A selected model digest, grounded/cited answers, paraphrases, conflicts, and insufficient-evidence results. |
+| RAG answer quality | A ten-question spot check on `qwen3:4b` is in the [lab](knowledge/llm/rag/repository-lab.md). Still open: a scored run covering paraphrases, conflicting sources, and grounding. |
 | Dev Container/Ona runtime | Container startup/rebuild and, where access exists, hosted workflow evidence. |
 | Weekly quality and freshness | Focused source reviews, full validators, reproducible catalog, and validated publication to `main`. |
 

@@ -1,0 +1,24 @@
+version: '1'
+questions:
+# Plainly off-topic: nothing in the corpus addresses these.
+- How do I bake sourdough bread at home?
+- What is the capital of Australia?
+- How do I train for a marathon in twelve weeks?
+- Who won the 2022 FIFA World Cup?
+- What is the best way to prune tomato plants?
+- How much water should a houseplant get in winter?
+- What is a good recipe for vegetable lasagna?
+- How do I change a flat tire on a bicycle?
+- Which countries border Switzerland?
+- When did the Roman Empire fall?
+- How do I learn to play the guitar quickly?
+- What are the symptoms of the common cold?
+# Near-misses: engineering vocabulary, but subjects the corpus does not cover.
+- How do I center a div with CSS flexbox?
+- How do I configure a Bluetooth headset on Ubuntu?
+- How do I write a stored procedure in Oracle PL/SQL?
+- What is the difference between SwiftUI and UIKit?
+- How do I publish an Android app to the Google Play Store?
+- How do I set up a Cisco VLAN trunk port?
+- How do I solder a surface-mount resistor?
+- How do I make a pivot table in Microsoft Excel?

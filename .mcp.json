@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "knowledge-base": {
+            "command": "python3",
+            "args": [
+                "scripts/kb-mcp-server.py"
+            ]
+        }
+    }
+}
