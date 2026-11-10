@@ -12,6 +12,8 @@ Executed Git 2.55.0.windows.2 and Terraform 1.17.1 runners locally with Python 3
 
 The new Linux workflow installs checksum-checked kind/kubectl, then runs the actual healthy deployment, two ready endpoints, cluster DNS/Service HTTP, separate Pod port-forward HTTP, an observed image-not-found error and failed rollout, continued old-Pod service, rollback, and namespace/cluster/node-container cleanup. Hosted success must be inspected for the exact revision; syntax/static checks do not prove this execution.
 
+Hosted execution recorded on 2026-11-10: [content revision c7d9d02](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42794513544) and [develop integration 461201e](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42794447314) both passed the live journey. Reports record Docker 29.4.2, kind v0.30.0 (Linux amd64), kubectl v1.34.1, Kubernetes v1.34.0, the pinned node/workload digests, and all six runtime assertions true. The later evidence-record edit changes documentation only; each publication still checks CI for its own revision.
+
 Remaining evidence: independent beginner sessions, native Windows/WSL/macOS/rootless repetition, accessibility/setup feedback, and cloud integration handoffs with authorized identity/cost/cleanup. No AWS resources or user workload were created; the broader cloud journey is not completed by local CI.
 
 ### Beginner journey validation
@@ -21,11 +23,11 @@ Remaining evidence: independent beginner sessions, native Windows/WSL/macOS/root
 | Repository checks | All fifteen required validator/test commands pass, including live GitHub label comparison. |
 | Markdown and navigation | 426 files lint cleanly; relative targets, heading fragments, parent indexes, and reachability pass. |
 | Catalog and retrieval definitions | 265 concepts; reproducible catalog; 79 retrieval definitions validate. |
-| External URLs | All 542 checked unique linked/source URLs returned HTTP 200 after redirects; external fragments were not tested. |
+| External URLs | All 543 checked unique linked/source URLs returned HTTP 200 after redirects; external fragments were not tested. |
 | Main retrieval smoke checks | All seven added questions and three existing Git/Kubernetes/Terraform journey questions retrieve an expected route in the top five chunks; the previously missed local Kubernetes question now starts with its tutorial. A fresh absent token returns `NO_EVIDENCE`. |
 | Develop-engine compatibility | Using the separately maintained develop RAG engine against these content changes gives hit@3 78/79 and hit@5 79/79; unanswerable refusals remain 18/20. Those scores do not describe the older main engine or model-answer quality. The remaining top-three miss is the existing Terraform-sensitive-values case. |
 | Local execution | Git recovery and beginner Terraform lifecycle pass with the versions and boundaries stated above. |
-| Hosted runtime gate | The new Linux workflow must pass deployment, failure, recovery, HTTP, and cleanup for the exact revision before those checks can be counted as executed. |
+| Hosted runtime gate | Both linked runs pass all six assertions: ready endpoints/cluster Service HTTP, Pod port-forward HTTP, actual image-not-found/failed rollout with old Pods serving, recovered image/endpoints/HTTP, namespace deletion, and cluster/node-container deletion. Future revisions require their own hosted result. |
 
 ## Previous batch: AWS security
 

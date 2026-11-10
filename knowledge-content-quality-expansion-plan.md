@@ -251,7 +251,7 @@ For every checked section, confirm all of the following:
     - [ ] [Local deployment learning path](knowledge/kubernetes/examples/local-deployment-learning-path/index.md)
       — beginner instructions, expected local results, failure recovery, and
       completion evidence.
-  - [ ] [Fundamentals](knowledge/kubernetes/fundamentals/index.md) — vocabulary,
+  - [x] [Fundamentals](knowledge/kubernetes/fundamentals/index.md) — vocabulary,
     control-plane model, workload lifecycle, and links to applied routes.
   - [ ] [Tricks](knowledge/kubernetes/tricks/index.md) — correctness, scope,
     security implications, and when not to use a shortcut.
