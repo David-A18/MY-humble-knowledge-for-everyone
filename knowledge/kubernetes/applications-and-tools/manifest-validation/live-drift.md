@@ -20,6 +20,9 @@ sources:
 - id: argo-cd-diff-customization
   resource: https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/
   title: Argo CD diff customization
+- id: kubectl-134-source
+  resource: https://raw.githubusercontent.com/kubernetes/kubectl/v0.34.1/pkg/cmd/diff/diff.go
+  title: kubectl 1.34.1 external diff command implementation
 ---
 
 # Detect desired-versus-live Kubernetes drift
@@ -54,6 +57,17 @@ What it does: handles the documented no-difference 0, difference 1 and error >1 
 
 The lab checks actual baseline/reordered status 0 and changed-port status 1. It deliberately runs a failing external diff process to test the >1 branch; that is an external comparison failure, not an authentication test. `KUBECTL_EXTERNAL_DIFF` must itself follow kubectl's status convention. For dyff, include `between --set-exit-code`; a pretty-printer that always exits 0 would hide changes.[^kubectl-diff-contract]
 
+## Use an executable wrapper for external commands
+
+The pinned kubectl 1.34.1 splits `KUBECTL_EXTERNAL_DIFF` itself and restricts/reorders extra arguments; it does not evaluate shell quoting or a general command line. Passing `python /path/to/script.py` is not a portable way to invoke a custom comparator. Use an executable wrapper and set the variable to its single executable path, without spaces.[^kubectl-134-source]
+
+```sh
+#!/usr/bin/env sh
+exec dyff between --omit-header --set-exit-code "$@"
+```
+
+What it does: an executable wrapper supplies dyff's command/flags itself, while preserving kubectl's two input-directory arguments. Save it in a task-owned path, make it executable, and assign that path to `KUBECTL_EXTERNAL_DIFF`. Check the pinned tools' behavior before adopting a different comparator. The lab uses its own executable wrapper returning 7 to exercise comparison-error handling; it does not execute this dyff wrapper integration.
+
 ## Interpret defaults and ownership
 
 | Difference | Investigation |
@@ -85,3 +99,5 @@ Sources reviewed on 2026-11-10. The [lab](regression-lab-and-ci.md#validation-bo
 [^kubectl-diff-contract]: [kubectl diff behavior, statuses and external command contract](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/).
 [^server-side-apply]: [Server-side apply ownership](https://kubernetes.io/docs/reference/using-api/server-side-apply/).
 [^argo-cd-diff-customization]: [Argo CD diff customization](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/).
+
+[^kubectl-134-source]: [kubectl 1.34.1 external diff argument handling](https://raw.githubusercontent.com/kubernetes/kubectl/v0.34.1/pkg/cmd/diff/diff.go).
