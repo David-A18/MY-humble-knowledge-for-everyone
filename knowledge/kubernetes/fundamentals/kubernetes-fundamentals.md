@@ -14,6 +14,9 @@ sources:
   - id: kubernetes-workloads
     resource: https://kubernetes.io/docs/concepts/workloads/
     title: Kubernetes workloads
+  - id: cluster-components
+    resource: https://kubernetes.io/docs/concepts/overview/components/
+    title: Kubernetes cluster components
 stale_after: 2026-12-19
 ---
 
@@ -39,6 +42,20 @@ Learn the Kubernetes mental model needed to complete the local deployment learni
 
 Start with [Start here](../../start-here.md), then complete the [local deployment learning path](../../cross-topic-guides/local-deployment-learning-path.md). That path creates a local cluster, deploys a small app, breaks it with a bad image tag, diagnoses the failure, rolls back, and cleans up.
 
+## From a manifest to a running Pod
+
+```mermaid
+flowchart LR
+    C[kubectl sends desired objects] --> A[API server and stored cluster state]
+    A --> D[Controllers create and reconcile Pods]
+    D --> S[Scheduler chooses a suitable node]
+    S --> K[Kubelet and container runtime start containers]
+    K --> R[Status and readiness observations]
+    R --> A
+```
+
+What it does: connects the control plane to worker execution and the feedback loop. The API server handles requests, controllers act on desired state, the scheduler assigns eligible unscheduled Pods, and the node's kubelet works with its container runtime. The control plane stores cluster state in etcd; writing a Git file alone does not submit an API request.[^cluster-components]
+
 ## Connect readiness, reconciliation, and recovery
 
 A Pod being `Running` does not establish that it is `Ready` to serve an application. A Deployment manages Pod replicas through ReplicaSets; its current availability and progress are different observations.[^kubernetes-workloads] In the local exercise, readiness plus matching labels provide the Service's normal ready endpoint set. Verify HTTP separately rather than inferring application behavior from a phase label.
@@ -58,3 +75,4 @@ Sources rechecked on 2026-11-10. These explanations remain draft; the [walkthrou
 
 [^kubernetes-concepts]: [Kubernetes concepts](https://kubernetes.io/docs/concepts/).
 [^kubernetes-workloads]: [Kubernetes workloads](https://kubernetes.io/docs/concepts/workloads/).
+[^cluster-components]: [Kubernetes cluster components](https://kubernetes.io/docs/concepts/overview/components/).

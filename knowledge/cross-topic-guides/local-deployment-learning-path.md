@@ -197,6 +197,8 @@ What it does: waits for namespace deletion, confirms no namespace result, then d
 
 Official sources and fixture digests reviewed on 2026-11-10. An older revision recorded a rootless local run with Docker 29.8.0; that historical record is not a fresh execution of these revised inputs. The [automated runner](../kubernetes/examples/local-deployment-learning-path/validate-lab.py) and [CI workflow](../../.github/workflows/local-learning-journey.yml) check actual deployment, Service HTTP, port-forward, image-not-found failure, rollback and cleanup for each tested revision. Inspect its exact commit's result before treating those checks as executed. The authoring Windows host could not run Kubernetes.
 
+Execution recorded on 2026-11-10: [the successful run for content revision c7d9d02](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42794513544) used Linux amd64, Docker 29.4.2, kind v0.30.0, kubectl v1.34.1 and Kubernetes v1.34.0. All six runtime assertions passed, including both HTTP paths, the intended failure with old Pods serving, restored image/endpoints/HTTP, namespace deletion, and removal of the kind cluster/node containers. The runner used the pinned node and NGINX digests shown in the inputs. This is hosted execution evidence, not independent beginner or rootless/desktop validation.
+
 Continue with the [Terraform local state lifecycle](../terraform/examples/local-state-lifecycle/local-state-lifecycle.md). Independent beginner testing, native Windows/WSL/rootless repetition, cloud load balancers, IAM and persistent storage remain outside this walkthrough's current evidence.
 
 ## Related links
