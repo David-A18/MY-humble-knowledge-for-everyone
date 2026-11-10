@@ -25,7 +25,7 @@ sources:
 
 Understand how a Kubernetes workload obtains temporary AWS credentials through IAM Roles for Service Accounts.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## What IRSA is
 
@@ -43,6 +43,8 @@ sequenceDiagram
   S->>Pod: Temporary role credentials
   Pod->>A: Signed request using role permissions
 ```
+
+What it does: separates projected token issuance, the STS credential exchange, and the later signed service request.
 
 ## Identity boundaries
 
@@ -66,6 +68,14 @@ What it does: compares configured role annotation with the role actually used by
 ## Security limits
 
 IRSA does not make containers a security boundary. Restrict node metadata access, account for privileged and host-network workloads, and avoid static environment credentials overriding the intended provider chain. Trace role assumptions with CloudTrail and test denied operations.
+
+## Tokens, sessions, and verification
+
+The projected JWT and the returned STS credentials have different expiry and refresh paths. A supported SDK reads the projected token and renews the AWS session; copying one session into static environment variables loses that provider behavior. Credential precedence varies by SDK, and an earlier configured source can mask IRSA.[^sdk-credential-compatibility]
+
+The [credential lifecycle guide](credential-providers-and-session-lifecycle.md) explains why `GetCallerIdentity` identifies the caller without proving resource access. Check the returned account/role against an expected value, then run both allowed and forbidden service requests. Network failures and missing objects are not evidence of a correct authorization deny.
+
+No live credential exchange was executed during this review.
 
 ## Related links
 

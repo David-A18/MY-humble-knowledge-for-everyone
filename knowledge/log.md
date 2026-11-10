@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-11-10
+
+- Expanded AWS security into a learning and operational path with nine new concepts and a local policy-contract lab. Rechecked existing OIDC/IRSA guidance and preserved the EKS comparison/lab routes. Local mutation tests are distinct from AWS policy evaluation and live authorization.
+
 ## 2026-11-02
 
 - **RAG engine**: The lab now reports OKF trust and freshness on every hit, flags weak evidence, and covers `start-here.md` and decision records. Navigation pages and the synthetic OKF example left the index.

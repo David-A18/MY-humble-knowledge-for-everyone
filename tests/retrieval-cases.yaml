@@ -366,3 +366,94 @@ cases:
   - knowledge/finops/examples/cost-analysis-lab/cost-analysis-lab.md
   required_source_ids:
   - finops-allocation
+- id: security-effective-permissions
+  question: Does every IAM policy need to allow a request and how does a role-session
+    resource grant differ?
+  expected_paths:
+  - knowledge/cloud/aws/security/iam-policy-evaluation-and-least-privilege.md
+  required_source_ids:
+  - principal-evaluation
+- id: security-credential-precedence
+  question: Why can static credentials mask a correct IRSA configuration and how do
+    projected-token and AWS session expiry differ?
+  expected_paths:
+  - knowledge/cloud/aws/security/credential-providers-and-session-lifecycle.md
+  required_source_ids:
+  - providers
+- id: security-caller-not-permission
+  question: Does GetCallerIdentity success prove the application has S3 permissions
+    or that session containment failed?
+  expected_paths:
+  - knowledge/cloud/aws/security/credential-providers-and-session-lifecycle.md
+  required_source_ids:
+  - caller
+- id: security-pod-target-role
+  question: Can EKS Pod Identity access another account through a target role and
+    where must the source role reside?
+  expected_paths:
+  - knowledge/cloud/aws/security/eks-pod-identity-operations.md
+  required_source_ids:
+  - pod-target
+- id: security-pod-cache
+  question: Does editing a Pod Identity association reset cached credentials and what
+    should be verified after a rollout?
+  expected_paths:
+  - knowledge/cloud/aws/security/eks-pod-identity-operations.md
+  required_source_ids:
+  - pod-target
+- id: security-kms-rotation
+  question: Does rotating KMS material re-encrypt stored data or rotate a database
+    password?
+  expected_paths:
+  - knowledge/cloud/aws/security/kms-encryption-and-access.md
+  required_source_ids:
+  - kms-rotate
+- id: security-kms-policy
+  question: Is an IAM decrypt permission sufficient when the KMS key policy does not
+    enable that access path?
+  expected_paths:
+  - knowledge/cloud/aws/security/kms-encryption-and-access.md
+  required_source_ids:
+  - kms-policy
+- id: security-secret-consumer
+  question: How do I prove secret rotation reached the backing service and a cached
+    application consumer?
+  expected_paths:
+  - knowledge/cloud/aws/security/secrets-manager-and-rotation.md
+  required_source_ids:
+  - secret-rotation
+- id: security-cloudtrail-data
+  question: Does CloudTrail Event history include S3 object data events and what retention
+    and Region scope apply?
+  expected_paths:
+  - knowledge/cloud/aws/security/cloudtrail-and-detection.md
+  required_source_ids:
+  - trail-history
+- id: security-sample-findings
+  question: Does a GuardDuty sample finding prove real threat detection or only downstream
+    response handling?
+  expected_paths:
+  - knowledge/cloud/aws/security/cloudtrail-and-detection.md
+  required_source_ids:
+  - guardduty
+- id: security-denied-stage
+  question: How do I distinguish STS trust failure from a later S3 or KMS AccessDenied
+    without granting wildcards?
+  expected_paths:
+  - knowledge/cloud/aws/security/iam-access-denied-troubleshooting.md
+  required_source_ids:
+  - evaluation
+- id: security-session-containment
+  question: Does removing role trust or restarting a Pod revoke credentials already
+    copied by an attacker?
+  expected_paths:
+  - knowledge/cloud/aws/security/security-incident-response.md
+  required_source_ids:
+  - revoke
+- id: security-policy-contract
+  question: Where can I catch broadened IRSA subjects or S3 object prefixes locally
+    without claiming IAM authorization was tested?
+  expected_paths:
+  - knowledge/cloud/aws/security/examples/policy-contract-lab/policy-contract-lab.md
+  required_source_ids:
+  - simulator

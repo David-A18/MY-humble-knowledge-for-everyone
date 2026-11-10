@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Reviewed AWS security with nine new concepts, stronger IRSA/OIDC guidance, and a ten-test local policy-contract exercise. Added navigation for effective permissions, credentials, Pod Identity target roles/caching, KMS, secrets, audit/detection, and incident recovery; real account acceptance remains open.
+
 - Upgraded the [RAG lab](knowledge/llm/rag/repository-lab.md) with paragraph-aware chunks, stemming, frontmatter and path search, concept-level ranking, OKF trust and freshness metadata, and an evidence-sufficiency check that makes `ask` refuse weak evidence.
 - Added `scripts/evaluate-retrieval.py` and `tests/unanswerable-questions.yaml`, which score the golden cases and refusal in CI for the first time.
 - Added the read-only `scripts/kb-mcp-server.py` with `.mcp.json`, and `scripts/report-knowledge-health.py` for area, trust, sourcing, and thin-page reporting.
