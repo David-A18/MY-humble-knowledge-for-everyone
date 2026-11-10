@@ -20,9 +20,12 @@ spec:
                 availableReplicas: 1
         - command:
             entrypoint: kubectl
+            env:
+              - name: KB_TEST_NAMESPACE
+                value: ($namespace)
             args:
               - --namespace
-              - ($namespace)
+              - $KB_TEST_NAMESPACE
               - exec
               - deployment/web
               - --
