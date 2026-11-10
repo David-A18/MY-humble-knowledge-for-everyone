@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Reworked the core beginner route with stage-specific preflight, isolated contexts/copies, pinned Kubernetes inputs, stronger failure/HTTP/cleanup checks, and Git/Terraform validation runners. Added a Linux CI journey for the actual kind deployment and recovery sequence; independent beginner/platform validation remains open.
+
 - Reviewed AWS security with nine new concepts, stronger IRSA/OIDC guidance, and a ten-test local policy-contract exercise. Added navigation for effective permissions, credentials, Pod Identity target roles/caching, KMS, secrets, audit/detection, and incident recovery; real account acceptance remains open.
 
 - Expanded FinOps and AWS FinOps with eleven source-backed concepts, stronger allocation/tagging guidance, and a tested synthetic calculation lab.

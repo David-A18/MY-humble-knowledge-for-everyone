@@ -2,7 +2,32 @@
 
 Review snapshot: 2026-11-10. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: AWS security
+## Current batch: core beginner journey
+
+Reviewed Start here, the local Kubernetes walkthrough and support files, Kubernetes fundamentals, and the beginner Terraform lifecycle. Added one preflight concept; retained established URLs and kept cross-topic/root review status partial because this is a selected reader journey, not a review of every direct concept. Kubernetes fundamentals and the local support directory are reviewed; broader Kubernetes examples remain pending.
+
+Official kind, Kubernetes, Git, NGINX and Terraform sources reviewed on 2026-11-10. The route now distinguishes shell/client/runtime prerequisites, explicit private kubeconfig targeting, Git index versus files versus live API/state, Service ClusterIP/DNS versus Pod port-forwarding, image-not-found diagnosis versus unrelated network failure, CLI input versus persisted configuration, and verified task-owned cleanup. kind/node/kubectl retain a fixed historical teaching baseline; the workload uses a reviewed NGINX 1.30.6 Alpine registry digest.
+
+Executed Git 2.55.0.windows.2 and Terraform 1.17.1 runners locally with Python 3.13.17. Git checks staged diff, unstaging without content loss, byte-for-byte restoration and unchanged HEAD. Terraform checks one create, no-change/changed statuses, in-place update with stable ID, chosen output, non-persisted CLI override, destroy and empty managed state. Both remove their temporary copies. The Windows host cannot execute Kubernetes: Docker/kind are absent and installed kubectl is denied execution.
+
+The new Linux workflow installs checksum-checked kind/kubectl, then runs the actual healthy deployment, two ready endpoints, cluster DNS/Service HTTP, separate Pod port-forward HTTP, an observed image-not-found error and failed rollout, continued old-Pod service, rollback, and namespace/cluster/node-container cleanup. Hosted success must be inspected for the exact revision; syntax/static checks do not prove this execution.
+
+Remaining evidence: independent beginner sessions, native Windows/WSL/macOS/rootless repetition, accessibility/setup feedback, and cloud integration handoffs with authorized identity/cost/cleanup. No AWS resources or user workload were created; the broader cloud journey is not completed by local CI.
+
+### Beginner journey validation
+
+| Check | Recorded result |
+| --- | --- |
+| Repository checks | All fifteen required validator/test commands pass, including live GitHub label comparison. |
+| Markdown and navigation | 426 files lint cleanly; relative targets, heading fragments, parent indexes, and reachability pass. |
+| Catalog and retrieval definitions | 265 concepts; reproducible catalog; 79 retrieval definitions validate. |
+| External URLs | All 542 checked unique linked/source URLs returned HTTP 200 after redirects; external fragments were not tested. |
+| Main retrieval smoke checks | All seven added questions and three existing Git/Kubernetes/Terraform journey questions retrieve an expected route in the top five chunks; the previously missed local Kubernetes question now starts with its tutorial. A fresh absent token returns `NO_EVIDENCE`. |
+| Develop-engine compatibility | Using the separately maintained develop RAG engine against these content changes gives hit@3 78/79 and hit@5 79/79; unanswerable refusals remain 18/20. Those scores do not describe the older main engine or model-answer quality. The remaining top-three miss is the existing Terraform-sensitive-values case. |
+| Local execution | Git recovery and beginner Terraform lifecycle pass with the versions and boundaries stated above. |
+| Hosted runtime gate | The new Linux workflow must pass deployment, failure, recovery, HTTP, and cleanup for the exact revision before those checks can be counted as executed. |
+
+## Previous batch: AWS security
 
 Reviewed the four existing security concepts and index, strengthened OIDC/IRSA credential and policy boundaries, and added nine concepts including the local policy-contract tutorial. The three indexed security directories now route effective permissions, credential/session lifecycle, Pod Identity operations, KMS, secrets, CloudTrail/detection, AccessDenied diagnosis, and incident response. New and revised concepts remain draft/unassigned. The broader governance/human-access section is still pending.
 
@@ -124,7 +149,8 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 | P2 | [Terraform follow-ups](knowledge/terraform/index.md) | Execute bounded remote lock/migration/restore, provider import/drift, and hosted credential/artifact drills; preserve the local lab contracts and cleanup evidence. |
 | P2 | [FinOps follow-ups](knowledge/finops/index.md) | Validate real notification/billing/workload outcomes and data adapters; preserve synthetic calculations as a separate evidence level. |
 | P2 | [AWS security follow-ups](knowledge/cloud/aws/security/index.md) | Execute the live IAM/identity, data protection, audit/delivery, and session-response acceptance listed in the current review; retain the synthetic contract boundary. |
-| P2 | [Core reader journeys](knowledge/start-here.md) | Follow prerequisites and handoffs, record broken/confusing routes, and improve only evidenced gaps. |
+| P2 | [Core reader follow-ups](knowledge/start-here.md) | Run independent beginner/platform sessions, preserve the local acceptance gates, and validate one authorized cloud handoff. |
+| P2 | [AWS governance/human access](knowledge/cloud/aws/governance-and-access/index.md) | Build the pending account/human-role, organization guardrail, least-privilege administration and recovery path from primary sources and scoped evidence. |
 | P2 | [New learning series](knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
 
 ## Indexed-section inventory
@@ -173,7 +199,7 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [cloud/solutions](knowledge/cloud/solutions/index.md) | 1 | Pending |
 | [cross-topic-guides/examples/data-aggregation](knowledge/cross-topic-guides/examples/data-aggregation/index.md) | 0 | Pending |
 | [cross-topic-guides/examples](knowledge/cross-topic-guides/examples/index.md) | 0 | Pending |
-| [cross-topic-guides](knowledge/cross-topic-guides/index.md) | 18 | Pending |
+| [cross-topic-guides](knowledge/cross-topic-guides/index.md) | 19 | Partial: beginner route reviewed 2026-11-10; other concepts pending |
 | [databases](knowledge/databases/index.md) | 2 | Pending |
 | [databases/kafka](knowledge/databases/kafka/index.md) | 5 | Pending |
 | [databases/mongodb](knowledge/databases/mongodb/index.md) | 5 | Pending |
@@ -208,8 +234,8 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [kubernetes/core-objects](knowledge/kubernetes/core-objects/index.md) | 2 | Pending |
 | [kubernetes/crossplane](knowledge/kubernetes/crossplane/index.md) | 17 | Pending |
 | [kubernetes/examples](knowledge/kubernetes/examples/index.md) | 0 | Pending |
-| [kubernetes/examples/local-deployment-learning-path](knowledge/kubernetes/examples/local-deployment-learning-path/index.md) | 0 | Pending |
-| [kubernetes/fundamentals](knowledge/kubernetes/fundamentals/index.md) | 1 | Pending |
+| [kubernetes/examples/local-deployment-learning-path](knowledge/kubernetes/examples/local-deployment-learning-path/index.md) | 0 | Reviewed 2026-11-10; hosted runtime per revision, platform repetition open |
+| [kubernetes/fundamentals](knowledge/kubernetes/fundamentals/index.md) | 1 | Reviewed 2026-11-10; independent reader evidence open |
 | [kubernetes](knowledge/kubernetes/index.md) | 0 | Pending |
 | [kubernetes/observability/examples](knowledge/kubernetes/observability/examples/index.md) | 0 | Pending |
 | [kubernetes/observability](knowledge/kubernetes/observability/index.md) | 7 | Pending |
@@ -230,7 +256,7 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [terraform/best-practices](knowledge/terraform/best-practices/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
 | [terraform/commands](knowledge/terraform/commands/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
 | [terraform/examples](knowledge/terraform/examples/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples/local-state-lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/local-state-lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md) | 1 | Rechecked 2026-11-10; local runner, remote/cloud procedures open |
 | [terraform/examples/module-workspace-lab/child](knowledge/terraform/examples/module-workspace-lab/child/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
 | [terraform/examples/module-workspace-lab](knowledge/terraform/examples/module-workspace-lab/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
 | [terraform/examples/module-workspace-lab/tests](knowledge/terraform/examples/module-workspace-lab/tests/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |

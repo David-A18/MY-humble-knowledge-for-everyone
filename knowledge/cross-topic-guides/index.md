@@ -2,6 +2,10 @@
 
 Guides that connect multiple engineering areas into practical workflows.
 
+## Beginner local route
+
+Read [Start here](../start-here.md), check [local environment preflight](local-learning-preflight.md), and complete the [Kubernetes deployment/failure/recovery exercise](local-deployment-learning-path.md). After cluster cleanup, continue with [Terraform local state](../terraform/examples/local-state-lifecycle/local-state-lifecycle.md). Git files, Kubernetes desired state, and Terraform state are separate learning boundaries.
+
 ## Added learning guides
 
 - [IRSA S3 access on EKS: positive and negative tests](irsa-s3-access-on-eks.md) - Focused learning material and supporting examples.

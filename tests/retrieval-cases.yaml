@@ -457,3 +457,52 @@ cases:
   - knowledge/cloud/aws/security/examples/policy-contract-lab/policy-contract-lab.md
   required_source_ids:
   - simulator
+- id: journey-preflight
+  question: Can I complete the Git and Terraform stages when Docker or kind is unavailable?
+  expected_paths:
+  - knowledge/cross-topic-guides/local-learning-preflight.md
+  required_source_ids:
+  - kind-known
+- id: journey-explicit-context
+  question: How does the local Kubernetes tutorial avoid applying resources to my
+    normal current context?
+  expected_paths:
+  - knowledge/cross-topic-guides/local-deployment-learning-path.md
+  required_source_ids:
+  - kind-start
+- id: journey-service-proof
+  question: Does a successful Service port-forward prove cluster DNS and ClusterIP
+    routing?
+  expected_paths:
+  - knowledge/cross-topic-guides/local-deployment-learning-path.md
+  required_source_ids:
+  - port-forward
+- id: journey-image-failure
+  question: What distinguishes the deliberate invalid-image rollout from a DNS failure
+    or registry rate limit?
+  expected_paths:
+  - knowledge/cross-topic-guides/local-deployment-learning-path.md
+  required_source_ids:
+  - deployment
+- id: journey-state-boundaries
+  question: Does restoring deployment.yaml in Git roll back the live Kubernetes Deployment
+    or its Terraform state?
+  expected_paths:
+  - knowledge/start-here.md
+  - knowledge/cross-topic-guides/local-deployment-learning-path.md
+  required_source_ids:
+  - git-restore
+- id: journey-cli-variable
+  question: After applying release_version=1.1.0 with -var, will the next Terraform
+    plan retain that input automatically?
+  expected_paths:
+  - knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md
+  required_source_ids:
+  - terraform-plan
+- id: journey-cleanup
+  question: Which checks prove the local exercise namespace and kind cluster were
+    deleted?
+  expected_paths:
+  - knowledge/cross-topic-guides/local-deployment-learning-path.md
+  required_source_ids:
+  - kind-start

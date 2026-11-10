@@ -6,6 +6,10 @@ The [new learning paths](knowledge/index.md#expanded-learning-paths) use the exi
 
 The [section quality ledger](section-quality-progress.md) records reviewed sections, remaining evidence, and the next focused batches. Read it before selecting ongoing improvement work.
 
+## Beginner route maintenance
+
+Start at [Start here](knowledge/start-here.md) and [local preflight](knowledge/cross-topic-guides/local-learning-preflight.md). The local learning workflow checks Git file recovery, Terraform state behavior, and a disposable kind deployment/failure/recovery path. Keep hosted execution, local platform setup, and independent reader evidence distinct; never infer cluster or cloud authority from a link check.
+
 ## Purpose
 
 `engineering-knowledge-base` is a public, Git-backed collection of practical

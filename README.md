@@ -15,6 +15,7 @@ See the [publication audit](knowledge-base-audit.md) and [maintenance queue](mai
 
 - [Browse the knowledge base](knowledge/index.md)
 - [Start here: local engineering learning path](knowledge/start-here.md)
+- [Local environment preflight](knowledge/cross-topic-guides/local-learning-preflight.md)
 - [Glossary](knowledge/glossary.md)
 - [Knowledge structure and standards](knowledge/ai/ai-tooling/knowledge-bases/okf-v0.2.md)
 - [Path migration guide](knowledge-migration.md)

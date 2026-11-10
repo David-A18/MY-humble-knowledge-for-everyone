@@ -1,5 +1,7 @@
 # Terraform
 
+The [beginner local lifecycle](examples/local-state-lifecycle/local-state-lifecycle.md) follows the [local Kubernetes route](../cross-topic-guides/local-deployment-learning-path.md) but owns separate local state. Its runner checks that CLI input overrides do not rewrite configuration.
+
 Practical Terraform notes for infrastructure as code, module design, commands, state, troubleshooting, and examples.
 
 ## Suggested learning sequence

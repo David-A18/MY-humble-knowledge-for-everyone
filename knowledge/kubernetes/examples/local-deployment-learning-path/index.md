@@ -1,14 +1,6 @@
 # Local deployment learning path files
 
-Status: Draft
-Audience: Beginning platform engineer
-Page type: Tutorial support files
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Docker 29.8.0 rootless daemon, kind v0.30.0, Kubernetes v1.34.0 node image, kubectl v1.34.1 client, and stable Deployment, Service, and Namespace APIs
-Validation evidence: Applied during the end-to-end local deployment learning path run; the failing image manifest was corrected after Kubernetes rejected the earlier incomplete patch
-Known limitations: These files are intentionally small and local; they are not production manifests
-Next review: After KB-14 reader testing or by 2026-12-19
+Use these task-owned teaching inputs with the [local deployment walkthrough](../../../cross-topic-guides/local-deployment-learning-path.md). The version contract pins tools/node image, the Deployment pins its workload digest, and the runners distinguish file recovery, API state, HTTP, and cleanup. Exact runtime evidence belongs to the tested commit's CI result; these are not production manifests.
 
 ## Purpose
 
@@ -21,7 +13,13 @@ This directory contains the exact Kubernetes manifests used by the [local deploy
 | [namespace.yaml](namespace.yaml) | Isolates the exercise resources. |
 | [deployment.yaml](deployment.yaml) | Creates a two-replica `nginx` Deployment. |
 | [service.yaml](service.yaml) | Creates a ClusterIP Service for the web Pods. |
-| [failing-image-patch.yaml](failing-image-patch.yaml) | Applies an invalid image tag to create a diagnosable rollout failure. |
+| [failing-image-patch.yaml](failing-image-patch.yaml) | Strategic merge patch for an existing Deployment; use `kubectl patch`, not standalone `apply`. |
+| [lab-versions.json](lab-versions.json) | Fixed kind, kubectl and release node-image contract. |
+| [.gitignore](.gitignore) | Keeps the task kubeconfig and Python bytecode out of the teaching repository. |
+| [validate-git-recovery.py](validate-git-recovery.py) | Exercises staged/unstaged recovery in a disposable Git copy. |
+| [validate-lab.py](validate-lab.py) | Creates a unique kind cluster, verifies Service/port-forward HTTP, image-not-found failure, rollback and owned cleanup. |
+
+The [CI workflow](../../../../.github/workflows/local-learning-journey.yml) also runs the beginner Terraform lifecycle. Read the [preflight](../../../cross-topic-guides/local-learning-preflight.md) before manual or automated cluster execution. Independent reader testing and platform-specific runtime repetition remain open.
 
 ## Related links
 
