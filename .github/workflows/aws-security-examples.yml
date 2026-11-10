@@ -28,3 +28,9 @@ jobs:
 
       - name: Catch policy fixture regressions
         run: python knowledge/cloud/aws/security/examples/policy-contract-lab/test-contracts.py
+
+      - name: Verify human-access inventory reconciliation
+        run: python knowledge/cloud/aws/governance-and-access/examples/access-review-lab/test-reconcile.py
+
+      - name: Report synthetic assignment and review findings
+        run: python knowledge/cloud/aws/governance-and-access/examples/access-review-lab/reconcile.py

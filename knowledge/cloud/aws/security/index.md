@@ -23,7 +23,7 @@ Learn AWS identity and permissions first, then protect data, establish evidence,
 - [EKS identity comparison](../../../cross-topic-guides/eks-workload-identity.md) remains the choice entry point; the [IRSA S3 lab](../../../cross-topic-guides/irsa-s3-access-on-eks.md) defines allowed/denied checks.
 - [AWS networking](../networking/index.md) covers endpoint/DNS and transport paths.
 - [Kubernetes secret delivery](../../../kubernetes/applications-and-tools/platform-tooling/secret-management.md) covers platform delivery choices.
-- [Governance and access](../governance-and-access/index.md) remains pending broader account/organization/human-access material; it is not completed by this workload-focused review.
+- [Governance and human access](../governance-and-access/index.md) covers account/OU design, federation, permission sets, organization guardrails, delegated IAM, root/emergency access and offboarding; its synthetic inventory evidence remains separate from live authorization.
 
 ## Evidence still needed
 

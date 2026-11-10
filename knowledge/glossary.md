@@ -178,5 +178,13 @@ Common terms used across the knowledge base.
 | Kubeconfig context | Named cluster/user/namespace selection used by kubectl; explicit flags can keep a lab independent of the globally selected context. |
 | Rollout | Controlled transition to a new workload Pod template; current availability and update progress are separate observations. |
 | Surge capacity | Additional capacity needed while new Pods start before old replicas are removed during a rolling update. |
+| Organizational unit (OU) | AWS Organizations hierarchy node grouping accounts under shared controls; distinct from a user group. |
+| SCP | Service control policy: organization permission guardrail for applicable principals in member accounts; grants no permissions itself. |
+| RCP | Resource control policy: organization guardrail on supported member-account resources, including access by external principals. |
+| Permission set | Identity Center policy template provisioned as controlled roles in assigned AWS accounts. |
+| Account access manager | IAM account-access model mapping Identity Center users/groups to existing IAM roles; distinct from permission sets. |
+| SCIM | System for Cross-Domain Identity Management; provisions directory identities/groups separately from SAML sign-in. |
+| Account vending | Owned workflow for requesting, creating, baselining and handing over governed accounts. |
+| Break-glass access | Prepared exceptional access path with defined outage dependencies, controlled activation, evidence and return to normal operations. |
 
 [Back to root index](../README.md)

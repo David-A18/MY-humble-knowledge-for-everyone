@@ -34,6 +34,8 @@ concepts, procedures, references, and learning paths.
 | Design a Crossplane platform API | [Crossplane component model](kubernetes/crossplane/component-model.md) | Understand providers, managed resources, XRDs, compositions, and XRs. |
 | Plan backup or migration work | [Velero](migrations/velero/index.md) | Choose backup, restore, migration, and disaster-recovery guidance. |
 
+For account ownership and workforce permissions, use [AWS governance and human access](cloud/aws/governance-and-access/index.md); retain the separate [AWS security route](cloud/aws/security/index.md) for workload/request authorization and incident operations.
+
 ## Reading and trust signals
 
 - `draft` means useful material that still needs a completed review cycle.

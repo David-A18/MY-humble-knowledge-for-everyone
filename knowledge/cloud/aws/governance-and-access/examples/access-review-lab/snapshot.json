@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-permission-set-assignments-only",
+  "complete": true,
+  "snapshot_at": "2026-11-10T08:00:00Z",
+  "users": [
+    {"id": "user-alice", "enabled": true},
+    {"id": "user-bob", "enabled": true},
+    {"id": "user-departed", "enabled": false}
+  ],
+  "groups": [
+    {"id": "group-readers"},
+    {"id": "group-empty"}
+  ],
+  "memberships": [
+    {"group_id": "group-readers", "user_id": "user-alice"},
+    {"group_id": "group-readers", "user_id": "user-departed"}
+  ],
+  "accounts": [
+    {"id": "111122223333", "owner": "synthetic-platform", "lifecycle": "active"},
+    {"id": "444455556666", "owner": "", "lifecycle": "retiring"}
+  ],
+  "permission_sets": [
+    {"id": "ps-read", "name": "SyntheticRead"},
+    {"id": "ps-admin", "name": "SyntheticAdmin"}
+  ],
+  "assignments": [
+    {"id": "a-group", "account_id": "111122223333", "principal_type": "GROUP", "principal_id": "group-readers", "permission_set_id": "ps-read", "provisioning": "SUCCEEDED"},
+    {"id": "a-direct", "account_id": "111122223333", "principal_type": "USER", "principal_id": "user-alice", "permission_set_id": "ps-read", "provisioning": "SUCCEEDED"},
+    {"id": "a-bob", "account_id": "444455556666", "principal_type": "USER", "principal_id": "user-bob", "permission_set_id": "ps-admin", "provisioning": "IN_PROGRESS"},
+    {"id": "a-empty", "account_id": "111122223333", "principal_type": "GROUP", "principal_id": "group-empty", "permission_set_id": "ps-read", "provisioning": "SUCCEEDED"}
+  ],
+  "reviews": [
+    {"id": "r-alice", "user_id": "user-alice", "account_id": "111122223333", "permission_set_id": "ps-read", "reviewer": "synthetic-reviewer", "reviewed_at": "2026-11-01T00:00:00Z", "expires_at": "2026-12-01T00:00:00Z"},
+    {"id": "r-bob", "user_id": "user-bob", "account_id": "444455556666", "permission_set_id": "ps-admin", "reviewer": "synthetic-reviewer", "reviewed_at": "2026-10-01T00:00:00Z", "expires_at": "2026-11-01T00:00:00Z"}
+  ]
+}

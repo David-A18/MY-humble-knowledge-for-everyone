@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Replaced the AWS governance outline with ten focused guides and a synthetic access-review tutorial. Covered current Identity Center/account access manager choices, permission sets, OU/SCP/RCP boundaries, delegated IAM, root/emergency recovery, account lifecycle and offboarding. Fourteen local regression tests keep assignment joins, review time and coverage limits explicit; live account acceptance remains open.
+
 - Reworked the core beginner route with stage-specific preflight, isolated contexts/copies, pinned Kubernetes inputs, stronger failure/HTTP/cleanup checks, and Git/Terraform validation runners. Added a Linux CI journey for the actual kind deployment and recovery sequence; independent beginner/platform validation remains open.
 
 - Reviewed AWS security with nine new concepts, stronger IRSA/OIDC guidance, and a ten-test local policy-contract exercise. Added navigation for effective permissions, credentials, Pod Identity target roles/caching, KMS, secrets, audit/detection, and incident recovery; real account acceptance remains open.

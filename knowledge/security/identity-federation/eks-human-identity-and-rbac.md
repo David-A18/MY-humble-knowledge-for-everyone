@@ -128,6 +128,9 @@ What it does: grants view-oriented EKS access scoped to the `payments` namespace
 
 ## Related links
 
+- [AWS workforce federation and account access](../../cloud/aws/governance-and-access/identity-center-and-human-federation.md)
+- [Permission-set role references](../../cloud/aws/governance-and-access/permission-sets-and-assignments.md)
+
 - Official documentation: [Amazon EKS access entries](https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html)
 - Official documentation: [Kubernetes RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - [OIDC fundamentals](oidc-fundamentals.md)

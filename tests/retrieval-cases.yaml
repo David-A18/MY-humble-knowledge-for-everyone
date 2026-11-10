@@ -506,3 +506,115 @@ cases:
   - knowledge/cross-topic-guides/local-deployment-learning-path.md
   required_source_ids:
   - kind-start
+- id: gov-account-ou
+  question: Should AWS OUs mirror the reporting hierarchy and is the organization
+    root an account root user?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/account-and-ou-design.md
+  required_source_ids:
+  - ou-design
+- id: gov-instance
+  question: Can an Identity Center account instance provide organization multi-account
+    access?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/identity-center-and-human-federation.md
+  required_source_ids:
+  - instances
+- id: gov-saml-scim
+  question: Does a successful SAML sign-in prove users and groups have been provisioned
+    through SCIM?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/identity-center-and-human-federation.md
+  required_source_ids:
+  - external-idp
+- id: gov-access-models
+  question: How do permission sets differ from account access manager mappings to
+    existing IAM roles?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/identity-center-and-human-federation.md
+  required_source_ids:
+  - account-access
+- id: gov-provisioning
+  question: Does defining a customer-managed policy in a permission set create it
+    in every target account?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/permission-sets-and-assignments.md
+  required_source_ids:
+  - custom-policy
+- id: gov-role-reference
+  question: Why can deleting the final permission-set assignment and reassigning it
+    break a KMS or EKS role reference?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/permission-sets-and-assignments.md
+  required_source_ids:
+  - role-refs
+- id: gov-cli-logout
+  question: Does aws sso logout revoke IAM role credentials already copied to another
+    machine?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/cli-sso-and-role-sessions.md
+  required_source_ids:
+  - sessions
+- id: gov-inherited-deny
+  question: Can a child OU allow override an inherited SCP deny and do SCPs restrict
+    management-account users?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/organization-policy-guardrails.md
+  required_source_ids:
+  - scp-evaluation
+- id: gov-rcp-external
+  question: Which organization policy can restrict external principals accessing supported
+    resources in member accounts?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/organization-policy-guardrails.md
+  required_source_ids:
+  - rcp
+- id: gov-delegation
+  question: Why must delegated IAM administration protect boundary policy versions
+    and PassRole as well as CreateRole?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/delegated-iam-administration.md
+  required_source_ids:
+  - boundary
+- id: gov-root-recovery
+  question: Must every member account retain root credentials and what is the scope
+    of an AssumeRoot session?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/root-and-emergency-access.md
+  required_source_ids:
+  - assume-root
+- id: gov-emergency-dependency
+  question: Will direct SAML emergency federation work if the external IdP is also
+    unavailable?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/root-and-emergency-access.md
+  required_source_ids:
+  - emergency
+- id: gov-account-factory
+  question: Is the AFT management account the same as the Control Tower management
+    account and does account creation prove baseline acceptance?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/account-vending-and-lifecycle.md
+  required_source_ids:
+  - aft
+- id: gov-offboarding
+  question: Does disabling a user or removing one direct assignment prove all group
+    paths and issued sessions are contained?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/access-review-and-offboarding.md
+  required_source_ids:
+  - revoke-users
+- id: gov-diagnosis
+  question: What should I inspect when portal login succeeds but a permission-set
+    role is missing or provisioning fails?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/governance-access-troubleshooting.md
+  required_source_ids:
+  - custom-policy
+- id: gov-inventory-lab
+  question: Where can I test overlapping direct and group assignments and expired
+    review records without claiming effective AWS permissions?
+  expected_paths:
+  - knowledge/cloud/aws/governance-and-access/examples/access-review-lab/access-review-lab.md
+  required_source_ids:
+  - sets
