@@ -4,7 +4,6 @@ from pathlib import Path
 import argparse
 import json
 import os
-import shlex
 import shutil
 import subprocess
 import sys
@@ -115,8 +114,9 @@ def main():
             require("targetPort" in changed.stdout and "81" in changed.stdout, "API diff must expose proposed routing regression")
             report["checks"]["live_diff_one_for_changed_target_port"] = True
             failing_diff = temporary / "failing-diff.py"
-            failing_diff.write_text("import sys\nprint('teaching diff process failure', file=sys.stderr)\nsys.exit(7)\n", encoding="utf-8")
-            error_env = dict(child_env, KUBECTL_EXTERNAL_DIFF=shlex.join([sys.executable, str(failing_diff)]))
+            failing_diff.write_text("#!" + sys.executable + "\nimport sys\nprint('teaching diff process failure', file=sys.stderr)\nsys.exit(7)\n", encoding="utf-8")
+            failing_diff.chmod(0o755)
+            error_env = dict(child_env, KUBECTL_EXTERNAL_DIFF=str(failing_diff))
             error = kubectl(*base_diff, str(HERE / "service-broken.json"), codes=tuple(range(2, 256)), env=error_env)
             require("teaching diff process failure" in error.stderr, "Expected a real external diff error, not API failure")
             report["diff_error_exit_code"] = error.returncode

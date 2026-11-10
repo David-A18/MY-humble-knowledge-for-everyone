@@ -3249,7 +3249,8 @@
       "source_ids": [
         "kubectl-diff-contract",
         "server-side-apply",
-        "argo-cd-diff-customization"
+        "argo-cd-diff-customization",
+        "kubectl-134-source"
       ],
       "stale_after": null,
       "status": "draft",
