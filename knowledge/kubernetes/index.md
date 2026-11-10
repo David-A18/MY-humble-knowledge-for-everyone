@@ -9,7 +9,7 @@ Use [fundamentals](fundamentals/index.md), [environment preflight](../cross-topi
 ## Security and operations learning paths
 
 - [Istio security](applications-and-tools/istio/index.md) - Workload authentication and authorization.
-- [Manifest validation](applications-and-tools/manifest-validation/index.md) - Differences, drift, and regressions.
+- [Manifest validation](applications-and-tools/manifest-validation/index.md) - Semantic differences, live drift, schema/policy coverage and a disposable routing regression lab.
 - [kro](applications-and-tools/kro/index.md) - Kubernetes platform APIs.
 - [Common platform tools](applications-and-tools/platform-tooling/index.md) - Tool selection and integrations.
 - [IRSA S3 lab](../cross-topic-guides/irsa-s3-access-on-eks.md) - AWS workload permissions.

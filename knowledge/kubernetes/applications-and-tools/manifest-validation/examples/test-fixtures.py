@@ -1,4 +1,4 @@
-"""Check known-good, reordered, and intentionally broken routing fixtures."""
+"""Check declared fixture relationships; this does not prove a process is listening."""
 import json
 from pathlib import Path
 import unittest
@@ -6,7 +6,7 @@ import yaml
 
 ROOT = Path(__file__).parent
 
-def routes_to_app(service, deployment):
+def matches_teaching_fixture_contract(service, deployment):
     pod = deployment["spec"]["template"]
     selector = service["spec"]["selector"]
     matches = all(pod["metadata"]["labels"].get(key) == value for key,value in selector.items())
@@ -21,11 +21,11 @@ class RoutingFixtures(unittest.TestCase):
         app = yaml.safe_load((ROOT/"app.yaml").read_text())
         self.assertEqual(good, reordered)
         self.assertNotEqual(good, bad)
-        self.assertTrue(routes_to_app(good, app))
-        self.assertFalse(routes_to_app(bad, app))
+        self.assertTrue(matches_teaching_fixture_contract(good, app))
+        self.assertFalse(matches_teaching_fixture_contract(bad, app))
         bad_selector = json.loads(json.dumps(good))
         bad_selector["spec"]["selector"]["app"] = "missing"
-        self.assertFalse(routes_to_app(bad_selector, app))
+        self.assertFalse(matches_teaching_fixture_contract(bad_selector, app))
         self.assertEqual(app["metadata"]["labels"]["team"], "platform")
 
 if __name__ == "__main__":

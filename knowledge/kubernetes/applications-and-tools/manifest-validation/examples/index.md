@@ -1,14 +1,23 @@
-# Manifest-validation fixtures
+# Manifest-validation fixtures and runners
 
-Run commands from the parent series directory. JSON manifests are also valid YAML.
+Run the documented commands from the repository root unless a chapter explicitly selects the series directory. JSON manifests are valid YAML. All inputs are synthetic.
 
-- `app.yaml`: labeled Deployment listening on port 80.
-- `service.json`: correct selector and target port.
-- `service-reordered.json`: identical data in a different key order.
-- `service-broken.json`: intentionally wrong target port.
-- `chainsaw-test.yaml`: apply, readiness, and connectivity test.
-- `ci-workflow.yaml`: educational offline/cluster CI sequence; copy and review before enabling.
-- `test-fixtures.py`: offline structural regression checks (requires PyYAML).
-- [Policy example](policy/index.md): ownership-label enforcement.
+| File | Purpose |
+| --- | --- |
+| [Version manifest](lab-versions.json) | Fixed tool releases, official release SHA256 values, node digest and immutable schema revision. |
+| [Linux installer](install-tools.py) | Downloads checksum-pinned Linux amd64 tools into an explicitly empty directory. |
+| [Source-tool runner](validate-offline.py) | Eight real Git/dyff/kubeconform/Conftest assertions, no cluster calls. |
+| [Cluster runner](validate-cluster.py) | Private kind cluster, Kustomize, live diff, wrong-port HTTP failure/recovery, Chainsaw and cleanup. |
+| [Fixture contract](test-fixtures.py) | Declared labels/ports only; does not prove a process listens. |
+| [Deployment](app.yaml) | One pinned NGINX workload listening on port 80. |
+| [Working Service](service.json) | Correct selector and target port. |
+| [Reordered Service](service-reordered.json) | Equal parsed object, different text. |
+| [Broken Service](service-broken.json) | Schema-valid target port 81, intentionally wrong for the application. |
+| [Kustomization](kustomization.yaml) | Renders the working Deployment and Service. |
+| [Chainsaw test](chainsaw-test.yaml) | Declarative apply/readiness/actual Service request; runner substitutes a broken Service in a temporary negative copy. |
+| [Workflow reference](ci-workflow.yaml) | Reference copy; the [enabled workflow](../../../../../.github/workflows/manifest-validation-lab.yml) is authoritative. |
+| [Policy example](policy/index.md) | Small ownership-label Rego rule. |
 
-[Back to series](../index.md) | [Back to root](../../../../../README.md)
+Follow the [lab](../regression-lab-and-ci.md) for prerequisites, expected results, execution evidence and cleanup. Do not run mutations in a shared cluster.
+
+[Back to series](../index.md) | [Back to knowledge](../../../../index.md)

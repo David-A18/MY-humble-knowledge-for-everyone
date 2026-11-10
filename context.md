@@ -10,6 +10,10 @@ The [section quality ledger](section-quality-progress.md) records reviewed secti
 
 Start at [Start here](knowledge/start-here.md) and [local preflight](knowledge/cross-topic-guides/local-learning-preflight.md). The local learning workflow checks Git file recovery, Terraform state behavior, and a disposable kind deployment/failure/recovery path. Keep hosted execution, local platform setup, and independent reader evidence distinct; never infer cluster or cloud authority from a link check.
 
+## Manifest-validation routing
+
+Use [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) to separate text/semantic differences, versioned schema and Rego coverage, prospective API comparison and actual Service behavior. Its private-cluster runner uses synthetic fixtures and explicit contexts; hosted results are revision-specific. Helm/Helm Diff and GitOps selection guidance is not evidence that those integrations ran.
+
 ## AWS identity routing
 
 Use [governance and human access](knowledge/cloud/aws/governance-and-access/index.md) for organization/account ownership, workforce federation, guardrails and offboarding. Use [AWS security](knowledge/cloud/aws/security/index.md) for request evaluation, credential behavior, workload identity and data/security operations. The access-review lab is a synthetic inventory join, never an IAM evaluator or session-containment attestation.

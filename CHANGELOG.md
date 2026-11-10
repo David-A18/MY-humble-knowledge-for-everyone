@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Reworked manifest validation into an executable source/API/behavior path: pinned tools and schemas, eight real offline checks, a private kind runner for live diff and Service recovery, and Chainsaw positive/negative tests. Added a Linux CI gate; hosted execution is revision-specific and Helm/GitOps integrations remain follow-ups.
+
 - Replaced the AWS governance outline with ten focused guides and a synthetic access-review tutorial. Covered current Identity Center/account access manager choices, permission sets, OU/SCP/RCP boundaries, delegated IAM, root/emergency recovery, account lifecycle and offboarding. Fourteen local regression tests keep assignment joins, review time and coverage limits explicit; live account acceptance remains open.
 
 - Reworked the core beginner route with stage-specific preflight, isolated contexts/copies, pinned Kubernetes inputs, stronger failure/HTTP/cleanup checks, and Git/Terraform validation runners. Added a Linux CI journey for the actual kind deployment and recovery sequence; independent beginner/platform validation remains open.

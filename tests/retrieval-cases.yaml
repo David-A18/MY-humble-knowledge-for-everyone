@@ -618,3 +618,59 @@ cases:
   - knowledge/cloud/aws/governance-and-access/examples/access-review-lab/access-review-lab.md
   required_source_ids:
   - sets
+- id: manifest-difference-drift-regression
+  question: How do semantic differences, configuration drift and behavioral regressions
+    differ when reviewing Kubernetes manifests?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/concepts-and-tool-selection.md
+  required_source_ids:
+  - kubectl-diff
+- id: manifest-mapping-order
+  question: How can dyff ignore reordered mapping keys but report a changed targetPort
+    with a useful exit code?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/rendered-yaml-comparison.md
+  required_source_ids:
+  - dyff-documentation
+- id: manifest-live-exit-status
+  question: How should kubectl diff exit statuses distinguish no differences, an intentional
+    change and a comparison failure?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/live-drift.md
+  required_source_ids:
+  - kubectl-diff-contract
+- id: manifest-diff-ownership
+  question: Should I automatically use force-conflicts when server-side comparison
+    reports a field ownership conflict?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/live-drift.md
+  required_source_ids:
+  - server-side-apply
+- id: manifest-schema-coverage
+  question: How should a Kubernetes schema gate handle unknown custom resources and
+    missing or skipped schemas?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/schema-and-policy.md
+  required_source_ids:
+  - kubeconform
+- id: manifest-valid-wrong-routing
+  question: Why can kubeconform and an ownership-label policy accept a wrong-port
+    Service while HTTP fails?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/schema-and-policy.md
+  required_source_ids:
+  - conftest
+- id: manifest-private-runtime-lab
+  question: Where can I run a private kind lab that detects a Service routing regression
+    and verifies namespace and cluster cleanup?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md
+  required_source_ids:
+  - kind
+- id: manifest-chainsaw-negative
+  question: How does the same Chainsaw apply assert and request test catch a broken
+    Service target port using negative inputs?
+  expected_paths:
+  - knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md
+  required_source_ids:
+  - chainsaw-project

@@ -23,17 +23,13 @@ spec:
             args:
               - --namespace
               - ($namespace)
-              - run
-              - probe
-              - --image=curlimages/curl:8.12.1
-              - --restart=Never
-              - --attach=true
-              - --rm=true
-              - --pod-running-timeout=60s
+              - exec
+              - deployment/web
               - --
-              - --fail
-              - --connect-timeout
+              - wget
+              - -T
               - "5"
-              - --max-time
-              - "10"
+              - -q
+              - -O
+              - "-"
               - http://web

@@ -188,3 +188,12 @@ Common terms used across the knowledge base.
 | Break-glass access | Prepared exceptional access path with defined outage dependencies, controlled activation, evidence and return to normal operations. |
 
 [Back to root index](../README.md)
+
+## Manifest-validation terms
+
+| Term | Meaning |
+| --- | --- |
+| Semantic manifest difference | A parsed object-field change, distinguished from whitespace or mapping-key order; see [rendered comparison](kubernetes/applications-and-tools/manifest-validation/rendered-yaml-comparison.md). |
+| Configuration drift | Divergence between identified intended state and live state; see [live comparison](kubernetes/applications-and-tools/manifest-validation/live-drift.md). |
+| Behavioral regression | Previously working behavior broken by a change; the [routing lab](kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md) tests actual Service traffic. |
+| Schema coverage | Which rendered objects have matching versioned schemas and were actually validated; missing or skipped objects need explicit handling. |
