@@ -2,6 +2,8 @@
 
 ## 2026-11-10
 
+- Reviewed the beginner Git → local Kubernetes → Terraform route. Added environment preflight, pinned node/workload inputs, a strategic image patch, explicit kubeconfig targeting, separate Service/port-forward HTTP checks, and repeatable Git/Terraform/kind validation. Runtime results must be read for the exact tested revision.
+
 - Expanded AWS security into a learning and operational path with nine new concepts and a local policy-contract lab. Rechecked existing OIDC/IRSA guidance and preserved the EKS comparison/lab routes. Local mutation tests are distinct from AWS policy evaluation and live authorization.
 
 ## 2026-11-02

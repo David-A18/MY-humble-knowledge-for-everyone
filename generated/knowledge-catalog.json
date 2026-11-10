@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 264,
+  "concept_count": 265,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1596,19 +1596,50 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Create a local Kubernetes cluster, deploy a small web workload, break it with a bad image tag, diagnose the failure, recover, and clean up.",
+      "description": "Complete a local Kubernetes exercise without an AWS account: deploy a pinned web workload, diagnose an image-pull failure, recover, and verify cleanup.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/cross-topic-guides/local-deployment-learning-path.md",
-      "source_ids": [],
+      "source_ids": [
+        "kind-start",
+        "kind-release",
+        "deployment",
+        "service",
+        "port-forward",
+        "git-restore",
+        "nginx-release"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cross-topic-guides",
-        "local-deployment-learning-path"
+        "learning",
+        "local-development",
+        "beginner"
       ],
       "title": "Local deployment learning path",
-      "type": "Learning Path"
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Beginning platform engineer",
+      "description": "Choose the Git, Kubernetes, or Terraform stage and check shell, runtime, target isolation, versions, and cleanup before starting.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cross-topic-guides/local-learning-preflight.md",
+      "source_ids": [
+        "kind-start",
+        "kind-known",
+        "kubeconfig",
+        "git-config"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "learning",
+        "local-development",
+        "beginner"
+      ],
+      "title": "Prepare the local learning environment",
+      "type": "How-to Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
@@ -4485,15 +4516,21 @@
     },
     {
       "audience": "Beginning platform engineer",
-      "description": "Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure.",
+      "description": "Choose and complete a local beginner route through Git recovery, Kubernetes deployment and failure diagnosis, and Terraform state without an AWS account.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/start-here.md",
-      "source_ids": [],
+      "source_ids": [
+        "kind-start",
+        "kubeconfig",
+        "git-restore"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "start-here"
+        "learning",
+        "local-development",
+        "beginner"
       ],
       "title": "Start here",
       "type": "Learning Path"
@@ -4655,7 +4692,9 @@
       "path": "knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md",
       "source_ids": [
         "terraform-cli",
-        "terraform-state"
+        "terraform-state",
+        "terraform-plan",
+        "terraform-data"
       ],
       "stale_after": "2026-12-19",
       "status": "draft",

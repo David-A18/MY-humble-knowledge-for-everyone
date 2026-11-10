@@ -1,73 +1,90 @@
 ---
-type: "Learning Path"
-title: "Start here"
-description: "Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure."
-tags: [start-here]
+type: Learning Path
+title: Start here
+description: Choose and complete a local beginner route through Git recovery, Kubernetes
+  deployment and failure diagnosis, and Terraform state without an AWS account.
+tags:
+- learning
+- local-development
+- beginner
 status: draft
 maturity: draft
-audience: "Beginning platform engineer"
+audience: Beginning platform engineer
 maintainer: unassigned
+sources:
+- id: kind-start
+  title: kind quick start
+  resource: https://kind.sigs.k8s.io/docs/user/quick-start/
+- id: kubeconfig
+  title: Kubernetes kubeconfig contexts
+  resource: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
+- id: git-restore
+  title: git restore
+  resource: https://git-scm.com/docs/git-restore
 ---
 
 # Start here
 
-Status: Draft
-Audience: Beginning platform engineer
-Page type: Tutorial route
-Maintainer: Unassigned
-Last substantive review: 2026-09-19
-Applicable versions: Git 2.53.0 source reviewed; Kubernetes and Terraform exercise versions declared in linked guides
-Validation evidence: Source reviewed and statically checked; Kubernetes learning path executed end to end with rootless Docker 29.8.0, kind v0.30.0, Kubernetes v1.34.0, and kubectl v1.34.1; Terraform exercise locally executed with Terraform v1.13.1
-Known limitations: Independent beginner testing belongs to the maintenance loop in the improvement plan
-Next review: After KB-14 reader testing or by 2026-12-19
+Start here when you want a practical path through cloud and platform engineering. Complete the local stages before choosing a cloud integration. The route connects concepts, a small working example, deliberate failure, diagnosis, recovery, and cleanup; reading a command list alone is not completion.
 
 ## Purpose
 
-Use this route when you are beginning practical cloud and platform engineering and want one complete local path before touching AWS, EKS, Crossplane, or production-like infrastructure.
-
-The first path keeps everything on your machine. It teaches the basic loop used in real work: make a Git change, deploy a small workload, break it on purpose, diagnose the symptom, recover, and clean up.
+Use [environment preflight](cross-topic-guides/local-learning-preflight.md) to choose a stage that your machine supports. You can do Git and Terraform practice without Docker. The Kubernetes stage uses local Linux containers and public registry downloads; none of these stages needs an AWS account.
 
 ## Prerequisites
 
-- A terminal and a text editor.
-- Git installed.
-- Docker installed and running.
-- `kind` and `kubectl` installed for the Kubernetes exercise.
-- Terraform installed for the Terraform exercise.
-- Enough local resources for one small Kubernetes cluster: at least 2 CPUs and 4 GB of free memory is a practical starting point.
+| Stage | Requirement | Start when |
+| --- | --- | --- |
+| Git | Terminal, Git, isolated scratch copy | You can inspect a tracked file and make a local teaching commit. |
+| Kubernetes | Bash, working Linux-container Docker, kind, compatible kubectl, registry access | Runtime and explicit target checks in preflight pass.[^kind-start][^kubeconfig] |
+| Terraform | Terraform 1.4+ and isolated local directory | You are using the built-in `terraform_data` fixture, not a cloud backend/provider. |
 
-No cloud account is required for the first exercises.
+Manual walkthrough commands use Bash. Native PowerShell users can run the Python Git/Terraform validators; see the preflight for the remaining platform-specific setup. Each exercise owns its own scratch directory/state or cluster, and has its own cleanup.
 
 ## First learning route
 
-| Step | Read or do this | Outcome |
+| Step | Read or do this | Check before moving on |
 | --- | --- | --- |
-| 1 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Understand working tree, index, `HEAD`, and safe restore behavior. |
-| 2 | [Kubernetes fundamentals](kubernetes/fundamentals/index.md) | Learn Pods, Deployments, Services, namespaces, labels, and reconciliation. |
-| 3 | [Local deployment learning path](cross-topic-guides/local-deployment-learning-path.md) | Deploy, break, diagnose, recover, and clean up a local workload. |
-| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Learn configuration, state, plan, apply, change, and destroy without a cloud account. |
+| 1 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Explain HEAD, index, and working tree. Unstage an edit without losing it, then restore only the disposable edit.[^git-restore] |
+| 2 | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Explain Pods, Deployments, ReplicaSets, readiness, labels and Services. |
+| 3 | [Local Kubernetes deployment exercise](cross-topic-guides/local-deployment-learning-path.md) | Ready workload and HTTP; actual invalid-image diagnosis; recovered image/HTTP; namespace/cluster cleanup. |
+| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | One state object, reviewed in-place update, correct output, and empty managed state after destroy. |
+
+The Kubernetes and Terraform examples teach separate reconciliation/state systems; Terraform does not provision this kind cluster. A Git restore changes a file, a Kubernetes rollback changes a live Pod template, and Terraform apply changes the objects tracked by its selected state. Keep those boundaries visible when explaining what you recovered.
+
+## Git restore, Kubernetes rollback, and Terraform state
+
+Restoring `deployment.yaml` in Git does not roll back a live Kubernetes Deployment. The file's next apply is a separate action. A Kubernetes rollout undo does not restore the Git index or Terraform state, and this Terraform fixture has no binding to that Deployment. Identify the state system before choosing a recovery command.
 
 ## Understanding checks
 
-After the local deployment path, you should be able to answer:
+Before moving to a cloud lab, explain which target each command used, which observation proved success, which failure was deliberate, and what was removed. Record versions, a short expected/observed result, failure reason, recovery result, cleanup, and any step you skipped. A timeout or missing executable does not count as the expected application failure.
 
-- What is the difference between `HEAD`, the Git index, and the working tree?
-- Why does a Deployment create Pods through a ReplicaSet instead of being a Pod itself?
-- How does a Service choose which Pods receive traffic?
-- What changed when the workload failed, and which command showed the reason?
-- Which cleanup command proves the local Kubernetes resources are gone?
+Ask a peer to follow the route from a fresh setup without your terminal history. Note unclear prerequisites, commands, messages and handoffs. That independent beginner exercise remains open; CI is useful repeatability evidence but does not replace reader testing.
 
 ## Next routes
 
-After completing the local path, choose based on your goal:
+Choose the next integration only after reading its account, credential, cost and cleanup prerequisites:
 
-| Goal | Next page | Extra prerequisites |
+| Goal | Next page | Additional preparation |
 | --- | --- | --- |
-| Learn AWS-hosted Kubernetes | [Deploying to EKS](cross-topic-guides/deploying-to-eks.md) | AWS sandbox account, IAM access, AWS CLI, and cost guardrails. |
-| Learn infrastructure control planes | [Crossplane on AWS](cross-topic-guides/crossplane-on-aws.md) | Kubernetes context, Crossplane concepts, AWS sandbox account, and cleanup discipline. |
-| Learn backup and recovery | [Velero](migrations/velero/index.md) | Kubernetes cluster, object storage, and backup/restore test space. |
+| Explore AWS-hosted Kubernetes | [Deploying to EKS](cross-topic-guides/deploying-to-eks.md) | Authorized sandbox, AWS identity/network/cost controls and EKS permission checks. |
+| Learn infrastructure control planes | [Crossplane on AWS](cross-topic-guides/crossplane-on-aws.md) | Existing cluster, Crossplane concepts, scoped provider credentials and external-resource cleanup. |
+| Learn backup and recovery | [Velero](migrations/velero/index.md) | Owned cluster/object storage and a planned restore verification. |
+| Continue Terraform locally | [Module/workspace](terraform/examples/module-workspace-lab/index.md) and [provider alias](terraform/examples/provider-alias-lab/index.md) labs | Finish the beginner lifecycle first; retain separate local states. |
+
+## Evidence and current limits
+
+Reviewed on 2026-11-10. Git recovery and Terraform lifecycle were executed on Windows with Git 2.55.0.windows.2, Python 3.13.17 and Terraform 1.17.1. Kubernetes versions and runtime evidence belong to the linked walkthrough and its exact revision's [CI workflow](../.github/workflows/local-learning-journey.yml); the local authoring host could not run Kubernetes. Earlier rootless/Terraform execution records in linked guides remain historical evidence. All route concepts remain draft/unassigned.
 
 ## Related links
 
+- [Knowledge index](index.md)
+- [Environment preflight](cross-topic-guides/local-learning-preflight.md)
+- [Section review evidence](../section-quality-progress.md)
 - [Knowledge-base improvement plan](../knowledge-base-improvement-plan.md)
 - [Back to root index](../README.md)
+
+[^kind-start]: [kind quick start](https://kind.sigs.k8s.io/docs/user/quick-start/).
+[^kubeconfig]: [Kubernetes kubeconfig contexts](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/).
+[^git-restore]: [git restore](https://git-scm.com/docs/git-restore).

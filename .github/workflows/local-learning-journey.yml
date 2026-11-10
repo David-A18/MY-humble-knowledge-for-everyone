@@ -1,0 +1,57 @@
+name: Local learning journey
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  local-journey:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.17.1
+          terraform_wrapper: false
+
+      - name: Install pinned kind and kubectl with published checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          versions=knowledge/kubernetes/examples/local-deployment-learning-path/lab-versions.json
+          kind_version=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["kind"])' "$versions")
+          kubectl_version=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["kubectl"])' "$versions")
+          tools_dir=$(mktemp -d)
+          cd "$tools_dir"
+          curl --fail --silent --show-error --location --retry 3 -o kind "https://github.com/kubernetes-sigs/kind/releases/download/$kind_version/kind-linux-amd64"
+          curl --fail --silent --show-error --location --retry 3 -o kind.sha256 "https://github.com/kubernetes-sigs/kind/releases/download/$kind_version/kind-linux-amd64.sha256sum"
+          echo "$(cut -d ' ' -f 1 kind.sha256)  kind" | sha256sum --check
+          curl --fail --silent --show-error --location --retry 3 -o kubectl "https://dl.k8s.io/release/$kubectl_version/bin/linux/amd64/kubectl"
+          curl --fail --silent --show-error --location --retry 3 -o kubectl.sha256 "https://dl.k8s.io/release/$kubectl_version/bin/linux/amd64/kubectl.sha256"
+          echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+          sudo install -m 0755 kind kubectl /usr/local/bin/
+
+      - name: Exercise Git staged and unstaged recovery
+        run: python knowledge/kubernetes/examples/local-deployment-learning-path/validate-git-recovery.py
+
+      - name: Exercise beginner Terraform local state lifecycle
+        run: python knowledge/terraform/examples/local-state-lifecycle/validate-lab.py
+
+      - name: Exercise Kubernetes deployment failure recovery and cleanup
+        run: python knowledge/kubernetes/examples/local-deployment-learning-path/validate-lab.py --report local-journey-report.json

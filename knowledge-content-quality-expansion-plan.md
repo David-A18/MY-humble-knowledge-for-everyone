@@ -24,7 +24,7 @@ content as a verified fact.
 
 The original 2026-09-21 baseline recorded 161 concepts: 151 draft and 10 stable, with 26 freshness deadlines and no assigned maintainer. That is historical evidence, not the current inventory.
 
-After the topic, Kubernetes troubleshooting, AWS networking, Terraform, FinOps, and AWS security passes, the catalog contains 264 concepts: 254 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 108 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
+After the topic, Kubernetes troubleshooting, AWS networking, Terraform, FinOps, AWS security, and beginner-route passes, the catalog contains 265 concepts: 255 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 108 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
 
 The repository already provides the foundations this plan will use:
 

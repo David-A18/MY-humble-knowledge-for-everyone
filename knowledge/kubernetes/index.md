@@ -2,6 +2,10 @@
 
 Practical Kubernetes notes for workloads, core objects, kubectl workflows, application tooling, troubleshooting, and operations.
 
+## Beginner local route
+
+Use [fundamentals](fundamentals/index.md), [environment preflight](../cross-topic-guides/local-learning-preflight.md), and the [deployment/failure/recovery walkthrough](../cross-topic-guides/local-deployment-learning-path.md). Its [files and runners](examples/local-deployment-learning-path/index.md) keep versions, HTTP evidence, Git state and cleanup explicit.
+
 ## Security and operations learning paths
 
 - [Istio security](applications-and-tools/istio/index.md) - Workload authentication and authorization.

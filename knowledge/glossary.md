@@ -175,5 +175,8 @@ Common terms used across the knowledge base.
 | PassRole | IAM permission to delegate a specified role to an AWS service; distinct from assuming that role directly. |
 | Session policy | Policy restricting permissions for a temporary AWS role session; does not independently grant permissions. |
 | Envelope encryption | Encrypting data with a data key and protecting that data key under another key. |
+| Kubeconfig context | Named cluster/user/namespace selection used by kubectl; explicit flags can keep a lab independent of the globally selected context. |
+| Rollout | Controlled transition to a new workload Pod template; current availability and update progress are separate observations. |
+| Surge capacity | Additional capacity needed while new Pods start before old replicas are removed during a rolling update. |
 
 [Back to root index](../README.md)
