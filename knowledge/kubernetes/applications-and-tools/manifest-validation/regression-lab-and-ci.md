@@ -95,7 +95,9 @@ Reports contain synthetic names and versions. Remove only your own reports, empt
 
 ## Validation boundary
 
-Sources reviewed on 2026-11-10. Python 3.13.17/PyYAML 6.0.3 on Windows executed the existing fixture test and all eight actual source-tool checks. Python/YAML parsing is checked for the cluster runner, but is not cluster execution evidence. Hosted cluster execution is pending until a specific successful workflow result is recorded here; inspect the exact revision's CI before claiming it passed.
+Sources reviewed on 2026-11-10. Python 3.13.17/PyYAML 6.0.3 on Windows executed the existing fixture test and all eight actual source-tool checks. Hosted execution recorded on 2026-11-10: the [develop integration 73d0ac0](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42804065069) passed all eight offline and thirteen cluster assertions. The [retained runtime report](examples/runtime-evidence.json) records Docker 28.0.4, kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, Chainsaw 0.2.15, the immutable node/schema inputs and the source-tool versions. The deliberate external-diff failure produced kubectl status 2; the wrong-port HTTP request produced wget status 1 while localhost and Deployment health remained good. Both Chainsaw namespaces, the lab namespace, cluster and node containers were removed.
+
+That report describes the linked code revision, not every future edit. The subsequent evidence-record update changes documentation/report data only; each publication still needs its own hosted result. Native host setup and independent reader success are separate evidence.
 
 No cloud account, shared cluster, Helm/Helm Diff release or GitOps controller was exercised. Native Windows/WSL/macOS repetition, external-diff implementations, CRD admission and independent reader sessions remain follow-ups.
 
