@@ -4,6 +4,7 @@ Run the documented commands from the repository root unless a chapter explicitly
 
 | File | Purpose |
 | --- | --- |
+| [Recorded runtime evidence](runtime-evidence.json) | Actual develop revision/run, versions and all eight/thirteen passing assertions; not a claim about future revisions. |
 | [Version manifest](lab-versions.json) | Fixed tool releases, official release SHA256 values, node digest and immutable schema revision. |
 | [Linux installer](install-tools.py) | Downloads checksum-pinned Linux amd64 tools into an explicitly empty directory. |
 | [Source-tool runner](validate-offline.py) | Eight real Git/dyff/kubeconform/Conftest assertions, no cluster calls. |

@@ -1,0 +1,53 @@
+{
+  "revision": "73d0ac0f149470e1030456db73ab81234228c5cf",
+  "branch": "develop",
+  "url": "https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42804065069",
+  "report": {
+    "cluster": "kb-manifest-aee90ee6b1",
+    "checks": {
+      "kustomize_renders_deployment_and_service": true,
+      "baseline_service_dns_and_http": true,
+      "live_diff_zero_for_baseline_and_reordered": true,
+      "live_diff_one_for_changed_target_port": true,
+      "live_diff_error_distinct_from_difference": true,
+      "diff_does_not_persist_change": true,
+      "wrong_port_breaks_http_while_deployment_healthy": true,
+      "live_drift_detected_after_mutation": true,
+      "restored_http_and_zero_diff": true,
+      "chainsaw_positive_http_and_cleanup": true,
+      "chainsaw_catches_routing_regression_and_cleans_up": true,
+      "namespace_deleted": true,
+      "cluster_and_node_containers_deleted": true
+    },
+    "versions": {
+      "docker": "28.0.4",
+      "kind": "kind v0.30.0 go1.24.6 linux/amd64",
+      "kubectl": "v1.34.1",
+      "chainsaw": "Version: 0.2.15\nTime: 2026-05-06T19:33:39Z\nGit commit ID: e166f7755b0d6098476c5c6677082203c877bfef",
+      "kubernetes": "v1.34.0"
+    },
+    "status": "passed",
+    "node_image": "kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a",
+    "diff_error_exit_code": 2,
+    "http_failure_exit_code": 1
+  },
+  "offline": {
+    "versions": {
+      "dyff": "dyff version 1.12.0",
+      "kubeconform": "v0.8.0",
+      "conftest": "Conftest: 0.71.1\nOPA: 1.21.1"
+    },
+    "schema_revision": "9367d1ce1c88b8bbf6ee06d0e80510f26394913f",
+    "checks": {
+      "git_detects_formatting_change": true,
+      "dyff_ignores_mapping_order": true,
+      "dyff_detects_target_port": true,
+      "schema_accepts_even_wrong_routing": true,
+      "schema_rejects_invalid_type": true,
+      "missing_schema_is_error": true,
+      "ownership_policy_accepts_owned_fixtures": true,
+      "ownership_policy_rejects_missing_label": true
+    },
+    "status": "passed"
+  }
+}
