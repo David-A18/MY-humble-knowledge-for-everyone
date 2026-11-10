@@ -3222,7 +3222,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Choose the check that answers the actual operational question.",
+      "description": "Distinguish semantic differences, configuration drift and behavioral regressions before choosing a check.",
       "maintainer": "unassigned",
       "maturity": "draft",
       "path": "knowledge/kubernetes/applications-and-tools/manifest-validation/concepts-and-tool-selection.md",
@@ -3237,7 +3237,7 @@
         "kubernetes",
         "manifest-validation"
       ],
-      "title": "Manifest comparison and regression concepts",
+      "title": "Kubernetes manifest differences, drift and regression testing",
       "type": "Reference"
     },
     {

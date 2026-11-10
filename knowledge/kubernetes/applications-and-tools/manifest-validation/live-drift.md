@@ -24,58 +24,64 @@ sources:
 
 # Detect desired-versus-live Kubernetes drift
 
-## Purpose
+Establish the intended revision, cluster, namespace and field owner before comparing live state. A live export contains server defaults, allocated fields, controller changes and status; a raw export-versus-Git patch does not automatically identify an operational problem.
 
-Compare the prospective apply result with live state and interpret reconciliation ownership.
+## What the API comparison does
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
-
-## Server-side comparison
+`kubectl diff` compares the current online configuration with the prospective applied configuration. Server-side mode exercises the API server's apply/dry-run path, including applicable admission and field ownership, without persisting the proposed object. It needs the relevant permissions; it is not an offline parser or a data-plane test.[^kubectl-diff-contract][^server-side-apply]
 
 ```bash
-kubectl diff --server-side -f desired.yaml
+kubectl --context "$CONTEXT" --namespace "$NAMESPACE" diff --server-side --field-manager=release-manager -f desired.yaml
 ```
 
-What it does: asks the API server to calculate the would-be applied configuration and compares it with current objects. It needs cluster access and permissions and may exercise dry-run admission. It does not prove data-plane success.
+What it does: compares one explicitly selected environment using an intentional field-manager name. Replace the placeholders with the application's verified context, namespace, manager and rendered file. Use the same ownership model as the actual release process; do not invent a new manager merely to avoid a conflict.
 
-## Correct exit-code handling
+## Handle all three outcomes
+
+In a Bash CI step with error handling enabled:
 
 ```bash
-set +e
-kubectl diff -f desired.yaml
-result=$?
-set -e
+result=0
+kubectl --context "$CONTEXT" --namespace "$NAMESPACE" diff --server-side --field-manager=release-manager -f desired.yaml || result=$?
 case "$result" in
   0) echo "No differences" ;;
   1) echo "Differences need review" ;;
-  *) echo "Comparison failed" >&2; exit "$result" ;;
+  *) echo "Comparison failed with status $result" >&2; exit "$result" ;;
 esac
 ```
 
-What it does: distinguishes no difference (0), differences (1), and errors (>1). Pipelines may deliberately fail on differences, but must label them correctly. Do not use `|| true`, which hides authentication and API failures.
+What it does: handles the documented no-difference 0, difference 1 and error >1 contract without swallowing errors with `|| true`. This example reports an intentional difference; a release gate may deliberately reject status 1 after labeling it correctly. Inspect diagnostics when a result is unexpected.[^kubectl-diff-contract]
 
-## Controller-managed fields
+The lab checks actual baseline/reordered status 0 and changed-port status 1. It deliberately runs a failing external diff process to test the >1 branch; that is an external comparison failure, not an authentication test. `KUBECTL_EXTERNAL_DIFF` must itself follow kubectl's status convention. For dyff, include `between --set-exit-code`; a pretty-printer that always exits 0 would hide changes.[^kubectl-diff-contract]
 
-Status, defaulted values, HPA-controlled replicas, webhook-injected containers, and allocated Service fields can differ legitimately. Configure narrow ignore rules only after identifying the owner. Ignoring a complete object or broad subtree can hide a real security or routing change.
+## Interpret defaults and ownership
 
-Argo CD and Flux also compare and reconcile configuration. Use the existing controller's revision and reconciliation status as evidence. A manual emergency change can be reverted at the next reconciliation; record it in Git or use the documented temporary suspension procedure.
+| Difference | Investigation |
+| --- | --- |
+| Status/resource version/managed fields in a raw export | These describe server state; compare the prospective object rather than blindly copying export metadata into Git. |
+| Allocated Service address or admission-injected field | Identify the allocator/webhook and whether the desired file intentionally owns the field. |
+| HPA-controlled replicas | Establish the autoscaler's ownership and the GitOps controller's documented narrow ignore behavior. |
+| Apply conflict | Inspect field ownership and the release contract; do not automatically add `--force-conflicts`. |
+| Image, selector, port, RBAC or storage difference | Review impact and run behavior/security checks; do not normalize away the evidence. |
 
-## Troubleshooting
+A clean diff does not prove correct behavior: the lab deliberately makes live state equal to a broken Service file. Likewise, diffing only one file does not prove that every obsolete object will be pruned. Inventory/deletion policy and reconciliation ownership need their own review.
 
-First confirm context, namespace, desired revision, and permissions. Next inspect field ownership and admission mutation. Finally investigate unexpected pruning or resource renaming. A forbidden API request is a failed comparison, not evidence of no drift.
+## Use the existing GitOps controller
 
-Source references: [^kubectl-diff-contract][^server-side-apply][^argo-cd-diff-customization]
+Argo CD supports diff customizations; narrowly document the owner and field before ignoring it. Flux reconciliation/diff evidence must include the actual revision and reconciliation result. Manual incident changes can be reverted by the controller; follow its documented suspension/override process and reconcile the accepted fix into Git.[^argo-cd-diff-customization]
 
-## Related links
+See [Argo CD versus Flux](../argo-cd-vs-flux.md), [GitOps](../gitops.md), and [Flux reconciliation](../flux-reconciliation-and-helm.md). This lab does not deploy either controller or claim to validate their behavior.
 
-- [kubectl diff contract](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/)
-- [Server-side apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/)
-- [Argo CD diff customization](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/)
-- [Flux reconciliation](../flux-reconciliation-and-helm.md)
-- [Back to parent index](index.md)
-- [Back to major area](../../index.md)
-- [Back to root index](../../../../README.md)
+## Troubleshoot safely
 
-[^kubectl-diff-contract]: [kubectl diff contract](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/).
-[^server-side-apply]: [Server-side apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/).
+Confirm the context, namespace, desired revision, credentials, API reachability and permissions. Then inspect admission messages and field ownership. Keep comparison errors separate from no-drift evidence. Never repair a comparison by applying an unreviewed object to a shared cluster.
+
+Diff output can expose sensitive values, and dry-run requests can exercise admission services. Use synthetic files and least-privilege credentials for real CI. Source-only workflows need no cluster access.
+
+Sources reviewed on 2026-11-10. The [lab](regression-lab-and-ci.md#validation-boundary) records hosted API/diff/request evidence separately from local source checks. Its runner owns a new kind cluster/private kubeconfig and checks that the diff did not persist `targetPort: 81`. Comparing alone needs no application cleanup; the lab verifies namespace and cluster removal after its deliberate mutations.
+
+- [Back to series](index.md) | [Back to Kubernetes](../../index.md)
+
+[^kubectl-diff-contract]: [kubectl diff behavior, statuses and external command contract](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/).
+[^server-side-apply]: [Server-side apply ownership](https://kubernetes.io/docs/reference/using-api/server-side-apply/).
 [^argo-cd-diff-customization]: [Argo CD diff customization](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/).

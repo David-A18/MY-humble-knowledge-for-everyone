@@ -7,7 +7,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 ## Added learning guides
 
 - [Kubernetes platform tooling](platform-tooling/index.md) - Focused learning material and supporting examples.
-- [Manifest comparison, drift, and regression testing](manifest-validation/index.md) - Focused learning material and supporting examples.
+- [Manifest comparison, drift, and regression testing](manifest-validation/index.md) - Source-tool checks and disposable Service failure/recovery with Chainsaw.
 - [Istio authentication and authorization](istio/index.md) - Focused learning material and supporting examples.
 - [kro: Kube Resource Orchestrator](kro/index.md) - Focused learning material and supporting examples.
 

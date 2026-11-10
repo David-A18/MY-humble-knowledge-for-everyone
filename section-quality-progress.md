@@ -2,7 +2,30 @@
 
 Review snapshot: 2026-11-10. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: AWS governance and human access
+## Current batch: manifest validation and regression
+
+Reviewed all five direct concepts and all three section indexes. The route now explains source/render/live/behavior boundaries, tool-specific exit statuses, immutable schema coverage, field ownership, secret-bearing output and cleanup. Existing URLs are preserved and no draft was promoted. The catalog remains 276 concepts; no new knowledge directories were needed.
+
+Official Kubernetes, dyff, kubeconform, Conftest, Helm/Helm Diff, kind and versioned Chainsaw sources reviewed on 2026-11-10. Added checksum-pinned Linux tools, a Kustomize fixture, eight actual source-tool assertions and thirteen private-cluster assertions. The existing fixture test is explicitly a declaration contract, not proof that `containerPort` starts a listener.
+
+Executed locally: Python 3.13.17/PyYAML 6.0.3, Git 2.55.0.windows.2, dyff 1.12.0, kubeconform 0.8.0 and Conftest 0.71.1/OPA 1.21.1. Text order differs, semantic order does not; target port differs; all four known objects validate despite wrong routing; invalid replicas and missing custom schema fail specifically; ownership allowed/denied cases pass. Cluster/Python/YAML syntax checks are not runtime evidence. Hosted execution is pending exact-revision workflow inspection.
+
+The Linux gate creates an isolated kind 0.30.0/Kubernetes 1.34.0 cluster with private kubeconfig, tests live statuses and no-persistence, actual healthy/broken/restored Service behavior, the same Chainsaw test with positive/negative inputs, and namespace/cluster/container cleanup. Helm/Helm Diff releases, GitOps controllers, CRD admission, multi-node/platform and independent reader cases remain follow-ups. Next focused batch: Istio security identities/JWT/mTLS runtime acceptance.
+
+### Manifest validation
+
+| Check | Recorded result |
+| --- | --- |
+| Required repository checks | All fifteen commands pass, including live GitHub label comparison. |
+| Markdown and navigation | 439 Markdown files lint cleanly; relative paths, heading anchors, indexes and reachability pass. |
+| Catalog and definitions | 276 concepts, 110 indexed directories, reproducible catalog and 103 valid retrieval definitions. |
+| External URLs | All 567 checked unique linked/source URLs return HTTP 200 after redirects; external fragments are outside this check. |
+| Main retrieval smoke | All eight new questions retrieve the intended concept in the top five chunks; an absent token returns `NO_EVIDENCE`. |
+| Develop-engine compatibility | Separate develop engine: expected route in top three for 102/103 and top five for 103/103; unanswerable refusals 18/20. Existing sensitive-Terraform top-three miss remains. These are not scores for the older main engine. |
+| Local execution | Fixture contract plus eight actual source-tool assertions pass with the versions stated above; no local cluster runtime is inferred. |
+| Hosted gate | New ninth workflow exercises actual API/request/Chainsaw behavior; exact-revision result pending inspection. |
+
+## Previous batch: AWS governance and human access
 
 Replaced the empty governance outline with ten focused guides and an inventory-reconciliation tutorial. The three indexed governance directories now route account/OU design, Identity Center/SAML/SCIM, permission sets versus IAM account access manager, CLI sessions, organization guardrails, delegated IAM, root/emergency recovery, account vending/retirement, access review/offboarding and diagnosis. Existing IAM/security and EKS comparison URLs remain separate routes. All new concepts are draft/unassigned.
 
@@ -254,9 +277,9 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [kubernetes/applications-and-tools/istio](knowledge/kubernetes/applications-and-tools/istio/index.md) | 6 | Pending |
 | [kubernetes/applications-and-tools/kro/examples](knowledge/kubernetes/applications-and-tools/kro/examples/index.md) | 0 | Pending |
 | [kubernetes/applications-and-tools/kro](knowledge/kubernetes/applications-and-tools/kro/index.md) | 5 | Pending |
-| [kubernetes/applications-and-tools/manifest-validation/examples](knowledge/kubernetes/applications-and-tools/manifest-validation/examples/index.md) | 0 | Pending |
-| [kubernetes/applications-and-tools/manifest-validation/examples/policy](knowledge/kubernetes/applications-and-tools/manifest-validation/examples/policy/index.md) | 0 | Pending |
-| [kubernetes/applications-and-tools/manifest-validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | 5 | Pending |
+| [kubernetes/applications-and-tools/manifest-validation/examples](knowledge/kubernetes/applications-and-tools/manifest-validation/examples/index.md) | 0 | Reviewed 2026-11-10; hosted acceptance pending, Helm/GitOps/CRD extensions open |
+| [kubernetes/applications-and-tools/manifest-validation/examples/policy](knowledge/kubernetes/applications-and-tools/manifest-validation/examples/policy/index.md) | 0 | Reviewed 2026-11-10; hosted acceptance pending, Helm/GitOps/CRD extensions open |
+| [kubernetes/applications-and-tools/manifest-validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | 5 | Reviewed 2026-11-10; hosted acceptance pending, Helm/GitOps/CRD extensions open |
 | [kubernetes/applications-and-tools/platform-tooling](knowledge/kubernetes/applications-and-tools/platform-tooling/index.md) | 11 | Pending |
 | [kubernetes/best-practices](knowledge/kubernetes/best-practices/index.md) | 0 | Pending |
 | [kubernetes/commands](knowledge/kubernetes/commands/index.md) | 6 | Pending |

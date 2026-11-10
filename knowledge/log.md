@@ -2,6 +2,8 @@
 
 ## 2026-11-10
 
+- Reviewed all five manifest-validation concepts and supporting indexes. Added real source-tool and private-cluster runners, immutable schema/tool inputs, explicit diff error handling, Service regression/recovery and Chainsaw negative coverage; keep hosted execution evidence distinct from local checks.
+
 - Expanded AWS governance and human access with eleven concepts and a synthetic inventory-reconciliation lab. Linked existing security/workload/cluster identity routes, added account/access decision criteria, and kept local assignment calculations separate from effective IAM permissions and issued-session containment.
 
 - Reviewed the beginner Git → local Kubernetes → Terraform route. Added environment preflight, pinned node/workload inputs, a strategic image patch, explicit kubeconfig targeting, separate Service/port-forward HTTP checks, and repeatable Git/Terraform/kind validation. Runtime results must be read for the exact tested revision.

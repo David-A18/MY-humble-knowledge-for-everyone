@@ -1,0 +1,43 @@
+name: Manifest validation lab
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  manifest-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Install pinned tools with release checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools_dir=$(mktemp -d)
+          python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py --directory "$tools_dir"
+          echo "$tools_dir" >> "$GITHUB_PATH"
+          python -m pip install PyYAML==6.0.3
+
+      - name: Check source fixtures
+        run: python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/test-fixtures.py
+
+      - name: Exercise actual semantic schema and policy tools
+        run: python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-offline.py --report manifest-offline-report.json
+
+      - name: Exercise live drift routing regression and cleanup
+        run: python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-cluster.py --report manifest-cluster-report.json

@@ -1,7 +1,7 @@
 ---
 type: Reference
-title: Manifest comparison and regression concepts
-description: Choose the check that answers the actual operational question.
+title: Kubernetes manifest differences, drift and regression testing
+description: Distinguish semantic differences, configuration drift and behavioral regressions before choosing a check.
 tags:
 - kubernetes
 - manifest-validation
@@ -21,50 +21,64 @@ sources:
   title: Helm Diff
 ---
 
-# Manifest comparison and regression concepts
+# Kubernetes manifest differences, drift and regression testing
 
-## Purpose
+Choose a check by the question it can answer. A manifest can parse, pass a schema, satisfy a label policy, and still send traffic to a port where nothing listens. A green Deployment condition covers the workload controller's criteria, not the complete user request path.
 
-Choose the check that answers the actual operational question.
+## Semantic differences, configuration drift and behavioral regressions
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+A **difference** is an observed change between two inputs. **Drift** is a difference between the intended state and live state; first establish which revision, environment and controller define intent. A **regression** is working behavior that a change breaks. Comments, whitespace and mapping-key order can change a textual diff without changing the parsed object. An intentional release change can produce a large diff while preserving behavior.
 
-## Four different questions
-
-| Question | Appropriate tools | Blind spot |
+| Operational question | Check and artifact | What it cannot establish |
 | --- | --- | --- |
-| What changed in source? | `git diff` | Templates may render differently. |
-| What changed in rendered objects? | `dyff`, Helm Diff, Helm/Kustomize rendering | No proof of runtime health. |
-| Does live state differ from desired? | `kubectl diff`, Argo CD diff, Flux diff/reconciliation | Admission and controller defaults add noise. |
-| Does behavior still work? | Helm tests, Chainsaw, HTTP/DNS probes | Covers only asserted scenarios. |
+| What did the author change? | `git diff`: committed/staged/working-tree patch. | The exact rendered objects or API outcome. |
+| What will the templates produce? | Helm/Kustomize: complete rendered objects for each values/overlay combination. | Every server capability, lookup, default or admission mutation. |
+| Which object fields changed? | dyff: structural paths and before/after values. | Kubernetes meaning or application correctness. |
+| How would a Helm upgrade differ? | Helm Diff: installed-release versus proposed-render comparison; optional live-aware mode. | A successful release or a traffic test. |
+| Are types and known fields valid? | kubeconform: versioned schema result with valid/invalid/error/skipped counts. | Full API validation, admission or controller behavior. |
+| Does this satisfy our stated rules? | Conftest: Rego allow/deny findings. | Rules that were never written or actual cluster enforcement. |
+| What would apply change now? | `kubectl diff`: live versus prospective apply, including server-side processing. | Persistent deployment, traffic success or full deletion inventory. |
+| Did behavior survive deployment? | Helm test hooks, Chainsaw, HTTP/DNS or domain-specific assertions. | Scenarios and failure modes that the suite does not assert. |
 
-A regression is previously working behavior broken by a change. Drift is divergence between actual and intended state. A formatting change is neither automatically a regression nor operational drift.
+The [routing lab](regression-lab-and-ci.md) exercises one concrete `targetPort: 80` â†’ `81` mutation across these layers.[^kubectl-diff][^dyff][^helm-diff]
 
-## Layer the checks
+## Build a useful release gate
 
-Render -> schema validation -> policy checks -> semantic comparison -> cluster admission/diff -> behavioral checks. Stop at the earliest meaningful failure, but preserve later checks: schema-valid YAML can still route to the wrong port.
+Render each supported environment from a known Git revision and pinned dependencies. Check schema coverage and policy, inspect semantic changes, then use a disposable cluster for admission and behavior. Preserve failure categories in the report: rendering failure, schema error, policy denial, intentional difference, comparison error and failed request are different next actions.
 
-## Review rules
+```mermaid
+flowchart LR
+    Source[Git revision and inputs] --> Render[Helm or Kustomize]
+    Render --> Validate[Schema and policy]
+    Validate --> Compare[Semantic and live comparison]
+    Compare --> Deploy[Disposable deployment]
+    Deploy --> Probe[Positive and negative behavior]
+    Probe --> Cleanup[Verified cleanup]
+```
 
-Compare the same chart versions, values, overlays, and API capabilities. Identify objects by API group/kind/namespace/name. Avoid sorting lists blindly: environment-variable order, init-container order, and policy-rule semantics may matter. Normalize only fields proven irrelevant to the question.
+What it does: separates configuration inspection from actual requests and makes cleanup part of acceptance. A failed early gate should stop that release; it does not make later layers unnecessary for releases that pass.
 
-Generated timestamps, resource versions, status, and managed fields often create live-export noise. Keep selectors, resource limits, images, permissions, probes, and routing fields visible. Secret values need redaction, not an unrestricted diff artifact.
+## Compare the intended things
 
-## Practical outcome
+Identify objects by API group, kind, namespace and name, rather than file position. Compare the same chart version, dependency lock, values, overlay, release name, namespace, tool version and API capabilities. Include additions and removals; comparing only matching objects misses a deleted Service or dropped RoleBinding.
 
-A useful pipeline reports whether it found an intentional difference, an invalid object, a policy violation, a cluster communication failure, or a failed behavior test. Avoid a single ambiguous green/red result that hides the cause.
+Do not sort every YAML list to make a diff shorter. Some list order matters; a comparator also cannot infer every CRD's list semantics. API-group changes, namespace changes, renamed resources, selectors, ports, images, probes, RBAC, storage and deletion intent deserve explicit review.
 
-Source references: [^kubectl-diff][^dyff][^helm-diff]
+## Security and tool choice
 
-## Related links
+Start with Git plus the renderer, schema/policy and behavior checks your deployment already needs. Add Helm Diff for Helm release review, or use existing [Argo CD/Flux](../argo-cd-vs-flux.md) revision/reconciliation evidence instead of inventing a second source of truth. Chainsaw is useful when multi-step apply/assert/cleanup makes a shell script difficult to review; a small explicit HTTP probe can be sufficient for a small route.
 
-- [kubectl diff](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/)
-- [dyff](https://github.com/homeport/dyff)
-- [Helm Diff](https://github.com/databus23/helm-diff)
-- [Back to parent index](index.md)
-- [Back to major area](../../index.md)
-- [Back to root index](../../../../README.md)
+Live comparison needs cluster credentials and may exercise dry-run admission. Avoid production mutation permissions for a source-only job. Rendered Secrets, environment variables, annotations and plugin output can contain credentials; review redaction before saving artifacts. Default Secret suppression in one tool is not a guarantee for every sensitive string.
 
-[^kubectl-diff]: [kubectl diff](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/).
-[^dyff]: [dyff](https://github.com/homeport/dyff).
-[^helm-diff]: [Helm Diff](https://github.com/databus23/helm-diff).
+## Evidence and next steps
+
+Sources reviewed on 2026-11-10. The lab's eight real offline tool checks were executed on Windows with dyff 1.12.0, kubeconform 0.8.0 and Conftest 0.71.1. Hosted cluster evidence is recorded separately in the [lab](regression-lab-and-ci.md#validation-boundary); do not infer it from a schema pass. Helm Diff, Helm test hooks, Argo CD and Flux are selection guidance here, not executed integrations in this lab.
+
+- [Rendered object comparison](rendered-yaml-comparison.md)
+- [Live drift and exit statuses](live-drift.md)
+- [Schema/policy coverage](schema-and-policy.md)
+- [Back to series](index.md) | [Back to Kubernetes](../../index.md)
+
+[^kubectl-diff]: [kubectl diff contract](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/).
+[^dyff]: [dyff project](https://github.com/homeport/dyff).
+[^helm-diff]: [Helm Diff documentation](https://github.com/databus23/helm-diff).
