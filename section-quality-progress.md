@@ -1,8 +1,30 @@
 # Section quality progress
 
-Review snapshot: 2026-10-29. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
+Review snapshot: 2026-11-10. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: FinOps and AWS FinOps
+## Current batch: AWS security
+
+Reviewed the four existing security concepts and index, strengthened OIDC/IRSA credential and policy boundaries, and added nine concepts including the local policy-contract tutorial. The three indexed security directories now route effective permissions, credential/session lifecycle, Pod Identity operations, KMS, secrets, CloudTrail/detection, AccessDenied diagnosis, and incident response. New and revised concepts remain draft/unassigned. The broader governance/human-access section is still pending.
+
+AWS primary sources reviewed on 2026-11-10. Current Pod Identity target-role chaining and cache behavior are explicit; the source role remains in the cluster account. Private IRSA issuer discovery uses current endpoint/resolver guidance. The guides distinguish management from data-event coverage, sample findings from threat detection, material rotation from credential rotation, and trust removal from issued-session containment. The existing EKS comparison URL remains the choice entry point.
+
+Executed Python 3.13.17 baseline and ten mutation tests against synthetic trust/read fixtures. The checker enforces this lab's narrow review contract and rejects accidental broadening; it is not an IAM evaluator. A dedicated Linux CI workflow runs the same local checks. No AWS CLI version or account command was executed in this batch. Access Analyzer/simulation examples are source-reviewed instructions, not observed service results.
+
+Remaining evidence: authorized IAM validation/simulation and actual allowed/denied requests; EKS role exchange and caller checks; Pod Identity target-role/cache migration; KMS/context and secret-consumer rotation failures; audit selectors/delivery and responder acknowledgement; session containment and independent recovery. Local mutation tests do not satisfy those acceptance requirements.
+
+### AWS security validation
+
+| Check | Recorded result |
+| --- | --- |
+| Repository checks | All fifteen required validator/test commands pass, including live GitHub label comparison. |
+| Markdown and navigation | 425 files lint cleanly; relative targets, heading fragments, parent indexes, and reachability pass. |
+| Catalog and retrieval definitions | 264 concepts; reproducible catalog; 72 retrieval definitions validate. |
+| External URLs | All 537 checked unique linked/source URLs returned HTTP 200 after redirects; external fragments were not tested. Fenced command endpoints are not external citation links. |
+| Retrieval execution | All thirteen new security questions retrieve the intended route among the top five chunks; a fresh absent token returns `NO_EVIDENCE`. This is lexical retrieval evidence, not model-answer quality. |
+| Local examples | Baseline checker and ten mutation tests pass on Python 3.13.17, without credentials or network requests. |
+| CI change | A dedicated workflow runs the fixture contracts and mutation tests on Python 3.13 in Linux. Hosted results must be inspected for the exact published commit. |
+
+## Previous batch: FinOps and AWS FinOps
 
 Reviewed both existing FinOps concepts and indexes, added eleven focused concepts plus two example indexes, and connected allocation, budgets/forecasts, anomalies, reporting/units, usage/rate optimization, Kubernetes costs, and AWS implementation routes. The four indexed FinOps directories have explicit learning and operational outcomes. All new concepts remain draft/unassigned.
 
@@ -101,7 +123,7 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 | P2 | [AWS networking follow-up](knowledge/cloud/aws/networking/index.md) | Execute the authorized read-only lab and controlled traffic/failover drills; expand transit/hybrid deployment and endpoint-policy recovery procedures. |
 | P2 | [Terraform follow-ups](knowledge/terraform/index.md) | Execute bounded remote lock/migration/restore, provider import/drift, and hosted credential/artifact drills; preserve the local lab contracts and cleanup evidence. |
 | P2 | [FinOps follow-ups](knowledge/finops/index.md) | Validate real notification/billing/workload outcomes and data adapters; preserve synthetic calculations as a separate evidence level. |
-| P2 | [AWS security](knowledge/cloud/aws/security/index.md) | Review existing OIDC/IRSA material and EKS comparison; record trust/permission evidence gaps before adding more identity summaries. |
+| P2 | [AWS security follow-ups](knowledge/cloud/aws/security/index.md) | Execute the live IAM/identity, data protection, audit/delivery, and session-response acceptance listed in the current review; retain the synthetic contract boundary. |
 | P2 | [Core reader journeys](knowledge/start-here.md) | Follow prerequisites and handoffs, record broken/confusing routes, and improve only evidenced gaps. |
 | P2 | [New learning series](knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
 
@@ -138,7 +160,9 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [cloud/aws/governance-and-access](knowledge/cloud/aws/governance-and-access/index.md) | 0 | Pending |
 | [cloud/aws](knowledge/cloud/aws/index.md) | 0 | Pending |
 | [cloud/aws/networking](knowledge/cloud/aws/networking/index.md) | 10 | Reviewed 2026-10-29; runtime and advanced procedures open |
-| [cloud/aws/security](knowledge/cloud/aws/security/index.md) | 4 | Pending |
+| [cloud/aws/security](knowledge/cloud/aws/security/index.md) | 12 | Reviewed 2026-11-10; live evidence open |
+| [cloud/aws/security/examples](knowledge/cloud/aws/security/examples/index.md) | 0 | Reviewed 2026-11-10; live evidence open |
+| [cloud/aws/security/examples/policy-contract-lab](knowledge/cloud/aws/security/examples/policy-contract-lab/index.md) | 1 | Reviewed 2026-11-10; live evidence open |
 | [cloud/aws/solutions-architect](knowledge/cloud/aws/solutions-architect/index.md) | 0 | Pending |
 | [cloud/aws/storage](knowledge/cloud/aws/storage/index.md) | 0 | Pending |
 | [cloud/aws/troubleshooting](knowledge/cloud/aws/troubleshooting/index.md) | 0 | Pending |

@@ -24,7 +24,7 @@ content as a verified fact.
 
 The original 2026-09-21 baseline recorded 161 concepts: 151 draft and 10 stable, with 26 freshness deadlines and no assigned maintainer. That is historical evidence, not the current inventory.
 
-After the topic, Kubernetes troubleshooting, AWS networking, Terraform, and FinOps passes, the catalog contains 255 concepts: 245 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 106 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
+After the topic, Kubernetes troubleshooting, AWS networking, Terraform, FinOps, and AWS security passes, the catalog contains 264 concepts: 254 draft and 10 stable. The [section quality ledger](section-quality-progress.md) inventories all 108 current indexed directories and records the scope and remaining evidence for each reviewed section. Breadth must not be presented as uniform technical authority; source review does not promote drafts automatically.
 
 The repository already provides the foundations this plan will use:
 
@@ -214,7 +214,7 @@ For every checked section, confirm all of the following:
       — IAM, organization boundaries, least privilege, and audit trails.
     - [x] [AWS networking](knowledge/cloud/aws/networking/index.md) — VPC,
       routing, connectivity, DNS, and security boundaries.
-    - [ ] [AWS security](knowledge/cloud/aws/security/index.md) — threat model,
+    - [x] [AWS security](knowledge/cloud/aws/security/index.md) — threat model,
       identity, data protection, and incident-response links.
     - [ ] [AWS solutions architect](knowledge/cloud/aws/solutions-architect/index.md)
       — design criteria, trade-offs, and review examples.

@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 255,
+  "concept_count": 264,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -961,20 +961,159 @@
       "type": "Explanation"
     },
     {
-      "audience": "Engineering learners and practitioners",
-      "description": "Use this page to understand how AWS trusts an external OpenID Connect provider and exchanges a valid token for temporary IAM credentials.",
+      "audience": "Cloud and platform engineers",
+      "description": "Distinguish API audit coverage, threat findings, posture findings, and tested response delivery.",
       "maintainer": "unassigned",
       "maturity": "draft",
-      "path": "knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md",
-      "source_ids": [],
+      "path": "knowledge/cloud/aws/security/cloudtrail-and-detection.md",
+      "source_ids": [
+        "trail-history",
+        "trail-data",
+        "guardduty",
+        "securityhub"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
-        "cloud",
         "aws",
-        "security"
+        "security",
+        "cloudtrail"
+      ],
+      "title": "CloudTrail evidence and security detection",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Identify which credentials an application actually uses and distinguish projected tokens, temporary sessions, refresh, and revocation.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/credential-providers-and-session-lifecycle.md",
+      "source_ids": [
+        "providers",
+        "caller",
+        "irsa-sdk",
+        "web-identity",
+        "revoke"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "credential"
+      ],
+      "title": "AWS credential providers and session lifecycle",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Inspect EKS associations, node-agent credentials, role trust, target-role access, and caching during workload identity changes.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/eks-pod-identity-operations.md",
+      "source_ids": [
+        "pod-identity",
+        "pod-flow",
+        "pod-association",
+        "pod-target"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "eks"
+      ],
+      "title": "Operate EKS Pod Identity",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Catch unintended changes to a synthetic trust and read-permission fixture, then plan validation, simulation, and live access tests.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/examples/policy-contract-lab/policy-contract-lab.md",
+      "source_ids": [
+        "analyzer",
+        "simulator",
+        "simulate-cli"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "iam",
+        "irsa",
+        "lab"
+      ],
+      "title": "Review an IRSA policy contract before AWS testing",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Locate the failing credential, trust, service permission, resource, organization, endpoint, or key boundary without granting broad access.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/iam-access-denied-troubleshooting.md",
+      "source_ids": [
+        "evaluation",
+        "principal-evaluation",
+        "caller",
+        "simulator",
+        "kms-policy"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "iam"
+      ],
+      "title": "Diagnose AWS AccessDenied",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Understand issuer registration, token validation, role trust, temporary credentials, and the separate AWS authorization step.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/iam-oidc-provider-and-sts-web-identity.md",
+      "source_ids": [
+        "web-identity",
+        "irsa",
+        "irsa-sdk"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "iam"
       ],
       "title": "IAM OIDC provider and STS web identity",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Separate role trust, permission grants, restrictive controls, and service-specific access before designing a least-privilege change.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/iam-policy-evaluation-and-least-privilege.md",
+      "source_ids": [
+        "evaluation",
+        "principal-evaluation",
+        "pass-role",
+        "analyzer"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "iam"
+      ],
+      "title": "IAM policy evaluation and least privilege",
       "type": "Explanation"
     },
     {
@@ -1035,6 +1174,70 @@
       ],
       "title": "IRSA trust and permission policies",
       "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Separate transport encryption, envelope encryption, key administration, data use, rotation, and recovery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/kms-encryption-and-access.md",
+      "source_ids": [
+        "kms-keys",
+        "kms-policy",
+        "kms-rotate"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "kms"
+      ],
+      "title": "KMS encryption and access boundaries",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Choose an AWS configuration or secret store and verify the entire credential-consumption and rotation path.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/secrets-manager-and-rotation.md",
+      "source_ids": [
+        "parameters",
+        "secret-practices",
+        "secret-rotation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "secrets"
+      ],
+      "title": "Secrets Manager access and rotation",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud and platform engineers",
+      "description": "Prepare a scoped response that preserves evidence, blocks new credentials, constrains issued sessions, and verifies recovery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/security/security-incident-response.md",
+      "source_ids": [
+        "incident",
+        "revoke",
+        "trail-history",
+        "pod-target"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "security",
+        "incident-response"
+      ],
+      "title": "Respond to suspected AWS credential compromise",
+      "type": "How-to Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
@@ -1262,7 +1465,8 @@
       "source_ids": [
         "aws-irsa",
         "aws-pod-identity",
-        "aws-pod-identity-association"
+        "aws-pod-identity-association",
+        "aws-pod-identity-target"
       ],
       "stale_after": null,
       "status": "draft",
@@ -1353,7 +1557,7 @@
         "cross-topic-guides"
       ],
       "title": "IRSA S3 access on EKS: positive and negative tests",
-      "type": "Explanation"
+      "type": "Tutorial"
     },
     {
       "audience": "Engineering learners and practitioners",

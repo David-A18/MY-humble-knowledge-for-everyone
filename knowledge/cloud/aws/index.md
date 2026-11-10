@@ -6,6 +6,10 @@ Practical AWS knowledge for cloud architecture, networking, compute, storage, se
 
 Start with [IRSA fundamentals](security/irsa-fundamentals.md), [trust and permissions](security/irsa-trust-and-permissions.md), and [troubleshooting](security/irsa-troubleshooting.md); apply them in the [EKS S3 lab](../../cross-topic-guides/irsa-s3-access-on-eks.md).
 
+## Security operations learning path
+
+Use [IAM evaluation](security/iam-policy-evaluation-and-least-privilege.md), [credential/session behavior](security/credential-providers-and-session-lifecycle.md), and the [policy-contract lab](security/examples/policy-contract-lab/index.md) before interpreting allowed/denied results. Continue through the [security index](security/index.md) for Pod Identity, KMS, secrets, audit/detection, diagnosis, and incident recovery.
+
 ## Networking learning path
 
 Start with [VPC/subnets](networking/vpc-and-subnet-fundamentals.md), [effective routes](networking/route-tables-and-path-selection.md), and [NAT/egress](networking/internet-and-nat-egress.md). Continue with [private endpoints/DNS](networking/vpc-endpoints-and-private-dns.md), [security groups](networking/security-groups.md), and the [read-only inspection lab](networking/network-inspection-lab.md). Use the [network diagnostic guide](networking/network-connectivity-troubleshooting.md) for failures.

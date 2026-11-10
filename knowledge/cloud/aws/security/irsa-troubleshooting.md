@@ -28,7 +28,7 @@ sources:
 
 Find credential-source, trust, and AWS authorization failures without exposing tokens.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## First checks
 
@@ -67,6 +67,14 @@ Private-cluster DNS and endpoint behavior depends on network configuration. Test
 Use Pod Identity where its supported capabilities and operating model fit; retain IRSA when federation or compatibility requirements justify it. Compare against current AWS constraints rather than assuming both mechanisms support identical node types or cross-account flows.
 
 Source references: [^irsa-benefits-and-caveats][^eks-pod-identity][^aws-sdk-support]
+
+## Preserve the stage and expected identity
+
+Distinguish an STS trust rejection from a service denial after credentials were obtained. Record action, account/Region, expected/actual ARN, resource, error code and request ID without recording the JWT or session secrets. `GetCallerIdentity` alone is not a service-permission or revocation test; use the intended resource operation. Follow [general AccessDenied diagnosis](iam-access-denied-troubleshooting.md) for the complete applicable policy set.
+
+For private clusters, evaluate the currently documented `oidc-eks` interface endpoint/private DNS option or an appropriate resolver/operator path. Do not repeat the older blanket assumption that an EKS private endpoint always makes issuer discovery impossible. Operator issuer discovery and workload STS connectivity are separate paths.[^irsa-benefits-and-caveats]
+
+For [Pod Identity](eks-pod-identity-operations.md), inspect EKS associations and agent caches rather than an IRSA annotation. Use [incident response](security-incident-response.md) when issued credentials may have escaped; restarting a Pod does not retract a copied session.
 
 ## Related links
 

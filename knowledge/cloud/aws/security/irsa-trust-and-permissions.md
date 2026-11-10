@@ -27,11 +27,11 @@ sources:
 
 Separate who may assume a role from what an assumed role may do.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Two independent policies
 
-The role trust policy permits STS web-identity role assumption from a specific federated issuer, token audience, namespace, and service account. The role permission policy allows AWS operations against resources. Both must succeed. Organization SCPs, permission boundaries, resource policies, and KMS policies can further restrict effective permissions.[^associate-service-account-and-iam-role][^sts-web-identity][^iam-policy-evaluation]
+The role trust policy permits STS web-identity role assumption from a specific federated issuer, token audience, namespace, and service account. A role permission policy grants AWS operations against resources. Successful assumption alone does not authorize those later requests: evaluate applicable identity/resource grants, organization controls, boundaries, session policies, and service-specific restrictions. KMS access adds its key-policy path.[^associate-service-account-and-iam-role][^sts-web-identity][^iam-policy-evaluation]
 
 ## Narrow trust example
 
@@ -78,6 +78,12 @@ Credential revocation and policy propagation are not instantaneous. Changing tru
 ## Diagnostic sequence
 
 Confirm the cluster's actual issuer, IAM OIDC provider, annotation, audience, and token subject. Then inspect the attached permission policy and resource/KMS restrictions. An STS denial belongs to the trust path; a later S3 denial belongs to authorization or the resource configuration.
+
+## Review contracts and effective permissions
+
+Use the [policy-contract lab](examples/policy-contract-lab/index.md) to catch changes to the exact synthetic issuer, audience, subject, object prefix, and read action. Its local assertions are not an IAM engine. Access Analyzer findings, AWS simulation, and a live positive/negative test each provide different evidence.
+
+The [IAM evaluation guide](iam-policy-evaluation-and-least-privilege.md) describes why effective access is not universally an intersection of every policy. Same-account resource-policy grants depend on the form of principal; cross-account and KMS paths need their own evaluation. A narrow role permission example alone cannot prove there is no other grant.
 
 ## Related links
 

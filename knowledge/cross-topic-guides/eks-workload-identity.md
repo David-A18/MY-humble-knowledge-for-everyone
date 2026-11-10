@@ -17,6 +17,9 @@ sources:
   - id: aws-pod-identity-association
     resource: https://docs.aws.amazon.com/eks/latest/userguide/pod-id-association.html
     title: Assign an IAM role to a Kubernetes service account
+  - id: aws-pod-identity-target
+    resource: https://docs.aws.amazon.com/eks/latest/userguide/pod-id-assign-target-role.html
+    title: Pod Identity target roles and credential caching
 ---
 
 # EKS workload identity
@@ -25,7 +28,7 @@ sources:
 
 Choose IRSA or EKS Pod Identity, then verify the actual AWS credential path.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Choose by integration requirements
 
@@ -43,7 +46,7 @@ For new EKS workloads, evaluate Pod Identity's supported operating model alongsi
 
 Kubernetes RBAC permits Kubernetes API operations. IAM permits AWS operations. Human EKS access is another identity path. Use one workload service account per meaningful permission boundary and verify both role trust and resource permissions.[^aws-irsa]
 
-## Deployment constraints checked on 2026-10-29
+## Deployment constraints checked on 2026-11-10
 
 EKS Pod Identity is documented for Linux EC2 worker nodes. It is not available for Fargate Pods, Windows EC2 Pods, EKS Anywhere, or self-managed Kubernetes on EC2. Standard clusters require the supported Pod Identity Agent; EKS Auto Mode provides the integration without the separate agent-installation step.[^aws-pod-identity]
 
@@ -54,6 +57,10 @@ aws eks list-pod-identity-associations --cluster-name "$CLUSTER" --namespace dem
 ```
 
 What it does: lists the EKS-side associations for the specified workload identity. The operator needs permission to query EKS. This read-only check complements the application's `sts get-caller-identity` result; it does not test resource permissions.
+
+## Pod Identity operations and cross-account targets
+
+Use [Pod Identity operations](../cloud/aws/security/eks-pod-identity-operations.md) for the container-provider/agent path, EKS association inspection and cache behavior. The associated role remains in the cluster account; a configured target role can be in another account, with the required source-role permission and target-role trust. Association changes do not immediately retract cached credentials or establish containment.[^aws-pod-identity-target]
 
 ## IRSA study path
 
@@ -93,3 +100,4 @@ Inventory controller and application SDK support, node types, role trust, accoun
 [^aws-irsa]: [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
 [^aws-pod-identity]: [EKS Pod Identity limits and considerations](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
 [^aws-pod-identity-association]: [Pod Identity association configuration](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-association.html).
+[^aws-pod-identity-target]: [Pod Identity target roles and credential caching](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-assign-target-role.html).

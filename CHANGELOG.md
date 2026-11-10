@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Reviewed AWS security with nine new concepts, stronger IRSA/OIDC guidance, and a ten-test local policy-contract exercise. Added navigation for effective permissions, credentials, Pod Identity target roles/caching, KMS, secrets, audit/detection, and incident recovery; real account acceptance remains open.
+
 - Expanded FinOps and AWS FinOps with eleven source-backed concepts, stronger allocation/tagging guidance, and a tested synthetic calculation lab.
 - Added CI checks for exact cost reconciliation, credits, unit comparisons, and overlapping savings claims, while keeping real billing and workload acceptance explicit.
 

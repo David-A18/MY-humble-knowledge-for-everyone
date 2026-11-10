@@ -170,5 +170,10 @@ Common terms used across the knowledge base.
 | SOPS | Tool for encrypting selected values in supported configuration/document formats. |
 | Watermark | Stream-processing estimate of event-time progress used to decide when a window is complete. |
 | Waypoint | Istio ambient proxy providing supported L7 processing for enrolled traffic. |
+| Explicit deny | An applicable policy denial that overrides permission grants for the request. |
+| Implicit deny | Access is denied because the applicable authorization path lacks the required permission grant. |
+| PassRole | IAM permission to delegate a specified role to an AWS service; distinct from assuming that role directly. |
+| Session policy | Policy restricting permissions for a temporary AWS role session; does not independently grant permissions. |
+| Envelope encryption | Encrypting data with a data key and protecting that data key under another key. |
 
 [Back to root index](../README.md)

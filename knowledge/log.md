@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-11-10
+
+- Expanded AWS security into a learning and operational path with nine new concepts and a local policy-contract lab. Rechecked existing OIDC/IRSA guidance and preserved the EKS comparison/lab routes. Local mutation tests are distinct from AWS policy evaluation and live authorization.
+
 ## 2026-10-29
 
 - **FinOps quality pass**: Added eleven concepts for budget/forecast/anomaly workflows, reporting/unit economics, rightsizing/rate evidence, Kubernetes allocation, four AWS implementation routes, and synthetic calculation practice; expanded existing allocation/tagging guides.
