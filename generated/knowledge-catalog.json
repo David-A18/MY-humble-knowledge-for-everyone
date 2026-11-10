@@ -3270,7 +3270,8 @@
       "source_ids": [
         "helm-chart-tests",
         "chainsaw-project",
-        "kind"
+        "kind",
+        "chainsaw-command"
       ],
       "stale_after": null,
       "status": "draft",

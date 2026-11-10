@@ -20,6 +20,9 @@ sources:
 - id: kind
   resource: https://kind.sigs.k8s.io/
   title: kind
+- id: chainsaw-command
+  resource: https://kyverno.github.io/chainsaw/0.2.15/operations/command/
+  title: Chainsaw 0.2.15 command environment expansion
 ---
 
 # Kubernetes routing regression lab and CI
@@ -74,7 +77,7 @@ The runner prints eight source-tool assertions and thirteen cluster assertions w
 
 The [cluster runner](examples/validate-cluster.py) uses explicit `--kubeconfig`/context for kubectl and a child-process-only `KUBECONFIG` for Chainsaw. Server-side apply and diff share the lab's field manager. It waits for the target-port change to reach EndpointSlices before probing, allows bounded data-plane convergence, and checks backend localhost HTTP independently.[^kind][^chainsaw-project]
 
-The [Chainsaw test](examples/chainsaw-test.yaml) applies the two fixtures, asserts availability and executes a real HTTP request. A temporary copy substitutes only the broken Service for the negative run. No Chainsaw controller or CRD is installed; Chainsaw is the test runner. Helm's `helm.sh/hook: test` Pod/Job mechanism is an alternative for packaged charts; `helm test` succeeds only when its hook workloads succeed. This lab does not install Helm or execute chart hooks.[^helm-chart-tests]
+The [Chainsaw test](examples/chainsaw-test.yaml) applies the two fixtures, asserts availability and executes a real HTTP request. A temporary copy substitutes only the broken Service for the negative run. Command arguments use environment-variable expansion, not resource-expression templating. The fixture binds the test namespace into `KB_TEST_NAMESPACE` and passes `$KB_TEST_NAMESPACE`; writing `($namespace)` directly in `args` sends that literal text to kubectl.[^chainsaw-command] No Chainsaw controller or CRD is installed; Chainsaw is the test runner. Helm's `helm.sh/hook: test` Pod/Job mechanism is an alternative for packaged charts; `helm test` succeeds only when its hook workloads succeed. This lab does not install Helm or execute chart hooks.[^helm-chart-tests]
 
 ## CI and diagnostics
 
@@ -103,3 +106,5 @@ No cloud account, shared cluster, Helm/Helm Diff release or GitOps controller wa
 [^helm-chart-tests]: [Helm chart tests](https://helm.sh/docs/topics/chart_tests/).
 [^chainsaw-project]: [Chainsaw 0.2.15 commands and timeouts](https://kyverno.github.io/chainsaw/0.2.15/reference/commands/chainsaw_test/).
 [^kind]: [kind documentation](https://kind.sigs.k8s.io/).
+
+[^chainsaw-command]: [Chainsaw command arguments, environment expansion and temporary kubeconfig](https://kyverno.github.io/chainsaw/0.2.15/operations/command/).
