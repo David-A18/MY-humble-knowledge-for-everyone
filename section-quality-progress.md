@@ -2,7 +2,30 @@
 
 Review snapshot: 2026-11-10. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: core beginner journey
+## Current batch: AWS governance and human access
+
+Replaced the empty governance outline with ten focused guides and an inventory-reconciliation tutorial. The three indexed governance directories now route account/OU design, Identity Center/SAML/SCIM, permission sets versus IAM account access manager, CLI sessions, organization guardrails, delegated IAM, root/emergency recovery, account vending/retirement, access review/offboarding and diagnosis. Existing IAM/security and EKS comparison URLs remain separate routes. All new concepts are draft/unassigned.
+
+AWS primary sources reviewed on 2026-11-10. Important boundaries include organization versus account Identity Center instances; assignment templates versus existing-role mappings; customer-managed policy dependencies and generated-role ARN churn; inherited SCP versus supported resource-side RCP scope; management-account and service-linked-role exceptions; centralized member-root access; independent outage dependencies; and interactive/application/issued IAM session lifetimes.
+
+Executed the synthetic Python 3.13.17 snapshot report and fourteen regression tests. Four source assignments expand to three unique user/account/set rows while retaining both direct/group paths for one person. Seven expected review findings remain visible. Tests cover duplicates, unknown references, disabled users, provisioning uncertainty, exact expiry/current/future review rules, incomplete/stale/future input, type/time-zone handling, exit codes and unchanged fixture bytes. The report explicitly does not evaluate IAM, other access models, issued sessions or actual cloud collection completeness. The teaching SCP example parses as JSON only.
+
+No AWS CLI version, account API, login, assignment/policy mutation, root session, account creation/closure or revocation was executed. The existing AWS security example workflow now also runs the reconciliation tests/report on Linux; inspect the exact revision's hosted outcome. Real collection/adapters, authorized positive/negative requests, staged guardrail/provisioning changes, recovery and old-session containment remain explicit acceptance follow-ups.
+
+### Governance validation
+
+| Check | Recorded result |
+| --- | --- |
+| Required repository checks | All fifteen validator/test commands pass, including live GitHub label comparison. |
+| Markdown and navigation | 439 files lint cleanly; relative targets, heading fragments, parent indexes and reachability pass. |
+| Catalog and retrieval definitions | 276 concepts; reproducible catalog; 95 retrieval definitions validate. |
+| External URLs | 567 unique linked/source URLs checked: 564 returned HTTP 200 after redirects/rechecks. Three existing GitHub references (OKF specification, configure-aws-credentials, actions/cache) returned HTTP 504 from this host on recheck; no newly added URL failed. Keep CI's hosted external-link outcome separate and do not weaken exclusions. |
+| Main retrieval | All sixteen new governance questions retrieve an expected route in the top five chunks; a fresh absent token returns `NO_EVIDENCE`. This is lexical retrieval evidence, not model-answer quality. |
+| Develop-engine compatibility | Against these content changes, the separate develop engine returns an expected route in the top three for 94/95 cases and top five for 95/95; unanswerable refusals remain 18/20. The existing Terraform-sensitive-values top-three miss remains explicit. These are not scores for the older main engine. |
+| Synthetic execution | Python 3.13.17 report and fourteen tests pass; teaching policy JSON parses. No cloud authorization, collection completeness or session revocation is inferred. |
+| CI change | The existing AWS security example workflow also runs the inventory tests/report on Python 3.13 in Linux. Check the exact revision's hosted result. |
+
+## Previous batch: core beginner journey
 
 Reviewed Start here, the local Kubernetes walkthrough and support files, Kubernetes fundamentals, and the beginner Terraform lifecycle. Added one preflight concept; retained established URLs and kept cross-topic/root review status partial because this is a selected reader journey, not a review of every direct concept. Kubernetes fundamentals and the local support directory are reviewed; broader Kubernetes examples remain pending.
 
@@ -152,7 +175,9 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 | P2 | [FinOps follow-ups](knowledge/finops/index.md) | Validate real notification/billing/workload outcomes and data adapters; preserve synthetic calculations as a separate evidence level. |
 | P2 | [AWS security follow-ups](knowledge/cloud/aws/security/index.md) | Execute the live IAM/identity, data protection, audit/delivery, and session-response acceptance listed in the current review; retain the synthetic contract boundary. |
 | P2 | [Core reader follow-ups](knowledge/start-here.md) | Run independent beginner/platform sessions, preserve the local acceptance gates, and validate one authorized cloud handoff. |
-| P2 | [AWS governance/human access](knowledge/cloud/aws/governance-and-access/index.md) | Build the pending account/human-role, organization guardrail, least-privilege administration and recovery path from primary sources and scoped evidence. |
+| P2 | [AWS governance follow-ups](knowledge/cloud/aws/governance-and-access/index.md) | Validate real human/account collection and authorization, guardrails/provisioning, independent emergency access and session containment; preserve the synthetic-only evidence boundary. |
+| P1 | [Manifest/regression runtime](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | Execute rendering/difference/schema/policy and behavioral regression checks in the proven disposable kind CI environment before broadening other cluster labs. |
+| P1 | [Istio runtime acceptance](knowledge/kubernetes/applications-and-tools/istio/index.md) | Exercise allowed/denied identities, missing/invalid JWTs, and mTLS in a compatible pinned cluster after the manifest lab. |
 | P2 | [New learning series](knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
 
 ## Indexed-section inventory
@@ -185,7 +210,9 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [cloud/aws/databases](knowledge/cloud/aws/databases/index.md) | 3 | Pending |
 | [cloud/aws/finops](knowledge/cloud/aws/finops/index.md) | 5 | Reviewed 2026-10-29; real billing/workload evidence open |
 | [cloud/aws/fundamentals](knowledge/cloud/aws/fundamentals/index.md) | 0 | Pending |
-| [cloud/aws/governance-and-access](knowledge/cloud/aws/governance-and-access/index.md) | 0 | Pending |
+| [cloud/aws/governance-and-access](knowledge/cloud/aws/governance-and-access/index.md) | 10 | Reviewed 2026-11-10; live account evidence open |
+| [cloud/aws/governance-and-access/examples](knowledge/cloud/aws/governance-and-access/examples/index.md) | 0 | Reviewed 2026-11-10; synthetic local evidence |
+| [cloud/aws/governance-and-access/examples/access-review-lab](knowledge/cloud/aws/governance-and-access/examples/access-review-lab/index.md) | 1 | Reviewed 2026-11-10; synthetic local evidence |
 | [cloud/aws](knowledge/cloud/aws/index.md) | 0 | Pending |
 | [cloud/aws/networking](knowledge/cloud/aws/networking/index.md) | 10 | Reviewed 2026-10-29; runtime and advanced procedures open |
 | [cloud/aws/security](knowledge/cloud/aws/security/index.md) | 12 | Reviewed 2026-11-10; live evidence open |

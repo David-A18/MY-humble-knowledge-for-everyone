@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 265,
+  "concept_count": 276,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -725,6 +725,247 @@
         "networking"
       ],
       "title": "AWS storage and network cost investigations",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Reconcile direct and group assignments with current approvals and contain future and already-issued access separately.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/access-review-and-offboarding.md",
+      "source_ids": [
+        "sets",
+        "account-access",
+        "revoke-users",
+        "sessions"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Review human access and complete offboarding",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Choose account boundaries, management responsibilities, and OU guardrails without confusing organizational grouping with permissions.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/account-and-ou-design.md",
+      "source_ids": [
+        "org-practices",
+        "ou-design",
+        "scp"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "AWS account and organizational-unit design",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Choose an account-provisioning owner and verify baseline, identity, audit, cost and retirement outcomes across asynchronous workflows.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/account-vending-and-lifecycle.md",
+      "source_ids": [
+        "org-practices",
+        "factory",
+        "aft"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Govern AWS account vending and retirement",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Configure a refreshable permission-set SSO profile, establish the actual caller, and distinguish local logout from session containment.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/cli-sso-and-role-sessions.md",
+      "source_ids": [
+        "cli-sso",
+        "sessions",
+        "account-access"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Use human AWS CLI sessions safely",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Design who may create, alter, pass and assume roles without allowing self-escalation through the delegation workflow.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/delegated-iam-administration.md",
+      "source_ids": [
+        "boundary",
+        "pass-role",
+        "delegation"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Delegate IAM administration within a reviewed boundary",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Join direct and group permission-set assignments to dated review records while preserving overlapping paths and collection uncertainty.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/examples/access-review-lab/access-review-lab.md",
+      "source_ids": [
+        "sets",
+        "sessions",
+        "account-access"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "access-review",
+        "synthetic-data",
+        "lab"
+      ],
+      "title": "Reconcile a synthetic human-access inventory",
+      "type": "Tutorial"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Locate directory, assignment, provisioning, credential, policy-path or recovery failures before changing grants.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/governance-access-troubleshooting.md",
+      "source_ids": [
+        "instances",
+        "custom-policy",
+        "role-refs",
+        "scp-evaluation",
+        "sessions"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Diagnose AWS human-access and governance failures",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Separate the identity source, directory provisioning, account-access model, roles, and application or workload identity.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/identity-center-and-human-federation.md",
+      "source_ids": [
+        "identity-center",
+        "instances",
+        "external-idp",
+        "account-access"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "IAM Identity Center and human federation",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Distinguish principal and resource guardrails, evaluate inherited SCPs, and plan a bounded rollout and recovery.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/organization-policy-guardrails.md",
+      "source_ids": [
+        "scp",
+        "scp-evaluation",
+        "rcp"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "AWS organization policy guardrails",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Design, provision, verify, change and retire human account assignments without confusing templates with effective access.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/permission-sets-and-assignments.md",
+      "source_ids": [
+        "sets",
+        "custom-policy",
+        "role-refs",
+        "delegation",
+        "assignments-cli",
+        "provisioned-cli"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Operate permission sets and account assignments",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Cloud administrators and platform engineers",
+      "description": "Prepare a tested recovery path that distinguishes management-root credentials, centralized member-root tasks, and federation outages.",
+      "maintainer": "unassigned",
+      "maturity": "draft",
+      "path": "knowledge/cloud/aws/governance-and-access/root-and-emergency-access.md",
+      "source_ids": [
+        "root-practices",
+        "root-central",
+        "assume-root",
+        "emergency"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "governance",
+        "human-access"
+      ],
+      "title": "Plan root and emergency access recovery",
       "type": "How-to Guide"
     },
     {

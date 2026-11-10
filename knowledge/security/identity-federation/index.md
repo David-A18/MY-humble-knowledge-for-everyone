@@ -2,6 +2,10 @@
 
 Identity federation knowledge for OIDC, token trust, external identity providers, and cloud access.
 
+## AWS human account access
+
+Use [Identity Center and human federation](../../cloud/aws/governance-and-access/identity-center-and-human-federation.md), [CLI sessions](../../cloud/aws/governance-and-access/cli-sso-and-role-sessions.md), and [access reviews/offboarding](../../cloud/aws/governance-and-access/access-review-and-offboarding.md). These account/role paths are separate from EKS cluster authorization and workload AWS credentials.
+
 ## AWS workload implementation
 
 Continue with [IRSA trust](../../cloud/aws/security/irsa-trust-and-permissions.md) and the [EKS S3 lab](../../cross-topic-guides/irsa-s3-access-on-eks.md).

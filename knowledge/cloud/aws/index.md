@@ -2,6 +2,10 @@
 
 Practical AWS knowledge for cloud architecture, networking, compute, storage, security, governance, FinOps, troubleshooting, and certification study.
 
+## Account governance and human access
+
+Use [governance and access](governance-and-access/index.md) for account/OU design, Identity Center access models, permission sets, guardrails, delegated IAM, root/emergency recovery and offboarding. Practice with the [synthetic access-review lab](governance-and-access/examples/access-review-lab/index.md) before adapting a real collection/review process.
+
 ## Workload identity learning path
 
 Start with [IRSA fundamentals](security/irsa-fundamentals.md), [trust and permissions](security/irsa-trust-and-permissions.md), and [troubleshooting](security/irsa-troubleshooting.md); apply them in the [EKS S3 lab](../../cross-topic-guides/irsa-s3-access-on-eks.md).
