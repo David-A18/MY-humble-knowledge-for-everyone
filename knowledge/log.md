@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-11-16
+
+- Added a pinned, disposable Istio sidecar lab that stages peer authentication, JWT validation and authorization, with request and cleanup assertions.
+
 ## 2026-11-10
 
 - Reviewed all five manifest-validation concepts and supporting indexes. Added real source-tool and private-cluster runners, immutable schema/tool inputs, explicit diff error handling, Service regression/recovery and Chainsaw negative coverage; keep hosted execution evidence distinct from local checks.

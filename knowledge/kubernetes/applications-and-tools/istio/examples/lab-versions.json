@@ -1,0 +1,28 @@
+{
+  "platform": "linux-amd64",
+  "tools": [
+    {
+      "name": "kind",
+      "version": "v0.30.0",
+      "url": "https://github.com/kubernetes-sigs/kind/releases/download/v0.30.0/kind-linux-amd64",
+      "sha256": "517ab7fc89ddeed5fa65abf71530d90648d9638ef0c4cde22c2c11f8097b8889",
+      "archive": false
+    },
+    {
+      "name": "kubectl",
+      "version": "v1.34.1",
+      "url": "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl",
+      "sha256": "7721f265e18709862655affba5343e85e1980639395d5754473dafaadcaa69e3",
+      "archive": false
+    },
+    {
+      "name": "istioctl",
+      "version": "1.32.0",
+      "url": "https://github.com/istio/istio/releases/download/1.32.0/istioctl-1.32.0-linux-amd64.tar.gz",
+      "sha256": "4771175dec92527cd90ddc7edb3b3abcb32ca2f3bc32b31aa31e0b12ad36f897",
+      "archive": true
+    }
+  ],
+  "kubernetes": "v1.34.0",
+  "node_image": "kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a"
+}

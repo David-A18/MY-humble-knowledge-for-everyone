@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: nginx:1.28.0-alpine
+          image: nginx:1.30.6-alpine@sha256:583b7f2fce1cdb8da5ad5c39ebd3c33b98b87d493190e548bdee1fa8c619c311
           ports:
             - containerPort: 80
 ---
@@ -48,7 +48,7 @@ spec:
   serviceAccountName: allowed
   containers:
     - name: client
-      image: curlimages/curl:8.12.1
+      image: curlimages/curl:8.12.1@sha256:94e9e444bcba979c2ea12e27ae39bee4cd10bc7041a472c4727a558e213744e6
       command: [sh, -c, "sleep 3600"]
 ---
 apiVersion: v1
@@ -59,5 +59,5 @@ spec:
   serviceAccountName: denied
   containers:
     - name: client
-      image: curlimages/curl:8.12.1
+      image: curlimages/curl:8.12.1@sha256:94e9e444bcba979c2ea12e27ae39bee4cd10bc7041a472c4727a558e213744e6
       command: [sh, -c, "sleep 3600"]
