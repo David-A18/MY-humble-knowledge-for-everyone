@@ -77,8 +77,9 @@ def main():
             require(tools["kind"] in run("kind", "version").stdout, "Unexpected kind version")
             client = json.loads(run("kubectl", "version", "--client", "-o", "json").stdout)
             require(client["clientVersion"]["gitVersion"] == tools["kubectl"], "Unexpected kubectl version")
-            require(run("istioctl", "version", "--remote=false", "--short").stdout.strip() == tools["istioctl"],
-                    "Unexpected istioctl version")
+            istioctl = json.loads(run("istioctl", "version", "--remote=false", "-o", "json").stdout)
+            actual_istio = istioctl["clientVersion"]["version"]
+            require(actual_istio == tools["istioctl"], f"Unexpected istioctl version: {actual_istio}")
             created = True
             run("kind", "create", "cluster", "--name", cluster, "--kubeconfig", kubeconfig,
                 "--image", versions["node_image"], "--wait", "120s", timeout=360)
