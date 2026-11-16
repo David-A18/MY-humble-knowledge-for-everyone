@@ -1,0 +1,33 @@
+name: Istio security lab
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  sidecar-security:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v6.0.0
+        with:
+          python-version: "3.13"
+      - name: Install the pinned lab tools
+        shell: bash
+        run: |
+          tools_dir=$(mktemp -d)
+          python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py \
+            --directory "$tools_dir" \
+            --versions knowledge/kubernetes/applications-and-tools/istio/examples/lab-versions.json
+          echo "$tools_dir" >> "$GITHUB_PATH"
+          python -m pip install cryptography==46.0.3
+      - name: Test sidecar identity JWT policy and mTLS
+        run: python knowledge/kubernetes/applications-and-tools/istio/examples/validate-mesh.py --report istio-mesh-report.json

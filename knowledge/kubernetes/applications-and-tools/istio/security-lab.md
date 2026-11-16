@@ -20,85 +20,74 @@ sources:
 - id: jwt-authentication-task
   resource: https://istio.io/latest/docs/tasks/security/authentication/authn-policy/
   title: JWT authentication task
+- id: peer-authentication
+  resource: https://istio.io/latest/docs/reference/config/security/peer_authentication/
+  title: Istio PeerAuthentication
+- id: authorization-policy
+  resource: https://istio.io/latest/docs/reference/config/security/authorization-policy/
+  title: Istio AuthorizationPolicy
 ---
 
 # Istio mTLS and JWT security lab
 
-## Purpose
-
-Reproduce workload authorization, mandatory JWTs, and plaintext rejection on a disposable cluster.
-
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Use a disposable sidecar mesh to see which layer rejects a request. The lab keeps the web server and URL constant while changing the client service account, the HTTP credential and the transport policy.
 
 ## Prerequisites
 
-Use Bash, a disposable kind cluster, and `istioctl` **1.31.0** with its matching control plane. Confirm the release's Kubernetes support matrix before choosing your kind node image. Python **3.13** plus `cryptography==46.0.3` generates a disposable signing key in memory. No private key is written or committed. This is a sidecar lab, not an ambient installation.[^istio-install][^supported-releases][^jwt-authentication-task]
+Use Linux amd64 with Docker, Python 3.13 and Bash. The version file pins Istio 1.32.0, kind 0.30.0, kubectl 1.34.1 and a Kubernetes 1.34.0 node image by digest. Istio's support matrix lists Kubernetes 1.34 for Istio 1.32. Check compatibility before substituting versions. [^supported-releases]
 
-Run from this series directory. Download and verify tools using their official release instructions rather than piping unreviewed installer scripts into a shell.
+The runner installs the minimal sidecar control plane into a new cluster. It uses a separate kubeconfig and verifies enrollment of both mesh clients and the server. A third client runs in a namespace with injection disabled. [^istio-install]
 
-> [!WARNING]
-> Installation modifies cluster-wide components and APIs. Confirm the current context is the disposable lab cluster before proceeding.
+## Run the lab
 
-## Install and enroll
-
-```bash
-istioctl install --set profile=demo -y
-kubectl create namespace istio-lab
-kubectl label namespace istio-lab istio-injection=enabled
-kubectl apply -n istio-lab -f examples/workloads.yaml
-kubectl wait pod -n istio-lab --all --for=condition=Ready --timeout=180s
-python -m venv /tmp/istio-jwt-env
-/tmp/istio-jwt-env/bin/python -m pip install cryptography==46.0.3
-/tmp/istio-jwt-env/bin/python examples/jwt-lab.py /tmp/istio-jwt-lab
-kubectl apply -f /tmp/istio-jwt-lab/policies.json
-```
-
-What it does: installs a disposable mesh, injects proxies, generates a one-hour synthetic JWT/public JWKS, and applies STRICT mTLS plus combined workload/JWT authorization. Generated output is outside Git. On Windows use the virtual environment's `Scripts/python.exe` and a local temporary directory.
-
-## Verify the access matrix
+From the repository root, use an isolated Python environment and run the following in Bash.
 
 ```bash
-TOKEN=$(cat /tmp/istio-jwt-lab/token.txt)
-kubectl exec -n istio-lab allowed -c client -- curl -sS -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" http://web
-kubectl exec -n istio-lab denied -c client -- curl -sS -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" http://web
-kubectl exec -n istio-lab allowed -c client -- curl -sS -o /dev/null -w '%{http_code}\n' http://web
-kubectl exec -n istio-lab allowed -c client -- curl -sS -o /dev/null -w '%{http_code}\n' -H 'Authorization: Bearer invalid' http://web
+python -m pip install cryptography==46.0.3
+tools_dir=$(mktemp -d)
+python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py \
+  --directory "$tools_dir" \
+  --versions knowledge/kubernetes/applications-and-tools/istio/examples/lab-versions.json
+export PATH="$tools_dir:$PATH"
+python knowledge/kubernetes/applications-and-tools/istio/examples/validate-mesh.py
 ```
 
-What it does: sends identical requests with distinct identities or credentials. Expect respectively **200, 403, 403, 401** once proxy configuration has converged. Valid JWT alone does not authorize the `denied` service account. Do not enable shell tracing or print bearer tokens.
+What it does: installs the checksum-pinned executables, creates a uniquely named cluster and runs the staged request checks. The two fixture images use digests. The JWT generator uses a fresh RSA key in memory and embeds its public JWKS in the policies. The runner passes the synthetic bearer token through stdin and retains only outcomes and version data in its report. The temporary directory holds the private kubeconfig, generated policies and short-lived token for the duration of the run.
 
-## Test non-mesh plaintext
+## Read the access matrix
 
-```bash
-kubectl create namespace plaintext-lab
-kubectl run plain -n plaintext-lab --image=curlimages/curl:8.12.1 --restart=Never --command -- curl --fail --connect-timeout 5 --max-time 10 http://web.istio-lab.svc.cluster.local
-kubectl logs -n plaintext-lab plain --pod-running-timeout=60s
-```
+| Phase | Client and credential | Expected observation |
+| --- | --- | --- |
+| Baseline | Allowed, denied and plaintext clients with no JWT | Each returns HTTP 200 before the policies apply. |
+| STRICT peer authentication | Allowed mesh client with no JWT | HTTP 200 over mesh mTLS. |
+| STRICT peer authentication | Uninjected client against the same Service | Connection rejected before an HTTP response. |
+| Add request authentication | Allowed client with valid JWT, missing JWT, then malformed JWT | HTTP 200, 200, then 401. |
+| Add authorization | Allowed client with a valid JWT | HTTP 200. |
+| Add authorization | Denied client with the same valid JWT | HTTP 403. |
+| Add authorization | Allowed client without a JWT | HTTP 403. |
+| Add authorization | Allowed client with a malformed JWT | HTTP 401. |
 
-What it does: attempts a connection without a mesh proxy. Expect a transport failure/nonzero termination rather than application HTTP 200 under STRICT policy. Wait for Pod termination and inspect its exit code before recording the result.
+PeerAuthentication STRICT requires a mesh peer on the tested inbound path. Keep a working mesh request in this phase so an outage cannot satisfy the negative case. The same plaintext client first reaches the Service and then receives a transport failure with HTTP code 000. A generic timeout or an API error fails the transport assertion. [^peer-authentication]
 
-## Debug and clean up
+RequestAuthentication validates a presented token and permits a request without one to continue to authorization. The ALLOW rule selects the server and requires both the mTLS principal of the allowed service account and a verified request principal. The same token sent by the other service account therefore receives 403. [^jwt-authentication-task][^authorization-policy]
 
-Use `istioctl analyze`, inspect server proxy logs and synchronized policy, and confirm every injected Pod has the proxy container. A stale token can cause 401; regenerate the lab output and reapply its matching public key.
+## Diagnose and clean up
 
-> [!WARNING]
-> These commands delete lab workloads. Verify context first. Delete only `istio-lab` and `plaintext-lab`; uninstall Istio or delete the kind cluster only if you created that entire installation for this lab.
+Start with the phase that failed. If the baseline fails, inspect readiness, sidecar injection and Service DNS. If a result changes after a policy is applied, inspect the destination proxy's configuration sync, the policy selector and the target namespace. For a JWT 401, check the issuer, audience, expiration and JWKS. For a 403 with a valid token, compare the peer and request principals with the same authorization rule. Keep bearer tokens out of shell traces, proxy diagnostics and retained reports.
 
-```bash
-kubectl delete namespace istio-lab plaintext-lab
-```
+The runner deletes both lab namespaces and verifies their absence. It attempts cluster deletion in its cleanup block and checks the kind inventory and Docker containers for the task cluster. If the process is terminated before cleanup runs, verify the printed cluster name and remove only that cluster.
 
-What it does: removes the lab's namespaced policies and workloads. Delete generated token files from the temporary directory when finished.
+## Validation
 
-## Related links
+Reviewed the install, release-support and policy references on 2026-11-16. The GitHub Actions workflow runs the same request checks with pinned tools on Ubuntu 24.04. The access matrix above lists expected results until a successful run is recorded. Ambient policy placement and production rollout are covered separately.
 
-- [Istio install](https://istio.io/latest/docs/setup/install/istioctl/)
-- [Supported releases](https://istio.io/latest/docs/releases/supported-releases/)
-- [JWT authentication task](https://istio.io/latest/docs/tasks/security/authentication/authn-policy/)
-- [Back to parent index](index.md)
-- [Back to major area](../../index.md)
-- [Back to root index](../../../../README.md)
+- [Examples and version pins](examples/index.md)
+- [Istio security lab workflow](../../../../.github/workflows/istio-security-lab.yml)
+- [Troubleshooting and rollout](troubleshooting-and-rollout.md)
+- [Back to Istio](index.md) | [Back to Kubernetes](../../index.md)
 
-[^istio-install]: [Istio install](https://istio.io/latest/docs/setup/install/istioctl/).
-[^supported-releases]: [Supported releases](https://istio.io/latest/docs/releases/supported-releases/).
-[^jwt-authentication-task]: [JWT authentication task](https://istio.io/latest/docs/tasks/security/authentication/authn-policy/).
+[^istio-install]: [Istio install with istioctl](https://istio.io/latest/docs/setup/install/istioctl/).
+[^supported-releases]: [Istio supported releases](https://istio.io/latest/docs/releases/supported-releases/).
+[^jwt-authentication-task]: [Istio authentication policy examples](https://istio.io/latest/docs/tasks/security/authentication/authn-policy/).
+[^peer-authentication]: [Istio PeerAuthentication](https://istio.io/latest/docs/reference/config/security/peer_authentication/).
+[^authorization-policy]: [Istio AuthorizationPolicy](https://istio.io/latest/docs/reference/config/security/authorization-policy/).

@@ -1,6 +1,8 @@
 # Istio security fixtures
 
-- `workloads.yaml`: server plus two client service-account identities.
-- `jwt-lab.py`: creates a short-lived synthetic JWT and matching public-key policies outside Git. Requires cryptography 46.0.3.
+- [Version pins](lab-versions.json) fix the Linux tool releases, checksums and kind node image.
+- [Workloads](workloads.yaml) define the server and two client service accounts.
+- [JWT fixture generator](jwt-lab.py) creates a synthetic token and matching policies for the disposable mesh.
+- [Mesh runner](validate-mesh.py) performs baseline, STRICT mTLS, JWT and authorization checks in sequence and verifies cleanup.
 
-[Back to lab](../security-lab.md) | [Back to series](../index.md) | [Back to root](../../../../../README.md)
+[Back to the lab](../security-lab.md) | [Back to Istio](../index.md)

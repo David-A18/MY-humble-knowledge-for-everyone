@@ -12,7 +12,7 @@ Read in order, or choose a task from the table.
 | [Workload identity and mTLS](workload-identity-and-mtls.md) | Follow certificate issuance and peer authentication. |
 | [JWT authentication and authorization](jwt-and-authorization.md) | Require verified tokens and authorize workloads. |
 | [Sidecar and ambient enforcement](sidecar-and-ambient.md) | Place L4 and L7 policy at the correct proxy. |
-| [Security lab](security-lab.md) | Test allowed, denied, missing-token, and plaintext requests. |
+| [Security lab](security-lab.md) | Compare live HTTP and transport outcomes before and after each policy in a disposable sidecar mesh. |
 | [Troubleshooting and rollout](troubleshooting-and-rollout.md) | Diagnose failures and introduce policy safely. |
 
 ## Related links

@@ -1,4 +1,4 @@
-"""Install the lab's checksum-pinned Linux amd64 tools into an empty directory."""
+"""Install checksum-pinned Linux amd64 lab tools into an empty directory."""
 
 from pathlib import Path
 import argparse
@@ -14,6 +14,7 @@ import urllib.request
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", type=Path, required=True)
+    parser.add_argument("--versions", type=Path, default=Path(__file__).with_name("lab-versions.json"))
     args = parser.parse_args()
     if platform.system() != "Linux" or platform.machine() not in ("x86_64", "amd64"):
         raise SystemExit("This installer supports Linux amd64 only; use the documented manual versions elsewhere")
@@ -21,7 +22,7 @@ def main():
     target.mkdir(parents=True, exist_ok=True)
     if any(target.iterdir()):
         raise SystemExit("Refusing to overwrite a nonempty tools directory")
-    versions = json.loads(Path(__file__).with_name("lab-versions.json").read_text(encoding="utf-8"))
+    versions = json.loads(args.versions.read_text(encoding="utf-8"))
     for tool in versions["tools"]:
         for attempt in range(3):
             try:
