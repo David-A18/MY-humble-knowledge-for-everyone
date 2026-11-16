@@ -79,7 +79,7 @@ The runner deletes both lab namespaces and verifies their absence. It attempts c
 
 ## Validation
 
-Reviewed the install, release-support and policy references on 2026-11-16. The GitHub Actions workflow runs the same request checks with pinned tools on Ubuntu 24.04. The access matrix above lists expected results until a successful run is recorded. Ambient policy placement and production rollout are covered separately.
+Reviewed the install, release-support and policy references on 2026-11-16. The GitHub Actions workflow runs the same request checks with pinned tools on Ubuntu 24.04. The [recorded develop run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/43842768767) passed every row on 2026-11-16. It confirmed the expected sidecar enrollment, the four request phases and the namespace, cluster and node-container cleanup checks. The [JSON report](examples/runtime-evidence.json) records the revision, outcomes and observed versions. The run used Docker 28.0.4 and Python 3.13.18. Ambient policy placement and production rollout are covered separately.
 
 - [Examples and version pins](examples/index.md)
 - [Istio security lab workflow](../../../../.github/workflows/istio-security-lab.yml)

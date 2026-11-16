@@ -1,0 +1,42 @@
+{
+  "revision": "cea53cb6e69304d720a7410258a6378acd46f5e3",
+  "branch": "develop",
+  "url": "https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/43842768767",
+  "report": {
+    "cluster": "kb-istio-994d005a62",
+    "node_image": "kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a",
+    "checks": {
+      "expected_sidecar_enrollment": true,
+      "baseline": [
+        "200",
+        "200",
+        "200"
+      ],
+      "strict_mtls": [
+        "200",
+        "transport-rejected"
+      ],
+      "request_authentication": [
+        "200",
+        "200",
+        "401"
+      ],
+      "combined_authorization": [
+        "200",
+        "403",
+        "403",
+        "401"
+      ],
+      "namespaces_deleted": true,
+      "cluster_and_nodes_deleted": true
+    },
+    "versions": {
+      "kind": "v0.30.0",
+      "kubectl": "v1.34.1",
+      "istioctl": "1.32.0",
+      "kubernetes": "v1.34.0",
+      "python": "3.13.18",
+      "docker": "28.0.4"
+    }
+  }
+}

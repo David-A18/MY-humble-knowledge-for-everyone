@@ -14,6 +14,10 @@ Start at [Start here](knowledge/start-here.md) and [local preflight](knowledge/c
 
 Use [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) to separate text/semantic differences, versioned schema and Rego coverage, prospective API comparison and actual Service behavior. Its private-cluster runner uses synthetic fixtures and explicit contexts; hosted results are revision-specific. Helm/Helm Diff and GitOps selection guidance is not evidence that those integrations ran.
 
+## Istio policy routing
+
+The [Istio lab](knowledge/kubernetes/applications-and-tools/istio/security-lab.md) runs one sidecar request path through baseline connectivity, STRICT peer authentication, JWT validation and combined authorization. Use its recorded result for that pinned setup and the ambient guide for waypoint policy placement.
+
 ## AWS identity routing
 
 Use [governance and human access](knowledge/cloud/aws/governance-and-access/index.md) for organization/account ownership, workforce federation, guardrails and offboarding. Use [AWS security](knowledge/cloud/aws/security/index.md) for request evaluation, credential behavior, workload identity and data/security operations. The access-review lab is a synthetic inventory join, never an IAM evaluator or session-containment attestation.
