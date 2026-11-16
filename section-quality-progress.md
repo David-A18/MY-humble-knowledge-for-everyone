@@ -1,8 +1,16 @@
 # Section quality progress
 
-Review snapshot: 2026-11-10. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
+Review snapshot: 2026-11-16. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: manifest validation and regression
+## Current batch: Istio sidecar security lab
+
+Reviewed the lab and its runnable fixtures on 2026-11-16 and kept the existing concept URL. The [Istio sidecar lab](knowledge/kubernetes/applications-and-tools/istio/security-lab.md) now runs in a private kind cluster with checksum-pinned tools and workload image digests. Source review covered installation, release compatibility, PeerAuthentication, RequestAuthentication and AuthorizationPolicy. The local fixture check verified the synthetic JWT signature and matching JWKS with cryptography 46.0.3.
+
+The [develop run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/43842768767) passed on Istio 1.32.0, Kubernetes 1.34.0, kind 0.30.0, kubectl 1.34.1, Docker 28.0.4 and Python 3.13.18. It verified enrollment, baseline connectivity for all three clients, plaintext rejection under STRICT, JWT-only acceptance of missing credentials, malformed-token HTTP 401 and the combined policy's HTTP 200/403/403/401 matrix. Both namespaces, the cluster and its node containers were removed. The first run found a CLI version-output parsing error before cluster creation. The runner now checks the structured version field.
+
+All ten hosted workflows passed for the linked develop revision. The other Istio chapters remain in the section review queue. Ambient waypoint behavior, certificate rotation and production rollout still need runtime evidence. The next disposable lab target is kro composition and lifecycle.
+
+## Previous batch: manifest validation and regression
 
 Reviewed all five direct concepts and all three section indexes. The route now explains source/render/live/behavior boundaries, tool-specific exit statuses, immutable schema coverage, field ownership, secret-bearing output and cleanup. Existing URLs are preserved and no draft was promoted. The catalog remains 276 concepts; no new knowledge directories were needed.
 
@@ -273,8 +281,8 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [git/troubleshooting](knowledge/git/troubleshooting/index.md) | 1 | Pending |
 | [knowledge bundle](knowledge/index.md) | 2 | Pending |
 | [kubernetes/applications-and-tools](knowledge/kubernetes/applications-and-tools/index.md) | 15 | Pending |
-| [kubernetes/applications-and-tools/istio/examples](knowledge/kubernetes/applications-and-tools/istio/examples/index.md) | 0 | Pending |
-| [kubernetes/applications-and-tools/istio](knowledge/kubernetes/applications-and-tools/istio/index.md) | 6 | Pending |
+| [kubernetes/applications-and-tools/istio/examples](knowledge/kubernetes/applications-and-tools/istio/examples/index.md) | 0 | Reviewed 2026-11-16 with hosted sidecar results |
+| [kubernetes/applications-and-tools/istio](knowledge/kubernetes/applications-and-tools/istio/index.md) | 6 | Partial review 2026-11-16. Lab executed. Other chapters pending. |
 | [kubernetes/applications-and-tools/kro/examples](knowledge/kubernetes/applications-and-tools/kro/examples/index.md) | 0 | Pending |
 | [kubernetes/applications-and-tools/kro](knowledge/kubernetes/applications-and-tools/kro/index.md) | 5 | Pending |
 | [kubernetes/applications-and-tools/manifest-validation/examples](knowledge/kubernetes/applications-and-tools/manifest-validation/examples/index.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |

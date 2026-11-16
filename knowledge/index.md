@@ -12,7 +12,7 @@ concepts, procedures, references, and learning paths.
 
 | Learning path | Outcome |
 | --- | --- |
-| [Istio authentication and authorization](kubernetes/applications-and-tools/istio/index.md) | Workload identities, mTLS, JWTs, sidecar/ambient policy, and access tests. |
+| [Istio authentication and authorization](kubernetes/applications-and-tools/istio/index.md) | Workload identities, mTLS, JWTs, sidecar and ambient policy, and a recorded sidecar access test. |
 | [Kubernetes platform tooling](kubernetes/applications-and-tools/platform-tooling/index.md) | Secrets, certificates, storage, DNS, policy, scaling, and tool selection. |
 | [Manifest validation and regressions](kubernetes/applications-and-tools/manifest-validation/index.md) | Semantic YAML differences, live drift, schema/policy coverage and a disposable routing regression lab. |
 | [IRSA](cloud/aws/security/irsa-fundamentals.md) | EKS credential flow, IAM trust, least privilege, and S3 access tests. |

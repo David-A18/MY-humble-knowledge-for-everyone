@@ -9,7 +9,7 @@ The [new learning paths](knowledge/index.md#expanded-learning-paths) now documen
 | Follow-up | Completion evidence |
 | --- | --- |
 | Review draft concepts and assign ownership | A real maintainer, official sources, review scope, and a justified freshness deadline; keep drafts visible until then. |
-| Istio/IRSA/kro/manifest labs | Disposable-environment runs recording actual versions, positive/negative behavior, and cleanup. |
+| Istio, IRSA, kro and manifest labs | [Istio sidecar](knowledge/kubernetes/applications-and-tools/istio/security-lab.md#validation) and [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md#validation-boundary) have recorded runs. Next evidence includes authorized IRSA and disposable kro runs, plus Istio ambient and rollout cases. |
 | Collector/Pixie/Kafka deployment labs | Delivery/capture, outage/recovery, and persistent-state results on supported infrastructure. |
 | RAG answer quality | A selected model digest, grounded/cited answers, paraphrases, conflicts, and insufficient-evidence results. |
 | Dev Container/Ona runtime | Container startup/rebuild and, where access exists, hosted workflow evidence. |
