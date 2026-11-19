@@ -28,15 +28,17 @@ structure and checks they define.
 - [x] Tested the pipeline: the repository gate passed on a pull request, and a simulated malicious pull request was caught by the policy checker and the trusted scan.
 - [ ] Maintainer: apply the repository settings in the [content policy checklist](governance/content-policy.md#maintainer-settings-checklist): branch protection, required checks, secret scanning, and labels.
 
-### Phase 3: Content quality — first pass done
+### Phase 3: Content quality — done; ongoing upkeep
 
 - [x] Plain-language style rules added to the [authoring instructions](instructions.md#write-for-everyone).
 - [x] Split the six pages over 2,900 words by reader task (Git and eksctl command catalogs, the GitHub Actions catalog, the Velero runbooks, and two Crossplane pages). The glossary stays one lookup page.
-- [ ] Review the ten remaining pages between 2,000 and 2,600 words and split those that serve more than one reader task.
+- [x] Reviewed the remaining long pages: split the Velero integrations, K9s, and Crossplane component-model pages. The rest (about 2,000 to 2,350 words) each serve one reader task.
 - [x] Rewrote the openings of [Start here](knowledge/start-here.md) and the Kubernetes and Terraform fundamentals in plain language, with a first example.
-- [ ] Continue the plain-language openings section by section, starting with the Git, AWS, and FinOps entry pages.
+- [x] Added plain openings and "new here?" starting points to the Git, AWS, and FinOps entry pages.
+- [x] Replaced nine empty sections: new starter pages for Git practices and tricks, AWS fundamentals, storage, and troubleshooting; Kubernetes practices and tricks moved from indexes into pages; AWS solutions-architect and Azure placeholders removed.
+- [ ] Ongoing: apply the plain-language rules whenever a page is edited.
 - [x] Expanded the four outline pages in [cross-topic guides](knowledge/cross-topic-guides/index.md) into complete guides.
-- [ ] Review each section for relevance and duplication, using the [section quality ledger](governance/section-quality-progress.md).
+- [ ] Ongoing: review each section for relevance and duplication, using the [section quality ledger](governance/section-quality-progress.md).
 
 ### Phase 4: News — first edition published
 
@@ -58,7 +60,7 @@ The knowledge base has no deployed website yet. The specification is ready in th
 
 ### Planned topics
 
-Agent workflows and evaluation, machine-learning fundamentals, and MLOps return
+Agent workflows and evaluation, machine-learning fundamentals, MLOps, and Azure return
 as sections when each has at least one complete, sourced concept. Until then,
 the [AI section](knowledge/ai/index.md) and [LLM section](knowledge/llm/index.md)
 cover current material.

@@ -244,10 +244,8 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [cloud/aws/security](../knowledge/cloud/aws/security/index.md) | 12 | Reviewed 2026-11-10; live evidence open |
 | [cloud/aws/security/examples](../examples/cloud/aws/security/README.md) | 0 | Reviewed 2026-11-10; live evidence open |
 | [cloud/aws/security/examples/policy-contract-lab](../examples/cloud/aws/security/policy-contract-lab/README.md) | 1 | Reviewed 2026-11-10; live evidence open |
-| [cloud/aws/solutions-architect](../knowledge/cloud/aws/solutions-architect/index.md) | 0 | Pending |
 | [cloud/aws/storage](../knowledge/cloud/aws/storage/index.md) | 0 | Pending |
 | [cloud/aws/troubleshooting](../knowledge/cloud/aws/troubleshooting/index.md) | 0 | Pending |
-| [cloud/azure](../knowledge/cloud/azure/index.md) | 0 | Pending |
 | [cloud/edge](../knowledge/cloud/edge/index.md) | 4 | Pending |
 | [cloud/gcloud](../knowledge/cloud/gcloud/index.md) | 1 | Pending |
 | [cloud](../knowledge/cloud/index.md) | 0 | Pending |

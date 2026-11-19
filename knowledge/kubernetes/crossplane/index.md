@@ -152,6 +152,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
 | [Design and troubleshoot XRDs and Compositions](xrd-composition-design-and-troubleshooting.md) | Choose direct resources or platform APIs, handle claims, and fix broken XRD, Composition, and XR links. |
 | [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
+| [Packages and provider runtime](packages-and-provider-runtime.md) | How providers, functions, and configurations install as packages, and how provider pods run and authenticate. |
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
@@ -174,6 +175,7 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 - [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
 - [Design and troubleshoot XRDs and Compositions](xrd-composition-design-and-troubleshooting.md)
 - [Component model](component-model.md)
+- [Packages and provider runtime](packages-and-provider-runtime.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)

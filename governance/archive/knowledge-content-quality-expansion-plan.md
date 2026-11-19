@@ -219,13 +219,13 @@ For every checked section, confirm all of the following:
       routing, connectivity, DNS, and security boundaries.
     - [x] [AWS security](../../knowledge/cloud/aws/security/index.md) — threat model,
       identity, data protection, and incident-response links.
-    - [ ] [AWS solutions architect](../../knowledge/cloud/aws/solutions-architect/index.md)
+    - [ ] AWS solutions architect (`knowledge/cloud/aws/solutions-architect/index.md`, removed on 2026-11-19)
       — design criteria, trade-offs, and review examples.
     - [ ] [AWS storage](../../knowledge/cloud/aws/storage/index.md) — storage choice,
       durability, lifecycle, recovery, and cost implications.
     - [ ] [AWS troubleshooting](../../knowledge/cloud/aws/troubleshooting/index.md)
       — symptom-led diagnostics, safe checks, and recovery paths.
-  - [ ] [Azure](../../knowledge/cloud/azure/index.md) — scope, authoritative sources,
+  - [ ] Azure (`knowledge/cloud/azure/index.md`, removed on 2026-11-19) — scope, authoritative sources,
     first useful learning routes, and maintenance capacity.
   - [ ] [Edge and CDN](../../knowledge/cloud/edge/index.md) — caching model, routing,
     invalidation, observability, and provider-specific limits.

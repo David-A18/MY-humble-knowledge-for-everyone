@@ -1,6 +1,12 @@
 # AWS
 
-Practical AWS knowledge for cloud architecture, networking, compute, storage, security, governance, FinOps, troubleshooting, and certification study.
+Amazon Web Services (AWS) rents servers, storage, databases, and many other
+building blocks that you create through an API and pay for as you use them.
+These guides cover how to design, secure, operate, and pay for systems on AWS.
+
+**New here?** Read [AWS fundamentals](fundamentals/aws-fundamentals.md) first,
+set up [budgets and cost alerts](finops/index.md) before you build, and keep
+[troubleshooting first checks](troubleshooting/first-checks.md) at hand.
 
 ## Account governance and human access
 
@@ -40,7 +46,6 @@ Use [AWS FinOps](finops/index.md) for tag activation, budgets/anomalies, Cost Ex
 | [FinOps](finops/index.md) | Cost visibility, tagging, budgets, and optimization. |
 | [Architecture](architecture/index.md) | Reference architectures, trade-offs, reliability, and design reviews. |
 | [Troubleshooting](troubleshooting/index.md) | Cloud diagnostic procedures and incident notes. |
-| [Solutions architect](solutions-architect/index.md) | Study notes and architecture review topics. |
 
 ## Official documentation
 

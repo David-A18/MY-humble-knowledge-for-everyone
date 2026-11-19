@@ -1,13 +1,7 @@
 # AWS fundamentals
 
-Core AWS concepts and operating models.
+The core AWS ideas to understand before building anything.
 
-## Expected content
-
-- Regions and Availability Zones.
-- Account structure.
-- Shared responsibility model.
-- Service quotas.
-- Resilience terminology.
+- [AWS fundamentals](aws-fundamentals.md) - Regions and Availability Zones, accounts, the shared responsibility model, and quotas.
 
 [Back to AWS index](../index.md) | [Back to root index](../../../../README.md)

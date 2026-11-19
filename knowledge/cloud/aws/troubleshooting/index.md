@@ -1,24 +1,8 @@
 # AWS troubleshooting
 
-Diagnostic runbooks for AWS service and architecture issues.
+Diagnostic starting points for AWS service and architecture problems.
 
-## Expected content
-
-- EC2 connectivity failures.
-- Load balancer health check failures.
-- IAM access denied errors.
-- VPC routing problems.
-- Unexpected cost spikes.
-
-## Available focused route
-
-- [AWS network connectivity](../networking/network-connectivity-troubleshooting.md) — separate DNS, routes, filtering, TLS, and API authorization, then choose the relevant evidence tool.
-
-## First checks
-
-- [ ] Confirm account, region, and resource identifiers.
-- [ ] Check recent changes.
-- [ ] Review CloudTrail or service logs where available.
-- [ ] Capture exact error messages.
+- [AWS troubleshooting first checks](first-checks.md) - Confirm account, Region, and identity, find recent changes, and read access-denied errors.
+- [AWS network connectivity](../networking/network-connectivity-troubleshooting.md) - Separate DNS, routes, filtering, TLS, and API authorization.
 
 [Back to AWS index](../index.md) | [Back to root index](../../../../README.md)

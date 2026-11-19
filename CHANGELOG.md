@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Added plain-language writing rules to the authoring instructions.
 
+- Added starter pages for Git commits and pull requests, Git productivity tricks, AWS fundamentals, choosing S3, EBS, or EFS, and AWS troubleshooting first checks, and plain openings for the Git, AWS, and FinOps entry pages.
+
 - Published the first weekly news roundup with four sourced briefs, and indexed news in the RAG lab with new retrieval cases.
 
 - Expanded the GitHub Actions with Terraform, GitHub Actions with Kubernetes, Terraform on AWS, and end-to-end deployment outlines into complete guides.

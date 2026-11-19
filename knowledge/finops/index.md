@@ -1,6 +1,13 @@
 # FinOps
 
-Connect technology cost, useful output, and accountable engineering decisions. Start with allocation and reporting, then choose budget/anomaly and optimization workflows.
+FinOps is the practice of making cloud spending visible and owned, so that
+engineering, product, and finance can decide together what is worth paying
+for. It starts with knowing who owns each cost, then adds reporting, budgets,
+alerts, and optimization.
+
+**New here?** Start with [cost allocation basics](cost-allocation-basics.md),
+then try the [cost analysis lab](cost-analysis-lab.md), which uses made-up data
+and needs no cloud account.
 
 ## Learning and operating routes
 

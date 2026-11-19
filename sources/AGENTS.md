@@ -31,7 +31,7 @@ Use these values when present, but verify them against the actual content.
 | Raw topic | Destination |
 | --- | --- |
 | AWS-specific cloud content | [cloud/aws](../knowledge/cloud/aws/index.md) |
-| Azure-specific cloud content | [cloud/azure](../knowledge/cloud/azure/index.md) |
+| Azure-specific cloud content | [cloud](../knowledge/cloud/index.md) (Azure is a planned topic) |
 | Google Cloud content | [cloud/gcloud](../knowledge/cloud/gcloud/index.md) |
 | Provider-neutral cloud content | [cloud](../knowledge/cloud/index.md) |
 | Database and data-platform content | [databases](../knowledge/databases/index.md) |

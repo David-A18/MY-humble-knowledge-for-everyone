@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 280,
+  "concept_count": 290,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -519,6 +519,27 @@
       ],
       "title": "AWS storage and network cost investigations",
       "type": "How-to Guide"
+    },
+    {
+      "audience": "Beginning cloud engineers",
+      "description": "Understand AWS Regions and Availability Zones, accounts, the shared responsibility model, and service quotas before building anything.",
+      "maintainer": "unassigned",
+      "path": "knowledge/cloud/aws/fundamentals/aws-fundamentals.md",
+      "source_ids": [
+        "global-infrastructure",
+        "shared-responsibility",
+        "service-quotas",
+        "get-caller-identity"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "fundamentals",
+        "beginner"
+      ],
+      "title": "AWS fundamentals",
+      "type": "Explanation"
     },
     {
       "audience": "Cloud administrators and platform engineers",
@@ -1238,6 +1259,50 @@
       ],
       "title": "Respond to suspected AWS credential compromise",
       "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Pick the right AWS storage service by comparing object storage (S3), block volumes (EBS), and shared file systems (EFS), and plan lifecycle and backups.",
+      "maintainer": "unassigned",
+      "path": "knowledge/cloud/aws/storage/choosing-s3-ebs-or-efs.md",
+      "source_ids": [
+        "s3-lifecycle",
+        "ebs-volumes",
+        "efs-intro",
+        "instance-store"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "storage",
+        "s3",
+        "ebs",
+        "efs"
+      ],
+      "title": "Choosing S3, EBS, or EFS",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Start any AWS investigation by confirming the account, Region, and identity, finding recent changes in CloudTrail, and reading access-denied errors correctly.",
+      "maintainer": "unassigned",
+      "path": "knowledge/cloud/aws/troubleshooting/first-checks.md",
+      "source_ids": [
+        "get-caller-identity",
+        "cloudtrail-events",
+        "iam-access-denied"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "troubleshooting",
+        "iam",
+        "cloudtrail"
+      ],
+      "title": "AWS troubleshooting first checks",
+      "type": "Troubleshooting Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
@@ -2247,6 +2312,26 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Keep Git history easy to read and review with focused commits, clear messages, short-lived branches, and small pull requests.",
+      "maintainer": "unassigned",
+      "path": "knowledge/git/best-practices/commits-branches-and-pull-requests.md",
+      "source_ids": [
+        "git-commit",
+        "gitworkflows",
+        "git-diff"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "best-practices",
+        "pull-requests"
+      ],
+      "title": "Commits, branches, and pull requests",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands.",
       "maintainer": "unassigned",
       "path": "knowledge/git/commands/advanced-commands.md",
@@ -2508,6 +2593,27 @@
       ],
       "title": "GitHub Actions workflow structure",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use git worktree, history search with git log -S, git reflog recovery, and aliases to work faster and recover safely.",
+      "maintainer": "unassigned",
+      "path": "knowledge/git/tricks/productivity-tricks.md",
+      "source_ids": [
+        "git-worktree",
+        "git-log",
+        "git-reflog",
+        "git-config"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "tricks",
+        "productivity"
+      ],
+      "title": "Git productivity tricks",
+      "type": "Reference"
     },
     {
       "audience": "Developers learning safe Git recovery",
@@ -2816,6 +2922,22 @@
       ],
       "title": "Istio workload identity and mutual TLS",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Configure K9s aliases, hotkeys, plugins, and read-only mode for daily use, and fix common K9s start-up and display problems.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/applications-and-tools/k9s-configuration-and-troubleshooting.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "k9s",
+        "troubleshooting"
+      ],
+      "title": "K9s configuration and troubleshooting",
+      "type": "How-to Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
@@ -3295,6 +3417,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Run Kubernetes workloads reliably and safely with resource requests, probes, careful deployments, least-privilege access, and Secret hygiene.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/best-practices/workload-and-operations-practices.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "best-practices"
+      ],
+      "title": "Kubernetes workload and operations practices",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Collect advanced kubectl commands for structured output, API discovery, server-side operations, debugging, node maintenance, and authorization checks.",
       "maintainer": "unassigned",
       "path": "knowledge/kubernetes/commands/advanced-commands.md",
@@ -3598,6 +3735,23 @@
         "managed-resources-and-lifecycle"
       ],
       "title": "Crossplane managed resources and lifecycle",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Understand how Crossplane installs providers, functions, and configurations as packages, and how provider pods run and authenticate to cloud APIs.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/crossplane/packages-and-provider-runtime.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "packages",
+        "providers"
+      ],
+      "title": "Crossplane packages and provider runtime",
       "type": "Explanation"
     },
     {
@@ -3916,6 +4070,22 @@
       ],
       "title": "Telemetry collection and aggregation",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Work faster with kubectl using aliases, default namespaces, label filters, compact output, kubectl explain, and temporary debug Pods.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/tricks/kubectl-productivity-tricks.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "kubectl",
+        "tricks"
+      ],
+      "title": "kubectl productivity tricks",
+      "type": "Reference"
     },
     {
       "audience": "Platform engineers with basic kubectl knowledge",
@@ -4371,6 +4541,23 @@
       ],
       "title": "Velero fundamentals",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Copy and adapt the instruction file, default GitHub Actions workflow, and Velero configuration that a backup and restore pipeline needs.",
+      "maintainer": "unassigned",
+      "path": "knowledge/migrations/velero/pipeline-workflow-reference.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "github-actions",
+        "ci-cd"
+      ],
+      "title": "Velero pipeline workflow reference",
+      "type": "Reference"
     },
     {
       "audience": "Engineering learners and practitioners",
