@@ -14,4 +14,7 @@ exclude = [
   # Crossplane docs are valid official references, but GitHub-hosted lychee
   # runners intermittently fail to connect to this Netlify-backed domain.
   "^https://docs\\.crossplane\\.io(/.*)?$",
+  # openai.com announcement pages answer automated checkers with 403 bot
+  # protection. developers.openai.com and the system card links are still checked.
+  "^https://openai\\.com/index/.*$",
 ]
