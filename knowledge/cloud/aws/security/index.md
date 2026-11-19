@@ -27,6 +27,6 @@ Learn AWS identity and permissions first, then protect data, establish evidence,
 
 ## Evidence still needed
 
-Run authorized IAM/IRSA/Pod Identity positive and negative tests, KMS/context and secret-consumer rotation drills, actual audit/notification delivery, and a controlled session-containment/recovery drill. Add independent review and ownership before promoting drafts. See the [section ledger](../../../../section-quality-progress.md) for precise scope and follow-ups.
+Run authorized IAM/IRSA/Pod Identity positive and negative tests, KMS/context and secret-consumer rotation drills, actual audit/notification delivery, and a controlled session-containment/recovery drill. Add independent review and ownership before promoting drafts. See the [section ledger](../../../../governance/section-quality-progress.md) for precise scope and follow-ups.
 
 [Back to AWS](../index.md) | [Back to knowledge](../../../index.md)

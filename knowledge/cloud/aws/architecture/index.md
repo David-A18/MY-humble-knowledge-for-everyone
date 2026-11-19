@@ -1,7 +1,5 @@
 # AWS architecture
 
-Status: Initial outline
-
 Architecture guidance, reference patterns, and design trade-offs for AWS workloads.
 
 ## Articles

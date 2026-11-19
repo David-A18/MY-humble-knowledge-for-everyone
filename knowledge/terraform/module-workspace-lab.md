@@ -89,7 +89,7 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 - [Back to this section](../../examples/terraform/module-workspace-lab/README.md)
 - [Back to Terraform](index.md)
 
-[^tf-tests]: ../../examples/terraform/module-workspace-lab/[Terraform test files](https://developer.hashicorp.com/terraform/language/tests)
-[^tf-for-each]: ../../examples/terraform/module-workspace-lab/[for_each reference](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
-[^tf-moved]: ../../examples/terraform/module-workspace-lab/[Refactoring with moved blocks](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring)
-[^tf-workspaces]: ../../examples/terraform/module-workspace-lab/[CLI workspace state model](https://developer.hashicorp.com/terraform/language/state/workspaces)
+[^tf-tests]: [Terraform test files](https://developer.hashicorp.com/terraform/language/tests)
+[^tf-for-each]: [for_each reference](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
+[^tf-moved]: [Refactoring with moved blocks](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring)
+[^tf-workspaces]: [CLI workspace state model](https://developer.hashicorp.com/terraform/language/state/workspaces)

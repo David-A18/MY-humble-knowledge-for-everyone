@@ -23,7 +23,7 @@ sources:
 
 Understand how a resource graph becomes a reusable Kubernetes API.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## What kro is
 

@@ -24,7 +24,7 @@ sources:
 
 Understand how a Kubernetes workload obtains temporary AWS credentials through IAM Roles for Service Accounts.
 
-Sources reviewed: 2026-11-10. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## What IRSA is
 

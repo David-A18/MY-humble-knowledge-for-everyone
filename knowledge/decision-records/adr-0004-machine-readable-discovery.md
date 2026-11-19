@@ -68,7 +68,7 @@ Do not add a static site yet. Revisit ADR-0003 after reader testing shows that r
 
 - [Generated knowledge artifacts](../../generated/README.md)
 - [Knowledge-quality test data](../../tests/README.md)
-- [Knowledge-base readiness review](../../knowledge-base-review.md)
+- [Knowledge-base readiness review](../../governance/archive/knowledge-base-review.md)
 - [ADR-0003: searchable site decision](adr-0003-searchable-site-decision.md)
 - [Decision records](index.md)
 - [Back to knowledge index](../index.md)

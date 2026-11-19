@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 266,
+  "concept_count": 268,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1842,7 +1842,7 @@
       "audience": "Engineering learners and practitioners",
       "description": "The repository is intended to grow over time across Git, GitHub Actions, Terraform, Kubernetes, AWS, FinOps, architecture, troubleshooting, and best practices. A single large document would become difficult to navigate, review, and maintain.",
       "maintainer": "unassigned",
-      "path": "knowledge/decision-records/ADR-0001-knowledge-base-structure.md",
+      "path": "knowledge/decision-records/adr-0001-knowledge-base-structure.md",
       "source_ids": [],
       "stale_after": null,
       "status": "draft",
@@ -1856,7 +1856,7 @@
       "audience": "Engineering learners and practitioners",
       "description": "The knowledge base needs a clear place for raw Markdown notes before they are converted into curated documentation. It also needs explicit routes for topics that are expected to grow beyond the initial Git, Terraform, Kubernetes, and AWS sections.",
       "maintainer": "unassigned",
-      "path": "knowledge/decision-records/ADR-0002-source-ingestion-and-topic-taxonomy.md",
+      "path": "knowledge/decision-records/adr-0002-source-ingestion-and-topic-taxonomy.md",
       "source_ids": [],
       "stale_after": null,
       "status": "draft",
@@ -1917,6 +1917,23 @@
         "website"
       ],
       "title": "ADR-0005: Publish a Git-backed reading site",
+      "type": "Decision Record"
+    },
+    {
+      "audience": "Knowledge-base maintainers and contributors",
+      "description": "Add a news section of short, sourced, dated briefs on AI, technology, and the economy that expire instead of becoming permanent guidance.",
+      "maintainer": "unassigned",
+      "path": "knowledge/decision-records/adr-0006-news-briefs.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "decision-records",
+        "okf",
+        "news",
+        "editorial-policy"
+      ],
+      "title": "ADR-0006: Publish dated news briefs inside the OKF bundle",
       "type": "Decision Record"
     },
     {
@@ -4402,6 +4419,21 @@
         "knowledge-article"
       ],
       "title": "Knowledge article template",
+      "type": "Template"
+    },
+    {
+      "audience": "News contributors",
+      "description": "Start a dated, sourced news brief that explains what happened, why it matters, and what readers should do.",
+      "maintainer": "unassigned",
+      "path": "knowledge/templates/news-brief-template.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "templates",
+        "news"
+      ],
+      "title": "News brief template",
       "type": "Template"
     },
     {

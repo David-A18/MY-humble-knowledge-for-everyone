@@ -2,8 +2,6 @@
 
 DevOps knowledge for delivery workflows, automation, code quality, reliability practices, and platform operations.
 
-Status: Initial outline
-
 ## Platform quality checks
 
 Use [manifest validation and regression tests](../kubernetes/applications-and-tools/manifest-validation/index.md) alongside code-quality checks.

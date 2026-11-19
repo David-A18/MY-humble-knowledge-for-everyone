@@ -2,8 +2,6 @@
 
 Solutions architect knowledge for design trade-offs, cloud architecture, reliability, security, cost, and review practices.
 
-Status: Initial outline
-
 ## Expected content
 
 - Architecture review checklists.

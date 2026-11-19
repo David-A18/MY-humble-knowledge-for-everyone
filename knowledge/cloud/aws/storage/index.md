@@ -1,7 +1,5 @@
 # AWS storage
 
-Status: Initial outline
-
 Storage service notes for object, block, and file storage on AWS.
 
 ## Expected content

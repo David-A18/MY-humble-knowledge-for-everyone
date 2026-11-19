@@ -1,7 +1,5 @@
 # Git tricks
 
-Status: Initial outline
-
 Small productivity techniques for working faster and safer with Git.
 
 ## Expected content

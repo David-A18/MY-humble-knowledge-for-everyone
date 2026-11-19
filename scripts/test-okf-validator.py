@@ -53,4 +53,45 @@ with tempfile.TemporaryDirectory(prefix="okf-validator-") as temporary:
     write(root, "log.md", "# Log\n\n## 2026-01-01\n\n- Old.\n\n## 2026-09-20\n\n- New.\n")
     assert any("newest first" in error for error in MODULE.validate_bundle(root))
 
+NEWS_BRIEF = """---
+type: News Brief
+title: Example brief
+description: A dated example brief.
+tags: [news]
+status: {status}
+audience: Readers
+maintainer: unassigned
+published: {published}
+stale_after: {stale_after}
+sources:
+  - id: primary
+    resource: https://example.com/announcement
+    title: Announcement
+---
+
+# Example brief
+"""
+
+
+def news_errors(path: str, **fields: str) -> list[str]:
+    values = {"status": "draft", "published": "2026-11-19", "stale_after": "2027-03-19"} | fields
+    with tempfile.TemporaryDirectory(prefix="okf-news-") as temporary:
+        root = Path(temporary)
+        write(root, "index.md", "---\nokf_version: \"0.2\"\n---\n\n# Root\n\n- [News](news/index.md)\n")
+        write(root, "news/index.md", "# News\n\n- [2026](2026/index.md)\n")
+        write(root, "news/2026/index.md", "# 2026\n\n- [November](11/index.md)\n")
+        directory = path.rsplit("/", 1)[0]
+        if directory != "news/2026":
+            write(root, f"{directory}/index.md", f"# Month\n\n- [Brief]({path.rsplit('/', 1)[1]})\n")
+        write(root, path, NEWS_BRIEF.format(**values))
+        return MODULE.validate_bundle(root)
+
+
+assert news_errors("news/2026/11/example-brief.md") == []
+assert any("cannot be stable" in e for e in news_errors("news/2026/11/example-brief.md", status="stable"))
+assert any("does not match published" in e for e in news_errors("news/2026/10/example-brief.md"))
+assert any("later than published" in e for e in news_errors("news/2026/11/example-brief.md", stale_after="2026-11-01"))
+assert any("published ISO date" in e for e in news_errors("news/2026/11/example-brief.md", published="soon"))
+assert any("news/YYYY/MM" in e for e in news_errors("news/2026/example-brief.md"))
+
 print("OKF validator fixtures passed.")

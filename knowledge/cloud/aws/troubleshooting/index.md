@@ -1,7 +1,5 @@
 # AWS troubleshooting
 
-Status: Initial outline
-
 Diagnostic runbooks for AWS service and architecture issues.
 
 ## Expected content

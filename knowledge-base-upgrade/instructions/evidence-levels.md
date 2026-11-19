@@ -40,6 +40,6 @@ What it does: makes the confidence level clear without overstating what was test
 
 - [Instruction index](README.md)
 - [Evidence recorder skill](../skills/evidence-recorder/SKILL.md)
-- [External evidence request checklist](../../external-evidence-request.md)
+- [External evidence request checklist](../../governance/external-evidence-request.md)
 - [Back to upgrade hub](../README.md)
 - [Back to root index](../../README.md)

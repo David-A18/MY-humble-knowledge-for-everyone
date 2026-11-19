@@ -1,7 +1,5 @@
 # Git best practices
 
-Status: Initial outline
-
 Guidance for keeping repository history understandable and reviewable.
 
 ## Expected content

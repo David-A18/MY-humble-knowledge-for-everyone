@@ -88,7 +88,7 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 - [Back to this section](../../examples/terraform/provider-alias-lab/README.md)
 - [Back to Terraform](index.md)
 
-[^tf-providers]: ../../examples/terraform/provider-alias-lab/[Provider configuration](https://developer.hashicorp.com/terraform/language/block/provider)
-[^tf-module-providers]: ../../examples/terraform/provider-alias-lab/[Providers within modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers)
-[^tf-lock-file]: ../../examples/terraform/provider-alias-lab/[Provider dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock)
-[^local-file]: ../../examples/terraform/provider-alias-lab/[local_file v2.9.1](https://raw.githubusercontent.com/hashicorp/terraform-provider-local/v2.9.1/docs/resources/file.md)
+[^tf-providers]: [Provider configuration](https://developer.hashicorp.com/terraform/language/block/provider)
+[^tf-module-providers]: [Providers within modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers)
+[^tf-lock-file]: [Provider dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock)
+[^local-file]: [local_file v2.9.1](https://raw.githubusercontent.com/hashicorp/terraform-provider-local/v2.9.1/docs/resources/file.md)

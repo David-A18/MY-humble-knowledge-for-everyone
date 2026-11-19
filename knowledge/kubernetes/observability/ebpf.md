@@ -27,7 +27,7 @@ sources:
 
 Understand what eBPF enables and the constraints of operating tools built on it.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## How it works
 

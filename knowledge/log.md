@@ -1,5 +1,12 @@
 # Knowledge bundle log
 
+## 2026-11-19
+
+- Made the bundle Markdown-only: runnable lab files moved to the top-level `examples/` folder, and lab tutorials moved up to their topic indexes.
+- Moved the sample OKF bundle out of the reader corpus, retired the duplicate `maturity` field, and removed the empty `ai-agents`, `ml`, `mlops`, and `assets` sections.
+- Renamed ADR-0001 and ADR-0002 to lowercase kebab-case.
+- Added the news section, the `News Brief` type, ADR-0006, and a news brief template.
+
 ## 2026-11-16
 
 - Added a pinned, disposable Istio sidecar lab that stages peer authentication, JWT validation and authorization, with request and cleanup assertions.

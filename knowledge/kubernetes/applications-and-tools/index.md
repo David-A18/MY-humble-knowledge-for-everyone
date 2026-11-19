@@ -1,7 +1,5 @@
 # Kubernetes applications and tools
 
-Status: Initial outline
-
 Notes for tools commonly used to package, deploy, and operate Kubernetes workloads.
 
 ## Added learning guides

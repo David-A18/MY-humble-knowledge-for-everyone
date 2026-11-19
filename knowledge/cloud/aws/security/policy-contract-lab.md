@@ -85,6 +85,6 @@ Official sources reviewed on 2026-11-10. Ten local mutation tests and the baseli
 
 [Back to this lab](../../../../examples/cloud/aws/security/policy-contract-lab/README.md) | [Back to examples](../../../../examples/cloud/aws/security/README.md) | [Back to AWS security](index.md)
 
-[^analyzer]: ../../../../examples/cloud/aws/security/policy-contract-lab/[IAM Access Analyzer policy validation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-validation.html).
-[^simulator]: ../../../../examples/cloud/aws/security/policy-contract-lab/[IAM policy simulator and limitations](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html).
-[^simulate-cli]: ../../../../examples/cloud/aws/security/policy-contract-lab/[SimulateCustomPolicy CLI](https://docs.aws.amazon.com/cli/latest/reference/iam/simulate-custom-policy.html).
+[^analyzer]: [IAM Access Analyzer policy validation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-validation.html).
+[^simulator]: [IAM policy simulator and limitations](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html).
+[^simulate-cli]: [SimulateCustomPolicy CLI](https://docs.aws.amazon.com/cli/latest/reference/iam/simulate-custom-policy.html).

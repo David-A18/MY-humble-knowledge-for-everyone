@@ -22,7 +22,7 @@ Design account boundaries and workforce access, then verify provisioning, guardr
 
 Primary sources reviewed on 2026-11-10. The local Python lab was executed with Python 3.13.17 and uses only synthetic data; no account calls or organization/identity changes occurred. Its output is potential assignment exposure under declared input assumptions, not effective IAM authorization or proof of revoked access. All concepts remain draft/unassigned.
 
-Follow up in authorized test accounts with actual directory/assignment collection, login and allowed/denied operations, provisioning/role-reference changes, staged SCP/RCP tests, emergency activation and session containment. Account creation/closure and IdP setup need their own bounded lifecycle evidence. See the [section review ledger](../../../../section-quality-progress.md).
+Follow up in authorized test accounts with actual directory/assignment collection, login and allowed/denied operations, provisioning/role-reference changes, staged SCP/RCP tests, emergency activation and session containment. Account creation/closure and IdP setup need their own bounded lifecycle evidence. See the [section review ledger](../../../../governance/section-quality-progress.md).
 
 ## Connected routes
 

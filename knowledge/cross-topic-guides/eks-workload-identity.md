@@ -27,7 +27,7 @@ sources:
 
 Choose IRSA or EKS Pod Identity, then verify the actual AWS credential path.
 
-Sources reviewed: 2026-11-10. See the [validation record](../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Choose by integration requirements
 

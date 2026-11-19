@@ -67,7 +67,7 @@ A dedicated bundle claimed to conform to OKF v0.2 must satisfy the official conf
 2. Every concept frontmatter block contains a non-empty `type`.
 3. Every reserved `index.md` or `log.md` follows its defined structure when present.
 
-A repository is not automatically an OKF bundle just because it documents OKF concepts. Here, the [`knowledge/` directory](../../../index.md) is the conformant bundle, while root governance files stay outside it. The separate [examples/okf-v0.2](../../../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md) bundle demonstrates the format with synthetic content, so retrieval excludes it.
+A repository is not automatically an OKF bundle just because it documents OKF concepts. Here, the [`knowledge/` directory](../../../index.md) is the conformant bundle, while root governance files stay outside it. The separate [OKF v0.2 example bundle](../../../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md) demonstrates the format with synthetic content. It lives in `examples/`, outside the reader bundle, so validators and retrieval never treat it as knowledge.
 
 Consumers must be permissive. A consumer should not reject a bundle merely because it sees unknown `type` values, extra frontmatter keys, missing optional metadata, missing optional indexes, or tolerable broken knowledge links.
 

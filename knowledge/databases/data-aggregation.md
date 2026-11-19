@@ -23,7 +23,7 @@ sources:
 
 Distinguish collecting records from calculating summaries and preserving stream-processing correctness.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## What an aggregator does
 

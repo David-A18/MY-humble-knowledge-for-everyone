@@ -179,5 +179,5 @@ What it does: copies the exact local fixture into a temporary directory, clears 
 - [Back to Terraform index](index.md)
 - [Back to knowledge index](../index.md)
 
-[^terraform-plan]: ../../examples/terraform/local-state-lifecycle/[Terraform plan and saved plans](https://developer.hashicorp.com/terraform/cli/commands/plan).
-[^terraform-data]: ../../examples/terraform/local-state-lifecycle/[Built-in terraform_data resource](https://developer.hashicorp.com/terraform/language/resources/terraform-data).
+[^terraform-plan]: [Terraform plan and saved plans](https://developer.hashicorp.com/terraform/cli/commands/plan).
+[^terraform-data]: [Built-in terraform_data resource](https://developer.hashicorp.com/terraform/language/resources/terraform-data).

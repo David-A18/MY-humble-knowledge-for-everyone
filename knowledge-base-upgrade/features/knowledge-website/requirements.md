@@ -9,7 +9,7 @@ The first audience is public engineering learners and practitioners already serv
 1. Publish every `index.md` and concept Markdown file under `knowledge/`, including decision records, templates, and asset guidance. Do not expose any `log.md` as a website page.
 2. Use `knowledge/index.md` as the home page. Provide topic navigation from index hierarchy, breadcrumbs, in-page heading navigation, and the authored cross-links. Do not infer or display backlinks in the first release.
 3. Provide client-side search over published pages. Index title, description, tags, and article body when present. Search results identify the page title, summary, route, and status. Browsing and reading work without JavaScript; only search requires it.
-4. Show concept `status`, `maturity`, `maintainer`, `stale_after`, recorded source links, and verification details only when present. Clearly label drafts and deprecated pages. Distinguish a passed review deadline from a claim that the content is wrong. Show the exact source commit and a source-file link on every page.
+4. Show concept `status`, `maintainer`, `stale_after`, recorded source links, and verification details only when present. Clearly label drafts and deprecated pages. Distinguish a passed review deadline from a claim that the content is wrong. Show the exact source commit and a source-file link on every page.
 5. Preserve GitHub-flavored Markdown, tables, footnotes, fenced code, admonition callouts, and Mermaid diagrams. Make code, tables, diagrams, and navigation usable on narrow screens and with a keyboard.
 6. Provide CC BY 4.0 attribution and a license link for published knowledge. Keep the website's code license separate from the source content license.
 
@@ -29,7 +29,7 @@ The site does not need accounts, a content editor, comments, analytics, a CMS, a
 
 ## Post-launch evidence
 
-Run the existing [reader tasks](../../../reader-test-facilitator-guide.md) on the live site after launch. Record participant outcomes and repeated blockers without inventing or exposing personal details. Use the evidence to change navigation and search priorities.
+Run the existing [reader tasks](../../../governance/reader-testing/facilitator-guide.md) on the live site after launch. Record participant outcomes and repeated blockers without inventing or exposing personal details. Use the evidence to change navigation and search priorities.
 
 ## Related links
 

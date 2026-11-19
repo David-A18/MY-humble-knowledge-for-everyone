@@ -10,7 +10,8 @@ maintainer: "unassigned"
 
 # GitHub Actions with Kubernetes
 
-Status: Initial outline
+> [!NOTE]
+> This page is a short outline. It lists the main steps and links to fuller guides; it will be expanded.
 
 ## Purpose
 

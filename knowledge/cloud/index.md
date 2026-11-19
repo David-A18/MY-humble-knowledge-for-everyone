@@ -2,8 +2,6 @@
 
 Provider-neutral and provider-specific cloud knowledge.
 
-Status: Initial outline
-
 ## Providers
 
 | Provider | Use it for |

@@ -12,11 +12,30 @@ Use [Diátaxis](https://diataxis.fr/) to choose one primary job for each concept
 | `Explanation` | A reader understands concepts, relationships, and trade-offs. |
 | `Troubleshooting Guide` | A reader moves from a symptom to diagnosis and safe recovery. |
 | `Decision Record` | A maintainer understands a recorded decision and its consequences. |
-| `Learning Path`, `Template`, `Glossary`, `Asset Guide` | A specialized repository resource. |
+| `News Brief` | A reader learns what changed, why it matters, and what to do. Dated and expiring; see the [news editorial policy](governance/news-editorial-policy.md). |
+| `Learning Path`, `Template`, `Glossary` | A specialized repository resource. |
 
-`Playbook`, `Attested Computation`, `Source Reference`, `Executor Reference`,
-and `Attester Reference` are reserved for the embedded OKF example, where they
-demonstrate the format's open vocabulary.
+## Write for everyone
+
+The knowledge base is for learners and practitioners, so keep explanations
+simple and useful:
+
+- **Open with the answer.** Start each concept with two or three plain sentences
+  that a newcomer can follow: what this is and when it matters.
+- **Show, then explain.** Give a small, concrete example early, then explain
+  what it does and why.
+- **Use plain words.** Prefer short sentences and everyday words. Define each
+  technical term the first time, or link to the [glossary](knowledge/glossary.md).
+- **Keep it relevant.** Include only what serves the page's single reader
+  outcome. Move tangents to their own concept and link to them.
+- **Keep pages short.** Aim for under about 2,000 words. Split longer pages by
+  reader task.
+- **Keep repository mechanics out of reader pages.** Validation runs, CI
+  records, and review evidence belong in metadata, logs, or
+  [governance](governance/README.md), not in the explanation.
+- **Text only.** Use tables, lists, and Mermaid diagrams instead of images, and
+  keep runnable files in [examples](examples/README.md). The
+  [content policy](governance/content-policy.md) lists what is allowed.
 
 ## Concept metadata
 
@@ -29,7 +48,6 @@ title: Clear human-readable title
 description: One sentence suitable for a search result or index entry.
 tags: [kubernetes, troubleshooting]
 status: draft
-maturity: initial-outline
 audience: Engineering learners and practitioners
 maintainer: unassigned
 ---

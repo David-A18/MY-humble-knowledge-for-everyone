@@ -2,8 +2,6 @@
 
 Programming language notes, idioms, tooling, runtime behavior, and practical examples.
 
-Status: Initial outline
-
 ## Expected content
 
 - Language fundamentals and idioms.

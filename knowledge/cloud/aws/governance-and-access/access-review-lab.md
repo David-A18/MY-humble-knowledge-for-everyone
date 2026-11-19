@@ -89,6 +89,6 @@ Remove only task-owned scratch copies or redirected reports after retaining need
 
 [Back to this lab](../../../../examples/cloud/aws/governance-and-access/access-review-lab/README.md) | [Back to examples](../../../../examples/cloud/aws/governance-and-access/README.md) | [Back to governance and access](index.md)
 
-[^sets]: ../../../../examples/cloud/aws/governance-and-access/access-review-lab/[Permission sets and multi-account access](https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetsconcept.html).
-[^sessions]: ../../../../examples/cloud/aws/governance-and-access/access-review-lab/[Identity Center session types and termination](https://docs.aws.amazon.com/singlesignon/latest/userguide/authconcept.html).
-[^account-access]: ../../../../examples/cloud/aws/governance-and-access/access-review-lab/[IAM account access manager](https://docs.aws.amazon.com/IAM/latest/UserGuide/account-access-manager.html).
+[^sets]: [Permission sets and multi-account access](https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetsconcept.html).
+[^sessions]: [Identity Center session types and termination](https://docs.aws.amazon.com/singlesignon/latest/userguide/authconcept.html).
+[^account-access]: [IAM account access manager](https://docs.aws.amazon.com/IAM/latest/UserGuide/account-access-manager.html).

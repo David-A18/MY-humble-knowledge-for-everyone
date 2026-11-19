@@ -44,8 +44,8 @@ Revisit this decision after KB-14 records actual reader outcomes. If a site is r
 
 ## Related links
 
-- [Knowledge-base improvement plan](../../knowledge-base-improvement-plan.md)
-- [Maintenance review queue](../../maintenance-review-queue.md)
-- [Knowledge-base review](../../knowledge-base-review.md)
+- [Knowledge-base improvement plan](../../governance/archive/knowledge-base-improvement-plan.md)
+- [Maintenance review queue](../../governance/maintenance-review-queue.md)
+- [Knowledge-base review](../../governance/archive/knowledge-base-review.md)
 - [Decision records](index.md)
 - [Back to root index](../../README.md)

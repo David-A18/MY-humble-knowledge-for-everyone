@@ -139,16 +139,16 @@ After a successful run, update:
 
 - [Crossplane local AWS S3 lab](local-aws-s3-lab.md) review-information block.
 - [Crossplane providers and authentication](providers-and-authentication.md) review-information block if authentication behavior was validated.
-- [Knowledge-base improvement plan](../../../knowledge-base-improvement-plan.md) KB-04 record.
-- [Maintenance review queue](../../../maintenance-review-queue.md) if the blocked evidence is resolved.
+- [Knowledge-base improvement plan](../../../governance/archive/knowledge-base-improvement-plan.md) KB-04 record.
+- [Maintenance review queue](../../../governance/maintenance-review-queue.md) if the blocked evidence is resolved.
 - [CHANGELOG.md](../../../CHANGELOG.md) for the validation evidence update.
 
 ## Related links
 
 - [Crossplane local AWS S3 lab](local-aws-s3-lab.md)
 - [Crossplane providers and authentication](providers-and-authentication.md)
-- [Maintenance review queue](../../../maintenance-review-queue.md)
-- [Knowledge-base improvement plan](../../../knowledge-base-improvement-plan.md)
+- [Maintenance review queue](../../../governance/maintenance-review-queue.md)
+- [Knowledge-base improvement plan](../../../governance/archive/knowledge-base-improvement-plan.md)
 - [Back to Crossplane index](index.md)
 - [Back to Kubernetes index](../index.md)
 - [Back to root index](../../../README.md)

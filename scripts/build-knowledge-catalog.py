@@ -41,8 +41,11 @@ def build_catalog(bundle: Path) -> dict:
             continue
         metadata = split_frontmatter(path.read_text(encoding="utf-8"))
         sources = metadata.get("sources", [])
+        entry = {}
+        if "published" in metadata:
+            entry["published"] = metadata["published"]
         concepts.append(
-            {
+            entry | {
                 "path": path.as_posix(),
                 "title": metadata["title"],
                 "description": metadata["description"],

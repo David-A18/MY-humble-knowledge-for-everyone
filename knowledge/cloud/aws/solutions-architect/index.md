@@ -1,7 +1,5 @@
 # AWS solutions architect
 
-Status: Initial outline
-
 Study and review notes for AWS architecture topics.
 
 ## Expected content

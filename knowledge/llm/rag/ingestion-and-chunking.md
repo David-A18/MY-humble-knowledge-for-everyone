@@ -23,7 +23,7 @@ sources:
 
 Turn reviewed source documents into reproducible evidence units.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Ingestion flow
 
@@ -39,7 +39,7 @@ The supplied lab detects headings outside fenced code, preserves section anchors
 
 ## Source lifecycle
 
-The lab accepts a repository root or the `knowledge/` bundle. It preserves repository-relative citation paths, carries simple OKF `status` and `maturity` values into results/prompts, and excludes deprecated concepts. Draft and unclassified sources remain explicitly labeled; a valid citation number does not promote their trust. The two lifecycle fields are read as bounded scalar values, not as a general YAML parser.
+The lab accepts a repository root or the `knowledge/` bundle. It preserves repository-relative citation paths, carries the simple OKF `status` value into results/prompts, and excludes deprecated concepts. Draft and unclassified sources remain explicitly labeled; a valid citation number does not promote their trust. The lifecycle field is read as a bounded scalar value, not as a general YAML parser.
 
 ## Source boundaries
 

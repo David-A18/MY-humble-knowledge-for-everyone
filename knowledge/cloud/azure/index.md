@@ -2,8 +2,6 @@
 
 Azure knowledge for cloud architecture, identity, networking, compute, storage, security, governance, FinOps, troubleshooting, and certification study.
 
-Status: Initial outline
-
 ## Expected content
 
 - Azure fundamentals.

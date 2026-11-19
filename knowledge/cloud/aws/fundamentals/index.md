@@ -1,7 +1,5 @@
 # AWS fundamentals
 
-Status: Initial outline
-
 Core AWS concepts and operating models.
 
 ## Expected content

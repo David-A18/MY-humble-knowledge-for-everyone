@@ -42,6 +42,6 @@ Each source update is proposed as a pinned-commit pull request in the website re
 ## Related links
 
 - [Website upgrade plan](../../knowledge-base-upgrade/features/knowledge-website/README.md)
-- [Reader test facilitator guide](../../reader-test-facilitator-guide.md)
+- [Reader test facilitator guide](../../governance/reader-testing/facilitator-guide.md)
 - [Decision records](index.md)
 - [Knowledge index](../index.md)

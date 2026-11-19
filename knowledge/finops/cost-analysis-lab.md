@@ -82,6 +82,6 @@ Official sources reviewed on 2026-10-29. Examples use synthetic assumptions, not
 - [Back to this section](../../examples/finops/cost-analysis-lab/README.md)
 - [Back to FinOps](index.md)
 
-[^finops-allocation]: ../../examples/finops/cost-analysis-lab/[FinOps Foundation — Allocation](https://www.finops.org/framework/capabilities/allocation/)
-[^finops-units]: ../../examples/finops/cost-analysis-lab/[FinOps Foundation — Unit Economics](https://www.finops.org/framework/capabilities/unit-economics/)
-[^finops-rate]: ../../examples/finops/cost-analysis-lab/[FinOps Foundation — Rate Optimization](https://www.finops.org/framework/capabilities/rate-optimization/)
+[^finops-allocation]: [FinOps Foundation — Allocation](https://www.finops.org/framework/capabilities/allocation/)
+[^finops-units]: [FinOps Foundation — Unit Economics](https://www.finops.org/framework/capabilities/unit-economics/)
+[^finops-rate]: [FinOps Foundation — Rate Optimization](https://www.finops.org/framework/capabilities/rate-optimization/)

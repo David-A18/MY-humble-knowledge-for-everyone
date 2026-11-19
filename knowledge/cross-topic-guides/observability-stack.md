@@ -14,7 +14,7 @@ maintainer: "unassigned"
 
 Connect application instrumentation, Kubernetes collection, AWS telemetry, backends, alerts, and operations.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Reference flow
 

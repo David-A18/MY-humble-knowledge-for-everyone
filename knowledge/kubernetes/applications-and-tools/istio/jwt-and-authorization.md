@@ -23,7 +23,7 @@ sources:
 
 Validate end-user tokens and combine them with workload identity.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Request identity differs from peer identity
 

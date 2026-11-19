@@ -26,7 +26,7 @@ sources:
 
 Separate who may assume a role from what an assumed role may do.
 
-Sources reviewed: 2026-11-10. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Two independent policies
 

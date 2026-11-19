@@ -80,8 +80,8 @@ Reviewed on 2026-11-10. Git recovery and Terraform lifecycle were executed on Wi
 
 - [Knowledge index](index.md)
 - [Environment preflight](cross-topic-guides/local-learning-preflight.md)
-- [Section review evidence](../section-quality-progress.md)
-- [Knowledge-base improvement plan](../knowledge-base-improvement-plan.md)
+- [Section review evidence](../governance/section-quality-progress.md)
+- [Knowledge-base improvement plan](../governance/archive/knowledge-base-improvement-plan.md)
 - [Back to root index](../README.md)
 
 [^kind-start]: [kind quick start](https://kind.sigs.k8s.io/docs/user/quick-start/).
