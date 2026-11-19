@@ -1,0 +1,133 @@
+name: Trusted content scan
+
+# Re-scans every pull request with the policy checker, moderation scanner, and
+# policy lists from the default branch, so a pull request cannot weaken the
+# checks by editing scripts or lists. Pull-request files are read as data and
+# never executed. Results are published as the "trusted-content-scan" commit
+# status (make it a required check) and, for moderation findings, as a
+# moderation-review issue for maintainers. See governance/content-policy.md.
+
+on:
+  workflow_run:
+    workflows: ["Repository gate"]
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  statuses: write
+
+jobs:
+  trusted-scan:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPOSITORY: ${{ github.repository }}
+      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      HEAD_REPOSITORY: ${{ github.event.workflow_run.head_repository.full_name }}
+      RUN_URL: ${{ github.event.workflow_run.html_url }}
+    steps:
+      - name: Check out trusted scanners from the default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: trusted
+          persist-credentials: false
+
+      - name: Check out pull-request files as data
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_sha }}
+          path: pr
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Find the pull request and author
+        id: pr
+        run: |
+          pr_json=$(gh pr list --repo "$REPOSITORY" --state open --search "$HEAD_SHA" --json number,author --jq '.[0] // empty')
+          if [ -z "$pr_json" ]; then
+            echo "No open pull request found for $HEAD_SHA."
+            echo "number=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "number=$(jq -r '.number' <<<"$pr_json")" >> "$GITHUB_OUTPUT"
+          echo "author=$(jq -r '.author.login' <<<"$pr_json")" >> "$GITHUB_OUTPUT"
+
+      - name: Run trusted policy and moderation scans
+        id: scan
+        run: |
+          set +e
+          python trusted/scripts/validate-repository-policy.py --root pr --policy-root trusted --json policy.json
+          policy_status=$?
+          python trusted/scripts/moderate-content.py --root pr --policy-root trusted --json moderation.json
+          moderation_status=$?
+          echo "policy_status=$policy_status" >> "$GITHUB_OUTPUT"
+          echo "moderation_status=$moderation_status" >> "$GITHUB_OUTPUT"
+          if [ "$policy_status" -ne 0 ] || [ "$moderation_status" -ne 0 ]; then
+            echo "result=failure" >> "$GITHUB_OUTPUT"
+          else
+            echo "result=success" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish the trusted-content-scan commit status
+        env:
+          RESULT: ${{ steps.scan.outputs.result }}
+        run: |
+          if [ "$RESULT" = "success" ]; then
+            description="Trusted policy and moderation scans passed"
+          else
+            description="Trusted scan found policy or moderation problems"
+          fi
+          gh api "repos/$REPOSITORY/statuses/$HEAD_SHA" \
+            -f state="$RESULT" -f context="trusted-content-scan" \
+            -f description="$description" -f target_url="$RUN_URL"
+
+      - name: Record a moderation case
+        if: steps.scan.outputs.moderation_status != '0' && steps.pr.outputs.number != ''
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          PR_AUTHOR: ${{ steps.pr.outputs.author }}
+        run: |
+          gh pr edit "$PR_NUMBER" --repo "$REPOSITORY" --add-label moderation-review
+          title="Moderation review: PR #$PR_NUMBER"
+          existing=$(gh issue list --repo "$REPOSITORY" --state open --label moderation-review --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          python3 - <<'PY' > issue-body.md
+          import json, os, re
+
+          def safe(value):
+              # Pull-request paths are untrusted: keep them inert inside code spans.
+              return re.sub(r"[`\r\n]", "", str(value))[:200]
+
+          findings = json.load(open("moderation.json", encoding="utf-8"))
+          print("The trusted moderation scan found blocked language in a pull request.")
+          print()
+          print(f"- Pull request: #{os.environ['PR_NUMBER']}")
+          print(f"- Author: `{safe(os.environ['PR_AUTHOR'])}`")
+          print(f"- Commit: `{safe(os.environ['HEAD_SHA'])}`")
+          print(f"- Scan run: {os.environ['RUN_URL']}")
+          print()
+          print("| File | Line | Category | Masked term |")
+          print("| --- | --- | --- | --- |")
+          for f in findings[:100]:
+              print(f"| `{safe(f['path'])}` | {int(f['line'])} | {safe(f['category'])} | `{safe(f['masked'])}` |")
+          print()
+          print("Maintainer steps: confirm the finding is not a false positive, close the pull request,")
+          print("and apply the sanction in governance/content-policy.md. Record false positives in")
+          print("governance/policy/moderation-exceptions.txt instead.")
+          PY
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$REPOSITORY" --body-file issue-body.md
+          else
+            gh issue create --repo "$REPOSITORY" --title "$title" --label moderation-review --body-file issue-body.md
+          fi
+
+      - name: Fail when the trusted scan fails
+        if: steps.scan.outputs.result != 'success'
+        run: exit 1

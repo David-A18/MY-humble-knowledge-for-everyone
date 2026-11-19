@@ -1,0 +1,159 @@
+name: Repository gate
+
+# The single required check for pull requests. Every job must pass before a
+# change can merge into develop or main. See governance/content-policy.md.
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  content-policy:
+    name: Content policy and moderation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Test policy and moderation checkers
+        run: |
+          python scripts/test-repository-policy.py
+          python scripts/test-content-moderation.py
+
+      - name: Enforce allowed files, safe Markdown, and safe links
+        run: python scripts/validate-repository-policy.py
+
+      - name: Scan for offensive, sexual, or hateful language
+        run: python scripts/moderate-content.py
+
+  secret-scan:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Scan commits for credentials
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "false"
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+
+  okf:
+    name: OKF structure and catalog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Install validation dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Validate the OKF bundle
+        run: |
+          python scripts/test-okf-validator.py
+          python scripts/validate-okf.py knowledge
+
+      - name: Validate command paths and retrieval cases
+        run: |
+          python scripts/test-command-path-validator.py
+          python scripts/validate-command-paths.py knowledge
+          python scripts/test-retrieval-case-validator.py
+
+      - name: Verify the generated knowledge catalog
+        run: |
+          python scripts/build-knowledge-catalog.py --check
+          python scripts/validate-retrieval-cases.py
+
+      - name: Test retrieval and the read-only MCP server
+        run: |
+          python examples/llm/rag/test_rag.py
+          python scripts/test-kb-mcp-server.py
+          python scripts/evaluate-retrieval.py --unanswerable tests/unanswerable-questions.yaml --min-hit-at-3 0.9 --min-refused 0.8
+
+  links:
+    name: Links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check local links, anchors, indexes, and reachability
+        run: |
+          node scripts/test-local-link-validator.mjs
+          node scripts/validate-local-links.mjs
+
+      - name: Check external links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          fail: true
+          args: --config lychee.toml --root-dir "${{ github.workspace }}" --no-progress "**/*.md"
+
+  markdown:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff # v24.2.0
+        with:
+          config: .markdownlint-cli2.jsonc
+          globs: "**/*.md"
+
+  repository-metadata:
+    name: Issue templates and labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Install validation dependency
+        run: python -m pip install PyYAML==6.0.2
+
+      - name: Validate issue templates and declared labels
+        run: |
+          python scripts/test-issue-template-validator.py
+          python scripts/validate-issue-templates.py
+          python scripts/test-github-label-validator.py
