@@ -17,6 +17,7 @@ Design input: Read-only Claude Code Opus 5.5 architecture reviews on 2026-09-26;
 | [Architecture](architecture.md) | Repository responsibilities, rendering stack, update workflow, and security boundaries. |
 | [Content contract](content-contract.md) | Snapshot format, inclusion, metadata, URL, asset, and link rules. |
 | [Rollout](rollout.md) | Repository setup, validation, deployment gate, recovery, and reader testing. |
+| [Landing zone design pack](landing-zone/README.md) | Design brief, toolchain reference, and preflight for designing the home page's landing zone. |
 
 The decision to launch before independent reader testing is recorded in [ADR-0005](../../../knowledge/decision-records/adr-0005-git-backed-reading-site.md). [ADR-0004](../../../knowledge/decision-records/adr-0004-machine-readable-discovery.md) still requires the website to consume canonical Markdown and the derived catalog.
 

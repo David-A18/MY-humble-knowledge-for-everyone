@@ -22,6 +22,10 @@ The [Istio lab](knowledge/kubernetes/applications-and-tools/istio/security-lab.m
 
 Use [governance and human access](knowledge/cloud/aws/governance-and-access/index.md) for organization/account ownership, workforce federation, guardrails and offboarding. Use [AWS security](knowledge/cloud/aws/security/index.md) for request evaluation, credential behavior, workload identity and data/security operations. The access-review lab is a synthetic inventory join, never an IAM evaluator or session-containment attestation.
 
+## Landing zone design routing
+
+Before designing the website home page, read the [landing zone design pack](knowledge-base-upgrade/features/knowledge-website/landing-zone/README.md): the brief, the reference toolchain with adopt/adapt/skip verdicts, and the preflight. Design and build happen in the website repository; this repository holds only text. Nearly all concepts are `draft`, so the design must not imply expert review.
+
 ## Purpose
 
 `engineering-knowledge-base` is a public, Git-backed collection of practical

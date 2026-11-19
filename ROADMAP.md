@@ -55,6 +55,7 @@ The knowledge base has no deployed website yet. The specification is ready in th
 [website plan](knowledge-base-upgrade/features/knowledge-website/README.md) and
 [ADR-0005](knowledge/decision-records/adr-0005-git-backed-reading-site.md).
 
+- [x] Prepared the [landing zone design pack](knowledge-base-upgrade/features/knowledge-website/landing-zone/README.md): brief, reference toolchain, and preflight. Open owner decisions are listed in the brief.
 - [ ] Choose the website repository and hosting provider.
 - [ ] Build the static site from the content contract, including the news listing and feed, search, and trust labels.
 - [ ] Set `SITE_REPOSITORY` so [website dispatch](.github/workflows/website-dispatch.yml) notifies the site after each validated `main` update.

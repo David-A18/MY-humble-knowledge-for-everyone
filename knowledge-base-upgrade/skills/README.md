@@ -21,6 +21,7 @@ Next review: Before installing any skill outside the repository
 | [Knowledge curator](knowledge-curator/README.md) | Improve an existing article or add a focused article while keeping indexes and evidence current. |
 | [Source ingestion router](source-ingestion-router/README.md) | Convert raw notes into curated destination pages with traceability. |
 | [Evidence recorder](evidence-recorder/README.md) | Record validation evidence, limitations, follow-ups, and changelog entries consistently. |
+| [Landing zone design](landing-zone-design/README.md) | Design and review the knowledge website landing zone against the brief, toolchain, and quality gates. |
 
 ## Installation rule
 

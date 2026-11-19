@@ -39,6 +39,7 @@ automation stay outside that bundle.
 | Plans and ongoing section reviews | [Roadmap](ROADMAP.md) and [governance](governance/README.md) |
 | Architecture decisions | [Decision records](knowledge/decision-records/index.md) |
 | Upgrades, tools, skills, or MCP templates | [Upgrade hub](knowledge-base-upgrade/README.md) |
+| Designing the website landing zone | [Landing zone design pack](knowledge-base-upgrade/features/knowledge-website/landing-zone/README.md) |
 | Raw source notes | [Sources](sources/README.md) |
 
 ## Validation and publication
