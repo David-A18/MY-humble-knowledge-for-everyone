@@ -36,7 +36,7 @@ Set `CLUSTER`, `AWS_REGION`, and `BUCKET` to your lab values. Run from the repos
 
 ## Define acceptance before creating resources
 
-Record the expected account and workload role, exact cluster/context, dedicated bucket/prefix, and test resources. Run the [local policy contracts](../../examples/cloud/aws/security/policy-contract-lab/README.md) before adapting the policy. Local contracts and AWS simulation do not replace this live EKS acceptance.
+Record the expected account and workload role, exact cluster/context, dedicated bucket/prefix, and test resources. Run the [local policy contracts](../cloud/aws/security/policy-contract-lab.md) before adapting the policy. Local contracts and AWS simulation do not replace this live EKS acceptance.
 
 For each test, retain exit status and exact error/result: intended read must return the synthetic content, forbidden write must return AccessDenied, and the alternate subject must fail role assumption. Compare the returned caller ARN to the intended role; do not accept a node role as success. NoSuchKey, timeout, DNS failure, or missing CLI is not the expected authorization denial. Treat an unexpected success as a failed test and inspect resource effects before cleanup.
 

@@ -242,7 +242,7 @@ Terraform records as true.
 
 ## Local practice exercise
 
-Use [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md) to create, inspect, change, and destroy a local state entry without a cloud account.
+Use [Terraform local state lifecycle](../local-state-lifecycle.md) to create, inspect, change, and destroy a local state entry without a cloud account.
 
 ## Expanded operational routes
 
@@ -261,7 +261,7 @@ Use [Terraform local state lifecycle](../../../examples/terraform/local-state-li
 - [terraform state command reference](https://developer.hashicorp.com/terraform/cli/commands/state)
 - [terraform plan command reference](https://developer.hashicorp.com/terraform/cli/commands/plan)
 - [Terraform moved blocks and refactoring documentation](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring)
-- [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md)
+- [Terraform local state lifecycle](../local-state-lifecycle.md)
 - [Back to Terraform fundamentals](index.md)
 - [Back to Terraform index](../index.md)
 - [Back to root index](../../../README.md)

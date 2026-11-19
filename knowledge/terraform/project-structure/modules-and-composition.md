@@ -43,7 +43,7 @@ flowchart LR
 
 What it does: shows the root coordinating sibling capabilities through explicit outputs. Prefer this to deeply nested children that discover or own unrelated infrastructure implicitly.
 
-The [local module lab](../../../examples/terraform/module-workspace-lab/README.md) passes service name, environment, selected workspace, release version, and replicas to a small child. `release_version` is intentionally not named `version`: `version` is a module-call meta-argument for selecting a remote module, not an ordinary release input. The lab is a state-backed teaching contract, not a deployment module.
+The [local module lab](../module-workspace-lab.md) passes service name, environment, selected workspace, release version, and replicas to a small child. `release_version` is intentionally not named `version`: `version` is a module-call meta-argument for selecting a remote module, not an ordinary release input. The lab is a state-backed teaching contract, not a deployment module.
 
 ## Select and pin sources deliberately
 
@@ -57,7 +57,7 @@ Module source and version semantics are distinct from provider requirements. `.t
 
 ## Keep runtime context at the root
 
-Reusable children declare provider requirements but normally receive configured providers from the caller. For alternate configurations, declare the expected child aliases and map them explicitly in the module call.[^tf-module-providers] See the [provider lab](../../../examples/terraform/provider-alias-lab/README.md) for an executable alias example. Hardcoding cloud credentials inside a child makes reuse and permission review difficult.
+Reusable children declare provider requirements but normally receive configured providers from the caller. For alternate configurations, declare the expected child aliases and map them explicitly in the module call.[^tf-module-providers] See the [provider lab](../provider-alias-lab.md) for an executable alias example. Hardcoding cloud credentials inside a child makes reuse and permission review difficult.
 
 ## Refactor identity as well as files
 

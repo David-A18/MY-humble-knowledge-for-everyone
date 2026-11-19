@@ -24,7 +24,16 @@ sources:
 
 # Start here
 
-Start here when you want a practical path through cloud and platform engineering. Complete the local stages before choosing a cloud integration. The route connects concepts, a small working example, deliberate failure, diagnosis, recovery, and cleanup; reading a command list alone is not completion.
+This is the beginner route. On your own computer, and without a cloud account,
+you will learn three tools that most platform teams use every day:
+
+- **Git** keeps the history of your files, so you can undo mistakes safely.
+- **Kubernetes** runs your applications in containers and keeps them running.
+- **Terraform** creates and changes infrastructure from text files.
+
+Each stage follows the same pattern: learn the idea, run a small example, break
+it on purpose, find the cause, fix it, and clean up. Doing those steps teaches
+far more than reading a list of commands.
 
 ## Purpose
 
@@ -59,7 +68,7 @@ Restoring `deployment.yaml` in Git does not roll back a live Kubernetes Deployme
 
 Before moving to a cloud lab, explain which target each command used, which observation proved success, which failure was deliberate, and what was removed. Record versions, a short expected/observed result, failure reason, recovery result, cleanup, and any step you skipped. A timeout or missing executable does not count as the expected application failure.
 
-Ask a peer to follow the route from a fresh setup without your terminal history. Note unclear prerequisites, commands, messages and handoffs. That independent beginner exercise remains open; CI is useful repeatability evidence but does not replace reader testing.
+If you can, ask a friend to follow the route on a fresh computer and note anything that confused them. Their questions show which steps need clearer explanations.
 
 ## Next routes
 
@@ -70,7 +79,7 @@ Choose the next integration only after reading its account, credential, cost and
 | Explore AWS-hosted Kubernetes | [Deploying to EKS](cross-topic-guides/deploying-to-eks.md) | Authorized sandbox, AWS identity/network/cost controls and EKS permission checks. |
 | Learn infrastructure control planes | [Crossplane on AWS](cross-topic-guides/crossplane-on-aws.md) | Existing cluster, Crossplane concepts, scoped provider credentials and external-resource cleanup. |
 | Learn backup and recovery | [Velero](migrations/velero/index.md) | Owned cluster/object storage and a planned restore verification. |
-| Continue Terraform locally | [Module/workspace](../examples/terraform/module-workspace-lab/README.md) and [provider alias](../examples/terraform/provider-alias-lab/README.md) labs | Finish the beginner lifecycle first; retain separate local states. |
+| Continue Terraform locally | [Module/workspace](terraform/module-workspace-lab.md) and [provider alias](terraform/provider-alias-lab.md) labs | Finish the beginner lifecycle first; retain separate local states. |
 
 ## Evidence and current limits
 
@@ -81,7 +90,6 @@ Reviewed on 2026-11-10. Git recovery and Terraform lifecycle were executed on Wi
 - [Knowledge index](index.md)
 - [Environment preflight](cross-topic-guides/local-learning-preflight.md)
 - [Section review evidence](../governance/section-quality-progress.md)
-- [Knowledge-base improvement plan](../governance/archive/knowledge-base-improvement-plan.md)
 - [Back to root index](../README.md)
 
 [^kind-start]: [kind quick start](https://kind.sigs.k8s.io/docs/user/quick-start/).

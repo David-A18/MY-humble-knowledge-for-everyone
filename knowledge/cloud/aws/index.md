@@ -4,7 +4,7 @@ Practical AWS knowledge for cloud architecture, networking, compute, storage, se
 
 ## Account governance and human access
 
-Use [governance and access](governance-and-access/index.md) for account/OU design, Identity Center access models, permission sets, guardrails, delegated IAM, root/emergency recovery and offboarding. Practice with the [synthetic access-review lab](../../../examples/cloud/aws/governance-and-access/access-review-lab/README.md) before adapting a real collection/review process.
+Use [governance and access](governance-and-access/index.md) for account/OU design, Identity Center access models, permission sets, guardrails, delegated IAM, root/emergency recovery and offboarding. Practice with the [synthetic access-review lab](governance-and-access/access-review-lab.md) before adapting a real collection/review process.
 
 ## Workload identity learning path
 
@@ -12,7 +12,7 @@ Start with [IRSA fundamentals](security/irsa-fundamentals.md), [trust and permis
 
 ## Security operations learning path
 
-Use [IAM evaluation](security/iam-policy-evaluation-and-least-privilege.md), [credential/session behavior](security/credential-providers-and-session-lifecycle.md), and the [policy-contract lab](../../../examples/cloud/aws/security/policy-contract-lab/README.md) before interpreting allowed/denied results. Continue through the [security index](security/index.md) for Pod Identity, KMS, secrets, audit/detection, diagnosis, and incident recovery.
+Use [IAM evaluation](security/iam-policy-evaluation-and-least-privilege.md), [credential/session behavior](security/credential-providers-and-session-lifecycle.md), and the [policy-contract lab](security/policy-contract-lab.md) before interpreting allowed/denied results. Continue through the [security index](security/index.md) for Pod Identity, KMS, secrets, audit/detection, diagnosis, and incident recovery.
 
 ## Networking learning path
 

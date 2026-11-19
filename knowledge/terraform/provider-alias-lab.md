@@ -84,7 +84,7 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 ## Related routes
 
 - [Provider model](fundamentals/providers-and-dependency-locking.md).
-- [Provider-free module lab](../../examples/terraform/module-workspace-lab/README.md).
+- [Provider-free module lab](module-workspace-lab.md).
 - [Back to this section](../../examples/terraform/provider-alias-lab/README.md)
 - [Back to Terraform](index.md)
 

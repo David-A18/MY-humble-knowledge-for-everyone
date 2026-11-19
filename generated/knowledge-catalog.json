@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 276,
+  "concept_count": 280,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -1465,7 +1465,7 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Map a complete delivery path from source control to running cloud infrastructure and application validation.",
+      "description": "Follow one change from a pull request to running infrastructure and a verified application, and know how to roll back at each layer.",
       "maintainer": "unassigned",
       "path": "knowledge/cross-topic-guides/end-to-end-deployment.md",
       "source_ids": [],
@@ -1473,40 +1473,57 @@
       "status": "draft",
       "tags": [
         "cross-topic-guides",
-        "end-to-end-deployment"
+        "end-to-end-deployment",
+        "ci-cd"
       ],
       "title": "End-to-end deployment",
       "type": "Explanation"
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Outline CI/CD workflows for validating and deploying Kubernetes workloads from GitHub Actions.",
+      "description": "Build an image, validate manifests, deploy to a Kubernetes cluster, and confirm the rollout from GitHub Actions, or hand deployment to GitOps.",
       "maintainer": "unassigned",
       "path": "knowledge/cross-topic-guides/github-actions-with-kubernetes.md",
-      "source_ids": [],
+      "source_ids": [
+        "k8s-deployment",
+        "kubectl-rollout",
+        "eks-kubeconfig",
+        "eks-access-entries",
+        "gha-oidc-aws"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "cross-topic-guides",
-        "github-actions-with-kubernetes"
+        "github-actions-with-kubernetes",
+        "kubernetes",
+        "ci-cd"
       ],
       "title": "GitHub Actions with Kubernetes",
-      "type": "Explanation"
+      "type": "How-to Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Define a safe CI workflow for formatting, validating, and reviewing Terraform changes with GitHub Actions.",
+      "description": "Run Terraform safely from GitHub Actions, with a plan on every pull request and a reviewed, approved apply after merge.",
       "maintainer": "unassigned",
       "path": "knowledge/cross-topic-guides/github-actions-with-terraform.md",
-      "source_ids": [],
+      "source_ids": [
+        "tf-plan",
+        "tf-apply",
+        "gha-oidc-aws",
+        "gha-environments",
+        "gha-secure-use"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "cross-topic-guides",
-        "github-actions-with-terraform"
+        "github-actions-with-terraform",
+        "terraform",
+        "ci-cd"
       ],
       "title": "GitHub Actions with Terraform",
-      "type": "Explanation"
+      "type": "How-to Guide"
     },
     {
       "audience": "Engineering learners and practitioners",
@@ -1635,15 +1652,21 @@
     },
     {
       "audience": "Engineering learners and practitioners",
-      "description": "Capture practical patterns for managing AWS infrastructure with Terraform.",
+      "description": "Set up Terraform for AWS so every run targets the right account and region, keeps state safe, and uses least-privilege credentials.",
       "maintainer": "unassigned",
       "path": "knowledge/cross-topic-guides/terraform-on-aws.md",
-      "source_ids": [],
+      "source_ids": [
+        "aws-provider",
+        "s3-backend",
+        "tf-plan"
+      ],
       "stale_after": null,
       "status": "draft",
       "tags": [
         "cross-topic-guides",
-        "terraform-on-aws"
+        "terraform-on-aws",
+        "terraform",
+        "aws"
       ],
       "title": "Terraform on AWS",
       "type": "Explanation"
@@ -4412,6 +4435,89 @@
       ],
       "title": "Velero troubleshooting and operations",
       "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "CISA urges immediate patching of an Oracle Java flaw that crafted Base64 input can use to crash the JVM or run code; Oracle's November 2026 update fixes it.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/critical-java-vulnerability-cve-2026-114938.md",
+      "published": "2026-11-19",
+      "source_ids": [
+        "cisa-alert",
+        "oracle-cpu"
+      ],
+      "stale_after": "2027-02-19",
+      "status": "draft",
+      "tags": [
+        "news",
+        "security",
+        "java",
+        "vulnerability"
+      ],
+      "title": "Patch the critical Java vulnerability CVE-2026-114938",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The EU's Digital Omnibus on AI adds new prohibitions from 2 December 2026 and moves the main high-risk obligations to December 2027 and August 2028.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/eu-ai-act-new-prohibitions-december-2026.md",
+      "published": "2026-11-19",
+      "source_ids": [
+        "eu-regulation-2026-1744",
+        "ep-summary"
+      ],
+      "stale_after": "2027-05-19",
+      "status": "draft",
+      "tags": [
+        "news",
+        "ai",
+        "regulation",
+        "eu"
+      ],
+      "title": "EU AI Act changes take effect on a new timeline",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The Fed held rates at 3.75 to 4 percent in October; minutes released on November 18 show most officials expect further increases may be needed to bring inflation down.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/fed-minutes-signal-possible-rate-increase.md",
+      "published": "2026-11-19",
+      "source_ids": [
+        "fomc-statement",
+        "fomc-minutes"
+      ],
+      "stale_after": "2026-12-10",
+      "status": "draft",
+      "tags": [
+        "news",
+        "economy",
+        "interest-rates"
+      ],
+      "title": "Federal Reserve minutes point to possible rate increases",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "OpenAI's November 17 release adds a top-tier and an everyday model to ChatGPT Work, Codex, and the API, with tighter cybersecurity safeguards.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/openai-gpt-6-2-astra-and-sol.md",
+      "published": "2026-11-19",
+      "source_ids": [
+        "openai-announcement",
+        "openai-model-page",
+        "openai-system-card"
+      ],
+      "stale_after": "2027-02-19",
+      "status": "draft",
+      "tags": [
+        "news",
+        "ai",
+        "llm"
+      ],
+      "title": "OpenAI releases GPT-6.2 Astra and Sol",
+      "type": "News Brief"
     },
     {
       "audience": "Engineering learners and practitioners",

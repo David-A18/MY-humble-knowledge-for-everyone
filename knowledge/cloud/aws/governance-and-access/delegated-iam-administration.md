@@ -50,7 +50,7 @@ Identity Center delegated administrators perform supported member-account tasks,
 
 Prepare an approved sandbox role path and harmless service action. Prove an intended role can be created/passed and that omitting/changing the required boundary, editing protected policy versions, passing an out-of-scope role, and changing protected trust/tag controls are rejected. Observe the caller and actual service result rather than treating a policy simulator as the complete environment.
 
-Use [AccessDenied diagnosis](../security/iam-access-denied-troubleshooting.md) and [policy review practice](../../../../examples/cloud/aws/security/policy-contract-lab/README.md) for supporting checks. Keep the prior policies and recovery principal outside the delegated change boundary. Cleanup removes only task-owned sandbox roles and artifacts after their service dependencies are stopped; this guide creates no such resources.
+Use [AccessDenied diagnosis](../security/iam-access-denied-troubleshooting.md) and [policy review practice](../security/policy-contract-lab.md) for supporting checks. Keep the prior policies and recovery principal outside the delegated change boundary. Cleanup removes only task-owned sandbox roles and artifacts after their service dependencies are stopped; this guide creates no such resources.
 
 ## Evidence and limits
 

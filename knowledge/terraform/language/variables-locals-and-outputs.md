@@ -43,7 +43,7 @@ variable "replicas" {
 }
 ```
 
-What it does: rejects zero, negative, and fractional values before they become an invalid release request. It is a focused illustration; the [module lab](../../../examples/terraform/module-workspace-lab/README.md) applies the same rule to each service in a typed map and tests rejection.
+What it does: rejects zero, negative, and fractional values before they become an invalid release request. It is a focused illustration; the [module lab](../module-workspace-lab.md) applies the same rule to each service in a typed map and tests rejection.
 
 | Need | Use | Design question |
 | --- | --- | --- |

@@ -260,7 +260,7 @@ the review needs provider behavior, state refresh, or permission validation.
 
 ## Local practice exercise
 
-Use [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md) to run the command flow without a cloud account.
+Use [Terraform local state lifecycle](../local-state-lifecycle.md) to run the command flow without a cloud account.
 
 ## Expanded operational routes
 
@@ -280,7 +280,7 @@ Use [Terraform local state lifecycle](../../../examples/terraform/local-state-li
 - [terraform providers lock reference](https://developer.hashicorp.com/terraform/cli/commands/providers/lock)
 - [Terraform dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock)
 - [Terraform state management](../fundamentals/state-management.md)
-- [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md)
+- [Terraform local state lifecycle](../local-state-lifecycle.md)
 - [Back to Terraform commands](index.md)
 - [Back to Terraform index](../index.md)
 - [Back to root index](../../../README.md)

@@ -29,10 +29,11 @@ simple and useful:
 - **Keep it relevant.** Include only what serves the page's single reader
   outcome. Move tangents to their own concept and link to them.
 - **Keep pages short.** Aim for under about 2,000 words. Split longer pages by
-  reader task.
-- **Keep repository mechanics out of reader pages.** Validation runs, CI
-  records, and review evidence belong in metadata, logs, or
-  [governance](governance/README.md), not in the explanation.
+  reader task. Lookup pages such as the glossary may be longer.
+- **Keep repository mechanics out of the explanation.** Put review dates,
+  tested versions, and what was not tested in a final `## Evidence and limits`
+  section, just before the related links. Validation records belong in
+  metadata, logs, or [governance](governance/README.md).
 - **Text only.** Use tables, lists, and Mermaid diagrams instead of images, and
   keep runnable files in [examples](examples/README.md). The
   [content policy](governance/content-policy.md) lists what is allowed.

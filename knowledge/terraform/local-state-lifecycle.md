@@ -166,8 +166,8 @@ What it does: copies the exact local fixture into a temporary directory, clears 
 
 ## Next local exercises
 
-- [Module and workspace lab](../../examples/terraform/module-workspace-lab/README.md) — learn typed contracts, stable keys, tests, refactors, and separate local states.
-- [Provider alias lab](../../examples/terraform/provider-alias-lab/README.md) — learn an installed provider and child alias mapping with a local artifact.
+- [Module and workspace lab](module-workspace-lab.md) — learn typed contracts, stable keys, tests, refactors, and separate local states.
+- [Provider alias lab](provider-alias-lab.md) — learn an installed provider and child alias mapping with a local artifact.
 
 ## Related links
 

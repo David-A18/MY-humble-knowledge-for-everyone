@@ -28,7 +28,7 @@ sources:
 
 # Local modules, keys, refactors, and workspaces lab
 
-This lab builds on the [first local state exercise](../../examples/terraform/local-state-lifecycle/README.md). It uses built-in `terraform_data` records and no cloud API or downloaded provider. You will observe typed module inputs/outputs, stable keys, expected validation failures, address refactoring, and separate CLI workspace states.
+This lab builds on the [first local state exercise](local-state-lifecycle.md). It uses built-in `terraform_data` records and no cloud API or downloaded provider. You will observe typed module inputs/outputs, stable keys, expected validation failures, address refactoring, and separate CLI workspace states.
 
 ## Prerequisites and isolation
 
@@ -85,7 +85,7 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 ## Related routes
 
 - [Module contracts](project-structure/modules-and-composition.md).
-- [Provider alias lab](../../examples/terraform/provider-alias-lab/README.md).
+- [Provider alias lab](provider-alias-lab.md).
 - [Back to this section](../../examples/terraform/module-workspace-lab/README.md)
 - [Back to Terraform](index.md)
 

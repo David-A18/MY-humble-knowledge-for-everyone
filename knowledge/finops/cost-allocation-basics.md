@@ -74,7 +74,7 @@ Define a report contract before allocating: currency, period/time zone, cost bas
 
 Preserve direct costs, shared pools, credits/refunds, and an explicit unallocated remainder. Do not silently spread unknown ownership over known teams to make coverage appear complete. Define the rounding rule and reconcile the final allocated total to the same source total.
 
-For example, the [synthetic calculation lab](../../examples/finops/cost-analysis-lab/README.md) totals 675.01 including a -20.00 credit. Payments/data direct costs are 330.00/200.00, unknown cost is 25.00, and a 120.01 shared pool is allocated 3:1. Final payments/data/unknown totals are 420.01/230.00/25.00, still 675.01. These are teaching amounts and a chosen allocation policy, not customer billing.
+For example, the [synthetic calculation lab](cost-analysis-lab.md) totals 675.01 including a -20.00 credit. Payments/data direct costs are 330.00/200.00, unknown cost is 25.00, and a 120.01 shared pool is allocated 3:1. Final payments/data/unknown totals are 420.01/230.00/25.00, still 675.01. These are teaching amounts and a chosen allocation policy, not customer billing.
 
 For coverage percentages, define the eligible charge base and how credits are treated. A zero or negative net denominator can make a percentage meaningless; report absolute exceptions and credit treatment rather than forcing a reassuring ratio. Allocation changes who sees a cost, not necessarily the provider total.
 

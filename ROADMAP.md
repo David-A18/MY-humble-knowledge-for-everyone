@@ -25,20 +25,24 @@ structure and checks they define.
 - [x] [Content policy](governance/content-policy.md) checks: allowed text file types, no binaries or executables, hidden-Unicode detection, safe Markdown, and link safety with a reviewed domain allowlist.
 - [x] Moderation scan with hashed blocked terms, plus a [trusted content scan](.github/workflows/trusted-content-scan.yml) that pull requests cannot weaken and that records moderation cases.
 - [x] Every action pinned to a commit SHA, with [Dependabot](.github/dependabot.yml) updates.
+- [x] Tested the pipeline: the repository gate passed on a pull request, and a simulated malicious pull request was caught by the policy checker and the trusted scan.
 - [ ] Maintainer: apply the repository settings in the [content policy checklist](governance/content-policy.md#maintainer-settings-checklist): branch protection, required checks, secret scanning, and labels.
 
-### Phase 3: Content quality — in progress
+### Phase 3: Content quality — first pass done
 
 - [x] Plain-language style rules added to the [authoring instructions](instructions.md#write-for-everyone).
-- [ ] Split pages over about 2,000 words by reader task: the glossary, the Git and eksctl command catalogs, the Velero runbooks, and the large Crossplane pages.
-- [ ] Rewrite beginner-facing pages to open with a plain summary and keep CI and review evidence out of the explanation. Start with [Start here](knowledge/start-here.md) and the fundamentals pages.
-- [ ] Expand the four outline pages in [cross-topic guides](knowledge/cross-topic-guides/index.md), or merge them into fuller guides.
+- [x] Split the six pages over 2,900 words by reader task (Git and eksctl command catalogs, the GitHub Actions catalog, the Velero runbooks, and two Crossplane pages). The glossary stays one lookup page.
+- [ ] Review the ten remaining pages between 2,000 and 2,600 words and split those that serve more than one reader task.
+- [x] Rewrote the openings of [Start here](knowledge/start-here.md) and the Kubernetes and Terraform fundamentals in plain language, with a first example.
+- [ ] Continue the plain-language openings section by section, starting with the Git, AWS, and FinOps entry pages.
+- [x] Expanded the four outline pages in [cross-topic guides](knowledge/cross-topic-guides/index.md) into complete guides.
 - [ ] Review each section for relevance and duplication, using the [section quality ledger](governance/section-quality-progress.md).
 
-### Phase 4: News — structure done, first edition pending
+### Phase 4: News — first edition published
 
 - [x] [ADR-0006](knowledge/decision-records/adr-0006-news-briefs.md), the [news editorial policy](governance/news-editorial-policy.md), the [news brief template](knowledge/templates/news-brief-template.md), validator rules, and the [news section](knowledge/news/index.md).
-- [ ] Publish the first weekly roundup of AI, technology, and economy briefs, adding each new source domain to the allowlist through review.
+- [x] Published the [first weekly roundup](knowledge/news/2026/11/index.md) with four briefs from primary sources, and added their domains to the allowlist.
+- [ ] Publish a roundup each week, and mark briefs `deprecated` when later events overturn them.
 - [ ] Optional: a scheduled workflow that collects candidate links into `sources/` for a person to turn into briefs. Nothing publishes automatically.
 
 ### Phase 5: Website — critical, scheduled for a separate session

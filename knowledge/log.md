@@ -2,6 +2,8 @@
 
 ## 2026-11-19
 
+- Published the first news roundup (week of 16 November 2026): four briefs on AI models, a critical Java vulnerability, US interest rates, and the EU AI Act timeline.
+- Split six oversized pages by reader task, expanded the four cross-topic outline pages into complete guides, and rewrote the beginner openings in plain language.
 - Made the bundle Markdown-only: runnable lab files moved to the top-level `examples/` folder, and lab tutorials moved up to their topic indexes.
 - Moved the sample OKF bundle out of the reader corpus, retired the duplicate `maturity` field, and removed the empty `ai-agents`, `ml`, `mlops`, and `assets` sections.
 - Renamed ADR-0001 and ADR-0002 to lowercase kebab-case.

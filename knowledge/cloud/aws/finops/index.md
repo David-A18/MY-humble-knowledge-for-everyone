@@ -14,7 +14,7 @@ Use these AWS implementation routes alongside the [provider-neutral FinOps model
 
 ## Practice and evidence
 
-The [local synthetic lab](../../../../examples/finops/cost-analysis-lab/README.md) exercises allocation and comparison math without AWS access. Sources were reviewed on 2026-10-29. CLI snippets were checked offline with AWS CLI 2.38.5; no billable query, notification, purchase, tag/backfill change, or production optimization was executed. Pricing, service eligibility, and account/view permissions require current verification for a real run.
+The [local synthetic lab](../../../finops/cost-analysis-lab.md) exercises allocation and comparison math without AWS access. Sources were reviewed on 2026-10-29. CLI snippets were checked offline with AWS CLI 2.38.5; no billable query, notification, purchase, tag/backfill change, or production optimization was executed. Pricing, service eligibility, and account/view permissions require current verification for a real run.
 
 ## Follow-up acceptance
 

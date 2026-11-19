@@ -56,7 +56,7 @@ Zero completed units means the unit cost is undefined, not zero. Changing traffi
 
 Have the cost owner and workload/product owner review exceptions and the next action. Share only the dimensions needed by the audience; billing exports can expose account identities, architecture, contracts, and customer relationships. Restrict query access, output retention, and public examples.
 
-The [calculation lab](../../examples/finops/cost-analysis-lab/README.md) reconciles credits and shared allocations, reports an unknown owner, and compares two synthetic demand levels. Its automated checks verify arithmetic and rejection behavior. No real report distribution, provider reconciliation, or customer savings were performed; remove only lab-owned local outputs after review.
+The [calculation lab](cost-analysis-lab.md) reconciles credits and shared allocations, reports an unknown owner, and compares two synthetic demand levels. Its automated checks verify arithmetic and rejection behavior. No real report distribution, provider reconciliation, or customer savings were performed; remove only lab-owned local outputs after review.
 
 ## Evidence and limits
 

@@ -80,7 +80,7 @@ Confirm the cluster's actual issuer, IAM OIDC provider, annotation, audience, an
 
 ## Review contracts and effective permissions
 
-Use the [policy-contract lab](../../../../examples/cloud/aws/security/policy-contract-lab/README.md) to catch changes to the exact synthetic issuer, audience, subject, object prefix, and read action. Its local assertions are not an IAM engine. Access Analyzer findings, AWS simulation, and a live positive/negative test each provide different evidence.
+Use the [policy-contract lab](policy-contract-lab.md) to catch changes to the exact synthetic issuer, audience, subject, object prefix, and read action. Its local assertions are not an IAM engine. Access Analyzer findings, AWS simulation, and a live positive/negative test each provide different evidence.
 
 The [IAM evaluation guide](iam-policy-evaluation-and-least-privilege.md) describes why effective access is not universally an intersection of every policy. Same-account resource-policy grants depend on the form of principal; cross-account and KMS paths need their own evaluation. A narrow role permission example alone cannot prove there is no other grant.
 

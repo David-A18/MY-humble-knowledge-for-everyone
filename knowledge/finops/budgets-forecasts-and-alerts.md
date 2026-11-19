@@ -43,7 +43,7 @@ Use actual and forecast-based thresholds where they answer different questions. 
 
 Start with demand × effective unit cost, then account for fixed/shared costs, commitments, planned migrations, seasonality, and billing lag. Show a range or scenarios when uncertain. Do not label a simple straight-line extrapolation a reliable statistical forecast.
 
-The [local lab](../../examples/finops/cost-analysis-lab/README.md) uses a deliberately simple example: 960 synthetic USD accrued over 12 complete days in a 30-day period gives a 2,400 run-rate estimate. If data is delayed or a deployment doubles demand tomorrow, that arithmetic is not a prediction of the final bill.
+The [local lab](cost-analysis-lab.md) uses a deliberately simple example: 960 synthetic USD accrued over 12 complete days in a 30-day period gives a 2,400 run-rate estimate. If data is delayed or a deployment doubles demand tomorrow, that arithmetic is not a prediction of the final bill.
 
 ## 3. Test the response path
 
