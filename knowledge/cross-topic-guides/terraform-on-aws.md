@@ -4,7 +4,6 @@ title: "Terraform on AWS"
 description: "Capture practical patterns for managing AWS infrastructure with Terraform."
 tags: [cross-topic-guides, terraform-on-aws]
 status: draft
-maturity: initial-outline
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

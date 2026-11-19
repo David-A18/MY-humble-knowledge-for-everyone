@@ -8,7 +8,6 @@ tags:
 - anomalies
 - operations
 status: draft
-maturity: draft
 audience: Platform engineers and cloud cost owners
 maintainer: unassigned
 sources:

@@ -4,7 +4,6 @@ title: "Crossplane deployment patterns and references"
 description: "Use this page to understand how to deploy multiple related resources with Crossplane, how to model Terraform-style count and foreach, and how resources reference each other when one resource needs values from another."
 tags: [kubernetes, crossplane]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

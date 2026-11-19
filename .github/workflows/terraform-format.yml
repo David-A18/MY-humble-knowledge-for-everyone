@@ -33,7 +33,7 @@ jobs:
           terraform fmt -recursive -check knowledge/terraform
 
       - name: Exercise local module, refactor, and workspace contracts
-        run: python3 knowledge/terraform/examples/module-workspace-lab/validate-lab.py --terraform terraform
+        run: python3 examples/terraform/module-workspace-lab/validate-lab.py --terraform terraform
 
       - name: Exercise local provider alias and dependency lock
-        run: python3 knowledge/terraform/examples/provider-alias-lab/validate-lab.py --terraform terraform
+        run: python3 examples/terraform/provider-alias-lab/validate-lab.py --terraform terraform

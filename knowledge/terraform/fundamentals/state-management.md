@@ -4,7 +4,6 @@ title: "State management"
 description: "Explain how Terraform state maps configuration to real infrastructure and why state handling is operationally sensitive."
 tags: [terraform, state-management]
 status: stable
-maturity: maintained
 audience: "Beginning platform engineer"
 maintainer: unassigned
 sources:
@@ -243,7 +242,7 @@ Terraform records as true.
 
 ## Local practice exercise
 
-Use [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md) to create, inspect, change, and destroy a local state entry without a cloud account.
+Use [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md) to create, inspect, change, and destroy a local state entry without a cloud account.
 
 ## Expanded operational routes
 
@@ -262,7 +261,7 @@ Use [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md
 - [terraform state command reference](https://developer.hashicorp.com/terraform/cli/commands/state)
 - [terraform plan command reference](https://developer.hashicorp.com/terraform/cli/commands/plan)
 - [Terraform moved blocks and refactoring documentation](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring)
-- [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md)
+- [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md)
 - [Back to Terraform fundamentals](index.md)
 - [Back to Terraform index](../index.md)
 - [Back to root index](../../../README.md)

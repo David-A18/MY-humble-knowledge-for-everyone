@@ -4,7 +4,6 @@ title: "Velero possible integrations"
 description: "Use this page to understand how Velero can be triggered from automation systems such as GitHub Actions, what the pipeline can safely do, and what configuration must already exist in AWS, EKS, Kubernetes, and Velero."
 tags: [migrations, velero, possible-integrations]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

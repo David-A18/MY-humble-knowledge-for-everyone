@@ -7,7 +7,6 @@ tags:
 - cloud
 - cdk
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:

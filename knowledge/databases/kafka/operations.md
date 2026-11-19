@@ -4,7 +4,6 @@ title: "Kafka operations"
 description: "Use this page to operate Kafka by watching the signals that usually explain reliability, performance, and consumer health."
 tags: [databases, kafka, operations]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

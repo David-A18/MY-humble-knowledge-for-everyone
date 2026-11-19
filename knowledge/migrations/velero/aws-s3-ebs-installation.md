@@ -4,7 +4,6 @@ title: "Velero AWS S3 and EBS installation"
 description: "Use this page to install Velero on Amazon EKS with AWS S3 backup storage and Amazon EBS persistent volume snapshots."
 tags: [migrations, velero, aws-s3-ebs-installation]
 status: draft
-maturity: draft
 audience: "Platform engineers installing Velero on EKS"
 maintainer: unassigned
 sources:

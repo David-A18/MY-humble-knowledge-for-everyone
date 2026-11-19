@@ -4,7 +4,6 @@ title: "OIDC token validation"
 description: "Use this guide to validate OIDC and JWT tokens safely before trusting identity claims in an application, gateway, or federation flow."
 tags: [security, identity-federation, oidc-token-validation]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

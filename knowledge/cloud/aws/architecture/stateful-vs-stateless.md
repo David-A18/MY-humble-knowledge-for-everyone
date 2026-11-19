@@ -4,7 +4,6 @@ title: "Stateful vs. stateless on AWS"
 description: "Use this page to classify AWS application components by where state lives and how that affects scaling, recovery, and operations."
 tags: [cloud, aws, architecture]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

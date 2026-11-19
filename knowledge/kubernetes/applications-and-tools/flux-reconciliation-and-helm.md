@@ -4,7 +4,6 @@ title: "Flux reconciliation and Helm releases"
 description: "Use this guide to understand Flux as a source-to-artifact-to-reconciler pipeline and to decide when to use Kustomization or HelmRelease."
 tags: [kubernetes, applications-and-tools, flux-reconciliation-and-helm]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

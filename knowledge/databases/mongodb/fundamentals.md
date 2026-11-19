@@ -4,7 +4,6 @@ title: "MongoDB fundamentals"
 description: "Use this page to understand MongoDB's core data model and when document databases are useful."
 tags: [databases, mongodb]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

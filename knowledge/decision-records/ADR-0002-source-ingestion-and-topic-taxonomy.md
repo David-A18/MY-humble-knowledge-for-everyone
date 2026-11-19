@@ -4,7 +4,6 @@ title: "ADR-0002: Source ingestion and topic taxonomy"
 description: "The knowledge base needs a clear place for raw Markdown notes before they are converted into curated documentation. It also needs explicit routes for topics that are expected to grow beyond the initial Git, Terraform, Kubernetes, and AWS sections."
 tags: [decision-records]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

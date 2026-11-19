@@ -4,7 +4,6 @@ title: Tutorial template
 description: Start a bounded, reproducible learning tutorial with prerequisites, validation, recovery, and cleanup.
 tags: [templates, tutorial]
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 ---

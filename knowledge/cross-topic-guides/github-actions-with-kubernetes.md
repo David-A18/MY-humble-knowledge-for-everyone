@@ -4,7 +4,6 @@ title: "GitHub Actions with Kubernetes"
 description: "Outline CI/CD workflows for validating and deploying Kubernetes workloads from GitHub Actions."
 tags: [cross-topic-guides, github-actions-with-kubernetes]
 status: draft
-maturity: initial-outline
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

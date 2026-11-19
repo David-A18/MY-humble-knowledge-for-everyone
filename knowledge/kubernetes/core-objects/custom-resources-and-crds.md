@@ -4,7 +4,6 @@ title: "Custom resources and CRDs"
 description: "Use this page to understand Kubernetes custom resources, CustomResourceDefinitions, and operators."
 tags: [kubernetes, core-objects, custom-resources-and-crds]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

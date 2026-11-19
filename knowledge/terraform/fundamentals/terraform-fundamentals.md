@@ -4,7 +4,6 @@ title: Terraform fundamentals
 description: Understand Terraform configuration, providers, resources, state, planning, application, and safe local practice before managing real infrastructure.
 tags: [terraform, fundamentals, infrastructure-as-code, beginner]
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -56,19 +55,19 @@ Understand the Terraform model before using it to manage cloud or shared infrast
 
 ## Learn without a cloud account
 
-Use [Terraform local state lifecycle](../examples/local-state-lifecycle/local-state-lifecycle.md). It uses the built-in `terraform_data` resource, so you can practice initialization, planning, state inspection, change review, and cleanup without cloud credentials.
+Use [Terraform local state lifecycle](../local-state-lifecycle.md). It uses the built-in `terraform_data` resource, so you can practice initialization, planning, state inspection, change review, and cleanup without cloud credentials.
 
 ## Continue the learning path
 
 - [Inputs, locals, and outputs](../language/variables-locals-and-outputs.md) — design a clear module contract.
-- [Module and workspace lab](../examples/module-workspace-lab/index.md) — execute tests, stable-key changes, and an ID-preserving refactor locally.
+- [Module and workspace lab](../../../examples/terraform/module-workspace-lab/README.md) — execute tests, stable-key changes, and an ID-preserving refactor locally.
 - [Provider dependencies](providers-and-dependency-locking.md) — distinguish package selection, aliases, and state locking.
 
 ## Related links
 
 - [Core Terraform workflow](../commands/core-workflow.md)
 - [Terraform state management](state-management.md)
-- [Terraform local state lifecycle](../examples/local-state-lifecycle/local-state-lifecycle.md)
+- [Terraform local state lifecycle](../local-state-lifecycle.md)
 - [Back to Terraform fundamentals](index.md)
 - [Back to Terraform index](../index.md)
 - [Back to knowledge index](../../index.md)

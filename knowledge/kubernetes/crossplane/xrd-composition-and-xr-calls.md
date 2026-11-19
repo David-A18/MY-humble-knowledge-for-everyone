@@ -4,7 +4,6 @@ title: "Crossplane XRDs, Compositions, and XR calls"
 description: "Use this page to understand the Crossplane platform API model from first principles: what an XRD is, what a Composition is, what an XR is, and what the Crossplane equivalent of a Terraform module call is."
 tags: [kubernetes, crossplane, xrd-composition-and-xr-calls]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

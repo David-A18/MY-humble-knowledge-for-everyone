@@ -4,7 +4,6 @@ title: "Crossplane on AWS"
 description: "Use this guide to run Crossplane in Kubernetes while managing AWS resources with clear bootstrap, authentication, account, GitOps, and ownership boundaries."
 tags: [cross-topic-guides, crossplane-on-aws]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

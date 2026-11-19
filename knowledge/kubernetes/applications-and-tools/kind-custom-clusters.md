@@ -4,7 +4,6 @@ title: "kind custom clusters"
 description: "Use this page to create local Kubernetes clusters with kind for development, CI, and platform-tooling labs."
 tags: [kubernetes, applications-and-tools, kind-custom-clusters]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

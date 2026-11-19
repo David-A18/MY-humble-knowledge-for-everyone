@@ -246,9 +246,9 @@ For every checked section, confirm all of the following:
   - [ ] [Crossplane](knowledge/kubernetes/crossplane/index.md) — provider
     lifecycle, credentials, managed-resource safety, compositions, and runtime
     evidence limits.
-  - [ ] [Examples](knowledge/kubernetes/examples/index.md) — prerequisites,
+  - [ ] [Examples](examples/kubernetes/README.md) — prerequisites,
     runnable scope, verification, cleanup, and learning value.
-    - [ ] [Local deployment learning path](knowledge/kubernetes/examples/local-deployment-learning-path/index.md)
+    - [ ] [Local deployment learning path](examples/kubernetes/local-deployment-learning-path/README.md)
       — beginner instructions, expected local results, failure recovery, and
       completion evidence.
   - [x] [Fundamentals](knowledge/kubernetes/fundamentals/index.md) — vocabulary,
@@ -282,9 +282,9 @@ For every checked section, confirm all of the following:
     — scope, exceptions, policy, security, and collaboration practices.
   - [x] [Terraform commands](knowledge/terraform/commands/index.md) — command
     state changes, plan review, permissions, expected results, and recovery.
-  - [x] [Terraform examples](knowledge/terraform/examples/index.md) — runnable
+  - [x] [Terraform examples](examples/terraform/README.md) — runnable
     assumptions, local safety, validation, and cleanup.
-    - [x] [Local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md)
+    - [x] [Local state lifecycle](examples/terraform/local-state-lifecycle/README.md)
       — tutorial precision, state inspection, failure modes, and destroy proof.
   - [x] [Terraform fundamentals](knowledge/terraform/fundamentals/index.md) —
     providers, resources, state, modules, variables, and lifecycle model.
@@ -330,18 +330,18 @@ For every checked section, confirm all of the following:
     - [ ] [Knowledge bases](knowledge/ai/ai-tooling/knowledge-bases/index.md)
       — knowledge architecture, authoring, provenance, freshness, retrieval,
       and agent behavior.
-      - [ ] [OKF v0.2 example bundle](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/index.md)
+      - [ ] [OKF v0.2 example bundle](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md)
         — conformance to the upstream format, clear separation from the
         canonical bundle, and safe illustrative data.
-        - [ ] [Example concepts](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/index.md)
+        - [ ] [Example concepts](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/concepts/index.md)
           — example metadata and reader purpose.
-        - [ ] [Example references](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/index.md)
+        - [ ] [Example references](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/index.md)
           — fixture navigation and source/attestation semantics.
-          - [ ] [Example attesters](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters/index.md)
+          - [ ] [Example attesters](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/attesters/index.md)
             — illustrative attester records and non-production boundaries.
-          - [ ] [Example executors](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors/index.md)
+          - [ ] [Example executors](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/executors/index.md)
             — illustrative execution records and non-production boundaries.
-          - [ ] [Example sources](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources/index.md)
+          - [ ] [Example sources](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/sources/index.md)
             — illustrative source records and provenance semantics.
 - [ ] [AI agents](knowledge/ai-agents/index.md) — agent workflows, tools,
   evaluation, safety, retrieval, and operational ownership.

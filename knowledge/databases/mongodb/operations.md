@@ -4,7 +4,6 @@ title: "MongoDB operations"
 description: "Use this page to operate MongoDB with attention to query performance, replication, sharding, backup, and recovery."
 tags: [databases, mongodb, operations]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -6,7 +6,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -42,7 +41,7 @@ Embeddings encode text into vectors; similarity finds nearby representations. A 
 Normalize cautiously, preserve exact identifiers, apply authorization/freshness filters, retrieve candidates, deduplicate, optionally rerank, and select a bounded evidence set. Hybrid systems may use rank fusion rather than comparing unrelated raw scores.
 
 ```bash
-python examples/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication missing JWT'
+python examples/llm/rag/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication missing JWT'
 ```
 
 What it does: executes the lab's safely quoted OR query over FTS5 and returns bounded ranked sections. BM25 scores rank results within the query; they are not calibrated answer-confidence probabilities.

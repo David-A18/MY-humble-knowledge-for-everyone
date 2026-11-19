@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          versions=knowledge/kubernetes/examples/local-deployment-learning-path/lab-versions.json
+          versions=examples/kubernetes/local-deployment-learning-path/lab-versions.json
           kind_version=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["kind"])' "$versions")
           kubectl_version=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["kubectl"])' "$versions")
           tools_dir=$(mktemp -d)
@@ -48,10 +48,10 @@ jobs:
           sudo install -m 0755 kind kubectl /usr/local/bin/
 
       - name: Exercise Git staged and unstaged recovery
-        run: python knowledge/kubernetes/examples/local-deployment-learning-path/validate-git-recovery.py
+        run: python examples/kubernetes/local-deployment-learning-path/validate-git-recovery.py
 
       - name: Exercise beginner Terraform local state lifecycle
-        run: python knowledge/terraform/examples/local-state-lifecycle/validate-lab.py
+        run: python examples/terraform/local-state-lifecycle/validate-lab.py
 
       - name: Exercise Kubernetes deployment failure recovery and cleanup
-        run: python knowledge/kubernetes/examples/local-deployment-learning-path/validate-lab.py --report local-journey-report.json
+        run: python examples/kubernetes/local-deployment-learning-path/validate-lab.py --report local-journey-report.json

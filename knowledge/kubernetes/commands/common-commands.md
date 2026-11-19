@@ -4,7 +4,6 @@ title: "Kubernetes common commands"
 description: "Collect common kubectl commands for applying manifests, comparing changes, managing rollouts, scaling workloads, deleting resources, filtering output, and exporting useful views."
 tags: [kubernetes, common-commands]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

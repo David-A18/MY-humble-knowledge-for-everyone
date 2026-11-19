@@ -4,7 +4,6 @@ title: "Evaluation and quality"
 description: "This guide defines how to measure whether an AI knowledge base works. A corpus is not good because it contains many files. It is good when agents can find the right evidence quickly, trust it appropriately, cite it correctly, and keep it current."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

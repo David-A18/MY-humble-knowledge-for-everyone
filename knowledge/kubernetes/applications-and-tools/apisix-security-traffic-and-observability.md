@@ -4,7 +4,6 @@ title: "APISIX security, traffic, and observability"
 description: "Use this guide to place the right policy in Apache APISIX without turning the gateway into hidden business logic."
 tags: [kubernetes, applications-and-tools]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

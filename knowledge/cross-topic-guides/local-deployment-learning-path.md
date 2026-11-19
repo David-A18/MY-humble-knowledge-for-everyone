@@ -8,7 +8,6 @@ tags:
 - local-development
 - beginner
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -45,16 +44,16 @@ Create a disposable kind cluster, deploy a two-replica web application, observe 
 
 This local Kubernetes route needs a working Linux-container Docker runtime, kind, kubectl, Git, Python, and public image-registry access. It creates no AWS resource and needs no AWS credentials. Manual commands below use Bash; use [Start here](../start-here.md) to choose the Git/Kubernetes/Terraform stage you can run.
 
-The [version contract](../kubernetes/examples/local-deployment-learning-path/lab-versions.json) pins kind v0.30.0, kubectl v1.34.1, and the release's Kubernetes v1.34.0 node digest.[^kind-release] The NGINX fixture uses a digest-pinned 1.30.6 Alpine image selected after reviewing the stable release notes.[^nginx-release] These are teaching inputs, not production readiness or a rolling latest-version promise.
+The [version contract](../../examples/kubernetes/local-deployment-learning-path/lab-versions.json) pins kind v0.30.0, kubectl v1.34.1, and the release's Kubernetes v1.34.0 node digest.[^kind-release] The NGINX fixture uses a digest-pinned 1.30.6 Alpine image selected after reviewing the stable release notes.[^nginx-release] These are teaching inputs, not production readiness or a rolling latest-version promise.
 
 ## What you will create
 
 | File | Purpose |
 | --- | --- |
-| [namespace.yaml](../kubernetes/examples/local-deployment-learning-path/namespace.yaml) | Task resource scope `kb-learning`. |
-| [deployment.yaml](../kubernetes/examples/local-deployment-learning-path/deployment.yaml) | Two Pods with readiness probes and explicit rollout headroom. |
-| [service.yaml](../kubernetes/examples/local-deployment-learning-path/service.yaml) | ClusterIP Service selecting ready web Pods. |
-| [failing-image-patch.yaml](../kubernetes/examples/local-deployment-learning-path/failing-image-patch.yaml) | Strategic merge patch for an existing Deployment; not a standalone resource. |
+| [namespace.yaml](../../examples/kubernetes/local-deployment-learning-path/namespace.yaml) | Task resource scope `kb-learning`. |
+| [deployment.yaml](../../examples/kubernetes/local-deployment-learning-path/deployment.yaml) | Two Pods with readiness probes and explicit rollout headroom. |
+| [service.yaml](../../examples/kubernetes/local-deployment-learning-path/service.yaml) | ClusterIP Service selecting ready web Pods. |
+| [failing-image-patch.yaml](../../examples/kubernetes/local-deployment-learning-path/failing-image-patch.yaml) | Strategic merge patch for an existing Deployment; not a standalone resource. |
 
 ## Concepts before commands
 
@@ -66,9 +65,9 @@ Run from the repository root, in a new Bash terminal:
 
 ```bash
 EXERCISE_DIR=$(mktemp -d "${TMPDIR:-/tmp}/kb-local-path.XXXXXX")
-cp knowledge/kubernetes/examples/local-deployment-learning-path/*.yaml "$EXERCISE_DIR/"
-cp knowledge/kubernetes/examples/local-deployment-learning-path/lab-versions.json "$EXERCISE_DIR/"
-cp knowledge/kubernetes/examples/local-deployment-learning-path/.gitignore "$EXERCISE_DIR/"
+cp examples/kubernetes/local-deployment-learning-path/*.yaml "$EXERCISE_DIR/"
+cp examples/kubernetes/local-deployment-learning-path/lab-versions.json "$EXERCISE_DIR/"
+cp examples/kubernetes/local-deployment-learning-path/.gitignore "$EXERCISE_DIR/"
 cd "$EXERCISE_DIR"
 git init -b learning
 git config user.name "Local learning fixture"
@@ -195,18 +194,18 @@ What it does: waits for namespace deletion, confirms no namespace result, then d
 
 ## Validation evidence and next step
 
-Official sources and fixture digests reviewed on 2026-11-10. An older revision recorded a rootless local run with Docker 29.8.0; that historical record is not a fresh execution of these revised inputs. The [automated runner](../kubernetes/examples/local-deployment-learning-path/validate-lab.py) and [CI workflow](../../.github/workflows/local-learning-journey.yml) check actual deployment, Service HTTP, port-forward, image-not-found failure, rollback and cleanup for each tested revision. Inspect its exact commit's result before treating those checks as executed. The authoring Windows host could not run Kubernetes.
+Official sources and fixture digests reviewed on 2026-11-10. An older revision recorded a rootless local run with Docker 29.8.0; that historical record is not a fresh execution of these revised inputs. The [automated runner](../../examples/kubernetes/local-deployment-learning-path/validate-lab.py) and [CI workflow](../../.github/workflows/local-learning-journey.yml) check actual deployment, Service HTTP, port-forward, image-not-found failure, rollback and cleanup for each tested revision. Inspect its exact commit's result before treating those checks as executed. The authoring Windows host could not run Kubernetes.
 
 Execution recorded on 2026-11-10: [the successful run for content revision c7d9d02](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42794513544) used Linux amd64, Docker 29.4.2, kind v0.30.0, kubectl v1.34.1 and Kubernetes v1.34.0. All six runtime assertions passed, including both HTTP paths, the intended failure with old Pods serving, restored image/endpoints/HTTP, namespace deletion, and removal of the kind cluster/node containers. The runner used the pinned node and NGINX digests shown in the inputs. This is hosted execution evidence, not independent beginner or rootless/desktop validation.
 
-Continue with the [Terraform local state lifecycle](../terraform/examples/local-state-lifecycle/local-state-lifecycle.md). Independent beginner testing, native Windows/WSL/rootless repetition, cloud load balancers, IAM and persistent storage remain outside this walkthrough's current evidence.
+Continue with the [Terraform local state lifecycle](../terraform/local-state-lifecycle.md). Independent beginner testing, native Windows/WSL/rootless repetition, cloud load balancers, IAM and persistent storage remain outside this walkthrough's current evidence.
 
 ## Related links
 
 - [Start here](../start-here.md)
 - [Kubernetes fundamentals](../kubernetes/fundamentals/index.md)
 - [Git undo and recovery](../git/troubleshooting/undo-and-recovery.md)
-- [Exercise files and validation](../kubernetes/examples/local-deployment-learning-path/index.md)
+- [Exercise files and validation](../../examples/kubernetes/local-deployment-learning-path/README.md)
 - [Back to cross-topic guides](index.md)
 
 [^kind-start]: [kind quick start](https://kind.sigs.k8s.io/docs/user/quick-start/).

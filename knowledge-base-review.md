@@ -150,7 +150,7 @@ The clearest cases are:
 
 - [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/index.md), a
   297-word explanation used by the beginner route.
-- [Terraform local state lifecycle](knowledge/terraform/examples/local-state-lifecycle/index.md), a
+- [Terraform local state lifecycle](examples/terraform/local-state-lifecycle/README.md), a
   622-word tutorial with a real local execution record.
 
 Move each learning outcome to a named concept beside the index, such as

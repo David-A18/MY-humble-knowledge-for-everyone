@@ -4,7 +4,6 @@ title: "ADR-0005: Publish a Git-backed reading site"
 description: "Present the canonical OKF bundle through a separate static website built from a reviewed, pinned knowledge-base revision."
 tags: [decision-records, okf, publishing, website]
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 ---

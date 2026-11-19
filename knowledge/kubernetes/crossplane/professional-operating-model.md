@@ -4,7 +4,6 @@ title: "Crossplane professional operating model"
 description: "Use this page to understand how professional platform teams actually work with Crossplane: what they give developers, what they keep private, how they review changes, and how Crossplane fits with GitOps, Terraform, AWS identity, policy, and observability."
 tags: [kubernetes, crossplane, professional-operating-model]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

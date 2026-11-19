@@ -4,7 +4,6 @@ title: "End-to-end deployment"
 description: "Map a complete delivery path from source control to running cloud infrastructure and application validation."
 tags: [cross-topic-guides, end-to-end-deployment]
 status: draft
-maturity: initial-outline
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

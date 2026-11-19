@@ -4,7 +4,6 @@ title: "GitHub Actions examples and use cases"
 description: "Use this page to copy common workflow shapes and understand how each example works."
 tags: [git, github-actions, examples-and-use-cases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

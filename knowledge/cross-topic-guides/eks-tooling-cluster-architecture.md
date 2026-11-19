@@ -4,7 +4,6 @@ title: "EKS tooling cluster architecture"
 description: "Use this guide to design a dedicated EKS tooling cluster that supports workload clusters."
 tags: [cross-topic-guides]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

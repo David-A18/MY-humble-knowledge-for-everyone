@@ -4,7 +4,6 @@ title: "Amazon MSK"
 description: "Use this page to understand when Amazon Managed Streaming for Apache Kafka is the right AWS home for Kafka workloads."
 tags: [cloud, aws, databases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

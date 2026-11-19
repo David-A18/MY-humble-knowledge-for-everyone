@@ -4,7 +4,6 @@ title: "Knowledge standards landscape"
 description: "This guide classifies the standards, specifications, conventions, protocols, and implementation technologies that appear around AI knowledge bases. The goal is to avoid treating every useful file format or retrieval tool as the same kind of \"standard.\""
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

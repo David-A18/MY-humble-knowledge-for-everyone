@@ -4,7 +4,6 @@ title: "Crossplane references"
 description: "Use this page as the reference list for the Crossplane section. Prefer these official sources when verifying examples, provider schemas, authentication behavior, operations, and production guidance."
 tags: [kubernetes, crossplane, references]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -4,7 +4,6 @@ title: "Helm for Kubernetes and Crossplane"
 description: "Use this page to understand Helm's chart and release model, safely inspect and"
 tags: [kubernetes, applications-and-tools, helm]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

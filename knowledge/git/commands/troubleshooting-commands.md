@@ -4,7 +4,6 @@ title: "Git troubleshooting commands"
 description: "Use this page to diagnose why Git is behaving unexpectedly before choosing a fix."
 tags: [git, troubleshooting-commands]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

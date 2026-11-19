@@ -8,7 +8,6 @@ tags:
 - providers
 - dependency-locking
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:
@@ -42,7 +41,7 @@ A provider is a plugin implementing resource/data-source operations. A provider 
 
 Default configuration inheritance does not replace a child's provider requirements. Aliases need deliberate wiring. Keep provider configuration blocks out of reusable child modules so the caller can control context and lifecycle.[^tf-module-providers]
 
-In the [local provider lab](../examples/provider-alias-lab/index.md), the root configures `local.artifacts` and maps it to the child's declared `local.writer` alias. The child uses that configuration to write one non-sensitive JSON artifact. This verifies wiring without suggesting that a label changes AWS identity.
+In the [local provider lab](../../../examples/terraform/provider-alias-lab/README.md), the root configures `local.artifacts` and maps it to the child's declared `local.writer` alias. The child uses that configuration to write one non-sensitive JSON artifact. This verifies wiring without suggesting that a label changes AWS identity.
 
 ## Review selection and upgrade behavior
 

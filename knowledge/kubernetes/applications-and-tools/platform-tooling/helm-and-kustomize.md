@@ -6,7 +6,6 @@ tags:
 - kubernetes
 - platform-tooling
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:

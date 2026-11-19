@@ -6,7 +6,6 @@ tags:
 - kubernetes
 - kro
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:

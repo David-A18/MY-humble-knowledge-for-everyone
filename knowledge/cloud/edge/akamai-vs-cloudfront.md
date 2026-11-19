@@ -4,7 +4,6 @@ title: "Akamai vs. CloudFront"
 description: "Use this page to choose between Akamai, Amazon CloudFront, or a multi-CDN approach."
 tags: [cloud, edge, akamai-vs-cloudfront]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

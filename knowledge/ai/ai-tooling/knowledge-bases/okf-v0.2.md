@@ -4,7 +4,6 @@ title: "OKF v0.2"
 description: "This article audits Open Knowledge Format v0.2 as a specification for portable, Git-friendly knowledge bundles that humans and agents can read, traverse, cite, and validate."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---
@@ -68,7 +67,7 @@ A dedicated bundle claimed to conform to OKF v0.2 must satisfy the official conf
 2. Every concept frontmatter block contains a non-empty `type`.
 3. Every reserved `index.md` or `log.md` follows its defined structure when present.
 
-A repository is not automatically an OKF bundle just because it documents OKF concepts. Here, the [`knowledge/` directory](../../../index.md) is the conformant bundle, while root governance files stay outside it. The separate [examples/okf-v0.2](examples/okf-v0.2/index.md) bundle demonstrates the format with synthetic content, so retrieval excludes it.
+A repository is not automatically an OKF bundle just because it documents OKF concepts. Here, the [`knowledge/` directory](../../../index.md) is the conformant bundle, while root governance files stay outside it. The separate [examples/okf-v0.2](../../../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md) bundle demonstrates the format with synthetic content, so retrieval excludes it.
 
 Consumers must be permissive. A consumer should not reject a bundle merely because it sees unknown `type` values, extra frontmatter keys, missing optional metadata, missing optional indexes, or tolerable broken knowledge links.
 
@@ -212,7 +211,7 @@ Document verification and runtime attestation are different. `verified` says the
 
 An LLM must not be the deterministic attester. It may explain a result, but attestation requires reproducible code or policy.
 
-See [Pod restart rate](examples/okf-v0.2/concepts/pod-restart-rate.md) for a small public-safe example.
+See [Pod restart rate](../../../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/concepts/pod-restart-rate.md) for a small public-safe example.
 
 ## When to use OKF
 
@@ -247,7 +246,7 @@ Do not use OKF as the only answer when:
 ## Related links
 
 - Official specification: [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md)
-- [OKF v0.2 example bundle](examples/okf-v0.2/index.md)
+- [OKF v0.2 example bundle](../../../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md)
 - [Knowledge standards landscape](knowledge-standards-landscape.md)
 - [Reference architecture](reference-architecture.md)
 - [Back to agent knowledge bases](index.md)

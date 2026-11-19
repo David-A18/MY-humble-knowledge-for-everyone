@@ -47,7 +47,7 @@ jobs:
 
       - name: Test RAG engine and MCP server
         run: |
-          python knowledge/llm/rag/examples/test_rag.py
+          python examples/llm/rag/test_rag.py
           python scripts/test-kb-mcp-server.py
 
       - name: Score retrieval against golden cases

@@ -4,7 +4,6 @@ title: "Kafka delivery guarantees and failure handling"
 description: "Use this guide to choose producer, consumer, retry, and dead-letter patterns that match the real business risk of duplicate, lost, or delayed records."
 tags: [databases, kafka]
 status: draft
-maturity: draft
 audience: "Engineers designing Kafka producers, consumers, and recovery paths"
 maintainer: unassigned
 sources:

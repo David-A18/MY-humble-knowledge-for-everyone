@@ -111,7 +111,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F3. **Owner:** Unassigned.
 
-**Edit:** [OKF example bundle](knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/readme-concept.md), [XRD guide](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md), and lint configuration only if necessary.
+**Edit:** [OKF example bundle](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/readme-concept.md), [XRD guide](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md), and lint configuration only if necessary.
 
 **Instructions:**
 
@@ -247,7 +247,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F4, F5, F8. **Owner:** Unassigned.
 
-**Edit:** [Terraform examples](knowledge/terraform/examples/index.md), [core workflow](knowledge/terraform/commands/core-workflow.md), and [state management](knowledge/terraform/fundamentals/state-management.md). Put actual exercise files in a focused subdirectory under `terraform/examples/` with its own `README.md`.
+**Edit:** [Terraform examples](examples/terraform/README.md), [core workflow](knowledge/terraform/commands/core-workflow.md), and [state management](knowledge/terraform/fundamentals/state-management.md). Put actual exercise files in a focused subdirectory under `terraform/examples/` with its own `README.md`.
 
 **Instructions:**
 

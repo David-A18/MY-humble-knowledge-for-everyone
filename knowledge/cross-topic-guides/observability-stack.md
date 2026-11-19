@@ -4,7 +4,6 @@ title: "Observability stack"
 description: "Describe the monitoring, logging, tracing, and alerting capabilities needed for cloud and Kubernetes operations."
 tags: [cross-topic-guides, observability-stack]
 status: draft
-maturity: initial-outline
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

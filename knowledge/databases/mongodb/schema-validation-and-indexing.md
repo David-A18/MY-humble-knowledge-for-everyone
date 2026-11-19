@@ -4,7 +4,6 @@ title: "MongoDB schema validation and indexing"
 description: "Use this guide to combine MongoDB's flexible document model with enough schema discipline and indexing to keep applications correct and queries predictable."
 tags: [databases, mongodb, schema-validation-and-indexing]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

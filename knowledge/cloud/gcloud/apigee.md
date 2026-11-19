@@ -4,7 +4,6 @@ title: "Apigee API management"
 description: "Use this page to understand where Google Cloud Apigee fits, how its main objects work together, and what to check before using it as an API management platform."
 tags: [cloud, gcloud, apigee]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

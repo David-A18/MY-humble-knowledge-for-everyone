@@ -4,7 +4,6 @@ title: "Security and governance"
 description: "This guide defines the security model for AI knowledge bases, retrieval systems, MCP serving, and agent-assisted maintenance."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

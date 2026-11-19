@@ -8,7 +8,6 @@ tags:
 - troubleshooting
 - plans
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:

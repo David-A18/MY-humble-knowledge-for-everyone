@@ -4,7 +4,6 @@ title: "Crossplane component model"
 description: "Use this page to understand every Crossplane-specific component that appears in a professional control plane: XRDs, XRs, Compositions, Functions, Configuration packages, providers, managed resources, activation policies, operations, environment data, usages, and package runtime controls."
 tags: [kubernetes, crossplane, component-model]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

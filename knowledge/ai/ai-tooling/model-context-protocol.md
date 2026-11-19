@@ -4,7 +4,6 @@ title: "Model Context Protocol"
 description: "This guide explains what Model Context Protocol is and how to design MCP servers that expose useful, safe tools and context to AI applications."
 tags: [ai, ai-tooling, model-context-protocol]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

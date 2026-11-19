@@ -11,7 +11,8 @@ const defaultIgnoredParts = [
   "sources/processed",
 ];
 
-const okfBundlePrefix = "knowledge/";
+// Directories that follow OKF index.md conventions instead of README.md.
+const okfBundlePrefixes = ["knowledge/", "examples/ai/ai-tooling/knowledge-bases/okf-v0.2/"];
 
 function toPosix(filePath) {
   return filePath.split(path.sep).join("/");
@@ -230,7 +231,7 @@ export function validateRepository(rootDirectory) {
 
   for (const file of markdownFiles) {
     const dir = path.dirname(file);
-    if (file.startsWith(okfBundlePrefix)) {
+    if (okfBundlePrefixes.some((prefix) => file.startsWith(prefix))) {
       if (path.basename(file) !== "index.md" && path.basename(file) !== "log.md") {
         const index = toPosix(path.join(dir, "index.md"));
         if (!markdownSet.has(index)) {

@@ -13,7 +13,7 @@ from pathlib import Path
 import yaml
 
 THIN_WORDS = 200
-EXCLUDED = ("knowledge/templates/", "knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/")
+EXCLUDED = ("knowledge/templates/",)
 
 
 def split_page(text: str) -> tuple[dict, str]:

@@ -6,7 +6,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -47,7 +46,7 @@ The lab accepts a repository root or the `knowledge/` bundle. It preserves repos
 Use an explicit allowlist of curated areas. The lab excludes raw incoming notes, processed-source archives, `work/`, templates, Git internals, and symlinked content. Public source eligibility is different from user-specific authorization in a private deployment.
 
 ```bash
-python examples/rag.py ingest --root ../.. --db /tmp/kb-rag.sqlite
+python examples/llm/rag/rag.py ingest --root ../.. --db /tmp/kb-rag.sqlite
 ```
 
 What it does: rebuilds the lab index from curated repository content when run from `knowledge/llm/rag`. The database must be a dedicated disposable lab database. Its content hash includes the actual files, including uncommitted edits; HEAD alone cannot identify that state.

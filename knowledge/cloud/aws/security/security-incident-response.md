@@ -8,7 +8,6 @@ tags:
 - security
 - incident-response
 status: draft
-maturity: draft
 audience: Cloud and platform engineers
 maintainer: unassigned
 sources:

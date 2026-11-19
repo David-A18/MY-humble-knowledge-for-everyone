@@ -4,7 +4,6 @@ title: "Kubernetes on AWS"
 description: "Collect guidance for running Kubernetes workloads on AWS infrastructure."
 tags: [cross-topic-guides, kubernetes-on-aws]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

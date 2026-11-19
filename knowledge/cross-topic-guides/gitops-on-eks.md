@@ -4,7 +4,6 @@ title: "GitOps on EKS"
 description: "Use this guide to operate EKS workloads with GitOps controllers such as Argo CD or Flux."
 tags: [cross-topic-guides, gitops-on-eks]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -4,7 +4,6 @@ title: "Topic and event design"
 description: "Use this page to design Kafka topics and events that are understandable, replayable, and operable."
 tags: [databases, kafka, topic-and-event-design]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

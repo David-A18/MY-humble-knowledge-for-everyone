@@ -6,7 +6,6 @@ tags:
 - cloud
 - cdk
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -38,7 +37,7 @@ Install pinned dependencies -> run TypeScript and Python assertions -> synthesiz
 
 For federation-based CI authentication, use the repository's existing GitHub Actions OIDC guidance. Avoid long-lived AWS keys in workflow variables. Synthesis can execute arbitrary application code, so do not give untrusted pull-request jobs production credentials.
 
-The [educational GitHub Actions workflow](examples/ci-workflow.yaml) installs pinned direct dependencies, runs both implementations, and compares synthesized resources. Action revisions are pinned to verified commits. It is supplied as an example, not installed in this repository's active workflows.
+The [educational GitHub Actions workflow](../../../../examples/cloud/aws/cdk/ci-workflow.yaml) installs pinned direct dependencies, runs both implementations, and compares synthesized resources. Action revisions are pinned to verified commits. It is supplied as an example, not installed in this repository's active workflows.
 
 ## Comparison boundary
 

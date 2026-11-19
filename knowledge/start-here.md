@@ -8,7 +8,6 @@ tags:
 - local-development
 - beginner
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -48,7 +47,7 @@ Manual walkthrough commands use Bash. Native PowerShell users can run the Python
 | 1 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Explain HEAD, index, and working tree. Unstage an edit without losing it, then restore only the disposable edit.[^git-restore] |
 | 2 | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Explain Pods, Deployments, ReplicaSets, readiness, labels and Services. |
 | 3 | [Local Kubernetes deployment exercise](cross-topic-guides/local-deployment-learning-path.md) | Ready workload and HTTP; actual invalid-image diagnosis; recovered image/HTTP; namespace/cluster cleanup. |
-| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | One state object, reviewed in-place update, correct output, and empty managed state after destroy. |
+| 4 | [Terraform local state lifecycle](terraform/local-state-lifecycle.md) | One state object, reviewed in-place update, correct output, and empty managed state after destroy. |
 
 The Kubernetes and Terraform examples teach separate reconciliation/state systems; Terraform does not provision this kind cluster. A Git restore changes a file, a Kubernetes rollback changes a live Pod template, and Terraform apply changes the objects tracked by its selected state. Keep those boundaries visible when explaining what you recovered.
 
@@ -71,7 +70,7 @@ Choose the next integration only after reading its account, credential, cost and
 | Explore AWS-hosted Kubernetes | [Deploying to EKS](cross-topic-guides/deploying-to-eks.md) | Authorized sandbox, AWS identity/network/cost controls and EKS permission checks. |
 | Learn infrastructure control planes | [Crossplane on AWS](cross-topic-guides/crossplane-on-aws.md) | Existing cluster, Crossplane concepts, scoped provider credentials and external-resource cleanup. |
 | Learn backup and recovery | [Velero](migrations/velero/index.md) | Owned cluster/object storage and a planned restore verification. |
-| Continue Terraform locally | [Module/workspace](terraform/examples/module-workspace-lab/index.md) and [provider alias](terraform/examples/provider-alias-lab/index.md) labs | Finish the beginner lifecycle first; retain separate local states. |
+| Continue Terraform locally | [Module/workspace](../examples/terraform/module-workspace-lab/README.md) and [provider alias](../examples/terraform/provider-alias-lab/README.md) labs | Finish the beginner lifecycle first; retain separate local states. |
 
 ## Evidence and current limits
 

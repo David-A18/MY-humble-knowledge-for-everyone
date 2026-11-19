@@ -4,7 +4,6 @@ title: "CDN and edge fundamentals"
 description: "Use this page to understand the basic CDN and edge-computing vocabulary used by CloudFront, Akamai, and multi-CDN designs."
 tags: [cloud, edge, cdn-and-edge-fundamentals]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

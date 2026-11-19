@@ -24,10 +24,10 @@ jobs:
         shell: bash
         run: |
           tools_dir=$(mktemp -d)
-          python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py \
+          python examples/kubernetes/applications-and-tools/manifest-validation/install-tools.py \
             --directory "$tools_dir" \
-            --versions knowledge/kubernetes/applications-and-tools/istio/examples/lab-versions.json
+            --versions examples/kubernetes/applications-and-tools/istio/lab-versions.json
           echo "$tools_dir" >> "$GITHUB_PATH"
           python -m pip install cryptography==46.0.3
       - name: Test sidecar identity JWT policy and mTLS
-        run: python knowledge/kubernetes/applications-and-tools/istio/examples/validate-mesh.py --report istio-mesh-report.json
+        run: python examples/kubernetes/applications-and-tools/istio/validate-mesh.py --report istio-mesh-report.json

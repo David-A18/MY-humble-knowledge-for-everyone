@@ -4,7 +4,6 @@ title: "Complete Git command catalog"
 description: "Use this catalog to recognize the Git command surface. Daily users should start with [Daily Git commands](daily-commands.md), [Common Git use cases](common-use-cases.md), and [Solve Git issues](solve-issues.md). This page keeps the complete inventory skimmable by separating command tables from examples."
 tags: [git, complete-command-catalog]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

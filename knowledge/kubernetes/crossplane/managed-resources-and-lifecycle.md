@@ -4,7 +4,6 @@ title: "Crossplane managed resources and lifecycle"
 description: "Use this page to understand direct managed resources, reconciliation fields, references, import behavior, pause controls, and deletion safety in Crossplane."
 tags: [kubernetes, crossplane, managed-resources-and-lifecycle]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

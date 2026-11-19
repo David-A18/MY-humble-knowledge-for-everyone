@@ -4,7 +4,6 @@ title: "GitHub Actions `uses` catalog"
 description: "Use this page to understand the uses: parameter and find common, general-purpose, and important actions for real workflows."
 tags: [git, github-actions, actions-and-uses-catalog]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

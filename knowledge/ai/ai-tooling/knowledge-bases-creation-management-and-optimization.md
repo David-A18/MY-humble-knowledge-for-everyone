@@ -4,7 +4,6 @@ title: "Knowledge-base creation, management, and optimization"
 description: "This guide is the compatibility entry point for agent-ready knowledge-base design. Use it to choose the right deeper guide for Markdown in Git, OKF v0.2, retrieval, provenance, freshness, security, evaluation, and MCP serving."
 tags: [ai, ai-tooling]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---
@@ -47,7 +46,7 @@ The Git corpus is the knowledge source of truth. Search indexes, vector indexes,
 | Track sources, trust, freshness, conflicts, and reconciliation | [Provenance, trust, and freshness](knowledge-bases/provenance-trust-and-freshness.md) |
 | Secure RAG, MCP serving, ingestion, and maintenance paths | [Security and governance](knowledge-bases/security-and-governance.md) |
 | Measure retrieval, answer quality, cost, freshness, and determinism | [Evaluation and quality](knowledge-bases/evaluation-and-quality.md) |
-| Inspect a small conformant bundle | [OKF v0.2 example bundle](knowledge-bases/examples/okf-v0.2/index.md) |
+| Inspect a small conformant bundle | [OKF v0.2 example bundle](../../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md) |
 
 ## Choosing the right approach
 

@@ -4,7 +4,6 @@ title: "eksctl commands for Amazon EKS"
 description: "Collect eksctl commands that are specific to Amazon EKS operations and different from normal kubectl work."
 tags: [kubernetes, eksctl-commands]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

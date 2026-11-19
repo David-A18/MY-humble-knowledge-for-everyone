@@ -4,7 +4,6 @@ title: "SonarQube"
 description: "Use this page to understand SonarQube Server as a code quality and security analysis platform, how analysis reaches the server, and how teams should use quality gates in delivery workflows."
 tags: [devops, code-quality, sonarqube]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

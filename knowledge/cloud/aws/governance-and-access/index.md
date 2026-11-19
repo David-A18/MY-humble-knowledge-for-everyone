@@ -16,7 +16,7 @@ Design account boundaries and workforce access, then verify provisioning, guardr
 | Provision and retire accounts | [Account vending and lifecycle](account-vending-and-lifecycle.md) — Organizations, Control Tower, AFT, acceptance and residual obligations. |
 | Review and remove human access | [Access reviews and offboarding](access-review-and-offboarding.md) — Overlapping direct/group paths, approvals, issued sessions and completion evidence. |
 | Diagnose an access/control failure | [Governance troubleshooting](governance-access-troubleshooting.md) — Directory, assignment, provisioning, credentials, policy path and recovery authority. |
-| Practice inventory reconciliation | [Examples](examples/index.md) — Synthetic joins, review expiry, uncertainty and fourteen local regression tests. |
+| Practice inventory reconciliation | [Access review lab](access-review-lab.md) — Synthetic joins, review expiry, uncertainty and fourteen local regression tests. The runnable files live in [examples](../../../../examples/cloud/aws/governance-and-access/README.md). |
 
 ## Evidence and remaining work
 

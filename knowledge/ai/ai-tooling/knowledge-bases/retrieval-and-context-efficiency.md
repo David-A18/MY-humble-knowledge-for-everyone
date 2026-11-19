@@ -4,7 +4,6 @@ title: "Retrieval and context efficiency"
 description: "This guide explains how to design retrieval for agent knowledge bases as a measurable context budget rather than a race to return more text."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

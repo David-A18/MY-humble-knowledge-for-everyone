@@ -6,7 +6,6 @@ tags:
 - kubernetes
 - kro
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -28,7 +27,7 @@ Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-
 
 ## Prerequisites
 
-Use a disposable kind cluster, kubectl, Helm 3, and kro **0.9.4**. The application image is pinned in the supplied [fixtures](examples/index.md). The release API is still `v1alpha1`; test compatibility before upgrades. Run from this series directory.[^pinned-kro-installation-instructions][^kro-v0-9-4-examples]
+Use a disposable kind cluster, kubectl, Helm 3, and kro **0.9.4**. The application image is pinned in the supplied [fixtures](../../../../examples/kubernetes/applications-and-tools/kro/README.md). The release API is still `v1alpha1`; test compatibility before upgrades. Run from this series directory.[^pinned-kro-installation-instructions][^kro-v0-9-4-examples]
 
 > [!WARNING]
 > Installation modifies cluster-wide components and APIs. Confirm the current context is the disposable lab cluster before proceeding.
@@ -37,7 +36,7 @@ Use a disposable kind cluster, kubectl, Helm 3, and kro **0.9.4**. The applicati
 
 ```bash
 helm install kro oci://registry.k8s.io/kro/charts/kro --namespace kro-system --create-namespace --version 0.9.4
-kubectl apply -f examples/webapp-rgd.yaml
+kubectl apply -f examples/kubernetes/applications-and-tools/kro/webapp-rgd.yaml
 kubectl get resourcegraphdefinition webapp
 kubectl api-resources | grep -i webapp
 ```
@@ -46,7 +45,7 @@ What it does: installs a pinned controller and requests a generated API. Inspect
 
 ```bash
 kubectl create namespace kro-lab
-kubectl apply -n kro-lab -f examples/webapp.yaml
+kubectl apply -n kro-lab -f examples/kubernetes/applications-and-tools/kro/webapp.yaml
 kubectl rollout status deployment/demo -n kro-lab --timeout=120s
 kubectl get webapp,deploy,service -n kro-lab
 kubectl port-forward -n kro-lab service/demo 8080:80
@@ -66,7 +65,7 @@ Do not manually maintain a second desired copy of the generated Deployment throu
 > Deleting an instance removes its managed workload resources according to controller lifecycle behavior. Use only the disposable namespace.
 
 ```bash
-kubectl delete -n kro-lab -f examples/webapp.yaml
+kubectl delete -n kro-lab -f examples/kubernetes/applications-and-tools/kro/webapp.yaml
 kubectl get deployment,service -n kro-lab
 kubectl delete namespace kro-lab
 ```

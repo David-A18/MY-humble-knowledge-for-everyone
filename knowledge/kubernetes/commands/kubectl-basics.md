@@ -4,7 +4,6 @@ title: kubectl basics
 description: Inspect the current Kubernetes context, workloads, logs, events, and resource details safely before making changes.
 tags: [kubernetes, kubectl, troubleshooting, beginner]
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:

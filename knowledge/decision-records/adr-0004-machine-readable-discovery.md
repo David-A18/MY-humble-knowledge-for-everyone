@@ -4,7 +4,6 @@ title: "ADR-0004: Keep Markdown canonical and generate discovery artifacts"
 description: "Keep OKF Markdown as the single curated source of truth while generating a deterministic catalog and testing navigation, command paths, and retrieval cases in CI."
 tags: [decision-records, okf, retrieval, quality]
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:

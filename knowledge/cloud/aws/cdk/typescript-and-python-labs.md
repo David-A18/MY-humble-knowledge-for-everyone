@@ -6,7 +6,6 @@ tags:
 - cloud
 - cdk
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -28,14 +27,14 @@ Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-
 
 ## Versions and files
 
-Examples pin `aws-cdk-lib==2.275.0` / `aws-cdk-lib: 2.275.0` and `constructs==10.8.1`. TypeScript tooling pins CDK CLI 2.1146.1 and tsx 4.23.15. Use Node 24 and Python 3.13. See [TypeScript files](examples/typescript/index.md) and [Python files](examples/python/index.md).[^cdk-testing][^s3-bucket-construct]
+Examples pin `aws-cdk-lib==2.275.0` / `aws-cdk-lib: 2.275.0` and `constructs==10.8.1`. TypeScript tooling pins CDK CLI 2.1146.1 and tsx 4.23.15. Use Node 24 and Python 3.13. See [TypeScript files](../../../../examples/cloud/aws/cdk/typescript/README.md) and [Python files](../../../../examples/cloud/aws/cdk/python/README.md).[^cdk-testing][^s3-bucket-construct]
 
 The stack enables S3-managed encryption, blocks all public access, requires TLS through a bucket policy, enables versioning, and retains the bucket on removal. It creates no application objects and needs no AWS calls for basic synthesis/assertions.
 
 ## TypeScript
 
 ```bash
-cd examples/typescript
+cd examples/cloud/aws/cdk/typescript
 pnpm install --ignore-scripts
 pnpm test
 pnpm synth
@@ -46,7 +45,7 @@ What it does: installs exact direct dependencies, checks security assertions, an
 ## Python
 
 ```bash
-cd examples/python
+cd examples/cloud/aws/cdk/python
 python -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python test_stack.py

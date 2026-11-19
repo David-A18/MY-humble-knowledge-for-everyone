@@ -49,7 +49,6 @@ def build_catalog(bundle: Path) -> dict:
                 "type": metadata["type"],
                 "tags": metadata["tags"],
                 "status": metadata["status"],
-                "maturity": metadata["maturity"],
                 "audience": metadata["audience"],
                 "maintainer": metadata["maintainer"],
                 "stale_after": metadata.get("stale_after"),

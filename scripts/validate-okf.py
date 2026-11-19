@@ -21,16 +21,9 @@ PROFILE_TYPES = {
     "Learning Path",
     "Template",
     "Glossary",
-    "Asset Guide",
-    # These types are used by the embedded OKF example bundle.
-    "Playbook",
-    "Attested Computation",
-    "Source Reference",
-    "Executor Reference",
-    "Attester Reference",
+    "News Brief",
 }
 STATUSES = {"draft", "stable", "deprecated"}
-MATURITY = {"initial-outline", "draft", "maintained", "deprecated"}
 ACTOR = re.compile(r"^(?:human:[A-Za-z0-9._-]+|process:[A-Za-z0-9._-]+|[A-Za-z0-9._-]+/[A-Za-z0-9._-]+)$")
 MAINTAINER = re.compile(r"^(?:unassigned|human:[A-Za-z0-9._-]+|team:[A-Za-z0-9._-]+)$")
 SOURCE_ID = re.compile(r"^[a-z0-9][a-z0-9-]*$")
@@ -93,15 +86,15 @@ def validate_bundle(bundle: Path) -> list[str]:
         if metadata is None:
             errors.append(f"{rel}: concept is missing YAML frontmatter")
             continue
-        for field in ("type", "title", "description", "tags", "status", "maturity", "audience", "maintainer"):
+        for field in ("type", "title", "description", "tags", "status", "audience", "maintainer"):
             if field not in metadata or metadata[field] in (None, "", []):
                 errors.append(f"{rel}: missing required profile field {field}")
         if metadata.get("type") not in PROFILE_TYPES:
             errors.append(f"{rel}: unsupported profile type {metadata.get('type')!r}")
         if metadata.get("status") not in STATUSES:
             errors.append(f"{rel}: status must be one of {sorted(STATUSES)}")
-        if metadata.get("maturity") not in MATURITY:
-            errors.append(f"{rel}: maturity must be one of {sorted(MATURITY)}")
+        if "maturity" in metadata:
+            errors.append(f"{rel}: maturity was retired; use status only")
         if not isinstance(metadata.get("tags"), list) or not all(isinstance(tag, str) and tag for tag in metadata.get("tags", [])):
             errors.append(f"{rel}: tags must be a non-empty list of strings")
         elif len(set(metadata["tags"])) != len(metadata["tags"]):
@@ -133,12 +126,8 @@ def validate_bundle(bundle: Path) -> list[str]:
         for date_field in ("stale_after",):
             if date_field in metadata and not isinstance(metadata[date_field], (str, date, datetime)):
                 errors.append(f"{rel}: {date_field} must be an ISO date or timestamp")
-        if (
-            metadata.get("status") == "stable"
-            and not rel.startswith("ai/ai-tooling/knowledge-bases/examples/okf-v0.2/")
-            and (not metadata.get("sources") or not metadata.get("stale_after"))
-        ):
-            errors.append(f"{rel}: stable concepts outside the embedded example need sources and stale_after")
+        if metadata.get("status") == "stable" and (not metadata.get("sources") or not metadata.get("stale_after")):
+            errors.append(f"{rel}: stable concepts need sources and stale_after")
 
     for directory in sorted({path.parent for path in markdown_files}):
         index = directory / "index.md"

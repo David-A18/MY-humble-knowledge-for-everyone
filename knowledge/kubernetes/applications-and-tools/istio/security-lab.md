@@ -7,7 +7,6 @@ tags:
 - kubernetes
 - istio
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -45,11 +44,11 @@ From the repository root, use an isolated Python environment and run the followi
 ```bash
 python -m pip install cryptography==46.0.3
 tools_dir=$(mktemp -d)
-python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py \
+python examples/kubernetes/applications-and-tools/manifest-validation/install-tools.py \
   --directory "$tools_dir" \
-  --versions knowledge/kubernetes/applications-and-tools/istio/examples/lab-versions.json
+  --versions examples/kubernetes/applications-and-tools/istio/lab-versions.json
 export PATH="$tools_dir:$PATH"
-python knowledge/kubernetes/applications-and-tools/istio/examples/validate-mesh.py
+python examples/kubernetes/applications-and-tools/istio/validate-mesh.py
 ```
 
 What it does: installs the checksum-pinned executables, creates a uniquely named cluster and runs the staged request checks. The two fixture images use digests. The JWT generator uses a fresh RSA key in memory and embeds its public JWKS in the policies. The runner passes the synthetic bearer token through stdin and retains only outcomes and version data in its report. The temporary directory holds the private kubeconfig, generated policies and short-lived token for the duration of the run.
@@ -79,9 +78,9 @@ The runner deletes both lab namespaces and verifies their absence. It attempts c
 
 ## Validation
 
-Reviewed the install, release-support and policy references on 2026-11-16. The GitHub Actions workflow runs the same request checks with pinned tools on Ubuntu 24.04. The [recorded develop run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/43842768767) passed every row on 2026-11-16. It confirmed the expected sidecar enrollment, the four request phases and the namespace, cluster and node-container cleanup checks. The [JSON report](examples/runtime-evidence.json) records the revision, outcomes and observed versions. The run used Docker 28.0.4 and Python 3.13.18. Ambient policy placement and production rollout are covered separately.
+Reviewed the install, release-support and policy references on 2026-11-16. The GitHub Actions workflow runs the same request checks with pinned tools on Ubuntu 24.04. The [recorded develop run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/43842768767) passed every row on 2026-11-16. It confirmed the expected sidecar enrollment, the four request phases and the namespace, cluster and node-container cleanup checks. The [JSON report](../../../../examples/kubernetes/applications-and-tools/istio/runtime-evidence.json) records the revision, outcomes and observed versions. The run used Docker 28.0.4 and Python 3.13.18. Ambient policy placement and production rollout are covered separately.
 
-- [Examples and version pins](examples/index.md)
+- [Examples and version pins](../../../../examples/kubernetes/applications-and-tools/istio/README.md)
 - [Istio security lab workflow](../../../../.github/workflows/istio-security-lab.yml)
 - [Troubleshooting and rollout](troubleshooting-and-rollout.md)
 - [Back to Istio](index.md) | [Back to Kubernetes](../../index.md)

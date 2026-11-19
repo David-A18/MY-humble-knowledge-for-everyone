@@ -4,7 +4,6 @@ title: "ADR-0001: Knowledge base structure"
 description: "The repository is intended to grow over time across Git, GitHub Actions, Terraform, Kubernetes, AWS, FinOps, architecture, troubleshooting, and best practices. A single large document would become difficult to navigate, review, and maintain."
 tags: [decision-records]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

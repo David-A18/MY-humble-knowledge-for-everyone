@@ -20,7 +20,7 @@ The [routing lab](regression-lab-and-ci.md) now supplies checksum-pinned tools, 
 
 ## Related links
 
-- [Runnable example files](examples/index.md)
+- [Runnable example files](../../../../examples/kubernetes/applications-and-tools/manifest-validation/README.md)
 
 - [Back to parent index](../index.md)
 - [Back to root index](../../../../README.md)

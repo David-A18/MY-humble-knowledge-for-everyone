@@ -4,7 +4,6 @@ title: "Velero troubleshooting and operations"
 description: "Use this page to diagnose Velero backup, restore, storage, snapshot, node-agent, and data movement issues."
 tags: [migrations, velero, troubleshooting-and-operations]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

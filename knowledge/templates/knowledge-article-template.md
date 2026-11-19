@@ -4,7 +4,6 @@ title: Knowledge article template
 description: Start a focused explanation or how-to guide with complete OKF metadata, evidence, and navigation.
 tags: [templates, knowledge-article]
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 ---

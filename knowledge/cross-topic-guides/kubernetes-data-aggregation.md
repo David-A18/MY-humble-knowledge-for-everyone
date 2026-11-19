@@ -6,7 +6,6 @@ description: Calculate minute-level order totals while handling duplicates, late
 tags:
 - cross-topic-guides
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -31,7 +30,7 @@ Sources reviewed: 2026-10-29. See the [validation record](../../knowledge-base-a
 
 ## Contract and limits
 
-The [example](examples/data-aggregation/index.md) uses one Kafka partition and one consumer with a SQLite database on a PVC. Each JSON event has a globally unique `id`, integer Unix-seconds `ts`, non-empty `region`, and integer `amount_cents`. It groups by region and 60-second tumbling window.[^kafka-docker-guide][^kafka-delivery-semantics][^kafka-python-consumer]
+The [example](../../examples/cross-topic-guides/data-aggregation/README.md) uses one Kafka partition and one consumer with a SQLite database on a PVC. Each JSON event has a globally unique `id`, integer Unix-seconds `ts`, non-empty `region`, and integer `amount_cents`. It groups by region and 60-second tumbling window.[^kafka-docker-guide][^kafka-delivery-semantics][^kafka-python-consumer]
 
 The watermark is maximum observed event time minus 30 seconds. A new event for a window whose end is at or behind the watermark is recorded as late rather than changing totals. Accepted event IDs and count/sum updates commit in one SQLite transaction. Consumer offsets commit afterward, so replay after a crash is deduplicated. This makes the local aggregate idempotent for matching event IDs, not every possible downstream effect exactly once.
 
@@ -42,8 +41,8 @@ The teaching engine retains deduplication IDs and totals indefinitely and advanc
 Use Python 3.13; the state engine uses only the standard library. Run from the repository root:
 
 ```bash
-python knowledge/cross-topic-guides/examples/data-aggregation/aggregate.py --db /tmp/aggregate.sqlite < knowledge/cross-topic-guides/examples/data-aggregation/events.jsonl
-python knowledge/cross-topic-guides/examples/data-aggregation/test_aggregate.py
+python examples/cross-topic-guides/data-aggregation/aggregate.py --db /tmp/aggregate.sqlite < examples/cross-topic-guides/data-aggregation/events.jsonl
+python examples/cross-topic-guides/data-aggregation/test_aggregate.py
 ```
 
 What it does: processes synthetic records, shows accepted/duplicate/late outcomes, and tests restart/replay behavior. Reusing the database deliberately retains prior state. Use a fresh dedicated file for a clean run.

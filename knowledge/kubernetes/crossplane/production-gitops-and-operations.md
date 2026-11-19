@@ -4,7 +4,6 @@ title: "Crossplane production, GitOps, and operations"
 description: "Use this page to run Crossplane as a critical control plane with GitOps, package promotion, observability, backup, upgrade, and operational workflow practices."
 tags: [kubernetes, crossplane]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

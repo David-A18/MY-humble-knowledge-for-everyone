@@ -27,7 +27,6 @@ title: Example
 description: A valid example concept.
 tags: [example]
 status: draft
-maturity: draft
 audience: Readers
 maintainer: unassigned
 ---

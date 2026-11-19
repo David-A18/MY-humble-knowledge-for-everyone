@@ -4,7 +4,6 @@ title: "Velero cluster migration and disaster recovery"
 description: "Use this page to plan Velero-based Kubernetes cluster migration, disaster recovery, and cross-cluster restores."
 tags: [migrations, velero]
 status: draft
-maturity: draft
 audience: "Platform engineers planning Kubernetes migration or disaster recovery with Velero"
 maintainer: unassigned
 sources:

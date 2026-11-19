@@ -13,7 +13,7 @@ Connect technology cost, useful output, and accountable engineering decisions. S
 | [Rightsizing and savings validation](rightsizing-and-savings-validation.md) | Validate capacity changes and distinguish modeled avoidance from realized results. |
 | [Commitments and rate optimization](commitments-and-rate-optimization.md) | Understand obligations, utilization/coverage, and overlapping savings claims. |
 | [Kubernetes allocation](kubernetes-cost-allocation.md) | Join cluster labels/metrics with real charges and owned shared/idle pools. |
-| [Examples](examples/index.md) | Execute synthetic calculations and thirteen tests without account access. |
+| [Cost analysis lab](cost-analysis-lab.md) | Execute synthetic calculations and thirteen tests without account access. The runnable files live in [examples](../../examples/finops/README.md). |
 
 ## AWS implementation routes
 

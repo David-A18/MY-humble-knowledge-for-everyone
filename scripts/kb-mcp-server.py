@@ -64,7 +64,7 @@ class KnowledgeServer:
     def __init__(self, root: Path, database: Path):
         self.root = root.resolve()
         self.database = database
-        self.rag = load_rag(self.root / "knowledge/llm/rag/examples/rag.py")
+        self.rag = load_rag(self.root / "examples/llm/rag/rag.py")
         self.rag.ingest(self.root, database)
 
     def concepts(self) -> dict[str, dict]:

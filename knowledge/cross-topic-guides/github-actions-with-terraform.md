@@ -4,7 +4,6 @@ title: "GitHub Actions with Terraform"
 description: "Define a safe CI workflow for formatting, validating, and reviewing Terraform changes with GitHub Actions."
 tags: [cross-topic-guides, github-actions-with-terraform]
 status: draft
-maturity: initial-outline
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -6,7 +6,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -30,8 +29,8 @@ Supply the user question separately from numbered evidence records. Each record 
 The lab optionally sends evidence to a local Ollama `/api/chat` endpoint with streaming disabled. Without a model argument it returns retrieved evidence and reports that generation did not run. A local endpoint is a deployment choice, not proof that a model is correct or safe.
 
 ```bash
-python examples/rag.py ask --db /tmp/kb-rag.sqlite 'How does IRSA obtain credentials?'
-python examples/rag.py ask --db /tmp/kb-rag.sqlite --model YOUR_INSTALLED_MODEL 'How does IRSA obtain credentials?'
+python examples/llm/rag/rag.py ask --db /tmp/kb-rag.sqlite 'How does IRSA obtain credentials?'
+python examples/llm/rag/rag.py ask --db /tmp/kb-rag.sqlite --model YOUR_INSTALLED_MODEL 'How does IRSA obtain credentials?'
 ```
 
 What it does: first inspects evidence without a model; then optionally requests a locally generated answer. Replace the model with one installed in your Ollama server and record its exact tag/digest. Downloading models can be large and is separate from this lab.

@@ -8,7 +8,6 @@ tags:
 - for-each
 - hcl
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:
@@ -52,7 +51,7 @@ output "releases" {
 }
 ```
 
-What it does: returns each module's public record under its stable service key. It belongs in the runnable [module lab](../examples/module-workspace-lab/index.md), where the provider-independent resource stores a teaching record in local state.
+What it does: returns each module's public record under its stable service key. It belongs in the runnable [module lab](../../../examples/terraform/module-workspace-lab/README.md), where the provider-independent resource stores a teaching record in local state.
 
 Unknown values are not automatically failures: a resource output can legitimately become known after apply. Distinguish an unknown attribute value from an unknown set of instance keys. Avoid routine `-target` or artificial `depends_on` blocks as a substitute for a clear graph.
 
@@ -70,7 +69,7 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 
 ## Related routes
 
-- [Module and workspace lab](../examples/module-workspace-lab/index.md).
+- [Module and workspace lab](../../../examples/terraform/module-workspace-lab/README.md).
 - [Unexpected plan diagnosis](../troubleshooting/failures-and-unexpected-plans.md).
 - [Back to this section](index.md)
 - [Back to Terraform](../index.md)

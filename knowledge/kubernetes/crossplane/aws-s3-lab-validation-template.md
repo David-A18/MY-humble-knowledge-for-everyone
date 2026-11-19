@@ -4,7 +4,6 @@ title: "Crossplane AWS S3 lab validation template"
 description: "Record an authorized sandbox execution of the [Crossplane local AWS S3 lab](local-aws-s3-lab.md) without committing credentials, account-sensitive output, or private infrastructure details."
 tags: [kubernetes, crossplane, aws-s3-lab-validation-template]
 status: draft
-maturity: draft
 audience: "Maintainers validating Crossplane AWS authentication guidance"
 maintainer: unassigned
 ---

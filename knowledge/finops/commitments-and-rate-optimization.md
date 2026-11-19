@@ -8,7 +8,6 @@ tags:
 - commitments
 - rate-optimization
 status: draft
-maturity: draft
 audience: Platform engineers and cloud cost owners
 maintainer: unassigned
 sources:
@@ -49,7 +48,7 @@ Review remaining eligible demand after planned rightsizing, shutdowns, migration
 
 For a synthetic one-period example, quantity falls from 100 to 80 and rate falls from 1.00 to 0.75. Cost changes from 100 to 60. The quantity effect at the original rate is 20; the rate effect on the remaining 80 units is another 20. The combined difference is 40, not 45 obtained by adding 20% and 25% as if independent.
 
-This decomposition is an explainable modeling convention. A fixed real commitment obligation, credits, license charges, or transfer costs can change the cash outcome. Use the [local lab](examples/cost-analysis-lab/index.md) to verify the arithmetic, then reconcile actual contracts/billing before claiming realized results.
+This decomposition is an explainable modeling convention. A fixed real commitment obligation, credits, license charges, or transfer costs can change the cash outcome. Use the [local lab](../../examples/finops/cost-analysis-lab/README.md) to verify the arithmetic, then reconcile actual contracts/billing before claiming realized results.
 
 ## Decision and operational boundaries
 

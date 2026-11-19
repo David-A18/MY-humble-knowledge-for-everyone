@@ -74,7 +74,7 @@ def score_abstention(rag, database: Path, questions: list[str], k: int) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", type=Path)
-    parser.add_argument("--rag", default="knowledge/llm/rag/examples/rag.py", type=Path)
+    parser.add_argument("--rag", default="examples/llm/rag/rag.py", type=Path)
     parser.add_argument("--cases", default=[Path("tests/retrieval-cases.yaml")], nargs="+", type=Path)
     parser.add_argument("--unanswerable", type=Path, help="YAML list of questions the corpus cannot answer")
     parser.add_argument("--k", default=8, type=int)

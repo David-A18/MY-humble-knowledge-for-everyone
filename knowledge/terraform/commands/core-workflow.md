@@ -4,7 +4,6 @@ title: "Core Terraform workflow"
 description: "Document the standard command flow for making and reviewing Terraform changes."
 tags: [terraform, core-workflow]
 status: stable
-maturity: maintained
 audience: "Beginning platform engineer"
 maintainer: unassigned
 sources:
@@ -261,7 +260,7 @@ the review needs provider behavior, state refresh, or permission validation.
 
 ## Local practice exercise
 
-Use [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md) to run the command flow without a cloud account.
+Use [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md) to run the command flow without a cloud account.
 
 ## Expanded operational routes
 
@@ -281,7 +280,7 @@ Use [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md
 - [terraform providers lock reference](https://developer.hashicorp.com/terraform/cli/commands/providers/lock)
 - [Terraform dependency lock file](https://developer.hashicorp.com/terraform/language/files/dependency-lock)
 - [Terraform state management](../fundamentals/state-management.md)
-- [Terraform local state lifecycle](../examples/local-state-lifecycle/index.md)
+- [Terraform local state lifecycle](../../../examples/terraform/local-state-lifecycle/README.md)
 - [Back to Terraform commands](index.md)
 - [Back to Terraform index](../index.md)
 - [Back to root index](../../../README.md)

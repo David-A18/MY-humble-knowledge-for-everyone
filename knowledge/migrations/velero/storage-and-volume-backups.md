@@ -4,7 +4,6 @@ title: "Velero storage and volume backups"
 description: "Use this page to choose how Velero should store backup artifacts and protect Kubernetes persistent volume data."
 tags: [migrations, velero, storage-and-volume-backups]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

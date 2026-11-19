@@ -4,7 +4,6 @@ title: "Velero real use cases and runbooks"
 description: "Use this page to map Velero capabilities to realistic Kubernetes operations."
 tags: [migrations, velero, real-use-cases-and-runbooks]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

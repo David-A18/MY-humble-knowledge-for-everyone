@@ -4,7 +4,6 @@ title: Kubernetes fundamentals
 description: Learn the cluster, Namespace, Pod, Deployment, Service, label, and reconciliation concepts used in the local learning path.
 tags: [kubernetes, fundamentals, beginner]
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:

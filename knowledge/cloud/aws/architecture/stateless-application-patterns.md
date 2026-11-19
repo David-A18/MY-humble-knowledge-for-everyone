@@ -4,7 +4,6 @@ title: "Stateless application patterns on AWS"
 description: "Use this guide to move application compute toward replaceable, horizontally scalable replicas while keeping required state in services designed to persist, replicate, secure, and recover it."
 tags: [cloud, aws, architecture]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

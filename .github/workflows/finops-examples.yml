@@ -24,7 +24,7 @@ jobs:
           python-version: "3.13"
 
       - name: Verify synthetic cost reconciliation and comparison contracts
-        run: python knowledge/finops/examples/cost-analysis-lab/test-cost-analysis.py
+        run: python examples/finops/cost-analysis-lab/test-cost-analysis.py
 
       - name: Run the synthetic report
-        run: python knowledge/finops/examples/cost-analysis-lab/cost-analysis.py
+        run: python examples/finops/cost-analysis-lab/cost-analysis.py

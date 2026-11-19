@@ -29,15 +29,15 @@ jobs:
         run: |
           set -euo pipefail
           tools_dir=$(mktemp -d)
-          python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py --directory "$tools_dir"
+          python examples/kubernetes/applications-and-tools/manifest-validation/install-tools.py --directory "$tools_dir"
           echo "$tools_dir" >> "$GITHUB_PATH"
           python -m pip install PyYAML==6.0.3
 
       - name: Check source fixtures
-        run: python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/test-fixtures.py
+        run: python examples/kubernetes/applications-and-tools/manifest-validation/test-fixtures.py
 
       - name: Exercise actual semantic schema and policy tools
-        run: python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-offline.py --report manifest-offline-report.json
+        run: python examples/kubernetes/applications-and-tools/manifest-validation/validate-offline.py --report manifest-offline-report.json
 
       - name: Exercise live drift routing regression and cleanup
-        run: python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-cluster.py --report manifest-cluster-report.json
+        run: python examples/kubernetes/applications-and-tools/manifest-validation/validate-cluster.py --report manifest-cluster-report.json

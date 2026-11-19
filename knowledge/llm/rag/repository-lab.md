@@ -7,7 +7,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -39,11 +38,11 @@ Use Python **3.13 or newer** with SQLite FTS5 enabled. The retrieval path uses o
 Run from the repository root:
 
 ```bash
-python knowledge/llm/rag/examples/rag.py ingest --root . --db /tmp/kb-rag.sqlite
-python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication'
-python knowledge/llm/rag/examples/rag.py ask --db /tmp/kb-rag.sqlite 'AssumeRoleWithWebIdentity'
-python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite "$(python -c 'import secrets; print(secrets.token_hex(16))')"
-python knowledge/llm/rag/examples/test_rag.py
+python examples/llm/rag/rag.py ingest --root . --db /tmp/kb-rag.sqlite
+python examples/llm/rag/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication'
+python examples/llm/rag/rag.py ask --db /tmp/kb-rag.sqlite 'AssumeRoleWithWebIdentity'
+python examples/llm/rag/rag.py search --db /tmp/kb-rag.sqlite "$(python -c 'import secrets; print(secrets.token_hex(16))')"
+python examples/llm/rag/test_rag.py
 python scripts/evaluate-retrieval.py --unanswerable tests/unanswerable-questions.yaml --show-misses
 ```
 

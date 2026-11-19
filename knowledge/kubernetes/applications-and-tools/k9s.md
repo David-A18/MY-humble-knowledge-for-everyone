@@ -4,7 +4,6 @@ title: "K9s"
 description: "Use this page to understand what K9s is, how to move around in it, and how to inspect common Kubernetes resources without typing every kubectl command manually."
 tags: [kubernetes, applications-and-tools, k9s]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---
