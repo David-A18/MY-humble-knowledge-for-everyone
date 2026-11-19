@@ -50,8 +50,12 @@ plans.
 Give one next step, link the concept page that covers it, or write "No action
 needed".
 
-## Sources
+## Related links
+
+- [News](../news/index.md)
+
+After copying, change these to the month's `index.md` and `../../index.md`.
 
 [^primary-announcement]: [Title of the official announcement](https://example.com/announcement)
 
-[Back to news](../news/index.md)
+The footnote definitions above render as the brief's source list.

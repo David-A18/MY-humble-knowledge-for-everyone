@@ -18,8 +18,16 @@ after which it is history rather than current advice.
 
 ## Briefs
 
-No briefs are published yet. The first weekly roundup will be listed here by
-year and month.
+### Latest: week of 16 November 2026
+
+- [OpenAI releases GPT-6.2 Astra and Sol](2026/11/openai-gpt-6-2-astra-and-sol.md)
+- [Patch the critical Java vulnerability CVE-2026-114938](2026/11/critical-java-vulnerability-cve-2026-114938.md)
+- [Federal Reserve minutes point to possible rate increases](2026/11/fed-minutes-signal-possible-rate-increase.md)
+- [EU AI Act changes take effect on a new timeline](2026/11/eu-ai-act-new-prohibitions-december-2026.md)
+
+### Archive
+
+- [2026](2026/index.md)
 
 ## Contribute a brief
 

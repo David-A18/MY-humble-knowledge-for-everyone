@@ -14,6 +14,7 @@ arxiv.org
 aws.amazon.com
 blog.crossplane.io
 cert-manager.io
+cisa.gov
 cli.github.com
 cloud.google.com
 cluster-api.sigs.k8s.io
@@ -37,8 +38,10 @@ docs.python.org
 docs.sonarsource.com
 docs.upbound.io
 ebpf.io
+eur-lex.europa.eu
 external-secrets.io
 falco.org
+federalreserve.gov
 fluxcd.io
 gateway-api.sigs.k8s.io
 genai.owasp.org
@@ -67,14 +70,18 @@ learn.chatgpt.com
 learn.microsoft.com
 mariadb.com
 marketplace.upbound.io
+mermaid.js.org
 modelcontextprotocol.io
 nginx.org
+oeil.europarl.europa.eu
 ona.com
 open-policy-agent.github.io
+openai.com
 opencost.io
 opengitops.dev
 openid.net
 opentelemetry.io
+oracle.com
 pagefind.app
 platform.claude.com
 platformengineering.org
@@ -100,4 +107,3 @@ www.sqlite.org
 www.upbound.io
 www.w3.org
 www.writethedocs.org
-mermaid.js.org

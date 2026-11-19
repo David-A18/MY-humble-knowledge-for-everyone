@@ -674,3 +674,24 @@ cases:
   - knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md
   required_source_ids:
   - chainsaw-project
+- id: news-java-vulnerability
+  question: Which Java vulnerability did CISA urge organizations to patch immediately
+    in November 2026?
+  expected_paths:
+  - knowledge/news/2026/11/critical-java-vulnerability-cve-2026-114938.md
+  required_source_ids:
+  - cisa-alert
+- id: news-eu-ai-act-timeline
+  question: When do the EU AI Act high-risk obligations apply after the Digital Omnibus
+    on AI?
+  expected_paths:
+  - knowledge/news/2026/11/eu-ai-act-new-prohibitions-december-2026.md
+  required_source_ids:
+  - eu-regulation-2026-1744
+- id: gha-terraform-approved-apply
+  question: How do I apply only a reviewed Terraform plan from GitHub Actions after
+    an environment approval?
+  expected_paths:
+  - knowledge/cross-topic-guides/github-actions-with-terraform.md
+  required_source_ids:
+  - gha-environments

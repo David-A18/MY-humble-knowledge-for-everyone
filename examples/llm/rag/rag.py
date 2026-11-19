@@ -11,12 +11,11 @@ import sqlite3
 import time
 import urllib.request
 
-AREAS = {"ai", "ai-agents", "cloud", "cross-topic-guides", "databases", "decision-records",
-         "devops", "finops", "git", "kubernetes", "llm", "migrations", "ml", "mlops",
+AREAS = {"ai", "cloud", "cross-topic-guides", "databases", "decision-records",
+         "devops", "finops", "git", "kubernetes", "llm", "migrations", "news",
          "programming-languages", "security", "solutions-architect", "terraform"}
-ROOT_CONCEPTS = {"glossary.md", "GLOSSARY.md", "start-here.md"}
+ROOT_CONCEPTS = {"glossary.md", "start-here.md"}
 RESERVED = {"index.md", "log.md"}
-# Synthetic demonstration content: its reviewers and sources are not real evidence.
 NAVIGATION_HEADINGS = {"related links", "related routes", "contents"}
 STOP = set("""what is a an the how does do can we use it for in of to and why about with
     are be been but by did from had has have i if into its may me might must my on or our
