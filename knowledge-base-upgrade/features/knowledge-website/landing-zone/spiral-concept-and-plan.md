@@ -9,7 +9,7 @@ Audience: The maintainer and AI agents designing and building the landing zone
 Page type: Design specification and plan
 Maintainer: Unassigned
 Last substantive review: Not independently reviewed; written 2026-11-19
-Applicable versions: Catalog of 2026-11-19 (290 concepts); prototype version 1
+Applicable versions: Catalog of 2026-11-19 (290 concepts); prototype version 2
 Validation evidence: A working prototype was built and driven in headless Chromium (software WebGL) at 1440x900 and 390x844 in dark and light themes. The full flow ran with no console errors and no horizontal overflow. No real GPU, real phone, screen reader, or reader test was used.
 Known limitations: The prototype is a single HTML page, not website code. Generated video has not been produced yet. Timings and budgets below are design targets until measured on real devices.
 Next review: After the reference clips are generated and the prototype is tuned
@@ -166,13 +166,31 @@ Preparation and review:
 | 7. Quality gates | Preflight gates plus frame-rate checks on real devices and WebGL-off tests | All gates pass |
 | 8. Launch and learn | Deploy, then run reader tasks | Reader results recorded; navigation adjusted |
 
-## Known issues in prototype version 1
+## Prototype version 2: cinematic renderer
 
-- The Cloud & Platform spiral has 12 coils and reads as dense. Consider grouping small loops, or a taller spiral with a longer intro camera move.
-- The AI and Tech News spirals are thin. They should still look complete with very few pages.
-- Labels can crowd the base rings on narrow laptop screens.
+The owner judged version 1 too simple ("like a game on low graphics"). Version 2 keeps the concept and controls and rebuilds the rendering to match the reference image:
+
+| Layer | Technique |
+| --- | --- |
+| Camera | Close on one spiral at a time, like the reference composition; scrolling climbs the spiral; the other spirals stand far behind for depth; an "All" view shows the three together |
+| Ribbon | A real 3D band whose width lies on the spiral surface, so it narrows at the silhouette; animated plasma noise, a white-hot core, bright edges, and travelling streaks |
+| Glow | A wide soft halo band, two light filaments wrapping the ribbon, and HDR bloom that only catches values above white |
+| Pages | Paper textures drawn with each topic's real section, type, title, summary, and status; curl and flutter in the vertex shader; backlit tint from the ribbon colour at that height; luminous edges |
+| Beam | White-gold core with travelling energy pulses, a star flare, and an anamorphic streak at the top |
+| Base | A swirling vortex disk, a hot point, and seven slightly tilted orbit rings with travelling sparks |
+| Particles | Ribbon dust streams, ambient dust, and star-shaped sparkles with diffraction spikes |
+| Background | A high-quality domain-warped nebula rendered once into a texture, plus a star field with diffraction spikes on bright stars |
+| Finish | ACES tone mapping in the dark theme, slight chromatic aberration, vignette, and film grain |
+| Navigation | A section rail on the right lists every loop; hovering a tick moves the camera to it and clicking enters it |
+
+The Gemini step in phase 2 is still open: this cloud session has no browser and no API key. The generated clips will serve as the tuning target and the poster loop, as planned above.
+
+## Known issues
+
+- The Cloud & Platform spiral is tall (12 loops). Climbing works, but the intro could travel the whole spiral once.
+- The AI and Tech News spirals are short. They should still look complete with very few pages.
 - Touch has no hover state. A tap goes straight to the preview card, which is intended, but needs a reader test.
-- Software WebGL was used for checks. Real-GPU frame rates are unknown.
+- Software WebGL was used for checks. Real-GPU frame rates are unknown, and the renderer needs a low-power profile (no filaments, fewer particles, no bloom) before launch.
 
 ## Related links
 
