@@ -1,5 +1,8 @@
 # Knowledge-base improvement plan
 
+> [!NOTE]
+> Archived on 2026-11-19. This document is kept for history and is superseded by the [roadmap](../../ROADMAP.md). Paths and plans in it may be out of date.
+
 Created: 2026-09-18
 
 Status: Complete for the documentation-scope improvement plan. KB-01 through KB-15 have implementation evidence. KB-04 and KB-14 keep optional follow-up issues for future sandbox execution evidence and reader-session evidence, but those follow-ups are not blockers for publishing or maintaining this documentation knowledge base.
@@ -12,7 +15,7 @@ Turn the review into a practical execution guide for contributors and AI agents.
 
 The first priority is to correct known problems and establish reliable validation. The next priority is to complete one beginner learning path. Expand coverage and publishing tools after those foundations work.
 
-This file is the implementation backlog, acceptance guide, and evidence log. [ROADMAP.md](ROADMAP.md) remains the high-level direction; the [review](knowledge-base-review.md) remains a dated record of findings. The status line above records the current implementation state; older task records preserve what was actually checked and which optional evidence was not gathered.
+This file is the implementation backlog, acceptance guide, and evidence log. [ROADMAP.md](../../ROADMAP.md) remains the high-level direction; the [review](knowledge-base-review.md) remains a dated record of findings. The status line above records the current implementation state; older task records preserve what was actually checked and which optional evidence was not gathered.
 
 ## Contents
 
@@ -32,7 +35,7 @@ This file is the implementation backlog, acceptance guide, and evidence log. [RO
 
 ## How to execute this plan
 
-1. Read [AGENTS.md](AGENTS.md), [context.md](context.md), [instructions.md](instructions.md), and [CONTRIBUTING.md](CONTRIBUTING.md). Read any applicable directory instructions before editing there.
+1. Read [AGENTS.md](../../AGENTS.md), [context.md](../../context.md), [instructions.md](../../instructions.md), and [CONTRIBUTING.md](../../CONTRIBUTING.md). Read any applicable directory instructions before editing there.
 2. Inspect the current checkout and changes. The review describes a historical baseline; confirm a reported defect still exists before changing it.
 3. Select the earliest unfinished work package whose required dependency deliverables are available and verified. Within a phase, independent packages can be tackled in either order.
 4. Set its tracker status to `In progress` and record the actual contributor or agent as owner. Do not assign another person's time without agreement.
@@ -95,7 +98,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F3 and the review's validation limitations. **Owner:** Unassigned.
 
-**Inspect:** [Review](knowledge-base-review.md), [lint configuration](.markdownlint-cli2.jsonc), [link configuration](lychee.toml), and current Git status.
+**Inspect:** [Review](knowledge-base-review.md), [lint configuration](../../.markdownlint-cli2.jsonc), [link configuration](../../lychee.toml), and current Git status.
 
 **Instructions:**
 
@@ -111,7 +114,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F3. **Owner:** Unassigned.
 
-**Edit:** [OKF example bundle](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/readme-concept.md), [XRD guide](knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md), and lint configuration only if necessary.
+**Edit:** [OKF example bundle](../../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/readme-concept.md), [XRD guide](../../knowledge/kubernetes/crossplane/xrd-composition-and-xr-calls.md), and lint configuration only if necessary.
 
 **Instructions:**
 
@@ -126,7 +129,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F1. **Owner:** Unassigned.
 
-**Edit:** [Undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md) and any related Git pages containing the same explanation.
+**Edit:** [Undo and recovery](../../knowledge/git/troubleshooting/undo-and-recovery.md) and any related Git pages containing the same explanation.
 
 **Instructions:**
 
@@ -141,7 +144,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F2 and F6. **Owner:** Unassigned.
 
-**Edit:** [Crossplane S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md), [provider authentication](knowledge/kubernetes/crossplane/providers-and-authentication.md), and relevant snippets found by search.
+**Edit:** [Crossplane S3 lab](../../knowledge/kubernetes/crossplane/local-aws-s3-lab.md), [provider authentication](../../knowledge/kubernetes/crossplane/providers-and-authentication.md), and relevant snippets found by search.
 
 **Instructions:**
 
@@ -157,7 +160,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F4. **Owner:** Unassigned.
 
-**Edit:** [Kafka delivery guarantees](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md).
+**Edit:** [Kafka delivery guarantees](../../knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md).
 
 **Instructions:**
 
@@ -177,7 +180,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F4, F6, F9. **Owner:** Unassigned.
 
-**Edit:** [Templates](knowledge/templates/index.md), [writing instructions](instructions.md), and [contributor checklist](CONTRIBUTING.md).
+**Edit:** [Templates](../../knowledge/templates/index.md), [writing instructions](../../instructions.md), and [contributor checklist](../../CONTRIBUTING.md).
 
 **Instructions:**
 
@@ -193,7 +196,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F7 and part of F10. **Owner:** Unassigned.
 
-**Edit:** [Root index](README.md), [cross-topic index](knowledge/cross-topic-guides/index.md), affected area indexes, [source router](sources/AGENTS.md), and [documentation-error form](.github/ISSUE_TEMPLATE/documentation-error.yml).
+**Edit:** [Root index](../../README.md), [cross-topic index](../../knowledge/cross-topic-guides/index.md), affected area indexes, [source router](../../sources/AGENTS.md), and [documentation-error form](../../.github/ISSUE_TEMPLATE/documentation-error.yml).
 
 **Instructions:**
 
@@ -208,7 +211,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F8. **Owner:** Unassigned.
 
-**Edit:** Existing workflows under `.github/workflows/`, [content CI/CD process](knowledge/git/github-actions/content-ci-cd-process.md), and a small maintained validation entry point if needed.
+**Edit:** Existing workflows under `.github/workflows/`, [content CI/CD process](../../knowledge/git/github-actions/content-ci-cd-process.md), and a small maintained validation entry point if needed.
 
 **Instructions:**
 
@@ -230,7 +233,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Finding:** F5. **Owner:** Unassigned.
 
-**Edit:** [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/index.md), [kind guidance](knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md), [troubleshooting](knowledge/kubernetes/troubleshooting/common-solutions.md), and relevant Git indexes. Proposed new paths: `start-here.md` and `cross-topic-guides/local-deployment-learning-path.md`; create and link them only during this package.
+**Edit:** [Kubernetes fundamentals](../../knowledge/kubernetes/fundamentals/index.md), [kind guidance](../../knowledge/kubernetes/applications-and-tools/kind-custom-clusters.md), [troubleshooting](../../knowledge/kubernetes/troubleshooting/common-solutions.md), and relevant Git indexes. Proposed new paths: `start-here.md` and `cross-topic-guides/local-deployment-learning-path.md`; create and link them only during this package.
 
 **Instructions:**
 
@@ -247,7 +250,7 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 **Findings:** F4, F5, F8. **Owner:** Unassigned.
 
-**Edit:** [Terraform examples](examples/terraform/README.md), [core workflow](knowledge/terraform/commands/core-workflow.md), and [state management](knowledge/terraform/fundamentals/state-management.md). Put actual exercise files in a focused subdirectory under `terraform/examples/` with its own `README.md`.
+**Edit:** [Terraform examples](../../examples/terraform/README.md), [core workflow](../../knowledge/terraform/commands/core-workflow.md), and [state management](../../knowledge/terraform/fundamentals/state-management.md). Put actual exercise files in a focused subdirectory under `terraform/examples/` with its own `README.md`.
 
 **Instructions:**
 
@@ -265,16 +268,16 @@ A dependency can supply verified input while still `Ready to publish`. In partic
 
 Use this initial cohort; replace a page only with a documented reason based on reader impact:
 
-1. [Git undo and recovery](knowledge/git/troubleshooting/undo-and-recovery.md).
-2. [Crossplane local AWS S3 lab](knowledge/kubernetes/crossplane/local-aws-s3-lab.md).
-3. [Crossplane providers and authentication](knowledge/kubernetes/crossplane/providers-and-authentication.md).
-4. [Terraform core workflow](knowledge/terraform/commands/core-workflow.md).
-5. [Terraform state management](knowledge/terraform/fundamentals/state-management.md).
-6. [Kafka delivery guarantees and failure handling](knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md).
-7. [Velero AWS S3 and EBS installation](knowledge/migrations/velero/aws-s3-ebs-installation.md).
-8. [Velero backup and restore workflows](knowledge/migrations/velero/backup-restore-workflows.md).
-9. [Velero migration and disaster recovery](knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md).
-10. [Deploying to EKS](knowledge/cross-topic-guides/deploying-to-eks.md).
+1. [Git undo and recovery](../../knowledge/git/troubleshooting/undo-and-recovery.md).
+2. [Crossplane local AWS S3 lab](../../knowledge/kubernetes/crossplane/local-aws-s3-lab.md).
+3. [Crossplane providers and authentication](../../knowledge/kubernetes/crossplane/providers-and-authentication.md).
+4. [Terraform core workflow](../../knowledge/terraform/commands/core-workflow.md).
+5. [Terraform state management](../../knowledge/terraform/fundamentals/state-management.md).
+6. [Kafka delivery guarantees and failure handling](../../knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md).
+7. [Velero AWS S3 and EBS installation](../../knowledge/migrations/velero/aws-s3-ebs-installation.md).
+8. [Velero backup and restore workflows](../../knowledge/migrations/velero/backup-restore-workflows.md).
+9. [Velero migration and disaster recovery](../../knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md).
+10. [Deploying to EKS](../../knowledge/cross-topic-guides/deploying-to-eks.md).
 
 **Instructions:** Review each page's consequential claims against current official sources; record applicable versions, last substantive review, actual reviewer, and validation scope. Reuse evidence from completed corrective tasks when it still applies. Check prerequisites, warning placement, success checks, failure handling, and cleanup. Record unavailable integration tests explicitly.
 
@@ -284,7 +287,7 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Finding:** F9. **Owner:** Unassigned.
 
-**Start with:** [Git catalog](knowledge/git/commands/complete-command-catalog.md), [K9s](knowledge/kubernetes/applications-and-tools/k9s.md), [Crossplane component model](knowledge/kubernetes/crossplane/component-model.md), and other long pages listed in the review.
+**Start with:** [Git catalog](../../knowledge/git/commands/complete-command-catalog.md), [K9s](../../knowledge/kubernetes/applications-and-tools/k9s.md), [Crossplane component model](../../knowledge/kubernetes/crossplane/component-model.md), and other long pages listed in the review.
 
 **Instructions:** Add concise contents navigation where readers jump between tasks. Use descriptive headings and narrow tables. Explain acronyms at first meaningful use. Check rendered tables, code, heading navigation, and diagrams on wide and narrow screens. Describe diagram meaning in surrounding text. Split only when a page serves genuinely separate reader goals; update incoming links if a split changes paths or anchors.
 
@@ -298,7 +301,7 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Findings:** F10 and F11. **Owner:** Unassigned.
 
-**Edit:** [AGENTS.md](AGENTS.md), [context.md](context.md), [instructions.md](instructions.md), [CONTRIBUTING.md](CONTRIBUTING.md), [processed-source index](sources/processed/README.md), and related source instructions.
+**Edit:** [AGENTS.md](../../AGENTS.md), [context.md](../../context.md), [instructions.md](../../instructions.md), [CONTRIBUTING.md](../../CONTRIBUTING.md), [processed-source index](../../sources/processed/README.md), and related source instructions.
 
 **Instructions:**
 
@@ -315,7 +318,7 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Finding:** F12. **Owner:** Unassigned.
 
-**Edit:** [Roadmap](ROADMAP.md), issue forms, and a small review queue linked from contributor guidance. A new queue file must be linked from its parent index.
+**Edit:** [Roadmap](../../ROADMAP.md), issue forms, and a small review queue linked from contributor guidance. A new queue file must be linked from its parent index.
 
 **Instructions:**
 
@@ -332,7 +335,7 @@ Use this initial cohort; replace a page only with a documented reason based on r
 
 **Finding:** F13. **Owner:** Unassigned.
 
-**Deliverable:** A decision record using the [ADR template](knowledge/templates/architecture-decision-record-template.md), linked from the [decision index](knowledge/decision-records/index.md).
+**Deliverable:** A decision record using the [ADR template](../../knowledge/templates/architecture-decision-record-template.md), linked from the [decision index](../../knowledge/decision-records/index.md).
 
 **Instructions:** Compare staying with repository navigation against a small static reading site using KB-14's findability evidence. Assess maintenance effort, search, mobile readability, accessibility, link compatibility, archives, and single-source publishing. If a prototype is useful, keep it bounded and evaluate it with the same tasks. Verify current tool capabilities before choosing a generator or host.
 
@@ -403,7 +406,7 @@ Use lowercase kebab-case for new documentation names and relative internal links
 
 Preserve the purpose of existing pages. Search before adding duplicate content. Place general database knowledge under databases, provider-specific material under cloud, and genuine multi-technology procedures under cross-topic guides.
 
-For imported material, follow [sources/AGENTS.md](sources/AGENTS.md). Verify claims, preserve source references, record the curated destinations, and archive the original only after successful ingestion. Never promote unknown authorship or generated statements into verified facts.
+For imported material, follow [sources/AGENTS.md](../../sources/AGENTS.md). Verify claims, preserve source references, record the curated destinations, and archive the original only after successful ingestion. Never promote unknown authorship or generated statements into verified facts.
 
 ## Validation and publication
 
@@ -427,7 +430,7 @@ git status --short --branch
 
 What it does: runs the repository Markdown scope, checks tracked diff whitespace, and identifies intended and unintended changes. Include new untracked files in the content review and link/lint checks.
 
-Also run the repository-aware link check and the technical checks relevant to the changed examples. KB-08 must document a stable command for those checks; do not invent an executable path before that tool exists. If using lychee, follow [lychee.toml](lychee.toml) and the [existing workflow](.github/workflows/link-check.yml), record its version, and distinguish external availability from local resolution.
+Also run the repository-aware link check and the technical checks relevant to the changed examples. KB-08 must document a stable command for those checks; do not invent an executable path before that tool exists. If using lychee, follow [lychee.toml](../../lychee.toml) and the existing workflow (`.github/workflows/link-check.yml`, since replaced by `repository-gate.yml`), record its version, and distinguish external availability from local resolution.
 
 ### Definition of done
 
@@ -442,7 +445,7 @@ Also run the repository-aware link check and the technical checks relevant to th
 - [ ] The staged diff includes only intended content.
 - [ ] Publication and remaining limitations are recorded in the handoff.
 
-Follow [instructions.md](instructions.md) and the [content CI/CD process](knowledge/git/github-actions/content-ci-cd-process.md) for committing and pushing validated work to the canonical branch. Use explicit file staging or hunk staging when other changes exist. Never force-push or discard unrelated changes to complete a documentation task.
+Follow [instructions.md](../../instructions.md) and the [content CI/CD process](../../knowledge/git/github-actions/content-ci-cd-process.md) for committing and pushing validated work to the canonical branch. Use explicit file staging or hunk staging when other changes exist. Never force-push or discard unrelated changes to complete a documentation task.
 
 If repository-wide checks fail, record which failures predate the task and validate the changed files separately to assess the change. A clean changed-file check does not waive the existing full-validation publication rule. Stop publication at that blocker and leave a precise handoff; do not silently weaken checks or broaden the task to unrelated fixes.
 
@@ -518,7 +521,7 @@ Owner: Codex
 Date: 2026-09-18
 Starting commit and pre-existing changes: Same batch as KB-01.
 Reader outcome: The known omission in temporary AWS credential examples is corrected in source-reviewed docs, and maintainers now have public-safe prerequisite, template, and issue-form paths for recording the missing AWS/Crossplane sandbox run.
-Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`, `kubernetes/crossplane/aws-s3-lab-validation-template.md`, `kubernetes/crossplane/README.md`, `.github/ISSUE_TEMPLATE/crossplane-aws-s3-validation.yml`, `external-evidence-request.md`, `maintenance-review-queue.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, and this plan.
+Files changed: `kubernetes/crossplane/local-aws-s3-lab.md`, `kubernetes/crossplane/providers-and-authentication.md`, `kubernetes/crossplane/aws-resource-workflow.md`, `kubernetes/crossplane/aws-s3-lab-validation-template.md`, `kubernetes/crossplane/README.md`, `.github/ISSUE_TEMPLATE/crossplane-aws-s3-validation.yml`, `governance/external-evidence-request.md`, `governance/maintenance-review-queue.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: AWS CLI credential-file documentation for short-term credentials and `aws_session_token`; Crossplane AWS S3 provider package example remains pinned to `xpkg.upbound.io/upbound/provider-aws-s3:v2.6.1`.
 Checks executed, tool versions, and results: Source review confirmed manually supplied AWS STS credentials require `aws_access_key_id`, `aws_secret_access_key`, and `aws_session_token`. Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed. For the external-evidence checklist batch, `npx markdownlint-cli2 "**/*.md"` passed across 250 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 250 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed. For the label-manifest validation batch, `python3 scripts/test-issue-template-validator.py` passed validator fixtures, `python3 scripts/validate-issue-templates.py` passed for 5 issue forms and 5 declared labels, and `python3 scripts/check-github-labels.py --repo David-A18/MY-humble-knowledge-for-everyone` confirmed 5 declared labels match the live GitHub repository labels. For the issue-form commit-placeholder clarification, local validation and GitHub Actions passed in commit `b57e80e`.
 Checks not executed and reason: The full Crossplane-to-AWS authentication path was not executed because this is a documentation knowledge base and no authorized non-production AWS sandbox credentials were available. A 2026-09-20 local preflight audit found Docker CLI 29.8.0 installed, but no reachable Docker daemon at the default socket and no usable kind, kubectl, Helm, or AWS CLI on `PATH`, so a local kind/Crossplane preflight still could not run in this workspace. The documentation states that limitation instead of claiming runtime proof.
@@ -588,7 +591,7 @@ Owner: Codex
 Date: 2026-09-18; execution evidence updated 2026-09-19.
 Starting commit and pre-existing changes: Original content published in the KB-01 batch; execution resumed from clean `main` at `3797b75`.
 Reader outcome: The first beginner route now exists and includes Git recovery, Kubernetes fundamentals, a local deployment exercise, a controlled failure, diagnosis, recovery, cleanup, and next-step links.
-Files changed: `start-here.md`, `cross-topic-guides/local-deployment-learning-path.md`, `kubernetes/fundamentals/README.md`, `kubernetes/examples/README.md`, `kubernetes/examples/local-deployment-learning-path/*`, `ROADMAP.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
+Files changed: `start-here.md`, `cross-topic-guides/local-deployment-learning-path.md`, `kubernetes/fundamentals/README.md`, `kubernetes/examples/README.md`, `kubernetes/examples/local-deployment-learning-path/*`, `ROADMAP.md`, `governance/maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Docker 29.8.0 rootless daemon, kind v0.30.0, Kubernetes v1.34.0 node image, kubectl v1.34.1 client, and stable Kubernetes Namespace, Deployment, and Service APIs.
 Checks executed, tool versions, and results: Created kind cluster `kb-local`; verified the control-plane node was `Ready`; applied namespace, Deployment, and Service; waited for two ready Pods; port-forwarded the Service and confirmed an HTTP response with `curl`; corrected `failing-image-patch.yaml` after Kubernetes rejected the previous incomplete Deployment patch; reproduced the intended `ErrImagePull` and `ImagePullBackOff`; rolled back successfully; practiced `git restore --staged` and `git restore`; deleted the namespace; deleted the kind cluster; confirmed no kind clusters remained. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed. The changed processed-source ingestion register also passed a direct local-link sanity check.
 Checks not executed and reason: Independent beginner testing was not executed; that optional follow-up belongs to KB-14 and requires actual readers.
@@ -658,7 +661,7 @@ Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `f7196bb`, tracking `origin/main`.
 Reader outcome: Maintainers now have a linked queue, optional external-evidence checklist, facilitator guide, results template, and issue form for priority guide reviews, validation follow-ups, and future reader-task testing.
-Files changed: `maintenance-review-queue.md`, `external-evidence-request.md`, `reader-test-facilitator-guide.md`, `reader-test-results-template.md`, `.github/ISSUE_TEMPLATE/reader-test-results.yml`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
+Files changed: `governance/maintenance-review-queue.md`, `governance/external-evidence-request.md`, `governance/reader-testing/facilitator-guide.md`, `governance/reader-testing/results-template.md`, `.github/ISSUE_TEMPLATE/reader-test-results.yml`, `README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `context.md`, `.github/ISSUE_TEMPLATE/documentation-error.yml`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository routes and KB-14 acceptance criteria in this plan.
 Checks executed, tool versions, and results: Python/PyYAML parsed all GitHub issue templates. `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 248 Markdown files for the initial scaffold. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 248 Markdown files and passed local links, fragments, indexes, and reachability. For the facilitator-guide batch, `npx markdownlint-cli2 "**/*.md"` passed across 249 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 249 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed. For the external-evidence checklist batch, `npx markdownlint-cli2 "**/*.md"` passed across 250 Markdown files, `node scripts/test-local-link-validator.mjs` passed, `node scripts/validate-local-links.mjs` checked 250 Markdown files and passed, `python3 scripts/validate-issue-templates.py` passed, and `git diff --check` passed. For the reader-test issue-form commit-placeholder clarification, local validation and GitHub Actions passed in commit `b57e80e`.
 Checks not executed and reason: Reader trials were not run because no participant group is available in this workspace. Author execution evidence now exists for the local Kubernetes beginner path under KB-09. The external evidence checklist and facilitator guide have not been exercised with actual readers yet, so the docs treat reader outcomes as optional future evidence.
@@ -672,7 +675,7 @@ Owner: Codex
 Date: 2026-09-19
 Starting commit and pre-existing changes: Started from clean `main` at `e4926ef`, tracking `origin/main`.
 Reader outcome: The repository now has an explicit publishing decision: keep Markdown repository navigation as the canonical surface for now, and reopen the static-site question only if reader testing or maintainer feedback identifies a measured need.
-Files changed: `decision-records/adr-0003-searchable-site-decision.md`, `decision-records/README.md`, `maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
+Files changed: `decision-records/adr-0003-searchable-site-decision.md`, `decision-records/README.md`, `governance/maintenance-review-queue.md`, `CHANGELOG.md`, and this plan.
 Authoritative sources and applicable versions: Current repository navigation, validation, and maintenance state at `e4926ef`; KB-14 scaffold and current lack of reader-findability evidence.
 Checks executed, tool versions, and results: `npx markdownlint-cli2 "**/*.md"` passed with `markdownlint-cli2 v0.23.2` and `markdownlint v0.41.1` across 246 Markdown files. `node scripts/test-local-link-validator.mjs` passed. `node scripts/validate-local-links.mjs` checked 246 Markdown files and passed local links, fragments, indexes, and reachability. `git diff --check` passed.
 Checks not executed and reason: Static-site generator and hosting capabilities were not evaluated because the decision does not select a generator, host, prototype, or public deployment path. Reader testing remains unavailable, so the ADR records a conservative current decision and a revisit trigger rather than fabricated site evidence.
@@ -711,7 +714,7 @@ Track completion and limitations together. Page count, word count, and number of
 Use the following task brief when starting implementation. Replace the task ID with an eligible package from the tracker.
 
 ```text
-Implement work package KB-01 from knowledge-base-improvement-plan.md.
+Implement work package KB-01 from governance/archive/knowledge-base-improvement-plan.md.
 
 Read repository and applicable directory instructions first. Inspect current
 Git state, preserve pre-existing changes, and recheck the review finding against
@@ -733,12 +736,12 @@ What it does: scopes implementation to one verifiable package while preserving e
 ## Related links
 
 - [Knowledge-base review](knowledge-base-review.md)
-- [Roadmap](ROADMAP.md)
-- [Agent router](AGENTS.md)
-- [Context map](context.md)
-- [Writing instructions](instructions.md)
-- [Contributing](CONTRIBUTING.md)
-- [Templates](knowledge/templates/index.md)
-- [Knowledge-base provenance and freshness](knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md)
-- [Knowledge-base evaluation](knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
-- [Back to root index](README.md)
+- [Roadmap](../../ROADMAP.md)
+- [Agent router](../../AGENTS.md)
+- [Context map](../../context.md)
+- [Writing instructions](../../instructions.md)
+- [Contributing](../../CONTRIBUTING.md)
+- [Templates](../../knowledge/templates/index.md)
+- [Knowledge-base provenance and freshness](../../knowledge/ai/ai-tooling/knowledge-bases/provenance-trust-and-freshness.md)
+- [Knowledge-base evaluation](../../knowledge/ai/ai-tooling/knowledge-bases/evaluation-and-quality.md)
+- [Back to root index](../../README.md)

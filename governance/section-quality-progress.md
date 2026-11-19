@@ -4,7 +4,7 @@ Review snapshot: 2026-11-16. This ledger tracks the ongoing section-by-section q
 
 ## Current batch: Istio sidecar security lab
 
-Reviewed the lab and its runnable fixtures on 2026-11-16 and kept the existing concept URL. The [Istio sidecar lab](knowledge/kubernetes/applications-and-tools/istio/security-lab.md) now runs in a private kind cluster with checksum-pinned tools and workload image digests. Source review covered installation, release compatibility, PeerAuthentication, RequestAuthentication and AuthorizationPolicy. The local fixture check verified the synthetic JWT signature and matching JWKS with cryptography 46.0.3.
+Reviewed the lab and its runnable fixtures on 2026-11-16 and kept the existing concept URL. The [Istio sidecar lab](../knowledge/kubernetes/applications-and-tools/istio/security-lab.md) now runs in a private kind cluster with checksum-pinned tools and workload image digests. Source review covered installation, release compatibility, PeerAuthentication, RequestAuthentication and AuthorizationPolicy. The local fixture check verified the synthetic JWT signature and matching JWKS with cryptography 46.0.3.
 
 The [develop run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/43842768767) passed on Istio 1.32.0, Kubernetes 1.34.0, kind 0.30.0, kubectl 1.34.1, Docker 28.0.4 and Python 3.13.18. It verified enrollment, baseline connectivity for all three clients, plaintext rejection under STRICT, JWT-only acceptance of missing credentials, malformed-token HTTP 401 and the combined policy's HTTP 200/403/403/401 matrix. Both namespaces, the cluster and its node containers were removed. The first run found a CLI version-output parsing error before cluster creation. The runner now checks the structured version field.
 
@@ -16,7 +16,7 @@ Reviewed all five direct concepts and all three section indexes. The route now e
 
 Official Kubernetes, dyff, kubeconform, Conftest, Helm/Helm Diff, kind and versioned Chainsaw sources reviewed on 2026-11-10. Added checksum-pinned Linux tools, a Kustomize fixture, eight actual source-tool assertions and thirteen private-cluster assertions. The existing fixture test is explicitly a declaration contract, not proof that `containerPort` starts a listener.
 
-Executed locally: Python 3.13.17/PyYAML 6.0.3, Git 2.55.0.windows.2, dyff 1.12.0, kubeconform 0.8.0 and Conftest 0.71.1/OPA 1.21.1. Text order differs, semantic order does not; target port differs; all four known objects validate despite wrong routing; invalid replicas and missing custom schema fail specifically; ownership allowed/denied cases pass. Cluster/Python/YAML syntax checks are not runtime evidence. Hosted execution is recorded for [develop integration 73d0ac0](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42804065069): all eight offline and thirteen cluster checks pass. The [retained report](examples/kubernetes/applications-and-tools/manifest-validation/runtime-evidence.json) records Docker 28.0.4, kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0 and Chainsaw 0.2.15, node/schema pins, actual diff error status 2 and HTTP failure status 1. Both Chainsaw outcomes and all namespace/cluster/container absence checks pass. The live work exposed and repaired the pinned kubectl external-command argument behavior and the preexisting Chainsaw namespace binding; these are now explained in the guides. Documentation/report-record edits do not change executable behavior; future revisions still need their own CI.
+Executed locally: Python 3.13.17/PyYAML 6.0.3, Git 2.55.0.windows.2, dyff 1.12.0, kubeconform 0.8.0 and Conftest 0.71.1/OPA 1.21.1. Text order differs, semantic order does not; target port differs; all four known objects validate despite wrong routing; invalid replicas and missing custom schema fail specifically; ownership allowed/denied cases pass. Cluster/Python/YAML syntax checks are not runtime evidence. Hosted execution is recorded for [develop integration 73d0ac0](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42804065069): all eight offline and thirteen cluster checks pass. The [retained report](../examples/kubernetes/applications-and-tools/manifest-validation/runtime-evidence.json) records Docker 28.0.4, kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0 and Chainsaw 0.2.15, node/schema pins, actual diff error status 2 and HTTP failure status 1. Both Chainsaw outcomes and all namespace/cluster/container absence checks pass. The live work exposed and repaired the pinned kubectl external-command argument behavior and the preexisting Chainsaw namespace binding; these are now explained in the guides. Documentation/report-record edits do not change executable behavior; future revisions still need their own CI.
 
 The Linux gate creates an isolated kind 0.30.0/Kubernetes 1.34.0 cluster with private kubeconfig, tests live statuses and no-persistence, actual healthy/broken/restored Service behavior, the same Chainsaw test with positive/negative inputs, and namespace/cluster/container cleanup. Helm/Helm Diff releases, GitOps controllers, CRD admission, multi-node/platform and independent reader cases remain follow-ups. Next focused batch: Istio security identities/JWT/mTLS runtime acceptance.
 
@@ -193,7 +193,7 @@ Known follow-ups: reproduce these sequences in disposable clusters; record actua
 | Local retrieval smoke check | Seven targeted keyword queries each retrieve their intended new guide in the top five chunks; a freshly generated absent token produces `NO_EVIDENCE`. No model generation was requested. |
 | Runtime boundary | Python 3.13.17 and Node 24.22.1 ran local checks. Docker, kind, and Helm are unavailable; the installed kubectl executable is denied execution. Cluster behavior remains untested. |
 
-The retrieval smoke check also exposed a tutorial issue: a hard-coded nonsense query matched its own indexed tutorial. The [RAG lab](knowledge/llm/rag/repository-lab.md) now generates the absent query at runtime. This is a bounded correction; the RAG section has not received a full section review in this cycle.
+The retrieval smoke check also exposed a tutorial issue: a hard-coded nonsense query matched its own indexed tutorial. The [RAG lab](../knowledge/llm/rag/repository-lab.md) now generates the absent query at runtime. This is a bounded correction; the RAG section has not received a full section review in this cycle.
 
 Next review: when upstream behavior changes, a reader reports a failure, or runtime evidence becomes available. Weekly upkeep selects one useful improvement; it does not imply a full technical review of every page each week.
 
@@ -201,15 +201,15 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 
 | Priority | Section / task | Completion criterion |
 | --- | --- | --- |
-| P2 | [AWS networking follow-up](knowledge/cloud/aws/networking/index.md) | Execute the authorized read-only lab and controlled traffic/failover drills; expand transit/hybrid deployment and endpoint-policy recovery procedures. |
-| P2 | [Terraform follow-ups](knowledge/terraform/index.md) | Execute bounded remote lock/migration/restore, provider import/drift, and hosted credential/artifact drills; preserve the local lab contracts and cleanup evidence. |
-| P2 | [FinOps follow-ups](knowledge/finops/index.md) | Validate real notification/billing/workload outcomes and data adapters; preserve synthetic calculations as a separate evidence level. |
-| P2 | [AWS security follow-ups](knowledge/cloud/aws/security/index.md) | Execute the live IAM/identity, data protection, audit/delivery, and session-response acceptance listed in the current review; retain the synthetic contract boundary. |
-| P2 | [Core reader follow-ups](knowledge/start-here.md) | Run independent beginner/platform sessions, preserve the local acceptance gates, and validate one authorized cloud handoff. |
-| P2 | [AWS governance follow-ups](knowledge/cloud/aws/governance-and-access/index.md) | Validate real human/account collection and authorization, guardrails/provisioning, independent emergency access and session containment; preserve the synthetic-only evidence boundary. |
-| P1 | [Manifest/regression runtime](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | Execute rendering/difference/schema/policy and behavioral regression checks in the proven disposable kind CI environment before broadening other cluster labs. |
-| P1 | [Istio runtime acceptance](knowledge/kubernetes/applications-and-tools/istio/index.md) | Exercise allowed/denied identities, missing/invalid JWTs, and mTLS in a compatible pinned cluster after the manifest lab. |
-| P2 | [New learning series](knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
+| P2 | [AWS networking follow-up](../knowledge/cloud/aws/networking/index.md) | Execute the authorized read-only lab and controlled traffic/failover drills; expand transit/hybrid deployment and endpoint-policy recovery procedures. |
+| P2 | [Terraform follow-ups](../knowledge/terraform/index.md) | Execute bounded remote lock/migration/restore, provider import/drift, and hosted credential/artifact drills; preserve the local lab contracts and cleanup evidence. |
+| P2 | [FinOps follow-ups](../knowledge/finops/index.md) | Validate real notification/billing/workload outcomes and data adapters; preserve synthetic calculations as a separate evidence level. |
+| P2 | [AWS security follow-ups](../knowledge/cloud/aws/security/index.md) | Execute the live IAM/identity, data protection, audit/delivery, and session-response acceptance listed in the current review; retain the synthetic contract boundary. |
+| P2 | [Core reader follow-ups](../knowledge/start-here.md) | Run independent beginner/platform sessions, preserve the local acceptance gates, and validate one authorized cloud handoff. |
+| P2 | [AWS governance follow-ups](../knowledge/cloud/aws/governance-and-access/index.md) | Validate real human/account collection and authorization, guardrails/provisioning, independent emergency access and session containment; preserve the synthetic-only evidence boundary. |
+| P1 | [Manifest/regression runtime](../knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | Execute rendering/difference/schema/policy and behavioral regression checks in the proven disposable kind CI environment before broadening other cluster labs. |
+| P1 | [Istio runtime acceptance](../knowledge/kubernetes/applications-and-tools/istio/index.md) | Exercise allowed/denied identities, missing/invalid JWTs, and mTLS in a compatible pinned cluster after the manifest lab. |
+| P2 | [New learning series](../knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
 
 ## Indexed-section inventory
 
@@ -217,120 +217,113 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 
 | Section | Direct concepts | Review state |
 | --- | --- | --- |
-| [ai/ai-tooling](knowledge/ai/ai-tooling/index.md) | 3 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples](examples/ai/ai-tooling/knowledge-bases/README.md) | 0 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/concepts/index.md) | 3 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md) | 1 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/attesters/index.md) | 1 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/executors/index.md) | 1 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/index.md) | 0 | Pending |
-| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources](examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/sources/index.md) | 4 | Pending |
-| [ai/ai-tooling/knowledge-bases](knowledge/ai/ai-tooling/knowledge-bases/index.md) | 7 | Pending |
-| [ai](knowledge/ai/index.md) | 0 | Pending |
-| [ai-agents](knowledge/ai-agents/index.md) | 0 | Pending |
-| [assets/diagrams](knowledge/assets/diagrams/index.md) | 0 | Pending |
-| [assets/icons](knowledge/assets/icons/index.md) | 0 | Pending |
-| [assets/images](knowledge/assets/images/index.md) | 0 | Pending |
-| [assets](knowledge/assets/index.md) | 0 | Pending |
-| [cloud/aws/architecture](knowledge/cloud/aws/architecture/index.md) | 3 | Pending |
-| [cloud/aws/cdk/examples](examples/cloud/aws/cdk/README.md) | 0 | Pending |
-| [cloud/aws/cdk/examples/python](examples/cloud/aws/cdk/python/README.md) | 0 | Pending |
-| [cloud/aws/cdk/examples/typescript](examples/cloud/aws/cdk/typescript/README.md) | 0 | Pending |
-| [cloud/aws/cdk](knowledge/cloud/aws/cdk/index.md) | 5 | Pending |
-| [cloud/aws/compute](knowledge/cloud/aws/compute/index.md) | 4 | Pending |
-| [cloud/aws/databases](knowledge/cloud/aws/databases/index.md) | 3 | Pending |
-| [cloud/aws/finops](knowledge/cloud/aws/finops/index.md) | 5 | Reviewed 2026-10-29; real billing/workload evidence open |
-| [cloud/aws/fundamentals](knowledge/cloud/aws/fundamentals/index.md) | 0 | Pending |
-| [cloud/aws/governance-and-access](knowledge/cloud/aws/governance-and-access/index.md) | 10 | Reviewed 2026-11-10; live account evidence open |
-| [cloud/aws/governance-and-access/examples](examples/cloud/aws/governance-and-access/README.md) | 0 | Reviewed 2026-11-10; synthetic local evidence |
-| [cloud/aws/governance-and-access/examples/access-review-lab](examples/cloud/aws/governance-and-access/access-review-lab/README.md) | 1 | Reviewed 2026-11-10; synthetic local evidence |
-| [cloud/aws](knowledge/cloud/aws/index.md) | 0 | Pending |
-| [cloud/aws/networking](knowledge/cloud/aws/networking/index.md) | 10 | Reviewed 2026-10-29; runtime and advanced procedures open |
-| [cloud/aws/security](knowledge/cloud/aws/security/index.md) | 12 | Reviewed 2026-11-10; live evidence open |
-| [cloud/aws/security/examples](examples/cloud/aws/security/README.md) | 0 | Reviewed 2026-11-10; live evidence open |
-| [cloud/aws/security/examples/policy-contract-lab](examples/cloud/aws/security/policy-contract-lab/README.md) | 1 | Reviewed 2026-11-10; live evidence open |
-| [cloud/aws/solutions-architect](knowledge/cloud/aws/solutions-architect/index.md) | 0 | Pending |
-| [cloud/aws/storage](knowledge/cloud/aws/storage/index.md) | 0 | Pending |
-| [cloud/aws/troubleshooting](knowledge/cloud/aws/troubleshooting/index.md) | 0 | Pending |
-| [cloud/azure](knowledge/cloud/azure/index.md) | 0 | Pending |
-| [cloud/edge](knowledge/cloud/edge/index.md) | 4 | Pending |
-| [cloud/gcloud](knowledge/cloud/gcloud/index.md) | 1 | Pending |
-| [cloud](knowledge/cloud/index.md) | 0 | Pending |
-| [cloud/solutions](knowledge/cloud/solutions/index.md) | 1 | Pending |
-| [cross-topic-guides/examples/data-aggregation](examples/cross-topic-guides/data-aggregation/README.md) | 0 | Pending |
-| [cross-topic-guides/examples](examples/cross-topic-guides/README.md) | 0 | Pending |
-| [cross-topic-guides](knowledge/cross-topic-guides/index.md) | 19 | Partial: beginner route reviewed 2026-11-10; other concepts pending |
-| [databases](knowledge/databases/index.md) | 2 | Pending |
-| [databases/kafka](knowledge/databases/kafka/index.md) | 5 | Pending |
-| [databases/mongodb](knowledge/databases/mongodb/index.md) | 5 | Pending |
-| [decision-records](knowledge/decision-records/index.md) | 5 | Pending |
-| [devops/code-quality](knowledge/devops/code-quality/index.md) | 2 | Pending |
-| [devops/development-environments/examples](examples/devops/development-environments/README.md) | 0 | Pending |
-| [devops/development-environments/examples/local/.devcontainer](examples/devops/development-environments/local/.devcontainer/README.md) | 0 | Pending |
-| [devops/development-environments/examples/local](examples/devops/development-environments/local/README.md) | 0 | Pending |
-| [devops/development-environments](knowledge/devops/development-environments/index.md) | 5 | Pending |
-| [devops](knowledge/devops/index.md) | 0 | Pending |
-| [finops/examples/cost-analysis-lab](examples/finops/cost-analysis-lab/README.md) | 1 | Reviewed 2026-10-29; real billing/workload evidence open |
-| [finops/examples](examples/finops/README.md) | 0 | Reviewed 2026-10-29; real billing/workload evidence open |
-| [finops](knowledge/finops/index.md) | 7 | Reviewed 2026-10-29; real billing/workload evidence open |
-| [git/best-practices](knowledge/git/best-practices/index.md) | 0 | Pending |
-| [git/commands](knowledge/git/commands/index.md) | 6 | Pending |
-| [git/github-actions](knowledge/git/github-actions/index.md) | 9 | Pending |
-| [git](knowledge/git/index.md) | 0 | Pending |
-| [git/tricks](knowledge/git/tricks/index.md) | 0 | Pending |
-| [git/troubleshooting](knowledge/git/troubleshooting/index.md) | 1 | Pending |
-| [knowledge bundle](knowledge/index.md) | 2 | Pending |
-| [kubernetes/applications-and-tools](knowledge/kubernetes/applications-and-tools/index.md) | 15 | Pending |
-| [kubernetes/applications-and-tools/istio/examples](examples/kubernetes/applications-and-tools/istio/README.md) | 0 | Reviewed 2026-11-16 with hosted sidecar results |
-| [kubernetes/applications-and-tools/istio](knowledge/kubernetes/applications-and-tools/istio/index.md) | 6 | Partial review 2026-11-16. Lab executed. Other chapters pending. |
-| [kubernetes/applications-and-tools/kro/examples](examples/kubernetes/applications-and-tools/kro/README.md) | 0 | Pending |
-| [kubernetes/applications-and-tools/kro](knowledge/kubernetes/applications-and-tools/kro/index.md) | 5 | Pending |
-| [kubernetes/applications-and-tools/manifest-validation/examples](examples/kubernetes/applications-and-tools/manifest-validation/README.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
-| [kubernetes/applications-and-tools/manifest-validation/examples/policy](examples/kubernetes/applications-and-tools/manifest-validation/policy/README.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
-| [kubernetes/applications-and-tools/manifest-validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | 5 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
-| [kubernetes/applications-and-tools/platform-tooling](knowledge/kubernetes/applications-and-tools/platform-tooling/index.md) | 11 | Pending |
-| [kubernetes/best-practices](knowledge/kubernetes/best-practices/index.md) | 0 | Pending |
-| [kubernetes/commands](knowledge/kubernetes/commands/index.md) | 6 | Pending |
-| [kubernetes/core-objects](knowledge/kubernetes/core-objects/index.md) | 2 | Pending |
-| [kubernetes/crossplane](knowledge/kubernetes/crossplane/index.md) | 17 | Pending |
-| [kubernetes/examples](examples/kubernetes/README.md) | 0 | Pending |
-| [kubernetes/examples/local-deployment-learning-path](examples/kubernetes/local-deployment-learning-path/README.md) | 0 | Reviewed 2026-11-10; hosted runtime per revision, platform repetition open |
-| [kubernetes/fundamentals](knowledge/kubernetes/fundamentals/index.md) | 1 | Reviewed 2026-11-10; independent reader evidence open |
-| [kubernetes](knowledge/kubernetes/index.md) | 0 | Pending |
-| [kubernetes/observability/examples](examples/kubernetes/observability/README.md) | 0 | Pending |
-| [kubernetes/observability](knowledge/kubernetes/observability/index.md) | 7 | Pending |
-| [kubernetes/tricks](knowledge/kubernetes/tricks/index.md) | 0 | Pending |
-| [kubernetes/troubleshooting](knowledge/kubernetes/troubleshooting/index.md) | 11 | Reviewed 2026-10-29; runtime follow-ups open |
-| [llm](knowledge/llm/index.md) | 0 | Pending |
-| [llm/rag/examples](examples/llm/rag/README.md) | 0 | Pending |
-| [llm/rag](knowledge/llm/rag/index.md) | 6 | Pending |
-| [migrations](knowledge/migrations/index.md) | 0 | Pending |
-| [migrations/velero](knowledge/migrations/velero/index.md) | 9 | Pending |
-| [ml](knowledge/ml/index.md) | 0 | Pending |
-| [mlops](knowledge/mlops/index.md) | 0 | Pending |
-| [programming-languages](knowledge/programming-languages/index.md) | 1 | Pending |
-| [security/identity-federation](knowledge/security/identity-federation/index.md) | 3 | Pending |
-| [security](knowledge/security/index.md) | 0 | Pending |
-| [solutions-architect](knowledge/solutions-architect/index.md) | 1 | Pending |
-| [templates](knowledge/templates/index.md) | 5 | Pending |
-| [terraform/best-practices](knowledge/terraform/best-practices/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/commands](knowledge/terraform/commands/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples](examples/terraform/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples/local-state-lifecycle](examples/terraform/local-state-lifecycle/README.md) | 1 | Rechecked 2026-11-10; local runner, remote/cloud procedures open |
-| [terraform/examples/module-workspace-lab/child](examples/terraform/module-workspace-lab/child/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples/module-workspace-lab](examples/terraform/module-workspace-lab/README.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples/module-workspace-lab/tests](examples/terraform/module-workspace-lab/tests/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples/provider-alias-lab/child](examples/terraform/provider-alias-lab/child/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/examples/provider-alias-lab](examples/terraform/provider-alias-lab/README.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/fundamentals](knowledge/terraform/fundamentals/index.md) | 5 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform](knowledge/terraform/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/language](knowledge/terraform/language/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/project-structure](knowledge/terraform/project-structure/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
-| [terraform/troubleshooting](knowledge/terraform/troubleshooting/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [ai/ai-tooling](../knowledge/ai/ai-tooling/index.md) | 3 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples](../examples/ai/ai-tooling/knowledge-bases/README.md) | 0 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts](../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/concepts/index.md) | 3 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2](../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/index.md) | 1 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/attesters](../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/attesters/index.md) | 1 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/executors](../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/executors/index.md) | 1 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references](../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/index.md) | 0 | Pending |
+| [ai/ai-tooling/knowledge-bases/examples/okf-v0.2/references/sources](../examples/ai/ai-tooling/knowledge-bases/okf-v0.2/references/sources/index.md) | 4 | Pending |
+| [ai/ai-tooling/knowledge-bases](../knowledge/ai/ai-tooling/knowledge-bases/index.md) | 7 | Pending |
+| [ai](../knowledge/ai/index.md) | 0 | Pending |
+| [cloud/aws/architecture](../knowledge/cloud/aws/architecture/index.md) | 3 | Pending |
+| [cloud/aws/cdk/examples](../examples/cloud/aws/cdk/README.md) | 0 | Pending |
+| [cloud/aws/cdk/examples/python](../examples/cloud/aws/cdk/python/README.md) | 0 | Pending |
+| [cloud/aws/cdk/examples/typescript](../examples/cloud/aws/cdk/typescript/README.md) | 0 | Pending |
+| [cloud/aws/cdk](../knowledge/cloud/aws/cdk/index.md) | 5 | Pending |
+| [cloud/aws/compute](../knowledge/cloud/aws/compute/index.md) | 4 | Pending |
+| [cloud/aws/databases](../knowledge/cloud/aws/databases/index.md) | 3 | Pending |
+| [cloud/aws/finops](../knowledge/cloud/aws/finops/index.md) | 5 | Reviewed 2026-10-29; real billing/workload evidence open |
+| [cloud/aws/fundamentals](../knowledge/cloud/aws/fundamentals/index.md) | 0 | Pending |
+| [cloud/aws/governance-and-access](../knowledge/cloud/aws/governance-and-access/index.md) | 10 | Reviewed 2026-11-10; live account evidence open |
+| [cloud/aws/governance-and-access/examples](../examples/cloud/aws/governance-and-access/README.md) | 0 | Reviewed 2026-11-10; synthetic local evidence |
+| [cloud/aws/governance-and-access/examples/access-review-lab](../examples/cloud/aws/governance-and-access/access-review-lab/README.md) | 1 | Reviewed 2026-11-10; synthetic local evidence |
+| [cloud/aws](../knowledge/cloud/aws/index.md) | 0 | Pending |
+| [cloud/aws/networking](../knowledge/cloud/aws/networking/index.md) | 10 | Reviewed 2026-10-29; runtime and advanced procedures open |
+| [cloud/aws/security](../knowledge/cloud/aws/security/index.md) | 12 | Reviewed 2026-11-10; live evidence open |
+| [cloud/aws/security/examples](../examples/cloud/aws/security/README.md) | 0 | Reviewed 2026-11-10; live evidence open |
+| [cloud/aws/security/examples/policy-contract-lab](../examples/cloud/aws/security/policy-contract-lab/README.md) | 1 | Reviewed 2026-11-10; live evidence open |
+| [cloud/aws/solutions-architect](../knowledge/cloud/aws/solutions-architect/index.md) | 0 | Pending |
+| [cloud/aws/storage](../knowledge/cloud/aws/storage/index.md) | 0 | Pending |
+| [cloud/aws/troubleshooting](../knowledge/cloud/aws/troubleshooting/index.md) | 0 | Pending |
+| [cloud/azure](../knowledge/cloud/azure/index.md) | 0 | Pending |
+| [cloud/edge](../knowledge/cloud/edge/index.md) | 4 | Pending |
+| [cloud/gcloud](../knowledge/cloud/gcloud/index.md) | 1 | Pending |
+| [cloud](../knowledge/cloud/index.md) | 0 | Pending |
+| [cloud/solutions](../knowledge/cloud/solutions/index.md) | 1 | Pending |
+| [cross-topic-guides/examples/data-aggregation](../examples/cross-topic-guides/data-aggregation/README.md) | 0 | Pending |
+| [cross-topic-guides/examples](../examples/cross-topic-guides/README.md) | 0 | Pending |
+| [cross-topic-guides](../knowledge/cross-topic-guides/index.md) | 19 | Partial: beginner route reviewed 2026-11-10; other concepts pending |
+| [databases](../knowledge/databases/index.md) | 2 | Pending |
+| [databases/kafka](../knowledge/databases/kafka/index.md) | 5 | Pending |
+| [databases/mongodb](../knowledge/databases/mongodb/index.md) | 5 | Pending |
+| [decision-records](../knowledge/decision-records/index.md) | 5 | Pending |
+| [devops/code-quality](../knowledge/devops/code-quality/index.md) | 2 | Pending |
+| [devops/development-environments/examples](../examples/devops/development-environments/README.md) | 0 | Pending |
+| [devops/development-environments/examples/local/.devcontainer](../examples/devops/development-environments/local/.devcontainer/README.md) | 0 | Pending |
+| [devops/development-environments/examples/local](../examples/devops/development-environments/local/README.md) | 0 | Pending |
+| [devops/development-environments](../knowledge/devops/development-environments/index.md) | 5 | Pending |
+| [devops](../knowledge/devops/index.md) | 0 | Pending |
+| [finops/examples/cost-analysis-lab](../examples/finops/cost-analysis-lab/README.md) | 1 | Reviewed 2026-10-29; real billing/workload evidence open |
+| [finops/examples](../examples/finops/README.md) | 0 | Reviewed 2026-10-29; real billing/workload evidence open |
+| [finops](../knowledge/finops/index.md) | 7 | Reviewed 2026-10-29; real billing/workload evidence open |
+| [git/best-practices](../knowledge/git/best-practices/index.md) | 0 | Pending |
+| [git/commands](../knowledge/git/commands/index.md) | 6 | Pending |
+| [git/github-actions](../knowledge/git/github-actions/index.md) | 9 | Pending |
+| [git](../knowledge/git/index.md) | 0 | Pending |
+| [git/tricks](../knowledge/git/tricks/index.md) | 0 | Pending |
+| [git/troubleshooting](../knowledge/git/troubleshooting/index.md) | 1 | Pending |
+| [knowledge bundle](../knowledge/index.md) | 2 | Pending |
+| [kubernetes/applications-and-tools](../knowledge/kubernetes/applications-and-tools/index.md) | 15 | Pending |
+| [kubernetes/applications-and-tools/istio/examples](../examples/kubernetes/applications-and-tools/istio/README.md) | 0 | Reviewed 2026-11-16 with hosted sidecar results |
+| [kubernetes/applications-and-tools/istio](../knowledge/kubernetes/applications-and-tools/istio/index.md) | 6 | Partial review 2026-11-16. Lab executed. Other chapters pending. |
+| [kubernetes/applications-and-tools/kro/examples](../examples/kubernetes/applications-and-tools/kro/README.md) | 0 | Pending |
+| [kubernetes/applications-and-tools/kro](../knowledge/kubernetes/applications-and-tools/kro/index.md) | 5 | Pending |
+| [kubernetes/applications-and-tools/manifest-validation/examples](../examples/kubernetes/applications-and-tools/manifest-validation/README.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
+| [kubernetes/applications-and-tools/manifest-validation/examples/policy](../examples/kubernetes/applications-and-tools/manifest-validation/policy/README.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
+| [kubernetes/applications-and-tools/manifest-validation](../knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | 5 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
+| [kubernetes/applications-and-tools/platform-tooling](../knowledge/kubernetes/applications-and-tools/platform-tooling/index.md) | 11 | Pending |
+| [kubernetes/best-practices](../knowledge/kubernetes/best-practices/index.md) | 0 | Pending |
+| [kubernetes/commands](../knowledge/kubernetes/commands/index.md) | 6 | Pending |
+| [kubernetes/core-objects](../knowledge/kubernetes/core-objects/index.md) | 2 | Pending |
+| [kubernetes/crossplane](../knowledge/kubernetes/crossplane/index.md) | 17 | Pending |
+| [kubernetes/examples](../examples/kubernetes/README.md) | 0 | Pending |
+| [kubernetes/examples/local-deployment-learning-path](../examples/kubernetes/local-deployment-learning-path/README.md) | 0 | Reviewed 2026-11-10; hosted runtime per revision, platform repetition open |
+| [kubernetes/fundamentals](../knowledge/kubernetes/fundamentals/index.md) | 1 | Reviewed 2026-11-10; independent reader evidence open |
+| [kubernetes](../knowledge/kubernetes/index.md) | 0 | Pending |
+| [kubernetes/observability/examples](../examples/kubernetes/observability/README.md) | 0 | Pending |
+| [kubernetes/observability](../knowledge/kubernetes/observability/index.md) | 7 | Pending |
+| [kubernetes/tricks](../knowledge/kubernetes/tricks/index.md) | 0 | Pending |
+| [kubernetes/troubleshooting](../knowledge/kubernetes/troubleshooting/index.md) | 11 | Reviewed 2026-10-29; runtime follow-ups open |
+| [llm](../knowledge/llm/index.md) | 0 | Pending |
+| [llm/rag/examples](../examples/llm/rag/README.md) | 0 | Pending |
+| [llm/rag](../knowledge/llm/rag/index.md) | 6 | Pending |
+| [migrations](../knowledge/migrations/index.md) | 0 | Pending |
+| [migrations/velero](../knowledge/migrations/velero/index.md) | 9 | Pending |
+| [programming-languages](../knowledge/programming-languages/index.md) | 1 | Pending |
+| [security/identity-federation](../knowledge/security/identity-federation/index.md) | 3 | Pending |
+| [security](../knowledge/security/index.md) | 0 | Pending |
+| [solutions-architect](../knowledge/solutions-architect/index.md) | 1 | Pending |
+| [templates](../knowledge/templates/index.md) | 5 | Pending |
+| [terraform/best-practices](../knowledge/terraform/best-practices/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/commands](../knowledge/terraform/commands/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples](../examples/terraform/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/local-state-lifecycle](../examples/terraform/local-state-lifecycle/README.md) | 1 | Rechecked 2026-11-10; local runner, remote/cloud procedures open |
+| [terraform/examples/module-workspace-lab/child](../examples/terraform/module-workspace-lab/child/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/module-workspace-lab](../examples/terraform/module-workspace-lab/README.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/module-workspace-lab/tests](../examples/terraform/module-workspace-lab/tests/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/provider-alias-lab/child](../examples/terraform/provider-alias-lab/child/README.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/examples/provider-alias-lab](../examples/terraform/provider-alias-lab/README.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/fundamentals](../knowledge/terraform/fundamentals/index.md) | 5 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform](../knowledge/terraform/index.md) | 0 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/language](../knowledge/terraform/language/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/project-structure](../knowledge/terraform/project-structure/index.md) | 2 | Reviewed 2026-10-29; remote/cloud procedures open |
+| [terraform/troubleshooting](../knowledge/terraform/troubleshooting/index.md) | 1 | Reviewed 2026-10-29; remote/cloud procedures open |
 
 ## Related planning
 
-- [Quality standard and original checklist](knowledge-content-quality-expansion-plan.md)
+- [Quality standard and original checklist](archive/knowledge-content-quality-expansion-plan.md)
 - [Maintenance review queue](maintenance-review-queue.md)
-- [Prioritized roadmap](ROADMAP.md)
-- [Back to repository](README.md)
+- [Prioritized roadmap](../ROADMAP.md)
+- [Back to repository](../README.md)

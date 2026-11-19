@@ -2,7 +2,7 @@
 
 ## Purpose
 
-List optional outside inputs that can strengthen the completed documentation-scope work in the [knowledge-base improvement plan](knowledge-base-improvement-plan.md).
+List optional outside inputs that can strengthen the completed documentation-scope work in the [knowledge-base improvement plan](archive/knowledge-base-improvement-plan.md).
 
 Status: Draft
 Audience: Maintainers, facilitators, and sandbox owners who can provide optional validation evidence
@@ -33,7 +33,7 @@ KB-04 is complete for documentation-scope work after the source-reviewed correct
 
 ### AWS evidence to record
 
-Use the [Crossplane AWS S3 lab validation template](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form. Record public-safe summaries only:
+Use the [Crossplane AWS S3 lab validation template](../knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form. Record public-safe summaries only:
 
 - Repository commit tested.
 - Tool versions and installed Crossplane/provider versions.
@@ -58,8 +58,8 @@ KB-14 is complete for documentation-scope work after the maintenance loop, facil
 - Broad reader profiles only, such as beginner, early practitioner, or experienced engineer.
 - Agreement that the session records documentation findings, not personal performance.
 - A repository commit or branch selected for the test.
-- A facilitator ready to use the [reader test facilitator guide](reader-test-facilitator-guide.md).
-- A copy of the [reader test results template](reader-test-results-template.md) or the reader-test results issue form.
+- A facilitator ready to use the [reader test facilitator guide](reader-testing/facilitator-guide.md).
+- A copy of the [reader test results template](reader-testing/results-template.md) or the reader-test results issue form.
 
 ### Reader evidence to record
 
@@ -81,15 +81,15 @@ Record only what is needed to improve the knowledge base:
 
 1. Update the relevant article review-information blocks with the actual evidence level.
 2. Update [maintenance review queue](maintenance-review-queue.md) with new evidence, new review reasons, or new dates.
-3. Update [knowledge-base improvement plan](knowledge-base-improvement-plan.md) KB-04 or KB-14 records if the evidence changes their limitations or follow-up status.
-4. Update [CHANGELOG.md](CHANGELOG.md) for meaningful validation evidence or content changes.
+3. Update [knowledge-base improvement plan](archive/knowledge-base-improvement-plan.md) KB-04 or KB-14 records if the evidence changes their limitations or follow-up status.
+4. Update [CHANGELOG.md](../CHANGELOG.md) for meaningful validation evidence or content changes.
 5. Run the repository validation checks before publishing.
 
 ## Related links
 
 - [Maintenance review queue](maintenance-review-queue.md)
-- [Crossplane AWS S3 lab validation template](knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md)
-- [Reader test facilitator guide](reader-test-facilitator-guide.md)
-- [Reader test results template](reader-test-results-template.md)
-- [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
-- [Back to root index](README.md)
+- [Crossplane AWS S3 lab validation template](../knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md)
+- [Reader test facilitator guide](reader-testing/facilitator-guide.md)
+- [Reader test results template](reader-testing/results-template.md)
+- [Knowledge-base improvement plan](archive/knowledge-base-improvement-plan.md)
+- [Back to root index](../README.md)

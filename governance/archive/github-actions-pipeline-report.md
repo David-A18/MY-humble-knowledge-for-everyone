@@ -1,5 +1,8 @@
 # GitHub Actions pipeline report
 
+> [!NOTE]
+> Archived on 2026-11-19. This document is kept for history and is superseded by the [roadmap](../../ROADMAP.md). Paths and plans in it may be out of date.
+
 ## Purpose
 
 This report records the recent GitHub Actions failures, root causes, and remediation work for `David-A18/MY-humble-knowledge-for-everyone`.
@@ -72,4 +75,4 @@ Run date: 2026-08-07
 - GitHub Actions run: [Link check 30994808777](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/30994808777)
 - GitHub Actions run: [Markdown lint 30994808726](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/30994808726)
 - GitHub Actions run: [Terraform format 30994808745](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/30994808745)
-- Back to root index: [README.md](README.md)
+- Back to root index: [README.md](../../README.md)

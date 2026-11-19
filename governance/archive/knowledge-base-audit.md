@@ -1,12 +1,15 @@
 # Knowledge-base publication audit
 
+> [!NOTE]
+> Archived on 2026-11-19. This document is kept for history and is superseded by the [roadmap](../../ROADMAP.md). Paths and plans in it may be out of date.
+
 Audit date: **2026-10-29**. This is a dated evidence record, not a live CI dashboard.
 
 ## Current source of truth
 
 Fetching GitHub revealed 58 commits absent from the original checkout. Published `main` at `b0c4f0e` already migrated the corpus to `knowledge/`, adopted reserved `index.md` navigation, added strict OKF metadata and a generated catalog, expanded Git/Terraform/local learning, and repaired the old lint findings.
 
-The ten requested topic groups were ported into that current structure without replacing the newer guides or governance. Their [learning paths](knowledge/index.md#expanded-learning-paths) cover Istio security, Kubernetes tools, manifest differences/regressions, IRSA, kro, observability/eBPF/Pixie, AWS CDK, aggregation, RAG, and Ona/Gitpod.
+The ten requested topic groups were ported into that current structure without replacing the newer guides or governance. Their [learning paths](../../knowledge/index.md#expanded-learning-paths) cover Istio security, Kubernetes tools, manifest differences/regressions, IRSA, kro, observability/eBPF/Pixie, AWS CDK, aggregation, RAG, and Ona/Gitpod.
 
 New concepts remain `draft` with an `unassigned` maintainer. Their official source records and citations identify evidence; they do not claim human approval or production execution. Executable examples and configurations remain MIT-licensed; authored knowledge follows the bundle's CC BY 4.0 license.
 
@@ -49,12 +52,12 @@ The original checkout and its unrelated Jev/Laya draft, `work/` files, pending m
 
 Weekly upkeep was requested by the user. Reviews should compare against current `origin/main`, choose a focused quality/freshness improvement, verify official sources, preserve unrelated work, run the maintained validation suite, and publish validated changes to `main`. Record runtime gaps honestly and stay quiet when no meaningful action is needed.
 
-Use the [maintenance queue](maintenance-review-queue.md) for work selection and [roadmap](ROADMAP.md) for broader direction. Do not treat a future runtime test or an unowned draft as completed review evidence.
+Use the [maintenance queue](../maintenance-review-queue.md) for work selection and [roadmap](../../ROADMAP.md) for broader direction. Do not treat a future runtime test or an unowned draft as completed review evidence.
 
 ## Related links
 
-- [Knowledge bundle](knowledge/index.md)
-- [Roadmap](ROADMAP.md)
-- [Maintenance review queue](maintenance-review-queue.md)
-- [Contributor contract](CONTRIBUTING.md)
-- [Back to repository index](README.md)
+- [Knowledge bundle](../../knowledge/index.md)
+- [Roadmap](../../ROADMAP.md)
+- [Maintenance review queue](../maintenance-review-queue.md)
+- [Contributor contract](../../CONTRIBUTING.md)
+- [Back to repository index](../../README.md)

@@ -1,5 +1,8 @@
 # Knowledge-base readiness review
 
+> [!NOTE]
+> Archived on 2026-11-19. This document is kept for history and is superseded by the [roadmap](../../ROADMAP.md). Paths and plans in it may be out of date.
+
 Review date: 2026-09-20
 Reviewed revision: `4d1c0de` on `develop`
 
@@ -64,7 +67,7 @@ bundle.
 
 ### Navigation is reliable
 
-[The bundle index](knowledge/index.md) gives people and agents a concise map
+[The bundle index](../../knowledge/index.md) gives people and agents a concise map
 of major areas. Parent indexes expose their direct children, focused pages use
 relative links, and the local-link validator checks targets, heading fragments,
 index presence, and reachability. This is an excellent foundation for both
@@ -72,9 +75,9 @@ GitHub browsing and agent retrieval.
 
 ### There is a real safe beginner route
 
-[Start here](knowledge/start-here.md), [the local Kubernetes learning
-path](knowledge/cross-topic-guides/local-deployment-learning-path.md), and
-[Git recovery](knowledge/git/troubleshooting/undo-and-recovery.md) provide a
+[Start here](../../knowledge/start-here.md), [the local Kubernetes learning
+path](../../knowledge/cross-topic-guides/local-deployment-learning-path.md), and
+[Git recovery](../../knowledge/git/troubleshooting/undo-and-recovery.md) provide a
 meaningful local-first journey. They include prerequisites, expected results,
 intentional failure, recovery, warnings, and cleanup. This is the right model
 for future tutorials.
@@ -84,7 +87,7 @@ for future tutorials.
 The OKF validator, local-link validator, Markdown lint, issue forms, review
 queue, source-ingestion area, contributor guide, licensing split, and
 `develop` branch checks give contributors a coherent operating model. The
-[maintenance review queue](maintenance-review-queue.md) already names the ten
+[maintenance review queue](../maintenance-review-queue.md) already names the ten
 operational guides that should be reviewed first.
 
 ### The scope is honest
@@ -148,9 +151,9 @@ or review as concepts.
 
 The clearest cases are:
 
-- [Kubernetes fundamentals](knowledge/kubernetes/fundamentals/index.md), a
+- [Kubernetes fundamentals](../../knowledge/kubernetes/fundamentals/index.md), a
   297-word explanation used by the beginner route.
-- [Terraform local state lifecycle](examples/terraform/local-state-lifecycle/README.md), a
+- [Terraform local state lifecycle](../../examples/terraform/local-state-lifecycle/README.md), a
   622-word tutorial with a real local execution record.
 
 Move each learning outcome to a named concept beside the index, such as
@@ -254,8 +257,8 @@ progress. The right next decision is not a documentation website; it is
 evidence from real readers.
 
 Run the existing reader-test protocol with three to five intended readers.
-Start them from [Start here](knowledge/start-here.md), use the ten tasks in the
-[facilitator guide](reader-test-facilitator-guide.md), record only anonymous
+Start them from [Start here](../../knowledge/start-here.md), use the ten tasks in the
+[facilitator guide](../reader-testing/facilitator-guide.md), record only anonymous
 results, and turn repeated blockers into small documentation issues.
 
 Use the results to decide whether GitHub navigation is sufficient or whether a
@@ -308,11 +311,11 @@ usefulness and trust much faster than adding more unreviewed topics.
 
 ## Related links
 
-- [Knowledge bundle](knowledge/index.md)
+- [Knowledge bundle](../../knowledge/index.md)
 - [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
 - [Knowledge content quality and expansion plan](knowledge-content-quality-expansion-plan.md)
-- [Maintenance review queue](maintenance-review-queue.md)
-- [Reader test facilitator guide](reader-test-facilitator-guide.md)
-- [Contributor guide](CONTRIBUTING.md)
-- [AI agent guide](AGENTS.md)
-- [Back to repository index](README.md)
+- [Maintenance review queue](../maintenance-review-queue.md)
+- [Reader test facilitator guide](../reader-testing/facilitator-guide.md)
+- [Contributor guide](../../CONTRIBUTING.md)
+- [AI agent guide](../../AGENTS.md)
+- [Back to repository index](../../README.md)

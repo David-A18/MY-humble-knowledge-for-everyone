@@ -9,12 +9,12 @@ Audience: Maintainers running knowledge-base reader tests
 Page type: Maintenance template
 Maintainer: Unassigned
 Last substantive review: 2026-09-19
-Applicable versions: Use with the current [maintenance review queue](maintenance-review-queue.md)
+Applicable versions: Use with the current [maintenance review queue](../maintenance-review-queue.md)
 Validation evidence: Template structure reviewed against KB-14 result fields; no reader session has been recorded yet
 Known limitations: This template does not replace actual reader participation or prove findability by itself
 Next review: After the first completed reader-test session
 
-Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run the session. Copy this file for each reader-test session or paste the sections into an issue. Do not commit names, email addresses, employer details, private infrastructure details, screenshots with secrets, or terminal output containing credentials.
+Use the [reader test facilitator guide](facilitator-guide.md) to run the session. Copy this file for each reader-test session or paste the sections into an issue. Do not commit names, email addresses, employer details, private infrastructure details, screenshots with secrets, or terminal output containing credentials.
 
 ## Session summary
 
@@ -23,7 +23,7 @@ Use the [reader test facilitator guide](reader-test-facilitator-guide.md) to run
 | Date | YYYY-MM-DD |
 | Facilitator | Unassigned |
 | Reader profile | Beginner, early practitioner, experienced engineer, or other broad category |
-| Starting page | [Start here](knowledge/start-here.md) |
+| Starting page | [Start here](../../knowledge/start-here.md) |
 | Repository commit | Commit hash tested |
 | Environment notes | Browser, terminal, operating system, or tool versions when relevant |
 | Consent to record anonymous findings | Yes or no |
@@ -68,14 +68,14 @@ Record repeated blockers as issues or small documentation tasks. Include the pag
 
 - [ ] Create documentation-error issues for incorrect, outdated, unclear, or broken content.
 - [ ] Create improvement issues for navigation, structure, or missing learning support.
-- [ ] Link repeated blockers from [maintenance review queue](maintenance-review-queue.md) if they affect priority guides.
-- [ ] Update [knowledge-base improvement plan](knowledge-base-improvement-plan.md) when KB-14 acceptance evidence exists.
-- [ ] Update [ROADMAP.md](ROADMAP.md) only after observed reader outcomes justify a priority change.
+- [ ] Link repeated blockers from [maintenance review queue](../maintenance-review-queue.md) if they affect priority guides.
+- [ ] Update [knowledge-base improvement plan](../archive/knowledge-base-improvement-plan.md) when KB-14 acceptance evidence exists.
+- [ ] Update [ROADMAP.md](../../ROADMAP.md) only after observed reader outcomes justify a priority change.
 
 ## Related links
 
-- [Reader test facilitator guide](reader-test-facilitator-guide.md)
-- [Maintenance review queue](maintenance-review-queue.md)
-- [Knowledge-base improvement plan](knowledge-base-improvement-plan.md)
-- [Contributing](CONTRIBUTING.md)
-- [Back to root index](README.md)
+- [Reader test facilitator guide](facilitator-guide.md)
+- [Maintenance review queue](../maintenance-review-queue.md)
+- [Knowledge-base improvement plan](../archive/knowledge-base-improvement-plan.md)
+- [Contributing](../../CONTRIBUTING.md)
+- [Back to root index](../../README.md)
