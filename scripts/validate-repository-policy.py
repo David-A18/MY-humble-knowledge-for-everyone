@@ -231,9 +231,13 @@ def check_markdown(rel: str, markdown: str, allowed_domains: set[str], allowed_p
             findings.append(Finding(rel, number, "media", "images are not allowed; describe the idea in text or use a Mermaid diagram"))
         urls = [m.group(1) for m in AUTOLINK.finditer(line)]
         without_autolinks = AUTOLINK.sub("", line)
+        reported_tags = set()
         for tag in HTML_TAG.finditer(without_autolinks):
             name = tag.group(2).lower()
             attributes = tag.group(3) or ""
+            if name in reported_tags:
+                continue  # report each element once per line, not its closing tag again
+            reported_tags.add(name)
             if name not in ALLOWED_HTML:
                 findings.append(Finding(rel, number, "raw-html", f"raw HTML <{name}> is not allowed outside code blocks"))
             elif attributes.strip():

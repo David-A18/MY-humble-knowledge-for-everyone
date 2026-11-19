@@ -72,6 +72,7 @@ assert rules({"knowledge/a.md": "# A\n\nzero\u200bwidth\n"}) == ["hidden-unicode
 
 # Raw HTML and media.
 assert rules({"knowledge/a.md": "# A\n\n<script>alert(1)</script>\n"}) == ["raw-html"]
+assert len(module.validate(make_root({"knowledge/a.md": "# A\n\n<script>alert(1)</script>\n"}))) == 1, "one finding per element"
 assert rules({"knowledge/a.md": "# A\n\n<iframe src=\"https://kubernetes.io\"></iframe>\n"}) == ["raw-html"]
 assert rules({"knowledge/a.md": "# A\n\n<details><summary>More</summary>Text</details>\n"}) == []
 assert rules({"knowledge/a.md": "# A\n\n<details open onclick=\"x()\">\n"}) == ["raw-html"]
