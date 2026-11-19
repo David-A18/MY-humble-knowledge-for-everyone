@@ -8,7 +8,6 @@ tags:
 - local-development
 - beginner
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -58,7 +57,7 @@ Use official installation instructions and organization-approved setup. For kind
 
 ## Keep a reproducible teaching baseline
 
-The [version contract](../kubernetes/examples/local-deployment-learning-path/lab-versions.json) fixes kind v0.30.0, kubectl v1.34.1 and a digest-pinned Kubernetes v1.34.0 node image. This is a repeatable historical teaching baseline, not a recommendation to deploy an old Kubernetes patch in production. Choose upgrades deliberately and rerun the walkthrough. The workload image is pinned in [deployment.yaml](../kubernetes/examples/local-deployment-learning-path/deployment.yaml).
+The [version contract](../../examples/kubernetes/local-deployment-learning-path/lab-versions.json) fixes kind v0.30.0, kubectl v1.34.1 and a digest-pinned Kubernetes v1.34.0 node image. This is a repeatable historical teaching baseline, not a recommendation to deploy an old Kubernetes patch in production. Choose upgrades deliberately and rerun the walkthrough. The workload image is pinned in [deployment.yaml](../../examples/kubernetes/local-deployment-learning-path/deployment.yaml).
 
 The [CI workflow](../../.github/workflows/local-learning-journey.yml) validates kind/kubectl downloads against published HTTPS checksums and records the runner's Docker/Kubernetes versions. It does not verify detached signatures or establish that the host's entire supply chain is trusted.
 

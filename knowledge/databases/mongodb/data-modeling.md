@@ -4,7 +4,6 @@ title: "MongoDB data modeling"
 description: "Use this page to choose MongoDB document shapes that match application access patterns."
 tags: [databases, mongodb, data-modeling]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

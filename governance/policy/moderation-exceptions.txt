@@ -1,0 +1,4 @@
+# Reviewed false positives for scripts/moderate-content.py.
+# Format: <repository-relative path> <term hash from the finding>
+# Add an entry only after a maintainer confirms the use is legitimate, and
+# explain why in the pull request.

@@ -4,7 +4,6 @@ title: "Glossary"
 description: "Common terms used across the knowledge base."
 tags: [glossary]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

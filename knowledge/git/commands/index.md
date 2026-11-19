@@ -12,6 +12,7 @@ Command references and practical workflows for working with Git repositories saf
 | [Troubleshooting commands](troubleshooting-commands.md) | Diagnostic commands for conflicts, remotes, credentials, ignored files, line endings, hooks, corruption, and slow repositories. |
 | [Advanced commands](advanced-commands.md) | Professional commands for rebasing, bisecting, patch workflows, worktrees, submodules, repository maintenance, and selected plumbing. |
 | [Complete command catalog](complete-command-catalog.md) | Categorized catalog of Git porcelain, ancillary, low-level, server, email, migration, interface, protocol, and helper commands. |
+| [Plumbing and internal commands](plumbing-and-internal-commands.md) | Low-level, server, protocol, and internal helper commands that scripts and Git itself use. |
 
 ## Official documentation
 

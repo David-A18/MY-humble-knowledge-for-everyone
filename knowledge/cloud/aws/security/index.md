@@ -16,7 +16,7 @@ Learn AWS identity and permissions first, then protect data, establish evidence,
 | Establish audit/detection evidence | [CloudTrail and detection](cloudtrail-and-detection.md) — Management/data events, GuardDuty and Security Hub CSPM. |
 | Investigate a failure | [AccessDenied diagnosis](iam-access-denied-troubleshooting.md) — Credential/trust/authorization stages and minimal correction. |
 | Respond to compromised access | [Incident response](security-incident-response.md) — Evidence, new-session containment, issued-session controls and recovery. |
-| Practice safely | [Examples](examples/index.md) — Local fixture contracts, AWS validation/simulation, and the live acceptance handoff. |
+| Practice safely | [Policy contract lab](policy-contract-lab.md) — Local fixture contracts, AWS validation/simulation, and the live acceptance handoff. The runnable files live in [examples](../../../../examples/cloud/aws/security/README.md). |
 
 ## Related sections
 
@@ -27,6 +27,6 @@ Learn AWS identity and permissions first, then protect data, establish evidence,
 
 ## Evidence still needed
 
-Run authorized IAM/IRSA/Pod Identity positive and negative tests, KMS/context and secret-consumer rotation drills, actual audit/notification delivery, and a controlled session-containment/recovery drill. Add independent review and ownership before promoting drafts. See the [section ledger](../../../../section-quality-progress.md) for precise scope and follow-ups.
+Run authorized IAM/IRSA/Pod Identity positive and negative tests, KMS/context and secret-consumer rotation drills, actual audit/notification delivery, and a controlled session-containment/recovery drill. Add independent review and ownership before promoting drafts. See the [section ledger](../../../../governance/section-quality-progress.md) for precise scope and follow-ups.
 
 [Back to AWS](../index.md) | [Back to knowledge](../../../index.md)

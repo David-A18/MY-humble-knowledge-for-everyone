@@ -4,7 +4,6 @@ title: "Apache APISIX"
 description: "Use this page to understand Apache APISIX as an API gateway for Kubernetes and EKS environments."
 tags: [kubernetes, applications-and-tools, apache-apisix]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

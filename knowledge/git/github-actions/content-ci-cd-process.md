@@ -4,7 +4,6 @@ title: "Content CI/CD process"
 description: "This page defines the repository CI/CD process for documentation-only changes. The goal is to keep main as the single published source of truth while keeping content updates lightweight."
 tags: [git, github-actions, content-ci-cd-process]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -6,7 +6,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -24,7 +23,7 @@ sources:
 
 Turn reviewed source documents into reproducible evidence units.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Ingestion flow
 
@@ -40,14 +39,14 @@ The supplied lab detects headings outside fenced code, preserves section anchors
 
 ## Source lifecycle
 
-The lab accepts a repository root or the `knowledge/` bundle. It preserves repository-relative citation paths, carries simple OKF `status` and `maturity` values into results/prompts, and excludes deprecated concepts. Draft and unclassified sources remain explicitly labeled; a valid citation number does not promote their trust. The two lifecycle fields are read as bounded scalar values, not as a general YAML parser.
+The lab accepts a repository root or the `knowledge/` bundle. It preserves repository-relative citation paths, carries the simple OKF `status` value into results/prompts, and excludes deprecated concepts. Draft and unclassified sources remain explicitly labeled; a valid citation number does not promote their trust. The lifecycle field is read as a bounded scalar value, not as a general YAML parser.
 
 ## Source boundaries
 
 Use an explicit allowlist of curated areas. The lab excludes raw incoming notes, processed-source archives, `work/`, templates, Git internals, and symlinked content. Public source eligibility is different from user-specific authorization in a private deployment.
 
 ```bash
-python examples/rag.py ingest --root ../.. --db /tmp/kb-rag.sqlite
+python examples/llm/rag/rag.py ingest --root ../.. --db /tmp/kb-rag.sqlite
 ```
 
 What it does: rebuilds the lab index from curated repository content when run from `knowledge/llm/rag`. The database must be a dedicated disposable lab database. Its content hash includes the actual files, including uncommitted edits; HEAD alone cannot identify that state.

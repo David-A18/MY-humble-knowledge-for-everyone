@@ -4,7 +4,6 @@ title: "Velero backup and restore workflows"
 description: "Use this page for the day-to-day Velero commands that create backups, schedules, restores, namespace mappings, and inspection output."
 tags: [migrations, velero, backup-restore-workflows]
 status: draft
-maturity: draft
 audience: "Operators running Velero backup, schedule, and restore workflows"
 maintainer: unassigned
 sources:

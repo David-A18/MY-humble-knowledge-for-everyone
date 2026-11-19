@@ -4,7 +4,6 @@ title: "ADR-0000: Decision title"
 description: Record a durable decision, the context that led to it, alternatives, consequences, ownership, and review trigger.
 tags: [templates, decision-record]
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 ---

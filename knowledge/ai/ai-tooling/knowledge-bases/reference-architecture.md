@@ -4,7 +4,6 @@ title: "Reference architecture"
 description: "This guide defines an agent-first, Git-backed, standards-aware knowledge system. It is for engineers, platform engineers, AI or LLMOps engineers, solutions architects, and agents that need a trustworthy corpus for retrieval, reasoning, citation, and maintenance."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

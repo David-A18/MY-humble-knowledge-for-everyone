@@ -1,7 +1,5 @@
 # AWS architecture
 
-Status: Initial outline
-
 Architecture guidance, reference patterns, and design trade-offs for AWS workloads.
 
 ## Articles
@@ -22,6 +20,6 @@ Architecture guidance, reference patterns, and design trade-offs for AWS workloa
 
 ## Official documentation
 
-- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/)
 
 [Back to AWS index](../index.md) | [Back to root index](../../../../README.md)

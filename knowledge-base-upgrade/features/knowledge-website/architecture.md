@@ -11,7 +11,7 @@ The website is an [Astro static build](https://docs.astro.build/en/guides/conten
 
 ```mermaid
 flowchart LR
-    KB["Knowledge main"] --> CI["OKF validation"]
+    KB["Knowledge main"] --> CI["Repository gate"]
     CI --> Signal["repository_dispatch"]
     Signal --> Sync["Website sync workflow"]
     Sync --> PR["Pinned-SHA update PR"]

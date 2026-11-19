@@ -36,7 +36,7 @@ Normalize URL encoding without changing case-sensitive source path lookup. All g
 
 ## Presentation metadata
 
-Concept pages use their required OKF fields: `type`, `title`, `description`, `tags`, `status`, `maturity`, `audience`, and `maintainer`. Display `sources`, `verified`, `generated`, and `stale_after` only when actually recorded. Index pages have navigation text rather than concept frontmatter. All pages show a link to their source at the locked SHA and the applicable [content license](../../../LICENSES/README.md).
+Concept pages use their required OKF fields: `type`, `title`, `description`, `tags`, `status`, `audience`, and `maintainer`. News briefs also carry `published`. Display `sources`, `verified`, `generated`, and `stale_after` only when actually recorded. Index pages have navigation text rather than concept frontmatter. All pages show a link to their source at the locked SHA and the applicable [content license](../../../LICENSES/README.md).
 
 ## Related links
 

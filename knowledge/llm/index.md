@@ -1,14 +1,12 @@
 # LLM
 
-Large language model knowledge for model behavior, prompting, retrieval, evaluation, and deployment.
+Large language model knowledge. Today this section covers retrieval-augmented generation (RAG); prompting, evaluation, and deployment are planned topics.
 
-Status: Initial outline
-
-## Added learning guides
+## Learning guides
 
 - [Retrieval-augmented generation (RAG)](rag/index.md) - Focused learning material and supporting examples.
 
-## Expected content
+## Planned topics
 
 - Prompting and context design.
 - Retrieval-augmented generation patterns.

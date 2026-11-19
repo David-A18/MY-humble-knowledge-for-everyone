@@ -1,7 +1,5 @@
 # Kubernetes core objects
 
-Status: Initial outline
-
 Focused notes for the Kubernetes objects used most often in application operations.
 
 ## Articles

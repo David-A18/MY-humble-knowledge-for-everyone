@@ -6,7 +6,6 @@ tags:
 - cloud
 - security
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -27,7 +26,7 @@ sources:
 
 Separate who may assume a role from what an assumed role may do.
 
-Sources reviewed: 2026-11-10. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Two independent policies
 
@@ -81,7 +80,7 @@ Confirm the cluster's actual issuer, IAM OIDC provider, annotation, audience, an
 
 ## Review contracts and effective permissions
 
-Use the [policy-contract lab](examples/policy-contract-lab/index.md) to catch changes to the exact synthetic issuer, audience, subject, object prefix, and read action. Its local assertions are not an IAM engine. Access Analyzer findings, AWS simulation, and a live positive/negative test each provide different evidence.
+Use the [policy-contract lab](policy-contract-lab.md) to catch changes to the exact synthetic issuer, audience, subject, object prefix, and read action. Its local assertions are not an IAM engine. Access Analyzer findings, AWS simulation, and a live positive/negative test each provide different evidence.
 
 The [IAM evaluation guide](iam-policy-evaluation-and-least-privilege.md) describes why effective access is not universally an intersection of every policy. Same-account resource-policy grants depend on the form of principal; cross-account and KMS paths need their own evaluation. A narrow role permission example alone cannot prove there is no other grant.
 

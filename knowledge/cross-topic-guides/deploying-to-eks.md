@@ -4,7 +4,6 @@ title: "Deploying to EKS"
 description: "Plan the moving parts of deploying applications to Amazon EKS."
 tags: [cross-topic-guides, deploying-to-eks]
 status: draft
-maturity: draft
 audience: "Application and platform engineers deploying to Amazon EKS"
 maintainer: unassigned
 sources:

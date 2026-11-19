@@ -6,7 +6,6 @@ tags:
 - kubernetes
 - observability
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -27,7 +26,7 @@ sources:
 
 Send a synthetic span through a pinned gateway and observe failure.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Prerequisites
 
@@ -37,7 +36,7 @@ Use a disposable Kubernetes cluster, kubectl, and Python 3.13. The fixture pins 
 
 ```bash
 kubectl create namespace telemetry-lab
-kubectl apply -n telemetry-lab -f examples/collector.yaml
+kubectl apply -n telemetry-lab -f examples/kubernetes/observability/collector.yaml
 kubectl rollout status deployment/collector -n telemetry-lab --timeout=120s
 kubectl port-forward -n telemetry-lab service/collector 4318:4318
 ```
@@ -45,7 +44,7 @@ kubectl port-forward -n telemetry-lab service/collector 4318:4318
 What it does: starts an OTLP/HTTP gateway with memory limiting, batching, and debug export. Run from this series directory; port-forwarding remains in the foreground.
 
 ```bash
-python examples/send-span.py
+python examples/kubernetes/observability/send-span.py
 kubectl logs -n telemetry-lab deployment/collector --since=2m
 ```
 

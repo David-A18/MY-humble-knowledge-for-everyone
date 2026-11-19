@@ -22,7 +22,7 @@ Add the source-side dispatch job only after the website repository and its sync 
 
 The owner chooses the static host and domain. Set origin and base path, add the matching deployment adapter, and record rollback steps in website `docs/deployment.md`. A reviewed website `main` commit deploys its already-validated lock. Check live routes, search, source links, redirects, and license attribution before announcing the site.
 
-After release, run the [reader-task protocol](../../../reader-test-facilitator-guide.md) with actual readers and log observed results in the existing templates or issue form. Change the site or knowledge navigation based on repeated blockers.
+After release, run the [reader-task protocol](../../../governance/reader-testing/facilitator-guide.md) with actual readers and log observed results in the existing templates or issue form. Change the site or knowledge navigation based on repeated blockers.
 
 ## Failure and rollback
 

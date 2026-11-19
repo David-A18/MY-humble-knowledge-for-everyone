@@ -4,7 +4,6 @@ title: "Bootstrap and bootstrapping"
 description: "This article explains the two meanings developers usually intend when they say"
 tags: [programming-languages, bootstrap-and-bootstrapping]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

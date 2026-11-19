@@ -4,7 +4,6 @@ title: "EKS human identity and Kubernetes RBAC"
 description: "Use this guide to separate human authentication to Amazon EKS from workload identity and to bind authenticated users or groups to Kubernetes permissions safely."
 tags: [security, identity-federation, eks-human-identity-and-rbac]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

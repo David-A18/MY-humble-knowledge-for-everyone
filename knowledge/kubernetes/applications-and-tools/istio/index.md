@@ -17,7 +17,7 @@ Read in order, or choose a task from the table.
 
 ## Related links
 
-- [Runnable example files](examples/index.md)
+- [Runnable example files](../../../../examples/kubernetes/applications-and-tools/istio/README.md)
 
 - [Back to parent index](../index.md)
 - [Back to root index](../../../../README.md)

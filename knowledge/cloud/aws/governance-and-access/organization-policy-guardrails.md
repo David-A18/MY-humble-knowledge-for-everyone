@@ -8,7 +8,6 @@ tags:
 - governance
 - human-access
 status: draft
-maturity: draft
 audience: Cloud administrators and platform engineers
 maintainer: unassigned
 sources:

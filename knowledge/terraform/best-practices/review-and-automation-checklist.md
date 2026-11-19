@@ -8,7 +8,6 @@ tags:
 - ci
 - review
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:

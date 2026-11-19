@@ -4,7 +4,6 @@ title: "Gateway API and Ingress"
 description: "Use this page to choose between Kubernetes Ingress, Gateway API, and gateway-specific custom resources."
 tags: [kubernetes, applications-and-tools, gateway-api-and-ingress]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

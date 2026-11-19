@@ -4,7 +4,6 @@ title: "EKS workload identity"
 description: "Use this guide to choose between IRSA and EKS Pod Identity for AWS permissions from Pods."
 tags: [cross-topic-guides, eks-workload-identity]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 sources:
@@ -28,7 +27,7 @@ sources:
 
 Choose IRSA or EKS Pod Identity, then verify the actual AWS credential path.
 
-Sources reviewed: 2026-11-10. See the [validation record](../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-11-10. See the [validation record](../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Choose by integration requirements
 

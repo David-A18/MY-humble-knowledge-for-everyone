@@ -4,7 +4,7 @@ Practical Kubernetes notes for workloads, core objects, kubectl workflows, appli
 
 ## Beginner local route
 
-Use [fundamentals](fundamentals/index.md), [environment preflight](../cross-topic-guides/local-learning-preflight.md), and the [deployment/failure/recovery walkthrough](../cross-topic-guides/local-deployment-learning-path.md). Its [files and runners](examples/local-deployment-learning-path/index.md) keep versions, HTTP evidence, Git state and cleanup explicit.
+Use [fundamentals](fundamentals/index.md), [environment preflight](../cross-topic-guides/local-learning-preflight.md), and the [deployment/failure/recovery walkthrough](../cross-topic-guides/local-deployment-learning-path.md). Its [files and runners](../../examples/kubernetes/local-deployment-learning-path/README.md) keep versions, HTTP evidence, Git state and cleanup explicit.
 
 ## Security and operations learning paths
 
@@ -31,7 +31,7 @@ Use [fundamentals](fundamentals/index.md), [environment preflight](../cross-topi
 | [Troubleshooting](troubleshooting/index.md) | Symptom-driven cluster and workload diagnostics. |
 | [Best practices](best-practices/index.md) | Operational safety, resource design, and reliability habits. |
 | [Tricks](tricks/index.md) | Helpful command patterns and productivity notes. |
-| [Examples](examples/index.md) | Practical manifests and walkthroughs. |
+| [Examples](../../examples/kubernetes/README.md) | Practical manifests and walkthroughs. |
 
 ## Fast paths for application tooling
 

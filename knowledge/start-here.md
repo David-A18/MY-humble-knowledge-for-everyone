@@ -8,7 +8,6 @@ tags:
 - local-development
 - beginner
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -25,7 +24,16 @@ sources:
 
 # Start here
 
-Start here when you want a practical path through cloud and platform engineering. Complete the local stages before choosing a cloud integration. The route connects concepts, a small working example, deliberate failure, diagnosis, recovery, and cleanup; reading a command list alone is not completion.
+This is the beginner route. On your own computer, and without a cloud account,
+you will learn three tools that most platform teams use every day:
+
+- **Git** keeps the history of your files, so you can undo mistakes safely.
+- **Kubernetes** runs your applications in containers and keeps them running.
+- **Terraform** creates and changes infrastructure from text files.
+
+Each stage follows the same pattern: learn the idea, run a small example, break
+it on purpose, find the cause, fix it, and clean up. Doing those steps teaches
+far more than reading a list of commands.
 
 ## Purpose
 
@@ -48,7 +56,7 @@ Manual walkthrough commands use Bash. Native PowerShell users can run the Python
 | 1 | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Explain HEAD, index, and working tree. Unstage an edit without losing it, then restore only the disposable edit.[^git-restore] |
 | 2 | [Kubernetes fundamentals](kubernetes/fundamentals/kubernetes-fundamentals.md) | Explain Pods, Deployments, ReplicaSets, readiness, labels and Services. |
 | 3 | [Local Kubernetes deployment exercise](cross-topic-guides/local-deployment-learning-path.md) | Ready workload and HTTP; actual invalid-image diagnosis; recovered image/HTTP; namespace/cluster cleanup. |
-| 4 | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | One state object, reviewed in-place update, correct output, and empty managed state after destroy. |
+| 4 | [Terraform local state lifecycle](terraform/local-state-lifecycle.md) | One state object, reviewed in-place update, correct output, and empty managed state after destroy. |
 
 The Kubernetes and Terraform examples teach separate reconciliation/state systems; Terraform does not provision this kind cluster. A Git restore changes a file, a Kubernetes rollback changes a live Pod template, and Terraform apply changes the objects tracked by its selected state. Keep those boundaries visible when explaining what you recovered.
 
@@ -60,7 +68,7 @@ Restoring `deployment.yaml` in Git does not roll back a live Kubernetes Deployme
 
 Before moving to a cloud lab, explain which target each command used, which observation proved success, which failure was deliberate, and what was removed. Record versions, a short expected/observed result, failure reason, recovery result, cleanup, and any step you skipped. A timeout or missing executable does not count as the expected application failure.
 
-Ask a peer to follow the route from a fresh setup without your terminal history. Note unclear prerequisites, commands, messages and handoffs. That independent beginner exercise remains open; CI is useful repeatability evidence but does not replace reader testing.
+If you can, ask a friend to follow the route on a fresh computer and note anything that confused them. Their questions show which steps need clearer explanations.
 
 ## Next routes
 
@@ -71,7 +79,7 @@ Choose the next integration only after reading its account, credential, cost and
 | Explore AWS-hosted Kubernetes | [Deploying to EKS](cross-topic-guides/deploying-to-eks.md) | Authorized sandbox, AWS identity/network/cost controls and EKS permission checks. |
 | Learn infrastructure control planes | [Crossplane on AWS](cross-topic-guides/crossplane-on-aws.md) | Existing cluster, Crossplane concepts, scoped provider credentials and external-resource cleanup. |
 | Learn backup and recovery | [Velero](migrations/velero/index.md) | Owned cluster/object storage and a planned restore verification. |
-| Continue Terraform locally | [Module/workspace](terraform/examples/module-workspace-lab/index.md) and [provider alias](terraform/examples/provider-alias-lab/index.md) labs | Finish the beginner lifecycle first; retain separate local states. |
+| Continue Terraform locally | [Module/workspace](terraform/module-workspace-lab.md) and [provider alias](terraform/provider-alias-lab.md) labs | Finish the beginner lifecycle first; retain separate local states. |
 
 ## Evidence and current limits
 
@@ -81,8 +89,7 @@ Reviewed on 2026-11-10. Git recovery and Terraform lifecycle were executed on Wi
 
 - [Knowledge index](index.md)
 - [Environment preflight](cross-topic-guides/local-learning-preflight.md)
-- [Section review evidence](../section-quality-progress.md)
-- [Knowledge-base improvement plan](../knowledge-base-improvement-plan.md)
+- [Section review evidence](../governance/section-quality-progress.md)
 - [Back to root index](../README.md)
 
 [^kind-start]: [kind quick start](https://kind.sigs.k8s.io/docs/user/quick-start/).

@@ -15,3 +15,9 @@
 - name: validation
   color: "5319e7"
   description: Validation evidence, sandbox runs, or verification work
+- name: dependencies
+  color: "0366d6"
+  description: Dependency updates opened by Dependabot
+- name: moderation-review
+  color: "b60205"
+  description: Content flagged by the trusted moderation scan; maintainer review required

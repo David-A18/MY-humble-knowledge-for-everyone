@@ -4,7 +4,6 @@ title: "MongoDB replication, sharding, and consistency"
 description: "Use this guide to decide when MongoDB needs replica sets, sharding, read preferences, write concern, and restore testing."
 tags: [databases, mongodb]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

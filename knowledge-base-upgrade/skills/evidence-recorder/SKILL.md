@@ -36,5 +36,5 @@ Use this skill when recording validation evidence, limitations, optional follow-
 
 - [Skill index](../README.md)
 - [Evidence levels](../../instructions/evidence-levels.md)
-- [External evidence request checklist](../../../external-evidence-request.md)
+- [External evidence request checklist](../../../governance/external-evidence-request.md)
 - [Back to root index](../../../README.md)

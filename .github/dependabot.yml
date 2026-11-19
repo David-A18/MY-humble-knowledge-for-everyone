@@ -1,0 +1,14 @@
+# Keep pinned GitHub Actions current. Dependabot opens pull requests that update
+# the commit SHA and version comment; they pass through the repository gate.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+    groups:
+      github-actions:
+        patterns:
+          - "*"

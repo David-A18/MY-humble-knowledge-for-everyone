@@ -4,7 +4,6 @@ title: "EKS operations"
 description: "Collect practical Amazon EKS operations that combine AWS CLI checks with kubectl workflows."
 tags: [cross-topic-guides, eks-operations]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

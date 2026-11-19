@@ -1,6 +1,13 @@
 # Git
 
-Practical Git knowledge for daily development, repository maintenance, automation, and recovery.
+Git records every change to a project's files, so you can see who changed what
+and why, work on ideas in parallel branches, and undo mistakes safely. Teams
+use it with hosting services such as GitHub to review and merge each other's
+work.
+
+**New here?** Start with [daily commands](commands/daily-commands.md), then
+learn [undo and recovery](troubleshooting/undo-and-recovery.md) and
+[commits, branches, and pull requests](best-practices/commits-branches-and-pull-requests.md).
 
 ## Index
 

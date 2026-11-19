@@ -8,7 +8,6 @@ tags:
 - plan
 - ci
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:
@@ -70,7 +69,7 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 
 ## Related routes
 
-- [Module/workspace tests](../examples/module-workspace-lab/index.md).
+- [Module/workspace tests](../module-workspace-lab.md).
 - [Review checklist](../best-practices/review-and-automation-checklist.md).
 - [Back to this section](index.md)
 - [Back to Terraform](../index.md)

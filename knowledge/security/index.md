@@ -2,8 +2,6 @@
 
 Security knowledge across cloud, platforms, applications, identity, supply chain, and operations.
 
-Status: Initial outline
-
 ## Articles
 
 | Article | Purpose |

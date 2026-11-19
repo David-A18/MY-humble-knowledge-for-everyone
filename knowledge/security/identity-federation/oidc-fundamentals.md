@@ -4,7 +4,6 @@ title: "OIDC fundamentals"
 description: "Use this page to understand OpenID Connect before applying it to AWS, EKS, or GitHub Actions."
 tags: [security, identity-federation, oidc-fundamentals]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

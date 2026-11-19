@@ -21,19 +21,13 @@ PROFILE_TYPES = {
     "Learning Path",
     "Template",
     "Glossary",
-    "Asset Guide",
-    # These types are used by the embedded OKF example bundle.
-    "Playbook",
-    "Attested Computation",
-    "Source Reference",
-    "Executor Reference",
-    "Attester Reference",
+    "News Brief",
 }
 STATUSES = {"draft", "stable", "deprecated"}
-MATURITY = {"initial-outline", "draft", "maintained", "deprecated"}
 ACTOR = re.compile(r"^(?:human:[A-Za-z0-9._-]+|process:[A-Za-z0-9._-]+|[A-Za-z0-9._-]+/[A-Za-z0-9._-]+)$")
 MAINTAINER = re.compile(r"^(?:unassigned|human:[A-Za-z0-9._-]+|team:[A-Za-z0-9._-]+)$")
 SOURCE_ID = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+NEWS_PATH = re.compile(r"^news/(\d{4})/(\d{2})/[a-z0-9][a-z0-9-]*\.md$")
 DATE_HEADING = re.compile(r"^## (\d{4}-\d{2}-\d{2})(?:\b|:)", re.MULTILINE)
 LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)\s]+)")
 
@@ -56,6 +50,45 @@ def split_frontmatter(markdown: str) -> tuple[dict | None, str, str | None]:
 
 def markdown_links(markdown: str) -> set[str]:
     return {match.group(1).split("#", 1)[0] for match in LINK.finditer(markdown)}
+
+
+def as_date(value) -> date | None:
+    if isinstance(value, datetime):
+        return value.date()
+    if isinstance(value, date):
+        return value
+    try:
+        return date.fromisoformat(str(value))
+    except ValueError:
+        return None
+
+
+def validate_news(rel: str, metadata: dict) -> list[str]:
+    """News briefs are dated, sourced, expiring, and filed by publication month (ADR-0006)."""
+    is_brief = metadata.get("type") == "News Brief"
+    if rel.startswith("news/") and not is_brief:
+        return [f"{rel}: concepts under news/ must use type News Brief"]
+    if not is_brief:
+        return []
+    errors = []
+    published = as_date(metadata.get("published"))
+    stale_after = as_date(metadata.get("stale_after"))
+    if published is None:
+        errors.append(f"{rel}: news briefs need a published ISO date")
+    if stale_after is None:
+        errors.append(f"{rel}: news briefs need a stale_after ISO date")
+    elif published and stale_after <= published:
+        errors.append(f"{rel}: stale_after must be later than published")
+    if not metadata.get("sources"):
+        errors.append(f"{rel}: news briefs need at least one source")
+    if metadata.get("status") == "stable":
+        errors.append(f"{rel}: news briefs cannot be stable; use draft or deprecated")
+    match = NEWS_PATH.match(rel)
+    if not match:
+        errors.append(f"{rel}: news briefs belong in news/YYYY/MM/<kebab-name>.md")
+    elif published and (int(match.group(1)), int(match.group(2))) != (published.year, published.month):
+        errors.append(f"{rel}: folder news/{match.group(1)}/{match.group(2)}/ does not match published {published.isoformat()}")
+    return errors
 
 
 def validate_bundle(bundle: Path) -> list[str]:
@@ -93,15 +126,15 @@ def validate_bundle(bundle: Path) -> list[str]:
         if metadata is None:
             errors.append(f"{rel}: concept is missing YAML frontmatter")
             continue
-        for field in ("type", "title", "description", "tags", "status", "maturity", "audience", "maintainer"):
+        for field in ("type", "title", "description", "tags", "status", "audience", "maintainer"):
             if field not in metadata or metadata[field] in (None, "", []):
                 errors.append(f"{rel}: missing required profile field {field}")
         if metadata.get("type") not in PROFILE_TYPES:
             errors.append(f"{rel}: unsupported profile type {metadata.get('type')!r}")
         if metadata.get("status") not in STATUSES:
             errors.append(f"{rel}: status must be one of {sorted(STATUSES)}")
-        if metadata.get("maturity") not in MATURITY:
-            errors.append(f"{rel}: maturity must be one of {sorted(MATURITY)}")
+        if "maturity" in metadata:
+            errors.append(f"{rel}: maturity was retired; use status only")
         if not isinstance(metadata.get("tags"), list) or not all(isinstance(tag, str) and tag for tag in metadata.get("tags", [])):
             errors.append(f"{rel}: tags must be a non-empty list of strings")
         elif len(set(metadata["tags"])) != len(metadata["tags"]):
@@ -133,12 +166,10 @@ def validate_bundle(bundle: Path) -> list[str]:
         for date_field in ("stale_after",):
             if date_field in metadata and not isinstance(metadata[date_field], (str, date, datetime)):
                 errors.append(f"{rel}: {date_field} must be an ISO date or timestamp")
-        if (
-            metadata.get("status") == "stable"
-            and not rel.startswith("ai/ai-tooling/knowledge-bases/examples/okf-v0.2/")
-            and (not metadata.get("sources") or not metadata.get("stale_after"))
-        ):
-            errors.append(f"{rel}: stable concepts outside the embedded example need sources and stale_after")
+        if metadata.get("status") == "stable" and (not metadata.get("sources") or not metadata.get("stale_after")):
+            errors.append(f"{rel}: stable concepts need sources and stale_after")
+
+        errors.extend(validate_news(rel, metadata))
 
     for directory in sorted({path.parent for path in markdown_files}):
         index = directory / "index.md"

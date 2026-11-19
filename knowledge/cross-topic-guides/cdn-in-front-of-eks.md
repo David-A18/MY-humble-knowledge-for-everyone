@@ -4,7 +4,6 @@ title: "CDN in front of EKS"
 description: "Use this guide to place a CDN such as CloudFront or Akamai in front of workloads running on Amazon EKS."
 tags: [cross-topic-guides, cdn-in-front-of-eks]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

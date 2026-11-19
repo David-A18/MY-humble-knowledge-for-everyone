@@ -1,0 +1,19 @@
+# Individually approved URL prefixes on restricted hosts.
+#
+# Restricted hosts (video platforms, raw file hosts, file sharing, and paste
+# sites) can serve any content, so each link is approved on its own. A URL
+# passes when it starts with one of these prefixes. CODEOWNERS review applies.
+
+# Pinned upstream source files cited by Terraform and Kubernetes pages.
+https://raw.githubusercontent.com/hashicorp/terraform-provider-local/
+https://raw.githubusercontent.com/kubernetes/kubectl/
+https://raw.githubusercontent.com/yannh/kubernetes-json-schema/
+
+# Crossplane conference talks referenced by the archived Crossplane study notes.
+https://www.youtube.com/watch?v=-GczeD5lUIk
+https://www.youtube.com/watch?v=2c-M5Us84V8
+https://www.youtube.com/watch?v=ZWdaQ4lH8ec
+https://www.youtube.com/watch?v=aWRWKnniqeM
+https://www.youtube.com/watch?v=jw8mMslpqOI
+https://www.youtube.com/watch?v=tbMCWp7rsk8
+https://www.youtube.com/results?search_query=Crossplane+Ep2+AWS+Resource+Control

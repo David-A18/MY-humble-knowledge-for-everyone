@@ -4,7 +4,6 @@ title: "GitHub Actions workflow structure"
 description: "Use this page to understand the structure of workflow YAML files and where each key belongs."
 tags: [git, github-actions, workflow-structure]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

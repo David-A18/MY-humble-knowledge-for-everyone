@@ -4,7 +4,6 @@ title: "Kafka fundamentals"
 description: "Use this page to understand the core Kafka mental model before designing producers, consumers, or AWS streaming architectures."
 tags: [databases, kafka]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -4,7 +4,6 @@ title: "Crossplane local AWS S3 lab"
 description: "Use this hands-on lab to install Crossplane in a local Kubernetes cluster, install an AWS S3 provider, create a real S3 bucket, observe reconciliation, test drift correction, and clean up safely."
 tags: [kubernetes, crossplane, local-aws-s3-lab]
 status: draft
-maturity: draft
 audience: "Platform engineers practicing Crossplane with AWS in a sandbox"
 maintainer: unassigned
 sources:

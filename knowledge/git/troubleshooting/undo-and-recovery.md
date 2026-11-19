@@ -4,7 +4,6 @@ title: "Undo and recovery"
 description: "Use Git's inspection tools before undoing work, then choose the least destructive recovery path."
 tags: [git, troubleshooting, undo-and-recovery]
 status: stable
-maturity: maintained
 audience: "Developers learning safe Git recovery"
 maintainer: unassigned
 sources:

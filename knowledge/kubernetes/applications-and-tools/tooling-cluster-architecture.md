@@ -4,7 +4,6 @@ title: "Tooling cluster architecture"
 description: "Use this guide to design a Kubernetes tooling cluster that hosts platform tools without accidentally creating a fragile, over-privileged control point."
 tags: [kubernetes, applications-and-tools, tooling-cluster-architecture]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

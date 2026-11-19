@@ -16,7 +16,7 @@ cases:
 - id: terraform-local-state
   question: How can I practice Terraform state safely without creating cloud resources?
   expected_paths:
-  - knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md
+  - knowledge/terraform/local-state-lifecycle.md
   required_source_ids:
   - terraform-cli
   - terraform-state
@@ -273,14 +273,14 @@ cases:
   question: Where can I test module contracts, moved addresses, and workspace separation
     without cloud access?
   expected_paths:
-  - knowledge/terraform/examples/module-workspace-lab/module-workspace-lab.md
+  - knowledge/terraform/module-workspace-lab.md
   required_source_ids:
   - tf-tests
 - id: terraform-local-provider-lab
   question: How can I exercise a provider alias and pinned lock file using a disposable
     local artifact?
   expected_paths:
-  - knowledge/terraform/examples/provider-alias-lab/provider-alias-lab.md
+  - knowledge/terraform/provider-alias-lab.md
   required_source_ids:
   - local-file
 - id: finops-budgets
@@ -363,7 +363,7 @@ cases:
   question: Where can I test shared-cost rounding, credits, and normalized cost avoidance
     with synthetic data?
   expected_paths:
-  - knowledge/finops/examples/cost-analysis-lab/cost-analysis-lab.md
+  - knowledge/finops/cost-analysis-lab.md
   required_source_ids:
   - finops-allocation
 - id: security-effective-permissions
@@ -454,7 +454,7 @@ cases:
   question: Where can I catch broadened IRSA subjects or S3 object prefixes locally
     without claiming IAM authorization was tested?
   expected_paths:
-  - knowledge/cloud/aws/security/examples/policy-contract-lab/policy-contract-lab.md
+  - knowledge/cloud/aws/security/policy-contract-lab.md
   required_source_ids:
   - simulator
 - id: journey-preflight
@@ -496,7 +496,7 @@ cases:
   question: After applying release_version=1.1.0 with -var, will the next Terraform
     plan retain that input automatically?
   expected_paths:
-  - knowledge/terraform/examples/local-state-lifecycle/local-state-lifecycle.md
+  - knowledge/terraform/local-state-lifecycle.md
   required_source_ids:
   - terraform-plan
 - id: journey-cleanup
@@ -615,7 +615,7 @@ cases:
   question: Where can I test overlapping direct and group assignments and expired
     review records without claiming effective AWS permissions?
   expected_paths:
-  - knowledge/cloud/aws/governance-and-access/examples/access-review-lab/access-review-lab.md
+  - knowledge/cloud/aws/governance-and-access/access-review-lab.md
   required_source_ids:
   - sets
 - id: manifest-difference-drift-regression
@@ -674,3 +674,24 @@ cases:
   - knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md
   required_source_ids:
   - chainsaw-project
+- id: news-java-vulnerability
+  question: Which Java vulnerability did CISA urge organizations to patch immediately
+    in November 2026?
+  expected_paths:
+  - knowledge/news/2026/11/critical-java-vulnerability-cve-2026-114938.md
+  required_source_ids:
+  - cisa-alert
+- id: news-eu-ai-act-timeline
+  question: When do the EU AI Act high-risk obligations apply after the Digital Omnibus
+    on AI?
+  expected_paths:
+  - knowledge/news/2026/11/eu-ai-act-new-prohibitions-december-2026.md
+  required_source_ids:
+  - eu-regulation-2026-1744
+- id: gha-terraform-approved-apply
+  question: How do I apply only a reviewed Terraform plan from GitHub Actions after
+    an environment approval?
+  expected_paths:
+  - knowledge/cross-topic-guides/github-actions-with-terraform.md
+  required_source_ids:
+  - gha-environments

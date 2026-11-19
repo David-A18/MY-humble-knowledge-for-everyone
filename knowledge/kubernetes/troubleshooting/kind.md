@@ -9,7 +9,6 @@ tags:
 - kind
 - local-development
 status: draft
-maturity: draft
 audience: Platform engineers with basic kubectl knowledge
 maintainer: unassigned
 sources:

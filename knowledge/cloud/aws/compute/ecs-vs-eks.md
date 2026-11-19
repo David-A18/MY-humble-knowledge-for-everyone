@@ -4,7 +4,6 @@ title: "ECS vs. EKS"
 description: "Use this guide to choose between Amazon ECS and Amazon EKS for container workloads on AWS."
 tags: [cloud, aws, compute]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

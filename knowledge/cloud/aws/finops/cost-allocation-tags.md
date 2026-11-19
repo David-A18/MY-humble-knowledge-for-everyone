@@ -8,7 +8,6 @@ tags:
 - finops
 - tagging
 status: draft
-maturity: draft
 audience: Cloud engineers and cost owners
 maintainer: unassigned
 sources:

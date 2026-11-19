@@ -1,7 +1,5 @@
 # Kubernetes applications and tools
 
-Status: Initial outline
-
 Notes for tools commonly used to package, deploy, and operate Kubernetes workloads.
 
 ## Added learning guides
@@ -56,7 +54,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | Understand what K9s is and how it maps to Kubernetes resources. | [K9s](k9s.md) |
 | Move through K9s views, filters, namespaces, and contexts. | [K9s navigation](k9s.md#move-around) |
 | Inspect Pods, logs, events, Deployments, Services, and cluster health. | [K9s inspection workflows](k9s.md#inspect-and-see-things) |
-| Use aliases, hotkeys, plugins, and read-only mode safely. | [K9s daily configuration](k9s.md#configuration-that-helps-daily-use) |
+| Use aliases, hotkeys, plugins, and read-only mode safely. | [K9s configuration and troubleshooting](k9s-configuration-and-troubleshooting.md) |
 
 ## Articles
 
@@ -77,6 +75,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [kind custom clusters](kind-custom-clusters.md) | Create local Kubernetes clusters for labs and CI. |
 | [kind images and local registries](kind-images-and-local-registries.md) | Load host-built images into kind or use a local registry. |
 | [K9s](k9s.md) | Use K9s to navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
+| [K9s configuration and troubleshooting](k9s-configuration-and-troubleshooting.md) | Configure aliases, hotkeys, plugins, and read-only mode, and fix common K9s problems. |
 | [Velero](../../migrations/velero/index.md) | Back up, restore, migrate, and recover Kubernetes resources and persistent volumes. |
 
 ## Expected content

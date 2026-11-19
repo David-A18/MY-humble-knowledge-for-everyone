@@ -12,8 +12,11 @@ Velero is a Kubernetes backup, restore, disaster recovery, and cluster migration
 | Install on EKS with S3, EBS snapshots, CSI support, IAM, and node-agent. | [AWS S3 and EBS installation](aws-s3-ebs-installation.md) |
 | Run backups, schedules, restores, filters, hooks, and restore mappings. | [Backup and restore workflows](backup-restore-workflows.md) |
 | Trigger Velero backup and migration tasks from GitHub Actions. | [Possible integrations](possible-integrations.md) |
+| Copy the instruction file, workflow, and Velero settings a pipeline needs. | [Pipeline workflow reference](pipeline-workflow-reference.md) |
 | Plan migration or disaster recovery with source and destination checks. | [Cluster migration and disaster recovery](cluster-migration-and-disaster-recovery.md) |
 | Map Velero to real operating scenarios, including GitOps and cross-cloud migrations. | [Real use cases and runbooks](real-use-cases-and-runbooks.md) |
+| Move a legacy Argo CD-managed cluster into a shared tooling cluster. | [Legacy cluster to tooling cluster](argocd-legacy-to-tooling-cluster-migration.md) |
+| Move Argo CD-managed workloads from AKS to EKS across clouds. | [AKS to EKS migration](aks-to-eks-argocd-migration.md) |
 | Investigate failures and operate Velero safely. | [Troubleshooting and operations](troubleshooting-and-operations.md) |
 
 ## What Velero protects

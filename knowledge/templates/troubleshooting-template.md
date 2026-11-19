@@ -4,7 +4,6 @@ title: Troubleshooting guide template
 description: Start a symptom-led troubleshooting guide with safe diagnostics, recovery, and prevention.
 tags: [templates, troubleshooting]
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 ---

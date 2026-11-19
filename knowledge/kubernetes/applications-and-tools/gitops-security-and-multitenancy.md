@@ -4,7 +4,6 @@ title: "GitOps security and multi-tenancy"
 description: "Use this guide to keep GitOps controllers powerful enough to reconcile clusters without giving every team uncontrolled cluster-wide deployment authority."
 tags: [kubernetes, applications-and-tools]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

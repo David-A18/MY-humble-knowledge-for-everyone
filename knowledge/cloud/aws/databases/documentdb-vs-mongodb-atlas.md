@@ -4,7 +4,6 @@ title: "DocumentDB vs. MongoDB Atlas"
 description: "Use this page to compare Amazon DocumentDB and MongoDB Atlas for MongoDB-oriented workloads on AWS."
 tags: [cloud, aws, databases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -4,7 +4,6 @@ title: "GitHub Actions commands"
 description: "Use this page for commands that operate GitHub Actions from the terminal and workflow commands used inside running jobs."
 tags: [git, github-actions]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

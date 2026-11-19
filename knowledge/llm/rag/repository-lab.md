@@ -7,7 +7,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -28,7 +27,7 @@ sources:
 
 Retrieve cited evidence from this Markdown knowledge base without a vector service.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Prerequisites and versions
 
@@ -39,11 +38,11 @@ Use Python **3.13 or newer** with SQLite FTS5 enabled. The retrieval path uses o
 Run from the repository root:
 
 ```bash
-python knowledge/llm/rag/examples/rag.py ingest --root . --db /tmp/kb-rag.sqlite
-python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication'
-python knowledge/llm/rag/examples/rag.py ask --db /tmp/kb-rag.sqlite 'AssumeRoleWithWebIdentity'
-python knowledge/llm/rag/examples/rag.py search --db /tmp/kb-rag.sqlite "$(python -c 'import secrets; print(secrets.token_hex(16))')"
-python knowledge/llm/rag/examples/test_rag.py
+python examples/llm/rag/rag.py ingest --root . --db /tmp/kb-rag.sqlite
+python examples/llm/rag/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication'
+python examples/llm/rag/rag.py ask --db /tmp/kb-rag.sqlite 'AssumeRoleWithWebIdentity'
+python examples/llm/rag/rag.py search --db /tmp/kb-rag.sqlite "$(python -c 'import secrets; print(secrets.token_hex(16))')"
+python examples/llm/rag/test_rag.py
 python scripts/evaluate-retrieval.py --unanswerable tests/unanswerable-questions.yaml --show-misses
 ```
 
@@ -53,7 +52,7 @@ What it does: builds a disposable index, returns ranked evidence with Markdown p
 
 Istio authentication sections should appear among the top five `PeerAuthentication` hits. IRSA/OIDC material should appear for the STS operation. A fresh random query should return no hits; `ask` with that same query returns `NO_EVIDENCE`. A fixed nonsense string printed in this tutorial can match the tutorial itself after ingestion, so generate it at runtime. Query timing and context size are measured separately from optional generation.
 
-Each hit carries the concept's `status`, `maturity`, `type`, `tags`, `source_ids`, and `stale_after`, plus a `trust_tier` and `stale` flag derived as OKF sections 5.3 and 5.5 define them. These signals are shown, not used to rank: almost every concept is an unverified draft, so a trust boost would carry no information today.
+Each hit carries the concept's `status`, `type`, `tags`, `source_ids`, and `stale_after`, plus a `trust_tier` and `stale` flag derived as OKF sections 5.3 and 5.5 define them. These signals are shown, not used to rank: almost every concept is an unverified draft, so a trust boost would carry no information today.
 
 `search` also reports `best_coverage`, the share of the question's rare-word weight found in the best concept, and `sufficient`, which is true at 0.5 or above. `search` always returns its hits so a person or agent can inspect weak matches. `ask` refuses with `NO_EVIDENCE` when evidence is not sufficient, without calling a model. Word overlap cannot tell whether a page truly answers a question, so a coverage pass is a screen and not proof of grounding.
 

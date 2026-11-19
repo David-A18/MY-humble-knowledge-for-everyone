@@ -4,7 +4,6 @@ title: "Create AI tools for Claude and Codex"
 description: "This guide explains how to design custom AI tools for Claude, Claude Code, Codex, and OpenAI workflows. It focuses on practical choices: function tools, MCP servers, skills, Markdown instructions, and platform-specific configuration."
 tags: [ai, ai-tooling]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

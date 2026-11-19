@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a single required repository gate, a content and security policy, a repository policy checker (text-only file types, no binaries or executables, hidden-Unicode detection, safe Markdown, and allowlisted, safe links), a hashed-term moderation scanner, and a trusted content scan that pull requests cannot weaken and that records moderation cases for maintainers.
+
+- Added gitleaks secret scanning, SHA-pinned GitHub Actions, and Dependabot updates for actions.
+
+- Added a news section with ADR-0006, a news editorial policy, a news brief template, and validator rules for dated, sourced, expiring briefs.
+
+- Added plain-language writing rules to the authoring instructions.
+
+- Added starter pages for Git commits and pull requests, Git productivity tricks, AWS fundamentals, choosing S3, EBS, or EFS, and AWS troubleshooting first checks, and plain openings for the Git, AWS, and FinOps entry pages.
+
+- Published the first weekly news roundup with four sourced briefs, and indexed news in the RAG lab with new retrieval cases.
+
+- Expanded the GitHub Actions with Terraform, GitHub Actions with Kubernetes, Terraform on AWS, and end-to-end deployment outlines into complete guides.
+
 - Added a reproducible Istio sidecar CI lab with baseline connectivity, STRICT mTLS, JWT validation and combined identity authorization checks.
 
 - Reworked manifest validation into an executable source/API/behavior path: pinned tools and schemas, eight real offline checks, a private kind runner for live diff and Service recovery, and Chainsaw positive/negative tests. Added a Linux CI gate; hosted execution is revision-specific and Helm/GitOps integrations remain follow-ups.
@@ -126,6 +140,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a content-only CI/CD process guide requiring documentation changes to land in `main`, with validation-focused checks, no required human review for normal content changes, and branch cleanup guidance.
 
 ### Changed
+
+- Made `knowledge/` Markdown-only by moving runnable lab files to `examples/`, moved the sample OKF bundle out of the reader corpus, and removed the duplicate `maturity` field.
+
+- Removed empty placeholder sections, moved root planning documents into `governance/` (archiving superseded plans), and replaced the scattered plans with a single roadmap.
+
+- Replaced the separate OKF, link, Markdown, and issue-template workflows with the repository gate.
+
+- Split six pages over 2,900 words into focused pages, pointed knowledge links at lab tutorial pages, and replaced AWS Well-Architected links moved by the 2026-11-16 documentation reorganization.
 
 - Expanded the stable Git undo-and-recovery guide with official Git source
   records, safer decision paths, expected results, untracked cleanup guidance,

@@ -4,7 +4,6 @@ title: "Amazon ECR"
 description: "Use this page to understand Amazon Elastic Container Registry (ECR), secure"
 tags: [cloud, aws, compute]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

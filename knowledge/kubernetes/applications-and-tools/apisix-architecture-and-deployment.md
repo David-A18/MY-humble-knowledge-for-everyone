@@ -4,7 +4,6 @@ title: "APISIX architecture and deployment"
 description: "Use this guide to understand how Apache APISIX, the APISIX Ingress Controller, Gateway API, and Kubernetes Services fit together before choosing a deployment mode."
 tags: [kubernetes, applications-and-tools]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

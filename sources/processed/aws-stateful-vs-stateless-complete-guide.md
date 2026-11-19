@@ -2217,7 +2217,7 @@ Can I terminate this replica right now without losing required information?
 The following sources were used to verify and extend this guide. AWS and Kubernetes documentation can evolve, so consult the current version when implementing production infrastructure.
 
 1. AWS Well-Architected Framework — Make systems stateless where possible
-   https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html
+   https://docs.aws.amazon.com/wellarchitected/2025-02-25/framework/rel_mitigate_interaction_failure_stateless.html
 
 2. Amazon VPC — Security Groups
    https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html

@@ -4,7 +4,6 @@ title: "APISIX on EKS"
 description: "Use this guide to run Apache APISIX as a Kubernetes API gateway on Amazon EKS."
 tags: [cross-topic-guides, apisix-on-eks]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

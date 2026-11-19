@@ -4,7 +4,6 @@ title: "Advanced Git commands"
 description: "Use this page for professional Git commands that are powerful, useful, and easier to misuse than daily commands."
 tags: [git, advanced-commands]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

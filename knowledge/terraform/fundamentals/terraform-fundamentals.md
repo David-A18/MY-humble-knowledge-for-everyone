@@ -4,7 +4,6 @@ title: Terraform fundamentals
 description: Understand Terraform configuration, providers, resources, state, planning, application, and safe local practice before managing real infrastructure.
 tags: [terraform, fundamentals, infrastructure-as-code, beginner]
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -24,6 +23,22 @@ stale_after: 2026-12-20
 ---
 
 # Terraform fundamentals
+
+Terraform lets you describe infrastructure, such as servers, networks, or
+storage, in text files instead of clicking through a web console. Terraform
+reads those files, shows you exactly what it would create, change, or delete,
+and only then makes the changes you approve. Because the files live in Git,
+your team can review infrastructure changes like any other code.
+
+```hcl
+resource "terraform_data" "greeting" {
+  input = "hello"
+}
+```
+
+What it does: declares one small resource that exists only in Terraform's
+records. Running `terraform plan` on it shows a single "create" action without
+touching any cloud account.
 
 ## Purpose
 
@@ -56,19 +71,19 @@ Understand the Terraform model before using it to manage cloud or shared infrast
 
 ## Learn without a cloud account
 
-Use [Terraform local state lifecycle](../examples/local-state-lifecycle/local-state-lifecycle.md). It uses the built-in `terraform_data` resource, so you can practice initialization, planning, state inspection, change review, and cleanup without cloud credentials.
+Use [Terraform local state lifecycle](../local-state-lifecycle.md). It uses the built-in `terraform_data` resource, so you can practice initialization, planning, state inspection, change review, and cleanup without cloud credentials.
 
 ## Continue the learning path
 
 - [Inputs, locals, and outputs](../language/variables-locals-and-outputs.md) — design a clear module contract.
-- [Module and workspace lab](../examples/module-workspace-lab/index.md) — execute tests, stable-key changes, and an ID-preserving refactor locally.
+- [Module and workspace lab](../module-workspace-lab.md) — execute tests, stable-key changes, and an ID-preserving refactor locally.
 - [Provider dependencies](providers-and-dependency-locking.md) — distinguish package selection, aliases, and state locking.
 
 ## Related links
 
 - [Core Terraform workflow](../commands/core-workflow.md)
 - [Terraform state management](state-management.md)
-- [Terraform local state lifecycle](../examples/local-state-lifecycle/local-state-lifecycle.md)
+- [Terraform local state lifecycle](../local-state-lifecycle.md)
 - [Back to Terraform fundamentals](index.md)
 - [Back to Terraform index](../index.md)
 - [Back to knowledge index](../../index.md)

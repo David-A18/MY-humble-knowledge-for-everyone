@@ -31,7 +31,7 @@ Use these values when present, but verify them against the actual content.
 | Raw topic | Destination |
 | --- | --- |
 | AWS-specific cloud content | [cloud/aws](../knowledge/cloud/aws/index.md) |
-| Azure-specific cloud content | [cloud/azure](../knowledge/cloud/azure/index.md) |
+| Azure-specific cloud content | [cloud](../knowledge/cloud/index.md) (Azure is a planned topic) |
 | Google Cloud content | [cloud/gcloud](../knowledge/cloud/gcloud/index.md) |
 | Provider-neutral cloud content | [cloud](../knowledge/cloud/index.md) |
 | Database and data-platform content | [databases](../knowledge/databases/index.md) |
@@ -44,11 +44,8 @@ Use these values when present, but verify them against the actual content.
 | FinOps content | [finops](../knowledge/finops/index.md) |
 | DevOps content | [devops](../knowledge/devops/index.md) |
 | Programming language content | [programming-languages](../knowledge/programming-languages/index.md) |
-| MLOps content | [mlops](../knowledge/mlops/index.md) |
-| AI content | [ai](../knowledge/ai/index.md) |
-| AI agent content | [ai-agents](../knowledge/ai-agents/index.md) |
+| AI, AI agent, ML, and MLOps content | [ai](../knowledge/ai/index.md) |
 | LLM content | [llm](../knowledge/llm/index.md) |
-| ML content | [ml](../knowledge/ml/index.md) |
 | Solutions architect content | [solutions-architect](../knowledge/solutions-architect/index.md) |
 | Multi-technology workflow | [cross-topic guides](../knowledge/cross-topic-guides/index.md) |
 

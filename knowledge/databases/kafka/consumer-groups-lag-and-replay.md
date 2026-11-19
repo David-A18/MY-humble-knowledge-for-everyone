@@ -4,7 +4,6 @@ title: "Kafka consumer groups, lag, and replay"
 description: "Use this guide to reason about Kafka consumer progress, scaling, lag, and safe replay."
 tags: [databases, kafka, consumer-groups-lag-and-replay]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

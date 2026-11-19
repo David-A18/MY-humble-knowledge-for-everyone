@@ -4,7 +4,6 @@ title: Command reference template
 description: Start a safe, scannable command reference with context checks, expected results, and recovery guidance.
 tags: [templates, command-reference]
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 ---
