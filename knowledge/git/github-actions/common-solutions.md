@@ -4,7 +4,6 @@ title: "GitHub Actions common solutions"
 description: "Use this page when a workflow fails or behaves unexpectedly. Start with inspection, then apply the smallest safe fix."
 tags: [git, github-actions, common-solutions]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

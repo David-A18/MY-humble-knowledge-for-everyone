@@ -4,7 +4,6 @@ title: "Tooling clusters"
 description: "Use this page to decide when a dedicated Kubernetes tooling cluster is useful."
 tags: [kubernetes, applications-and-tools, tooling-clusters]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

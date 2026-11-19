@@ -9,7 +9,6 @@ tags:
 - scheduling
 - resources
 status: draft
-maturity: draft
 audience: Platform engineers with basic kubectl knowledge
 maintainer: unassigned
 sources:

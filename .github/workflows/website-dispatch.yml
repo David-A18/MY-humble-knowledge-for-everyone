@@ -2,7 +2,7 @@ name: Notify knowledge website
 
 on:
   workflow_run:
-    workflows: ["OKF validation"]
+    workflows: ["Repository gate"]
     types: [completed]
 
 permissions:

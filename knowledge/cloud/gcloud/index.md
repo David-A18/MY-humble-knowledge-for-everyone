@@ -2,8 +2,6 @@
 
 Google Cloud knowledge for cloud architecture, identity, networking, compute, storage, security, governance, FinOps, troubleshooting, and certification study.
 
-Status: Initial outline
-
 ## Expected content
 
 - Google Cloud fundamentals.

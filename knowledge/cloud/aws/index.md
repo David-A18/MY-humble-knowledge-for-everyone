@@ -1,10 +1,16 @@
 # AWS
 
-Practical AWS knowledge for cloud architecture, networking, compute, storage, security, governance, FinOps, troubleshooting, and certification study.
+Amazon Web Services (AWS) rents servers, storage, databases, and many other
+building blocks that you create through an API and pay for as you use them.
+These guides cover how to design, secure, operate, and pay for systems on AWS.
+
+**New here?** Read [AWS fundamentals](fundamentals/aws-fundamentals.md) first,
+set up [budgets and cost alerts](finops/index.md) before you build, and keep
+[troubleshooting first checks](troubleshooting/first-checks.md) at hand.
 
 ## Account governance and human access
 
-Use [governance and access](governance-and-access/index.md) for account/OU design, Identity Center access models, permission sets, guardrails, delegated IAM, root/emergency recovery and offboarding. Practice with the [synthetic access-review lab](governance-and-access/examples/access-review-lab/index.md) before adapting a real collection/review process.
+Use [governance and access](governance-and-access/index.md) for account/OU design, Identity Center access models, permission sets, guardrails, delegated IAM, root/emergency recovery and offboarding. Practice with the [synthetic access-review lab](governance-and-access/access-review-lab.md) before adapting a real collection/review process.
 
 ## Workload identity learning path
 
@@ -12,7 +18,7 @@ Start with [IRSA fundamentals](security/irsa-fundamentals.md), [trust and permis
 
 ## Security operations learning path
 
-Use [IAM evaluation](security/iam-policy-evaluation-and-least-privilege.md), [credential/session behavior](security/credential-providers-and-session-lifecycle.md), and the [policy-contract lab](security/examples/policy-contract-lab/index.md) before interpreting allowed/denied results. Continue through the [security index](security/index.md) for Pod Identity, KMS, secrets, audit/detection, diagnosis, and incident recovery.
+Use [IAM evaluation](security/iam-policy-evaluation-and-least-privilege.md), [credential/session behavior](security/credential-providers-and-session-lifecycle.md), and the [policy-contract lab](security/policy-contract-lab.md) before interpreting allowed/denied results. Continue through the [security index](security/index.md) for Pod Identity, KMS, secrets, audit/detection, diagnosis, and incident recovery.
 
 ## Networking learning path
 
@@ -40,11 +46,10 @@ Use [AWS FinOps](finops/index.md) for tag activation, budgets/anomalies, Cost Ex
 | [FinOps](finops/index.md) | Cost visibility, tagging, budgets, and optimization. |
 | [Architecture](architecture/index.md) | Reference architectures, trade-offs, reliability, and design reviews. |
 | [Troubleshooting](troubleshooting/index.md) | Cloud diagnostic procedures and incident notes. |
-| [Solutions architect](solutions-architect/index.md) | Study notes and architecture review topics. |
 
 ## Official documentation
 
 - [AWS documentation](https://docs.aws.amazon.com/)
-- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/)
 
 [Back to cloud index](../index.md) | [Back to root index](../../../README.md)

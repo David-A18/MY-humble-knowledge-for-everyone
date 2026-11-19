@@ -4,7 +4,6 @@ title: "ADR-0003: Keep repository navigation before adding a searchable site"
 description: "The knowledge base is currently published as a Git repository with Markdown indexes, focused articles, local validation scripts, and an explicit maintenance review queue. The improvement plan asks whether a searchable static reading site would be worthwhile after reader-task testing produces findability evidence."
 tags: [decision-records]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---
@@ -45,8 +44,8 @@ Revisit this decision after KB-14 records actual reader outcomes. If a site is r
 
 ## Related links
 
-- [Knowledge-base improvement plan](../../knowledge-base-improvement-plan.md)
-- [Maintenance review queue](../../maintenance-review-queue.md)
-- [Knowledge-base review](../../knowledge-base-review.md)
+- [Knowledge-base improvement plan](../../governance/archive/knowledge-base-improvement-plan.md)
+- [Maintenance review queue](../../governance/maintenance-review-queue.md)
+- [Knowledge-base review](../../governance/archive/knowledge-base-review.md)
 - [Decision records](index.md)
 - [Back to root index](../../README.md)

@@ -2,14 +2,11 @@
 
 Provider-neutral and provider-specific cloud knowledge.
 
-Status: Initial outline
-
 ## Providers
 
 | Provider | Use it for |
 | --- | --- |
 | [AWS](aws/index.md) | AWS fundamentals, networking, compute, storage, security, governance, FinOps, architecture, troubleshooting, and certification notes. |
-| [Azure](azure/index.md) | Azure services, identity, networking, operations, cost, governance, and architecture notes. |
 | [Google Cloud](gcloud/index.md) | Google Cloud services, identity, networking, operations, cost, governance, and architecture notes. |
 
 ## Shared cloud areas

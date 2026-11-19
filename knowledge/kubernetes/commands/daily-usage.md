@@ -4,7 +4,6 @@ title: "Kubernetes daily usage commands"
 description: "Collect the kubectl commands used most often during daily Kubernetes and EKS work: checking context, inspecting resources, reading logs, entering containers, and temporarily forwarding traffic."
 tags: [kubernetes, daily-usage]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

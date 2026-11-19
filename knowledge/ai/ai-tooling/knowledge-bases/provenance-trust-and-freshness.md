@@ -4,7 +4,6 @@ title: "Provenance, trust, and freshness"
 description: "This guide explains how an agent knowledge base records where knowledge came from, how it was verified, whether it is still fresh, and what to do when sources disagree."
 tags: [ai, ai-tooling, knowledge-bases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---
@@ -62,7 +61,7 @@ source_path: docs/concepts/workloads/pods
 source_hash: sha256:example
 renderer_version: docs-renderer/1.2.0
 knowledge_concepts:
-   - knowledge/ai/ai-tooling/knowledge-bases/examples/okf-v0.2/concepts/source-schema-extraction
+   - examples/ai/ai-tooling/knowledge-bases/okf-v0.2/concepts/source-schema-extraction
 generated_hash: sha256:example-output
 last_reconciled_at: 2026-08-08T10:00:00Z
 status: active

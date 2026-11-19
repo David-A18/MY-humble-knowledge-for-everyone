@@ -7,7 +7,6 @@ tags:
 - kubernetes
 - manifest-validation
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:

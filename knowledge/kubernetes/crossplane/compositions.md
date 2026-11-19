@@ -4,7 +4,6 @@ title: "Crossplane compositions"
 description: "Use this page to design Crossplane platform APIs with Composite Resource Definitions, composite resources, composition functions, composition revisions, and local rendering."
 tags: [kubernetes, crossplane, compositions]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

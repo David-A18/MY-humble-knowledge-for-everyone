@@ -4,7 +4,6 @@ title: "Proof of Concept"
 description: "A Proof of Concept, usually shortened to PoC, is a small, time-boxed effort"
 tags: [solutions-architect, proof-of-concept]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -9,7 +9,6 @@ tags:
 - security-groups
 - security
 status: draft
-maturity: draft
 audience: Cloud and platform engineering learners
 maintainer: unassigned
 sources:

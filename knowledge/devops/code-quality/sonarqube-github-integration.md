@@ -4,7 +4,6 @@ title: "SonarQube GitHub integration"
 description: "Use this page to set the right mental model for SonarQube Server and GitHub integration: repository import and binding, GitHub Actions analysis, pull request decoration, required checks, and security alert reporting."
 tags: [devops, code-quality, sonarqube-github-integration]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

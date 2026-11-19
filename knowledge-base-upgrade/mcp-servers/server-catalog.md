@@ -11,7 +11,7 @@ Maintainer: Unassigned
 Last substantive review: 2026-09-20
 Applicable versions: Current repository structure on the `develop` branch
 Validation evidence: Markdown lint and local link validation must pass before publication
-Known limitations: Server roles are design templates, not installed services
+Known limitations: The search and filesystem roles run as `scripts/kb-mcp-server.py`; the other roles remain design templates
 Next review: Before implementing or connecting an MCP server
 
 ## Server roles

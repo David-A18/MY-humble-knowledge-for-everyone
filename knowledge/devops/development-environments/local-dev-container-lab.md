@@ -6,7 +6,6 @@ tags:
 - devops
 - development-environments
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -24,20 +23,20 @@ sources:
 
 Validate a portable environment without a hosted account.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Prerequisites and files
 
-Use a local Docker-compatible container runtime plus a Dev Container-capable editor or CLI. The sample config is in [examples/local](examples/local/index.md). It pins a Python 3.13 image tag and uses no repository credentials. The CLI example pins `@devcontainers/cli@0.80.0`.[^dev-container-cli][^dev-container-specification]
+Use a local Docker-compatible container runtime plus a Dev Container-capable editor or CLI. The sample config is in [examples/local](../../../examples/devops/development-environments/local/README.md). It pins a Python 3.13 image tag and uses no repository credentials. The CLI example pins `@devcontainers/cli@0.80.0`.[^dev-container-cli][^dev-container-specification]
 
 ## Open locally
 
 Open `examples/local` as the workspace folder and choose your editor's “Reopen in Container” action. Alternatively, from this series directory:
 
 ```bash
-pnpm dlx @devcontainers/cli@0.80.0 read-configuration --workspace-folder examples/local
-pnpm dlx @devcontainers/cli@0.80.0 up --workspace-folder examples/local
-pnpm dlx @devcontainers/cli@0.80.0 exec --workspace-folder examples/local python verify.py
+pnpm dlx @devcontainers/cli@0.80.0 read-configuration --workspace-folder examples/devops/development-environments/local
+pnpm dlx @devcontainers/cli@0.80.0 up --workspace-folder examples/devops/development-environments/local
+pnpm dlx @devcontainers/cli@0.80.0 exec --workspace-folder examples/devops/development-environments/local python verify.py
 ```
 
 What it does: parses the configuration, starts the container, and executes the verification script. `read-configuration` does not prove the container starts. CLI/image downloads require network access; `up` and `exec` require the container runtime.

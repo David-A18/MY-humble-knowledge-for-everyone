@@ -4,7 +4,6 @@ title: "Stateful design decision checklist"
 description: "Use this checklist before running stateful workloads, network appliances, databases, brokers, or workflow systems on AWS."
 tags: [cloud, aws, architecture]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

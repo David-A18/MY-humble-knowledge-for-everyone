@@ -1,5 +1,15 @@
 # Knowledge bundle log
 
+## 2026-11-19
+
+- Added starter pages for Git practices and tricks and AWS fundamentals, storage, and troubleshooting; moved Kubernetes practices and tricks out of their indexes; removed the empty AWS solutions-architect and Azure sections; split three more long pages.
+- Published the first news roundup (week of 16 November 2026): four briefs on AI models, a critical Java vulnerability, US interest rates, and the EU AI Act timeline.
+- Split six oversized pages by reader task, expanded the four cross-topic outline pages into complete guides, and rewrote the beginner openings in plain language.
+- Made the bundle Markdown-only: runnable lab files moved to the top-level `examples/` folder, and lab tutorials moved up to their topic indexes.
+- Moved the sample OKF bundle out of the reader corpus, retired the duplicate `maturity` field, and removed the empty `ai-agents`, `ml`, `mlops`, and `assets` sections.
+- Renamed ADR-0001 and ADR-0002 to lowercase kebab-case.
+- Added the news section, the `News Brief` type, ADR-0006, and a news brief template.
+
 ## 2026-11-16
 
 - Added a pinned, disposable Istio sidecar lab that stages peer authentication, JWT validation and authorization, with request and cleanup assertions.
@@ -13,6 +23,12 @@
 - Reviewed the beginner Git → local Kubernetes → Terraform route. Added environment preflight, pinned node/workload inputs, a strategic image patch, explicit kubeconfig targeting, separate Service/port-forward HTTP checks, and repeatable Git/Terraform/kind validation. Runtime results must be read for the exact tested revision.
 
 - Expanded AWS security into a learning and operational path with nine new concepts and a local policy-contract lab. Rechecked existing OIDC/IRSA guidance and preserved the EKS comparison/lab routes. Local mutation tests are distinct from AWS policy evaluation and live authorization.
+
+## 2026-11-02
+
+- **RAG engine**: The lab now reports OKF trust and freshness on every hit, flags weak evidence, and covers `start-here.md` and decision records. Navigation pages and the synthetic OKF example left the index.
+- **Retrieval evidence**: Golden cases and unanswerable questions are scored in CI. A read-only MCP server exposes search and fetch to AI hosts.
+- **OKF guide**: Corrected the outdated statement about this repository's bundle status.
 
 ## 2026-10-29
 

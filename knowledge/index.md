@@ -30,7 +30,7 @@ concepts, procedures, references, and learning paths.
 | Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
-| Learn Terraform safely | [Terraform local state lifecycle](terraform/examples/local-state-lifecycle/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |
+| Learn Terraform safely | [Terraform local state lifecycle](terraform/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |
 | Design a Crossplane platform API | [Crossplane component model](kubernetes/crossplane/component-model.md) | Understand providers, managed resources, XRDs, compositions, and XRs. |
 | Plan backup or migration work | [Velero](migrations/velero/index.md) | Choose backup, restore, migration, and disaster-recovery guidance. |
 
@@ -42,6 +42,10 @@ For account ownership and workforce permissions, use [AWS governance and human a
 - `stable` means the concept has current recorded sources and a freshness deadline.
 - `deprecated` means do not use the concept for new work; follow its replacement link.
 - Source records and review deadlines appear in concept frontmatter. AI tools can use the generated [knowledge catalog](../generated/README.md) to filter and route concepts without treating the catalog as a second source of truth.
+
+## News
+
+- [News](news/index.md) - Dated, sourced briefs on AI, technology, and the economy, and what they mean for readers.
 
 ## Engineering topics
 
@@ -58,10 +62,8 @@ For account ownership and workforce permissions, use [AWS governance and human a
 
 ## AI and architecture
 
-- [AI](ai/index.md) - AI systems, tooling, MCP, knowledge bases, and safe engineering use.
-- [AI agents](ai-agents/index.md) - Planned coverage for agent workflows, evaluation, and operational safety; use AI tooling for current agent knowledge-base guidance.
-- [LLM](llm/index.md) - Planned LLM route; current retrieval and evaluation material lives in AI tooling.
-- [ML](ml/index.md) and [MLOps](mlops/index.md) - Planned topic maps, not yet a complete learning curriculum.
+- [AI](ai/index.md) - AI systems, tooling, MCP, knowledge bases, and safe engineering use. Agent workflows, ML, and MLOps are planned topics in the [roadmap](../ROADMAP.md).
+- [LLM](llm/index.md) - Retrieval-augmented generation (RAG): retrieval, citations, grounded answers, evaluation, and a local Python lab.
 - [Solutions architect](solutions-architect/index.md) - Design trade-offs, proofs of concept, and architecture reviews.
 - [Cross-topic guides](cross-topic-guides/index.md) - End-to-end workflows across technologies.
 
@@ -71,5 +73,4 @@ For account ownership and workforce permissions, use [AWS governance and human a
 - [Glossary](glossary.md) - Shared terminology.
 - [Decision records](decision-records/index.md) - Recorded repository and architecture decisions.
 - [Templates](templates/index.md) - Diátaxis-aligned documentation starters.
-- [Assets](assets/index.md) - Guidance for diagrams, images, and icons.
 - [Bundle log](log.md) - Notable changes to this knowledge bundle.

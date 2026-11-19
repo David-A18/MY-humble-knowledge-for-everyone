@@ -4,7 +4,6 @@ title: "EKS to ECS migration"
 description: "Use this guide to plan a full-platform migration from Amazon EKS to Amazon ECS."
 tags: [cloud, aws, compute]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

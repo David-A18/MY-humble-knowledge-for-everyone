@@ -4,7 +4,6 @@ title: "AWS VPC platform API with Crossplane"
 description: "Show how one Crossplane XR can request multiple deployable AWS networking resources: a VPC, private subnets, a network ACL, ACL rules, a route table, route table associations, and VPC endpoints."
 tags: [kubernetes, crossplane, aws-vpc-platform-api]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

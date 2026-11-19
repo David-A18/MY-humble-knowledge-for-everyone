@@ -8,7 +8,6 @@ tags:
 - workspaces
 - state
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:
@@ -49,7 +48,7 @@ With S3, the default workspace uses the configured `key`; other workspace paths 
 
 ## Practice in the local-only lab
 
-The [module/workspace lab](../examples/module-workspace-lab/index.md) creates two built-in state records in `default`, selects a new `preview` workspace, confirms fresh state, applies the same configuration there, and verifies that `default` remains unchanged. Its output records the selected workspace for observation; that does not create a security boundary.
+The [module/workspace lab](../module-workspace-lab.md) creates two built-in state records in `default`, selects a new `preview` workspace, confirms fresh state, applies the same configuration there, and verifies that `default` remains unchanged. Its output records the selected workspace for observation; that does not create a security boundary.
 
 Workspace creation, selection, and deletion change the CLI's operating context. In a real repository, review backend, workspace, inputs, provider aliases, and cloud identity together before planning or applying. Automation should select these explicitly rather than inherit a developer's last local choice or `TF_WORKSPACE` setting silently.
 

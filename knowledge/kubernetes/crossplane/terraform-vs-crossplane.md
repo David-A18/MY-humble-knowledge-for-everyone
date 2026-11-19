@@ -4,7 +4,6 @@ title: "Terraform vs Crossplane"
 description: "Use this page to decide when Terraform is enough, when Crossplane adds a better operating model, and which problems Crossplane solves that Terraform does not solve naturally."
 tags: [kubernetes, crossplane, terraform-vs-crossplane]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

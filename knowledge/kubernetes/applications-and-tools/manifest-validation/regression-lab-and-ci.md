@@ -7,7 +7,6 @@ tags:
 - kubernetes
 - manifest-validation
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -33,7 +32,7 @@ Prove why valid YAML and a healthy Deployment do not establish working Service t
 
 Use a disposable Linux amd64 Docker environment, Python 3.10+ and Git. The supplied installer supports Linux amd64 only; Windows has executed source-only tool evidence, while the authoring host has no usable Docker/kind runtime. Do not point these mutation tests at an existing cluster.
 
-The [version manifest](examples/lab-versions.json) pins kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0/node digest, dyff 1.12.0, kubeconform 0.8.0, Conftest 0.71.1 and Chainsaw 0.2.15. These are a fixed teaching baseline, not a claim of latest releases. The Deployment pins NGINX 1.30.6 Alpine by registry digest.
+The [version manifest](../../../../examples/kubernetes/applications-and-tools/manifest-validation/lab-versions.json) pins kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0/node digest, dyff 1.12.0, kubeconform 0.8.0, Conftest 0.71.1 and Chainsaw 0.2.15. These are a fixed teaching baseline, not a claim of latest releases. The Deployment pins NGINX 1.30.6 Alpine by registry digest.
 
 Downloads require GitHub, Kubernetes release endpoints, a schema repository and container registries. The installer verifies stored release SHA256 values obtained from official release metadata/checksum files; it does not verify detached publisher signatures. Record Docker/Python/tool versions from your actual run.
 
@@ -46,11 +45,11 @@ python -m venv /tmp/kb-manifest-venv
 source /tmp/kb-manifest-venv/bin/activate
 python -m pip install PyYAML==6.0.3
 tools_dir=$(mktemp -d)
-python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/install-tools.py --directory "$tools_dir"
+python examples/kubernetes/applications-and-tools/manifest-validation/install-tools.py --directory "$tools_dir"
 export PATH="$tools_dir:$PATH"
-python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/test-fixtures.py
-python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-offline.py --report /tmp/kb-manifest-offline.json
-python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-cluster.py --report /tmp/kb-manifest-cluster.json
+python examples/kubernetes/applications-and-tools/manifest-validation/test-fixtures.py
+python examples/kubernetes/applications-and-tools/manifest-validation/validate-offline.py --report /tmp/kb-manifest-offline.json
+python examples/kubernetes/applications-and-tools/manifest-validation/validate-cluster.py --report /tmp/kb-manifest-cluster.json
 ```
 
 What it does: creates a task-owned Python environment, installs checksum-pinned Linux executables into an empty directory, then runs fixture, actual source-tool and live-cluster checks. Choose a different task-owned venv path if that path already exists. The cluster runner always creates a unique kind cluster and private temporary kubeconfig; it does not reuse the current user context or mutate tracked manifests.
@@ -75,13 +74,13 @@ The runner prints eight source-tool assertions and thirteen cluster assertions w
 
 ## Inspect the implementation
 
-The [cluster runner](examples/validate-cluster.py) uses explicit `--kubeconfig`/context for kubectl and a child-process-only `KUBECONFIG` for Chainsaw. Server-side apply and diff share the lab's field manager. It waits for the target-port change to reach EndpointSlices before probing, allows bounded data-plane convergence, and checks backend localhost HTTP independently.[^kind][^chainsaw-project]
+The [cluster runner](../../../../examples/kubernetes/applications-and-tools/manifest-validation/validate-cluster.py) uses explicit `--kubeconfig`/context for kubectl and a child-process-only `KUBECONFIG` for Chainsaw. Server-side apply and diff share the lab's field manager. It waits for the target-port change to reach EndpointSlices before probing, allows bounded data-plane convergence, and checks backend localhost HTTP independently.[^kind][^chainsaw-project]
 
-The [Chainsaw test](examples/chainsaw-test.yaml) applies the two fixtures, asserts availability and executes a real HTTP request. A temporary copy substitutes only the broken Service for the negative run. Command arguments use environment-variable expansion, not resource-expression templating. The fixture binds the test namespace into `KB_TEST_NAMESPACE` and passes `$KB_TEST_NAMESPACE`; writing `($namespace)` directly in `args` sends that literal text to kubectl.[^chainsaw-command] No Chainsaw controller or CRD is installed; Chainsaw is the test runner. Helm's `helm.sh/hook: test` Pod/Job mechanism is an alternative for packaged charts; `helm test` succeeds only when its hook workloads succeed. This lab does not install Helm or execute chart hooks.[^helm-chart-tests]
+The [Chainsaw test](../../../../examples/kubernetes/applications-and-tools/manifest-validation/chainsaw-test.yaml) applies the two fixtures, asserts availability and executes a real HTTP request. A temporary copy substitutes only the broken Service for the negative run. Command arguments use environment-variable expansion, not resource-expression templating. The fixture binds the test namespace into `KB_TEST_NAMESPACE` and passes `$KB_TEST_NAMESPACE`; writing `($namespace)` directly in `args` sends that literal text to kubectl.[^chainsaw-command] No Chainsaw controller or CRD is installed; Chainsaw is the test runner. Helm's `helm.sh/hook: test` Pod/Job mechanism is an alternative for packaged charts; `helm test` succeeds only when its hook workloads succeed. This lab does not install Helm or execute chart hooks.[^helm-chart-tests]
 
 ## CI and diagnostics
 
-The enabled [Manifest validation lab workflow](../../../../.github/workflows/manifest-validation-lab.yml) runs the same commands on Ubuntu 24.04/Python 3.13 for pull requests and `develop`/`main`. A [reference workflow copy](examples/ci-workflow.yaml) preserves the original example route; inspect the enabled workflow for authoritative behavior.
+The enabled [Manifest validation lab workflow](../../../../.github/workflows/manifest-validation-lab.yml) runs the same commands on Ubuntu 24.04/Python 3.13 for pull requests and `develop`/`main`. A [reference workflow copy](../../../../examples/kubernetes/applications-and-tools/manifest-validation/ci-workflow.yaml) preserves the original example route; inspect the enabled workflow for authoritative behavior.
 
 On failure, inspect the named assertion, exact tool versions and original command diagnostic. Schema-download errors are not invalid replicas. Missing images, DNS/network setup or RBAC failures are not the intended Service regression. The runner prints synthetic-cluster Pods/events on errors and attempts cluster removal in `finally`; a cleanup failure remains a failed result.
 
@@ -95,13 +94,13 @@ Reports contain synthetic names and versions. Remove only your own reports, empt
 
 ## Validation boundary
 
-Sources reviewed on 2026-11-10. Python 3.13.17/PyYAML 6.0.3 on Windows executed the existing fixture test and all eight actual source-tool checks. Hosted execution recorded on 2026-11-10: the [develop integration 73d0ac0](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42804065069) passed all eight offline and thirteen cluster assertions. The [retained runtime report](examples/runtime-evidence.json) records Docker 28.0.4, kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, Chainsaw 0.2.15, the immutable node/schema inputs and the source-tool versions. The deliberate external-diff failure produced kubectl status 2; the wrong-port HTTP request produced wget status 1 while localhost and Deployment health remained good. Both Chainsaw namespaces, the lab namespace, cluster and node containers were removed.
+Sources reviewed on 2026-11-10. Python 3.13.17/PyYAML 6.0.3 on Windows executed the existing fixture test and all eight actual source-tool checks. Hosted execution recorded on 2026-11-10: the [develop integration 73d0ac0](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/42804065069) passed all eight offline and thirteen cluster assertions. The [retained runtime report](../../../../examples/kubernetes/applications-and-tools/manifest-validation/runtime-evidence.json) records Docker 28.0.4, kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, Chainsaw 0.2.15, the immutable node/schema inputs and the source-tool versions. The deliberate external-diff failure produced kubectl status 2; the wrong-port HTTP request produced wget status 1 while localhost and Deployment health remained good. Both Chainsaw namespaces, the lab namespace, cluster and node containers were removed.
 
 That report describes the linked code revision, not every future edit. The subsequent evidence-record update changes documentation/report data only; each publication still needs its own hosted result. Native host setup and independent reader success are separate evidence.
 
 No cloud account, shared cluster, Helm/Helm Diff release or GitOps controller was exercised. Native Windows/WSL/macOS repetition, external-diff implementations, CRD admission and independent reader sessions remain follow-ups.
 
-- [Example files](examples/index.md)
+- [Example files](../../../../examples/kubernetes/applications-and-tools/manifest-validation/README.md)
 - [Live drift contract](live-drift.md) | [Schema/policy coverage](schema-and-policy.md)
 - [Back to series](index.md) | [Back to Kubernetes](../../index.md)
 

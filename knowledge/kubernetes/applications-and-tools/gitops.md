@@ -4,7 +4,6 @@ title: "GitOps"
 description: "Use this page to understand GitOps as an operating model for Kubernetes delivery."
 tags: [kubernetes, applications-and-tools, gitops]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

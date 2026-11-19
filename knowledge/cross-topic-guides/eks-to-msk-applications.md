@@ -4,7 +4,6 @@ title: "EKS to MSK applications"
 description: "Use this guide to connect Kubernetes applications on EKS to Amazon MSK."
 tags: [cross-topic-guides, eks-to-msk-applications]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

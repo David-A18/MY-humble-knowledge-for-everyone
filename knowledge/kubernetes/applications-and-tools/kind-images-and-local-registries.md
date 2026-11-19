@@ -4,7 +4,6 @@ title: "kind images and local registries"
 description: "Use this guide when a local kind cluster cannot pull or see images that were built on the host machine."
 tags: [kubernetes, applications-and-tools]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

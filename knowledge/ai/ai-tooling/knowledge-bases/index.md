@@ -66,7 +66,7 @@ producer changes
 | [Provenance, trust, and freshness](provenance-trust-and-freshness.md) | Source authority, claim attribution, reconciliation, staleness, conflict handling, and versioning. |
 | [Security and governance](security-and-governance.md) | Prompt injection, poisoning, retrieval authorization, MCP risks, write-path abuse, and governance mapping. |
 | [Evaluation and quality](evaluation-and-quality.md) | Golden questions, retrieval metrics, answer evaluation, cost metrics, freshness metrics, determinism, observability, and cache safety. |
-| [Knowledge-base examples](examples/index.md) | Public-safe OKF and agent-knowledge-base examples. |
+| [Knowledge-base examples](../../../../examples/ai/ai-tooling/knowledge-bases/README.md) | Public-safe OKF and agent-knowledge-base examples. |
 | [Knowledge-base upgrade hub](../../../../knowledge-base-upgrade/README.md) | Repository-specific feature, tool, skill, MCP, and instruction scaffold for upgrading this knowledge base. |
 
 ## How everything fits together

@@ -8,7 +8,6 @@ tags:
 - security
 - secrets
 status: draft
-maturity: draft
 audience: Cloud and platform engineers
 maintainer: unassigned
 sources:

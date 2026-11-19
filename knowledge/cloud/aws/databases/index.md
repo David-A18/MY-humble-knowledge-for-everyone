@@ -1,7 +1,5 @@
 # AWS databases
 
-Status: Initial outline
-
 Database service notes and architecture considerations.
 
 ## Articles

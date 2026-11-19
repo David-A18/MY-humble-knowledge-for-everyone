@@ -6,7 +6,6 @@ tags:
 - llm
 - rag
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -24,7 +23,7 @@ sources:
 
 Choose retrieval techniques from measured failure cases.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Retrieval methods
 
@@ -42,7 +41,7 @@ Embeddings encode text into vectors; similarity finds nearby representations. A 
 Normalize cautiously, preserve exact identifiers, apply authorization/freshness filters, retrieve candidates, deduplicate, optionally rerank, and select a bounded evidence set. Hybrid systems may use rank fusion rather than comparing unrelated raw scores.
 
 ```bash
-python examples/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication missing JWT'
+python examples/llm/rag/rag.py search --db /tmp/kb-rag.sqlite 'PeerAuthentication missing JWT'
 ```
 
 What it does: executes the lab's safely quoted OR query over FTS5 and returns bounded ranked sections. BM25 scores rank results within the query; they are not calibrated answer-confidence probabilities.
@@ -51,7 +50,7 @@ What it does: executes the lab's safely quoted OR query over FTS5 and returns bo
 
 Build representative questions with expected source sections. Inspect misses: was the source absent, chunk malformed, query vocabulary different, or rank too low? Fix the responsible stage. Add semantic candidates/reranking only when the baseline's measured misses justify cost and latency.
 
-The sample removes common English question words and uses bounded lexical terms. It has no semantic fallback or calibrated relevance threshold; related-word matches can still be weak. Production systems need an evaluated evidence-sufficiency policy, not only a non-empty result list.
+The sample removes common English question words and uses bounded lexical terms. It groups chunks by concept, ranks on the best chunk's share of the question's rare-word weight, and reports whether the best concept reaches an evaluated coverage threshold. It has no semantic fallback, so related-word matches can still be weak. Coverage measures word overlap, not whether a page answers the question.
 
 Source references: [^fts5-bm25][^original-retrieval-grounded-generation-research]
 

@@ -7,7 +7,6 @@ tags:
 - kubernetes
 - manifest-validation
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -34,10 +33,10 @@ Conftest evaluates structured inputs against Rego. This section's policy require
 
 ## Run the complete source-only exercise
 
-From the repository root, install the [pinned versions](examples/lab-versions.json) and PyYAML 6.0.3 as described in the [lab](regression-lab-and-ci.md), then run:
+From the repository root, install the [pinned versions](../../../../examples/kubernetes/applications-and-tools/manifest-validation/lab-versions.json) and PyYAML 6.0.3 as described in the [lab](regression-lab-and-ci.md), then run:
 
 ```bash
-python knowledge/kubernetes/applications-and-tools/manifest-validation/examples/validate-offline.py
+python examples/kubernetes/applications-and-tools/manifest-validation/validate-offline.py
 ```
 
 What it does: invokes actual Git, dyff 1.12.0, kubeconform 0.8.0 and Conftest 0.71.1. It requires no kubeconfig or cluster. Schema requests use immutable repository revision `9367d1ce1c88b8bbf6ee06d0e80510f26394913f` and Kubernetes 1.34.0; the schema cache and mutated files live in a temporary directory.
@@ -57,8 +56,8 @@ The runner also checks textual and semantic differences; see [rendered compariso
 From the series directory:
 
 ```bash
-kubeconform -strict -summary -kubernetes-version 1.34.0 -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/9367d1ce1c88b8bbf6ee06d0e80510f26394913f/{{.NormalizedKubernetesVersion}}-standalone{{.StrictSuffix}}/{{.ResourceKind}}{{.KindSuffix}}.json' examples/app.yaml examples/service-broken.json
-conftest test examples/app.yaml examples/service-broken.json --policy examples/policy
+kubeconform -strict -summary -kubernetes-version 1.34.0 -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/9367d1ce1c88b8bbf6ee06d0e80510f26394913f/{{.NormalizedKubernetesVersion}}-standalone{{.StrictSuffix}}/{{.ResourceKind}}{{.KindSuffix}}.json' examples/kubernetes/applications-and-tools/manifest-validation/app.yaml examples/kubernetes/applications-and-tools/manifest-validation/service-broken.json
+conftest test examples/kubernetes/applications-and-tools/manifest-validation/app.yaml examples/kubernetes/applications-and-tools/manifest-validation/service-broken.json --policy examples/kubernetes/applications-and-tools/manifest-validation/policy
 ```
 
 What it does: pins the schema source as well as the target API version and shows why both tools accept the wrong-port fixture. A subsequent HTTP test is expected to detect the regression. Use the runner for controlled negative mutations and count assertions instead of manually editing the tracked files.
@@ -79,7 +78,7 @@ When CI differs from a workstation, compare tool versions, schema revision/downl
 
 Sources reviewed on 2026-11-10. All eight real offline tool checks passed locally on Windows with Python 3.13.17 and PyYAML 6.0.3. The [runtime lab](regression-lab-and-ci.md#validation-boundary) carries separate Linux/cluster evidence. Temporary mutations/cache are removed by the runner; tracked fixtures remain unchanged. The installer writes only to an explicitly supplied empty tools directory, which you may remove after the lab.
 
-- [Policy files](examples/policy/index.md)
+- [Policy files](../../../../examples/kubernetes/applications-and-tools/manifest-validation/policy/README.md)
 - [Back to series](index.md) | [Back to Kubernetes](../../index.md)
 
 [^kubeconform]: [kubeconform strict validation, schema locations and custom-resource support](https://github.com/yannh/kubeconform).

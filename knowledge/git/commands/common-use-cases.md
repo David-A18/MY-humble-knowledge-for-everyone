@@ -4,7 +4,6 @@ title: "Common Git use cases"
 description: "Use this page when you know what you want to do, but you are not sure which Git commands belong together."
 tags: [git, common-use-cases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

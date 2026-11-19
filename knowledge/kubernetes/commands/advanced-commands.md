@@ -4,7 +4,6 @@ title: "Kubernetes advanced commands"
 description: "Collect advanced kubectl commands for structured output, API discovery, server-side operations, debugging, node maintenance, and authorization checks."
 tags: [kubernetes, advanced-commands]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

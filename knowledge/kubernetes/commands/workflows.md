@@ -4,7 +4,6 @@ title: "Kubernetes command workflows"
 description: "Provide repeatable command sequences for common operational workflows: inspecting a workload, deploying safely, rolling back, debugging service reachability, and checking resource pressure."
 tags: [kubernetes, workflows]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

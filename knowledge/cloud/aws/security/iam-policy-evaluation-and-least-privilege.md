@@ -8,7 +8,6 @@ tags:
 - security
 - iam
 status: draft
-maturity: draft
 audience: Cloud and platform engineers
 maintainer: unassigned
 sources:
@@ -48,7 +47,7 @@ An applicable explicit deny overrides an allow. Missing an allow is an implicit 
 
 Start from an operation the application actually needs. For a known S3 object prefix, `s3:GetObject` targets object ARNs such as `arn:aws:s3:::example-lab-bucket/public-lab/*`; listing is a different bucket-level permission. Do not add listing or writes merely to make a diagnostic command convenient. See [IRSA policy examples](irsa-trust-and-permissions.md).
 
-Write the expected access matrix before editing a policy: intended principal/action/resource succeeds; another subject, another prefix, and write/delete operations fail. Include required encryption/service conditions and a clear owner. Use [local policy contracts](examples/policy-contract-lab/index.md) to catch accidental fixture broadening, then AWS validation/simulation and live disposable-resource tests for the actual decision.
+Write the expected access matrix before editing a policy: intended principal/action/resource succeeds; another subject, another prefix, and write/delete operations fail. Include required encryption/service conditions and a clear owner. Use [local policy contracts](policy-contract-lab.md) to catch accidental fixture broadening, then AWS validation/simulation and live disposable-resource tests for the actual decision.
 
 `iam:PassRole` allows an operator to delegate an approved role to a service; it does not mean the operator can assume that role directly. Scope which roles and services can be passed. A broad ability to pass a powerful role can bypass the intended operator boundary.[^pass-role]
 

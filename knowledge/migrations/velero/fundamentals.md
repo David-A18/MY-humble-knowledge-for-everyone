@@ -4,7 +4,6 @@ title: "Velero fundamentals"
 description: "Use this page to understand what Velero is, where it fits, and the limits to account for before using it for Kubernetes migration or recovery."
 tags: [migrations, velero]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -4,7 +4,6 @@ title: "Blue-green deployment"
 description: "Use this page to understand what blue-green deployment means, what kind of cloud solution it is, how to recognize it in real environments, and which services usually participate."
 tags: [cloud, solutions, blue-green-deployment]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

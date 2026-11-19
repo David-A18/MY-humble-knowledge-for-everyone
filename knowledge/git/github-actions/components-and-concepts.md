@@ -4,7 +4,6 @@ title: "GitHub Actions components and concepts"
 description: "Use this page to understand the main building blocks of GitHub Actions before writing or debugging workflow files."
 tags: [git, github-actions, components-and-concepts]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

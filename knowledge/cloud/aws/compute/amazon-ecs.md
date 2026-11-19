@@ -4,7 +4,6 @@ title: "Amazon ECS"
 description: "Use this guide to understand Amazon Elastic Container Service (Amazon ECS), what runs there, how its main components fit together, and which operational patterns are practical in real AWS environments."
 tags: [cloud, aws, compute]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

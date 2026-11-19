@@ -4,7 +4,6 @@ title: "Multi-CDN operations"
 description: "Use this guide to operate more than one CDN provider without creating inconsistent cache, security, DNS, logging, or rollback behavior."
 tags: [cloud, edge, multi-cdn-operations]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

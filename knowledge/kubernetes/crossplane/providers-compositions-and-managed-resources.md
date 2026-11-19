@@ -4,7 +4,6 @@ title: "Crossplane providers, managed resources, and compositions"
 description: "Use this page to distinguish the Crossplane building blocks that are often confused:"
 tags: [kubernetes, crossplane]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -4,7 +4,6 @@ title: "Solve Git issues"
 description: "Use this page when you made a mistake and need the safest command for the situation."
 tags: [git, solve-issues]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

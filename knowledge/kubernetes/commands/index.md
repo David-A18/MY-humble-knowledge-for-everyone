@@ -11,6 +11,8 @@ Command references for `kubectl` and day-to-day cluster inspection.
 | [Advanced commands](advanced-commands.md) | JSONPath, API discovery, dry runs, server-side apply, debug, node maintenance, and auth checks. |
 | [Workflows](workflows.md) | Command sequences for deployments, rollback, service debugging, and resource pressure checks. |
 | [eksctl commands for Amazon EKS](eksctl-commands.md) | AWS-native EKS commands for clusters, node groups, add-ons, IAM access, Pod Identity, Fargate, and logging. |
+| [eksctl access and permissions](eksctl-access-and-permissions.md) | Access entries, legacy aws-auth, Pod Identity, and IRSA commands. |
+| [eksctl Fargate, Auto Mode, and networking](eksctl-compute-and-network-options.md) | Fargate profiles, Auto Mode and Karpenter, endpoint access, and control plane logging. |
 | [kubectl basics](kubectl-basics.md) | Common commands for inspecting workloads and cluster resources. |
 
 ## Official documentation

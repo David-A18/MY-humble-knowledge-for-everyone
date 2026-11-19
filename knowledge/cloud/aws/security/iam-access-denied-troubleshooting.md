@@ -8,7 +8,6 @@ tags:
 - security
 - iam
 status: draft
-maturity: draft
 audience: Cloud and platform engineers
 maintainer: unassigned
 sources:
@@ -55,7 +54,7 @@ Same-account resource policy behavior depends on whether the principal is a user
 
 ## Use validation and simulation as supporting evidence
 
-For candidate policies, use [Access Analyzer and simulation](examples/policy-contract-lab/policy-contract-lab.md). Supply required context and interpret missing-context results. A simulator does not execute the requested API and cannot reproduce all live controls; verify allowed and forbidden operations in the actual disposable environment.[^simulator]
+For candidate policies, use [Access Analyzer and simulation](policy-contract-lab.md). Supply required context and interpret missing-context results. A simulator does not execute the requested API and cannot reproduce all live controls; verify allowed and forbidden operations in the actual disposable environment.[^simulator]
 
 Change only the demonstrated missing grant or incorrect constraint, with a rollback and owner. Recheck the caller and both sides of the access matrix after propagation. An unexpected allowed write or role assumption is a security regression; do not treat it as a lab success.
 

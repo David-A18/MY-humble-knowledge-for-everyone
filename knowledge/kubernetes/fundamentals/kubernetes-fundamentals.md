@@ -4,7 +4,6 @@ title: Kubernetes fundamentals
 description: Learn the cluster, Namespace, Pod, Deployment, Service, label, and reconciliation concepts used in the local learning path.
 tags: [kubernetes, fundamentals, beginner]
 status: draft
-maturity: draft
 audience: Beginning platform engineer
 maintainer: unassigned
 sources:
@@ -21,6 +20,12 @@ stale_after: 2026-12-19
 ---
 
 # Kubernetes fundamentals
+
+Kubernetes runs applications packaged as containers across one or more
+machines. You tell it what you want, for example "keep three copies of my web
+app running", and it keeps checking and fixing the real situation until it
+matches. If a container crashes, Kubernetes starts a new one; if you change the
+version, it replaces the old copies gradually.
 
 ## Purpose
 
@@ -62,7 +67,9 @@ A Pod being `Running` does not establish that it is `Ready` to serve an applicat
 
 The Kubernetes API objects are the desired state that controllers reconcile.[^kubernetes-concepts] Editing a YAML file in Git does not change those objects until a tool applies it. `kubectl rollout undo` changes a live Pod template; it does not restore a Git file. Terraform state in the next exercise tracks a separate local resource and does not track this kind cluster.
 
-Sources rechecked on 2026-11-10. These explanations remain draft; the [walkthrough](../../cross-topic-guides/local-deployment-learning-path.md) and its CI record carry the actual exercise versions and runtime checks.
+## Evidence and limits
+
+Sources rechecked on 2026-11-10. The [walkthrough](../../cross-topic-guides/local-deployment-learning-path.md) records the exact tool versions and checks used in the exercise.
 
 ## Related links
 

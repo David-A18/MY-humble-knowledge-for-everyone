@@ -4,7 +4,6 @@ title: "Velero components and architecture"
 description: "Use this page to understand Velero's server, CLI, custom resources, controllers, plugins, and data movement components."
 tags: [migrations, velero, components-and-architecture]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

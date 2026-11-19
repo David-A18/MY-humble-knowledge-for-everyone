@@ -1,0 +1,117 @@
+# Maintenance review queue
+
+## Requested topic-series upkeep
+
+The user requested weekly upkeep on 2026-10-29. Start each review from current `main`; use [the publication audit](archive/knowledge-base-audit.md) to distinguish actual checks from pending runtime evidence.
+
+| Priority | Review target | Next useful evidence |
+| --- | --- | --- |
+| High | [Istio](../knowledge/kubernetes/applications-and-tools/istio/index.md), [IRSA](../knowledge/cloud/aws/security/irsa-fundamentals.md) | Current security/API behavior, supported versions, and allowed/denied tests. |
+| High | [Platform tools](../knowledge/kubernetes/applications-and-tools/platform-tooling/index.md), [manifest validation](../knowledge/kubernetes/applications-and-tools/manifest-validation/index.md), [kro](../knowledge/kubernetes/applications-and-tools/kro/index.md) | Release/schema changes, controller ownership, and reproducible examples. |
+| Normal | [Observability](../knowledge/kubernetes/observability/index.md), [aggregation](../knowledge/databases/data-aggregation.md) | Supported nodes/protocols, collector delivery, data privacy, and replay/recovery. |
+| Normal | [CDK](../knowledge/cloud/aws/cdk/index.md), [RAG](../knowledge/llm/rag/index.md), [Ona/Gitpod](../knowledge/devops/development-environments/index.md) | Dependency/availability changes, cross-language contracts, retrieval/citation quality, and actual runtime boundaries. |
+
+Prefer one coherent improvement per run. Rebuild the catalog after metadata changes, run all required checks, and publish only intended changes. Do not update review dates, promote drafts, or claim runtime verification merely because links still return HTTP 200. Notify only on a meaningful update, failed validation/publication, or required user action.
+
+## Section quality cycle
+
+Use the [section quality ledger](section-quality-progress.md) for the actual directory inventory and next batches. Kubernetes troubleshooting now has eleven focused guides; AWS networking has ten connected guides, including a read-only inspection lab and the regional/zonal NAT distinction. Cluster/controller execution, redacted diagnostic outputs, and real reader testing remain open evidence; no draft was promoted.
+
+Next: run the [kro composition lab](../knowledge/kubernetes/applications-and-tools/kro/application-lab.md) in a disposable cluster and record lifecycle, failure and cleanup results. The Istio sidecar lab now has baseline, STRICT mTLS, JWT and authorization evidence. Ambient waypoint checks and staged rollout remain open. Manifest validation now has recorded actual source/API/HTTP/Chainsaw and cleanup evidence on a pinned disposable Linux environment. Manifest-validation Helm/Helm Diff, GitOps/controller, CRD and platform/reader extensions remain open. AWS governance now has source-reviewed account/human access routes and a fourteen-test synthetic reconciliation lab; real directory/account, guardrail, emergency and session-removal drills remain open. The beginner route now has an explicit preflight and automated Git/Terraform/kind acceptance; independent beginner sessions and native Windows/WSL/rootless repetition remain open. AWS security now has source-reviewed identity, data protection, audit/detection, response routes and ten local policy-contract mutation tests; actual account authorization and operations remain open. FinOps now has allocation, budgeting/anomaly, reporting/unit, optimization, Kubernetes, AWS implementation, and synthetic practice routes; actual billing/workload/notification evidence remains open. Terraform now has focused language, module, provider, workspace, backend, review, and diagnostic routes plus two local labs. AWS networking follow-ups include account-backed path checks and focused transit/hybrid procedures. Preserve existing completed Git recovery and Terraform workflow/state work. Publish through `develop`, wait for the required CI, and integrate into `main` only when checks pass, as required by [AGENTS.md](../AGENTS.md#validation-and-publication).
+
+## Purpose
+
+Track priority article reviews, optional validation follow-ups, and reader-task testing for the knowledge base.
+
+Status: Draft
+Audience: Maintainers and contributors planning review work
+Page type: Maintenance queue
+Maintainer: Unassigned
+Last queue planning review: 2026-10-29; individual guide evidence remains recorded separately
+Applicable versions: Current repository state recorded in the [knowledge-base improvement plan](archive/knowledge-base-improvement-plan.md)
+Validation evidence: Markdown lint and local link validation passed for the queue introduction and external-evidence checklist batches
+Known limitations: Reader trials have not started, and cloud, Crossplane, Velero, EKS, and broker integration checks remain optional evidence that needs suitable environments
+Next queue review: Weekly upkeep on Mondays at 10:00 Europe/Madrid, or sooner after a relevant upstream change or reader report
+
+Use this queue with the [knowledge-base improvement plan](archive/knowledge-base-improvement-plan.md). The plan defines acceptance criteria and records completed work packages. This queue is the working list for recurring maintenance and reader testing.
+
+Use the [external evidence request checklist](external-evidence-request.md) to identify optional outside inputs, the [reader test facilitator guide](reader-testing/facilitator-guide.md) to run sessions, and the [reader test results template](reader-testing/results-template.md) or reader-test GitHub issue form to record results.
+
+## How to use this queue
+
+1. Pick an article whose next review date is due, whose upstream product changed, or whose optional validation evidence is now available.
+2. Read the article, parent index, [instructions](../instructions.md), and any related official sources before editing.
+3. Update the article's review-information block with the actual evidence level: source reviewed, statically checked, locally executed, or sandbox executed.
+4. Record reader feedback or execution results in the article, plan record, changelog, or a linked issue as appropriate.
+5. Keep personal reader details out of the repository. Record only the information needed to improve the documentation.
+
+## Priority operational guide queue
+
+| Guide | Owner | Next review | Reason | Current evidence | Open evidence |
+| --- | --- | --- | --- | --- | --- |
+| [Git undo and recovery](../knowledge/git/troubleshooting/undo-and-recovery.md) | Unassigned | 2026-12-21 | Safety-critical recovery guidance | Source reviewed against official Git status, diff, restore, revert, reset, reflog, and clean documentation; core examples locally reproduced in a disposable repository with Git 2.53.0 | Broader merge-conflict, sparse-checkout, submodule, corrupt-repository, detached-HEAD, and deleted-branch scenarios |
+| [Crossplane local AWS S3 lab](../knowledge/kubernetes/crossplane/local-aws-s3-lab.md) | Unassigned | After sandbox AWS execution or 2026-12-19 | Real cloud resources and credentials | Crossplane and AWS STS source review plus [validation template](../knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) | Live kind, Crossplane, provider, and AWS sandbox run |
+| [Crossplane providers and authentication](../knowledge/kubernetes/crossplane/providers-and-authentication.md) | Unassigned | 2026-12-19 | Credential and provider behavior changes quickly | Crossplane v2.4 source review | Provider-controller authentication execution |
+| [Terraform core workflow](../knowledge/terraform/commands/core-workflow.md) | Unassigned | 2026-12-21 | Core workflow used by learners | Source reviewed against official Terraform CLI, fmt, init, validate, plan, apply, providers lock, and dependency lock documentation; linked local exercise has Terraform v1.13.1 history and a fresh v1.17.1 lifecycle run; two added local labs test module/workspace/refactor and provider-alias behavior | Remote backend/cloud identity, policy, and hosted artifact/approval behavior |
+| [Terraform state management](../knowledge/terraform/fundamentals/state-management.md) | Unassigned | 2026-12-21 | State guidance is operationally sensitive | Source reviewed against official Terraform state, backend, locking, remote state, sensitive-data, plan, and state-command documentation; linked local exercise has Terraform v1.13.1 history and fresh v1.17.1 execution; local workspace and ID-preserving refactor checks pass | Backend-specific locking, drift, migration, import, and recovery drills remain unexecuted |
+| [Kafka delivery guarantees and failure handling](../knowledge/databases/kafka/delivery-guarantees-and-failure-handling.md) | Unassigned | After broker-backed execution or 2026-12-19 | Messaging behavior needs runtime evidence | Kafka and kafka-python source review plus static Python syntax check | Broker-backed producer, consumer, retry, and replay tests |
+| [Velero AWS S3 and EBS installation](../knowledge/migrations/velero/aws-s3-ebs-installation.md) | Unassigned | After sandbox EKS installation or 2026-12-19 | Backup tooling and AWS permissions | Velero, AWS plugin, and EKS source review | Live EKS, S3, EBS CSI, snapshot controller, and IAM execution |
+| [Velero backup and restore workflows](../knowledge/migrations/velero/backup-restore-workflows.md) | Unassigned | After cluster-backed restore drill or 2026-12-19 | Restore commands must match reality | Velero source review | Live backup, schedule, restore, namespace mapping, and cleanup drill |
+| [Velero migration and disaster recovery](../knowledge/migrations/velero/cluster-migration-and-disaster-recovery.md) | Unassigned | After cross-cluster restore drill or 2026-12-19 | Migration and DR claims need proof | Velero migration and restore source review | Source and destination clusters, shared storage, and application restore drill |
+| [Deploying to EKS](../knowledge/cross-topic-guides/deploying-to-eks.md) | Unassigned | After sandbox EKS deployment or 2026-12-19 | Production-impact workflow | Amazon EKS and Kubernetes source review | Live kubeconfig, authorization, diff, apply, rollout, and rollback drill |
+
+## Reader-task testing queue
+
+KB-14 provides the process for actual reader testing. Reader sessions are optional follow-up evidence; when they happen, record results without unnecessary personal data.
+
+### Participant criteria
+
+When maintainers choose to collect reader evidence, recruit 3-5 willing readers through an authorized channel. Aim for readers who want to learn practical platform, cloud, or DevOps work and who can use a terminal safely. Record experience level broadly, such as beginner, early practitioner, or experienced engineer.
+
+### Test tasks
+
+Ask each reader to start from [Start here](../knowledge/start-here.md) and answer or complete these tasks. The [reader test facilitator guide](reader-testing/facilitator-guide.md) provides the session script, expected routes, scoring rules, and hint rules.
+
+1. Find how to undo an unstaged Git edit without rewriting shared history.
+2. Find the first local Kubernetes learning path and identify its prerequisites.
+3. Diagnose a Kubernetes workload restart using the documented route.
+4. Distinguish Crossplane provider, managed resource, XRD, Composition, and XR.
+5. Find how to validate a Velero restore before trusting it.
+6. Choose whether Terraform or Crossplane is the better starting point for a reusable platform API.
+7. Find how to update kubeconfig and validate permissions before deploying to EKS.
+8. Explain when Kafka at-least-once processing can cause duplicate side effects.
+9. Identify the next step after finishing the local beginner route.
+10. Report one confusing term, missing prerequisite, or blocked step.
+
+### Result fields
+
+Record only the fields needed for documentation improvement:
+
+| Field | Use |
+| --- | --- |
+| Date | When the test happened. |
+| Reader profile | Broad experience level only. |
+| Task number | Which task was attempted. |
+| Found page | Page the reader used. |
+| Time to find | Approximate time, rounded to the nearest minute. |
+| Result | Completed, partially completed, blocked, or skipped. |
+| Confusing term or step | The smallest phrase or step that caused trouble. |
+| Follow-up action | Issue, edit, or no change with reason. |
+
+## Optional validation follow-ups
+
+- KB-04 can be strengthened with authorized AWS and Crossplane sandbox execution, but the source-reviewed documentation correction is complete for the knowledge-base scope. Track optional runtime evidence in [issue #1](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1), with the latest validated baseline noted in [issue comment #5749445645](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/1#issuecomment-5749445645). Use the [external evidence request checklist](external-evidence-request.md) before the run, then use the [AWS S3 lab validation template](../knowledge/kubernetes/crossplane/aws-s3-lab-validation-template.md) or the Crossplane AWS S3 validation issue form to record the run.
+- KB-14 can be strengthened with actual reader participation, but the testing process and maintenance scaffold are complete for the knowledge-base scope. Track optional reader evidence in [issue #2](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2), with the latest validated baseline noted in [issue comment #5749445761](https://github.com/David-A18/MY-humble-knowledge-for-everyone/issues/2#issuecomment-5749445761). Use the external evidence request checklist before recruiting readers, then use the reader-test facilitator guide to run sessions and the reader-test results template or reader-test GitHub issue form to record sessions.
+- KB-15 is recorded in [ADR-0003](../knowledge/decision-records/adr-0003-searchable-site-decision.md): keep repository navigation as the canonical surface for now and reopen the static-site question if reader evidence or maintainer feedback shows a measured need.
+
+## Related links
+
+- [External evidence request checklist](external-evidence-request.md)
+- [Reader test facilitator guide](reader-testing/facilitator-guide.md)
+- [Reader test results template](reader-testing/results-template.md)
+- [Knowledge-base improvement plan](archive/knowledge-base-improvement-plan.md)
+- [Knowledge-base review](archive/knowledge-base-review.md)
+- [Contributing](../CONTRIBUTING.md)
+- [AI documentation instructions](../instructions.md)
+- [Roadmap](../ROADMAP.md)
+- [Back to root index](../README.md)

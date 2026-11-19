@@ -22,7 +22,7 @@ Use [Kubernetes cost allocation](../../finops/kubernetes-cost-allocation.md) to 
 
 ## Related links
 
-- [Runnable example files](examples/index.md)
+- [Runnable example files](../../../examples/kubernetes/observability/README.md)
 
 - [Back to parent index](../index.md)
 - [Back to root index](../../../README.md)

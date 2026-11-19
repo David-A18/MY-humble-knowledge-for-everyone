@@ -7,7 +7,6 @@ tags:
 - kubernetes
 - istio
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -28,7 +27,7 @@ sources:
 
 Locate the enforcing proxy before writing authentication and authorization policy.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+Sources reviewed: 2026-10-29. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
 
 ## Two deployment models
 

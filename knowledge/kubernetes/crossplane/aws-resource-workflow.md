@@ -4,7 +4,6 @@ title: "Crossplane AWS resource workflow"
 description: "Use this workflow to understand every component and interaction from installing Crossplane to deploying, observing, updating, and deleting AWS resources."
 tags: [kubernetes, crossplane, aws-resource-workflow]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

@@ -1,16 +1,8 @@
 # AWS storage
 
-Status: Initial outline
+Object, block, and file storage on AWS, with lifecycle and backup planning.
 
-Storage service notes for object, block, and file storage on AWS.
-
-## Expected content
-
-- S3.
-- EBS.
-- EFS.
-- Backup and lifecycle policies.
-- Durability and availability considerations.
+- [Choosing S3, EBS, or EFS](choosing-s3-ebs-or-efs.md) - Compare the three storage services and plan lifecycle rules and backups.
 
 ## Related migration guidance
 

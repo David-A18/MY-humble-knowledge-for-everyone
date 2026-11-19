@@ -8,7 +8,6 @@ tags:
 - governance
 - human-access
 status: draft
-maturity: draft
 audience: Cloud administrators and platform engineers
 maintainer: unassigned
 sources:
@@ -34,7 +33,7 @@ An access review asks which person can obtain which account role, why the assign
 
 Collect users and enabled state from the authoritative source/directory, groups and memberships, accounts and owners, permission sets/deployed status, assignments, review records and collection times. Inventory account access manager role assignments too if used; they are a separate mapping from permission sets.[^sets][^account-access] Track pagination, collection permissions, missing scopes and inconsistent snapshots.
 
-The [synthetic inventory lab](examples/access-review-lab/index.md) demonstrates stable-ID joins, direct/group expansion, duplicate-path handling, expired/missing reviews, disabled users, empty groups, unknown ownership and provisioning uncertainty. Its report is potential assignment exposure under declared inputs, not an effective IAM permission or session-revocation result.
+The [synthetic inventory lab](access-review-lab.md) demonstrates stable-ID joins, direct/group expansion, duplicate-path handling, expired/missing reviews, disabled users, empty groups, unknown ownership and provisioning uncertainty. Its report is potential assignment exposure under declared inputs, not an effective IAM permission or session-revocation result.
 
 ## Review and remediate
 

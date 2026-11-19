@@ -10,7 +10,6 @@ tags:
 - networking
 - endpoint-slices
 status: draft
-maturity: draft
 audience: Platform engineers with basic kubectl knowledge
 maintainer: unassigned
 sources:

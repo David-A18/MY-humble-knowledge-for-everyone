@@ -4,7 +4,6 @@ title: "Flux"
 description: "Use this page to understand Flux as a GitOps toolkit for Kubernetes."
 tags: [kubernetes, applications-and-tools, flux]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

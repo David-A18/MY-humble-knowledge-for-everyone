@@ -4,7 +4,6 @@ title: "AWS OIDC federation"
 description: "Use this page to authenticate GitHub Actions to AWS without storing long-lived AWS access keys as repository secrets."
 tags: [git, github-actions, aws-oidc-federation]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

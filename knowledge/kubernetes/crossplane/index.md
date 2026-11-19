@@ -150,13 +150,16 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 | Article | Purpose |
 | --- | --- |
 | [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md) | Learn the beginner mental model for XRDs, Compositions, XRs, and what the Crossplane equivalent of a Terraform module call is. |
+| [Design and troubleshoot XRDs and Compositions](xrd-composition-design-and-troubleshooting.md) | Choose direct resources or platform APIs, handle claims, and fix broken XRD, Composition, and XR links. |
 | [Component model](component-model.md) | Define Crossplane-specific components including XRDs, XRs, Compositions, Functions, Configuration packages, MRDs, MRAPs, Operations, Usages, and package revisions. |
+| [Packages and provider runtime](packages-and-provider-runtime.md) | How providers, functions, and configurations install as packages, and how provider pods run and authenticate. |
 | [Managed resources and lifecycle](managed-resources-and-lifecycle.md) | Understand direct managed resources, reconciliation fields, references, import, pause, and deletion behavior. |
 | [Providers and authentication](providers-and-authentication.md) | Install providers, configure provider configs, choose authentication models, and validate schemas. |
 | [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md) | Distinguish provider packages, managed resources, XRDs, XRs, Compositions, Functions, and Configuration packages. |
 | [Compositions](compositions.md) | Design platform APIs with XRDs, XRs, composition functions, revisions, and rendering. |
 | [Application delivery platform API](application-delivery-platform-api.md) | Implement one application request as an ECR repository plus Kubernetes delivery resources. |
 | [Deployment patterns and references](deployment-patterns-and-references.md) | Deploy multiple related resources, model Terraform-style loops, and reference outputs between resources. |
+| [Reusable templates versus Terraform modules](reusable-templates-vs-terraform-modules.md) | Map Terraform module ideas onto XRDs, Compositions, and functions. |
 | [Terraform vs Crossplane](terraform-vs-crossplane.md) | Compare run-based Terraform workflows with Crossplane reconciliation and platform APIs, including what Crossplane solves that Terraform does not solve naturally. |
 | [AWS VPC platform API](aws-vpc-platform-api.md) | Use one `PlatformNetwork` XR to compose an AWS VPC, private subnets, network ACLs, route table associations, and VPC endpoints. |
 | [Professional operating model](professional-operating-model.md) | Understand how platform teams actually operate Crossplane with GitOps, environments, ownership, reviews, and controls. |
@@ -170,13 +173,16 @@ Crossplane is usually a poor fit when the team does not want to operate Kubernet
 ## Related links
 
 - [XRDs, Compositions, and XR calls](xrd-composition-and-xr-calls.md)
+- [Design and troubleshoot XRDs and Compositions](xrd-composition-design-and-troubleshooting.md)
 - [Component model](component-model.md)
+- [Packages and provider runtime](packages-and-provider-runtime.md)
 - [Managed resources and lifecycle](managed-resources-and-lifecycle.md)
 - [Providers and authentication](providers-and-authentication.md)
 - [Providers, managed resources, and compositions](providers-compositions-and-managed-resources.md)
 - [Crossplane compositions](compositions.md)
 - [Application delivery platform API](application-delivery-platform-api.md)
 - [Deployment patterns and references](deployment-patterns-and-references.md)
+- [Reusable templates versus Terraform modules](reusable-templates-vs-terraform-modules.md)
 - [Terraform vs Crossplane](terraform-vs-crossplane.md)
 - [AWS VPC platform API](aws-vpc-platform-api.md)
 - [Professional operating model](professional-operating-model.md)

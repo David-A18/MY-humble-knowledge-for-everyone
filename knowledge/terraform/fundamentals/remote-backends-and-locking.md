@@ -9,7 +9,6 @@ tags:
 - s3
 - locking
 status: draft
-maturity: draft
 audience: Engineering learners and platform practitioners
 maintainer: unassigned
 sources:

@@ -4,7 +4,6 @@ title: "GitHub Actions security, secrets, and permissions"
 description: "Use this page to design safer workflows: least-privilege tokens, protected environments, secret handling, dependency trust, and OIDC authentication."
 tags: [git, github-actions]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

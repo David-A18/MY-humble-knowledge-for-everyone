@@ -2,9 +2,9 @@
 
 ## Expanded topic routes
 
-The [new learning paths](knowledge/index.md#expanded-learning-paths) use the existing OKF bundle and generated catalog. Keep source/API review distinct from runtime evidence; see the [audit](knowledge-base-audit.md). Preserve newer local learning and Terraform material while improving related topics.
+The [new learning paths](knowledge/index.md#expanded-learning-paths) use the existing OKF bundle and generated catalog. Keep source/API review distinct from runtime evidence; see the [audit](governance/archive/knowledge-base-audit.md). Preserve newer local learning and Terraform material while improving related topics.
 
-The [section quality ledger](section-quality-progress.md) records reviewed sections, remaining evidence, and the next focused batches. Read it before selecting ongoing improvement work.
+The [section quality ledger](governance/section-quality-progress.md) records reviewed sections, remaining evidence, and the next focused batches. Read it before selecting ongoing improvement work.
 
 ## Beginner route maintenance
 
@@ -33,8 +33,10 @@ reading and AI-agent retrieval.
 
 | Area | Role |
 | --- | --- |
-| [`knowledge/`](knowledge/index.md) | Canonical, CC BY 4.0 licensed knowledge bundle. Reader-facing concepts, indexes, glossary, templates, decisions, and asset guidance live here. |
-| Root files | Repository entry point, governance, licensing, plans, and contributor instructions. |
+| [`knowledge/`](knowledge/index.md) | Canonical, CC BY 4.0 licensed knowledge bundle, Markdown only. Reader-facing concepts, news briefs, indexes, glossary, templates, and decisions live here. |
+| [`examples/`](examples/README.md) | Runnable lab files that knowledge pages link to, in text formats only. |
+| [`governance/`](governance/README.md) | Content and security policy, link allowlists, moderation lists, editorial policy, review ledgers, and archived plans. |
+| Root files | Repository entry point, roadmap, licensing, and contributor instructions. |
 | [`sources/`](sources/README.md) | Raw or archived input, not curated OKF knowledge. |
 | [`knowledge-base-upgrade/`](knowledge-base-upgrade/README.md) | Develop-branch upgrade work and maintainer tooling. |
 | [Website upgrade plan](knowledge-base-upgrade/features/knowledge-website/README.md) | Source-side contract and rollout plan for a separate static reading site. |
@@ -51,11 +53,11 @@ reading and AI-agent retrieval.
 
 Every non-reserved Markdown file under `knowledge/` has parseable YAML
 frontmatter. The repository requires `type`, `title`, `description`, `tags`,
-`status`, `maturity`, `audience`, and `maintainer`.
+`status`, `audience`, and `maintainer`.
 
-`status` is `draft`, `stable`, or `deprecated`. `maturity` preserves the
-reader-facing distinction between `initial-outline`, `draft`, `maintained`, and
-`deprecated`. Provenance, human review, generation details, and freshness are
+`status` is `draft`, `stable`, or `deprecated`. The former `maturity` field
+duplicated `status` and was retired on 2026-11-19. News briefs also require
+`published`, `sources`, and `stale_after`. Provenance, human review, generation details, and freshness are
 optional and must be recorded only when evidence exists.
 
 Use the official [OKF v0.2 specification](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md). The previous `knowledge-catalog` copy is frozen.
@@ -66,9 +68,14 @@ Use the official [OKF v0.2 specification](https://github.com/GoogleCloudPlatform
 - [`scripts/build-knowledge-catalog.py`](scripts/build-knowledge-catalog.py) derives a deterministic catalog for AI retrieval and maintenance tooling.
 - [`scripts/validate-command-paths.py`](scripts/validate-command-paths.py) rejects fenced examples that still reference pre-OKF root paths.
 - [`scripts/validate-retrieval-cases.py`](scripts/validate-retrieval-cases.py) keeps golden retrieval tasks aligned with real concepts and source IDs.
+- [`scripts/evaluate-retrieval.py`](scripts/evaluate-retrieval.py) scores the [RAG lab](knowledge/llm/rag/repository-lab.md) against those tasks and unanswerable questions, and fails below agreed floors.
+- [`scripts/kb-mcp-server.py`](scripts/kb-mcp-server.py) serves read-only search and fetch to AI hosts over MCP.
+- [`scripts/report-knowledge-health.py`](scripts/report-knowledge-health.py) reports concept counts, trust, sourcing, and thin pages by area.
 - [`scripts/check-github-labels.py`](scripts/check-github-labels.py) compares declared labels with GitHub; when `gh` is absent it uses the read-only REST API. Its tests cover pagination and failure reporting without credentials.
 - [`scripts/validate-local-links.mjs`](scripts/validate-local-links.mjs) enforces valid internal links and reachability, a stricter rule than OKF consumer conformance.
-- Markdown lint, issue-template validation, GitHub label checks, link validation, Terraform format checks, and OKF validation run in CI on `develop` and `main`.
+- [`scripts/validate-repository-policy.py`](scripts/validate-repository-policy.py) enforces the [content policy](governance/content-policy.md): allowed text file types, no binaries or executables, safe Markdown, and safe, allowlisted links.
+- [`scripts/moderate-content.py`](scripts/moderate-content.py) blocks profanity, explicit sexual language, and slurs using hashed term lists.
+- The [repository gate](.github/workflows/repository-gate.yml) runs all checks, a secret scan, external link checks, and Markdown lint on every pull request and on `develop` and `main`. The [trusted content scan](.github/workflows/trusted-content-scan.yml) re-runs the policy and moderation checks from the default branch and records moderation cases.
 
 ## Validation scripts
 

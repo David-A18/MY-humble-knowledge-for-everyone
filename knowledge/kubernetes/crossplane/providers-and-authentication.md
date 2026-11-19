@@ -4,7 +4,6 @@ title: "Crossplane providers and authentication"
 description: "Use this page to understand Crossplane provider packages, provider configs, authentication choices, package health, and schema validation."
 tags: [kubernetes, crossplane, providers-and-authentication]
 status: draft
-maturity: draft
 audience: "Platform engineers designing Crossplane provider authentication"
 maintainer: unassigned
 sources:

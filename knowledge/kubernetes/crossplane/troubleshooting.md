@@ -4,7 +4,6 @@ title: "Crossplane troubleshooting"
 description: "Diagnose Crossplane provider, composition, managed-resource, authentication, deletion, and runtime failures."
 tags: [kubernetes, crossplane, troubleshooting]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

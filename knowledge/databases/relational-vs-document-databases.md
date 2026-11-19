@@ -4,7 +4,6 @@ title: "Relational vs. document databases"
 description: "Use this page to decide whether a relational database or document database is a better starting point for a workload."
 tags: [databases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

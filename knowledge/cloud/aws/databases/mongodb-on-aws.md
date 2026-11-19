@@ -4,7 +4,6 @@ title: "MongoDB on AWS"
 description: "Use this page to choose how MongoDB-style workloads should run in or near AWS."
 tags: [cloud, aws, databases]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

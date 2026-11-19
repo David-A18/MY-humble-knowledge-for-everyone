@@ -4,7 +4,6 @@ title: "Stateful workloads"
 description: "Use this page to understand Kubernetes objects and storage decisions for stateful workloads."
 tags: [kubernetes, core-objects, stateful-workloads]
 status: draft
-maturity: draft
 audience: "Engineering learners and practitioners"
 maintainer: "unassigned"
 ---

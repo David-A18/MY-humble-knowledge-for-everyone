@@ -6,7 +6,6 @@ tags:
 - kubernetes
 - manifest-validation
 status: draft
-maturity: draft
 audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
@@ -41,14 +40,14 @@ Helm rendering with API lookups, server capabilities or install/upgrade branches
 Run from this series directory with the pinned dyff 1.12.0 baseline:
 
 ```bash
-git diff --no-index -- examples/service.json examples/service-reordered.json
-dyff between --set-exit-code examples/service.json examples/service-reordered.json
-dyff between --set-exit-code examples/service.json examples/service-broken.json
+git diff --no-index -- examples/kubernetes/applications-and-tools/manifest-validation/service.json examples/kubernetes/applications-and-tools/manifest-validation/service-reordered.json
+dyff between --set-exit-code examples/kubernetes/applications-and-tools/manifest-validation/service.json examples/kubernetes/applications-and-tools/manifest-validation/service-reordered.json
+dyff between --set-exit-code examples/kubernetes/applications-and-tools/manifest-validation/service.json examples/kubernetes/applications-and-tools/manifest-validation/service-broken.json
 ```
 
 What it does: the Git comparison returns 1 for changed text, dyff returns 0 for equal parsed mappings, and the final dyff comparison returns 1 and names the `targetPort` change from 80 to 81. These expected nonzero commands need explicit handling in a `set -e` script. JSON documents are valid YAML inputs.
 
-The [offline runner](examples/validate-offline.py) asserts these results using the real executables, rather than replacing a diff tool with Python object equality. It also checks schema/policy outcomes. A structural difference is evidence to review, not automatic proof that a change should be rejected.
+The [offline runner](../../../../examples/kubernetes/applications-and-tools/manifest-validation/validate-offline.py) asserts these results using the real executables, rather than replacing a diff tool with Python object equality. It also checks schema/policy outcomes. A structural difference is evidence to review, not automatic proof that a change should be rejected.
 
 ## Review a Helm upgrade
 
