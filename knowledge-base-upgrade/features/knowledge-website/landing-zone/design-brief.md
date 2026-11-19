@@ -73,13 +73,13 @@ The reference project's bar was Lighthouse performance at least 90, accessibilit
 
 | # | Decision | Recommended default | Blocks |
 | --- | --- | --- | --- |
-| 1 | Hero film or static hero | Static hero with CSS motion. A film needs real source imagery, which this knowledge base does not have. | The whole hero design |
+| 1 | Hero film or static hero | Decided 2026-11-19: an interactive, real-time spiral scene, with generated video used as reference and fallback. See the [concept and plan](spiral-concept-and-plan.md). | Resolved |
 | 2 | Landing zone and `/` | Keep `knowledge/index.md` as `/` and place the landing zone above it, so the content contract is unchanged. | Route and contract |
 | 3 | Languages | English only, matching the corpus. The reference project had EN/ES routes. | Copy and routing |
 | 4 | Name, logo, and visual identity | None exists in the repository. The owner supplies or approves them. | Visual design |
 | 5 | Website repository and host | Not chosen. See ROADMAP Phase 5. Design can start before the host is chosen. | Deployment only |
 | 6 | Typeface | Reuse the reference pairing (a width-variable display face plus a compact sans) only if the owner likes the look. | Visual design |
-| 7 | Colour schemes | Light and dark, following the system setting. | Theme tokens |
+| 7 | Colour schemes | Decided 2026-11-19: dark space and light paper themes, following the system setting, from the owner's two reference images. | Resolved |
 
 Also note that ROADMAP says Phases 1 and 2 must be complete before website design starts. Phase 2 still has one open maintainer item: applying the repository settings in the [content policy checklist](../../../../governance/content-policy.md#maintainer-settings-checklist).
 

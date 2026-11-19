@@ -22,6 +22,7 @@ The landing zone is the first screen and first scroll of the website home route 
 
 | Document | Use it for |
 | --- | --- |
+| [Knowledge spiral concept and build plan](spiral-concept-and-plan.md) | The chosen concept, the spiral-to-content mapping, interaction states, visual system, the role of Gemini video, and phased delivery. |
 | [Design brief](design-brief.md) | The reader outcome, the real content to present, hard constraints, the quality bar, and the open decisions for the owner. |
 | [Toolchain reference](toolchain.md) | The film, page, quality, and Claude Code tooling from the reference project, with what to adopt, adapt, or skip here. |
 | [Preflight and quality gates](preflight.md) | What was verified in this container, what is missing, the pre-design checklist, and the proposed quality gates. |

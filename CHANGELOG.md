@@ -139,6 +139,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added Apigee API management coverage under Google Cloud and SonarQube code quality plus GitHub integration coverage under DevOps, with root fast paths and glossary entries.
 - Added a content-only CI/CD process guide requiring documentation changes to land in `main`, with validation-focused checks, no required human review for normal content changes, and branch cleanup guidance.
 - Added a landing zone design pack under the website plan (design brief, reference toolchain with adopt/adapt/skip verdicts, and preflight with proposed quality gates) and a draft landing zone design skill. A smoke test in a disposable container built a one-page Astro site with self-hosted fonts, loaded it over HTTP in Chromium, and audited it with Lighthouse. No real design, film pipeline, or reader testing has happened.
+- Added the knowledge spiral concept and build plan for the landing zone: spirals for AI, Cloud & Platform, and Tech News, loops as sections, and floating pages as topics. It covers interaction states, the visual system, the role of Gemini video, the topic reading view, and phased delivery. A single-page WebGL prototype built from the real catalog was checked in headless Chromium with software rendering; real devices and readers have not been tested.
 
 ### Changed
 
