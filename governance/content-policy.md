@@ -126,7 +126,7 @@ Apply these repository settings once. They cannot be stored in files.
   [dependabot.yml](../.github/dependabot.yml)).
 - [ ] Set GitHub Actions to require approval before running workflows from
   first-time contributors.
-- [ ] Create the `moderation-review` and `dependencies` labels, or sync them from
+- [ ] Optionally create the `moderation-review` and `dependencies` labels ahead of time (the trusted scan and Dependabot create them when first needed), or sync them from
   [labels.yml](../.github/labels.yml).
 
 ## Local checks

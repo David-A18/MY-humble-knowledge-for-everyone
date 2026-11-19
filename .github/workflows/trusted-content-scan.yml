@@ -95,6 +95,9 @@ jobs:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           PR_AUTHOR: ${{ steps.pr.outputs.author }}
         run: |
+          # Create or refresh the label so the first case does not fail on a missing label.
+          gh label create moderation-review --repo "$REPOSITORY" --force \
+            --color b60205 --description "Content flagged by the trusted moderation scan; maintainer review required"
           gh pr edit "$PR_NUMBER" --repo "$REPOSITORY" --add-label moderation-review
           title="Moderation review: PR #$PR_NUMBER"
           existing=$(gh issue list --repo "$REPOSITORY" --state open --label moderation-review --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
