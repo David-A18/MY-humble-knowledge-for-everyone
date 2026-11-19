@@ -17,9 +17,11 @@ structure and checks they define.
 - [x] Empty placeholder sections (`ai-agents`, `ml`, `mlops`, `assets`) were removed; they are listed as planned topics below.
 - [x] Root planning documents moved to [governance](governance/README.md), with superseded plans archived.
 - [x] Decision-record file names now follow the lowercase kebab-case rule.
-- [ ] Maintainer: merge `develop` into `main` after the repository gate passes, and delete stale remote branches (`codex/*`, `feat/rag-retrieval-engine`) once their work is confirmed merged.
+- [x] Merged into `develop` and released to `main` on 2026-11-19 after the repository gate passed (David-A18/MY-humble-knowledge-for-everyone#7, #8, and #9).
+- [ ] Maintainer: delete the seven fully merged stale branches (`codex/aws-governance-access`, `codex/aws-security-review`, `codex/core-reader-journey`, `codex/istio-security-runtime`, `codex/knowledge-website-plan`, `codex/manifest-validation-runtime`, `feat/rag-retrieval-engine`).
+- [ ] Maintainer: decide on `codex/knowledge-clarity-upgrade`, which holds 223 unmerged commits from 2026-10-17, before deleting it.
 
-### Phase 2: Security and integrity pipeline — done, settings pending
+### Phase 2: Security and integrity pipeline — live on main, settings pending
 
 - [x] One required [repository gate](.github/workflows/repository-gate.yml): content policy, moderation, secret scan, OKF and catalog, links, Markdown lint, and issue templates.
 - [x] [Content policy](governance/content-policy.md) checks: allowed text file types, no binaries or executables, hidden-Unicode detection, safe Markdown, and link safety with a reviewed domain allowlist.
