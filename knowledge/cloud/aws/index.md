@@ -45,6 +45,6 @@ Use [AWS FinOps](finops/index.md) for tag activation, budgets/anomalies, Cost Ex
 ## Official documentation
 
 - [AWS documentation](https://docs.aws.amazon.com/)
-- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/)
 
 [Back to cloud index](../index.md) | [Back to root index](../../../README.md)

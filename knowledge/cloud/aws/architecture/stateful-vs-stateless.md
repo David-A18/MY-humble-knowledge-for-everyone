@@ -68,7 +68,7 @@ What it does: highlights why stateful systems need runbooks and recovery tests, 
 - [Stateful design decision checklist](stateful-design-decision-checklist.md)
 - [Stateful networking](../networking/stateful-networking.md)
 - [Stateful workloads](../../../kubernetes/core-objects/stateful-workloads.md)
-- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/)
 - [Back to AWS architecture](index.md)
 - [Back to AWS index](../index.md)
 - [Back to root index](../../../../README.md)

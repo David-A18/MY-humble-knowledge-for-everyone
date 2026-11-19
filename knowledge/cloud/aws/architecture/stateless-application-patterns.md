@@ -124,7 +124,7 @@ What it does: removes current application Pods and verifies that the Deployment 
 
 ## Related links
 
-- Official documentation: [AWS Well-Architected stateless services guidance](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_stateless.html)
+- Official documentation: [AWS Well-Architected REL05-BP06: make systems stateless where possible (framework v13, 2025-02-25)](https://docs.aws.amazon.com/wellarchitected/2025-02-25/framework/rel_mitigate_interaction_failure_stateless.html)
 - Official documentation: [AWS Lambda application design](https://docs.aws.amazon.com/lambda/latest/dg/concepts-application-design.html)
 - [Stateful vs. stateless](stateful-vs-stateless.md)
 - [Stateful networking](../networking/stateful-networking.md)

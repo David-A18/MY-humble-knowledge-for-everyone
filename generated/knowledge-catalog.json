@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 268,
+  "concept_count": 276,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -2284,6 +2284,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Look up Git's low-level, server, protocol, and internal helper commands that scripts and Git itself use.",
+      "maintainer": "unassigned",
+      "path": "knowledge/git/commands/plumbing-and-internal-commands.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "commands",
+        "plumbing"
+      ],
+      "title": "Git plumbing and internal commands",
+      "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Use this page when you made a mistake and need the safest command for the situation.",
       "maintainer": "unassigned",
       "path": "knowledge/git/commands/solve-issues.md",
@@ -2358,6 +2374,22 @@
       ],
       "title": "GitHub Actions commands",
       "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Find widely used GitHub Actions for setup, cloud authentication, containers, quality and security, releases, and community tasks.",
+      "maintainer": "unassigned",
+      "path": "knowledge/git/github-actions/common-actions-by-category.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "github-actions",
+        "actions-and-uses-catalog"
+      ],
+      "title": "Common GitHub Actions by category",
+      "type": "Reference"
     },
     {
       "audience": "Engineering learners and practitioners",
@@ -3285,6 +3317,23 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Grant people cluster access with access entries or legacy aws-auth, and give pods AWS permissions with Pod Identity or IRSA, using eksctl.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/commands/eksctl-access-and-permissions.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "eksctl-commands",
+        "eks",
+        "iam"
+      ],
+      "title": "eksctl commands for EKS access and workload permissions",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Collect eksctl commands that are specific to Amazon EKS operations and different from normal kubectl work.",
       "maintainer": "unassigned",
       "path": "knowledge/kubernetes/commands/eksctl-commands.md",
@@ -3296,6 +3345,23 @@
         "eksctl-commands"
       ],
       "title": "eksctl commands for Amazon EKS",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Configure Fargate profiles, EKS Auto Mode and Karpenter, endpoint access, and control plane logging with eksctl.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/commands/eksctl-compute-and-network-options.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "eksctl-commands",
+        "eks",
+        "networking"
+      ],
+      "title": "eksctl commands for Fargate, Auto Mode, and networking",
       "type": "How-to Guide"
     },
     {
@@ -3594,6 +3660,22 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Compare how Terraform modules and Crossplane XRDs, Compositions, and functions package reusable infrastructure.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/crossplane/reusable-templates-vs-terraform-modules.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "terraform"
+      ],
+      "title": "Crossplane reusable templates versus Terraform modules",
+      "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Use this page to decide when Terraform is enough, when Crossplane adds a better operating model, and which problems Crossplane solves that Terraform does not solve naturally.",
       "maintainer": "unassigned",
       "path": "knowledge/kubernetes/crossplane/terraform-vs-crossplane.md",
@@ -3639,6 +3721,23 @@
       ],
       "title": "Crossplane XRDs, Compositions, and XR calls",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Decide between direct managed resources and platform APIs, handle older claim-based examples, and fix broken XRD, Composition, and XR links.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/crossplane/xrd-composition-design-and-troubleshooting.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "crossplane",
+        "xrd-composition-and-xr-calls",
+        "troubleshooting"
+      ],
+      "title": "Design and troubleshoot Crossplane XRDs and Compositions",
+      "type": "Troubleshooting Guide"
     },
     {
       "audience": "Beginning platform engineer",
@@ -4126,6 +4225,42 @@
       ],
       "title": "RAG retrieval and reranking",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Plan a cross-cloud move from AKS to EKS where disk snapshots are not portable, using Argo CD, Velero file-level backups, and application-native data tools.",
+      "maintainer": "unassigned",
+      "path": "knowledge/migrations/velero/aks-to-eks-argocd-migration.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "argo-cd",
+        "aks",
+        "eks",
+        "runbook"
+      ],
+      "title": "Migrate Argo CD-managed workloads from Azure AKS to AWS EKS",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Move team applications from a legacy cluster into a shared tooling cluster with GitOps for desired state, Velero for resources and file data, and native tools for databases.",
+      "maintainer": "unassigned",
+      "path": "knowledge/migrations/velero/argocd-legacy-to-tooling-cluster-migration.md",
+      "source_ids": [],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "migrations",
+        "velero",
+        "argo-cd",
+        "runbook"
+      ],
+      "title": "Migrate an Argo CD-managed legacy cluster into a tooling cluster",
+      "type": "How-to Guide"
     },
     {
       "audience": "Platform engineers installing Velero on EKS",
