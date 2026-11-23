@@ -1,6 +1,9 @@
-# kro 0.9.4 fixtures
+# kro composition lab
 
-- `webapp-rgd.yaml`: generated API and graph.
-- `webapp.yaml`: namespaced instance.
+Run the [knowledge-base tutorial](../../../../knowledge/kubernetes/applications-and-tools/kro/application-lab.md) from the repository root.
 
-[Back to lab](../../../../knowledge/kubernetes/applications-and-tools/kro/application-lab.md) | [Back to series](../../../../knowledge/kubernetes/applications-and-tools/kro/index.md) | [Back to root](../../../../README.md)
+- [Definition](webapp-rgd.yaml) creates the WebApp API and defines workload readiness during updates.
+- [Instance](webapp.yaml) requests a server with a pinned image.
+- [Controller permissions](controller-access.yaml) grant the raw installation access to the lab resource types.
+- [Version pins](lab-versions.json) select tools, node image and controller manifest checksum.
+- [Runner](validate-lab.py) exercises API generation, HTTP, validation, scale, recreation, image failure, recovery and deletion.
