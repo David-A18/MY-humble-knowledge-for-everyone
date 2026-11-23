@@ -1,8 +1,18 @@
 # Section quality progress
 
-Review snapshot: 2026-11-16. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
+Review snapshot: 2026-11-23. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
-## Current batch: Istio sidecar security lab
+## Current batch: kro composition and lifecycle lab
+
+Reviewed the local tutorial, its index and runnable fixtures on 2026-11-23. Corrected repository-root command paths after the examples migration. Pinned the raw controller installation by release SHA256, added the required aggregated ClusterRole and defined Deployment readiness using the current observed generation, updated replicas and available replicas. Source references target the kro 0.9.4 installation, readiness, access-control, schema and deletion documentation. The other four kro concepts remain pending review.
+
+The [pull-request run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45145546874) passed eleven runtime assertions. The [retained report](../examples/kubernetes/applications-and-tools/kro/runtime-evidence.json) identifies its source revision and pull-request event. It records kro 0.9.4, kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, Docker 28.0.4 and Python 3.13.18. The lab verified definition/API readiness, actual Service HTTP and endpoint status, invalid-instance rejection, scaling, Service recreation, failed-image graph readiness, recovery, parent deletion, namespace deletion and cluster/node cleanup. An initial run exposed an underscore in the temporary cluster name. The runner now normalizes the name before creation.
+
+Local validation passed 21 of the 23 prescribed commands. The executable-bit policy fixture fails on Windows because its setup uses POSIX file permissions. It passes in the hosted Linux gate. The live label comparison reports two existing missing labels, dependencies and moderation-review. The repository gate and trusted scan passed for the initial PR revision. The next revision's link job encountered transient connection failures on existing Kubernetes/Kyverno references. Final publication still requires the current gate and trusted status.
+
+Next focused runtime work is collector signal delivery and failure recovery. kro graph upgrades, external-reference retention and tenancy permissions remain follow-ups. No concept was promoted from draft.
+
+## Previous batch: Istio sidecar security lab
 
 Reviewed the lab and its runnable fixtures on 2026-11-16 and kept the existing concept URL. The [Istio sidecar lab](../knowledge/kubernetes/applications-and-tools/istio/security-lab.md) now runs in a private kind cluster with checksum-pinned tools and workload image digests. Source review covered installation, release compatibility, PeerAuthentication, RequestAuthentication and AuthorizationPolicy. The local fixture check verified the synthetic JWT signature and matching JWKS with cryptography 46.0.3.
 
@@ -207,8 +217,9 @@ Next review: when upstream behavior changes, a reader reports a failure, or runt
 | P2 | [AWS security follow-ups](../knowledge/cloud/aws/security/index.md) | Execute the live IAM/identity, data protection, audit/delivery, and session-response acceptance listed in the current review; retain the synthetic contract boundary. |
 | P2 | [Core reader follow-ups](../knowledge/start-here.md) | Run independent beginner/platform sessions, preserve the local acceptance gates, and validate one authorized cloud handoff. |
 | P2 | [AWS governance follow-ups](../knowledge/cloud/aws/governance-and-access/index.md) | Validate real human/account collection and authorization, guardrails/provisioning, independent emergency access and session containment; preserve the synthetic-only evidence boundary. |
-| P1 | [Manifest/regression runtime](../knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | Execute rendering/difference/schema/policy and behavioral regression checks in the proven disposable kind CI environment before broadening other cluster labs. |
-| P1 | [Istio runtime acceptance](../knowledge/kubernetes/applications-and-tools/istio/index.md) | Exercise allowed/denied identities, missing/invalid JWTs, and mTLS in a compatible pinned cluster after the manifest lab. |
+| P2 | [Manifest extensions](../knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | Preserve the recorded offline/live checks. Add Helm release, GitOps controller and CRD admission scenarios. |
+| P2 | [Istio runtime extensions](../knowledge/kubernetes/applications-and-tools/istio/index.md) | Preserve the recorded sidecar identity/JWT/mTLS matrix. Add ambient waypoint and staged rollout cases. |
+| P1 | [Collector runtime](../knowledge/kubernetes/observability/collector-lab.md) | Demonstrate signal delivery, collector failure behavior and recovery on disposable infrastructure. |
 | P2 | [New learning series](../knowledge/index.md#expanded-learning-paths) | Recheck version-sensitive security/availability claims and add actual disposable-environment evidence when available. |
 
 ## Indexed-section inventory
@@ -276,8 +287,8 @@ The table is an on-disk snapshot of every knowledge directory index. Direct coun
 | [kubernetes/applications-and-tools](../knowledge/kubernetes/applications-and-tools/index.md) | 15 | Pending |
 | [kubernetes/applications-and-tools/istio/examples](../examples/kubernetes/applications-and-tools/istio/README.md) | 0 | Reviewed 2026-11-16 with hosted sidecar results |
 | [kubernetes/applications-and-tools/istio](../knowledge/kubernetes/applications-and-tools/istio/index.md) | 6 | Partial review 2026-11-16. Lab executed. Other chapters pending. |
-| [kubernetes/applications-and-tools/kro/examples](../examples/kubernetes/applications-and-tools/kro/README.md) | 0 | Pending |
-| [kubernetes/applications-and-tools/kro](../knowledge/kubernetes/applications-and-tools/kro/index.md) | 5 | Pending |
+| [kubernetes/applications-and-tools/kro/examples](../examples/kubernetes/applications-and-tools/kro/README.md) | 0 | Reviewed 2026-11-23 with hosted lifecycle evidence |
+| [kubernetes/applications-and-tools/kro](../knowledge/kubernetes/applications-and-tools/kro/index.md) | 5 | Partial 2026-11-23. Lab executed. Other four concepts pending. |
 | [kubernetes/applications-and-tools/manifest-validation/examples](../examples/kubernetes/applications-and-tools/manifest-validation/README.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
 | [kubernetes/applications-and-tools/manifest-validation/examples/policy](../examples/kubernetes/applications-and-tools/manifest-validation/policy/README.md) | 0 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |
 | [kubernetes/applications-and-tools/manifest-validation](../knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | 5 | Reviewed 2026-11-10; pinned hosted lab passes, Helm/GitOps/CRD extensions open |

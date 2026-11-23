@@ -74,7 +74,7 @@ The [new learning paths](knowledge/index.md#expanded-learning-paths) document al
 | Follow-up | Completion evidence |
 | --- | --- |
 | Review draft concepts and assign ownership | A real maintainer, official sources, review scope, and a justified freshness deadline; keep drafts visible until then. |
-| Istio, IRSA, kro and manifest labs | [Istio sidecar](knowledge/kubernetes/applications-and-tools/istio/security-lab.md#validation) and [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md#validation-boundary) have recorded runs. Next evidence includes authorized IRSA and disposable kro runs, plus Istio ambient and rollout cases. |
+| Istio, IRSA, kro and manifest labs | [Istio sidecar](knowledge/kubernetes/applications-and-tools/istio/security-lab.md#validation) and [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md#validation-boundary) have recorded runs. The [kro composition lab](knowledge/kubernetes/applications-and-tools/kro/application-lab.md#evidence-and-limits) also has a recorded lifecycle run. Next evidence includes authorized IRSA, Istio ambient/rollout and kro upgrade or external-reference cases. |
 | Collector/Pixie/Kafka deployment labs | Delivery/capture, outage/recovery, and persistent-state results on supported infrastructure. |
 | RAG answer quality | A ten-question spot check on `qwen3:4b` is in the [lab](knowledge/llm/rag/repository-lab.md). Still open: a scored run covering paraphrases, conflicting sources, and grounding. |
 | Dev Container/Ona runtime | Container startup/rebuild and, where access exists, hosted workflow evidence. |

@@ -16,7 +16,7 @@ concepts, procedures, references, and learning paths.
 | [Kubernetes platform tooling](kubernetes/applications-and-tools/platform-tooling/index.md) | Secrets, certificates, storage, DNS, policy, scaling, and tool selection. |
 | [Manifest validation and regressions](kubernetes/applications-and-tools/manifest-validation/index.md) | Semantic YAML differences, live drift, schema/policy coverage and a disposable routing regression lab. |
 | [IRSA](cloud/aws/security/irsa-fundamentals.md) | EKS credential flow, IAM trust, least privilege, and S3 access tests. |
-| [kro](kubernetes/applications-and-tools/kro/index.md) | Resource graphs, CEL, generated APIs, and lifecycle. |
+| [kro](kubernetes/applications-and-tools/kro/index.md) | Resource graphs, CEL, generated APIs and a recorded local lifecycle lab. |
 | [Observability, eBPF, and Pixie](kubernetes/observability/index.md) | Signals, kernel visibility, telemetry collection, and debugging. |
 | [AWS CDK v2](cloud/aws/cdk/index.md) | Equivalent TypeScript/Python labs, assertions, synthesis, and deployment. |
 | [Data aggregation](databases/data-aggregation.md) | Windows, deduplication, late events, durable state, and Kafka. |

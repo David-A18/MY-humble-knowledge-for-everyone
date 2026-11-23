@@ -2993,7 +2993,10 @@
       "path": "knowledge/kubernetes/applications-and-tools/kro/application-lab.md",
       "source_ids": [
         "pinned-kro-installation-instructions",
-        "kro-v0-9-4-examples"
+        "kro-v0-9-4-examples",
+        "kro-readiness",
+        "kro-access",
+        "kro-deletion"
       ],
       "stale_after": null,
       "status": "draft",

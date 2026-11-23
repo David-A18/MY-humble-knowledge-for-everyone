@@ -1,0 +1,36 @@
+name: kro composition lab
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  composition:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: "3.13"
+      - name: Install pinned lab tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools_dir=$(mktemp -d)
+          python examples/kubernetes/applications-and-tools/manifest-validation/install-tools.py \
+            --directory "$tools_dir" \
+            --versions examples/kubernetes/applications-and-tools/kro/lab-versions.json
+          echo "$tools_dir" >> "$GITHUB_PATH"
+          python -m pip install PyYAML==6.0.3
+      - name: Exercise graph reconciliation failure recovery and deletion
+        run: python examples/kubernetes/applications-and-tools/kro/validate-lab.py --report kro-lab-report.json
