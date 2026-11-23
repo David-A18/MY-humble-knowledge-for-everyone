@@ -46,7 +46,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="kb-kro-") as directory:
         temporary = Path(directory)
         # The temporary directory gives this run its cluster name and private kubeconfig.
-        cluster = temporary.name
+        cluster = temporary.name.replace("_", "-")
         kubeconfig = str(temporary / "kubeconfig")
         context = "kind-" + cluster
         report["cluster"] = cluster
