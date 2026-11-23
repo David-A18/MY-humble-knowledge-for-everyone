@@ -10,7 +10,7 @@ Read in order, or choose a task from the table.
 | --- | --- |
 | [Fundamentals](fundamentals.md) | Understand generated APIs and reconciliation. |
 | [Resource graphs and CEL](resource-graphs-and-cel.md) | Connect schemas, resource dependencies, readiness, and status. |
-| [Local application-composition lab](application-lab.md) | Create a WebApp API with Deployment and Service. |
+| [Local application-composition lab](application-lab.md) | Exercise a WebApp API, workload readiness, failure, recovery and parent deletion. |
 | [Lifecycle and troubleshooting](lifecycle-and-troubleshooting.md) | Operate definitions, instances, updates, and deletion. |
 | [kro tool comparison](tool-comparison.md) | Choose between templates, compositions, and custom operators. |
 

@@ -166,6 +166,7 @@ Common terms used across the knowledge base.
 | Regression | Previously working behavior broken by a change; configuration comparison alone cannot rule it out. |
 | Reranking | Reordering a retrieved candidate set using an additional relevance model or scoring step. |
 | ResourceGraphDefinition | kro definition containing a generated API schema and resource graph. |
+| readyWhen | kro expressions that decide when a graph resource is ready for dependent processing. The [composition lab](kubernetes/applications-and-tools/kro/application-lab.md) checks the current Deployment generation and replica health. |
 | SOPS | Tool for encrypting selected values in supported configuration/document formats. |
 | Watermark | Stream-processing estimate of event-time progress used to decide when a window is complete. |
 | Waypoint | Istio ambient proxy providing supported L7 processing for enrolled traffic. |

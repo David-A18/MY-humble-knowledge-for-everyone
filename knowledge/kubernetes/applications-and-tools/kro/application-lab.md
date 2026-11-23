@@ -10,75 +10,116 @@ audience: Engineering learners and practitioners
 maintainer: unassigned
 sources:
 - id: pinned-kro-installation-instructions
-  resource: https://kro.run/docs/getting-started/Installation/
+  resource: https://kro.run/0.9.4/docs/getting-started/Installation/
   title: Pinned kro installation instructions
 - id: kro-v0-9-4-examples
-  resource: https://github.com/kro-run/kro/tree/v0.9.4/examples
+  resource: https://github.com/kubernetes-sigs/kro/tree/v0.9.4/examples
   title: kro v0.9.4 examples
+- id: kro-readiness
+  resource: https://kro.run/0.9.4/docs/concepts/rgd/resource-definitions/readiness/
+  title: kro 0.9.4 readiness
+- id: kro-access
+  resource: https://kro.run/0.9.4/docs/advanced/access-control/
+  title: kro 0.9.4 access control
+- id: kro-deletion
+  resource: https://kro.run/0.9.4/docs/advanced/instance-deletion/
+  title: kro 0.9.4 instance deletion
 ---
 
 # Local kro application-composition lab
 
-## Purpose
+Create a small WebApp API that manages a Deployment and Service together. Change the WebApp to scale the application, break and restore its image, and observe how kro repairs or deletes its children.
 
-Create and operate a WebApp API that composes a Deployment and Service.
+For example, this instance asks the generated API for two web-server replicas.
 
-Sources reviewed: 2026-10-29. See the [validation record](../../../../governance/archive/knowledge-base-audit.md) for executed checks and unexecuted runtime labs.
+~~~yaml
+apiVersion: kro.run/v1alpha1
+kind: WebApp
+metadata:
+  name: demo
+spec:
+  replicas: 2
+~~~
 
-## Prerequisites
+What it does: supplies the user-facing input to the ResourceGraphDefinition, or RGD. kro evaluates that definition and reconciles the underlying Deployment and Service. The supplied definition provides the default server image.
 
-Use a disposable kind cluster, kubectl, Helm 3, and kro **0.9.4**. The application image is pinned in the supplied [fixtures](../../../../examples/kubernetes/applications-and-tools/kro/README.md). The release API is still `v1alpha1`; test compatibility before upgrades. Run from this series directory.[^pinned-kro-installation-instructions][^kro-v0-9-4-examples]
+## Prepare a disposable cluster
 
-> [!WARNING]
-> Installation modifies cluster-wide components and APIs. Confirm the current context is the disposable lab cluster before proceeding.
+Run all commands below from the repository root. Use Linux amd64, Docker and Python in an isolated environment. The [example files](../../../../examples/kubernetes/applications-and-tools/kro/README.md) include the definition, instance, controller permissions, version pins and runner.
 
-## Install and define the API
+The runner creates a unique kind cluster and private kubeconfig. It installs the checksum-verified raw controller manifest for the selected release. The release manifest grants basic permissions. The supplied aggregated ClusterRole adds access to this lab's WebApp, Deployment and Service types. These permissions apply across namespaces, so use a dedicated cluster. [^pinned-kro-installation-instructions][^kro-access]
 
-```bash
-helm install kro oci://registry.k8s.io/kro/charts/kro --namespace kro-system --create-namespace --version 0.9.4
-kubectl apply -f examples/kubernetes/applications-and-tools/kro/webapp-rgd.yaml
-kubectl get resourcegraphdefinition webapp
-kubectl api-resources | grep -i webapp
-```
+~~~bash
+python -m pip install PyYAML==6.0.3
+tools_dir=$(mktemp -d)
+python examples/kubernetes/applications-and-tools/manifest-validation/install-tools.py \
+  --directory "$tools_dir" \
+  --versions examples/kubernetes/applications-and-tools/kro/lab-versions.json
+export PATH="$tools_dir:$PATH"
+python examples/kubernetes/applications-and-tools/kro/validate-lab.py
+~~~
 
-What it does: installs a pinned controller and requests a generated API. Inspect definition conditions and wait for `webapps.kro.run` discovery before applying instances.
+What it does: installs the pinned kind and kubectl binaries into an empty tools directory, then performs the composition, failure, recovery and cleanup exercise. It prints observed versions and each assertion. An assertion failure fails the command and triggers cluster cleanup.
 
-```bash
-kubectl create namespace kro-lab
-kubectl apply -n kro-lab -f examples/kubernetes/applications-and-tools/kro/webapp.yaml
-kubectl rollout status deployment/demo -n kro-lab --timeout=120s
-kubectl get webapp,deploy,service -n kro-lab
-kubectl port-forward -n kro-lab service/demo 8080:80
-```
+## Follow definition, instance and children
 
-What it does: creates one higher-level instance and waits for its generated workload. In a second terminal, `curl --fail http://localhost:8080` should return the nginx page. Port forwarding stays in the foreground; stop it before cleanup.
+The runner waits for the controller, the RGD's Ready condition and the generated WebApp CRD before creating an instance. A controller Pod becoming ready is only the first stage.
 
-## Observe reconciliation
+| Stage | Expected observation |
+| --- | --- |
+| Register the definition | The RGD becomes ready and the WebApp CRD is established. |
+| Create the WebApp | One replica becomes available, the instance becomes ready and its status endpoint matches the Service IP. |
+| Send a request | An in-cluster request through Service DNS returns the NGINX page. |
+| Supply replicas zero | The generated API rejects the value below the schema minimum. |
+| Scale through the instance | The Deployment converges to two updated, available replicas. |
+| Delete the Service | kro recreates it with a new UID, updates the endpoint and restores HTTP access. |
+| Supply a missing image | A Pod reports image-not-found and the graph loses readiness. |
+| Restore the pinned image | Updated replicas, graph readiness and Service HTTP recover. |
+| Delete the instance | The managed Deployment and Service disappear before namespace cleanup. |
+| Finish | The namespace, kind cluster and its node containers are absent. |
 
-Change `spec.replicas` in `webapp.yaml` to 2 and reapply. Verify the generated Deployment converges to two replicas. Change the image to a deliberately invalid tag and inspect instance, Deployment, and Pod conditions; restore the pinned image and verify recovery.
+The Service references the Deployment selector through a CEL expression. That reference establishes a dependency. The Deployment's readyWhen expressions check its observed generation, updated replicas and available replicas. Dependent processing waits for those conditions. [^kro-readiness][^kro-v0-9-4-examples]
 
-Do not manually maintain a second desired copy of the generated Deployment through GitOps. GitOps should own the WebApp instance while kro owns its children.
+Without explicit workload readiness expressions, a created resource with resolved references may be considered ready while its application is starting. A readiness predicate also needs to cover updates. Existing available replicas can keep serving while the newly requested image fails.
 
-## Cleanup
+## Inspect a failed stage
 
-> [!WARNING]
-> Deleting an instance removes its managed workload resources according to controller lifecycle behavior. Use only the disposable namespace.
+For an interactive session in your own disposable cluster, replace LAB_CONTEXT with its context name.
 
-```bash
-kubectl delete -n kro-lab -f examples/kubernetes/applications-and-tools/kro/webapp.yaml
-kubectl get deployment,service -n kro-lab
-kubectl delete namespace kro-lab
-```
+~~~bash
+kubectl --context LAB_CONTEXT get rgd webapp -o yaml
+kubectl --context LAB_CONTEXT get webapp demo -n kro-lab -o yaml
+kubectl --context LAB_CONTEXT get deployment,service,pod -n kro-lab
+kubectl --context LAB_CONTEXT get events -n kro-lab --sort-by=.lastTimestamp
+kubectl --context LAB_CONTEXT logs deployment/kro -n kro-system
+~~~
 
-What it does: tests deletion through the parent API before removing the namespace. Remove the RGD/controller only after all dependent lab instances are gone and only if the installation is dedicated to this lab.
+What it does: follows definition validation, instance conditions, child health, events and controller diagnostics. The automated runner deletes its private cluster on exit, so inspect its failure report first when using that route.
+
+An API discovery error points to the definition or generated CRD. A forbidden operation points to controller or caller permissions. A registry timeout is a different failure from the deliberately missing image. The runner requires an image-not-found diagnostic before accepting the negative case.
+
+Update the WebApp instance as the input to kro. A second deployment tool managing the same child fields can create ownership conflicts. Keep definition and instance changes versioned so a repair can be reproduced.
+
+## Delete through the parent API
+
+The lab deletes the WebApp and checks that its Deployment and Service disappear while the namespace still exists. This exercises kro's instance cleanup path. Namespace deletion alone removes namespaced resources and provides weaker evidence of parent lifecycle behavior. Keep the controller running while its instances and finalizers are reconciled. [^kro-deletion]
+
+After instance cleanup, the runner deletes the RGD and namespace, then removes the task cluster and checks for remaining labeled node containers. Remove your own tool installation and redirected reports after retaining results.
+
+## Evidence and limits
+
+Sources reviewed on 2026-11-23 against kro 0.9.4 documentation. The fixed teaching baseline uses kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, PyYAML 6.0.3 and the versioned raw controller manifest. The NGINX image uses a content digest. The [recorded pull-request run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45145546874) passed all eleven runtime assertions on 2026-11-23. Its [report](../../../../examples/kubernetes/applications-and-tools/kro/runtime-evidence.json) records Docker 28.0.4 and Python 3.13.18 alongside the selected tool and controller versions. Subsequent revisions need their own workflow results.
+
+The workflow covers one namespaced local graph. Cloud resources, external references, graph-version migration and multi-tenant permissions require additional scenarios. Review definition-author and controller privileges before adapting this example to a shared platform.
 
 ## Related links
 
-- [Pinned kro installation instructions](https://kro.run/docs/getting-started/Installation/)
-- [kro v0.9.4 examples](https://github.com/kro-run/kro/tree/v0.9.4/examples)
-- [Back to parent index](index.md)
-- [Back to major area](../../index.md)
-- [Back to root index](../../../../README.md)
+- [kro lab files](../../../../examples/kubernetes/applications-and-tools/kro/README.md)
+- [Lifecycle diagnosis](lifecycle-and-troubleshooting.md)
+- [Back to kro](index.md) | [Back to Kubernetes](../../index.md)
 
-[^pinned-kro-installation-instructions]: [Pinned kro installation instructions](https://kro.run/docs/getting-started/Installation/).
-[^kro-v0-9-4-examples]: [kro v0.9.4 examples](https://github.com/kro-run/kro/tree/v0.9.4/examples).
+[^pinned-kro-installation-instructions]: [kro 0.9.4 installation](https://kro.run/0.9.4/docs/getting-started/Installation/).
+[^kro-v0-9-4-examples]: [kro 0.9.4 examples](https://github.com/kubernetes-sigs/kro/tree/v0.9.4/examples).
+[^kro-readiness]: [Readiness and dependency handling](https://kro.run/0.9.4/docs/concepts/rgd/resource-definitions/readiness/).
+[^kro-access]: [Controller access modes](https://kro.run/0.9.4/docs/advanced/access-control/).
+[^kro-deletion]: [Instance deletion](https://kro.run/0.9.4/docs/advanced/instance-deletion/).

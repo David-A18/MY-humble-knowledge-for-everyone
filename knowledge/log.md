@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-11-23
+
+- Reworked the kro lab with repository-root commands, versioned source links, aggregated controller permissions and readiness during updates. Added a disposable runtime runner for composition, recovery and deletion.
+
 ## 2026-11-19
 
 - Added starter pages for Git practices and tricks and AWS fundamentals, storage, and troubleshooting; moved Kubernetes practices and tricks out of their indexes; removed the empty AWS solutions-architect and Azure sections; split three more long pages.

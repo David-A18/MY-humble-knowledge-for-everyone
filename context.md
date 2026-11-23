@@ -18,6 +18,10 @@ Use [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-v
 
 The [Istio lab](knowledge/kubernetes/applications-and-tools/istio/security-lab.md) runs one sidecar request path through baseline connectivity, STRICT peer authentication, JWT validation and combined authorization. Use its recorded result for that pinned setup and the ambient guide for waypoint policy placement.
 
+## kro composition routing
+
+Use the [kro lab](knowledge/kubernetes/applications-and-tools/kro/application-lab.md) for a local generated API, aggregated controller permissions, workload readiness during updates, Service recreation, failure/recovery and deletion through the parent instance. Its files live under examples and its source references target kro 0.9.4.
+
 ## AWS identity routing
 
 Use [governance and human access](knowledge/cloud/aws/governance-and-access/index.md) for organization/account ownership, workforce federation, guardrails and offboarding. Use [AWS security](knowledge/cloud/aws/security/index.md) for request evaluation, credential behavior, workload identity and data/security operations. The access-review lab is a synthetic inventory join, never an IAM evaluator or session-containment attestation.

@@ -1,0 +1,26 @@
+{
+  "platform": "linux-amd64",
+  "tools": [
+    {
+      "name": "kind",
+      "version": "v0.30.0",
+      "url": "https://github.com/kubernetes-sigs/kind/releases/download/v0.30.0/kind-linux-amd64",
+      "sha256": "517ab7fc89ddeed5fa65abf71530d90648d9638ef0c4cde22c2c11f8097b8889",
+      "archive": false
+    },
+    {
+      "name": "kubectl",
+      "version": "v1.34.1",
+      "url": "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl",
+      "sha256": "7721f265e18709862655affba5343e85e1980639395d5754473dafaadcaa69e3",
+      "archive": false
+    }
+  ],
+  "kubernetes": "v1.34.0",
+  "node_image": "kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a",
+  "kro": "0.9.4",
+  "controller_manifest": {
+    "url": "https://github.com/kubernetes-sigs/kro/releases/download/v0.9.4/kro-core-install-manifests.yaml",
+    "sha256": "73614812c733dd7c9b687195dac9ad8f078ef886d520af77fb7bc83b140179d3"
+  }
+}
