@@ -1,0 +1,32 @@
+{
+  "revision": "6ad711492216256f0ce5d75ad2e2bee2b595e4f9",
+  "branch": "codex/kro-lifecycle-lab",
+  "url": "https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45145546874",
+  "event": "pull_request",
+  "report": {
+    "checks": {
+      "pinned_controller_ready": true,
+      "definition_and_generated_api_ready": true,
+      "baseline_http_and_status_endpoint": true,
+      "invalid_instance_rejected_by_generated_schema": true,
+      "instance_change_scales_children": true,
+      "deleted_service_recreated_and_http_recovers": true,
+      "missing_image_blocks_graph_readiness": true,
+      "restored_image_recovers_graph_and_http": true,
+      "instance_deletion_removes_children": true,
+      "lab_namespace_deleted": true,
+      "cluster_and_nodes_deleted": true
+    },
+    "versions": {
+      "python": "3.13.18",
+      "kro": "0.9.4",
+      "kind": "kind v0.30.0 go1.24.6 linux/amd64",
+      "kubectl": "v1.34.1",
+      "docker": "28.0.4",
+      "kubernetes": "v1.34.0"
+    },
+    "cluster": "kb-kro-2w6q9ho4",
+    "controller_image": "registry.k8s.io/kro/kro:v0.9.4",
+    "status": "passed"
+  }
+}

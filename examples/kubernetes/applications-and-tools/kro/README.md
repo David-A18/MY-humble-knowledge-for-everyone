@@ -6,4 +6,5 @@ Run the [knowledge-base tutorial](../../../../knowledge/kubernetes/applications-
 - [Instance](webapp.yaml) requests a server with a pinned image.
 - [Controller permissions](controller-access.yaml) grant the raw installation access to the lab resource types.
 - [Version pins](lab-versions.json) select tools, node image and controller manifest checksum.
+- [Recorded runtime results](runtime-evidence.json) contain the tested revision, observed versions and eleven passing assertions.
 - [Runner](validate-lab.py) exercises API generation, HTTP, validation, scale, recreation, image failure, recovery and deletion.

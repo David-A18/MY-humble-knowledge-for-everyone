@@ -108,7 +108,7 @@ After instance cleanup, the runner deletes the RGD and namespace, then removes t
 
 ## Evidence and limits
 
-Sources reviewed on 2026-11-23 against kro 0.9.4 documentation. The fixed teaching baseline uses kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, PyYAML 6.0.3 and the versioned raw controller manifest. The NGINX image uses a content digest. Runtime results remain pending until the hosted CI run is inspected.
+Sources reviewed on 2026-11-23 against kro 0.9.4 documentation. The fixed teaching baseline uses kind 0.30.0, kubectl 1.34.1, Kubernetes 1.34.0, PyYAML 6.0.3 and the versioned raw controller manifest. The NGINX image uses a content digest. The [recorded pull-request run](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45145546874) passed all eleven runtime assertions on 2026-11-23. Its [report](../../../../examples/kubernetes/applications-and-tools/kro/runtime-evidence.json) records Docker 28.0.4 and Python 3.13.18 alongside the selected tool and controller versions. Subsequent revisions need their own workflow results.
 
 The workflow covers one namespaced local graph. Cloud resources, external references, graph-version migration and multi-tenant permissions require additional scenarios. Review definition-author and controller privileges before adapting this example to a shared platform.
 
