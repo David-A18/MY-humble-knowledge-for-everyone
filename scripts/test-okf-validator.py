@@ -63,7 +63,7 @@ audience: Readers
 maintainer: unassigned
 published: {published}
 stale_after: {stale_after}
-sources:
+{extra}sources:
   - id: primary
     resource: https://example.com/announcement
     title: Announcement
@@ -74,7 +74,7 @@ sources:
 
 
 def news_errors(path: str, **fields: str) -> list[str]:
-    values = {"status": "draft", "published": "2026-11-19", "stale_after": "2027-03-19"} | fields
+    values = {"status": "draft", "published": "2026-11-19", "stale_after": "2027-03-19", "extra": ""} | fields
     with tempfile.TemporaryDirectory(prefix="okf-news-") as temporary:
         root = Path(temporary)
         write(root, "index.md", "---\nokf_version: \"0.2\"\n---\n\n# Root\n\n- [News](news/index.md)\n")
@@ -93,5 +93,20 @@ assert any("does not match published" in e for e in news_errors("news/2026/10/ex
 assert any("later than published" in e for e in news_errors("news/2026/11/example-brief.md", stale_after="2026-11-01"))
 assert any("published ISO date" in e for e in news_errors("news/2026/11/example-brief.md", published="soon"))
 assert any("news/YYYY/MM" in e for e in news_errors("news/2026/example-brief.md"))
+
+# Critical alerts: optional, only `critical`, and an alert_until inside the brief's life.
+BRIEF = "news/2026/11/example-brief.md"
+assert news_errors(BRIEF, extra="alert: critical\n") == []
+assert news_errors(BRIEF, extra="alert: critical\nalert_until: 2026-12-01\n") == []
+assert any("alert must be one of" in e for e in news_errors(BRIEF, extra="alert: urgent\n"))
+assert any("alert_until needs an alert" in e for e in news_errors(BRIEF, extra="alert_until: 2026-12-01\n"))
+assert any("ISO date" in e for e in news_errors(BRIEF, extra="alert: critical\nalert_until: soon\n"))
+assert any("earlier than published" in e for e in news_errors(BRIEF, extra="alert: critical\nalert_until: 2026-11-01\n"))
+assert any("later than stale_after" in e for e in news_errors(BRIEF, extra="alert: critical\nalert_until: 2027-06-01\n"))
+with tempfile.TemporaryDirectory(prefix="okf-alert-") as temporary:
+    root = Path(temporary)
+    write(root, "index.md", "---\nokf_version: \"0.2\"\n---\n\n# Root\n\n- [Example](example.md)\n")
+    write(root, "example.md", VALID_CONCEPT.replace("maintainer: unassigned\n", "maintainer: unassigned\nalert: critical\n", 1))
+    assert any("only news briefs" in e for e in MODULE.validate_bundle(root))
 
 print("OKF validator fixtures passed.")

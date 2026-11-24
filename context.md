@@ -61,7 +61,8 @@ frontmatter. The repository requires `type`, `title`, `description`, `tags`,
 
 `status` is `draft`, `stable`, or `deprecated`. The former `maturity` field
 duplicated `status` and was retired on 2026-11-19. News briefs also require
-`published`, `sources`, and `stale_after`. Provenance, human review, generation details, and freshness are
+`published`, `sources`, and `stale_after`, and may carry `alert: critical` with an
+optional `alert_until`. Provenance, human review, generation details, and freshness are
 optional and must be recorded only when evidence exists.
 
 Use the official [OKF v0.2 specification](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md). The previous `knowledge-catalog` copy is frozen.
