@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added optional critical alerts for news briefs: `alert: critical` and `alert_until`, checked by the OKF validator, carried into the generated catalog when set, and described in the news editorial policy and the news brief template.
+
 - Added a pinned kro composition runner and CI workflow for generated API validation, scaling, Service recreation, image failure/recovery and parent cleanup. Corrected the lab working directory, raw-install RBAC and workload readiness.
 
 - Added a single required repository gate, a content and security policy, a repository policy checker (text-only file types, no binaries or executables, hidden-Unicode detection, safe Markdown, and allowlisted, safe links), a hashed-term moderation scanner, and a trusted content scan that pull requests cannot weaken and that records moderation cases for maintainers.
