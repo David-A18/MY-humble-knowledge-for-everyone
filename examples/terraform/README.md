@@ -9,7 +9,6 @@ Use disposable local copies. These examples practice state, modules, aliases, an
 | [First local state lifecycle](local-state-lifecycle/README.md) | The beginner init/plan/apply/inspect/change/destroy route. |
 | [Modules and workspaces](module-workspace-lab/README.md) | Validated inputs, stable keys, tests, ID-preserving refactor, and two local states. |
 | [Provider aliases and lock file](provider-alias-lab/README.md) | Pinned local provider, explicit child mapping, a local artifact, and cleanup. |
-
 | [State lock recovery](lock-recovery/README.md) | Reproduce contention and recover an orphaned lock on a loopback backend. |
 
 ## Evidence and follow-ups
