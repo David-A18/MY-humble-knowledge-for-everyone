@@ -48,6 +48,7 @@ genai.owasp.org
 getbootstrap.com
 getsops.io
 git-scm.com
+github.blog
 github.com
 grafana.com
 helm.sh

@@ -23,6 +23,7 @@ Use [fundamentals](fundamentals/index.md), [environment preflight](../cross-topi
 
 | Section | Focus |
 | --- | --- |
+| [Plan a minor upgrade](plan-a-minor-upgrade.md) | Review compatibility and rehearse production checks in staging. |
 | [Fundamentals](fundamentals/index.md) | Cluster concepts, control plane basics, and workload lifecycle. |
 | [Core objects](core-objects/index.md) | Pods, deployments, services, config, storage, and ingress concepts. |
 | [Commands](commands/index.md) | `kubectl` workflows and diagnostic commands. |

@@ -1,5 +1,10 @@
 # November 2026
 
+## Week of 23 November 2026
+
+- [Kubernetes 1.38 preview flags node and kubectl changes](kubernetes-1-38-upgrade-preview.md) - Check runtimes and remote commands ahead of the planned release.
+- [GitHub Code Quality fails uploads in unsupported formats](github-coverage-upload-format.md) - Align coverage report output with the upload action.
+
 ## Week of 16 November 2026
 
 - [OpenAI releases GPT-6.2 Astra and Sol](openai-gpt-6-2-astra-and-sol.md) - New top-tier and everyday models; pin model IDs and re-run your evaluations before switching.

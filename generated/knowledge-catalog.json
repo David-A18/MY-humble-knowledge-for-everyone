@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 290,
+  "concept_count": 293,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -4076,6 +4076,25 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Build a staging checklist for a Kubernetes minor upgrade and decide when production rollout can proceed.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/plan-a-minor-upgrade.md",
+      "source_ids": [
+        "version-skew",
+        "api-migration"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "upgrades",
+        "platform-engineering"
+      ],
+      "title": "Plan a Kubernetes minor upgrade",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Work faster with kubectl using aliases, default namespaces, label filters, compact output, kubectl explain, and temporary debug Pods.",
       "maintainer": "unassigned",
       "path": "knowledge/kubernetes/tricks/kubectl-productivity-tricks.md",
@@ -4686,6 +4705,44 @@
         "interest-rates"
       ],
       "title": "Federal Reserve minutes point to possible rate increases",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The coverage upload action now fails when a report uses an unsupported format.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/github-coverage-upload-format.md",
+      "published": "2026-11-25",
+      "source_ids": [
+        "announcement"
+      ],
+      "stale_after": "2027-02-25",
+      "status": "draft",
+      "tags": [
+        "news",
+        "github-actions",
+        "code-quality"
+      ],
+      "title": "GitHub Code Quality fails uploads in unsupported formats",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The release team outlines runtime and client changes operators can test before the planned December release.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/kubernetes-1-38-upgrade-preview.md",
+      "published": "2026-11-25",
+      "source_ids": [
+        "announcement"
+      ],
+      "stale_after": "2027-02-25",
+      "status": "draft",
+      "tags": [
+        "news",
+        "kubernetes",
+        "platform-engineering"
+      ],
+      "title": "Kubernetes 1.38 preview flags node and kubectl changes",
       "type": "News Brief"
     },
     {
