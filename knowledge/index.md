@@ -10,7 +10,7 @@ concepts, procedures, references, and learning paths.
 
 ## Latest news
 
-- [Week of 23 November 2026](news/2026/11/index.md#week-of-23-november-2026) - Kubernetes upgrade planning and a change to GitHub coverage uploads.
+- [Week of 23 November 2026](news/2026/11/index.md#week-of-23-november-2026) - Kubernetes upgrade planning and the EKS 1.31 support deadline.
 - [News archive](news/index.md) - Dated briefs on AI, technology, and the economy.
 
 ## Expanded learning paths

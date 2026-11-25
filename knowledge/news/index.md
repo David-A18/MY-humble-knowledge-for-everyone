@@ -21,7 +21,7 @@ after which it is history rather than current advice.
 ### Latest week of 23 November 2026
 
 - [Kubernetes 1.38 preview flags node and kubectl changes](2026/11/kubernetes-1-38-upgrade-preview.md) - Check runtime compatibility and rehearse remote commands.
-- [GitHub Code Quality fails uploads in unsupported formats](2026/11/github-coverage-upload-format.md) - Generate Cobertura XML for coverage uploads.
+- [Amazon EKS 1.31 reaches the end of extended support](2026/11/eks-1-31-extended-support-end.md) - Check remaining clusters and their upgrade readiness.
 
 ### Week of 16 November 2026
 

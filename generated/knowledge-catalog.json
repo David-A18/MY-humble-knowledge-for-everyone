@@ -4668,6 +4668,26 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "AWS lists 26 November 2026 as the end of extended support for Kubernetes 1.31 on EKS.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/eks-1-31-extended-support-end.md",
+      "published": "2026-11-25",
+      "source_ids": [
+        "eks-lifecycle"
+      ],
+      "stale_after": "2027-02-25",
+      "status": "draft",
+      "tags": [
+        "news",
+        "aws",
+        "eks",
+        "kubernetes"
+      ],
+      "title": "Amazon EKS 1.31 reaches the end of extended support",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "The EU's Digital Omnibus on AI adds new prohibitions from 2 December 2026 and moves the main high-risk obligations to December 2027 and August 2028.",
       "maintainer": "unassigned",
       "path": "knowledge/news/2026/11/eu-ai-act-new-prohibitions-december-2026.md",
@@ -4705,25 +4725,6 @@
         "interest-rates"
       ],
       "title": "Federal Reserve minutes point to possible rate increases",
-      "type": "News Brief"
-    },
-    {
-      "audience": "Engineering learners and practitioners",
-      "description": "The coverage upload action now fails when a report uses an unsupported format.",
-      "maintainer": "unassigned",
-      "path": "knowledge/news/2026/11/github-coverage-upload-format.md",
-      "published": "2026-11-25",
-      "source_ids": [
-        "announcement"
-      ],
-      "stale_after": "2027-02-25",
-      "status": "draft",
-      "tags": [
-        "news",
-        "github-actions",
-        "code-quality"
-      ],
-      "title": "GitHub Code Quality fails uploads in unsupported formats",
       "type": "News Brief"
     },
     {
