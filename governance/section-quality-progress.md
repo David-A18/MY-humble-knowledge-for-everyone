@@ -1,12 +1,14 @@
 # Section quality progress
 
-## 2026-11-25 Kubernetes compatibility rehearsal
+## 2026-11-25 RAG grounding evaluation
 
-The hosted [local learning journey](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45591858699)
-passed the removed-API checks on separate Kubernetes 1.31.6 and 1.32.2
-kind clusters. It verified the shared baseline object, the legacy request
-failure on the target, recovery via the supported API, and cluster cleanup.
-In-place upgrade and state migration remain separate exercises.
+Five synthetic cases retrieved their required evidence. Three passed the
+lexical coverage gate. Fixed answer controls distinguished supported citations
+from wrong-source, missing, invented-duration, and reversed-period answers.
+A CPU run with Qwen3-0.6B Q8_0 and llama.cpp b12651 produced no accepted
+answers on the three cases sent to generation. All three failed the
+citation-format check. The two low-coverage queries were refused before
+generation.
 
 ## 2026-11-25 Terraform state lock recovery
 
@@ -25,6 +27,14 @@ WSL Ubuntu. The live labels check still reports `dependencies` and
 optional. The cluster rehearsal and website route verification remain open.
 
 Review snapshot: 2026-11-23. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
+
+## 2026-11-25 Kubernetes compatibility rehearsal
+
+The hosted [local learning journey](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45591858699)
+passed the removed-API checks on separate Kubernetes 1.31.6 and 1.32.2
+kind clusters. It verified the shared baseline object, the legacy request
+failure on the target, recovery via the supported API, and cluster cleanup.
+In-place upgrade and state migration remain separate exercises.
 
 ## Current batch: kro composition and lifecycle lab
 
