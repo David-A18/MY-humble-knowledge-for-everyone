@@ -1,5 +1,12 @@
 # Section quality progress
 
+## 2026-11-25 Terraform state lock recovery
+
+Terraform 1.17.1 on Windows reproduced contention via two clients and a
+loopback HTTP backend. Recovery preserved the saved state byte for byte,
+and a subsequent apply took and released a fresh lock. S3 recovery and
+hosted runner evidence remain open.
+
 ## 2026-11-25 landing content batch
 
 Source-reviewed the Kubernetes minor upgrade guide and two platform news
