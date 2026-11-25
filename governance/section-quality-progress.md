@@ -1,5 +1,13 @@
 # Section quality progress
 
+## 2026-11-25 Kubernetes compatibility rehearsal
+
+The hosted [local learning journey](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45591858699)
+passed the removed-API checks on separate Kubernetes 1.31.6 and 1.32.2
+kind clusters. It verified the shared baseline object, the legacy request
+failure on the target, recovery via the supported API, and cluster cleanup.
+In-place upgrade and state migration remain separate exercises.
+
 ## 2026-11-25 Terraform state lock recovery
 
 Terraform 1.17.1 on Windows reproduced contention via two clients and a
