@@ -2,6 +2,8 @@
 
 ## 2026-11-25
 
+- Added a Route 53 hybrid DNS troubleshooting guide for inbound and outbound query paths.
+
 - Added Terraform state lock recovery guidance and a locally executed two-client HTTP backend rehearsal.
 
 - Added two platform news briefs, surfaced the weekly roundup on the knowledge home, and added a staging checklist for Kubernetes minor upgrades.

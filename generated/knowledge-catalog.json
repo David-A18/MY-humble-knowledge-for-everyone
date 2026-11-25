@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 294,
+  "concept_count": 295,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -796,6 +796,28 @@
       ],
       "title": "CloudFront",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Trace a failed private DNS query between an AWS VPC and an on-premises network to the failing resolver or network hop.",
+      "maintainer": "unassigned",
+      "path": "knowledge/cloud/aws/networking/hybrid-dns-troubleshooting.md",
+      "source_ids": [
+        "inbound",
+        "outbound",
+        "rule-selection",
+        "query-logs"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "aws",
+        "networking",
+        "dns",
+        "route-53"
+      ],
+      "title": "Diagnose hybrid DNS failures with Route 53 Resolver",
+      "type": "Troubleshooting Guide"
     },
     {
       "audience": "Cloud and platform engineering learners",

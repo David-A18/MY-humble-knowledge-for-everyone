@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a Route 53 hybrid DNS troubleshooting guide for AWS and on-premises query paths.
+
 - Added a Terraform state lock recovery guide and a disposable HTTP backend rehearsal.
 
 - Added a Kubernetes minor upgrade guide and two November news briefs, linked from the knowledge home.
