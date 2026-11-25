@@ -2,6 +2,8 @@
 
 ## 2026-11-25
 
+- Added Terraform state lock recovery guidance and a locally executed two-client HTTP backend rehearsal.
+
 - Added two platform news briefs, surfaced the weekly roundup on the knowledge home, and added a staging checklist for Kubernetes minor upgrades.
 
 ## 2026-11-23
