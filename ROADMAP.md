@@ -46,6 +46,7 @@ structure and checks they define.
 
 - [x] [ADR-0006](knowledge/decision-records/adr-0006-news-briefs.md), the [news editorial policy](governance/news-editorial-policy.md), the [news brief template](knowledge/templates/news-brief-template.md), validator rules, and the [news section](knowledge/news/index.md).
 - [x] Published the [first weekly roundup](knowledge/news/2026/11/index.md) with four briefs from primary sources, and added their domains to the allowlist.
+- [x] Published the [week of 23 November roundup](knowledge/news/2026/11/index.md#week-of-23-november-2026) with two platform briefs and reviewed the six briefs for expiry on 25 November.
 - [ ] Publish a roundup each week, and mark briefs `deprecated` when later events overturn them.
 - [ ] Optional: a scheduled workflow that collects candidate links into `sources/` for a person to turn into briefs. Nothing publishes automatically.
 
@@ -58,7 +59,9 @@ The knowledge base has no deployed website yet. The specification is ready in th
 - [ ] Choose the website repository and hosting provider.
 - [ ] Build the static site from the content contract, including the news listing and feed, search, and trust labels.
 - [ ] Set `SITE_REPOSITORY` so [website dispatch](.github/workflows/website-dispatch.yml) notifies the site after each validated `main` update.
-- [ ] Run reader task tests after launch.
+- [x] Prepared [three landing-page reader tasks](governance/reader-testing/facilitator-guide.md#website-landing-page-session).
+- [ ] Verify the rendered routes at the website's pinned source commit once a preview URL is available.
+- [ ] Run the three tasks with willing readers and use their observations to fix the most consequential finding.
 
 ### Planned topics
 
@@ -75,8 +78,9 @@ The [new learning paths](knowledge/index.md#expanded-learning-paths) document al
 | --- | --- |
 | Review draft concepts and assign ownership | A real maintainer, official sources, review scope, and a justified freshness deadline; keep drafts visible until then. |
 | Istio, IRSA, kro and manifest labs | [Istio sidecar](knowledge/kubernetes/applications-and-tools/istio/security-lab.md#validation) and [manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/regression-lab-and-ci.md#validation-boundary) have recorded runs. The [kro composition lab](knowledge/kubernetes/applications-and-tools/kro/application-lab.md#evidence-and-limits) also has a recorded lifecycle run. Next evidence includes authorized IRSA, Istio ambient/rollout and kro upgrade or external-reference cases. |
+| Kubernetes minor upgrade compatibility | The [removed-API rehearsal](knowledge/kubernetes/plan-a-minor-upgrade.md#rehearse-a-removed-api) passed on disposable Kubernetes 1.31.6 and 1.32.2 clusters. In-place upgrade and state migration remain open. |
 | Collector/Pixie/Kafka deployment labs | Delivery/capture, outage/recovery, and persistent-state results on supported infrastructure. |
-| RAG answer quality | A ten-question spot check on `qwen3:4b` is in the [lab](knowledge/llm/rag/repository-lab.md). Still open: a scored run covering paraphrases, conflicting sources, and grounding. |
+| RAG answer quality | A ten-question spot check on `qwen3:4b` is in the [lab](knowledge/llm/rag/repository-lab.md). A five-case scored run now covers paraphrases, conflicting evidence, and grounding controls. Qwen3-0.6B failed the citation check on all three generated answers. Two queries were refused before generation. Follow up with a larger benchmark and model comparison. |
 | Dev Container/Ona runtime | Container startup/rebuild and, where access exists, hosted workflow evidence. |
 
 Use the [maintenance review queue](governance/maintenance-review-queue.md) to schedule guide reviews and the [knowledge-base upgrade hub](knowledge-base-upgrade/README.md) for repository-level tools, skills, and MCP templates.
@@ -88,7 +92,7 @@ This replaces the old broad bullets after checking the current articles and inde
 | Priority / state | Existing coverage | Remaining task and completion criterion |
 | --- | --- | --- |
 | P1 / foundation documentation complete; runtime open | [AWS networking](knowledge/cloud/aws/networking/index.md): ten guides and a read-only inspection lab | Follow up with account-backed path verification, permitted/denied traffic and failover results; add focused Transit Gateway provisioning, hybrid BGP, and endpoint-policy recovery procedures. The [hybrid DNS procedure](knowledge/cloud/aws/networking/hybrid-dns-troubleshooting.md) is source-reviewed, with account-backed evidence pending. |
-| P1 / foundation documentation and local labs complete; remote evidence open | [Terraform learning path](knowledge/terraform/index.md), [module/workspace lab](knowledge/terraform/module-workspace-lab.md), and [provider alias lab](knowledge/terraform/provider-alias-lab.md) | Follow up with backend-specific competing-writer/restore/migration drills, cloud/provider imports, drift/recovery, and hosted credential/artifact checks. Preserve the executed local contracts and existing workflow/state guides. |
+| P1 / foundation documentation and local labs complete; remote evidence open | [Terraform learning path](knowledge/terraform/index.md), [module/workspace lab](knowledge/terraform/module-workspace-lab.md), and [provider alias lab](knowledge/terraform/provider-alias-lab.md) | The [loopback HTTP lock rehearsal](knowledge/terraform/troubleshooting/state-lock-recovery.md) verified contention and recovery. Follow up with cloud-backed competing-writer, restore, and migration drills, cloud/provider imports, drift/recovery, and hosted credential/artifact checks. Preserve the executed local contracts and existing workflow/state guides. |
 | P1 / foundation docs and synthetic calculations complete; real evidence open | [FinOps learning path](knowledge/finops/index.md), [AWS FinOps](knowledge/cloud/aws/finops/index.md), and [calculation lab](knowledge/finops/cost-analysis-lab.md) | Follow up with account-backed notification delivery, source-bill reconciliation, representative controlled rightsizing/SLO tests, and attributable financial outcomes. Synthetic math does not establish realized savings. |
 | P1 / manifest source/runtime lab verified; extensions open | [Manifest validation](knowledge/kubernetes/applications-and-tools/manifest-validation/index.md) | Preserve the linked eight offline/thirteen live assertions and require each revision's CI. Extend with Helm/Helm Diff release gates, GitOps ownership/controller, CRD admission and independent platform/reader cases. |
 | P1 / documentation complete; runtime open | [Kubernetes troubleshooting](knowledge/kubernetes/troubleshooting/index.md) | Eleven focused guides cover the requested diagnostic areas. Next evidence: disposable failure/recovery drills, actual versions, and redacted expected outputs. |
