@@ -10,6 +10,8 @@ Practical Kubernetes examples and walkthroughs.
 | --- | --- |
 | [Local deployment learning path files](local-deployment-learning-path/README.md) | Manifests for the first local Kubernetes learning path. |
 
+| [Removed API rehearsal](minor-upgrade-rehearsal/README.md) | Compare a legacy API client across Kubernetes 1.31 and 1.32. |
+
 ## Expected future content
 
 - Deployment and service manifests.

@@ -55,3 +55,6 @@ jobs:
 
       - name: Exercise Kubernetes deployment failure recovery and cleanup
         run: python examples/kubernetes/local-deployment-learning-path/validate-lab.py --report local-journey-report.json
+
+      - name: Rehearse a Kubernetes removed API and verify cleanup
+        run: python examples/kubernetes/minor-upgrade-rehearsal/run.py
