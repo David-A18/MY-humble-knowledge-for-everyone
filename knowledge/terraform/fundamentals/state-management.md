@@ -129,6 +129,9 @@ stale lock. Force-unlocking a lock another run still owns can allow multiple
 writers to modify the same state, which can corrupt the record Terraform relies
 on.[^terraform-state-locking]
 
+Use the [state lock recovery guide](../troubleshooting/state-lock-recovery.md)
+to check the owner, recover an orphaned lock, and verify the next plan.
+
 ## Safe operating checklist
 
 - [ ] Confirm the working directory, workspace, backend, and target account or

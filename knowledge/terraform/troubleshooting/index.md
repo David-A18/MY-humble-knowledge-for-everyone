@@ -7,7 +7,6 @@ Preserve the exact error and selected context before changing dependencies, stat
 | Guide | Outcome |
 | --- | --- |
 | [Failures and unexpected plans](failures-and-unexpected-plans.md) | Initialization, aliases, backend/workspace confusion, address changes, drift, and import ownership. |
-
 | [State lock recovery](state-lock-recovery.md) | Identify active contention, recover an orphaned lock, and verify the next plan. |
 
 ## Evidence and follow-ups

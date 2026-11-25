@@ -63,7 +63,7 @@ For migration, freeze writers, record every relevant workspace/state, take prote
 
 A lock failure may mean another valid writer is active, not a corrupt state. Inspect the owner/run and timestamps with the backend operator. Prefer waiting or safely terminating the owning run under its incident process. Neither `-lock=false` nor manual deletion of a live lock is a routine repair. Force-unlock belongs to a confirmed stale-lock recovery with exclusive ownership and evidence.
 
-No remote backend, cloud bucket, migration, or competing-writer drill was executed in this revision. Use the [state guide](state-management.md) for the general model and add backend-specific runtime evidence before calling an operational procedure tested. Remove only task-owned sandbox backend resources after consumers/state retention requirements have been resolved; never treat a real state bucket as disposable lab output.
+The [state lock recovery guide](../troubleshooting/state-lock-recovery.md) links a disposable two-client rehearsal. It reproduces a competing writer and recovers an orphaned lock on a loopback HTTP backend. Test cloud storage permissions, backups, and lock recovery separately on the backend you operate.
 
 ## Evidence and limits
 
@@ -72,7 +72,6 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 ## Related routes
 
 - [Recover from state lock contention](../troubleshooting/state-lock-recovery.md) and rehearse it with two Terraform clients.
-
 - [Dependency lock file](providers-and-dependency-locking.md) — provider selection, not concurrency.
 - [Failure diagnosis](../troubleshooting/failures-and-unexpected-plans.md).
 - [Back to this section](index.md)
