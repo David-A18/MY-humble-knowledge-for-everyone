@@ -93,6 +93,14 @@ above used fixed answer fixtures. The scorer checks the seeded duration
 claims and their citations. General factual grounding still requires
 reviewing the rest of the answer.
 
+A separate CPU run on 25 November 2026 used Qwen3-0.6B Q8_0 (SHA-256 starts
+`9465e63a22ad`) with llama.cpp build b12651 and a loopback chat adapter.
+The adapter forwarded the same messages with temperature 0, an 8,192-token
+context and a 128-token output limit, with server reasoning disabled.
+All three requests that reached generation failed the citation-format
+check. The two low-coverage cases were refused before calling the model.
+This is a result for that model and configuration on the synthetic cases.
+
 ## Cleanup and limitations
 
 Remove only your disposable SQLite database after closing clients. Do not commit indexes or model outputs. This implementation has no tenant authentication, semantic retrieval, background ingestion, or automatic source-trust assessment. Measure with the golden cases before adding those features.

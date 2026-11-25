@@ -5,7 +5,10 @@
 Five synthetic cases retrieved their required evidence. Three passed the
 lexical coverage gate. Fixed answer controls distinguished supported citations
 from wrong-source, missing, invented-duration, and reversed-period answers.
-A scored model run remains open.
+A CPU run with Qwen3-0.6B Q8_0 and llama.cpp b12651 produced no accepted
+answers on the three cases sent to generation. All three failed the
+citation-format check. The two low-coverage queries were refused before
+generation.
 
 ## 2026-11-25 Terraform state lock recovery
 
