@@ -15,13 +15,14 @@ Learn the address and routing model, choose connectivity and security boundaries
 | [Choose VPC and hybrid connectivity](vpc-connectivity-options.md) | Compare VPC peering, Transit Gateway, PrivateLink, VPN, and Direct Connect by reachability scope and operating responsibility. |
 | [Read-only VPC inspection lab](network-inspection-lab.md) | Build an evidence map of an existing authorized VPC and explain one dependency path without provisioning or changing its resources. |
 | [Diagnose AWS network connectivity failures](network-connectivity-troubleshooting.md) | Move from a failing DNS, TCP, TLS, or API request to the responsible VPC path or policy without broad firewall changes. |
+| [Diagnose hybrid DNS failures](hybrid-dns-troubleshooting.md) | Trace a private DNS lookup in either direction between AWS and your network. |
 | [CloudFront](cloudfront.md) | Design CloudFront request paths, cache isolation, origin protection, and verification for AWS applications and EKS backends. |
 
 ## Suggested sequence
 
 Start with VPC/subnets → effective routes → egress/endpoints → security groups and ACLs. Choose peering/transit/hybrid connectivity only after the required reachability scope is clear. Complete the read-only lab to explain one existing dependency path; use the diagnostic runbook for a real failure.
 
-CloudFront is the edge entry-path guide and links to the separate CDN and EKS material. Detailed Transit Gateway provisioning, hybrid DNS/BGP, endpoint-policy lockout recovery, and cloud-backed failover drills remain future focused procedures.
+CloudFront is the edge entry-path guide and links to the separate CDN and EKS material. Detailed Transit Gateway provisioning, hybrid BGP, endpoint-policy lockout recovery, and cloud-backed failover drills remain future focused procedures.
 
 ## Practice and evidence
 

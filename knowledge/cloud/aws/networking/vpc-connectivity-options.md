@@ -74,7 +74,7 @@ Before implementation, record account/Region/AZ boundaries, CIDRs, exchanged pre
 
 Verification needs forward and return reachability plus the application permission boundary: test an intended permitted flow, a disallowed segment, and the planned failover path in a controlled window. Keep rollback routes and out-of-band access. This page provisions nothing; a future sandbox must remove task-owned routes and attachments in dependency order, coordinate peer acceptance/cleanup with owners, and confirm that circuits or billable connections are actually released.
 
-Detailed Transit Gateway deployment, hybrid DNS, BGP policy, and failover drills remain focused future procedures, not evidence implied by this selection guide.
+Use [hybrid DNS troubleshooting](hybrid-dns-troubleshooting.md) when private resolution fails across the network boundary. Detailed Transit Gateway deployment, BGP policy, and failover drills remain follow-ups.
 
 ## Evidence and operating boundary
 

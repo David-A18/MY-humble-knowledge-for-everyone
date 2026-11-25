@@ -1,5 +1,11 @@
 # Section quality progress
 
+## 2026-11-25 Route 53 hybrid DNS
+
+Reviewed AWS sources for inbound and outbound forwarding, rule selection,
+and query logging. The troubleshooting guide records test points and expected
+observations. Account-backed DNS and failover evidence remains open.
+
 ## 2026-11-25 Terraform state lock recovery
 
 Terraform 1.17.1 on Windows reproduced contention via two clients and a
