@@ -24,7 +24,8 @@ Use the [reader test facilitator guide](facilitator-guide.md) to run the session
 | Facilitator | Unassigned |
 | Reader profile | Beginner, early practitioner, experienced engineer, or other broad category |
 | Starting page | [Start here](../../knowledge/start-here.md) |
-| Repository commit | Commit hash tested |
+| Repository commit | Commit hash tested, including the website's pinned content revision where applicable |
+| Surface | Website preview URL or GitHub Markdown |
 | Environment notes | Browser, terminal, operating system, or tool versions when relevant |
 | Consent to record anonymous findings | Yes or no |
 
@@ -42,6 +43,15 @@ Use the [reader test facilitator guide](facilitator-guide.md) to run the session
 | 8. Explain when Kafka at-least-once processing can cause duplicate side effects.                    |            |              |        |                        |                  |
 | 9. Identify the next step after finishing the local beginner route.                                 |            |              |        |                        |                  |
 | 10. Report one confusing term, missing prerequisite, or blocked step.                               |            |              |        |                        |                  |
+
+For a [landing-page session](facilitator-guide.md#website-landing-page-session),
+use these rows in place of the general task list.
+
+| Task | Found page | Time to find | Result | Confusing term or step | Follow-up action |
+| --- | --- | --- | --- | --- | --- |
+| L1. Find a Kubernetes upgrade guide. | | | | | |
+| L2. Follow the staging failure procedure. | | | | | |
+| L3. Trace a platform news brief to its source. | | | | | |
 
 Use these result values consistently:
 

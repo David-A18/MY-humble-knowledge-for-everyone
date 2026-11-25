@@ -63,6 +63,25 @@ The expected route is not a grading key. If a reader reaches a different useful 
 | 9 | Identify the next step after finishing the local beginner route. | [Start here](../../knowledge/start-here.md) or [Local deployment learning path](../../knowledge/cross-topic-guides/local-deployment-learning-path.md) | Reader finds a next topic such as Terraform, Kubernetes troubleshooting, Crossplane, EKS, or Velero. |
 | 10 | Report one confusing term, missing prerequisite, or blocked step. | Any page used during the session | Reader provides a specific term, instruction, prerequisite, or navigation step to improve. |
 
+## Website landing-page session
+
+Record the preview URL and the exact content commit displayed by the site.
+Start each task from the landing page without an open search result or deep
+link. Use one reader session for the three tasks below and apply the same
+scoring rules. If only the GitHub Markdown is available, record the surface
+as GitHub to keep that session's observations distinct from website findings.
+
+| Task | Reader prompt | Completion signal |
+| --- | --- | --- |
+| L1 | You need to prepare for a Kubernetes upgrade. Find a guide and name one check you would run before touching production. | Reader finds the [minor upgrade guide](../../knowledge/kubernetes/plan-a-minor-upgrade.md) or an equivalent route and names a concrete staging check. |
+| L2 | Use that guide to decide what to do if a staging node fails to become Ready after an upgrade. | Reader follows the checklist, pauses production, and describes comparing the failing check with the baseline before rerunning it. No production access is needed. |
+| L3 | Find a recent platform news item and open its original source. What did that source confirm? | Reader reaches the roundup, opens a brief's primary source, and distinguishes an announced plan from a released change or a support deadline. |
+
+Reset to the landing page before L3. Capture the first useful link, whether
+a hint was needed, and the exact label or instruction that caused confusion.
+Use the observed problem to propose a small fix, then rerun the affected task
+against the revised content commit.
+
 ## Scoring rules
 
 Use these values consistently in the results template:
