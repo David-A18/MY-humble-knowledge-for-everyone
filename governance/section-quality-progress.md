@@ -6,6 +6,16 @@ Reviewed AWS sources for inbound and outbound forwarding, rule selection,
 and query logging. The troubleshooting guide records test points and expected
 observations. Account-backed DNS and failover evidence remains open.
 
+## 2026-11-25 RAG grounding evaluation
+
+Five synthetic cases retrieved their required evidence. Three passed the
+lexical coverage gate. Fixed answer controls distinguished supported citations
+from wrong-source, missing, invented-duration, and reversed-period answers.
+A CPU run with Qwen3-0.6B Q8_0 and llama.cpp b12651 produced no accepted
+answers on the three cases sent to generation. All three failed the
+citation-format check. The two low-coverage queries were refused before
+generation.
+
 ## 2026-11-25 Terraform state lock recovery
 
 Terraform 1.17.1 on Windows reproduced contention via two clients and a

@@ -61,6 +61,10 @@ by your distribution and record who can pause the rollout. For example, a
 provider may let you replace a node pool while offering a different recovery
 path for the control plane.
 
+## Rehearse a removed API
+
+Run the [disposable compatibility exercise](../../examples/kubernetes/minor-upgrade-rehearsal/README.md) against Kubernetes 1.31 and 1.32. The example uses FlowSchema, an API server request-classification resource. A legacy client using `v1beta3` works on the baseline and receives NotFound on the target. Switching the request to `v1` restores it. Use the same pattern to test any API clients identified in your inventory.[^api-migration]
+
 ## Related links
 
 - [Manifest validation and regressions](applications-and-tools/manifest-validation/index.md)
