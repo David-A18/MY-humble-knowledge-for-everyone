@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 293,
+  "concept_count": 294,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -5300,6 +5300,26 @@
         "plans"
       ],
       "title": "Terraform failures and unexpected plans",
+      "type": "Troubleshooting Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Identify the lock owner, recover an orphaned lock, and verify that normal Terraform operations can resume.",
+      "maintainer": "unassigned",
+      "path": "knowledge/terraform/troubleshooting/state-lock-recovery.md",
+      "source_ids": [
+        "state-lock",
+        "force-unlock",
+        "s3-locking"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "terraform",
+        "state",
+        "troubleshooting"
+      ],
+      "title": "Recover from Terraform state lock contention",
       "type": "Troubleshooting Guide"
     }
   ]

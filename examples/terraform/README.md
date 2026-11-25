@@ -10,6 +10,8 @@ Use disposable local copies. These examples practice state, modules, aliases, an
 | [Modules and workspaces](module-workspace-lab/README.md) | Validated inputs, stable keys, tests, ID-preserving refactor, and two local states. |
 | [Provider aliases and lock file](provider-alias-lab/README.md) | Pinned local provider, explicit child mapping, a local artifact, and cleanup. |
 
+| [State lock recovery](lock-recovery/README.md) | Reproduce contention and recover an orphaned lock on a loopback backend. |
+
 ## Evidence and follow-ups
 
 The section was reviewed on 2026-10-29. Local execution uses Terraform 1.17.1; cloud-backed imports, remote locks/migration, hosted CI credentials, and provider-specific failure drills remain follow-up evidence. The guides identify their individual scope and lifecycle status.

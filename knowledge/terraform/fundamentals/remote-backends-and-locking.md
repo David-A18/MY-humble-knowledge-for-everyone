@@ -71,6 +71,8 @@ Sources reviewed on 2026-10-29. Local examples were executed with Terraform 1.17
 
 ## Related routes
 
+- [Recover from state lock contention](../troubleshooting/state-lock-recovery.md) and rehearse it with two Terraform clients.
+
 - [Dependency lock file](providers-and-dependency-locking.md) — provider selection, not concurrency.
 - [Failure diagnosis](../troubleshooting/failures-and-unexpected-plans.md).
 - [Back to this section](index.md)
