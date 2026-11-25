@@ -36,6 +36,18 @@ sources:
 ---
 ```
 
+Rarely, a brief is news that readers should know about right away. Then add
+`alert: critical`, and optionally `alert_until` (an ISO date between
+`published` and `stale_after`; without it the alert lasts until
+`stale_after`). The website shows these briefs as a notice. Read
+[critical alerts](../../governance/news-editorial-policy.md#critical-alerts)
+in the editorial policy first:
+
+```yaml
+alert: critical
+alert_until: 2026-12-03
+```
+
 ## What happened
 
 Two or three plain sentences: the date, who acted, and what changed.[^primary-announcement]

@@ -42,8 +42,10 @@ def build_catalog(bundle: Path) -> dict:
         metadata = split_frontmatter(path.read_text(encoding="utf-8"))
         sources = metadata.get("sources", [])
         entry = {}
-        if "published" in metadata:
-            entry["published"] = metadata["published"]
+        # Optional news fields appear only when a concept sets them, so the entries of other concepts do not change.
+        for field in ("published", "alert", "alert_until"):
+            if field in metadata:
+                entry[field] = metadata[field]
         concepts.append(
             entry | {
                 "path": path.as_posix(),

@@ -63,12 +63,36 @@ def as_date(value) -> date | None:
         return None
 
 
+ALERTS = {"critical"}
+
+
+def validate_alert(rel: str, metadata: dict, published: date | None, stale_after: date | None) -> list[str]:
+    """An optional editorial alert on a news brief: `alert: critical`, ending at `alert_until` or else at `stale_after`."""
+    errors = []
+    has_alert, has_until = "alert" in metadata, "alert_until" in metadata
+    if has_alert and (not isinstance(metadata["alert"], str) or metadata["alert"] not in ALERTS):
+        errors.append(f"{rel}: alert must be one of {sorted(ALERTS)}")
+    if has_until and not has_alert:
+        errors.append(f"{rel}: alert_until needs an alert")
+    if has_until:
+        until = as_date(metadata["alert_until"])
+        if until is None:
+            errors.append(f"{rel}: alert_until must be an ISO date")
+        elif published and until < published:
+            errors.append(f"{rel}: alert_until must not be earlier than published")
+        elif stale_after and until > stale_after:
+            errors.append(f"{rel}: alert_until must not be later than stale_after")
+    return errors
+
+
 def validate_news(rel: str, metadata: dict) -> list[str]:
     """News briefs are dated, sourced, expiring, and filed by publication month (ADR-0006)."""
     is_brief = metadata.get("type") == "News Brief"
     if rel.startswith("news/") and not is_brief:
         return [f"{rel}: concepts under news/ must use type News Brief"]
     if not is_brief:
+        if "alert" in metadata or "alert_until" in metadata:
+            return [f"{rel}: only news briefs can carry alert or alert_until"]
         return []
     errors = []
     published = as_date(metadata.get("published"))
@@ -88,6 +112,7 @@ def validate_news(rel: str, metadata: dict) -> list[str]:
         errors.append(f"{rel}: news briefs belong in news/YYYY/MM/<kebab-name>.md")
     elif published and (int(match.group(1)), int(match.group(2))) != (published.year, published.month):
         errors.append(f"{rel}: folder news/{match.group(1)}/{match.group(2)}/ does not match published {published.isoformat()}")
+    errors.extend(validate_alert(rel, metadata, published, stale_after))
     return errors
 
 

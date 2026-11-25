@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-11-25
+
+- Added two platform news briefs, surfaced the weekly roundup on the knowledge home, and added a staging checklist for Kubernetes minor upgrades.
+
 ## 2026-11-23
 
 - Reworked the kro lab with repository-root commands, versioned source links, aggregated controller permissions and readiness during updates. Added a disposable runtime runner for composition, recovery and deletion.
