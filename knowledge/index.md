@@ -8,6 +8,11 @@ This directory is the canonical Open Knowledge Format v0.2 bundle for this
 repository. Start with a subject area, then follow its index to focused
 concepts, procedures, references, and learning paths.
 
+## Latest news
+
+- [Week of 23 November 2026](news/2026/11/index.md#week-of-23-november-2026) - Kubernetes upgrade planning and the EKS 1.31 support deadline.
+- [News archive](news/index.md) - Dated briefs on AI, technology, and the economy.
+
 ## Expanded learning paths
 
 | Learning path | Outcome |
@@ -29,6 +34,7 @@ concepts, procedures, references, and learning paths.
 | --- | --- | --- |
 | Learn practical platform basics locally | [Start here](start-here.md) | Use Git, Kubernetes, and Terraform without a cloud account. |
 | Recover safely from a Git mistake | [Git undo and recovery](git/troubleshooting/undo-and-recovery.md) | Inspect first, then choose the least-destructive recovery action. |
+| Prepare a Kubernetes upgrade | [Plan a minor upgrade](kubernetes/plan-a-minor-upgrade.md) | Check compatibility and decide when a staging upgrade is ready for production. |
 | Diagnose a Kubernetes workload | [Kubernetes troubleshooting](kubernetes/troubleshooting/index.md) | Move from symptom to safe diagnostics and recovery. |
 | Learn Terraform safely | [Terraform local state lifecycle](terraform/local-state-lifecycle.md) | Practice plan, state, change review, and destroy locally. |
 | Design a Crossplane platform API | [Crossplane component model](kubernetes/crossplane/component-model.md) | Understand providers, managed resources, XRDs, compositions, and XRs. |
@@ -42,10 +48,6 @@ For account ownership and workforce permissions, use [AWS governance and human a
 - `stable` means the concept has current recorded sources and a freshness deadline.
 - `deprecated` means do not use the concept for new work; follow its replacement link.
 - Source records and review deadlines appear in concept frontmatter. AI tools can use the generated [knowledge catalog](../generated/README.md) to filter and route concepts without treating the catalog as a second source of truth.
-
-## News
-
-- [News](news/index.md) - Dated, sourced briefs on AI, technology, and the economy, and what they mean for readers.
 
 ## Engineering topics
 

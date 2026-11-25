@@ -18,7 +18,12 @@ after which it is history rather than current advice.
 
 ## Briefs
 
-### Latest: week of 16 November 2026
+### Latest week of 23 November 2026
+
+- [Kubernetes 1.38 preview flags node and kubectl changes](2026/11/kubernetes-1-38-upgrade-preview.md) - Check runtime compatibility and rehearse remote commands.
+- [Amazon EKS 1.31 reaches the end of extended support](2026/11/eks-1-31-extended-support-end.md) - Check remaining clusters and their upgrade readiness.
+
+### Week of 16 November 2026
 
 - [OpenAI releases GPT-6.2 Astra and Sol](2026/11/openai-gpt-6-2-astra-and-sol.md)
 - [Patch the critical Java vulnerability CVE-2026-114938](2026/11/critical-java-vulnerability-cve-2026-114938.md)

@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 290,
+  "concept_count": 293,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -4076,6 +4076,25 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "Build a staging checklist for a Kubernetes minor upgrade and decide when production rollout can proceed.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/plan-a-minor-upgrade.md",
+      "source_ids": [
+        "version-skew",
+        "api-migration"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "upgrades",
+        "platform-engineering"
+      ],
+      "title": "Plan a Kubernetes minor upgrade",
+      "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "Work faster with kubectl using aliases, default namespaces, label filters, compact output, kubectl explain, and temporary debug Pods.",
       "maintainer": "unassigned",
       "path": "knowledge/kubernetes/tricks/kubectl-productivity-tricks.md",
@@ -4649,6 +4668,26 @@
     },
     {
       "audience": "Engineering learners and practitioners",
+      "description": "AWS lists 26 November 2026 as the end of extended support for Kubernetes 1.31 on EKS.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/eks-1-31-extended-support-end.md",
+      "published": "2026-11-25",
+      "source_ids": [
+        "eks-lifecycle"
+      ],
+      "stale_after": "2027-02-25",
+      "status": "draft",
+      "tags": [
+        "news",
+        "aws",
+        "eks",
+        "kubernetes"
+      ],
+      "title": "Amazon EKS 1.31 reaches the end of extended support",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
       "description": "The EU's Digital Omnibus on AI adds new prohibitions from 2 December 2026 and moves the main high-risk obligations to December 2027 and August 2028.",
       "maintainer": "unassigned",
       "path": "knowledge/news/2026/11/eu-ai-act-new-prohibitions-december-2026.md",
@@ -4686,6 +4725,25 @@
         "interest-rates"
       ],
       "title": "Federal Reserve minutes point to possible rate increases",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "The release team outlines runtime and client changes operators can test before the planned December release.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/kubernetes-1-38-upgrade-preview.md",
+      "published": "2026-11-25",
+      "source_ids": [
+        "announcement"
+      ],
+      "stale_after": "2027-02-25",
+      "status": "draft",
+      "tags": [
+        "news",
+        "kubernetes",
+        "platform-engineering"
+      ],
+      "title": "Kubernetes 1.38 preview flags node and kubectl changes",
       "type": "News Brief"
     },
     {

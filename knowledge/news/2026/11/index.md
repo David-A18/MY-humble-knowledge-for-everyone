@@ -1,5 +1,10 @@
 # November 2026
 
+## Week of 23 November 2026
+
+- [Kubernetes 1.38 preview flags node and kubectl changes](kubernetes-1-38-upgrade-preview.md) - Check runtimes and remote commands ahead of the planned release.
+- [Amazon EKS 1.31 reaches the end of extended support](eks-1-31-extended-support-end.md) - Check remaining clusters and their upgrade readiness.
+
 ## Week of 16 November 2026
 
 - [OpenAI releases GPT-6.2 Astra and Sol](openai-gpt-6-2-astra-and-sol.md) - New top-tier and everyday models; pin model IDs and re-run your evaluations before switching.

@@ -1,5 +1,14 @@
 # Section quality progress
 
+## 2026-11-25 landing content batch
+
+Source-reviewed the Kubernetes minor upgrade guide and two platform news
+briefs. OKF, local links, Markdown lint, moderation, catalog freshness and
+retrieval thresholds passed. The repository-policy fixtures passed under
+WSL Ubuntu. The live labels check still reports `dependencies` and
+`moderation-review`; the content policy lists their advance creation as
+optional. The cluster rehearsal and website route verification remain open.
+
 Review snapshot: 2026-11-23. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
 
 ## Current batch: kro composition and lifecycle lab

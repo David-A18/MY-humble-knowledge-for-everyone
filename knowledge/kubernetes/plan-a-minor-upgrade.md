@@ -1,0 +1,72 @@
+---
+type: How-to Guide
+title: Plan a Kubernetes minor upgrade
+description: Build a staging checklist for a Kubernetes minor upgrade and decide when production rollout can proceed.
+tags: [kubernetes, upgrades, platform-engineering]
+status: draft
+audience: Engineering learners and practitioners
+maintainer: unassigned
+sources:
+  - id: version-skew
+    resource: https://kubernetes.io/releases/version-skew-policy/
+    title: Kubernetes version skew policy
+  - id: api-migration
+    resource: https://kubernetes.io/docs/reference/using-api/deprecation-guide/
+    title: Kubernetes deprecated API migration guide
+---
+
+# Plan a Kubernetes minor upgrade
+
+Make a checklist for the target version, then run it against a staging cluster
+before touching production. For example, if a deployment uses an old API
+version, update the source manifest or chart and confirm the new version works
+before the upgrade removes the old API.
+
+## Record what runs today
+
+- Record the control plane version, each node pool's kubelet and container
+  runtime versions, and the `kubectl` version used by CI.
+- Inventory add-ons and webhooks, including DNS, networking, storage, ingress
+  and admission. Record the versions supported by their maintainers for the
+  target Kubernetes minor.
+- Check the distribution's upgrade sequence alongside the upstream component
+  version skew rules, which describe how far versions may differ during
+  an upgrade.[^version-skew]
+
+## Check what the target version changes
+
+Read the release notes for each minor version on your upgrade path. Compare the
+deprecated API migration guide against rendered Helm charts, GitOps manifests
+and API clients. A cluster may still return a resource through a supported API
+even when a chart or client continues to send requests to an older version.
+Check both the desired configuration and the clients that run in
+practice.[^api-migration]
+
+## Decide whether to proceed
+
+Run the same checks before and after upgrading staging. Use representative
+workloads and the versions you plan to use in production.
+
+| Check | Evidence to record |
+| --- | --- |
+| Nodes and scheduling | The upgraded nodes become Ready and a representative workload starts on them. |
+| Network and DNS | An application resolves a Service name and reaches the expected backend. |
+| Storage | A test workload can mount its volume and read a known test record. |
+| Admission and delivery | The normal deployment pipeline creates or updates a workload and required policies still apply. |
+
+If a required check fails, pause before upgrading production. Capture the
+first failing operation, compare it with the baseline and rerun after fixing
+the dependency. Before production rollout, identify the recovery path supported
+by your distribution and record who can pause the rollout. For example, a
+provider may let you replace a node pool while offering a different recovery
+path for the control plane.
+
+## Related links
+
+- [Manifest validation and regressions](applications-and-tools/manifest-validation/index.md)
+- [Kubernetes backup and recovery with Velero](../migrations/velero/index.md)
+- [Kubernetes index](index.md)
+- [Knowledge home](../index.md)
+
+[^version-skew]: [Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/)
+[^api-migration]: [Kubernetes deprecated API migration guide](https://kubernetes.io/docs/reference/using-api/deprecation-guide/)

@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a Kubernetes minor upgrade guide and two November news briefs, linked from the knowledge home.
+
 - Added optional critical alerts for news briefs: `alert: critical` and `alert_until`, checked by the OKF validator, carried into the generated catalog when set, and described in the news editorial policy and the news brief template.
 
 - Added a pinned kro composition runner and CI workflow for generated API validation, scaling, Service recreation, image failure/recovery and parent cleanup. Corrected the lab working directory, raw-install RBAC and workload readiness.
