@@ -1,5 +1,11 @@
 # Section quality progress
 
+## 2026-11-25 Route 53 hybrid DNS
+
+Reviewed AWS sources for inbound and outbound forwarding, rule selection,
+and query logging. The troubleshooting guide records test points and expected
+observations. Account-backed DNS and failover evidence remains open.
+
 ## 2026-11-25 RAG grounding evaluation
 
 Five synthetic cases retrieved their required evidence. Three passed the
@@ -27,6 +33,14 @@ WSL Ubuntu. The live labels check still reports `dependencies` and
 optional. The cluster rehearsal and website route verification remain open.
 
 Review snapshot: 2026-11-23. This ledger tracks the ongoing section-by-section quality pass. A reviewed section has had its index and direct concepts inspected; it does not imply that its child sections, runtime examples, or every technical claim are production verified.
+
+## 2026-11-25 Kubernetes compatibility rehearsal
+
+The hosted [local learning journey](https://github.com/David-A18/MY-humble-knowledge-for-everyone/actions/runs/45591858699)
+passed the removed-API checks on separate Kubernetes 1.31.6 and 1.32.2
+kind clusters. It verified the shared baseline object, the legacy request
+failure on the target, recovery via the supported API, and cluster cleanup.
+In-place upgrade and state migration remain separate exercises.
 
 ## Current batch: kro composition and lifecycle lab
 
