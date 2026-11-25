@@ -4103,7 +4103,8 @@
       "path": "knowledge/kubernetes/plan-a-minor-upgrade.md",
       "source_ids": [
         "version-skew",
-        "api-migration"
+        "api-migration",
+        "api-deprecation"
       ],
       "stale_after": null,
       "status": "draft",
