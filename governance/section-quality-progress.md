@@ -1,5 +1,12 @@
 # Section quality progress
 
+## 2026-11-25 RAG grounding evaluation
+
+Five synthetic cases retrieved their required evidence. Three passed the
+lexical coverage gate. Fixed answer controls distinguished supported citations
+from wrong-source, missing, invented-duration, and reversed-period answers.
+A scored model run remains open.
+
 ## 2026-11-25 Terraform state lock recovery
 
 Terraform 1.17.1 on Windows reproduced contention via two clients and a

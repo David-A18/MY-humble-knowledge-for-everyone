@@ -68,6 +68,31 @@ Add `--timeout 300` on a CPU-only machine. On 2026-11-02, `qwen3:4b` (`359d7dd4b
 
 The current index schema includes lifecycle fields. Rebuild the disposable database when upgrading this example; the ingestion transaction replaces only its lab-owned index tables.
 
+## Score paraphrases and grounded citations
+
+```bash
+python -B examples/llm/rag/evaluate-grounding.py
+```
+
+What it does: builds a disposable three-document corpus with current and
+legacy approval windows and an unrelated example. It reports whether the
+needed sources were retrieved and whether the lexical coverage threshold
+would allow an answer. The citation scorer checks each seeded duration,
+its time period, and the source cited in the same clause.
+
+On 25 November 2026, all five queries retrieved their needed sources.
+Three passed the coverage check. A low-overlap paraphrase and a paraphrased
+comparison fell below it despite retrieving the needed evidence. Across
+all five cases, the scorer accepted the supported fixture answer and
+rejected the wrong-source, uncited, invented-duration, and reversed-period
+controls.
+
+Run the same cases with `--model YOUR_INSTALLED_MODEL` while your local
+Ollama server is running to score generated answers. The recorded results
+above used fixed answer fixtures. The scorer checks the seeded duration
+claims and their citations. General factual grounding still requires
+reviewing the rest of the answer.
+
 ## Cleanup and limitations
 
 Remove only your disposable SQLite database after closing clients. Do not commit indexes or model outputs. This implementation has no tenant authentication, semantic retrieval, background ingestion, or automatic source-trust assessment. Measure with the golden cases before adding those features.
