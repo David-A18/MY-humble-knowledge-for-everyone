@@ -14,6 +14,7 @@ Use [manifest validation and regression tests](../kubernetes/applications-and-to
 
 | Section | Focus |
 | --- | --- |
+| [Choose jq or yq](jq-and-yq-for-config-checks.md) | Inspect JSON and YAML and identify the expected yq implementation. |
 | [Docker Compose configuration](docker-compose-config.md) | Validate merged files and trace unexpected environment values. |
 | [Code quality](code-quality/index.md) | Static analysis, quality gates, pull request feedback, and CI/CD quality checks. |
 

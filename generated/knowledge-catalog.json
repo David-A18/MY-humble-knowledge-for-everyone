@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 299,
+  "concept_count": 300,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -2194,6 +2194,28 @@
       ],
       "title": "Validate and troubleshoot Docker Compose configuration",
       "type": "How-to Guide"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Choose a CLI for structured configuration checks and identify which yq implementation your script requires.",
+      "maintainer": "unassigned",
+      "path": "knowledge/devops/jq-and-yq-for-config-checks.md",
+      "source_ids": [
+        "jq-manual",
+        "go-yq",
+        "python-yq"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "json",
+        "yaml",
+        "jq",
+        "yq"
+      ],
+      "title": "Choose jq or yq for JSON and YAML checks",
+      "type": "Explanation"
     },
     {
       "audience": "Platform engineers and cloud cost owners",
