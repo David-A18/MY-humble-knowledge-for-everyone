@@ -153,6 +153,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Clarified the EU AI Act brief with the separate December content-marking deadline.
+
 - Made `knowledge/` Markdown-only by moving runnable lab files to `examples/`, moved the sample OKF bundle out of the reader corpus, and removed the duplicate `maturity` field.
 
 - Removed empty placeholder sections, moved root planning documents into `governance/` (archiving superseded plans), and replaced the scattered plans with a single roadmap.
