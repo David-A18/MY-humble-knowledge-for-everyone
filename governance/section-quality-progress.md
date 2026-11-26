@@ -1,5 +1,12 @@
 # Section quality progress
 
+## jq and yq configuration checks
+
+Reviewed the official jq and both yq project references. Executed direct
+JSON and YAML assertions and YAML-to-JSON conversion with jq 1.8.1 and
+Mike Farah yq 4.47.2 on Ubuntu under WSL. Tested both false-result exit statuses.
+Kislyuk yq was source-reviewed.
+
 ## Docker Compose configuration
 
 Reviewed Docker's configuration, merge, and interpolation references. Docker
