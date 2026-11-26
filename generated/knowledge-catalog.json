@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 296,
+  "concept_count": 297,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -3407,6 +3407,28 @@
       ],
       "title": "Vault on Kubernetes",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Use Stern to collect a bounded log snapshot across replicas and follow a rollout from one terminal.",
+      "maintainer": "unassigned",
+      "path": "knowledge/kubernetes/applications-and-tools/stern-log-troubleshooting.md",
+      "source_ids": [
+        "stern-docs",
+        "stern-release",
+        "kubectl-logs",
+        "kubectl-auth"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "kubernetes",
+        "logging",
+        "stern",
+        "troubleshooting"
+      ],
+      "title": "Find logs across Kubernetes replicas with Stern",
+      "type": "How-to Guide"
     },
     {
       "audience": "Engineering learners and practitioners",

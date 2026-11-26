@@ -74,6 +74,7 @@ Notes for tools commonly used to package, deploy, and operate Kubernetes workloa
 | [Tooling cluster architecture](tooling-cluster-architecture.md) | Design tooling cluster patterns, failure behavior, security, and EKS account boundaries. |
 | [kind custom clusters](kind-custom-clusters.md) | Create local Kubernetes clusters for labs and CI. |
 | [kind images and local registries](kind-images-and-local-registries.md) | Load host-built images into kind or use a local registry. |
+| [Stern](stern-log-troubleshooting.md) | Collect logs across matching replicas and follow a rollout. |
 | [K9s](k9s.md) | Use K9s to navigate, inspect, filter, and operate Kubernetes resources from a terminal UI. |
 | [K9s configuration and troubleshooting](k9s-configuration-and-troubleshooting.md) | Configure aliases, hotkeys, plugins, and read-only mode, and fix common K9s problems. |
 | [Velero](../../migrations/velero/index.md) | Back up, restore, migrate, and recover Kubernetes resources and persistent volumes. |
