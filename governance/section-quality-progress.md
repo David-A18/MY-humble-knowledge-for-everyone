@@ -1,5 +1,11 @@
 # Section quality progress
 
+## Stern log troubleshooting
+
+Reviewed command semantics against the Stern v1.35.0 and Kubernetes references.
+Verified the checksum, version and flags of the Windows AMD64 Stern binary.
+Cluster log-stream behavior remains source-reviewed.
+
 ## 2026-11-25 Route 53 hybrid DNS
 
 Reviewed AWS sources for inbound and outbound forwarding, rule selection,

@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a source-reviewed Stern guide with bounded snapshots, rollout streams, and troubleshooting.
+
 - Added a news brief on the November Kubernetes patches for the 1.35, 1.36, and 1.37 series.
 
 - Added a Route 53 hybrid DNS troubleshooting guide for AWS and on-premises query paths.
