@@ -1,5 +1,11 @@
 # Section quality progress
 
+## Docker Compose configuration
+
+Reviewed Docker's configuration, merge, and interpolation references. Docker
+Compose v2.39.4 on Ubuntu under WSL verified merged values, shell precedence,
+and failure for a missing required variable. Containers were not started.
+
 ## Git bisect regression troubleshooting
 
 Reviewed the Git bisect, worktree, and show references. Git 2.53.0 on Ubuntu

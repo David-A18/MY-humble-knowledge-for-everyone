@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a Docker Compose configuration guide with tested merge and interpolation examples.
+
 - Added a Git bisect regression guide and recorded a local worktree rehearsal.
 
 - Added a source-reviewed Stern guide with bounded snapshots, rollout streams, and troubleshooting.
