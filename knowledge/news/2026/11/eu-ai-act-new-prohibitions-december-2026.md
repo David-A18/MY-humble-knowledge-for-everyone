@@ -34,6 +34,13 @@ According to the European Parliament's summary, it:[^ep-summary]
 - requires providers and deployers to support AI literacy among the people who
   operate their AI systems.
 
+### Content marking for systems already on the market
+
+The Parliament summary identifies a separate **2 December 2026** deadline
+for providers whose synthetic-content systems were already on the market
+before 2 August 2026. Those providers must comply with the content-marking
+obligations by that date.[^ep-summary]
+
 ## Why it matters
 
 Teams that build or use AI for people in the EU have a firm date for the new
@@ -44,6 +51,8 @@ The delay exists because standards and national authorities were not ready.
 
 - Check now that no product can generate the newly prohibited content, before
   2 December 2026.
+- If you provide a system that generates synthetic content, check when it
+  entered the market and whether the content-marking deadline applies.
 - If you build or deploy AI in a high-risk area, use the extra time to prepare:
   document data sources, risk controls, and human oversight.
 - Confirm exact obligations in the regulation text or with legal advice; this
