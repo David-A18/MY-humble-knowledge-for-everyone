@@ -153,6 +153,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Require claim-level official sources when adding or updating knowledge content.
+
 - Clarified the EU AI Act brief with the separate December content-marking deadline.
 
 - Made `knowledge/` Markdown-only by moving runnable lab files to `examples/`, moved the sample OKF bundle out of the reader corpus, and removed the duplicate `maturity` field.

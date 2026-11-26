@@ -59,9 +59,27 @@ Use `status: stable` only when a page has current, recorded review evidence,
 official `sources`, and `stale_after`. Keep draft content discoverable, but do
 not present it as fully trusted guidance.
 Do not add `generated`, `verified`, `sources`, or `stale_after` during a move or
-mechanical edit. Add them when the stated evidence actually exists. Cite sources
-for important technical claims with keyed Markdown footnotes linked to
-`sources[].id`.
+mechanical edit. Add them when the stated evidence actually exists.
+
+### Official sources for factual claims
+
+For every substantive factual claim you add or change, cite the official
+vendor, upstream project, or standards body responsible for that information.
+Apply this to summaries, guides, explanations, comparisons, and news,
+including command flags, defaults, prerequisites, limits, and compatibility.
+
+Place a keyed Markdown footnote beside the claim or group of claims it
+supports and match the key to `sources[].id`. Link to the exact documentation
+section, release note, or specification. Pin the documented version where
+behavior varies, and identify which version the text covers. Open each
+source and check that it supports the wording. A reachable link alone
+establishes only that the page can be opened.
+
+For an original example, cite the official reference for the commands and
+behavior it relies on. If you ran it, record the tested version, environment,
+and observed result in Evidence and limits. Label recommendations and
+inferences as such, with the official evidence they draw on. Omit or narrow
+factual claims that the official evidence cannot support.
 
 ## Indexes, logs, and links
 
