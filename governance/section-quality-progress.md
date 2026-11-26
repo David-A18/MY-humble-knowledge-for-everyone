@@ -1,5 +1,12 @@
 # Section quality progress
 
+## Git bisect regression troubleshooting
+
+Reviewed the Git bisect, worktree, and show references. Git 2.53.0 on Ubuntu
+under WSL found the expected regression in a three-commit fixture and verified
+reset and worktree cleanup. Merge history and skipped candidates were not
+exercised.
+
 ## Stern log troubleshooting
 
 Reviewed command semantics against the Stern v1.35.0 and Kubernetes references.

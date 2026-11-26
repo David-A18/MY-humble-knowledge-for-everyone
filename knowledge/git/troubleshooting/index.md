@@ -12,6 +12,7 @@ planned focused guides.
 | Article | Purpose |
 | --- | --- |
 | [Undo and recovery](undo-and-recovery.md) | Safely inspect, undo, and recover local Git changes, staged changes, pushed commits, local resets, lost branch tips, and untracked cleanup. |
+| [Find a regression with Git bisect](find-a-regression-with-bisect.md) | Identify the first failing commit in a separate worktree. |
 
 ## Expected future content
 
