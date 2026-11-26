@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 297,
+  "concept_count": 298,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -2636,6 +2636,26 @@
       ],
       "title": "Git productivity tricks",
       "type": "Reference"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Reproduce a failure, bisect it in a separate worktree, and inspect the first failing commit.",
+      "maintainer": "unassigned",
+      "path": "knowledge/git/troubleshooting/find-a-regression-with-bisect.md",
+      "source_ids": [
+        "bisect",
+        "worktree",
+        "show"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "git",
+        "troubleshooting",
+        "regression"
+      ],
+      "title": "Find the commit that introduced a regression with Git bisect",
+      "type": "Troubleshooting Guide"
     },
     {
       "audience": "Developers learning safe Git recovery",
