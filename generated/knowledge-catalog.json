@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 298,
+  "concept_count": 299,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -2171,6 +2171,29 @@
       ],
       "title": "Reproducible development environments",
       "type": "Explanation"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Inspect merged Compose files, identify the source of interpolated values, and catch missing inputs before startup.",
+      "maintainer": "unassigned",
+      "path": "knowledge/devops/docker-compose-config.md",
+      "source_ids": [
+        "compose-install",
+        "compose-config",
+        "compose-merge",
+        "compose-interpolation",
+        "compose-release"
+      ],
+      "stale_after": null,
+      "status": "draft",
+      "tags": [
+        "devops",
+        "docker",
+        "compose",
+        "troubleshooting"
+      ],
+      "title": "Validate and troubleshoot Docker Compose configuration",
+      "type": "How-to Guide"
     },
     {
       "audience": "Platform engineers and cloud cost owners",
