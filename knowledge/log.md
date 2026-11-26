@@ -1,5 +1,9 @@
 # Knowledge bundle log
 
+## 2026-11-26
+
+- Added the November Kubernetes patch release brief to the current weekly roundup.
+
 ## 2026-11-25
 
 - Added a Route 53 hybrid DNS troubleshooting guide for inbound and outbound query paths.
