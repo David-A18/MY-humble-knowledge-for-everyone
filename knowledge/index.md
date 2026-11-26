@@ -10,8 +10,8 @@ concepts, procedures, references, and learning paths.
 
 ## Latest news
 
-- [Week of 23 November 2026](news/2026/11/index.md#week-of-23-november-2026) - Kubernetes patch releases, upgrade planning, and the EKS 1.31 support deadline.
-- [News archive](news/index.md) - Dated briefs on AI, technology, and the economy.
+- [Week of 23 November 2026](news/2026/11/index.md#week-of-23-november-2026) - Agent Skills over MCP and Kubernetes release updates.
+- [News archive](news/index.md) - Dated briefs on technology, AI tools, agent skills, and open-source projects.
 
 ## Expanded learning paths
 

@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added an Agent Skills news brief and documented website discovery through the shared catalog.
+
 - Added a comparison of jq and two yq implementations with executed JSON and YAML checks.
 
 - Added a Docker Compose configuration guide with tested merge and interpolation examples.
