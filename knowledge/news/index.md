@@ -20,6 +20,8 @@ after which it is history rather than current advice.
 
 ### Latest week of 23 November 2026
 
+- [Kubernetes publishes November patches for 1.35 through 1.37](2026/11/kubernetes-november-patch-releases.md) - Review the release for your current minor series.
+
 - [Kubernetes 1.38 preview flags node and kubectl changes](2026/11/kubernetes-1-38-upgrade-preview.md) - Check runtime compatibility and rehearse remote commands.
 - [Amazon EKS 1.31 reaches the end of extended support](2026/11/eks-1-31-extended-support-end.md) - Check remaining clusters and their upgrade readiness.
 

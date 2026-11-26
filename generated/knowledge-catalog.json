@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 295,
+  "concept_count": 296,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -4767,6 +4767,27 @@
         "platform-engineering"
       ],
       "title": "Kubernetes 1.38 preview flags node and kubectl changes",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Upstream Kubernetes released three patch versions on 25 November 2026.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/kubernetes-november-patch-releases.md",
+      "published": "2026-11-26",
+      "source_ids": [
+        "patch-137",
+        "patch-136",
+        "patch-135"
+      ],
+      "stale_after": "2027-02-26",
+      "status": "draft",
+      "tags": [
+        "news",
+        "kubernetes",
+        "platform-engineering"
+      ],
+      "title": "Kubernetes publishes November patches for 1.35 through 1.37",
       "type": "News Brief"
     },
     {

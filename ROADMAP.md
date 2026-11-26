@@ -46,7 +46,7 @@ structure and checks they define.
 
 - [x] [ADR-0006](knowledge/decision-records/adr-0006-news-briefs.md), the [news editorial policy](governance/news-editorial-policy.md), the [news brief template](knowledge/templates/news-brief-template.md), validator rules, and the [news section](knowledge/news/index.md).
 - [x] Published the [first weekly roundup](knowledge/news/2026/11/index.md) with four briefs from primary sources, and added their domains to the allowlist.
-- [x] Published the [week of 23 November roundup](knowledge/news/2026/11/index.md#week-of-23-november-2026) with two platform briefs and reviewed the six briefs for expiry on 25 November.
+- [x] Published the [week of 23 November roundup](knowledge/news/2026/11/index.md#week-of-23-november-2026) with platform briefs on the Kubernetes release preview, the EKS support deadline, and the November Kubernetes patches. Reviewed the six existing briefs for expiry on 25 November.
 - [ ] Publish a roundup each week, and mark briefs `deprecated` when later events overturn them.
 - [ ] Optional: a scheduled workflow that collects candidate links into `sources/` for a person to turn into briefs. Nothing publishes automatically.
 
