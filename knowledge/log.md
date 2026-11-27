@@ -2,6 +2,8 @@
 
 ## 2026-11-26
 
+- Expanded News coverage to explicitly include AI tools, agent skills, and open-source repositories. Added the Ruby MCP SDK Skills brief.
+
 - Added the November Kubernetes patch release brief to the current weekly roundup.
 
 ## 2026-11-25

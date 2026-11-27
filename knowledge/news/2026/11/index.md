@@ -2,6 +2,8 @@
 
 ## Week of 23 November 2026
 
+- [Ruby MCP SDK adds support for Agent Skills](ruby-mcp-sdk-agent-skills.md) - Evaluate skill discovery and distribution with the beta extension.
+
 - [Kubernetes publishes November patches for 1.35 through 1.37](kubernetes-november-patch-releases.md) - Review the release for your current minor series.
 
 - [Kubernetes 1.38 preview flags node and kubectl changes](kubernetes-1-38-upgrade-preview.md) - Check runtimes and remote commands ahead of the planned release.
