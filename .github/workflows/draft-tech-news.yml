@@ -1,0 +1,80 @@
+name: Draft tech news
+
+on:
+  schedule:
+    - cron: '15 9 * * *'
+      timezone: Europe/Madrid
+    - cron: '15 12 * * *'
+      timezone: America/New_York
+  workflow_dispatch:
+    inputs:
+      discover_only:
+        description: Check sources without drafting or opening a pull request
+        type: boolean
+        default: true
+
+concurrency:
+  group: scheduled-tech-news
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: develop
+          persist-credentials: false
+      - uses: actions/setup-python@e797f83bcb11b83ed58fa840aacc3f279cde2a72ff
+        with:
+          python-version: '3.13'
+      - name: Install metadata parser
+        run: python -m pip install PyYAML==6.0.2
+      - name: Discover and draft from upstream release records
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NEWS_MODEL: ${{ vars.NEWS_MODEL }}
+          DISCOVER_ONLY: ${{ inputs.discover_only }}
+        run: |
+          if [[ "$DISCOVER_ONLY" == "true" ]]; then
+            python scripts/draft-tech-news.py --discover-only
+          else
+            if [[ -z "$OPENAI_API_KEY" ]]; then
+              echo "::error::Configure the repository OPENAI_API_KEY secret to enable drafting."
+              exit 1
+            fi
+            python scripts/draft-tech-news.py
+          fi
+      - name: Validate and open a news pull request
+        if: github.event_name == 'schedule' || !inputs.discover_only
+        env:
+          GH_TOKEN: ${{ secrets.NEWS_PR_TOKEN || github.token }}
+        run: |
+          git add -- knowledge/news
+          if git diff --cached --quiet; then exit 0; fi
+          python scripts/build-knowledge-catalog.py
+          git add -- generated/knowledge-catalog.json
+          python scripts/validate-repository-policy.py
+          python scripts/moderate-content.py
+          python scripts/validate-okf.py knowledge
+          python scripts/build-knowledge-catalog.py --check
+          node scripts/validate-local-links.mjs
+          git diff --cached --check
+          existing="$(gh pr list --base develop --search 'in:title "Scheduled tech news"' --state open --json number --jq '.[0].number // empty')"
+          if [[ -n "$existing" ]]; then
+            echo "News PR #$existing is awaiting review. Keeping the existing review revision."
+            exit 0
+          fi
+          branch="codex/scheduled-news-${GITHUB_RUN_ID}"
+          git switch -c "$branch"
+          git -c user.name=github-actions -c user.email=41898282+github-actions[bot]@users.noreply.github.com commit -m "docs: draft scheduled tech news"
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/$branch"
+          gh pr create --base develop --head "$branch" --title "Scheduled tech news" \
+            --body "Review each draft against its upstream release notes. Merge only after the repository gate and trusted content scan pass."
