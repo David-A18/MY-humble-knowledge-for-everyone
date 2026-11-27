@@ -20,6 +20,14 @@ The website accepts `okf_version: "0.2"` in `knowledge/index.md` and `catalog_ve
 - Do not publish root governance, `sources/`, `.github/`, scripts, or generated files as site pages. A link to one of these opens its source file or directory on GitHub at the locked SHA. A link to an excluded `log.md` follows the same rule.
 - Keep source citations in articles. Render recorded source links and optional verification fields without treating absent data as evidence.
 
+## News listing
+
+Discover briefs in the same catalog as other concepts. Filter entries with
+`type: News Brief` and use their `path` for the Markdown source at the locked
+commit. Use `published` to order entries newest first, and use `tags` to group
+items such as AI tools or agent skills. The [news index](../../../knowledge/news/index.md)
+is the landing page for the section.
+
 ## Routes and links
 
 | Source target | Website behavior |

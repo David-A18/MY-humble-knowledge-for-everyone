@@ -13,7 +13,7 @@ plan for. Three areas are in scope:
 
 | Area | Examples of what qualifies |
 | --- | --- |
-| Artificial intelligence | New model capabilities or availability, AI regulation, safety incidents, open-source releases, and changes to AI tools that engineers use. |
+| Artificial intelligence | New model capabilities or availability, AI regulation, safety incidents, AI tools, agent skills, and meaningful releases from open-source AI repositories. |
 | Technology | Major releases, end-of-life dates, security vulnerabilities with wide impact, cloud and platform changes, and standards. |
 | Economy | Technology jobs and skills demand, interest-rate or inflation decisions that change infrastructure budgets, cloud pricing, trade rules affecting hardware, and major industry funding shifts. |
 

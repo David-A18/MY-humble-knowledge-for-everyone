@@ -44,11 +44,10 @@ jobs:
         run: |
           if [[ "$DISCOVER_ONLY" == "true" ]]; then
             python scripts/draft-tech-news.py --discover-only
+          elif [[ -z "$OPENAI_API_KEY" ]]; then
+            echo "::warning::Configure the repository OPENAI_API_KEY secret to enable drafting. Running discovery only."
+            python scripts/draft-tech-news.py --discover-only
           else
-            if [[ -z "$OPENAI_API_KEY" ]]; then
-              echo "::error::Configure the repository OPENAI_API_KEY secret to enable drafting."
-              exit 1
-            fi
             python scripts/draft-tech-news.py
           fi
       - name: Validate and open a news pull request
