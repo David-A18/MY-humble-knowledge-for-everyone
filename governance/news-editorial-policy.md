@@ -13,7 +13,7 @@ plan for. Three areas are in scope:
 
 | Area | Examples of what qualifies |
 | --- | --- |
-| Artificial intelligence | New model capabilities or availability, AI regulation, safety incidents, open-source releases, and changes to AI tools that engineers use. |
+| Artificial intelligence | New model capabilities or availability, AI regulation, safety incidents, AI tools, agent skills, and meaningful releases from open-source AI repositories. |
 | Technology | Major releases, end-of-life dates, security vulnerabilities with wide impact, cloud and platform changes, and standards. |
 | Economy | Technology jobs and skills demand, interest-rate or inflation decisions that change infrastructure budgets, cloud pricing, trade rules affecting hardware, and major industry funding shifts. |
 
@@ -26,6 +26,41 @@ Publish a weekly roundup with a small number of briefs that pass the scope test.
 Covering fewer items well is better than covering everything. A significant
 event, such as a critical vulnerability, can get its own brief between
 roundups.
+
+## Scheduled collection and drafting
+
+The [Draft tech news workflow](../.github/workflows/draft-tech-news.yml) is
+scheduled for **09:15 Europe/Madrid** and **12:15 America/New_York** each day.
+Those time zones keep both runs aligned to local time across DST changes.
+A manual discovery run checks the sources without model calls or repository
+writes. [GitHub schedule reference](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onschedule)
+
+The [collector](../scripts/draft-tech-news.py) reads the official releases for
+Codex, Claude Code, MCP SDKs, Vercel Skills, Transformers, Kubernetes,
+Terraform, and Docker Compose. It checks the release timestamp and resolves
+the tag to an upstream commit. The commit corroborates the release identity.
+The official release notes carry the factual claims, and can still require
+additional upstream evidence during review. The collector uses a 36-hour
+lookback, skips releases already cited in News, and drafts up to two briefs
+when the evidence warrants coverage.
+[GitHub Releases API](https://docs.github.com/en/rest/releases/releases)
+
+- Configure the repository Actions secret `OPENAI_API_KEY` to enable drafting.
+  Set `NEWS_MODEL` only if you need a different JSON-capable model. The default
+  is `gpt-5-mini`. Only public release notes go to the model.
+  [OpenAI model reference](https://developers.openai.com/api/docs/models/gpt-5-mini)
+- The workflow opens a PR against `develop`. Either allow repository Actions to
+  create PRs and approve the resulting workflow runs, or configure the optional
+  `NEWS_PR_TOKEN` with repository-scoped Contents and Pull Requests write
+  permissions. Review the automation PR against the primary sources before
+  merging. Publish through the existing release process to `main`.
+  [GitHub token behavior](https://docs.github.com/en/actions/concepts/security/github_token)
+- A run with zero qualifying items opens no PR. If an earlier news PR awaits
+  review, the next run leaves that PR intact.
+- The task writes dated `News Brief` Markdown, updates the news indexes and
+  rebuilds the catalog. The website receives the same content format as it
+  does for a manually written brief.
+- [Editorial prompt](news-automation-instructions.md)
 
 ## Writing a brief
 

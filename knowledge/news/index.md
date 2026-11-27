@@ -1,8 +1,8 @@
 # News
 
-Short, dated briefs on artificial intelligence, technology, and the economy:
-what happened, why it matters to people who build and run software, and what to
-do about it. Each brief links to its original sources and has an expiry date,
+Short, dated briefs on technology, AI models, AI tools, agent skills, and
+open-source repositories. Each explains what changed, who it affects, and
+what readers can do about it. Each brief links to its original sources and has an expiry date,
 after which it is history rather than current advice.
 
 ## How the news works
@@ -19,6 +19,8 @@ after which it is history rather than current advice.
 ## Briefs
 
 ### Latest week of 23 November 2026
+
+- [Ruby MCP SDK adds support for Agent Skills](2026/11/ruby-mcp-sdk-agent-skills.md) - Evaluate skill discovery and distribution with the beta extension.
 
 - [Kubernetes publishes November patches for 1.35 through 1.37](2026/11/kubernetes-november-patch-releases.md) - Review the release for your current minor series.
 

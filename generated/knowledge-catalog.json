@@ -1,7 +1,7 @@
 {
   "bundle_root": "knowledge",
   "catalog_version": "1",
-  "concept_count": 300,
+  "concept_count": 301,
   "concepts": [
     {
       "audience": "Engineering learners and practitioners",
@@ -4896,6 +4896,30 @@
         "llm"
       ],
       "title": "OpenAI releases GPT-6.2 Astra and Sol",
+      "type": "News Brief"
+    },
+    {
+      "audience": "Engineering learners and practitioners",
+      "description": "Ruby MCP SDK 1.9.0 adds a way for servers to publish skills and clients to discover and verify them.",
+      "maintainer": "unassigned",
+      "path": "knowledge/news/2026/11/ruby-mcp-sdk-agent-skills.md",
+      "published": "2026-11-26",
+      "source_ids": [
+        "ruby-sdk",
+        "skills-wg"
+      ],
+      "stale_after": "2027-02-26",
+      "status": "draft",
+      "tags": [
+        "news",
+        "ai",
+        "ai-tools",
+        "agent-skills",
+        "mcp",
+        "open-source",
+        "ruby"
+      ],
+      "title": "Ruby MCP SDK adds support for Agent Skills",
       "type": "News Brief"
     },
     {
